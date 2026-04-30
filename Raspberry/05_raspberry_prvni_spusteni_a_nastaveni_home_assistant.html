@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>První Spuštění Home Assistant – Raspberry Pi Průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--orange:#ff7c2a;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s;margin-top:40px}
+.nav-back:hover{gap:12px}
+
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;
+  color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit}
+
+/* CALLOUTS */
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
+.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
+.step{display:flex;gap:20px;padding:16px 0}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);
+  border:2px solid var(--rasp1);display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.9em;color:var(--rasp1-light);
+  flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
+.step-desc ul{padding-left:18px;margin:8px 0 4px}
+.step-desc li{margin:5px 0;font-size:1em}
+.step-desc code{font-size:.9em}
+.step-desc strong{color:var(--white)}
+.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
+
+/* CABLE DIAGRAM */
+.cable-order{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;margin:20px 0}
+.cable-order-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.cable-item{display:flex;align-items:center;gap:16px;padding:10px 0;
+  border-bottom:1px solid var(--border)}
+.cable-item:last-child{border-bottom:none;padding-bottom:0}
+.cable-order-num{font-family:'Syne',sans-serif;font-size:1.3em;font-weight:800;
+  color:var(--rasp1);width:32px;flex-shrink:0;text-align:center}
+.cable-detail{flex:1}
+.cable-name{font-size:.9em;color:var(--white);font-weight:600;margin-bottom:2px}
+.cable-note{font-size:.82em;color:var(--t2)}
+
+/* FORM FIELDS PREVIEW */
+.form-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;margin:20px 0}
+.form-row{margin-bottom:16px}
+.form-label{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:block}
+.form-hint{font-size:.82em;color:var(--t2);margin-top:5px;line-height:1.5}
+.form-field{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;
+  padding:10px 14px;font-size:.9em;color:var(--text);width:100%;font-family:'Inter',sans-serif}
+
+/* IP TABLE */
+.ip-methods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+@media(max-width:580px){.ip-methods{grid-template-columns:1fr}}
+.ip-method{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.ip-method-title{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:8px}
+.ip-method p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.65}
+
+/* CHAPTER NAV */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;
+  padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;
+  text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 05</div>
+  <h1>První spuštění <em>Home Assistant</em></h1>
+  <p class="h-desc">Fyzické zapojení všech komponent, první boot z USB SSD, nalezení HA v síti a kompletní průvodce prvním nastavením – od vytvoření účtu po statickou IP adresu.</p>
+</header>
+
+<!-- FYZICKÉ ZAPOJENÍ -->
+<section class="sec">
+  <h2>Fyzické zapojení</h2>
+  <p>Pořadí zapojení je důležité. Napájení zapojuj vždy jako <strong>poslední</strong> – tím se RPi spustí. Vše ostatní musí být připojeno dřív.</p>
+
+  <div class="cable-order">
+    <div class="cable-order-title">Pořadí zapojení</div>
+
+    <div class="cable-item">
+      <div class="cable-order-num">1</div>
+      <div class="cable-detail">
+        <div class="cable-name">💽 mSATA USB SSD</div>
+        <div class="cable-note">Zasuň do USB portu – doporučuji horní pravý port (USB 2.0, vhodný pro SSD). Bez SD karty v slotu.</div>
+      </div>
+    </div>
+
+    <div class="cable-item">
+      <div class="cable-order-num">2</div>
+      <div class="cable-detail">
+        <div class="cable-name">📶 Zigbee USB koordinátor (SLZB-07)</div>
+        <div class="cable-note">Přes USB prodlužovací kabel (15–30 cm) do druhého USB portu. Prodlužovák dongle vystrčí od kovové desky a zlepší Zigbee příjem.</div>
+      </div>
+    </div>
+
+    <div class="cable-item">
+      <div class="cable-order-num">3</div>
+      <div class="cable-detail">
+        <div class="cable-name">🌐 Ethernet kabel</div>
+        <div class="cable-note">Jeden konec do RPi (RJ-45 port na krátké straně desky), druhý do routeru nebo Ethernet switche.</div>
+      </div>
+    </div>
+
+    <div class="cable-item">
+      <div class="cable-order-num" style="color:var(--green2)">4</div>
+      <div class="cable-detail">
+        <div class="cable-name">⚡ Napájecí zdroj (Micro-USB)</div>
+        <div class="cable-note">Jako poslední – tím se systém spustí. Používej originální RPi napájecí zdroj 5V/3A.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Bez SD karty!</div>
+    <p>Do slotu pro SD kartu <strong>NIC nevkládej</strong>. RPi musí bootovat z USB SSD. Pokud by byla vložena SD karta (i prázdná nebo s jiným OS), RPi by se pokusil bootovat z ní a neúspěšně.</p>
+  </div>
+</section>
+
+<!-- PRVNÍ BOOT -->
+<section class="sec">
+  <h2>První boot – co se děje</h2>
+  <p>Po připojení napájení se spustí první boot. Tento proces trvá výrazně déle než normální start – systém se rozbaluje, konfiguruje a nastavuje. <strong>Buď trpělivý.</strong></p>
+
+  <ul>
+    <li>🟡 <strong>0–2 minuty:</strong> RPi bootuje HAOS z USB SSD</li>
+    <li>🟡 <strong>2–10 minut:</strong> HAOS rozbaluje kontejnery, stahuje supervisor a core komponenty</li>
+    <li>🟡 <strong>10–20 minut:</strong> Supervisor iniciuje Home Assistant Core, stahuje aktuální verzi</li>
+    <li>🟢 <strong>Po 10–25 minutách:</strong> Systém je připraven</li>
+  </ul>
+
+  <div class="callout callout-danger">
+    <div class="callout-title">🔴 Nejdůležitější pravidlo prvního bootu</div>
+    <p><strong>NIKDY nepřerušuj napájení během prvního bootu!</strong> Systém zapisuje databázi, konfiguraci a soubory. Přerušení může způsobit poškození dat a budeš muset celý proces opakovat od začátku.</p>
+  </div>
+
+  <h3>Jak poznáš, že je systém připraven?</h3>
+  <p>Otevři webový prohlížeč na jakémkoliv zařízení v síti (PC, telefon, tablet) a přejdi na:</p>
+  <pre><code>http://homeassistant.local:8123</code></pre>
+  <p>Pokud se zobrazí stránka "Welcome to Home Assistant" nebo průvodce nastavením → systém je připraven.</p>
+  <p>Pokud se stránka nenačte nebo zobrazí chybu → počkej dalších 5 minut a zkus znovu. Celý první boot může trvat až 25 minut.</p>
+</section>
+
+<!-- NALEZENÍ IP -->
+<section class="sec">
+  <h2>Nalezení IP adresy v síti</h2>
+  <p>Adresa <code>homeassistant.local</code> funguje přes mDNS a nemusí fungovat na všech sítích (zejména starší routery). Jako zálohu si zjisti přímou IP adresu:</p>
+
+  <div class="ip-methods">
+    <div class="ip-method">
+      <div class="ip-method-title">🌐 Přes webové rozhraní routeru</div>
+      <p>Přihlaš se do routeru (obvykle <code>192.168.1.1</code> nebo <code>192.168.0.1</code>). Najdi seznam připojených zařízení (DHCP clients / Connected devices). Hledej zařízení s názvem <strong>"homeassistant"</strong> nebo <strong>"hassio"</strong>. Poznamenej si IP adresu.</p>
+    </div>
+    <div class="ip-method">
+      <div class="ip-method-title">🔍 Přes network scanner</div>
+      <p>Na Windows: stáhni <strong>Advanced IP Scanner</strong> (zdarma) nebo použij <strong>nmap</strong>. Spusť sken lokální sítě (např. 192.168.1.0/24) a hledej zařízení s hostname "homeassistant".</p>
+    </div>
+  </div>
+
+  <p>Jakmile máš IP adresu (např. <code>192.168.1.50</code>), přistupuj přes:</p>
+  <pre><code>http://192.168.1.50:8123</code></pre>
+</section>
+
+<!-- PRVNÍ NASTAVENÍ -->
+<section class="sec">
+  <h2>Průvodce prvním nastavením</h2>
+  <p>Po otevření <code>http://homeassistant.local:8123</code> nebo IP adresy se zobrazí průvodce. Projdeme ho krok za krokem:</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Uvítací obrazovka</div>
+        <div class="step-desc">
+          <p>Zobrazí se "Welcome to Home Assistant". Klikni <strong>"Create my smart home"</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Vytvoření účtu správce</div>
+        <div class="step-desc">
+          <p>Toto je tvůj hlavní přihlašovací účet – <strong>uložit bezpečně!</strong></p>
+          <ul>
+            <li><strong>Jméno:</strong> tvoje jméno (zobrazovací)</li>
+            <li><strong>Uživatelské jméno:</strong> přihlašovací jméno, bez mezer (např. <code>admin</code>)</li>
+            <li><strong>Heslo:</strong> min. 12 znaků, kombinace písmen, čísel a symbolů</li>
+            <li><strong>Potvrď heslo:</strong> zadej znovu</li>
+          </ul>
+          <p>Toto heslo nelze obnovit bez přístupu k systému. Zapiš si ho do bezpečného místa (password manager).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Nastavení domácnosti a polohy</div>
+        <div class="step-desc">
+          <p>Tato nastavení se používají pro astronomické automatizace (západ/východ slunce, přítomnost doma).</p>
+          <ul>
+            <li><strong>Jméno domácnosti:</strong> libovolný název (např. "Moje Home")</li>
+            <li><strong>Časové pásmo:</strong> Europe/Prague</li>
+            <li><strong>Poloha:</strong> klikni na mapu nebo zadej souřadnice – stačí přibližně, město nebo čtvrť</li>
+            <li><strong>Systém jednotek:</strong> Metrické</li>
+            <li><strong>Měna:</strong> CZK</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Přeskočit automatickou detekci zařízení</div>
+        <div class="step-desc">
+          <p>HA nabídne automaticky nalezená zařízení v síti (Philips Hue Bridge, Sonos, Chromecast...). Tato stránka je volitelná – klikni <strong>"Skip"</strong> (Přeskočit). Zařízení přidáme manuálně přes Zigbee2MQTT.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Dokončení průvodce</div>
+        <div class="step-desc">
+          <p>Klikni <strong>"Finish"</strong>. Jsi přihlášen do Home Assistant! Uvidíš hlavní dashboard (Overview).</p>
+          <p>Výchozí dashboard je prázdný – to je v pořádku. Karty a widgety přidáme po nastavení Zigbee zařízení.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATICKÁ IP -->
+<section class="sec">
+  <h2>Nastavení pevné IP adresy (doporučeno)</h2>
+  <p>DHCP router přiděluje IP adresy dynamicky – po restartu se může IP RPi změnit. Pro server který běží 24/7 chceme <strong>pevnou IP</strong>, aby záložky v prohlížeči vždy fungovaly.</p>
+
+  <h3>Varianta A – Rezervace v routeru (nejlepší způsob)</h3>
+  <p>Přidej do routeru DHCP rezervaci: Router vždy přidělí konkrétní IP konkrétní MAC adrese RPi. Výhoda: nakonfigurováno v jednom místě, funguje i po přeinstalaci HAOS.</p>
+  <ol>
+    <li>Přihlaš se do routeru (obvykle <code>192.168.1.1</code>)</li>
+    <li>Najdi seznam DHCP klientů – hledej "homeassistant"</li>
+    <li>Zkopíruj MAC adresu RPi (formát: <code>b8:27:eb:xx:xx:xx</code>)</li>
+    <li>Najdi sekci <strong>DHCP Reservations</strong> / <strong>Static IP</strong> / <strong>IP Binding</strong> (název závisí na routeru)</li>
+    <li>Přidej rezervaci: MAC adresa → zvolená IP (např. <code>192.168.1.50</code>)</li>
+    <li>Ulož a restartuj router</li>
+  </ol>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Jakou IP zvolit?</div>
+    <p>Zvol IP <strong>mimo DHCP rozsah</strong> routeru. Zjistíš ho v nastavení routeru (obvykle 192.168.1.100–192.168.1.254). Dobrá volba: <code>192.168.1.50</code> nebo <code>192.168.1.10</code> – tyto adresy DHCP obvykle nepřiděluje.</p>
+  </div>
+
+  <h3>Varianta B – Nastavení přímo v Home Assistant</h3>
+  <p>Pokud nemáš přístup do routeru nebo chceš nastavit IP přímo v HAOS:</p>
+  <ol>
+    <li>Jdi do <strong>Nastavení → Systém → Síť</strong></li>
+    <li>Klikni na rozhraní <strong>eth0</strong> (Ethernet)</li>
+    <li>Přepni z <strong>"Automatic (DHCP)"</strong> na <strong>"Static"</strong></li>
+    <li>Vyplň:
+      <ul>
+        <li>IP adresa: <code>192.168.1.50/24</code> (nebo dle tvé sítě)</li>
+        <li>Brána (Gateway): <code>192.168.1.1</code> (adresa routeru)</li>
+        <li>DNS: <code>192.168.1.1</code> (router) nebo <code>1.1.1.1</code> (Cloudflare)</li>
+      </ul>
+    </li>
+    <li>Ulož – RPi se restartuje, od té doby má pevnou IP</li>
+  </ol>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Po nastavení statické IP</div>
+    <p>Aktualizuj záložku v prohlížeči na novou adresu (např. <code>http://192.168.1.50:8123</code>). Přístup přes hostname <code>homeassistant.local:8123</code> bude nadále fungovat.</p>
+  </div>
+</section>
+
+<!-- CO DÁL -->
+<section class="sec">
+  <h2>Co jsi právě dokončil</h2>
+  <ul>
+    <li>✅ RPi 3 B+ fyzicky zapojen a spuštěn z USB SSD</li>
+    <li>✅ Home Assistant OS nabooting a plně funkční</li>
+    <li>✅ Vytvořen administrátorský účet</li>
+    <li>✅ Nastavena poloha, časová zóna a jednotky</li>
+    <li>✅ Pevná IP adresa v síti</li>
+  </ul>
+  <p>Pokračuj na <a href="06_raspberry_zakladni_nastaveni_home_assistant.html">Kapitolu 06 – Základní nastavení Home Assistant</a> kde povolíme pokročilý režim, provedeme aktualizace a připravíme systém na instalaci add-onů.</p>
+</section>
+
+<nav class="chapter-nav">
+  <a href="04_raspberry_priprava_usb_msata_ssd_windows.html" class="ch-btn">
+    <span>←</span>
+    <div>
+      <span class="ch-label">předchozí kapitola</span>
+      <span class="ch-name">Příprava USB SSD</span>
+    </div>
+  </a>
+  <a href="06_raspberry_zakladni_nastaveni_home_assistant.html" class="ch-btn next">
+    <div>
+      <span class="ch-label">další kapitola</span>
+      <span class="ch-name">Základní nastavení HA</span>
+    </div>
+    <span>→</span>
+  </a>
+</nav>
+
+<footer>
+  05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br>
+  <a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Příprava USB mSATA SSD – Raspberry Pi Průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--orange:#ff7c2a;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s;margin-top:40px}
+.nav-back:hover{gap:12px}
+
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;
+  color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit}
+
+/* CALLOUTS */
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
+.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
+.step{display:flex;gap:20px;padding:16px 0}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);
+  border:2px solid var(--rasp1);display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.9em;color:var(--rasp1-light);
+  flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
+.step-desc ul{padding-left:18px;margin:8px 0}
+.step-desc li{margin:4px 0;font-size:1em}
+.step-desc code{font-size:.9em}
+.step-desc strong{color:var(--white)}
+.step-desc p{margin-bottom:8px;font-size:1em}
+
+/* STATUS BAR */
+.status-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:18px 22px;margin:20px 0}
+.status-bar-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.status-items{display:flex;flex-wrap:wrap;gap:12px}
+.status-item{display:flex;align-items:center;gap:8px;font-size:.85em;color:var(--t2)}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.status-dot.ok{background:var(--green)}
+.status-dot.warn{background:var(--yellow)}
+.status-dot.info{background:var(--cyan)}
+
+/* CHAPTER NAV */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;
+  padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;
+  text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 04</div>
+  <h1>Příprava <em>USB mSATA SSD</em></h1>
+  <p class="h-desc">Jak nastavit RPi 3 B+ pro bootování z USB, nahrát image Home Assistant OS na SSD disk pod Windows a připravit vše pro první spuštění.</p>
+</header>
+
+<!-- CO BUDEŠ POTŘEBOVAT -->
+<section class="sec">
+  <h2>Co potřebuješ před začátkem</h2>
+
+  <div class="status-bar">
+    <div class="status-bar-title">Checklist před startem</div>
+    <div class="status-items">
+      <span class="status-item"><span class="status-dot ok"></span>PC s Windows 10 nebo 11</span>
+      <span class="status-item"><span class="status-dot ok"></span>mSATA SSD v USB pouzdře</span>
+      <span class="status-item"><span class="status-dot ok"></span>Raspberry Pi 3 B+</span>
+      <span class="status-item"><span class="status-dot ok"></span>Internetové připojení</span>
+      <span class="status-item"><span class="status-dot info"></span>Volitelně: malá SD karta pro USB boot aktivaci</span>
+    </div>
+  </div>
+
+  <p>Software který stáhneš/nainstaluješ:</p>
+  <ul>
+    <li><strong>Raspberry Pi Imager</strong> – zdarma, z <a href="https://www.raspberrypi.com/software/" target="_blank">raspberrypi.com/software</a></li>
+    <li>Volitelně: Raspberry Pi OS Lite pro aktivaci USB bootu (pokud ještě není povolený)</li>
+  </ul>
+</section>
+
+<!-- KROK 1: USB BOOT -->
+<section class="sec">
+  <h2>Část 1 – Povolení USB boot na RPi 3 B+</h2>
+  <p>RPi 3 B+ ve výchozím nastavení bootuje ze SD karty. Aby bootoval z USB SSD, musíme toto nastavení jednou změnit – zapsat OTP (One-Time Programmable) bit do procesoru.</p>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Je USB boot možná už povolen?</div>
+    <p>Novější kusy RPi 3 B+ mají USB boot povolený z výroby. Jednoduše to otestuj: zapoj USB SSD s HA image (viz část 2) <strong>bez SD karty</strong> a zkus nastartovat. Pokud RPi naběhne → přeskoč tuto část a jdi rovnou na část 2.</p>
+  </div>
+
+  <h3>Jak aktivovat USB boot (pokud ještě není)</h3>
+  <p>Potřebuješ malou SD kartu (stačí i 2–4 GB). Na ni nahrajeme Raspberry Pi OS Lite, bootujeme z ní jednou, systém automaticky aktivuje USB boot a pak ji vyjmeme.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Stáhni a nainstaluj Raspberry Pi Imager</div>
+        <div class="step-desc">
+          <p>Přejdi na <a href="https://www.raspberrypi.com/software/" target="_blank">raspberrypi.com/software</a>, klikni <strong>"Download for Windows"</strong> a spusť instalátor. Průvodce: Next → Install → Finish. Spusť aplikaci.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Vyber zařízení a OS pro aktivaci USB bootu</div>
+        <div class="step-desc">
+          <ul>
+            <li>Klikni <strong>CHOOSE DEVICE</strong> → Raspberry Pi 3</li>
+            <li>Klikni <strong>CHOOSE OS</strong> → Raspberry Pi OS (other) → <strong>Raspberry Pi OS Lite (32-bit)</strong></li>
+            <li>Klikni <strong>CHOOSE STORAGE</strong> → vyber svoji <strong>SD kartu</strong> (NE USB SSD!)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Zapiš OS na SD kartu a nastartuj</div>
+        <div class="step-desc">
+          <p>Klikni <strong>NEXT</strong> → <strong>NO</strong> (bez customizace) → <strong>YES</strong> (potvrď smazání). Čekej na dokončení (5–10 minut).</p>
+          <p>Po zápisu vlož SD kartu do RPi, zapoj Ethernet a napájení. <strong>Nechej RPi nastartovat – čekej 30–60 sekund.</strong> Zelená LED bude rychle blikat při bootování a pak se uklidní.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">USB boot je aktivován – zelená LED 4× zabliká</div>
+        <div class="step-desc">
+          <p>Raspberry Pi OS Lite při prvním bootu automaticky nastaví OTP bit pro USB boot. Poznáš to tak, že po cca 30 sekundách zelená LED <strong>rychle 4× zabliká</strong> – to znamená "USB boot enabled".</p>
+          <p><strong>Odpoj napájení a vyjmi SD kartu.</strong> Od teď bude RPi hledat bootovací zařízení na USB portech, pokud není vložena SD karta.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 OTP bit je trvalý</div>
+    <p>Změna je nevratná – jednou aktivovaný USB boot nelze deaktivovat. Ale to je v pořádku: RPi bude bootovat z SD karty pokud je vložena, jinak z USB. Logika zůstane zachována.</p>
+  </div>
+</section>
+
+<!-- KROK 2: HAOS NA SSD -->
+<section class="sec">
+  <h2>Část 2 – Nahrání Home Assistant OS na USB SSD</h2>
+  <p>Teď nahrajeme samotný Home Assistant OS na mSATA USB SSD. Toto je skutečný bootovací disk systému.</p>
+
+  <div class="callout callout-danger">
+    <div class="callout-title">🔴 Důležité upozornění</div>
+    <p>V Raspberry Pi Imager vybereš USB SSD jako úložiště. <strong>Všechna stávající data na SSD budou nenávratně smazána.</strong> Ujisti se, že vybíráš správné zařízení – zkontroluj název a velikost. Nikdy nevyber systémový disk Windows!</p>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Připoj mSATA USB SSD k počítači</div>
+        <div class="step-desc">
+          <p>Zasuň mSATA SSD do USB pouzdra, připoj pouzdro k PC přes USB. Windows ho detekuje jako removable disk. Pokud se otevře průzkumník – zavři ho, disk bude přeformátován.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-title">Otevři Raspberry Pi Imager a zvol zařízení</div>
+        <div class="step-desc">
+          <p>Spusť Raspberry Pi Imager. Klikni <strong>CHOOSE DEVICE</strong> → vyber <strong>Raspberry Pi 3</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <div class="step-title">Vyber Home Assistant OS jako operační systém</div>
+        <div class="step-desc">
+          <p>Klikni <strong>CHOOSE OS</strong> a naviguj:</p>
+          <ul>
+            <li>→ <strong>Other specific-purpose OS</strong></li>
+            <li>→ <strong>Home assistants and home automation</strong></li>
+            <li>→ <strong>Home Assistant</strong></li>
+            <li>→ <strong>Home Assistant OS X.X (RPi 3/3+/3B+)</strong> – vyber <em>nejnovější verzi</em></li>
+          </ul>
+          <p>Image se automaticky stáhne z internetu (cca 300–500 MB). Nebo si ho stáhni ručně z <a href="https://github.com/home-assistant/operating-system/releases" target="_blank">github.com/home-assistant/operating-system/releases</a> (hledej <code>haos_rpi3-X.XX.img.xz</code>) a použij "Use custom".</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <div class="step-title">Vyber USB SSD jako cílové úložiště</div>
+        <div class="step-desc">
+          <p>Klikni <strong>CHOOSE STORAGE</strong> → vyber svůj USB SSD disk.</p>
+          <p>Zkontroluj název a velikost! Typicky se bude jmenovat nějak jako "USB3.0 DISK" nebo název výrobce pouzdra. Pokud vidíš "Windows (C:)" nebo podobně – <strong>NEKLIKEJ NA TO!</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">9</div>
+      <div class="step-body">
+        <div class="step-title">Zapiš image na SSD</div>
+        <div class="step-desc">
+          <p>Klikni <strong>NEXT</strong>. Imager se zeptá na OS customisation – klikni <strong>NO</strong> (HA konfigurujeme přes webové rozhraní, ne zde).</p>
+          <p>Potvrď smazání: <strong>YES</strong>. Zápis začne – ukazatel průběhu zobrazí stav. <strong>NEODPOJUJ SSD!</strong></p>
+          <ul>
+            <li>Fáze zapisování: cca 3–8 minut (dle rychlosti USB)</li>
+            <li>Fáze ověřování: cca 2–5 minut</li>
+          </ul>
+          <p>Po dokončení se zobrazí <strong>"Write Successful"</strong>. Klikni Continue → zavři Imager.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">10</div>
+      <div class="step-body">
+        <div class="step-title">Bezpečně odstraň USB SSD</div>
+        <div class="step-desc">
+          <p>Pravé tlačítko na ikoně USB v System Tray (u hodin) → <strong>"Safely Remove Hardware"</strong> → vyber SSD → Eject.</p>
+          <p>Počkej na potvrzení "Safe to Remove" a teprve pak fyzicky odpoj USB SSD od PC.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CO DĚLAT S WINDOWS DIALOGY -->
+<section class="sec">
+  <h2>Časté situace při nahrávání na Windows</h2>
+
+  <h3>Windows chce naformátovat disk po dokončení</h3>
+  <p>Po úspěšném zápisu HAOS image Windows zobrazí dialog "Je nutné naformátovat disk... před použitím". <strong>Klikni na CANCEL / Zrušit!</strong> Disk obsahuje Linux oddíly které Windows nerozezná, ale jsou správně zapsány. Neformátuj ho!</p>
+
+  <h3>Imager hlásí chybu při ověřování</h3>
+  <p>Pokud se ověřování nezdaří, pravděpodobně:</p>
+  <ul>
+    <li>Problémový USB kabel nebo port – zkus jiný USB port (preferuj USB 3.0, modrý)</li>
+    <li>Vadné USB pouzdro – otestuj jiným</li>
+    <li>Vadný SSD – vzácné, ale možné</li>
+  </ul>
+  <p>Zkus znovu – Imager sám nabídne opakování.</p>
+
+  <h3>SSD se v Imager nezobrazuje</h3>
+  <ul>
+    <li>Odpoj a znovu zapoj USB kabel</li>
+    <li>Zkus jiný USB port (přímo na PC, ne přes hub)</li>
+    <li>Zkontroluj ve Správci zařízení (Device Manager) jestli se disk zobrazuje</li>
+  </ul>
+</section>
+
+<!-- SHRNUTÍ -->
+<section class="sec">
+  <h2>Shrnutí – co teď máš připravené</h2>
+  <ul>
+    <li>✅ RPi 3 B+ s aktivovaným USB boot (OTP bit)</li>
+    <li>✅ mSATA USB SSD s nahraným Home Assistant OS image</li>
+    <li>✅ Vše připravené pro fyzické zapojení a první boot</li>
+  </ul>
+  <p>Pokračuj na <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html">Kapitolu 05 – První spuštění a nastavení Home Assistant</a>.</p>
+</section>
+
+<nav class="chapter-nav">
+  <a href="03_raspberry_poznamka_k_zigbee_modulu.html" class="ch-btn">
+    <span>←</span>
+    <div>
+      <span class="ch-label">předchozí kapitola</span>
+      <span class="ch-name">Zigbee modul</span>
+    </div>
+  </a>
+  <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html" class="ch-btn next">
+    <div>
+      <span class="ch-label">další kapitola</span>
+      <span class="ch-name">První spuštění HA</span>
+    </div>
+    <span>→</span>
+  </a>
+</nav>
+
+<footer>
+  04_raspberry_priprava_usb_msata_ssd_windows.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br>
+  <a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardware – Raspberry Pi Průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--orange:#ff7c2a;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s;margin-top:40px}
+.nav-back:hover{gap:12px}
+
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
+
+/* CALLOUTS */
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:6px}
+.callout ul{margin-bottom:0}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+
+/* HARDWARE CARDS */
+.hw-grid{display:grid;gap:14px;margin:20px 0}
+.hw-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;
+  position:relative;transition:border-color .2s}
+.hw-card:hover{border-color:var(--border2)}
+.hw-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.hw-card-title{font-family:'Syne',sans-serif;font-size:1em;font-weight:700;color:var(--white)}
+.hw-badge{font-family:'DM Mono',monospace;font-size:.7em;padding:3px 10px;border-radius:10px;
+  border:1px solid;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0}
+.hw-badge-required{color:var(--rasp1-light);border-color:rgba(227,11,92,.3);background:rgba(227,11,92,.08)}
+.hw-badge-recommended{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+.hw-badge-optional{color:var(--t2);border-color:var(--border);background:var(--bg3)}
+.hw-card p{font-size:.88em;color:var(--t2);margin-bottom:8px;line-height:1.65}
+.hw-card ul{padding-left:18px;margin-bottom:0}
+.hw-card li{font-size:.85em;margin:5px 0}
+
+/* POWER TABLE */
+.power-spec{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;margin:20px 0}
+.power-row{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--border)}
+.power-row:last-child{border-bottom:none}
+.power-label{font-family:'DM Mono',monospace;font-size:.83em;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+.power-value{font-family:'Syne',sans-serif;font-size:1.1em;font-weight:700;color:var(--rasp1-light)}
+.power-note{font-size:.8em;color:var(--t3);margin-top:2px}
+
+/* SHOP LINKS */
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:16px 0}
+.shop-link{display:block;background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;font-family:'DM Mono',monospace;font-size:.8em;color:var(--t2);
+  text-decoration:none;transition:all .2s;letter-spacing:.04em}
+.shop-link:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.shop-link span{display:block;color:var(--white);font-size:1.05em;margin-bottom:2px;font-family:'Inter',sans-serif;font-weight:600}
+
+/* CHAPTER NAV */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;
+  padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;
+  text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+.ch-btn .ch-name{color:inherit}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 02</div>
+  <h1><em>Hardware</em></h1>
+  <p class="h-desc">Kompletní seznam všeho co potřebuješ koupit – od RPi přes napájení po Zigbee koordinátor. Včetně doporučených obchodů v ČR a konkrétních tipů na nákup.</p>
+</header>
+
+<!-- SEZNAM HARDWARE -->
+<section class="sec">
+  <h2>Co potřebuješ koupit</h2>
+
+  <div class="hw-grid">
+
+    <div class="hw-card">
+      <div class="hw-card-header">
+        <div class="hw-card-title">🍓 Raspberry Pi 3 Model B+</div>
+        <span class="hw-badge hw-badge-required">povinné</span>
+      </div>
+      <p>Hlavní výpočetní jednotka. RPi 3 B+ má čtyřjádrový CPU 1.4 GHz, 1 GB RAM, Ethernet, WiFi a Bluetooth. Pro Home Assistant se základní konfigurací (do cca 15 add-onů) naprosto dostačuje.</p>
+      <ul>
+        <li>Doporučuji koupit <strong>jako kit</strong> – obsahuje pouzdro a někdy i napájecí zdroj</li>
+        <li>Alternativa: RPi 4 (2 GB) je výkonnější, ale dražší a má USB-C napájení</li>
+        <li>Cena: cca <strong>1 300–1 800 Kč</strong> (samotná deska), kit cca 2 000–2 500 Kč</li>
+      </ul>
+    </div>
+
+    <div class="hw-card">
+      <div class="hw-card-header">
+        <div class="hw-card-title">💽 mSATA SSD v USB pouzdře</div>
+        <span class="hw-badge hw-badge-required">povinné</span>
+      </div>
+      <p>Bootovací disk – náhrada za SD kartu. Výrazně rychlejší (10–50×) a trvanlivější (100× více zápisových cyklů). Home Assistant databáze a logy zapisují intenzivně – SSD to zvládá bez problémů roky.</p>
+      <ul>
+        <li><strong>Velikost SSD:</strong> min. 32 GB, doporučeno 64 GB (pro zálohy a budoucí rozšíření)</li>
+        <li><strong>Doporučené mSATA disky:</strong> Kingston SMS200S3, SanDisk X110, Crucial M500</li>
+        <li><strong>USB pouzdro:</strong> chipset JMicron JMS567/JMS578 je problematický – doporučuji pouzdra s <strong>ASMedia ASM1153</strong> nebo JMicron JMS561</li>
+        <li><strong>Ověřená pouzdra:</strong> Inateck FE2009, ORICO MSA-UC3, Plugable USBC-SATA-V</li>
+        <li>Cena SSD + pouzdro: cca <strong>400–900 Kč</strong> celkem</li>
+      </ul>
+      <div style="margin-top:12px;padding:10px 14px;background:rgba(245,197,66,.06);border-left:2px solid var(--yellow);border-radius:6px;font-size:.83em;color:var(--t2)">
+        ⚠️ <strong style="color:var(--yellow)">UAS problém:</strong> Pouzdra s JMS578 chipsetem mohou způsobovat náhodné pády RPi. Pokud se ti to stane, přidej do <code>cmdline.txt</code> parametr <code>usb-storage.quirks=XXXX:YYYY:u</code> (kde XXXX:YYYY je VendorID:ProductID tvého pouzdra z <code>lsusb</code>).
+      </div>
+    </div>
+
+    <div class="hw-card">
+      <div class="hw-card-header">
+        <div class="hw-card-title">⚡ Napájecí zdroj Micro-USB</div>
+        <span class="hw-badge hw-badge-required">povinné – čti pozorně</span>
+      </div>
+      <p>Nejpodceňovanější součástka. Špatný napájecí zdroj je nejčastější příčina nestability. S mSATA USB SSD odebírá RPi 3 B+ více proudu než se samotnou SD kartou – potřebuješ <strong>min. 3A</strong>.</p>
+      <ul>
+        <li><strong>Nejlepší volba:</strong> Originální Raspberry Pi Official PSU – 5.1V / 2.5A (designováno pro RPi, regulovaný výstup – prakticky nikdy neklesne pod 5V)</li>
+        <li><strong>Nebo:</strong> Meanwell GST25B05, CanaKit 3A Micro-USB, každý kvalitní zdroj 5V/3A s pevným kabelem</li>
+        <li><strong>Vyhni se:</strong> generickým nabíječkám telefonů, nabíječkám bez udané ampéráže, odpojitelným USB kabelům (přidávají odpor)</li>
+      </ul>
+    </div>
+
+    <div class="hw-card">
+      <div class="hw-card-header">
+        <div class="hw-card-title">📶 USB Zigbee koordinátor</div>
+        <span class="hw-badge hw-badge-required">povinné</span>
+      </div>
+      <p>Fyzická brána Zigbee sítě. Vše o výběru modulu je v <a href="03_raspberry_poznamka_k_zigbee_modulu.html">Kapitole 03</a>. Stručně:</p>
+      <ul>
+        <li><strong>SMLIGHT SLZB-07</strong> (EFR32MG21) – doporučeno, plug-and-play, cca 600–900 Kč</li>
+        <li><strong>Sonoff Zigbee Dongle Plus-E</strong> (EFR32MG21) – levnější alternativa, cca 400–600 Kč</li>
+        <li><strong>ConBee III</strong> – prémiová volba s extra software podporou</li>
+      </ul>
+    </div>
+
+    <div class="hw-card">
+      <div class="hw-card-header">
+        <div class="hw-card-title">🔌 USB prodlužovací kabel</div>
+        <span class="hw-badge hw-badge-recommended">doporučeno</span>
+      </div>
+      <p>Pro Zigbee koordinátor. Dongle přímo v RPi je obklopen kovovými součástkami a tělem desky, které tlumí signál. Prodlužovák 15–30 cm dongle vystrčí do prostoru a výrazně zlepší dosah.</p>
+      <ul>
+        <li>Délka: <strong>15–30 cm</strong> (delší kabely mohou přidávat zpoždění)</li>
+        <li>Typ: USB-A samec → USB-A samice</li>
+        <li>Cena: cca 50–150 Kč, dostupné v každém elektru</li>
+      </ul>
+    </div>
+
+    <div class="hw-card">
+      <div class="hw-card-header">
+        <div class="hw-card-title">🌐 Ethernet kabel</div>
+        <span class="hw-badge hw-badge-recommended">doporučeno</span>
+      </div>
+      <p>RPi 3 B+ má WiFi, ale <strong>Ethernet = stabilita</strong>. HA zapisuje data průběžně a WiFi výpadky mohou způsobit problémy. Pro server který běží 24/7 preferuj drát.</p>
+      <ul>
+        <li>Kategorie: Cat 5e nebo Cat 6 (100 Mbit/s na RPi 3 je maximum)</li>
+        <li>Délka: dle potřeby – měříme od RPi k routeru/switchi</li>
+        <li>Cena: 50–200 Kč dle délky</li>
+      </ul>
+    </div>
+
+    <div class="hw-card">
+      <div class="hw-card-header">
+        <div class="hw-card-title">💾 Malý USB flash disk (pro zálohy)</div>
+        <span class="hw-badge hw-badge-optional">volitelné</span>
+      </div>
+      <p>Lokální zálohovací médium – zapojí se do druhého USB portu RPi. Zálohy HA (50–200 MB každá) se automaticky kopírují sem pro rychlou obnovu bez NAS nebo internetu.</p>
+      <ul>
+        <li>Velikost: min. 16 GB, doporučeno 32 GB</li>
+        <li>Důležité: kvalitní flash disk (SanDisk Ultra), ne nejlevnější generická značka</li>
+        <li>Cena: 150–300 Kč</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- NAPÁJENÍ DETAIL -->
+<section class="sec">
+  <h2>Napájení – technické požadavky</h2>
+  <p>RPi 3 B+ používá <strong>Micro-USB (ne USB-C)</strong>. Toto je nejčastěji podceňovaná součástka – a nejčastější příčina problémů.</p>
+
+  <div class="power-spec">
+    <div class="power-row">
+      <div>
+        <div class="power-label">Konektor</div>
+        <div class="power-note">RPi 3 B+ – POZOR: jiný než RPi 4/5</div>
+      </div>
+      <div class="power-value">Micro-USB</div>
+    </div>
+    <div class="power-row">
+      <div>
+        <div class="power-label">Napětí</div>
+        <div class="power-note">Přesně 5V nebo mírně výš – 5.1V je ideál</div>
+      </div>
+      <div class="power-value">5V DC</div>
+    </div>
+    <div class="power-row">
+      <div>
+        <div class="power-label">Minimální proud</div>
+        <div class="power-note">Bez USB SSD – dnes už nedostačující pro stabilní provoz</div>
+      </div>
+      <div class="power-value">2.5A</div>
+    </div>
+    <div class="power-row">
+      <div>
+        <div class="power-label">Doporučený proud</div>
+        <div class="power-note">S mSATA USB SSD + Zigbee dongle + Ethernet</div>
+      </div>
+      <div class="power-value" style="color:var(--green2)">3A nebo více</div>
+    </div>
+  </div>
+
+  <div class="callout callout-danger">
+    <div class="callout-title">🔴 Co se stane při špatném napájení?</div>
+    <ul>
+      <li>V HA se zobrazí <strong>žlutá ikonka blesku</strong> (undervoltage warning)</li>
+      <li>RPi omezí výkon CPU (throttling) – systém je pomalý</li>
+      <li>Náhodné restarty, ztráta dat na SSD</li>
+      <li>Nestabilita Zigbee komunikace – zařízení "mizí"</li>
+      <li>Korupce databáze – nejhorší scénář, ztráta konfigurace</li>
+    </ul>
+  </div>
+
+  <h3>Kde koupit napájecí zdroj v ČR</h3>
+
+  <div class="shop-grid">
+    <a href="https://www.alza.cz/raspberry-pi-2-5a-d4191252.htm" class="shop-link" target="_blank">
+      <span>Alza.cz</span>
+      RPi Official PSU 2.5A
+    </a>
+    <a href="https://rpishop.cz" class="shop-link" target="_blank">
+      <span>RPishop.cz</span>
+      Kompletní RPi příslušenství
+    </a>
+    <a href="https://botland.cz" class="shop-link" target="_blank">
+      <span>Botland.cz</span>
+      RPi napájení a kity
+    </a>
+    <a href="https://dratek.cz" class="shop-link" target="_blank">
+      <span>Dratek.cz</span>
+      Elektronika + Zigbee
+    </a>
+    <a href="https://www.mironet.cz" class="shop-link" target="_blank">
+      <span>Mironet.cz</span>
+      Počítačové komponenty
+    </a>
+    <a href="https://www.hw-shop.cz" class="shop-link" target="_blank">
+      <span>HW-shop.cz</span>
+      Hardware a elektronika
+    </a>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Tip: koupit jako kit</div>
+    <p>Na RPishop.cz nebo Alza.cz jsou dostupné starter kity s RPi 3 B+, napájecím zdrojem a pouzdrem. Cena je lepší než koupit vše zvlášť a máš jistotu že napájení je správné.</p>
+  </div>
+</section>
+
+<!-- VÝBĚR SSD POUZDRA -->
+<section class="sec">
+  <h2>Výběr USB pouzdra pro mSATA – detailní tipy</h2>
+  <p>Ne každé pouzdro pro mSATA SSD funguje s RPi bez problémů. Problémový chipset <strong>JMS578</strong> způsobuje náhodné pády kvůli chybám v UAS (USB Attached Storage) protokolu.</p>
+
+  <h3>Jak zjistit chipset svého pouzdra</h3>
+  <ol>
+    <li>Připoj pouzdro k PC nebo RPi</li>
+    <li>Na Windows: Device Manager → pohled na USB zařízení → vlastnosti → Hardware IDs</li>
+    <li>Na RPi přes SSH: spusť <code>lsusb -v</code> a hledej VendorID:ProductID</li>
+    <li>Pokud vidíš <code>152d:0578</code> = JMS578 = může být problém</li>
+  </ol>
+
+  <h3>Pokud máš problémové pouzdro – řešení</h3>
+  <p>Přidej quirks parametr do bootovacího konfiguračního souboru. Po přístupu přes SSH do HAOS:</p>
+  <pre><code># Zjisti VendorID:ProductID svého pouzdra
+lsusb
+
+# Příklad výstupu: Bus 001 Device 002: ID 152d:0578 JMicron Technology Corp.
+
+# Přidej do /mnt/boot/cmdline.txt (parametr na KONEC stávajícího řádku, ne nový řádek!):
+usb-storage.quirks=152d:0578:u</code></pre>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Ověřená doporučení komunity HA</div>
+    <p>Nejlépe hodnocená pouzdra v komunitě Home Assistant pro mSATA/SATA: <strong>Inateck FE2009</strong> (ASMedia ASM1153E), <strong>UGREEN USB 3.0 SATA</strong>, a pouzdra s JMicron JMS561. Vyhledej recenze na <a href="https://community.home-assistant.io" target="_blank">community.home-assistant.io</a> při výběru.</p>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="sec">
+  <h2>Nákupní checklist</h2>
+  <p>Než půjdeš nakupovat, projdi tento seznam:</p>
+  <ul>
+    <li>☐ Raspberry Pi 3 Model B+ (nebo kit)</li>
+    <li>☐ mSATA SSD disk (min. 32 GB)</li>
+    <li>☐ USB pouzdro pro mSATA (s ASMedia nebo JMS561 chipsetem)</li>
+    <li>☐ Napájecí zdroj Micro-USB <strong>5V / 3A</strong> (originální RPi nebo Meanwell)</li>
+    <li>☐ Ethernet kabel (délka dle potřeby)</li>
+    <li>☐ USB Zigbee koordinátor (SLZB-07 nebo Sonoff)</li>
+    <li>☐ USB prodlužovací kabel 15–30 cm (pro Zigbee dongle)</li>
+    <li>☐ [VOLITELNÉ] Malý USB flash disk 32 GB pro lokální zálohy</li>
+    <li>☐ [VOLITELNÉ] Pouzdro/krabička pro RPi (pokud nekupuješ kit)</li>
+  </ul>
+</section>
+
+<nav class="chapter-nav">
+  <a href="01_raspberry_prehled_systemu.html" class="ch-btn">
+    <span>←</span>
+    <div>
+      <span class="ch-label">předchozí kapitola</span>
+      <span class="ch-name">Přehled systému</span>
+    </div>
+  </a>
+  <a href="03_raspberry_poznamka_k_zigbee_modulu.html" class="ch-btn next">
+    <div>
+      <span class="ch-label">další kapitola</span>
+      <span class="ch-name">Zigbee modul</span>
+    </div>
+    <span>→</span>
+  </a>
+</nav>
+
+<footer>
+  02_raspberry_hardware.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br>
+  <a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

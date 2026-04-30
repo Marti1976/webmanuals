@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bezpečnost – Raspberry Pi Průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --rasp1:#e30b5c; --rasp1-light:#ff3377;
+  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back:hover{gap:12px}
+
+header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light)}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
+  margin:28px 0 10px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+strong{color:var(--white);font-weight:600}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
+  color:var(--t2);line-height:1.6;overflow-x:auto}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 11</div>
+  <h1>Bezpečnost</h1>
+</header>
+
+<div class="content">
+<p>DŮLEŽITÉ: Home Assistant by měl být dostupný POUZE z lokální sítě,
+          pokud nevíš přesně co děláš s vzdáleným přístupem!
+
+------------------------------------------------------------------------
+11.1 FIREWALL NA ROUTERU (NEJDŮLEŽITĚJŠÍ OCHRANA)
+------------------------------------------------------------------------
+
+PRAVIDLO Č. 1: NIKDY neforwarduj port 8123 (ani žádný jiný HA port)
+               z internetu na RPi!
+
+Jak zkontrolovat nastavení routeru:
+KROK 53: Přihlaš se do routeru (obvykle 192.168.1.1)
+KROK 54: Zkontroluj sekci "Port Forwarding" / "NAT" / "Virtual Server"
+          -> NESMÍ existovat žádné pravidlo forwardující port 8123 na IP RPi
+          -> Pokud existuje: SMAŽ HO IHNED
+
+KROK 55: Zkontroluj sekci "UPnP" / "Universal Plug and Play"
+          -> UPnP může automaticky otevírat porty!
+          -> Doporučuji VYPNOUT UPnP v routeru pro větší kontrolu
+
+------------------------------------------------------------------------
+11.2 FIREWALL V HOME ASSISTANT OS
+------------------------------------------------------------------------
+
+HAOS má základní firewall, ale je vhodné přidat pravidla:
+
+KROK 56: Nastavení -> Systém -> Host
+          -> Zde lze vidět firewall nastavení
+          
+Přes SSH (volitelné – nutný SSH addon):
+
+Povolit přístup jen z lokální sítě (příklad pro síť 192.168.1.0/24):
+  ha network update eth0 --ipv4-method static --ipv4-address 192.168.1.50/24
+
+------------------------------------------------------------------------
+11.3 SILNÉ HESLO A DVOUFAKTOROVÁ AUTENTIZACE (2FA)
+------------------------------------------------------------------------
+
+KROK 57: Nastav 2FA pro svůj HA účet:
+          -> Klikni na své jméno vlevo dole
+          -> Sekce "Zabezpečení" nebo "Multi-factor Authentication"
+          -> Klikni "Aktivovat" u TOTP (Time-based One-Time Password)
+          -> Naskenuj QR kód aplikací Google Authenticator nebo Authy
+          -> Zapiš si záložní kódy na BEZPEČNÉ místo!
+          -> Klikni "Aktivovat"
+
+Po zapnutí 2FA budeš při přihlášení potřebovat kód z mobilu.
+2FA PLATÍ POUZE PRO PŘIHLÁŠENÍ – přes lokální síť je to extra ochrana.
+
+------------------------------------------------------------------------
+11.4 TRUSTED NETWORKS – BEZPROBLÉMOVÝ LOKÁLNÍ PŘÍSTUP
+------------------------------------------------------------------------
+
+Pokud chceš, aby zařízení v lokální síti nemusela zadávat heslo:
+
+KROK 58: V Home Assistant -> Nastavení -> Lidé -> záložka "Poskytovatelé auth"
+          -> Nebo uprav configuration.yaml:
+
+Přidej do /config/configuration.yaml:
+
+homeassistant:
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.1.0/24       # tvoje lokální síť
+        - 127.0.0.1
+      allow_bypass_login: true  # bez hesla z lokální sítě
+    - type: homeassistant     # standardní přihlášení (záloha)
+
+!!! POZOR: Tento přístup je vhodný POUZE pokud je tvoje WiFi/LAN
+           zabezpečena a nikdo cizí se k ní nedostane !!!
+
+------------------------------------------------------------------------
+11.5 ZABEZPEČENÍ MQTT
+------------------------------------------------------------------------
+
+KROK 59: Ověř, že Mosquitto poslouchá POUZE na lokálních rozhraních:
+          -> Nastavení -> Doplňky -> Mosquitto broker -> KONFIGURACE
+          -> Přidej nebo ověř:
+
+customize:
+  active: false
+logins:
+  - username: mqtt_user
+    password: [tvoje heslo]
+certfile: fullchain.pem
+keyfile: privkey.pem
+
+Mosquitto v HAOS je ve výchozím nastavení dostupný POUZE uvnitř HA sítě
+(port 1883 není přístupný z internetu – je to v pořádku).
+
+------------------------------------------------------------------------
+11.6 VZDÁLENÝ PŘÍSTUP – KDYŽ HO PŘECE JEN CHCEŠ
+------------------------------------------------------------------------
+
+POKUD chceš přistupovat k HA z internetu, nikdy neotvírej port 8123!
+Místo toho použij:
+
+VARIANTA A – Nabu Casa (Home Assistant Cloud):
+  -> Placená služba (cca 65 Kč/měsíc) od tvůrců HA
+  -> Nejjednodušší a nejbezpečnější vzdálený přístup
+  -> Nastavení: Nastavení -> Home Assistant Cloud
+  -> Vše šifrované, bez portforwardingu
+
+VARIANTA B – Tailscale VPN (ZDARMA):
+  -> VPN síť – připojíš se jako bys byl doma
+  -> Nastavení:
+     1. Registruj se na https://tailscale.com (zdarma)
+     2. Nastavení -> Doplňky -> ADD-ON STORE -> hledej "Tailscale"
+     3. Nainstaluj a nastav Tailscale addon v HA
+     4. Na telefonu/PC nainstaluj Tailscale klienta
+     5. Přes Tailscale se připojíš k domácí síti odkudkoli
+  -> Přístup k HA: přes Tailscale IP adresu (100.x.x.x)
+
+VARIANTA C – WireGuard VPN na routeru:
+  -> Složitější, vyžaduje podporu v routeru (Turris, Mikrotik, Asus Merlin)
+  -> Nejbezpečnější varianta, veškerý provoz šifrován
+
+DOPORUČENÍ: Nabu Casa pro jednoduchost, Tailscale pro bezplatný přístup.
+NIKDY nepoužívej přímý port forwarding bez HTTPS a silného hesla!
+
+------------------------------------------------------------------------
+11.7 LOGOVÁNÍ A SLEDOVÁNÍ PŘIHLÁŠENÍ
+------------------------------------------------------------------------
+
+KROK 60: Nastavení -> Systém -> Protokoly
+          -> Sleduj neúspěšné pokusy o přihlášení
+          -> Filtruj dle "login" nebo "failed"
+
+KROK 61: Nastav notifikaci při neúspěšném přihlášení (volitelné):
+          -> Automatizace -> Vytvořit automatizaci
+          -> Trigger: "Log entry" s klíčovým slovem "failed login"
+          -> Akce: Odeslat push notifikaci na mobil
+
+POZNÁMKY K BEZPEČNOSTI:
+[zde si pište vlastní poznámky]</p>
+</div>
+
+<footer>
+  11_raspberry_bezpecnost.html · Raspberry Pi Průvodce · Duben 2026<br/>
+  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

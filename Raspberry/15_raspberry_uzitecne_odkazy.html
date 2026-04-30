@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Užitečné Odkazy – Raspberry Pi Průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --rasp1:#e30b5c; --rasp1-light:#ff3377;
+  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back:hover{gap:12px}
+
+header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light)}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
+  margin:28px 0 10px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+strong{color:var(--white);font-weight:600}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
+  color:var(--t2);line-height:1.6;overflow-x:auto}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 15</div>
+  <h1>Užitečné Odkazy</h1>
+</header>
+
+<div class="content">
+<p>HOME ASSISTANT:
+  Hlavní web:         https://www.home-assistant.io
+  Dokumentace:        https://www.home-assistant.io/docs/
+  Fórum komunity:     https://community.home-assistant.io
+  YouTube kanál:      https://www.youtube.com/@HomeAssistant
+  České fórum/skupiny: https://www.facebook.com/groups/homeassistantcz
+
+ZIGBEE2MQTT:
+  Hlavní web:         https://www.zigbee2mqtt.io
+  Dokumentace:        https://www.zigbee2mqtt.io/guide/getting-started/
+  Podporovaná zařízení: https://www.zigbee2mqtt.io/supported-devices/
+  GitHub (problémy):  https://github.com/Koenkk/zigbee2mqtt/issues
+
+SLZB-07 DONGLE:
+  Oficální web:       https://smlight.tech/product/slzb-07
+  Manuál:             https://smlight.tech/manual-slzb-07/
+  Firmware flash:     https://smlight.tech/flasher
+  Dratek.cz (CZ eshop): https://dratek.cz
+
+ZÁLOHOVACÍ DOPLŇKY:
+  Google Drive Backup: https://github.com/sabeechen/hassio-google-drive-backup
+  Samba Backup:        https://github.com/thomasmauerer/hassio-addons
+
+RASPBERRY PI:
+  Dokumentace:        https://www.raspberrypi.com/documentation/
+  Imager download:    https://www.raspberrypi.com/software/
+  Fórum:              https://forums.raspberrypi.com
+
+BEZPEČNOST – VZDÁLENÝ PŘÍSTUP:
+  Nabu Casa:          https://www.nabucasa.com
+  Tailscale:          https://tailscale.com
+  Tailscale addon:    https://github.com/hassio-addons/addon-tailscale
+
+ČESKÉ OBCHODY PRO RASPBERRY PI A PŘÍSLUŠENSTVÍ:
+  Alza.cz:   https://www.alza.cz/raspberry-pi/18859158.htm
+  Mironet.cz: https://www.mironet.cz
+  RPishop.cz: https://rpishop.cz
+  Botland.cz: https://botland.cz
+  Dratek.cz:  https://dratek.cz
+
+NAPÁJENÍ – KONKRÉTNÍ PRODUKTY V ČR:
+  Originální RPi 2.5A (Alza):
+    https://www.alza.cz/raspberry-pi-2-5a-d4191252.htm
+  Originální RPi 2.5A (Mironet):
+    https://www.mironet.cz/raspberry-pi-napajeci-adapter-25a-pro-rpi-3+dp376066/
+
+MONITORING A DIAGNOSTIKA:
+  Glances (systémové info): add-on "Glances" v HA store
+  Netdata:                  add-on "Netdata" v HA store
+
+================================================================================
+KONEC MANUÁLU
+================================================================================
+
+Verze: 1.0 | Duben 2026
+Vytvořeno pro: Raspberry Pi 3 B+ + Home Assistant OS + Zigbee2MQTT + mSATA USB SSD
+Zigbee: SMLIGHT SLZB-07 (EFR32MG21) / Ebyte E72-2G4M20S1E (CC2652P)
+
+Hodně štěstí s instalací! Pokud narazíš na problém, komunita HA je
+velmi přátelská a ochotná pomoci na: https://community.home-assistant.io
+
+Klíčová hesla a poznámky (UCHOVEJ BEZPEČNĚ!):
+  HA admin heslo:         ________________________
+  HA admin uživatel:      ________________________
+  MQTT uživatel:          ________________________
+  MQTT heslo:             ________________________
+  Samba Backup uživatel:  ________________________
+  Samba Backup heslo:     ________________________
+  Synology ha_backup user:________________________
+  Synology ha_backup pass:________________________
+  IP adresa HA:           ________________________
+  IP adresa Synology NAS: ________________________
+  Záloha heslo (šifrování):_______________________
+
+================================================================================</p>
+</div>
+
+<footer>
+  15_raspberry_uzitecne_odkazy.html · Raspberry Pi Průvodce · Duben 2026<br/>
+  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>
