@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instalace & Cleanup – Antigravity průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --amber:#f59e0b;--amber2:#fcd34d;
+  --red:#ef4444;--red2:#fca5a5;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(239,68,68,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--red2)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-r{color:var(--red2);border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.08)}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--red2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--red2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--red);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--red2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(239,68,68,.1);
+  color:var(--red2);border:1px solid rgba(239,68,68,.2);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:#6ee7b7}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--amber2)}
+.info{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25);color:#d09090}
+.info .content strong{color:var(--red2)}
+
+.steps{display:flex;flex-direction:column;gap:12px;margin:14px 0}
+.step{display:grid;grid-template-columns:40px 1fr;gap:0;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.step-n{display:flex;align-items:flex-start;justify-content:center;padding-top:14px;
+  font-family:'Syne',sans-serif;font-size:1.1em;font-weight:800;color:var(--red);
+  background:rgba(239,68,68,.06);border-right:1px solid var(--border)}
+.step-b{padding:12px 16px}
+.step-t{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:6px;font-size:.95em}
+.step-b p{font-size:.88em;color:var(--t2);margin-bottom:5px}
+.step-b p:last-child{margin-bottom:0}
+
+.cmd-box{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--red);
+  border-radius:8px;padding:12px;margin:12px 0;font-family:'DM Mono',monospace;font-size:.8em;
+  color:var(--red2);line-height:1.7;overflow-x:auto}
+
+.files-tree{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;
+  margin:12px 0;font-family:'DM Mono',monospace;font-size:.78em;color:var(--text);line-height:1.8}
+
+.checklist{background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--red);
+  border-radius:8px;padding:14px;margin:12px 0}
+.checklist h4{margin-top:0;font-size:.9em;color:var(--red2);text-transform:uppercase;letter-spacing:.08em}
+.cl-item{display:flex;gap:8px;padding:4px 0;font-size:.85em;border-bottom:1px solid rgba(255,255,255,.04)}
+.cl-item:last-child{border-bottom:none}
+.cl-box{color:var(--red);flex-shrink:0;margin-top:1px}
+.cl-text{color:var(--t2)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 11</div>
+  <h1>Instalace & <em>Cleanup</em></h1>
+  <p class="h-desc">Kde se všechno instaluje, co se stane na tvém počítači, a jak to všechno úplně čistě odstranit když to přestaneš potřebovat. Bez zbytků.</p>
+  <div class="badges">
+    <span class="badge badge-r">📦 Instalace</span>
+    <span class="badge badge-c">🧹 Cleanup</span>
+    <span class="badge badge-r">🔍 Co se změní</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Instalace — co se děje</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Kde se co instaluje</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Ověření instalace</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Systémové permisí a přístupy</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Jak odinstalovat Antigravity</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Jak očistit všechny zbytky</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Kompletní cleanup checklist</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Windows vs Linux — rozdíly</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Instalace — co se děje</h2>
+
+  <p>Antigravity je aplikace na bázi VS Code, kterou si nainstalujete na lokální počítač. Nic se neposílá do cloudu během instalace.</p>
+
+  <h3>Co se stane během instalace?</h3>
+  <ul>
+    <li><strong>Stáhne se balíček</strong> (obr. 200-400 MB) z Google serverů</li>
+    <li><strong>Rozbalí se do složky</strong> na tvém disku (obvykle Program Files nebo /usr/local)</li>
+    <li><strong>Vytvoří se registrační klíč</strong> (Windows) nebo konfigurace (Linux/Mac)</li>
+    <li><strong>Integruje se do systému</strong> — můžeš spustit <code>antigravity</code> z terminálu kdekoliv</li>
+    <li><strong>Vytvoří se konfigurační složka</strong> (~/.antigravity) v domovské složce</li>
+  </ul>
+
+  <h3>Jak instalace vypadá prakticky</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Stažení</div>
+        <p>Stáhneš instalátor z <code>antigravity.google.com/download</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Spuštění instalace</div>
+        <p>Dvakrát klikni na <code>.exe</code> (Windows) nebo <code>.dmg/.deb</code> (Linux/Mac)</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Průvodce instalací</div>
+        <p>Klikáš "Next" → "Install" → "Finish". Standardní proces.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">První spuštění</div>
+        <p>Antigravity se otevře, poprosí tě aby sis přihlásil Google účtem</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Instalace je jednoduchá — žádné překvapení</strong>
+      <p>Je to jako instalovat jakýkoliv program. Klikáš, čekáš, hotovo. Žádné skryté složky, žádné chytrosti.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Kde se co instaluje</h2>
+
+  <h3>Windows</h3>
+  <div class="files-tree">
+Program Files<br/>
+├─ Google<br/>
+│  └─ Antigravity<br/>
+│     ├─ antigravity.exe<br/>
+│     ├─ resources<br/>
+│     └─ ...files...<br/>
+<br/>
+AppData\Roaming<br/>
+├─ Google\Antigravity<br/>
+│  └─ settings.json<br/>
+│  └─ workspaces<br/>
+│  └─ extensions
+  </div>
+
+  <h3>Linux</h3>
+  <div class="files-tree">
+/usr/local/bin<br/>
+└─ antigravity<br/>
+<br/>
+/usr/local/share<br/>
+└─ antigravity<br/>
+   ├─ resources<br/>
+   └─ ...files...<br/>
+<br/>
+~/.config/antigravity<br/>
+├─ settings.json<br/>
+├─ workspaces<br/>
+└─ extensions
+  </div>
+
+  <h3>Klíčové složky (důležité pro cleanup)</h3>
+  <ul>
+    <li><strong>Aplikace</strong> — Program Files (Windows) / /usr/local (Linux)</li>
+    <li><strong>Konfigurace & Data</strong> — ~/.antigravity (na všech OS)</li>
+    <li><strong>Workspace settings</strong> — .antigravity-config v projektu (lokálně v složce kde pracuješ)</li>
+    <li><strong>Extensions</strong> — ~/.antigravity/extensions</li>
+  </ul>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Skryté složky</strong>
+      <p>Složky začínající tečkou (.) jsou skryté. Aby jsi je viděl v File Exploreru (Windows) nebo Finderu (Mac), musíš zapnout "Show hidden files".</p>
+    </div>
+  </box>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Ověření instalace</h2>
+
+  <p>Jak vědět že se Antigravity správně nainstaloval?</p>
+
+  <h3>Kontrola 1: Antigravity je přístupný z terminálu</h3>
+  <div class="cmd-box">
+$ antigravity --version<br/>
+Antigravity 1.2.5<br/>
+<br/>
+✓ Pokud vidíš verzi — OK
+  </div>
+
+  <h3>Kontrola 2: Aplikace se spustí</h3>
+  <div class="cmd-box">
+$ antigravity
+<br/>
+(Měla by se otevřít GUI aplikace)
+  </div>
+
+  <h3>Kontrola 3: Konfigurace existuje</h3>
+  <div class="cmd-box">
+# Windows:<br/>
+dir %APPDATA%\Google\Antigravity<br/>
+<br/>
+# Linux/Mac:<br/>
+ls ~/.antigravity
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Pokud všechny tři kontroly projdou — instalace je OK</strong>
+      <p>Antigravity je připravený na použití.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Systémové permisí a přístupy</h2>
+
+  <p>Antigravity si nepoužívá žádné speciální systémové oprávnění, ale měl by mít přístup k:</p>
+
+  <h3>Co Antigravity potřebuje:</h3>
+  <ul>
+    <li><strong>Čtení a zápis do souborů v Workspace</strong> — tvoje projekty</li>
+    <li><strong>Spouštění příkazů v terminálu</strong> — npm, git, build</li>
+    <li><strong>Přístup k Internetu</strong> — propojení s Google Gemini API</li>
+    <li><strong>Přístup k Chrome/Chromium</strong> — pokud máš extension (screenshot)</li>
+  </ul>
+
+  <h3>Co NEPOTŘEBUJE:</h3>
+  <ul>
+    <li>Administrátorský přístup (na Windows)</li>
+    <li>root přístup (na Linux)</li>
+    <li>Přístup k systémovým souborům mimo instalační složku</li>
+    <li>Přístup k ostatním uživatelským účtům</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Nikdy nespouštěj Antigravity "jako správce"</strong>
+      <p>Na Windows to není potřeba a zvyšuje to rizika. Antigravity pracuje bez admin práv.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Jak odinstalovat Antigravity</h2>
+
+  <h3>Windows — Nastavení Aplikace</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Otevři Nastavení</div>
+        <p>Start → Settings → Apps → Installed apps</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Najdi Antigravity</div>
+        <p>Hledej "Antigravity" nebo "Google Antigravity"</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Klikni na tři tečky → Uninstall</div>
+        <p>Potvrd že chceš odinstalovat. Průvodce udělá zbytek.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">Restart (pokud se zeptá)</div>
+        <p>Někdy je potřeba restartovat Windows</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Linux — Package Manager</h3>
+  <div class="cmd-box">
+# Debian/Ubuntu:<br/>
+sudo apt-get remove antigravity<br/>
+sudo apt-get autoremove<br/>
+<br/>
+# Fedora:<br/>
+sudo dnf remove antigravity
+  </div>
+
+  <h3>Mac — Uninstaller</h3>
+  <div class="cmd-box">
+# Pokud existuje uninstall skript:<br/>
+/Applications/Google\ Antigravity.app/Contents/MacOS/uninstall<br/>
+<br/>
+# Nebo tradičně:<br/>
+rm -rf /Applications/Google\ Antigravity.app
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Po odinstalaci:</strong>
+      <p>Hlavní aplikace je pryč. Ale konfigurační soubory a data zůstávají (viz sekce 06).</p>
+    </div>
+  </box>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Jak očistit všechny zbytky</h2>
+
+  <p>Po odinstalaci je chytré smazat i konfigurační složky a data.</p>
+
+  <h3>Windows — Smazání zbytků</h3>
+  <div class="cmd-box">
+# 1. Smaž konfiguraci:<br/>
+rmdir /S %APPDATA%\Google\Antigravity<br/>
+<br/>
+# 2. Smaž workspace data:<br/>
+rmdir /S %APPDATA%\Google\AntgravityData<br/>
+<br/>
+# 3. Smaž z registry (pokud existuje):<br/>
+# (To udělá automaticky uninstaller)
+  </div>
+
+  <h3>Linux/Mac — Smazání zbytků</h3>
+  <div class="cmd-box">
+# Smaž všechny konfigurace:<br/>
+rm -rf ~/.antigravity<br/>
+rm -rf ~/.config/antigravity<br/>
+<br/>
+# Smaž workspace data:<br/>
+rm -rf ~/.local/share/antigravity
+  </div>
+
+  <h3>Projekt-specifické soubory (v Workspace)</h3>
+  <p>V každé složce projektu kde jsi s Antigravity pracoval mohou být soubory:</p>
+  <div class="cmd-box">
+.antigravity-config.json  ← smaž pokud chceš<br/>
+.antigravity-cache/       ← lze smazat, bude regenerována
+  </div>
+
+  <p>Ty nejsou kritické — projekty budou fungovat bez nich. Ale čistota je pěkná.</p>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>NEPŘEKRAČUJ toto!</strong>
+      <p>Nemaž <code>.git</code>, <code>node_modules</code>, <code>src</code> nebo ostatní součásti projektu. Smaž jen Antigravity-specifické věci (`.antigravity-*`).</p>
+    </div>
+  </box>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Kompletní cleanup checklist</h2>
+
+  <div class="checklist">
+    <h4>🧹 Pokud chceš Antigravity úplně smazat</h4>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Zavřít všechny otevřené projekty v Antigravity</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Zavřít Antigravity aplikaci úplně</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Odinstalovat přes Nastavení/Package Manager</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Smazat ~/.antigravity složku</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Smazat ~/.config/antigravity (Linux/Mac)</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Smazat AppData\Google\Antigravity (Windows)</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">V projektech: smazat .antigravity-config.json soubory</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Reštartovat počítač (pro jistotu)</span></div>
+  </div>
+
+  <div class="checklist">
+    <h4>✓ Ověření že je všechno pryč</h4>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Zkus: antigravity --version → "command not found"</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Zkus: ls ~/.antigravity → složka neexistuje</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">V Nastavení: Antigravity se v seznamu aplikací neobjevuje</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span class="cl-text">Projekty se můžeš otevřít v normálním VS Code bez problémů</span></div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Po tomto checklist je počítač ve stejném stavu jako před instalací</strong>
+      <p>Žádné zbytky, žádné konflikty, nic.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Windows vs Linux — důležité rozdíly</h2>
+
+  <div class="grid2">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px">
+      <h4 style="margin-top:0;color:var(--cyan2)">Windows</h4>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Instalace přes exe + Nastavení</p>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Soubory jsou v AppData</p>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Uninstaluje se přes GUI</p>
+      <p style="font-size:.85em;color:var(--t2)">Složky jsou skryté — musíš zapnout View Hidden</p>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px">
+      <h4 style="margin-top:0;color:var(--cyan2)">Linux/Mac</h4>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Instalace přes package manager</p>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Soubory jsou v ~/.config</p>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Odinstalace přes apt-get/dnf</p>
+      <p style="font-size:.85em;color:var(--t2)">Cleanup přes rm -rf (pozor na příkaz!)</p>
+    </div>
+  </div>
+
+  <h3>Terminál vs GUI</h3>
+  <p><strong>Windows:</strong> Uninstalace v GUI je nejjednoduší. Terminálem je zbytečně komplikované.</p>
+  <p><strong>Linux:</strong> Terminálem je nejrychlejší a nejbezpečnější. GUI není vždycky dostupné.</p>
+
+  <h3>Skryté složky — Linux/Mac je jednodušší</h3>
+  <p><strong>Windows:</strong> Musíš zapnout "Show hidden files" v File Exploreru</p>
+  <p><strong>Linux/Mac:</strong> <code>ls -la</code> v terminálu všechno ukazuje</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Pro Linux uživatele:</strong>
+      <p>Nedejte si zamést — <code>rm -rf ~/.antigravity</code> je bezpečné. Tečka znamená "home directory", ne root. Smaž jen to.</p>
+    </div>
+  </box>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  11_ANT_Instalace.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  <a href="00_ANT_INDEX.html">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

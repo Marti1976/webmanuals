@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vývojový server – Průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#08090e;--bg2:#0e1117;--bg3:#141820;--bg4:#1a2030;
+  --border:#1e2535;--border2:#2a3548;
+  --text:#c8d6e8;--text2:#7a8fa8;--text3:#4a5f78;
+  --blue:#4f9cf9;--blue2:#82c4ff;
+  --green:#2ecc71;--green2:#7feba0;
+  --amber:#f0a030;--amber2:#fbbf24;
+  --teal:#00d4b8;--teal2:#5eeedd;
+  --red:#e05555;--purple:#a78bfa;
+  --white:#e8f0fc;
+  --r:10px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:5px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;overflow-x:hidden}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
+
+/* HERO */
+.hero{padding:60px 0 40px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-100px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(79,156,249,.1) 0%,transparent 65%);pointer-events:none}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.72em;color:var(--blue);letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(1.9em,4.5vw,3em);font-weight:800;
+  color:var(--white);line-height:1.1;margin-bottom:14px}
+.hero h1 span{color:var(--blue)}
+.hero p{color:var(--text2);font-size:1.02em;max-width:580px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.72em;padding:4px 12px;border-radius:16px;border:1px solid}
+.bg{color:var(--green2);border-color:rgba(46,204,113,.4);background:rgba(46,204,113,.07)}
+.bb{color:var(--blue2);border-color:rgba(79,156,249,.4);background:rgba(79,156,249,.07)}
+.ba{color:var(--amber2);border-color:rgba(240,160,48,.4);background:rgba(240,160,48,.07)}
+
+/* SECTIONS */
+.sec{margin-top:52px;padding-top:16px;border-top:1px solid var(--border)}
+.sec-tag{font-family:'DM Mono',monospace;font-size:.7em;color:var(--blue);letter-spacing:.13em;
+  text-transform:uppercase;margin-bottom:8px}
+.sec h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:14px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.08em;font-weight:600;color:var(--teal);margin:26px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.94em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px;color:var(--text)}
+ul,ol{padding-left:20px}
+li{margin:5px 0;color:var(--text2);font-size:.94em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--text2);font-style:italic}
+
+/* CODE */
+code{font-family:'DM Mono',monospace;font-size:.85em;background:rgba(79,156,249,.1);
+  color:var(--blue2);border:1px solid rgba(79,156,249,.2);border-radius:4px;padding:1px 7px}
+.cb{background:#070a12;border:1px solid var(--border);border-left:3px solid var(--blue);
+  border-radius:var(--r);padding:16px 18px;margin:12px 0;font-family:'DM Mono',monospace;
+  font-size:.85em;line-height:1.9;overflow-x:auto;color:var(--blue2)}
+.cb .cm{color:var(--text3);font-style:italic}
+.cb .wh{color:var(--white)}
+.cb .gn{color:var(--green2)}
+.cb .am{color:var(--amber2)}
+.cb .rd{color:var(--red)}
+
+/* TERMINAL */
+.term{background:#060810;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:14px 0}
+.term-bar{display:flex;align-items:center;gap:6px;padding:9px 14px;background:var(--bg3);
+  border-bottom:1px solid var(--border)}
+.td{width:10px;height:10px;border-radius:50%}
+.td-r{background:#ff5f57}.td-y{background:#febc2e}.td-g{background:#28c840}
+.t-ttl{font-family:'DM Mono',monospace;font-size:.72em;color:var(--text3);margin-left:8px}
+.term-body{padding:16px 18px;font-family:'DM Mono',monospace;font-size:.83em;line-height:1.95}
+.tl{display:block}
+.tp{color:var(--green2)}.tc{color:var(--white)}.to{color:var(--text2)}
+.ts{color:var(--teal2)}.ta{color:var(--amber2)}.te{color:var(--red)}
+
+/* CALLOUTS */
+.box{display:flex;gap:12px;padding:14px 18px;border-radius:var(--r);margin:16px 0;font-size:.9em}
+.box-icon{font-size:1.2em;flex-shrink:0;margin-top:1px}
+.box-body strong{display:block;margin-bottom:3px;font-family:'Syne',sans-serif;font-size:.92em}
+.box-body p{margin:0;color:inherit}
+.tip{background:rgba(46,204,113,.07);border:1px solid rgba(46,204,113,.22);color:#90c89a}
+.tip .box-body strong{color:var(--green2)}
+.warn{background:rgba(240,160,48,.07);border:1px solid rgba(240,160,48,.22);color:#d4b870}
+.warn .box-body strong{color:var(--amber2)}
+.info{background:rgba(79,156,249,.07);border:1px solid rgba(79,156,249,.22);color:#90b8e0}
+.info .box-body strong{color:var(--blue2)}
+.danger{background:rgba(224,85,85,.07);border:1px solid rgba(224,85,85,.22);color:#d09090}
+.danger .box-body strong{color:var(--red)}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin:12px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:560px){.two{grid-template-columns:1fr}}
+.mini{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.mini h4{margin-top:0;font-size:.88em;margin-bottom:6px}
+.mini p{margin:0;font-size:.85em;color:var(--text2)}
+
+/* BIG VISUAL */
+.workflow{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:28px;margin:20px 0;text-align:center}
+.wf-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 0}
+.wf-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;
+  padding:12px 18px;font-size:.88em;min-width:130px}
+.wf-box strong{display:block;font-family:'Syne',sans-serif;font-size:.95em;color:var(--white);margin-bottom:3px}
+.wf-box span{color:var(--text3);font-size:.8em}
+.wf-arrow{color:var(--border2);font-size:1.3em}
+.wf-box.active{border-color:var(--blue);background:rgba(79,156,249,.08)}
+.wf-box.active strong{color:var(--blue2)}
+
+/* NPM TABLE */
+.npm-table{width:100%;border-collapse:collapse;font-size:.87em;margin:14px 0}
+.npm-table th{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--text3);
+  padding:9px 12px;text-align:left;border-bottom:2px solid var(--border)}
+.npm-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.npm-table tr:last-child td{border-bottom:none}
+.npm-table tr:hover td{background:var(--bg2)}
+.npm-table td:first-child{font-family:'DM Mono',monospace;color:var(--teal2);white-space:nowrap}
+.npm-table td:nth-child(2){color:var(--text2)}
+.npm-table td:last-child{color:var(--text3);font-size:.85em}
+
+/* PORT VIZ */
+.port-viz{display:flex;align-items:stretch;gap:0;border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;margin:14px 0;font-size:.88em}
+.pv-left{background:var(--bg3);padding:18px 20px;min-width:180px;border-right:1px solid var(--border)}
+.pv-right{padding:18px 20px;flex:1}
+.pv-url{font-family:'DM Mono',monospace;font-size:1.1em;color:var(--green2);margin-bottom:6px}
+.pv-label{font-size:.78em;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+
+/* DIV */
+.div{display:flex;align-items:center;gap:14px;margin:40px 0}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--border)}
+.div span{font-family:'DM Mono',monospace;font-size:.7em;color:var(--text3);
+  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+
+/* STEP CARDS */
+.steps{display:flex;flex-direction:column;gap:14px;margin:18px 0}
+.step{display:grid;grid-template-columns:46px 1fr;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.step-n{display:flex;align-items:flex-start;justify-content:center;padding-top:16px;
+  font-family:'Syne',sans-serif;font-size:1.2em;font-weight:800;color:var(--blue);
+  background:rgba(79,156,249,.05);border-right:1px solid var(--border)}
+.step-b{padding:14px 18px}
+.step-t{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:7px;font-size:.97em}
+.step-b p{font-size:.9em;color:var(--text2);margin-bottom:7px}
+.step-b p:last-child{margin-bottom:0}
+
+/* HMR VIZ */
+.hmr{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;margin:16px 0}
+.hmr-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:14px;text-align:center}
+.hmr-box .icon{font-size:1.8em;margin-bottom:6px}
+.hmr-box strong{display:block;font-family:'Syne',sans-serif;font-size:.88em;color:var(--white);margin-bottom:4px}
+.hmr-box span{font-size:.78em;color:var(--text3)}
+.hmr-arrow{text-align:center;color:var(--border2);font-size:1.4em}
+
+/* TABLE OF CONTENTS */
+.toc{background:var(--bg2);border:1px solid var(--border);border-top:3px solid var(--blue);
+  border-radius:var(--r);padding:22px 26px;margin:28px 0}
+.toc-t{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--blue);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.toc-g{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px}
+@media(max-width:500px){.toc-g{grid-template-columns:1fr}}
+.toc-i{display:flex;align-items:baseline;gap:9px;font-size:.87em;color:var(--text2);
+  text-decoration:none;padding:3px 0;transition:color .2s}
+.toc-i:hover{color:var(--blue2)}
+.toc-n{font-family:'DM Mono',monospace;font-size:.76em;color:var(--blue);min-width:18px}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.73em;color:var(--text3);line-height:2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">// průvodce č. 2 ze 3</div>
+  <h1>Vývojový server –<br><span>jak vidět změny</span><br>okamžitě</h1>
+  <p>Vše o npm dev serveru, dvou terminálech a o tom jak Gemini CLI + Vite spolupracují. Žádný GitHub, žádné nahrávání.</p>
+  <div class="badges">
+    <span class="badge bg">✓ Testování bez GitHubu</span>
+    <span class="badge bb">⚡ Změny do 1 sekundy</span>
+    <span class="badge ba">🖥️ Dva terminály vedle sebe</span>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-t">Co tady najdeš</div>
+  <div class="toc-g">
+    <a class="toc-i" href="#s1"><span class="toc-n">01</span> Co je vývojový server</a>
+    <a class="toc-i" href="#s2"><span class="toc-n">02</span> Jak spustit dev server</a>
+    <a class="toc-i" href="#s3"><span class="toc-n">03</span> Dva terminály – nastavení</a>
+    <a class="toc-i" href="#s4"><span class="toc-n">04</span> HMR – automatické obnovení</a>
+    <a class="toc-i" href="#s5"><span class="toc-n">05</span> Všechny npm příkazy</a>
+    <a class="toc-i" href="#s6"><span class="toc-n">06</span> Kompletní pracovní postup</a>
+    <a class="toc-i" href="#s7"><span class="toc-n">07</span> Problémy a řešení</a>
+    <a class="toc-i" href="#s8"><span class="toc-n">08</span> Adresy a porty</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-tag">// sekce 01</div>
+  <h2>Co je vývojový server a proč ho potřebuješ</h2>
+
+  <p>Tvůj receptář je React aplikace. React aplikace nemůžeš prostě otevřít jako HTML soubor v prohlížeči – vyžaduje kompilaci, zpracování TypeScriptu, Tailwindu a dalších věcí. To za tebe dělá <strong>vývojový server</strong>.</p>
+
+  <div class="card">
+    <strong>Vývojový server = lokální "mini-hosting" na tvém počítači.</strong>
+    <p style="margin-top:8px;">Spustíš ho jedním příkazem a aplikace je dostupná na adrese <code>http://localhost:3000</code>. To je tvá aplikace, běžící jen na tvém počítači, nikdo jiný ji nevidí.</p>
+  </div>
+
+  <h3>Tvůj projekt používá Vite</h3>
+  <p>Vite je moderní nástroj pro vývoj webových aplikací. Pro tebe to znamená jednu klíčovou věc:</p>
+
+  <div class="hmr">
+    <div class="hmr-box">
+      <div class="icon">✏️</div>
+      <strong>Gemini změní soubor</strong>
+      <span>např. přidá tlačítko</span>
+    </div>
+    <div class="hmr-arrow">⚡</div>
+    <div class="hmr-box">
+      <div class="icon">🌐</div>
+      <strong>Prohlížeč se obnoví</strong>
+      <span>do 1–2 sekund, sám</span>
+    </div>
+  </div>
+
+  <p>Nemusíš nic mačkat, nic restartovat, nic nahrávat. Prostě koukáš do prohlížeče a vidíš změny okamžitě.</p>
+
+  <div class="box info">
+    <span class="box-icon">💡</span>
+    <div class="box-body">
+      <strong>Tohle se jmenuje HMR – Hot Module Replacement</strong>
+      <p>Vite sleduje tvé soubory a při každé změně okamžitě aktualizuje jen tu část stránky, která se změnila. Ani neztratíš stav aplikace (co máš rozepsané, kde jsi scrolloval).</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-tag">// sekce 02</div>
+  <h2>Jak spustit vývojový server</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Otevři terminál a přejdi do projektu</div>
+        <p>Musíš být ve složce projektu (tam kde je <code>package.json</code>).</p>
+        <div class="cb">
+<span class="cm"># Přejdi do složky projektu:</span>
+<span class="wh">cd C:\Users\Pavel\projekty\rodinny-receptar</span>
+<span class="cm"> </span>
+<span class="cm"># Ověř že jsi na správném místě (měl bys vidět package.json):</span>
+<span class="wh">ls</span>  <span class="cm">← Mac/Linux</span>
+<span class="wh">dir</span> <span class="cm">← Windows</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Spusť dev server</div>
+        <div class="cb"><span class="wh">npm run dev</span></div>
+        <p>Vite se spustí a uvidíš výstup podobný tomuto:</p>
+        <div class="term">
+          <div class="term-bar"><div class="td td-r"></div><div class="td td-y"></div><div class="td td-g"></div><span class="t-ttl">Terminal – dev server</span></div>
+          <div class="term-body">
+            <span class="tl"><span class="tp">$</span> <span class="tc">npm run dev</span></span>
+            <span class="tl"> </span>
+            <span class="tl"><span class="ts">  VITE v6.2.0  ready in 312 ms</span></span>
+            <span class="tl"> </span>
+            <span class="tl"><span class="to">  ➜  Local:   </span><span class="gn">http://localhost:3000/</span></span>
+            <span class="tl"><span class="to">  ➜  Network: </span><span class="to">http://192.168.1.105:3000/</span></span>
+            <span class="tl"> </span>
+            <span class="tl"><span class="to">  ➜  press h + enter to show help</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Otevři aplikaci v prohlížeči</div>
+        <p>Otevři prohlížeč (Chrome doporučeno) a jdi na adresu:</p>
+        <div class="port-viz">
+          <div class="pv-left">
+            <div class="pv-label">Adresa aplikace</div>
+            <div class="pv-url">localhost:3000</div>
+          </div>
+          <div class="pv-right">
+            <p><strong>localhost</strong> = tvůj počítač (ne internet)</p>
+            <p><strong>3000</strong> = port (číslo "dveří" ke tvé aplikaci)</p>
+            <p>Případně zkus <code>http://localhost:5173</code> pokud 3000 nefunguje – Vite někdy používá jiný port.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">Nechej server běžet</div>
+        <p>Terminál s dev serverem <strong>nezavírej a nepřerušuj</strong>. Musí běžet celou dobu co pracuješ. Pokud terminál zavřeš, aplikace v prohlížeči přestane fungovat.</p>
+        <div class="box warn">
+          <span class="box-icon">⚠️</span>
+          <div class="box-body"><strong>Terminál s dev serverem = nechej otevřený</strong><p>Spustíš ho jednou a zapomeneš na něj. Veškerou práci dělat budeš ve druhém terminálu s Gemini CLI.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-tag">// sekce 03</div>
+  <h2>Dva terminály vedle sebe – nastavení</h2>
+
+  <p>Tohle je klíč k celému pracovnímu postupu. Potřebuješ dvě okna terminálu otevřená zároveň.</p>
+
+  <div class="workflow">
+    <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:18px;">Jak to vypadá na obrazovce</div>
+    <div class="wf-row">
+      <div class="wf-box">
+        <strong>Terminál 1</strong>
+        <span>npm run dev<br>← nechej běžet</span>
+      </div>
+      <div class="wf-arrow">+</div>
+      <div class="wf-box active">
+        <strong>Terminál 2</strong>
+        <span>gemini<br>← tady pracuješ</span>
+      </div>
+      <div class="wf-arrow">+</div>
+      <div class="wf-box">
+        <strong>Prohlížeč</strong>
+        <span>localhost:3000<br>← vidíš výsledek</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Jak otevřít druhý terminál</h3>
+
+  <div class="two">
+    <div class="mini">
+      <h4>🪟 Windows – PowerShell</h4>
+      <p>Klikni pravým tlačítkem na ikonu PowerShell na hlavním panelu → <strong>"Otevřít nové okno"</strong>. Nebo Win+R → powershell → Enter.</p>
+    </div>
+    <div class="mini">
+      <h4>🪟 Windows Terminal (moderní)</h4>
+      <p>Klikni na šipku dolů vedle záložky → <strong>"New tab"</strong> nebo <code>Ctrl+Shift+T</code>. Oba terminály jsou pak jako záložky.</p>
+    </div>
+    <div class="mini">
+      <h4>🍎 Mac – iTerm2</h4>
+      <p><code>Cmd+T</code> = nová záložka, nebo <code>Cmd+D</code> = rozděl okno vedle sebe. Doporučuji rozdělit vedle sebe.</p>
+    </div>
+    <div class="mini">
+      <h4>🍎 Mac – výchozí Terminal</h4>
+      <p>Shell → Nové okno → Nové okno. Nebo <code>Cmd+N</code> = nové okno terminálu.</p>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="box-icon">💡</span>
+    <div class="box-body">
+      <strong>Tip: VS Code má integrovaný terminál</strong>
+      <p>Pokud používáš VS Code pro prohlížení kódu, má vlastní terminál dole. Ctrl+` (backtick) ho otevře. Můžeš mít terminály jako záložky přímo ve VS Code.</p>
+    </div>
+  </div>
+
+  <h3>Kompletní setup – co a kde spustit</h3>
+  <div class="cb">
+<span class="cm">═══ TERMINÁL 1 (nechej běžet, nepsat sem) ═══</span>
+<span class="tp">$</span> <span class="wh">cd C:\cesta\k\rodinny-receptar</span>
+<span class="tp">$</span> <span class="wh">npm run dev</span>
+<span class="gn">  ➜  Local: http://localhost:3000/   ← aplikace běží</span>
+<span class="cm">  (tento terminál nezavírej)</span>
+
+<span class="cm">═══ TERMINÁL 2 (tady píšeš Gemini) ═══</span>
+<span class="tp">$</span> <span class="wh">cd C:\cesta\k\rodinny-receptar</span>   <span class="cm">← stejná složka!</span>
+<span class="tp">$</span> <span class="wh">gemini</span>
+<span class="am">Gemini &gt; </span><span class="wh">Přidej tlačítko pro oblíbené recepty</span>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-tag">// sekce 04</div>
+  <h2>HMR – jak funguje automatické obnovení</h2>
+
+  <p>HMR (Hot Module Replacement) je funkce Vite, která sleduje změny v souborech a okamžitě je promítne do prohlížeče. Nemusíš mačkat F5.</p>
+
+  <h3>Co se stane krok za krokem</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Gemini upraví soubor (např. RecipeCard.tsx)</div>
+        <p>Ve druhém terminálu Gemini napíše nový kód a uloží soubor na disk.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Vite si toho okamžitě všimne</div>
+        <p>V prvním terminálu (kde běží dev server) uvidíš zprávu:</p>
+        <div class="cb"><span class="gn">  [vite] hmr update /src/components/RecipeCard.tsx</span></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Prohlížeč se sám obnoví</div>
+        <p>Do 1–2 sekund vidíš změnu v prohlížeči. Žádné F5, žádný restart.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="mini" style="border-color:rgba(46,204,113,.3)">
+      <h4 style="color:var(--green2)">✅ Kdy HMR funguje perfektně</h4>
+      <p>Změny v komponentách, styly, text, logika – vše co je uvnitř src/ složky.</p>
+    </div>
+    <div class="mini" style="border-color:rgba(240,160,48,.3)">
+      <h4 style="color:var(--amber2)">⚠️ Kdy je potřeba restart serveru</h4>
+      <p>Změny v <code>vite.config.ts</code>, <code>package.json</code>, nebo instalace nových npm balíčků. Pak stiskni Ctrl+C v prvním terminálu a znovu <code>npm run dev</code>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-tag">// sekce 05</div>
+  <h2>Všechny npm příkazy pro tvůj projekt</h2>
+
+  <p>Npm je správce balíčků – nástroj který spravuje všechny závislosti projektu. Příkazy <code>npm run ...</code> jsou definované v <code>package.json</code> tvého projektu.</p>
+
+  <table class="npm-table">
+    <thead>
+      <tr><th>Příkaz</th><th>Co dělá</th><th>Kdy použít</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>npm run dev</td>
+        <td>Spustí vývojový server na localhost:3000</td>
+        <td>Vždy při práci na projektu – hlavní příkaz</td>
+      </tr>
+      <tr>
+        <td>npm run build</td>
+        <td>Vytvoří produkční verzi do složky /dist</td>
+        <td>Před nahráním na hosting/GitHub Pages</td>
+      </tr>
+      <tr>
+        <td>npm run preview</td>
+        <td>Spustí preview produkčního buildu lokálně</td>
+        <td>Ověření buildu před nasazením</td>
+      </tr>
+      <tr>
+        <td>npm install</td>
+        <td>Nainstaluje všechny závislosti ze package.json</td>
+        <td>Po stažení projektu z Gitu, nebo po přidání nových balíčků</td>
+      </tr>
+      <tr>
+        <td>npm install název-balíčku</td>
+        <td>Přidá nový balíček do projektu</td>
+        <td>Když potřebuješ novou knihovnu (vždy se ptej Gemini)</td>
+      </tr>
+      <tr>
+        <td>npm run lint</td>
+        <td>Zkontroluje kód na chyby (TypeScript check)</td>
+        <td>Před odevzdáním/nasazením kódu</td>
+      </tr>
+      <tr>
+        <td>npm run clean</td>
+        <td>Smaže složku /dist</td>
+        <td>Když chceš čistý build od začátku</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <span class="box-icon">⚠️</span>
+    <div class="box-body">
+      <strong>Po Ctrl+C musíš znovu spustit server</strong>
+      <p>Pokud omylem stiskneš Ctrl+C v terminálu s dev serverem, server se zastaví. Stačí znovu napsat <code>npm run dev</code> a spustit ho znovu.</p>
+    </div>
+  </div>
+
+  <h3>Jak zastavit dev server</h3>
+  <div class="cb">
+<span class="cm"># V terminálu kde běží npm run dev stiskni:</span>
+<span class="wh">Ctrl + C</span>
+<span class="cm"># Server se zastaví, terminál je zase volný</span>
+<span class="cm"># Znovu spustit: npm run dev</span>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-tag">// sekce 06</div>
+  <h2>Kompletní pracovní postup od A do Z</h2>
+
+  <p>Tohle je přesně to co budeš dělat každý den kdy budeš pracovat na receptáři.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Udělej zálohu (git commit)</div>
+        <div class="cb">
+<span class="wh">git add .</span>
+<span class="wh">git commit -m "záloha před prací $(date)"</span>
+        </div>
+        <p>Vždy jako první. Nikdy nevíš co AI udělá.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Otevři dva terminály, spusť dev server v Terminálu 1</div>
+        <div class="cb">
+<span class="cm">── TERMINÁL 1 ──</span>
+<span class="wh">cd cesta/k/projektu</span>
+<span class="wh">npm run dev</span>
+<span class="cm">  → čekej až uvidíš "Local: http://localhost:3000/"</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Otevři aplikaci v prohlížeči</div>
+        <p>Chrome nebo Firefox → adresa <code>http://localhost:3000</code> → Enter.</p>
+        <p>Měl bys vidět svůj receptář. Nechej toto okno otevřené.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">Spusť Gemini CLI v Terminálu 2</div>
+        <div class="cb">
+<span class="cm">── TERMINÁL 2 ──</span>
+<span class="wh">cd cesta/k/projektu</span>
+<span class="wh">gemini</span>
+<span class="am">Gemini &gt;</span> <span class="wh">Přečti GEMINI.md a čekej na mé pokyny. Pracuj česky.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">5</div>
+      <div class="step-b">
+        <div class="step-t">Pracuj – piš instrukce Gemini, sleduj prohlížeč</div>
+        <div class="cb">
+<span class="am">Gemini &gt;</span> <span class="wh">Přidej do RecipeCard tlačítko pro sdílení receptu</span>
+<span class="to">Gemini: OK, přidám tlačítko. Upravím soubor RecipeCard.tsx, řádek 34.</span>
+<span class="to">Smím to udělat?</span>
+<span class="am">Gemini &gt;</span> <span class="wh">Ano</span>
+<span class="gn">✅ Hotovo. Podívej se do prohlížeče.</span>
+        </div>
+        <p>V prohlížeči uvidíš změnu automaticky do 1–2 sekund.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">6</div>
+      <div class="step-b">
+        <div class="step-t">Konec práce – ulož a zastav</div>
+        <div class="cb">
+<span class="cm">V Terminálu 2 (Gemini):</span>
+<span class="wh">/quit</span>
+
+<span class="cm">V Terminálu 1 (dev server):</span>
+<span class="wh">Ctrl + C</span>
+
+<span class="cm">Git commit všeho co jsi udělal:</span>
+<span class="wh">git add .</span>
+<span class="wh">git commit -m "přidáno tlačítko sdílení"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-tag">// sekce 07</div>
+  <h2>Problémy s dev serverem – řešení</h2>
+
+  <div class="steps">
+    <div class="step" style="border-left:3px solid var(--red)">
+      <div class="step-n" style="color:var(--red)">!</div>
+      <div class="step-b">
+        <div class="step-t">❌ Prohlížeč hlásí "This site can't be reached"</div>
+        <p><strong>Dev server není spuštěný.</strong> Jdi do Terminálu 1 a zkontroluj jestli tam běží <code>npm run dev</code>. Pokud ne, spusť ho znovu.</p>
+      </div>
+    </div>
+
+    <div class="step" style="border-left:3px solid var(--red)">
+      <div class="step-n" style="color:var(--red)">!</div>
+      <div class="step-b">
+        <div class="step-t">❌ Port 3000 je already in use</div>
+        <div class="cb">
+<span class="te">Error: Port 3000 is already in use</span>
+        </div>
+        <p>Jiná instance dev serveru již běží (nebo jiný program). Buď ji najdi a zastav (Ctrl+C v jiném terminálu), nebo změň port:</p>
+        <div class="cb"><span class="wh">npm run dev -- --port 3001</span></div>
+        <p>Pak otevři <code>http://localhost:3001</code></p>
+      </div>
+    </div>
+
+    <div class="step" style="border-left:3px solid var(--red)">
+      <div class="step-n" style="color:var(--red)">!</div>
+      <div class="step-b">
+        <div class="step-t">❌ Prohlížeč neukazuje změny (HMR nefunguje)</div>
+        <p>Zkus tyto věci v pořadí:</p>
+        <ol>
+          <li>Tvrdé obnovení stránky: <code>Ctrl+Shift+R</code> (nebo Cmd+Shift+R na Mac)</li>
+          <li>V Terminálu 1 zastav server (Ctrl+C) a znovu spusť <code>npm run dev</code></li>
+          <li>Vymaž cache prohlížeče: DevTools → Application → Storage → Clear site data</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="step" style="border-left:3px solid var(--red)">
+      <div class="step-n" style="color:var(--red)">!</div>
+      <div class="step-b">
+        <div class="step-t">❌ Chyba při spuštění npm run dev</div>
+        <div class="cb"><span class="te">Error: Cannot find module '...'</span></div>
+        <p>Pravděpodobně chybí node_modules složka. Spusť:</p>
+        <div class="cb"><span class="wh">npm install</span></div>
+        <p>Počkej až se dokončí, pak znovu <code>npm run dev</code>.</p>
+      </div>
+    </div>
+
+    <div class="step" style="border-left:3px solid var(--amber)">
+      <div class="step-n" style="color:var(--amber)">?</div>
+      <div class="step-b">
+        <div class="step-t">⚠️ Gemini přidal balíček, server se rozbil</div>
+        <p>Gemini mohl přidat závislost do package.json ale neinstaloval ji. Zastav server a spusť:</p>
+        <div class="cb">
+<span class="wh">npm install</span>
+<span class="wh">npm run dev</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-tag">// sekce 08</div>
+  <h2>Adresy a porty – co znamenají</h2>
+
+  <div class="two">
+    <div class="mini">
+      <h4>🏠 localhost:3000</h4>
+      <p><strong>localhost</strong> = tvůj počítač. Nikdo jiný tuto adresu nevidí. Je to jako "doma".</p>
+      <p><strong>3000</strong> = číslo portu. Tvůj projekt je nakonfigurován na tento port v souboru vite.config.</p>
+    </div>
+    <div class="mini">
+      <h4>🌐 192.168.x.x:3000</h4>
+      <p>Tato adresa (Network) funguje na zařízeních ve stejné WiFi síti. Můžeš si otevřít aplikaci i na mobilu!</p>
+      <p>Stačí zadat tuto IP adresu do prohlížeče na mobilu (připojeném na stejnou WiFi).</p>
+    </div>
+  </div>
+
+  <div class="box info">
+    <span class="box-icon">📱</span>
+    <div class="box-body">
+      <strong>Tip: Testování PWA na mobilu přes WiFi</strong>
+      <p>Tvůj receptář je PWA (dá se nainstalovat v Chrome na mobilu). Při vývoji ho můžeš testovat na mobilu: v terminálu najdi "Network: http://192.168.x.x:3000" a tuto adresu otevři v Chrome na mobilu. Obě zařízení musí být na stejné WiFi.</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="box-icon">⚠️</span>
+    <div class="box-body">
+      <strong>localhost ≠ internet</strong>
+      <p>Aplikace na localhost není dostupná z internetu. Aby ji viděl někdo jiný, musíš ji nasadit na hosting (GitHub Pages, Netlify, atd.) – ale to je až po vývoji.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Průvodce č. 2 ze 3 &nbsp;·&nbsp; Vývojový server &nbsp;·&nbsp;
+  Projekt: <strong style="color:var(--amber)">rodinny-receptar</strong> &nbsp;·&nbsp;
+  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
+</footer>
+</div>
+<script>
+</script>
+</body>
+</html>

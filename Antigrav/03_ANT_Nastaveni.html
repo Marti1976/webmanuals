@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nastavení Antigravity – průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --amber:#f59e0b;--amber2:#fcd34d;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(0,217,255,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--cyan)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+.badge-p{color:var(--purple2);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--cyan);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--cyan);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--cyan2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--cyan);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--purple2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(0,217,255,.1);
+  color:var(--cyan2);border:1px solid rgba(0,217,255,.2);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:var(--green2)}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--amber2)}
+.info{background:rgba(0,217,255,.08);border-color:rgba(0,217,255,.25);color:#90d8e8}
+.info .content strong{color:var(--cyan2)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.card-mini{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.card-mini h4{margin-top:0;font-size:.9em;margin-bottom:8px}
+.card-mini p{margin:0;font-size:.85em;color:var(--t2);line-height:1.6}
+
+.settings-table{width:100%;border-collapse:collapse;font-size:.85em;margin:14px 0}
+.settings-table th{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--t3);padding:9px 12px;text-align:left;border-bottom:2px solid var(--border)}
+.settings-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.settings-table tr:last-child td{border-bottom:none}
+.settings-table td:first-child{font-family:'DM Mono',monospace;color:var(--cyan2);white-space:nowrap}
+.settings-table td:nth-child(2){color:var(--t2)}
+.settings-table td:last-child{color:var(--t3);font-size:.8em}
+
+.config-block{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--cyan);
+  border-radius:8px;padding:14px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
+  color:var(--cyan2);line-height:1.7;overflow-x:auto}
+
+.step-visual{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;
+  margin:14px 0;font-size:.9em;line-height:1.8}
+.step-visual strong{display:block;color:var(--cyan);margin-bottom:8px}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 03</div>
+  <h1>Nastavení <em>Antigravity</em></h1>
+  <p class="h-desc">Co všechno se dá nastavit, kde to najdeš, a co všechny ty options vlastně znamenají. Od vzhledu až po agentní režimy.</p>
+  <div class="badges">
+    <span class="badge badge-c">⚙️ Konfigurace</span>
+    <span class="badge badge-p">🎨 Přizpůsobení</span>
+    <span class="badge badge-c">🤖 Agent režimy</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Kde jsou settings?</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Vzhled (Theme)</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Editor & Kód</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Klávesnice</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Agentní režimy</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Chrome Extension</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> API & Klíče</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Workspace</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Kde jsou settings v Antigravity?</h2>
+
+  <p>Settings se otevírají na tři způsoby:</p>
+  <ul>
+    <li><strong>Klávesová zkratka:</strong> <code>Ctrl+,</code> (comma) — stejně jako VS Code</li>
+    <li><strong>Menu:</strong> File → Preferences → Settings</li>
+    <li><strong>Икона:</strong> V dolním levém rohu (settings gear) → Settings</li>
+  </ul>
+
+  <p>Otevře se panel se dvěma tabukami:</p>
+  <ul>
+    <li><strong>GUI</strong> — přátelský interface s checkboxy a slidery (jednodušší)</li>
+    <li><strong>JSON</strong> — raw <code>settings.json</code> soubor (pro experty)</li>
+  </ul>
+
+  <div class="box info">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Pro začátečníka: Používej GUI tab</strong>
+      <p>Je tam vše jako v normálních aplikacích — checkboxy, dropdown menu, slidery. JSON je pro pokročilé.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Vzhled — Theme (Appearance)</h2>
+
+  <p>V sekci <strong>Appearance</strong> najdeš všechno co se týče vizuálu.</p>
+
+  <h3>Color Theme — barvy editoru</h3>
+  <div class="grid2">
+    <div class="card-mini">
+      <h4 style="color:var(--cyan2)">🎨 Dostupné themes</h4>
+      <p><strong>Default Dark</strong> — tmavé (doporučeno)</p>
+      <p><strong>Default Light</strong> — světlé</p>
+      <p><strong>Custom</strong> — si můžeš vytvořit vlastní barvy</p>
+    </div>
+    <div class="card-mini">
+      <h4 style="color:var(--cyan2)">⚙️ Jak to změnit</h4>
+      <p>Settings → Appearance → Color Theme → výběr z dropdown</p>
+      <p>Změna se aplikuje okamžitě.</p>
+    </div>
+  </div>
+
+  <h3>Icon Theme — ikony v file exploreru</h3>
+  <p>Jak vypadají ikony souboru v levém panelu. Výchozí je "Seti". Můžeš vybrat z několika sad ikon.</p>
+
+  <h3>Font & Font Size</h3>
+  <div class="settings-table">
+    <thead><tr><th>Nastavení</th><th>Výchozí</th><th>Co to dělá</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Editor: Font Family</td>
+        <td>Menlo / Consolas</td>
+        <td>Jaký font se používá v editoru (kód)</td>
+      </tr>
+      <tr>
+        <td>Editor: Font Size</td>
+        <td>14px</td>
+        <td>Velikost textu. Zvyš když vidíš špatně.</td>
+      </tr>
+      <tr>
+        <td>Editor: Line Height</td>
+        <td>1.5</td>
+        <td>Vzdálenost mezi řádky kódu</td>
+      </tr>
+      <tr>
+        <td>Editor: Letter Spacing</td>
+        <td>0</td>
+        <td>Vzdálenost mezi písmeny (pro úplné nováčky neměň)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Tip: Font pro kódování</strong>
+      <p>Doporučuji "<strong>JetBrains Mono</strong>" nebo "<strong>Fira Code</strong>" — jsou navrženy pro programátory a mají lepší čitelnost. Stáhneš je zdarma a pak vybeš v settings.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Editor & Kód — jak se chová editor</h2>
+
+  <h3>Tab Size & Indentation</h3>
+  <div class="config-block">
+Editor: Tab Size = 2 (nebo 4)<br/>
+Editor: Insert Spaces = ON<br/>
+⟹ Když stiskneš Tab, přidá se 2 (nebo 4) mezer<br/>
+⟹ Tvůj kód bude "zarovnaný" stejně jako ostatní
+  </div>
+
+  <p>Proč je to důležité? Tvůj projekt má CSS v Tailwind — pokud budeš mít jiný spacing než ostatní soubory, bude to chaotické.</p>
+
+  <h3>Word Wrap — zalamování dlouhých řádků</h3>
+  <ul>
+    <li><strong>Off</strong> — řádky se nelamují, musíš scrollovat vpravo</li>
+    <li><strong>On</strong> — dlouhý řádek se zalomí do více řádků (čitelnější)</li>
+  </ul>
+
+  <p>Pro receptář s HTML/JSX components: <strong>On</strong> je lepší.</p>
+
+  <h3>Format On Save</h3>
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Editor: Format On Save</strong>
+      <p>Pokud máš nainstalovaný Prettier nebo Eslint: <strong>ON</strong><br/>Pokud ne: <strong>OFF</strong> (aby tě to neštvalo nekončícím formatováním)</p>
+    </div>
+  </box>
+
+  <h3>Minimap — ten malý náhled vpravo</h3>
+  <p>Minimap ti ukazuje malý náhled kódu vpravo. Pokud je ti to v cestě, vypni: <strong>Editor: Minimap Enabled = OFF</strong></p>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Klávesnice — klavesové zkratky</h2>
+
+  <p>Antigravity používá skoro stejné zkratky jako VS Code. Pokud jsi v tom nový, tady jsou nejdůležitější:</p>
+
+  <div class="grid2">
+    <div class="card-mini">
+      <h4>Soubory & Editor</h4>
+      <p><code>Ctrl+P</code> — Quick Open (najdi soubor)</p>
+      <p><code>Ctrl+N</code> — Nový soubor</p>
+      <p><code>Ctrl+W</code> — Zavři tab</p>
+      <p><code>Ctrl+S</code> — Ulož</p>
+      <p><code>Ctrl+Z</code> — Undo</p>
+    </div>
+    <div class="card-mini">
+      <h4>Agent & Chat</h4>
+      <p><code>Ctrl+K Ctrl+I</code> — Inline prompt (agent v editoru)</p>
+      <p><code>Ctrl+L</code> — Clear chat (agent panel)</p>
+      <p><code>Ctrl+,</code> — Settings</p>
+      <p><code>Ctrl+`</code> — Terminal</p>
+    </div>
+  </div>
+
+  <h3>Jak si změnit zkratky?</h3>
+  <p>Settings → Keyboard Shortcuts → hledej příkaz → klikni a přeprogramuj.</p>
+
+  <div class="box info">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Tip pro Gemini CLI uživatele</strong>
+      <p>Pokud jsi zvyklý na CLI příkazy a chceš použít agent přes command pallete: <code>Cmd+Shift+P</code> (nebo <code>Ctrl+Shift+P</code>) — otevře command menu kde můžeš psát příkazy Antigravity.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Agentní režimy — nejdůležitější pro tebe</h2>
+
+  <p>Toto je klíčová volba. Zde nastavíš jak "autonomní" agent bude.</p>
+
+  <h3>Agent Execution Mode</h3>
+  <p>Najdeš v Settings → Agent → Execution Mode.</p>
+
+  <div class="grid2">
+    <div class="card-mini" style="border-color:rgba(16,185,129,.3)">
+      <h4 style="color:var(--green2)">🟢 Review-Driven</h4>
+      <p><strong>Nejbezpečnější.</strong> Agent plánuje → ty schválíš → agent dělá. Vždy musíš OK dát.</p>
+      <p style="margin-top:8px;font-size:.8em;color:var(--t3)"><em>Pro tebe ideální vzhledem k AI Studio traumě</em></p>
+    </div>
+    <div class="card-mini" style="border-color:rgba(0,217,255,.3)">
+      <h4 style="color:var(--cyan2)">🔵 Agent-Assisted</h4>
+      <p><strong>Středně autonomní.</strong> Drobné změny — bez ptaní. Větší věci — čeká. Rozumný kompromis.</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card-mini" style="border-color:rgba(245,158,11,.3)">
+      <h4 style="color:var(--amber2)">🟡 Hands-Off</h4>
+      <p><strong>Více autonomie.</strong> Agent pracuje, jen ti hlásí co udělal. Pro zkušené.</p>
+    </div>
+    <div class="card-mini" style="border-color:rgba(239,68,68,.3)">
+      <h4 style="color:var(--amber2)">🔴 Full Autonomy</h4>
+      <p><strong>Maximálně rizika.</strong> Agent si dělá co chce. Nepoužívej pokud máš problém s AI Studiem.</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Moje doporučení: Začni s Review-Driven</strong>
+      <p>Když se naučíš jak agent funguje a budeš věřit že neudělá něco divného — můžeš přepnout na Agent-Assisted. Ale s Review-Driven nejsi nikdy zaskočen.</p>
+    </div>
+  </box>
+
+  <h3>Approval Settings</h3>
+  <p>Pokud máš Review-Driven, můžeš ještě nastavit:</p>
+  <ul>
+    <li><strong>Auto-approve for small changes</strong> — automaticky OK pro změny v jednom souboru (pokud chceš)</li>
+    <li><strong>Show diff before approval</strong> — vždy vidíš co se změní (doporučeno ON)</li>
+    <li><strong>Require comments for rejection</strong> — když zamítneš plán, musíš říct proč</li>
+  </ul>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Chrome Extension — Screenshots & Live Testing</h2>
+
+  <p>Chrome extension umožňuje agentovi spustit aplikaci v prohlížeči a udělat screenshoty. Je to volitelné, ale velmi užitečné.</p>
+
+  <h3>Jak nainstalovat?</h3>
+  <div class="step-visual">
+    <strong>1. Otevři Chrome Web Store</strong><br/>
+    Hledej "Antigravity Chrome Extension"<br/>
+    <br/>
+    <strong>2. Klikni "Přidat do Chrome"</strong><br/>
+    Tě poprosí o povolení<br/>
+    <br/>
+    <strong>3. Ověř v Antigravity Settings</strong><br/>
+    Settings → Extensions → Antigravity Chrome Extension: ON
+  </div>
+
+  <h3>Co to dělá?</h3>
+  <ul>
+    <li>Agent může otevřít tvou aplikaci (<code>localhost:3000</code>) v Chrome</li>
+    <li>Udělá automatický screenshot jak to vypadá</li>
+    <li>Vidí co je v HTML — pokud agent chce vědět jak se aplikace chová, ví přesně</li>
+    <li>Spustí formuláře a interakce pokud je to potřeba</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Pro receptář je to perfektní</strong>
+      <p>Když agent přidá nový filtr nebo změní komponentu, sám vidí jak to vypadá. Ušetří to spoustu "pokaž mi screenshot" konverzací.</p>
+    </div>
+  </box>
+
+  <h3>Bezpečnostní poznámka</h3>
+  <p>Extension má přístup k:</p>
+  <ul>
+    <li>Obsahu na <strong>localhost</strong> (tvoje místní aplikace) — v pořádku</li>
+    <li>NEUVIDÍ tvůj obsah na ostatních webech — security je zabudovaná</li>
+  </ul>
+
+  <p>Pokud nechceš extension — OK. Agent bude pracovat bez něj, jen nebude vidět screenshoty výsledku.</p>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>API & Klíče — připojení na Google Gemini API</h2>
+
+  <p>Antigravity se připojuje k Google Gemini API. Klíč je již nastavený když ses přihlásil svým Google účtem, ale můžeš to změnit.</p>
+
+  <h3>Kde je to nastavené?</h3>
+  <p>Settings → API & Authentication → Google Gemini API</p>
+
+  <h3>Možnosti</h3>
+  <ul>
+    <li><strong>Use Default (Recommended)</strong> — Antigravity token, za tebe spravovaný. Nejjednoduché.</li>
+    <li><strong>Use Custom API Key</strong> — tvůj vlastní klíč od Google. Pokud máš svůj projekt v Google Cloud Console.</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Nikdy nesdílej API klíč</strong>
+      <p>Pokud si vytvoříš svůj klíč — <strong>nemaž ho do GitHubu ani ho nesdílej s nikým</strong>. Klíč by měl být jen v <code>.env</code> lokálně (a v <code>.gitignore</code>).</p>
+    </div>
+  </box>
+
+  <h3>Rate Limiting — kolik agentů můžeš spustit?</h3>
+  <p>Google má limity pro free tier:</p>
+  <ul>
+    <li><strong>1000 požadavků za den</strong> — pro hobby projekt dost</li>
+    <li><strong>60 požadavků za minutu</strong> — agent pracuje dost rychle</li>
+  </ul>
+
+  <p>Pokud je pro tebe málo — můžeš upgrade na placený Google Cloud.</p>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Workspace — projekty a složky</h2>
+
+  <p>Antigravity je "multi-workspace" IDE — můžeš mít otevřeno více projektů najednou.</p>
+
+  <h3>Add Folder to Workspace</h3>
+  <p>File → Add Folder to Workspace → vyběr složky tvého projektu</p>
+
+  <p>Pokud máš receptář a chceš přidat jiný projekt na vývoj: <strong>File → Add Folder</strong> a obě složky se budou zobrazovat v file exploreru.</p>
+
+  <h3>Workspace Settings</h3>
+  <p>Na úrovni workspace (ne globální) můžeš nastavit:</p>
+  <ul>
+    <li><strong>Editor settings pro tenhle projekt</strong> — třeba Font Size jen pro receptář</li>
+    <li><strong>Extensions aktivity</strong> — které rozšíření se mají v tomhle workspace aktivovat</li>
+    <li><strong>Launch configuration</strong> — když spustíš debug, jaké příkazy se spustí</li>
+  </ul>
+
+  <div class="box info">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Tip: Workspace File (.code-workspace)</strong>
+      <p>Když máš složitý setup s více projektů, Antigravity vytvoří soubor <code>*.code-workspace</code> který si pamatuje jaké složky byly otevřené. Kdyś ho otevřeš znova — všechno se vrátí do stejného stavu.</p>
+    </div>
+  </box>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  03_ANT_Nastaveni.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  <a href="00_ANT_INDEX.html">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

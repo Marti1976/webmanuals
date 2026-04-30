@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekty – Antigravity průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --blue:#4878d4;--blue2:#90b8f8;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(72,120,212,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--blue2)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-b{color:var(--blue2);border-color:rgba(72,120,212,.3);background:rgba(72,120,212,.08)}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--blue);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--blue2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--blue2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--blue);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--blue2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(72,120,212,.1);
+  color:var(--blue2);border:1px solid rgba(72,120,212,.2);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:#6ee7b7}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--amber)}
+.info{background:rgba(72,120,212,.08);border-color:rgba(72,120,212,.25);color:#a8c8e8}
+.info .content strong{color:var(--blue2)}
+
+.steps{display:flex;flex-direction:column;gap:12px;margin:14px 0}
+.step{display:grid;grid-template-columns:40px 1fr;gap:0;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.step-n{display:flex;align-items:flex-start;justify-content:center;padding-top:14px;
+  font-family:'Syne',sans-serif;font-size:1.1em;font-weight:800;color:var(--blue);
+  background:rgba(72,120,212,.06);border-right:1px solid var(--border)}
+.step-b{padding:12px 16px}
+.step-t{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:6px;font-size:.95em}
+.step-b p{font-size:.88em;color:var(--t2);margin-bottom:5px}
+.step-b p:last-child{margin-bottom:0}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.card-mini{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.card-mini h4{margin-top:0;font-size:.9em;margin-bottom:8px}
+.card-mini p{margin:0;font-size:.85em;color:var(--t2);line-height:1.6}
+
+.config-block{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--blue);
+  border-radius:8px;padding:12px;margin:12px 0;font-family:'DM Mono',monospace;font-size:.8em;
+  color:var(--blue2);line-height:1.6;overflow-x:auto}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 05</div>
+  <h1>Projekty</h1>
+  <p class="h-desc">Jak vytvářet nové projekty, importovat existující (jako tvůj receptář), pracovat s více projekty zároveň a organizovat je v Antigravity.</p>
+  <div class="badges">
+    <span class="badge badge-b">📁 Správa projektů</span>
+    <span class="badge badge-c">🔄 Import</span>
+    <span class="badge badge-b">⚙️ Konfigurace</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Nový projekt vs Import</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Vytvoření nového projektu</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Import existujícího projektu</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Workspace — více projektů</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Projekt settings</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Jak se vrátit z projektu</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Pro tvůj receptář</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Nový projekt vs Import — rozdíl</h2>
+
+  <h3>Nový projekt</h3>
+  <p>Když nemáš nic — Antigravity ti vytvoří kostru projektu z šablony.</p>
+  <ul>
+    <li>React template</li>
+    <li>Next.js template</li>
+    <li>Vanilla JS template</li>
+    <li>Prázdná složka</li>
+  </ul>
+
+  <h3>Import existujícího projektu</h3>
+  <p>Máš projekt kde na disku (GitHub, lokálně, odkud chceš) — vezmeš ho a otevřeš v Antigravity.</p>
+  <ul>
+    <li>Tvůj receptář (React project na disku)</li>
+    <li>Projekt z GitHubu (git clone + otevřít)</li>
+    <li>Projekt od kolegy (soubor ZIP či složka)</li>
+  </ul>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Pro tebe: Import je správná cesta</strong>
+      <p>Máš receptář hotový na disku. Necháš ho tam, jen ho otevřeš v Antigravity. Nic se netkne.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Vytvoření nového projektu</h2>
+
+  <p>Pokud bys chtěl nový projekt od nuly:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Welcome tab — New Project</div>
+        <p>Když se Antigravity spustí, vidíš Welcome. Klikni "[New Project]"</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Vyber template</div>
+        <p>React, Next.js, Svelte, prázdná — co chceš</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Pojmenuj projekt</div>
+        <p>Třeba "my-app", "experiment-2024"</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">Vyber cestu</div>
+        <p>Kde na disku má být složka projektu (výchozí: ~/Projects)</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">5</div>
+      <div class="step-b">
+        <div class="step-t">Antigravity inicializuje</div>
+        <p>Vytvoří soubory, nainstaluje npm deps, spustí git init. Hotovo.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Import existujícího projektu — TvůJ receptář</h2>
+
+  <p>To je to co potřebuješ.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">File → Open Folder</div>
+        <p>Nebo jednoduše drag-drop složku projektu do Antigravity</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Vyber složku receptáře</div>
+        <p>Kde máš <code>src/</code>, <code>package.json</code>, <code>.git</code> atd.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Antigravity detekuje project</div>
+        <p>Vidí že je to React projekt, rozpozná .git, nastaví vše</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">Projekt je otevřený</div>
+        <p>File Explorer vlevo, editor uprostřed, agent vpravo. Hotovo!</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Co se stane s tvým projektem?</h3>
+  <ul>
+    <li>✅ Nic se nezmění — tvůj kód zůstane stejný</li>
+    <li>✅ Antigravity jen čte soubory</li>
+    <li>✅ Když uzavřeš Antigravity — projekt je stále tam</li>
+    <li>✅ Můžeš ho otevřít v normálním VS Code kdykoliv</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Bezpečné — není to destruktivní</strong>
+      <p>Import je jen otevření. Tvůj projekt si stojí sám o sobě.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Workspace — více projektů zároveň</h2>
+
+  <p>Antigravity umožňuje mít otevřeno více projektů najednou (na rozdíl od VS Code, kde máš jeden workspace).</p>
+
+  <h3>Jak přidat druhý projekt do Workspace?</h3>
+  <p>File → Add Folder to Workspace</p>
+
+  <p>Nyní máš v File Exploreru dva projekty vidět. Můžeš:</p>
+  <ul>
+    <li>Otevřít soubor z projektu A</li>
+    <li>Editor práce — kód z A i B vidět vedle sebe</li>
+    <li>Agent vidí oba projekty v kontextu</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Workspace konfiguraci</strong>
+      <p>Antigravity si pamatuje které projekty byly otevřené. Když zavřeš a znova otevřeš — jsou tam. Konfigurace je v <code>.code-workspace</code> souboru (podobně jako VS Code).</p>
+    </div>
+  </box>
+
+  <h3>Pro tvůj případ</h3>
+  <p>Máš jeden projekt (receptář) — workspace není nutný. Ale pokud bys chtěl přidat druhý experiment — takhle bys to dělal.</p>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Projekt Settings — per projekt</h2>
+
+  <p>Každý projekt má svá settings — oddělená od globálních.</p>
+
+  <h3>Kde jsou settings projektu?</h3>
+  <p>File → Preferences → Settings, ale klikni na "Workspace" tab (ne "User")</p>
+
+  <h3>Co se dá nastavit per projekt?</h3>
+  <ul>
+    <li><strong>Agent Approval Mode</strong> — pro tenhle projekt Review-Driven, pro jiný Agent-Assisted</li>
+    <li><strong>Ignored files</strong> — jaké soubory agent vidět nesmí (.env, temp/ atd.)</li>
+    <li><strong>Build command</strong> — co se spustí příkazem npm run build</li>
+    <li><strong>Format on Save</strong> — jen pro tenhle projekt</li>
+    <li><strong>Extensions</strong> — které ext se mají v tomhle projektu aktivovat</li>
+  </ul>
+
+  <h3>Příklad: Tvůj receptář</h3>
+  <div class="config-block">
+"[receptar-workspace]": {<br/>
+&nbsp;"agent.approvalMode": "review-driven",<br/>
+&nbsp;"editor.formatOnSave": true,<br/>
+&nbsp;"files.exclude": {<br/>
+&nbsp;&nbsp;"node_modules": true,<br/>
+&nbsp;&nbsp;".env.local": true<br/>
+&nbsp;}<br/>
+}
+  </div>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Pro začátečníka: Defaultní settings jsou fajn</strong>
+      <p>Nemusíš nic měnit. Antigravity si pamatuje čo potřebuje.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Jak se vrátit z projektu</h2>
+
+  <h3>Zavřít projekt (ale ne Antigravity)</h3>
+  <p>File → Close Folder</p>
+
+  <p>Projekt se zavře, vrátíš se do Welcome screenu. Ostatní otevřené projekty zůstanou.</p>
+
+  <h3>Otevřít jiný projekt</h3>
+  <p>File → Open Recent</p>
+
+  <p>Antigravity si pamatuje posledních 20 projektů které jsi otevíral. Můžeš se na ně vrátit jedním klikem.</p>
+
+  <h3>Úplně zavřít Antigravity</h3>
+  <p>File → Exit (nebo Ctrl+Q)</p>
+
+  <p>Vše se zavře. Ale projekty a Git data zůstanou na disku — nic se neztratí.</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Tvůj receptář bude existovat bez ohledu na Antigravity</strong>
+      <p>Je to jen IDE — tvůj projekt je na disku. Antigravity je jen způsob jak s ním pracovat.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Pro tvůj receptář — konkrétně</h2>
+
+  <p>Tady je přesný postup:</p>
+
+  <h3>Krok 1: Najdi složku receptáře</h3>
+  <div class="config-block">
+C:\Users\marti\Documents\rodinny-receptar<br/>
+(nebo `/home/marti/projects/rodinny-receptar`)<br/>
+<br/>
+Měla by obsahovat:<br/>
+├─ src/<br/>
+├─ public/<br/>
+├─ package.json<br/>
+├─ .git/<br/>
+└─ vite.config.ts
+  </div>
+
+  <h3>Krok 2: Otevři v Antigravity</h3>
+  <p>File → Open Folder → vyber složku receptáře</p>
+
+  <h3>Krok 3: Ověř že je vše připravené</h3>
+  <ul>
+    <li>File Explorer vlevo vidí strukturu src/, public/</li>
+    <li>Terminal je dostupný (Ctrl+`)</li>
+    <li>Agent panel je vidět vpravo</li>
+  </ul>
+
+  <h3>Krok 4: Spusť dev server (pokud chceš)</h3>
+  <div class="config-block">
+Terminal: npm run dev<br/>
+<br/>
+Server se spustí na http://localhost:3000<br/>
+Agent ho vidí a můžeš s ním testovat
+  </div>
+
+  <h3>Krok 5: Pracuj s agentem</h3>
+  <p>Agent → "Přidej filtr na cenu" → ... → hotovo</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Právě teď máš vše co potřebuješ</strong>
+      <p>Otevřít receptář, pracovat s agentem, commitovat změny. Jednoduchý flow.</p>
+    </div>
+  </box>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  05_ANT_Projekty.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  <a href="00_ANT_INDEX.html">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

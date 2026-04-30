@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Antigravity – Kompletní průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:15px;overflow-x:hidden}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+
+/* HEADER */
+header{padding:60px 0 50px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-100px;right:-200px;width:600px;height:500px;
+  background:radial-gradient(ellipse,rgba(0,217,255,.08) 0%,transparent 65%);pointer-events:none}
+header::after{content:'';position:absolute;bottom:-50px;left:-100px;width:400px;height:300px;
+  background:radial-gradient(ellipse,rgba(168,85,247,.06) 0%,transparent 65%);pointer-events:none}
+.logo{font-family:'Syne',sans-serif;font-size:2.5em;font-weight:800;color:var(--white);
+  margin-bottom:12px}
+.logo span{color:var(--cyan)}
+.tagline{color:var(--t2);font-size:1.05em;max-width:700px;margin-bottom:28px}
+.badges-h{display:flex;flex-wrap:wrap;gap:10px}
+.badge-h{font-family:'DM Mono',monospace;font-size:.75em;padding:6px 14px;border-radius:16px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.bh-cyan{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+.bh-purple{color:var(--purple2);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+.bh-accent{color:var(--accent2);border-color:rgba(255,0,110,.3);background:rgba(255,0,110,.08)}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:40px 0}
+.card{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:-50px;right:-50px;width:150px;height:150px;
+  background:radial-gradient(circle,rgba(0,217,255,.1) 0%,transparent 70%);opacity:0;
+  transition:opacity .3s}
+.card:hover{border-color:var(--border2);transform:translateY(-4px)}
+.card:hover::before{opacity:1}
+.card-num{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--cyan);
+  margin-bottom:10px;display:block}
+.card-title{font-family:'Syne',sans-serif;font-size:1.1em;font-weight:700;color:var(--white);
+  margin-bottom:8px;position:relative;z-index:1}
+.card-desc{font-size:.87em;color:var(--t2);line-height:1.7;position:relative;z-index:1}
+.card-link{display:inline-block;margin-top:12px;font-family:'DM Mono',monospace;font-size:.78em;
+  color:var(--cyan2);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 12px;border:1px solid rgba(0,217,255,.3);border-radius:6px;transition:all .2s}
+.card-link:hover{border-color:var(--cyan2);background:rgba(0,217,255,.08)}
+
+/* SECTIONS */
+.sec{margin:50px 0}
+.sec-title{font-family:'Syne',sans-serif;font-size:1.5em;font-weight:700;color:var(--white);
+  margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:30px 0}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:2.5em;font-weight:800;color:var(--cyan);display:block}
+.stat-label{font-size:.85em;color:var(--t2);margin-top:6px}
+
+/* CALLOUT */
+.callout{background:linear-gradient(135deg,rgba(0,217,255,.08) 0%,rgba(168,85,247,.08) 100%);
+  border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:var(--r);
+  padding:20px 24px;margin:20px 0}
+.callout-title{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--cyan2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.callout p{margin:0;font-size:.9em;color:var(--t2);line-height:1.7}
+
+/* TIMELINE */
+.timeline{position:relative;padding:30px 0 30px 40px}
+.timeline::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--cyan) 0%,var(--purple) 100%)}
+.timeline-item{margin-bottom:24px;padding:14px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;position:relative}
+.timeline-item::before{content:'';position:absolute;left:-34px;top:20px;width:24px;height:24px;
+  border-radius:50%;background:var(--bg);border:2px solid var(--cyan)}
+.timeline-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--white);
+  margin-bottom:4px}
+.timeline-desc{font-size:.85em;color:var(--t2)}
+
+/* FOOTER */
+footer{margin-top:80px;padding:30px 0;border-top:1px solid var(--border);text-align:center;
+  font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);line-height:2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<header>
+  <h1 class="logo">Google <span>Antigravity</span></h1>
+  <p class="tagline">Kompletní průvodce pro agentní vývoj. Od instalace přes bezpečnost až k mastery. Bez zbytečného tlachání, jen facts.</p>
+  <div class="badges-h">
+    <span class="badge-h bh-cyan">🤖 Agent-first IDE</span>
+    <span class="badge-h bh-purple">⚡ Autonomní agenti</span>
+    <span class="badge-h bh-accent">🎯 Prakticky zaměřeno</span>
+  </div>
+</header>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat">
+    <span class="stat-num">11</span>
+    <span class="stat-label">Kompletních kapitol</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">∞</span>
+    <span class="stat-label">Autonomních agentů</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">$0</span>
+    <span class="stat-label">Cena (free tier)</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Lokálně na tvém PC</span>
+  </div>
+</section>
+
+<!-- CALLOUT -->
+<div class="callout">
+  <div class="callout-title">💡 Co je tohle?</div>
+  <p>Antigravity je IDE od Googlu postavené na VS Code, kde AI agenti pracují autonomně. Ty jim říkáš "udělej X" a oni to plánují, provádějí a ověřují — bez čekání na tvoje kroky. Ale (a toto JE důležité) musíš vědět jak je zkrotit, aby tě nechali dělat rozhodnutí.</p>
+</div>
+
+<!-- OBSAH -->
+<section class="sec">
+  <h2 class="sec-title">📚 Všechny kapitoly</h2>
+  <div class="grid">
+    <!-- 01 -->
+    <a href="01_ANT_Editor_View.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">01</span>
+      <div class="card-title">Editor View</div>
+      <div class="card-desc">Seznámení s prostředím. Jak se orientovat, kde co je, jak psát kód vedle agenta, a co jsou ty Artifacts.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 02 -->
+    <a href="02_ANT_Manager_View.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">02</span>
+      <div class="card-title">Manager View</div>
+      <div class="card-desc">Mission Control pro agenty. Jak orchestrovat více agentů paralelně, jak sledovat jejich progress, jak řídit složité úkoly.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 03 -->
+    <a href="03_ANT_Nastaveni.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">03</span>
+      <div class="card-title">Nastavení</div>
+      <div class="card-desc">Co všechno se dá v Antigravity nastavit. Theme, klávesnice, rozšíření, agentní režimy, Chrome extension a co to všechno znamená.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 04 -->
+    <a href="04_ANT_Bezpecnost.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">04</span>
+      <div class="card-title">Bezpečnost Agenta</div>
+      <div class="card-desc">Jak zkrotit agenty aby tě nechali dělat rozhodnutí. Approval workflows, Allow/Deny listy, co agent smí a nesmí dělat. Prakticky zaměřeno na tvůj problém s AI Studiem.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 05 -->
+    <a href="05_ANT_Projekty.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">05</span>
+      <div class="card-title">Projekty</div>
+      <div class="card-desc">Jak vytvářet nové projekty, importovat existující, pracovat s více projekty zároveň, organizace souborů.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 06 -->
+    <a href="06_ANT_Pravidla.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">06</span>
+      <div class="card-title">Vlastní Pravidla</div>
+      <div class="card-desc">Workflows a Rules — jak napsat vlastní instrukce pro agenta. Jak se to liší od GEMINI.md. Persistentní pravidla která se dodržují.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 07 -->
+    <a href="07_ANT_Git_Verze.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">07</span>
+      <div class="card-title">Git & Verze</div>
+      <div class="card-desc">Jak Antigravity funguje s Gitem. Commits, verzování, co když se agent a ty měníte stejný soubor. Jak být v bezpečí s backup strategie.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 08 -->
+    <a href="08_ANT_Firebase_Alt.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">08</span>
+      <div class="card-title">Firebase Alternativa</div>
+      <div class="card-desc">Supabase, Vercel, Railway — kam dát tvůj projekt aby se nezavíral. Porovnání, co je free, co je trvalé, jak to nasadit bez GitHubu.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 09 -->
+    <a href="09_ANT_Chyby_Limity.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">09</span>
+      <div class="card-title">Chyby & Limity</div>
+      <div class="card-desc">Co se stane když skončí API limit, jak se vrátit z chyby agenta, rate limiting, troubleshooting, co nedělá správně a jak to fixovat.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 10 -->
+    <a href="10_ANT_Tipy_Triky.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">10</span>
+      <div class="card-title">Tipy & Triky</div>
+      <div class="card-desc">Jak psát prompty aby agent poslouchal. Patterns které fungují. Jak se vyhnout selhání. Real-world příklady, jaké úkoly delegovat, jaké dělat sám.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+
+    <!-- 11 -->
+    <a href="11_ANT_Instalace.html" class="card" style="text-decoration:none;color:inherit">
+      <span class="card-num">11</span>
+      <div class="card-title">Instalace & Cleanup</div>
+      <div class="card-desc">Detailně co se instaluje, kde. Jak se vrátit do původního stavu když to chceš smazat. Žádné zbytky, čistá odinstalace.</div>
+      <span class="card-link">Otevřít →</span>
+    </a>
+  </div>
+</section>
+
+<!-- ŘÁD ČTENÍ -->
+<section class="sec">
+  <h2 class="sec-title">📍 Doporučený řád čtení</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-title">Fase 1: Orientace (hned)</div>
+      <div class="timeline-desc">01 Editor View → 03 Nastavení → 04 Bezpečnost. Zjistíš co Antigravity je a jak jej zkrotit.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-title">Fase 2: Praxe (když začneš pracovat)</div>
+      <div class="timeline-desc">05 Projekty → 06 Vlastní Pravidla. Import tvého projektu a nastavení pravidel aby agent poslouchal.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-title">Fase 3: Bezpečnost (velmi důležité)</div>
+      <div class="timeline-desc">07 Git & Verze → 09 Chyby & Limity. Jak se chránit před chybami agenta.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-title">Fase 4: Advanced (když už víš co děláš)</div>
+      <div class="timeline-desc">02 Manager View → 10 Tipy & Triky. Paralelní agenti, komplexní workflow, mastery.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-title">Fase 5: Nasazení (když chceš jít do světa)</div>
+      <div class="timeline-desc">08 Firebase Alternativa. Kde hostovat projekt aby был stálý a nepřístupný.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREVIEW POZNÁMKA -->
+<div class="callout" style="border-left-color:var(--purple)">
+  <div class="callout-title">📝 Status průvodce</div>
+  <p>Právě čteš <strong>INDEX.html</strong> — navigaci a přehled. Ostatní kapitoly se budují postupně. Klikáš-li na "Připravuje se...", soubor ještě neexistuje — pojď za mnou a budeme ho spolu psát.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Google Antigravity — Kompletní průvodce &nbsp;·&nbsp;
+  Projekty - all &nbsp;·&nbsp;
+  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
+</footer>
+
+</div>
+</body>
+</html>

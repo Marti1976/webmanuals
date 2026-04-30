@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manager View – Antigravity průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --amber:#f59e0b;--amber2:#fcd34d;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(168,85,247,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--purple2)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-p{color:var(--purple2);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--purple);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--purple2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--purple2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--purple);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--purple2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(168,85,247,.1);
+  color:var(--purple2);border:1px solid rgba(168,85,247,.2);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:var(--green2)}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--amber2)}
+.info{background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.25);color:#d0b8e8}
+.info .content strong{color:var(--purple2)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.card-mini{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.card-mini h4{margin-top:0;font-size:.9em;margin-bottom:8px}
+.card-mini p{margin:0;font-size:.85em;color:var(--t2);line-height:1.6}
+
+.diagram{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--purple);
+  border-radius:8px;padding:14px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
+  color:var(--purple2);line-height:1.8;overflow-x:auto}
+
+.flow-step{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;
+  margin:8px 0;font-size:.9em;line-height:1.7}
+.flow-step strong{color:var(--purple2);display:block;margin-bottom:6px;font-size:.95em}
+
+.agent-panel{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;
+  margin:12px 0;font-family:'DM Mono',monospace;font-size:.78em;color:var(--purple2)}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.compare{grid-template-columns:1fr}}
+.comp-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px}
+.comp-title{font-family:'Syne',sans-serif;font-size:.85em;font-weight:700;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--border);color:var(--purple2)}
+.comp-item{display:flex;gap:8px;padding:5px 0;font-size:.82em}
+.comp-icon{color:var(--purple2);flex-shrink:0}
+.comp-text{color:var(--t2)}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 02</div>
+  <h1>Manager <em>View</em></h1>
+  <p class="h-desc">Mission Control pro agenty. Jak spustit více agentů paralelně, jak je orchestrovat, sledovat progress a řídit komplexní workflows. Pro pokročilé uživatele.</p>
+  <div class="badges">
+    <span class="badge badge-p">🎛️ Orchestrace</span>
+    <span class="badge badge-c">⚡ Paralelní práce</span>
+    <span class="badge badge-p">🚀 Advanced workflows</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Co je Manager View</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Editor vs Manager — rozdíl</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Spuštění prvního agenta</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Paralelní agenti — concept</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Mission Control (dashboard)</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Dag (workflow definition)</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Praktický příklad</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Kdy Manager View použít</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Co je Manager View</h2>
+
+  <p>Manager View je druhý mód Antigravity. Zatímco Editor View je "ty + jeden agent v panelu", Manager View je <strong>Mission Control pro orchestraci více agentů najednou</strong>.</p>
+
+  <h3>Analogie: Orchestra</h3>
+  <p><strong>Editor View:</strong> Ty a dirigent (agent) hrají společně, ty máš poslední slovo.<br/>
+  <strong>Manager View:</strong> Ty jsi dirigent, máš více hudebníků (agentů) a všichni hrají podle tvého plánu zároveň.</p>
+
+  <h3>Fyzicky co se změní?</h3>
+  <ul>
+    <li>Mizí bočný agent panel — místo toho máš <strong>big-screen dashboard</strong></li>
+    <li>Vidíš všechny agenty najednou, jejich stavy, progress</li>
+    <li>Agenti pracují <strong>paralelně</strong> — jeden dělá feature A, druhý feature B, třetí testy — všichni zároveň</li>
+    <li>Ty jen sleduješ a řídíš — je to autopilot, ale ty jsi pilot</li>
+  </ul>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Pro tvůj receptář (zatím) není nutný</strong>
+      <p>Hobby projekt, jeden člověk = Editor View stačí. Manager View se hodí když máš komplexní projekt kde by agenti mohli dělat věci nezávisle na sobě.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Editor View vs Manager View — přesný rozdíl</h2>
+
+  <div class="compare">
+    <div class="comp-card">
+      <div class="comp-title">Editor View (toto máš teď)</div>
+      <div class="comp-item"><span class="comp-icon">📝</span><span class="comp-text">Jeden agent v panelu</span></div>
+      <div class="comp-item"><span class="comp-icon">🔄</span><span class="comp-text">Sériově — jeden úkol za druhým</span></div>
+      <div class="comp-item"><span class="comp-icon">👁️</span><span class="comp-text">Ty vidíš agent panel + editor vedle sebe</span></div>
+      <div class="comp-item"><span class="comp-icon">⚠️</span><span class="comp-text">Když agent čeká na schválení, nic se nedělá</span></div>
+      <div class="comp-item"><span class="comp-icon">💡</span><span class="comp-text">Jednodušší, méně složitý</span></div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title">Manager View (pro experty)</div>
+      <div class="comp-item"><span class="comp-icon">🤖</span><span class="comp-text">Více agentů najednou</span></div>
+      <div class="comp-item"><span class="comp-icon">⚡</span><span class="comp-text">Paralelně — všichni pracují zároveň</span></div>
+      <div class="comp-item"><span class="comp-icon">🎛️</span><span class="comp-text">Vidíš velký dashboard se všema agenty</span></div>
+      <div class="comp-item"><span class="comp-icon">🚀</span><span class="comp-text">Agent A pracuje, Agent B čeká, Agent C se chystá</span></div>
+      <div class="comp-item"><span class="comp-icon">🔧</span><span class="comp-text">Pokročilejší, více kontroly, více komplexity</span></div>
+    </div>
+  </div>
+
+  <h3>Praktický příklad</h3>
+  <p><strong>Editor View flow:</strong></p>
+  <div class="flow-step">
+    <strong>Ty:</strong> "Přidej login komponentu"<br/>
+    Agent dělá ✓<br/>
+    <br/>
+    <strong>Ty:</strong> "Teď přidej database backup"<br/>
+    Agent dělá ✓
+  </div>
+
+  <p><strong>Manager View flow:</strong></p>
+  <div class="flow-step">
+    <strong>Ty:</strong> [defineš workflow:]<br/>
+    - Agent1: Přidej login komponentu<br/>
+    - Agent2: Přidej database backup (až bude Agent1 hotov)<br/>
+    - Agent3: Spusť testy (až bude Agent2 hotov)<br/>
+    <br/>
+    <strong>Všichni agenti pracují optimálně a správné pořadí se řeší automaticky</strong>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Spuštění prvního agenta v Manager View</h2>
+
+  <p>Jak se do Manager View dostaneš?</p>
+
+  <h3>Krok 1: Přepnout se do Manager View</h3>
+  <p>V levém rohu Antigravity: <strong>View Selector</strong> → vyber "Manager View" (místo "Editor View")</p>
+
+  <p>Nebo: View → Manager Mode (menu)</p>
+
+  <h3>Krok 2: Vidíš dashboard</h3>
+  <p>Místo editoru se otevře <strong>Mission Control dashboard</strong> — velké obrazovka s:</p>
+  <ul>
+    <li>Timeline agentů (vpravo)</li>
+    <li>Stav jednotlivých agentů (kdo pracuje, kdo čeká, kdo je hotov)</li>
+    <li>Workflow editor (uprostřed) — kde definuješ co se má stát</li>
+  </ul>
+
+  <h3>Krok 3: Vytvořit nový agent task</h3>
+  <p><code>[+] Add Agent</code> → pojmenuj agenta (třeba "LoginAgent") → co má dělat</p>
+
+  <div class="agent-panel">
+Agent: LoginAgent
+Task: "Vytvoř login komponentu s email/password fieldem"
+Status: [⏳ Waiting for input]
+  </div>
+
+  <h3>Krok 4: Spustit workflow</h3>
+  <p><code>[RUN]</code> tlačítko uprostřed → všichni agenti se spustí</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Poprvé:</strong> Je to lehce chaotické. Dashboard má spoustu informací. Počkej chvíli, až si zvykneš.
+    </div>
+  </box>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Paralelní agenti — jak se orchestrují</h2>
+
+  <p>Klíčová myšlenka: <strong>Agent A nemusí čekat na Agenta B pokud jsou nezávislí.</strong></p>
+
+  <h3>Závislosti (Dependencies)</h3>
+  <p>Někdy agent MUSÍ čekat:</p>
+
+  <div class="diagram">
+Agent1 (Login komponenta)
+   ↓
+Agent2 (Database pro uživatele) ← čeká na Agent1
+   ↓
+Agent3 (Testy)
+
+vs.
+
+Agent1 (Login)
+  ↗  ↘
+Agent2 (Styling)  Agent3 (Tests)  ← paralelně, nezávislí
+  ↘  ↙
+     (All done)
+  </div>
+
+  <h3>Jak to definovat?</h3>
+  <p>V Manager View workflow editoru:</p>
+
+  <div class="agent-panel">
+agents:
+  - name: LoginFeature
+    task: "..."
+    
+  - name: DatabaseSetup
+    task: "..."
+    depends_on: [LoginFeature]  ← čeká!
+    
+  - name: Styling
+    task: "..."
+    # no depends_on = může běžet hned paralelně
+  </div>
+
+  <h3>Výhoda</h3>
+  <ul>
+    <li>Když Agent1 čeká na schválení → Agent2 a Agent3 pracují</li>
+    <li>Výrazně se zrychluje vývoj</li>
+    <li>Komplexní projekty se řeší "jako by to dělali 3 lidi najednou"</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Pozor na konflikty souborů</strong>
+      <p>Pokud Agent1 a Agent2 oba editují <code>package.json</code> → konflikt v Gitu. Musíš dbát aby paralelní agenti pracovali na různých souborech.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Mission Control — dashboard a monitoring</h2>
+
+  <p>Dashboard ci ukazuje všechno co se děje.</p>
+
+  <h3>Levá strana — Agenti & States</h3>
+  <ul>
+    <li><code>🟢 Agent1: Running</code> — teď pracuje</li>
+    <li><code>🟡 Agent2: Waiting</code> — čeká na schválení (tvůj input)</li>
+    <li><code>⚫ Agent3: Blocked</code> — čeká na Agent1</li>
+    <li><code>✅ Agent4: Complete</code> — hotov</li>
+  </ul>
+
+  <h3>Uprostřed — Timeline</h3>
+  <p>Grafická linie co se dělo v čase. Vidíš:</p>
+  <ul>
+    <li>Kdy se každý agent spustil</li>
+    <li>Jak dlouho dělal co dělal</li>
+    <li>Kde byly čekací doby</li>
+    <li>Topologie (kdo čekal na koho)</li>
+  </ul>
+
+  <h3>Pravá strana — Artifacts & Logs</h3>
+  <ul>
+    <li>Klikni na agenta → vidíš jeho plan, diffs, error zprávy</li>
+    <li>Terminal output — co se dělalo</li>
+    <li>Build logs — výsledky</li>
+  </ul>
+
+  <h3>Interakce</h3>
+  <ul>
+    <li><code>[Approve]</code> — schvál agenta, ať pokračuje</li>
+    <li><code>[Edit]</code> — změň plán agenta</li>
+    <li><code>[Reject]</code> — zastavit, agent se zeptá co jinak</li>
+    <li><code>[Pause All]</code> — zastavit všechny agenty</li>
+    <li><code>[Restart]</code> — znovu začít konkrétní agenta</li>
+  </ul>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>DAG — Workflow Definition (pro experty)</h2>
+
+  <p>DAG = Directed Acyclic Graph. To je fancy slovo pro "definici kdo závisí na kom".</p>
+
+  <h3>Jak se to píše?</h3>
+  <p>V YAML nebo JSON:</p>
+
+  <div class="agent-panel">
+workflow:
+  name: "Receptář - Přidání Feature"
+  agents:
+    - id: agent-1
+      name: "Features"
+      task: "Přidej filtr na cenu"
+      timeout: 600s
+      
+    - id: agent-2
+      name: "Tests"
+      task: "Napiš testy pro filtr"
+      depends_on: [agent-1]
+      
+    - id: agent-3
+      name: "Docs"
+      task: "Aktualizuj README"
+      depends_on: [agent-2]
+  </div>
+
+  <h3>Výsledek</h3>
+  <p>Antigravity si z toho vytvoří graf:</p>
+  <p><code>Agent1 → Agent2 → Agent3</code></p>
+
+  <p>Spustí Agent1, až bude hotov → Agent2, až bude hotov → Agent3.</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Pro začátečníky: Můžeš ignorovat</strong>
+      <p>DAG se vytváří automaticky když klikáš "[+] Add Agent" a vztahuješ je myší. YAML je jen pro pokročilé co chtějí úplnou kontrolu.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Praktický příklad — komplexní workflow</h2>
+
+  <p>Představ si že na receptáři potřebuješ udělat toto:</p>
+  <ul>
+    <li>Přidat filtr na cenu (feature)</li>
+    <li>Stylem to zatím netřešíš, jen funkčnost</li>
+  </ul>
+
+  <h3>V Editor View:</h3>
+  <div class="flow-step">
+    <strong>Ty:</strong> Přidej filtr<br/>
+    Agent dělá → hotov → Ty: OK<br/>
+    <br/>
+    <strong>Ty:</strong> Teď nastyluj<br/>
+    Agent dělá → hotov → Ty: OK<br/>
+    <br/>
+    <strong>Ty:</strong> Napiš testy<br/>
+    Agent dělá → hotov
+  </div>
+
+  <p><strong>Čas:</strong> 30 minut (sériově)</p>
+
+  <h3>V Manager View:</h3>
+  <div class="flow-step">
+    <strong>Ty vytvoříš 3 agenty:</strong><br/>
+    Agent1: Přidej filtr<br/>
+    Agent2: Nastyluj (čeká na Agent1)<br/>
+    Agent3: Napiš testy (čeká na Agent2)<br/>
+    <br/>
+    <strong>Spustíš [RUN]</strong><br/>
+    - Agent1 pracuje<br/>
+    - Ty zatím [Approve] ostatní chystáš<br/>
+    - Agent1 hotov, Agent2 se spustí<br/>
+    - Agent2 pracuje, Agent3 se čeká<br/>
+    - Agent2 hotov, Agent3 se spustí
+  </div>
+
+  <p><strong>Čas:</strong> 25 minut (lepší paralelizace schválení)</p>
+
+  <h3>Ještě pokročilejší:</h3>
+  <p>Pokud by sytling a testy byly <strong>nezávislé</strong> (nemusí čekat na sebe):</p>
+  <div class="flow-step">
+    Agent1: Filtr (2 min)<br/>
+    ↓<br/>
+    Agent2: Styling (5 min)<br/>
+    Agent3: Testy (4 min) ← paralelně s Agent2<br/>
+    <br/>
+    <strong>Čas: 11 minut!</strong> (místo 30)
+  </div>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Kdy Manager View použít</h2>
+
+  <h3>✓ Dělej Manager View když:</h3>
+  <ul>
+    <li>Máš <strong>více nezávislých tasků</strong> — styling + testing + features</li>
+    <li>Chceš <strong>optimalizovat čas</strong> — paralelní práce je jednoznačně rychlejší</li>
+    <li>Máš <strong>komplexní projekt</strong> — více souborů, více komponent</li>
+    <li>Chceš <strong>vidět big picture</strong> — jak to všechno funguje dohromady</li>
+  </ul>
+
+  <h3>✗ Nepoužívej Manager View když:</h3>
+  <ul>
+    <li>Máš <strong>malý projekt</strong> (receptář atd.) — overhead</li>
+    <li>Tasks jsou <strong>vysoce závislé</strong> — jedna věc se musí dělat po druhé</li>
+    <li>Jsi <strong>nový v Antigravity</strong> — nejdříve nauč se Editor View</li>
+    <li>Pracuješ <strong>sám</strong> — není důvod pro orchestraci</li>
+  </ul>
+
+  <h3>Pro tvůj projekt (receptář)</h3>
+  <p><strong>Editor View stačí.</strong> Projekt je dostatečně malý, tasks jsou spíš sekvenční (přidej feature → nastyluj → test). Manager View je pro pokročilejší:</p>
+
+  <ul>
+    <li>Velké projekty s více formování paralelními streamy</li>
+    <li>Týmy kde více agentů pracuje na různých partech</li>
+    <li>Optimalizace: frontend + backend + testing paralelně</li>
+  </ul>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>V budoucnu — pokud se rozšíříš</strong>
+      <p>Pokud se receptář stane komplexnějším projektem nebo budeš mít víc věcí co dělat — přepni na Manager View. Zatím je to overkill.</p>
+    </div>
+  </box>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  02_ANT_Manager_View.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  <a href="00_ANT_INDEX.html">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

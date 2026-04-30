@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor View – Antigravity průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --amber:#f59e0b;--amber2:#fcd34d;
+  --red:#ef4444;--red2:#fca5a5;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+/* NAV ZPĚT */
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+/* HEADER */
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(0,217,255,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--cyan)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+.badge-p{color:var(--purple2);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+
+/* TOC */
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--cyan);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--cyan);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--cyan2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--cyan);min-width:16px}
+
+/* SECTION */
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--purple2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+a{color:var(--cyan2);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* CODE */
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(0,217,255,.1);
+  color:var(--cyan2);border:1px solid rgba(0,217,255,.2);border-radius:4px;padding:1px 7px}
+
+/* BOXES */
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:var(--green2)}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--amber2)}
+.danger{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25);color:#d09090}
+.danger .content strong{color:var(--red2)}
+.info{background:rgba(0,217,255,.08);border-color:rgba(0,217,255,.25);color:#90d8e8}
+.info .content strong{color:var(--cyan2)}
+
+/* COMPARISON */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.compare{grid-template-columns:1fr}}
+.comp-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.comp-title{font-family:'Syne',sans-serif;font-size:.85em;font-weight:700;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--border)}
+.comp-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:.82em}
+.comp-icon{color:var(--cyan);flex-shrink:0;margin-top:1px}
+.comp-text{color:var(--t2)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:12px;margin:14px 0}
+.step{display:grid;grid-template-columns:40px 1fr;gap:0;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.step-n{display:flex;align-items:flex-start;justify-content:center;padding-top:14px;
+  font-family:'Syne',sans-serif;font-size:1.1em;font-weight:800;color:var(--cyan);
+  background:rgba(0,217,255,.06);border-right:1px solid var(--border)}
+.step-b{padding:12px 16px}
+.step-t{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:6px;
+  font-size:.95em}
+.step-b p{font-size:.88em;color:var(--t2);margin-bottom:5px}
+.step-b p:last-child{margin-bottom:0}
+
+/* GRID 2COL */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+/* DIAGRAM */
+.diagram{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
+  color:var(--cyan2);line-height:1.8;overflow-x:auto}
+
+/* FOOTER */
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- NAV ZPĚT -->
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<!-- HEADER -->
+<header>
+  <div class="h-num">// kapitola 01</div>
+  <h1>Editor <em>View</em></h1>
+  <p class="h-desc">Seznámení s Antigravity IDE. Jak se pohybovat v rozhraní, jak funguje spolupráce s agentem, co jsou Artifacts, a proč je to jiné než AI Studio.</p>
+  <div class="badges">
+    <span class="badge badge-c">👀 Orientace</span>
+    <span class="badge badge-p">🤖 Agent jako společník</span>
+    <span class="badge badge-c">🎯 Prakticky</span>
+  </div>
+</header>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Co je Editor View a co není</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Rozhraní — kde co je</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Jak agent v Editor View funguje</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Artifacts — co to je a proč je to důležité</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Approval workflow — jak se agent ptá</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Vs. AI Studio — co se změnilo</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Psaní promptu agentovi</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Praktický příklad — krok za krokem</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Co je Editor View a co není</h2>
+
+  <p>Antigravity má dva různé módy práce. Právě teď se zaměříme na <strong>Editor View</strong> — to je ten tradičnější, více "pod tvou kontrolou".</p>
+
+  <h3>Editor View = VS Code + bočný agent panel</h3>
+  <p>Levá strana: klasické VS Code — soubory, struktura projektu, editace kódu, všechno co znáš. Pravá strana (nebo v panelu): agent kterého můžeš psát. Můžeš sám kódovat, agent ti pomáhá — nebo mu dáš úkol a on kóduje zatímco ty čekáš.</p>
+
+  <div class="compare">
+    <div class="comp-card">
+      <div class="comp-title" style="color:var(--green2)">✅ Co Editor View JE</div>
+      <div class="comp-row"><span class="comp-icon">✓</span><span class="comp-text">Známé VS Code rozhraní</span></div>
+      <div class="comp-row"><span class="comp-icon">✓</span><span class="comp-text">Můžeš kódovat sám, agent v panelu</span></div>
+      <div class="comp-row"><span class="comp-icon">✓</span><span class="comp-text">Agent vypomáhá, neovládá</span></div>
+      <div class="comp-row"><span class="comp-icon">✓</span><span class="comp-text">Máš vždy poslední slovo</span></div>
+      <div class="comp-row"><span class="comp-icon">✓</span><span class="comp-text">Dobré pro kódování s pomocí AI</span></div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title" style="color:var(--amber2)">❌ Co Editor View NENÍ</div>
+      <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Není to Agent-first (to je Manager View)</span></div>
+      <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Nejde tu paralelně více agentů</span></div>
+      <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Agent neví co chceš dok ho explicitně neřekneš</span></div>
+      <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Není to AI Studio chatbox</span></div>
+    </div>
+  </div>
+
+  <div class="box info">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Proč začínat s Editor View?</strong>
+      <p>Pokud jsi měl negativní zkušenost s AI Studiem kde agent dělal věci bez tvého vědomí — Editor View je pro tebe bezpečnější volba. Máš přehled, máš kontrolu. Později můžeš zkusit Manager View pokud budeš chtít více autonomie.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Rozhraní — kde co je</h2>
+
+  <p>Antigravity Editor View je upravená verze VS Code. Pokud znáš VS Code, půjde ti to snadno. Pokud ne, tady je orientace:</p>
+
+  <h3>Levá strana — editor a files (klasické)</h3>
+  <ul>
+    <li><strong>File Explorer</strong> — stromová struktura projektu. Všechny složky a soubory tvého receptáře.</li>
+    <li><strong>Search</strong> — hledání v souborech (Ctrl+Shift+F / Cmd+Shift+F)</li>
+    <li><strong>Source Control</strong> — Git integrace. Uvidíš změny, commity, větve.</li>
+    <li><strong>Extensions</strong> — VS Code rozšíření — stejná jako klasické VS Code.</li>
+  </ul>
+
+  <h3>Uprostřed — editory a terminal</h3>
+  <ul>
+    <li><strong>Tab souboru</strong> — otevři soubor a edituj. Agent v panelu vidí co edituješ.</li>
+    <li><strong>Terminal</strong> — spusť příkazy (npm run dev, build, git atd.). Agentovi můžeš říct "spusť build" a on to zadá terminálu.</li>
+    <li><strong>Preview</strong> — pokud jsi otevřel HTML/Markdown, vidíš náhled.</li>
+  </ul>
+
+  <h3>Pravá strana — agent panel (nové v Antigravity)</h3>
+  <ul>
+    <li><strong>Chat s agentem</strong> — napíšeš task, agent mu rozumí v kontextu celého projektu, může se ptát dál.</li>
+    <li><strong>Artifacts panel</strong> — agent zde zobrazuje to co dělá: plány, diffs kódu, screenshoty (pokud má Chrome extension).</li>
+    <li><strong>Status agenta</strong> — víš jestli agent čeká, pracuje, nebo čeka na tvé schválení.</li>
+  </ul>
+
+  <div class="diagram">
+┌────────────────────────────────────────────────────────────┐
+│ Antigravity IDE — Editor View                              │
+├────────────────────────────────────────────────────────────┤
+│ File Explorer  │  src/App.tsx         │  Agent Chat        │
+│ ├─ src/        │  ........................│  "Přidej button" │
+│ ├─ public/     │  return &lt;div&gt;...      │  ........................│
+│ │ ├─ manifest │  const [count] ...      │  Artifacts:        │
+│ └─ package.json│                        │  - Plan (diff)     │
+│                │  .................... │  - Waiting for OK  │
+│ SEARCH         │  Terminal             │  [Approve] [Edit]  │
+│                │  $ npm run dev...     │                    │
+└────────────────────────────────────────────────────────────┘
+  </div>
+
+  <h3>Klávesové zkratky (stejné jako VS Code)</h3>
+  <div class="grid2">
+    <div>
+      <strong>Soubory & editace</strong><br/>
+      <code>Ctrl+P</code> — Quick Open (najdi soubor)<br/>
+      <code>Ctrl+Shift+F</code> — Hledání v projektu<br/>
+      <code>Ctrl+S</code> — Ulož soubor<br/>
+      <code>Ctrl+Z</code> — Undo
+    </div>
+    <div>
+      <strong>Terminál & Agent</strong><br/>
+      <code>Ctrl+`</code> — Otevři/zavři terminál<br/>
+      <code>Ctrl+K Ctrl+I</code> — Inline command pro agenta<br/>
+      <code>Ctrl+L</code> — Clear chat (agent panel)
+    </div>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Jak agent v Editor View funguje</h2>
+
+  <p>Přihlášeníš si v Antigravity, otevřeš Editor View, a vidíš agent panel. Co se stane když mu cokoliv řekneš?</p>
+
+  <h3>Typický workflow agenta</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Ty napíšeš task (prompt)</div>
+        <p><strong>Příklad:</strong> "Přidej v komponenty RecipeCard.tsx tlačítko pro oblíbené recepty (heart ikona)"</p>
+        <p>Agent si přečte projekt, vyhledá relevantní soubory, rozumí kontextu.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Agent PLÁNUJE (Plan Artifact)</div>
+        <p>Zobrazí se plán co bude dělat:</p>
+        <p style="font-size:.85em;color:var(--cyan);font-family:'DM Mono'">📋 Plan:<br/>- Otevřu RecipeCard.tsx<br/>- Přidám import Lucide Heart ikony<br/>- Přidám state pro isFavorite<br/>- Rendernu button s ikonou na řádku 45<br/>- Uložím soubor</p>
+        <p><strong>Klíčové:</strong> Agent se PTÁŠ na schválení. Nečeká jen tak.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Ty schválíš nebo odmítneš</div>
+        <p>V Artifacts panelu jsou tlačítka <strong>[Approve] [Edit] [Reject]</strong>.</p>
+        <p><strong>Approve:</strong> Agent pokračuje.<br/><strong>Edit:</strong> Napíšeš feedback, agent se přizpůsobí.<br/><strong>Reject:</strong> Agent se zeptá co jinak.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">Agent PROVÁDÍ (Execution)</div>
+        <p>Změní soubory, spustí příkazy, vše se udělá. V terminálu vidíš output.</p>
+        <p style="font-size:.85em;color:var(--green2)">✓ RecipeCard.tsx změněn<br/>✓ Dependency instalován (react-icons)<br/>✓ Build úspěšný</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">5</div>
+      <div class="step-b">
+        <div class="step-t">Agent OVĚŘUJE (Verification)</div>
+        <p>Pokud má Chrome extension nainstalovanou, spustí aplikaci v prohlížeči, udělá screenshot, ukaže že tlačítko se zobrazuje správně.</p>
+        <p><strong>Nebo jen sám řekne:</strong> "Hotovo, 3 soubory změněno, žádných chyb"</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Klíčový rozdíl od AI Studio</strong>
+      <p>Agent si nemůže jen tak "rozmyslet" že pokračuje sám. V každém kroku se ptá. To je tvá ochrana — pokud agent chce dělat věci mimo task, můžeš ho zastavit.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Artifacts — co to je a proč je to důležité</h2>
+
+  <p>Artifacts jsou věci které agent vytváří a mezi vámi sdílí. Nejde o "raw tool calls" nebo technické hlášky — jde o věci které chypeš i ty.</p>
+
+  <h3>Jaké Artifacts agent generuje?</h3>
+  <ul>
+    <li><strong>Plan (Plánování)</strong> — co bude agent dělat, krok za krokem. Vidíš to předtím než se stane.</li>
+    <li><strong>Code Diff</strong> — změny v souborech. Barevně zvýrazneno co se změnilo (+zelená, -červená).</li>
+    <li><strong>Screenshot</strong> — pokud agent spustil aplikaci v prohlížeči, vidíš jak to vypadá.</li>
+    <li><strong>Task List</strong> — seznam úkolů pro agent nebo progress report.</li>
+    <li><strong>Error Report</strong> — pokud něco selhalo, agent to dokumentuje s vysvětlením.</li>
+  </ul>
+
+  <h3>Proč na Artifacts záleží?</h3>
+  <p>V AI Studiu jsi viděl jen výsledky — a případně jsi si všimla až když už bylo pozdě. Artifacts ti dávají <strong>vizibilitu a kontrolu</strong>. Vidíš přesně co se změní dřív než se to změní.</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Jak Artifacts fungují v praxi</strong>
+      <p>Agent zobrazí Plan → ty si ho přečteš → buď klikneš Approve (pokračuj), nebo comentuješ jako v Google Docs ("ne, nechci smazat DB, jenom přidej nový field"). Agent vidí tvůj komentář a přizpůsobí se.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Approval workflow — jak se agent ptá</h2>
+
+  <p>Toto je ta část která tě ochrání před problémem z AI Studio. Agent se MUSÍ ptát než něco významného udělá.</p>
+
+  <h3>Režimy schválení (Approval Modes)</h3>
+  <p>V nastavení Antigravity si můžeš zvolit jak přísný máš být s agentem:</p>
+
+  <div class="compare">
+    <div class="comp-card">
+      <div class="comp-title" style="color:var(--green2)">🟢 Agent-Assisted (doporučeno)</div>
+      <p style="font-size:.85em;color:var(--t2);margin-top:10px">Agent sám rozhoduje co je bezpečné. Drobné změny — bez ptaní. Větší věci — čeká na schválení.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title" style="color:var(--amber2)">🟡 Review-Driven</div>
+      <p style="font-size:.85em;color:var(--t2);margin-top:10px">Agent plánuje, ty schválíš plán, pak provádí. Nejbezpečnější.</p>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="comp-card">
+      <div class="comp-title" style="color:var(--amber2)">🟡 Hands-Off</div>
+      <p style="font-size:.85em;color:var(--t2);margin-top:10px">Agent pracuje víc autonomně, ale hlásí ti co udělal. Pro zkušené.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title" style="color:var(--red2)">🔴 Full Autonomy</div>
+      <p style="font-size:.85em;color:var(--t2);margin-top:10px">Agent si dělá co chce. Riziko. Nepoužívej pokud máš trauma z AI Studio.</p>
+    </div>
+  </div>
+
+  <h3>Příklad Approval Workflow</h3>
+  <div class="diagram">
+Ty:  "Refaktoruj soubor utils.ts abys oddělil logiku"
+
+Agent (v panelu):
+┌──────────────────────────────────────────┐
+│ PLAN ARTIFACT                            │
+├──────────────────────────────────────────┤
+│ Budu:                                    │
+│ 1. Extrahovat sortRecipes() do helper    │
+│ 2. Vytvořit nový soubor helpers.ts       │
+│ 3. Aktualizovat importy v App.tsx        │
+│ 4. Spustit testy (npm run test)          │
+│                                          │
+│ [✓ Approve] [✎ Edit] [✗ Reject]        │
+└──────────────────────────────────────────┘
+
+Ty: [klikneš ✓ Approve]
+
+Agent: (pracuje)
+[✓] helpers.ts vytvořen
+[✓] utils.ts refaktorován
+[✓] Importy aktualizovány
+[⏳] Spouštím testy...
+
+Chyba: Jeden test selhal. Opravuji.
+
+[✓] Vše hotovo. Artifacts:
+  - Diff (ukaž změny)
+  - Screenshot (výsledek)
+</div>
+
+  <div class="box danger">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Nikdy neklikej "OK na všechno"</strong>
+      <p>Approval je jednocestný. Pokud schválíš špatný plán, agent to udělá. Agentu se pak budou opravovat věci manuálně. Čti vždy co agent plánuje, i když to trvá 30 sekund.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Vs. AI Studio — co se změnilo</h2>
+
+  <p>Pojďme si srovnat tvůj problém z AI Studio s tím jak funguje Antigravity Editor View.</p>
+
+  <table style="width:100%;border-collapse:collapse;font-size:.87em;margin:14px 0">
+    <thead>
+      <tr style="border-bottom:2px solid var(--border)">
+        <th style="padding:9px 12px;text-align:left;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.78em">Situace</th>
+        <th style="padding:9px 12px;text-align:left;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.78em">Google AI Studio</th>
+        <th style="padding:9px 12px;text-align:left;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.78em">Antigravity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:10px 12px;color:var(--white)">Agent vidí tvůj projekt?</td>
+        <td style="padding:10px 12px;color:var(--t2)">Jen co zkopíruješ</td>
+        <td style="padding:10px 12px;color:var(--green2)">✓ Vidí vše, celý projekt</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:10px 12px;color:var(--white)">Agent si "rozmyslí" další kroky?</td>
+        <td style="padding:10px 12px;color:var(--red2)">✓ Ano, dělá věci bez ptaní</td>
+        <td style="padding:10px 12px;color:var(--green2)">✗ Ne, vždy se ptá</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:10px 12px;color:var(--white)">Vidíš PŘED tím co agent udělá?</td>
+        <td style="padding:10px 12px;color:var(--red2)">Jen částečně</td>
+        <td style="padding:10px 12px;color:var(--green2)">✓ Plan Artifact, vše vidíš</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:10px 12px;color:var(--white)">Můžeš zastavit agent uprostřed?</td>
+        <td style="padding:10px 12px;color:var(--red2)">Těžko, už to dělá</td>
+        <td style="padding:10px 12px;color:var(--green2)">✓ Klidně, čeká na schválení</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:10px 12px;color:var(--white)">Jak se vrátíš z chyby?</td>
+        <td style="padding:10px 12px;color:var(--red2)">Ručně, 3 týdny práce pryč</td>
+        <td style="padding:10px 12px;color:var(--green2)">✓ Git undo, zálohy</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px;color:var(--white)">Cena?</td>
+        <td style="padding:10px 12px;color:var(--green2)">Zdarma</td>
+        <td style="padding:10px 12px;color:var(--green2)">Zdarma</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box info">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Konkrétně k tvé situaci — smazání databáze</strong>
+      <p>V Antigravity by to vypadalo takto: Agent v planu řekne "Smaž databázi a nahraď ji novou strukturou". Ty to vidíš, a klikneš [Reject] nebo [Edit]. Databáze se NEZMĚNÍ pokud ty to neschválíš. Bod.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Psaní promptu agentovi</h2>
+
+  <p>Jak psát task aby agent dělal přesně to co chceš? Stejná pravidla jako u Gemini CLI, ale s jedním rozdílem — Antigravity agent vidí tvůj kód.</p>
+
+  <h3>Vzorce které fungují</h3>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Specifický task s kontextem</strong>
+      <p>"V komponenty RecipeCard.tsx, vedle tlačítka Delete (řádek 52), přidej nové tlačítko Edit s ikonou tužky. Tlačítko by mělo volat function onEdit() kterou dostane component skrz props."</p>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>S výsledkem na konci</strong>
+      <p>"Refaktoruj src/utils/api.ts: oddělíme fetch logiku do samostatného souboru api-client.ts. Výsledek: utils/api.ts bude mít jen business logiku, api-client.ts bude mít HTTP klienta. Testy by měly projít."</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Vyhni se vágním tasků</strong>
+      <p>❌ "Vylepši kód"<br/>❌ "Oprav to"<br/>❌ "Udělej to lépe"<br/><br/>Agent neví co znamená "lépe". Buď konkrétní.</p>
+    </div>
+  </div>
+
+  <h3>Komunikace s agentem během práce</h3>
+  <p>Pokud se agent ptá dál (chatuj s ním), odpovídej konkrétně:</p>
+  <ul>
+    <li><strong>"Ano, přidej i error handling"</strong> — konkrétní</li>
+    <li><strong>"Ne, nechci smazat ten soubor, jenom ho refaktoruj"</strong> — jasné hranice</li>
+    <li><strong>"Zobraz mi diff předtím"</strong> — máš kontrolu</li>
+  </ul>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Praktický příklad — krok za krokem</h2>
+
+  <p>Představme si že otevřeš Antigravity, načteš svůj projekt receptáře a chceš aby agent přidal jednu novou feature.</p>
+
+  <h3>Příklad: "Přidej filtr na cenu receptu"</h3>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">A</div>
+      <div class="step-b">
+        <div class="step-t">Ty napíšeš do Agent panelu:</div>
+        <p style="font-family:'DM Mono';color:var(--cyan);margin-top:8px">"V komponenty RecipeFilter.tsx přidej nový slider input pro filtrování ceny receptu. Minimálně 0 Kč, maximálně 500 Kč. State ulož do existujícího state objektu filterOptions. Nezapomeň na onChange handler."</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">B</div>
+      <div class="step-b">
+        <div class="step-t">Agent Creates PLAN Artifact</div>
+        <p style="font-size:.87em;margin-top:8px">v panelu se zobrazí:</p>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px;margin-top:8px;font-family:'DM Mono';font-size:.8em;color:var(--cyan)">
+📋 PLAN - Přidání price filter<br/>
+1. Otevřu soubor RecipeFilter.tsx<br/>
+2. Najdu state objektu filterOptions<br/>
+3. Přidám priceMin a priceMax do stavu<br/>
+4. Rendernu Slider komponentu (2x)<br/>
+5. Přidám onChange handlery<br/>
+6. Uložím soubor<br/>
+<br/>
+Files: 1 změněn<br/>
+Build: OK (bez dependencí)<br/>
+        </div>
+        <p style="margin-top:10px"><strong>Status:</strong> ⏳ Čeká na tvé schválení</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">C</div>
+      <div class="step-b">
+        <div class="step-t">Ty schválíš plán</div>
+        <p>V Artifacts panelu: <span style="background:rgba(16,185,129,.2);padding:2px 8px;border-radius:4px;color:var(--green2)">[✓ Approve]</span> — klikneš.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">D</div>
+      <div class="step-b">
+        <div class="step-t">Agent PROVÁDÍ (Execution)</div>
+        <p>Terminal se aktivuje, vidíš co agent dělá:</p>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px;margin-top:8px;font-family:'DM Mono';font-size:.75em;color:var(--cyan2)">
+$ nano src/components/RecipeFilter.tsx<br/>
+✓ Soubor otevřen a aktualizován<br/>
+✓ State objekty přidány<br/>
+✓ Slider komponenty vyrenderovány<br/>
+✓ Handlers propojeny<br/>
+$ npm run build<br/>
+[webpack] Build OK<br/>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">E</div>
+      <div class="step-b">
+        <div class="step-t">Agent OVĚŘÍ (Verification)</div>
+        <p>Agent (pokud má Chrome extension) spustí aplikaci a udělá screenshot:</p>
+        <p style="font-size:.85em;margin-top:8px;color:var(--t2)">🌐 Spouštím aplikaci v prohlížeči...</p>
+        <p style="font-size:.85em;color:var(--green2)">✓ Aplikace běží na http://localhost:3000</p>
+        <p style="font-size:.85em;color:var(--green2)">✓ Price Slider viditelný v UI</p>
+        <p style="font-size:.85em;color:var(--green2)">✓ Interakce OK — slider se pohybuje 0-500</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">F</div>
+      <div class="step-b">
+        <div class="step-t">Agent hlásí hotovo</div>
+        <p style="margin-top:8px">Artifacts panel zobrazí:</p>
+        <ul style="margin-top:6px;font-size:.85em">
+          <li><strong>Diff:</strong> Právě co se změnilo v RecipeFilter.tsx</li>
+          <li><strong>Screenshot:</strong> Jak vypadá aplikace s novým filtrem</li>
+          <li><strong>Summary:</strong> "Hotovo, 1 soubor změněn, 0 chyb, build OK"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">G</div>
+      <div class="step-b">
+        <div class="step-t">Ty schválíš nebo edituješ</div>
+        <p><strong>[✓ Done]</strong> — task se uzavřel, agent čeká na nový.<br/>nebo<br/><strong>[✎ Edit]</strong> — napíšeš feedback a agent to opravuje.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box info">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Pozorování z příkladu</strong>
+      <p>Vidíš PLÁN předtím než se cokoliv změní. Vidíš DIFFU co se změnilo. Vidíš SCREENSHOT výsledku. Má jsi šanci zastavit v kterémkoliv kroku. To je kontrola kterou jsi měla z AI Studio.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  01_Editor_View.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  <a href="INDEX.html">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

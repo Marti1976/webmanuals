@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webový Manuál - Rozcestník</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Barevná paleta - Temný premium vzhled */
+            --bg-color: #0a0810;
+            --bg-card: #13101c;
+            --bg-card-hover: #1a1528;
+            --text-main: #f0e8ff;
+            --text-muted: #8073a8;
+            --accent-primary: #00d9ff;
+            --accent-secondary: #a855f7;
+            --border-color: #2a1f3d;
+            --border-hover: #5a4a75;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambientní podsvícení pozadí */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.05) 0%, rgba(168, 85, 247, 0.05) 50%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--accent-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Mřížka pro karty - přesně 3 sloupce na velkých monitorech */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        /* Karta manuálu */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .card-badge {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent-primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .card-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.2s;
+        }
+
+        .card:hover .card-link {
+            gap: 12px;
+        }
+
+        /* Patička */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        @media (min-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Webový Manuál</h1>
+            <p class="subtitle">Centrální rozcestník pro vaši dokumentaci, pravidla a průvodce. Vyberte požadovaný manuál pro pokračování.</p>
+        </header>
+
+        <main>
+            <div class="grid-container">
+                
+                <!-- KARTA MANUÁLU 1: Gemini CLI -->
+                <a href="GeminiCLI/00_CLI_INDEX.html" class="card">
+                    <div class="card-header">
+                        <span class="card-icon">⚡</span>
+                        <span class="card-badge">Aktivní</span>
+                    </div>
+                    <h2 class="card-title">Gemini CLI</h2>
+                    <p class="card-desc">Kompletní průvodce pro instalaci, nastavení a používání Google Gemini z příkazové řádky.</p>
+                    <span class="card-link">Otevřít manuál <span>→</span></span>
+                </a>
+                <!-- KONEC KARTY -->
+
+                <!-- KARTA MANUÁLU 2: Antigravity -->
+                <a href="Antigrav/00_ANT_INDEX.html" class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🚀</span>
+                        <span class="card-badge">Aktivní</span>
+                    </div>
+                    <h2 class="card-title">Google Antigravity</h2>
+                    <p class="card-desc">Průvodce agentním prostředím od Google. Instalace, bezpečnost a řízení autonomních agentů.</p>
+                    <span class="card-link">Otevřít manuál <span>→</span></span>
+                </a>
+                <!-- KONEC KARTY -->
+
+                <!-- ŠABLONA PRO NOVOU KARTU (Zkopírujte tento blok pro přidání další) -->
+                <!--
+                <a href="NAZEV_SLOZKY/index.html" class="card">
+                    <div class="card-header">
+                        <span class="card-icon">📂</span>
+                        <span class="card-badge" style="color: #a855f7; background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.2);">Nové</span>
+                    </div>
+                    <h2 class="card-title">Název nového manuálu</h2>
+                    <p class="card-desc">Krátký popis toho, co tento nový manuál obsahuje. Stačí upravit tento text.</p>
+                    <span class="card-link">Otevřít manuál <span>→</span></span>
+                </a>
+                -->
+                <!-- KONEC ŠABLONY -->
+
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Projekt Webový Manuál &middot; Systém dokumentace pro bezpečný a řízený vývoj</p>
+    </footer>
+
+</body>
+</html>

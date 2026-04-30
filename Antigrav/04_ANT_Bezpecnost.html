@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bezpečnost Antigravity – průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --amber:#f59e0b;--amber2:#fcd34d;
+  --red:#ef4444;--red2:#fca5a5;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(0,217,255,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--red2)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-r{color:var(--red2);border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.08)}
+.badge-g{color:var(--green2);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--red2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--red2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--red);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--red2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(239,68,68,.1);
+  color:var(--red2);border:1px solid rgba(239,68,68,.2);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.danger{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25);color:#d09090}
+.danger .content strong{color:var(--red2)}
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:var(--green2)}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--amber2)}
+.info{background:rgba(0,217,255,.08);border-color:rgba(0,217,255,.25);color:#90d8e8}
+.info .content strong{color:var(--cyan2)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.card-mini{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.card-mini h4{margin-top:0;font-size:.9em;margin-bottom:8px}
+.card-mini p{margin:0;font-size:.85em;color:var(--t2);line-height:1.6}
+
+.checklist{background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--green);
+  border-radius:var(--r);padding:18px 22px;margin:14px 0}
+.checklist h4{color:var(--green2);margin-top:0;font-size:.9em;text-transform:uppercase;letter-spacing:.08em}
+.cl-item{display:flex;align-items:flex-start;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:.85em;color:var(--t2)}
+.cl-item:last-child{border-bottom:none}
+.cl-box{color:var(--green);flex-shrink:0;margin-top:2px}
+
+.risk-table{width:100%;border-collapse:collapse;font-size:.85em;margin:14px 0}
+.risk-table th{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--t3);padding:9px 12px;text-align:left;border-bottom:2px solid var(--border)}
+.risk-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.risk-table tr:last-child td{border-bottom:none}
+.risk-table td:first-child{font-family:'DM Mono',monospace;color:var(--white);white-space:nowrap}
+.risk-table td:nth-child(2){color:var(--t2)}
+.risk-level{display:inline-block;font-family:'DM Mono',monospace;font-size:.78em;
+  padding:2px 10px;border-radius:10px;border:1px solid;white-space:nowrap}
+.rl-low{color:var(--green2);border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.08)}
+.rl-mid{color:var(--amber2);border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.08)}
+.rl-hi{color:var(--red2);border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.08)}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 04</div>
+  <h1>Bezpečnost <em>Agenta</em></h1>
+  <p class="h-desc">Jak zkrotit autonomního agenta. Approval workflows, Allow/Deny listy, data privacy. Zaměřeno na tvůj problém s AI Studiem — aby se to NEOPAKOVALO.</p>
+  <div class="badges">
+    <span class="badge badge-r">🔒 Přístupová kontrola</span>
+    <span class="badge badge-g">✓ Schválení akcí</span>
+    <span class="badge badge-r">⚡ Bezpečnostní režimy</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Co agent vidí v tvém projektu</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Approval workflow — jak funguje</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Allow/Deny listy — co smí dělat</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Chránění citlivých dat</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Data privacy — kde běží kód</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Audit trail — coje se dělo</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Role-based access — týmová práce</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Praktické bezpečnostní tipy</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Co agent vidí v tvém projektu</h2>
+
+  <p>Antigravity agent pracuje v Workspace ve kterém ho otevřeš. <strong>Vidí všechny soubory ve všech přidaných složkách.</strong></p>
+
+  <h3>Co vidí agent?</h3>
+  <ul>
+    <li>Všechny soubory v <code>/src</code>, <code>/public</code>, <code>package.json</code>, vše</li>
+    <li>Obsah tvého terminálu a výstupy příkazů</li>
+    <li>Git historii (commity, větve)</li>
+    <li>Obsah <code>.env</code> souboru (pokud není ignorován!)</li>
+    <li>Obsah jakéhokoliv souboru co bude otevřený v editoru</li>
+  </ul>
+
+  <div class="box danger">
+    <span class="icon">🔴</span>
+    <div class="content">
+      <strong>Nikdy neukládej hesla či klíče v .env nebo v kódu</strong>
+      <p>Pokud je tam API klíč, heslo k databázi nebo cokoliv citlivého — agent to vidí a může to poslat Google serverům. <strong>Vždy</strong> używaj <code>.env</code> který je v <code>.gitignore</code> a v Antigravity project settings ho ignorovat.</p>
+    </div>
+  </box>
+
+  <h3>Co agent NEVIDÍ?</h3>
+  <ul>
+    <li>Soubory mimo tvůj Workspace (v jiných složkách)</li>
+    <li>Ostatní projekty které nejsou v Workspace</li>
+    <li>Tvůj obsah v prohlížeči (jen pokud máš Chrome extension a ty mu řekneš aby se tam podíval)</li>
+    <li>Obsah tvého disku mimo projekt</li>
+  </ul>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Approval workflow — jak funguje schválení</h2>
+
+  <p>Toto je tvoje hlavní ochrana. Agent si nemůže jen tak "rozmyslet" co udělá — musí tě požádat.</p>
+
+  <h3>Kroky schvalovacího procesu</h3>
+
+  <div class="card-mini" style="border-left:3px solid var(--green);margin:14px 0">
+    <h4 style="color:var(--green2)">1️⃣ Agent vidí task</h4>
+    <p>Ty napíšeš: "Přidej filter na cenu". Agent si to přečte.</p>
+  </div>
+
+  <div class="card-mini" style="border-left:3px solid var(--cyan);margin:14px 0">
+    <h4 style="color:var(--cyan2)">2️⃣ Agent tvoří PLÁN</h4>
+    <p>Zobrazí se v Artifacts: "Změní soubor X na řádku Y, přidá komponenty Z". <strong>Stále nic není změněno.</strong></p>
+  </div>
+
+  <div class="card-mini" style="border-left:3px solid var(--amber);margin:14px 0">
+    <h4 style="color:var(--amber2)">3️⃣ TY schválíš nebo odmítneš</h4>
+    <p>Vidíš plán a rozhodneš se. Tlačítka: <code>[Approve]</code> <code>[Edit]</code> <code>[Reject]</code></p>
+  </div>
+
+  <div class="card-mini" style="border-left:3px solid var(--green);margin:14px 0">
+    <h4 style="color:var(--green2)">4️⃣ Agent PROVÁDÍ (jen pokud yes)</h4>
+    <p>Změny se aplikují, vidíš to v terminálu, vidíš diffs.</p>
+  </div>
+
+  <div class="card-mini" style="border-left:3px solid var(--cyan);margin:14px 0">
+    <h4 style="color:var(--cyan2)">5️⃣ Agent ověřuje (Verification)</h4>
+    <p>Spustí build, screenshoty, ukazuje že to funguje.</p>
+  </div>
+
+  <h3>V Review-Driven režimu (doporučeno)</h3>
+  <p><strong>Agent si nemůže nic vzít jako samozřejmost.</strong> Každý krok musí být schválen. Není "iniciativy" která by tě překvapila.</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>To je rozdíl od AI Studio</strong>
+      <p>V AI Studiu agent viděl tvůj kód, řekl si "hmm, k tomu by se hodilo i tohle" a dělal to bez ptaní. V Antigravity: "Chceš aby já taky udělal X?" A ty můžeš říct "NE, jenom Y!"</p>
+    </div>
+  </box>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Allow/Deny listy — co smí agent dělat</h2>
+
+  <p>Kromě schválení jednotlivých akcí můžeš agentovi permanentně určit hranice.</p>
+
+  <h3>Kde to nastavit?</h3>
+  <p>Settings → Agent → Permissions → Allow/Deny Lists</p>
+
+  <h3>Allow List — co agent SMÍ dělat</h3>
+  <p>Pokud je Allow list zapnutý, agent může dělat <strong>POUZE</strong> co tam máš:</p>
+
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin:12px 0;
+    font-family:'DM Mono';font-size:.8em;color:var(--cyan);line-height:1.7">
+Allow:
+  - modify files in /src
+  - modify files in /public
+  - run: npm run build
+  - run: npm run dev
+  - Deny: delete files
+  - Deny: modify package.json
+  - Deny: run npm install
+    </div>
+
+  <p><strong>Efekt:</strong> Agent může měnit kód, ale NEMŮŽE instalovat balíčky ani mazat soubory. Ochrana!</p>
+
+  <h3>Deny List — co agent NESMÍ dělat</h3>
+  <p>Opačné — co konkrétně je zakázáno:</p>
+
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin:12px 0;
+    font-family:'DM Mono';font-size:.8em;color:var(--red2);line-height:1.7">
+Deny:
+  - delete any files
+  - modify database.json
+  - modify .env
+  - run: rm -rf
+    </div>
+
+  <h3>Jak to použít pro tvůj projekt?</h3>
+
+  <div class="card-mini" style="border-color:rgba(16,185,129,.3)">
+    <h4 style="color:var(--green2)">✓ Co doporučuji povolit</h4>
+    <p>modify files in /src<br/>modify files in /public<br/>run: npm run dev<br/>run: npm run build</p>
+  </div>
+
+  <div class="card-mini" style="border-color:rgba(239,68,68,.3)">
+    <h4 style="color:var(--red2)">✗ Co zakázat</h4>
+    <p>delete any files<br/>modify package.json<br/>run: npm install<br/>modify .env</p>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Pozor: Allow list je přísnější</strong>
+      <p>Pokud máš Allow list — agent NIČEHO jiného nemůže dělat. Pokud máš Deny list — agent smí všechno kromě zakázaného. Validu pro receptář: Deny list.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Chránění citlivých dat</h2>
+
+  <p>Konkrétní věci které musíš chránit:</p>
+
+  <h3>❌ NIKDY v projektu:</h3>
+  <ul>
+    <li><strong>API klíče</strong> — Google, Firebase, atd.</li>
+    <li><strong>Hesla</strong> — databáze, služby</li>
+    <li><strong>Database URL</strong> — pokud je produkční</li>
+    <li><strong>Privátní tokeny</strong> — JWT, OAuth tokeny</li>
+  </ul>
+
+  <h3>Jak je správně chránit?</h3>
+
+  <div class="checklist">
+    <h4>✓ Bezpečný postup</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Vytvoř soubor <code>.env.local</code> — tam všechny klíče</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Přidej <code>.env.local</code> do <code>.gitignore</code> — nesmí jít na GitHub</div>
+    <div class="cl-item"><span class="cl-box">☐</span> V Antigravity Settings → Project → Ignore Files → přidej <code>.env.local</code></div>
+    <div class="cl-item"><span class="cl-box">☐</span> Agent nebude vidět <code>.env.local</code> — ochrana</div>
+  </div>
+
+  <h3>Pro receptář konkrétně:</h3>
+  <p><code>.env.local</code> tam patří:</p>
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin:12px 0;
+    font-family:'DM Mono';font-size:.8em;color:var(--cyan);line-height:1.7">
+# .env.local (NEVER na GitHub, nikdy pro agenta)
+VITE_GOOGLE_API_KEY=tvoj-tajny-klic
+NEXT_PUBLIC_SUPABASE_URL=https://...
+DATABASE_PASSWORD=super-tajne
+    </div>
+
+  <div class="box info">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Env variables v kódu</strong>
+      <p>V kódu pak užívaš <code>process.env.VITE_GOOGLE_API_KEY</code> — a ta se na runtime načte z <code>.env.local</code>. Agent vidí jen že tu je reference, ale ne hodnotu.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Data privacy — kde běží kód a data</h2>
+
+  <h3>Kde se procesují tvé datos?</h3>
+
+  <table class="risk-table">
+    <thead><tr><th>Komponenta</th><th>Kde běží</th><th>Privátnost</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Antigravity IDE</td>
+        <td>Tvůj lokální počítač</td>
+        <td style="color:var(--green2)">✓ Lokální, nic se neodesílá</td>
+      </tr>
+      <tr>
+        <td>Tvůj kód (src/)</td>
+        <td>Tvůj počítač + Gemini API</td>
+        <td style="color:var(--amber2)">⚠️ Agent to vidí a může to poslat Google</td>
+      </tr>
+      <tr>
+        <td>Terminal výstup</td>
+        <td>Tvůj počítač</td>
+        <td style="color:var(--green2)">✓ Lokální, pokud agent to nesdílí</td>
+      </tr>
+      <tr>
+        <td>Chrome Extension screenshoty</td>
+        <td>Tvůj počítač + Gemini API</td>
+        <td style="color:var(--amber2)">⚠️ Screenshot se může poslat Google (pokud ho agent sdílí)</td>
+      </tr>
+      <tr>
+        <td>Aplikace (localhost:3000)</td>
+        <td>Tvůj počítač (ve VS Code)</td>
+        <td style="color:var(--green2)">✓ Lokální, není na internetu</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box danger">
+    <span class="icon">🔴</span>
+    <div class="content">
+      <strong>Kód = data na Google serverech</strong>
+      <p>Když agent pracuje, tvůj kód jde na Google API. To je normální pro Gemini/AI. Pokud máš velmi citlivý kód (na produkční data, bezpečnostní logiku) — měl bys si to uvědomit.</p>
+    </div>
+  </box>
+
+  <h3>Local-only režim (pokud je dostupný)</h3>
+  <p>Některé Antigravity verze mají "Local Only Mode" — agent pracuje bez posílání do cloudu. Pokud je to pro tebe kritické, zjisti si jestli je dostupné.</p>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Audit trail — coje se dělo</h2>
+
+  <p>Antigravity si pamatuje co agent dělal. Můžeš si to prohlédnout.</p>
+
+  <h3>Kde je historii akcí?</h3>
+  <p>View → Agent History (nebo Command Palette → Show Agent Activity)</p>
+
+  <h3>Co vidíš v historii?</h3>
+  <ul>
+    <li>Kdy se spustilo</li>
+    <li>Co agent dělal (plán)</li>
+    <li>Co přesně změnil (diff)</li>
+    <li>Co se stalo (build status, výstupy)</li>
+    <li>Byl-li schválen či ne</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Praktické užití: "Kontrola zpět"</strong>
+      <p>Pokud si myslíš že agent něco podivného dělal — otevři historii, podívej se přesně co se změnilo. Pak můžeš <code>git checkout</code> nebo <code>undo</code>.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Role-based access — pro týmy</h2>
+
+  <p>Pokud by na projektu pracovalo více lidí (nyní pro tebe neaktuální, ale užitečné vědět):</p>
+
+  <h3>Role které existují</h3>
+  <ul>
+    <li><strong>Owner</strong> — tvůr. Všechna práva.</li>
+    <li><strong>Editor</strong> — může měnit kód, spouštět agenty.</li>
+    <li><strong>Reviewer</strong> — vidí změny, schvaluje. Nemůže sám měnit.</li>
+    <li><strong>Viewer</strong> — jen čte, nic nezmění.</li>
+  </ul>
+
+  <p>Pro tvůj projekt sám: Ty jsi Owner. Hotovo.</p>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Praktické bezpečnostní tipy</h2>
+
+  <div class="checklist">
+    <h4>🔒 Tvůj checklist bezpečnosti</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Spusť Antigravity s Review-Driven režimem (ne Full Autonomy)</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Vytvoř .gitignore s .env.local a jeho zákaz v Antigravity</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Postav Deny list: delete, package.json, .env, npm install</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Před prací s agentem: git commit (záloha)</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Čti každý plán. Nepřeskakuj schvalování.</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Když agentneví nevím — řekni mu "Show me what you changed"</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Pravidelně kontroluj Agent History</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Nesdílej API klíče. Nikdy. Vůbec.</div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Při prvního spuštění s agentem</strong>
+      <p>Dej agentovi malý, nekritický task. Třeba "Přidej komentář do souboru README". Uvidíš jak pracuje, jak vypadá workflow. Pak když budeš jistý — komplexnější věci.</p>
+    </div>
+  </box>
+
+  <h3>Když se agent choval divně:</h3>
+  <ol>
+    <li>Podívej se do Agent History — co přesně dělal?</li>
+    <li><code>git checkout .</code> — vrátí vše do posledního commitu</li>
+    <li>Znovu si sedni s agentem — co se stalo? Řekni mu pravidla znova.</li>
+  </ol>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  04_ANT_Bezpecnost.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  <a href="00_ANT_INDEX.html">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

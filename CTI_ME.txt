@@ -1,0 +1,19 @@
+==========================
+Webový Manuál - Rozcestník
+==========================
+
+Tento projekt slouží jako centrální rozcestník pro všechny vaše webové manuály a dokumentace (Antigrav, GeminiCLI a další).
+Je navržen tak, aby byl snadno přístupný jako klasická webová stránka.
+
+-------------------------
+Struktura repozitáře:
+-------------------------
+- index.html   : Hlavní stránka (rozcestník), která obsahuje odkazy na jednotlivé manuály.
+- style.css    : Společné kaskádové styly pro vizuální vzhled rozcestníku.
+- [složky]     : Složky tvoří jednotlivé konkrétní návody (např. složka Antigrav, GeminiCLI).
+
+-------------------------
+Hostování a sdílení:
+-------------------------
+Tento projekt je díky své statické povaze (čisté HTML/CSS) připraven na snadné a bezplatné hostování (např. přes GitHub Pages nebo jiný webhosting). 
+Díky tomu k němu budete mít přístup z jakéhokoliv zařízení online.

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gemini CLI – kompletní průvodce od nuly</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07080d;
+      --bg-panel: #0c0e16;
+      --bg-alt: #12151f;
+      --fg: #bccde0;
+      --fg-soft: #6a7d96;
+      --accent: #e8a020;
+      --accent-strong: #f5c842;
+      --accent-soft: rgba(232, 160, 32, 0.12);
+      --border-subtle: rgba(26, 31, 46, 0.9);
+      --card-border: rgba(26, 31, 46, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1080px;
+      border-radius: 24px;
+      border: 1px solid var(--border-subtle);
+      background:
+        radial-gradient(circle at top left, rgba(232, 160, 32, 0.10), transparent 55%),
+        radial-gradient(circle at top right, rgba(130, 196, 255, 0.12), transparent 60%),
+        linear-gradient(145deg, var(--bg-panel), var(--bg-alt));
+      box-shadow:
+        0 32px 120px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      padding: 32px 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    header {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .eyebrow-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-soft);
+    }
+
+    .eyebrow-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #00d26a;
+      box-shadow: 0 0 0 4px rgba(0, 210, 106, 0.18);
+    }
+
+    .eyebrow-right {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.92));
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      color: var(--fg-soft);
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 4vw, 3.1rem);
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+    }
+
+    .headline-line {
+      display: block;
+    }
+
+    .headline-accent {
+      background: linear-gradient(120deg, #f97316, #facc15);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 40rem;
+      font-size: 14px;
+      color: var(--fg-soft);
+      line-height: 1.6;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .toc-wrapper {
+      border-radius: 18px;
+      border: 1px solid rgba(250, 204, 21, 0.55);
+      background:
+        radial-gradient(circle at top left, rgba(232, 160, 32, 0.16), transparent 55%),
+        linear-gradient(135deg, var(--bg-panel), var(--bg-alt));
+      padding: 18px 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toc-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--fg-soft);
+    }
+
+    .toc-title-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc-title-main span.badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .toc-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 10px 24px;
+      }
+
+      .page {
+        padding: 22px 16px 16px;
+      }
+    }
+
+    .card-link {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      padding: 9px 11px 8px;
+      background: var(--bg-panel);
+      transition: border-color 130ms ease-out, background 130ms ease-out, transform 90ms ease-out, box-shadow 90ms ease-out;
+      cursor: pointer;
+    }
+
+    .card-link:hover {
+      border-color: rgba(232, 160, 32, 0.9);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.85);
+      transform: translateY(-1px);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 2px;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--fg-soft);
+      line-height: 1.5;
+    }
+
+    .card-arrow {
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      font-size: 14px;
+      color: rgba(250, 204, 21, 0.9);
+    }
+
+    .footer-note {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--fg-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="eyebrow-row">
+        <div class="eyebrow-left">
+          <span class="eyebrow-dot"></span>
+          <span>// průvodce pro projekt rodinný receptář</span>
+        </div>
+        <div class="eyebrow-right">
+          <span class="pill"><span class="pill-dot"></span><span>zdarma navždy</span></span>
+          <span class="pill"><span class="pill-dot"></span><span>1000 dotazů denně</span></span>
+          <span class="pill"><span class="pill-dot"></span><span>vidíš celý projekt</span></span>
+          <span class="pill"><span class="pill-dot"></span><span>mluví česky</span></span>
+        </div>
+      </div>
+
+      <h1>
+        <span class="headline-line">Gemini CLI – <span class="headline-accent">kompletní průvodce</span></span>
+        <span class="headline-line">od nuly</span>
+      </h1>
+
+      <p class="lede">
+        Krok za krokem, bez přeskakování. Pro toho, kdo se teprve učí a nechce znovu zažít noční můry
+        s Google AI Studiem. Tohle je indexová stránka, která tě jen přepne do správné kapitoly.
+      </p>
+    </header>
+
+    <main>
+      <section class="toc-wrapper">
+        <div class="toc-title-row">
+          <div class="toc-title-main">
+            <span class="badge-dot"></span>
+            <span>obsah průvodce</span>
+          </div>
+          <div>klikni na libovolnou kartu</div>
+        </div>
+
+        <div class="toc-grid">
+          <a class="card-link" href="01_CLI_KOMPLETNI_PRUVODCE_WINDOWS.html">
+            <div class="card-top">
+              <span>01 &middot; co je gemini cli</span>
+              <span>windows</span>
+            </div>
+            <h2 class="card-title">Kompletní průvodce instalací a nastavením</h2>
+            <p class="card-desc">
+              Instalace, konfigurace, přidání do PATH a první funkční příkaz. Startovní bod pro čistý systém.
+            </p>
+            <span class="card-arrow">↗</span>
+          </a>
+
+          <a class="card-link" href="02_CLI_DEV_SERVER.html">
+            <div class="card-top">
+              <span>02 &middot; vývojový server</span>
+              <span>dev / api</span>
+            </div>
+            <h2 class="card-title">Lokální dev server s Gemini CLI</h2>
+            <p class="card-desc">
+              Jak nastavit jednoduchý vývojový server, testovat nápady a napojit CLI do vlastních nástrojů.
+            </p>
+            <span class="card-arrow">↗</span>
+          </a>
+
+          <a class="card-link" href="03_CLI_GEMINI_TAHAK.html">
+            <div class="card-top">
+              <span>03 &middot; rychlý tahák</span>
+              <span>příkazy</span>
+            </div>
+            <h2 class="card-title">Tahák příkazů a mini workflow</h2>
+            <p class="card-desc">
+              Nejčastější příkazy, přepínače, vzory promptů a workflow, které používáš každý den v terminálu.
+            </p>
+            <span class="card-arrow">↗</span>
+          </a>
+
+          <a class="card-link" href="04_CLI_BEZPECNOST.html">
+            <div class="card-top">
+              <span>04 &middot; bezpečnost</span>
+              <span>security</span>
+            </div>
+            <h2 class="card-title">Bezpečné použití Gemini CLI</h2>
+            <p class="card-desc">
+              Jak pracovat s API klíči, co nedávat do promptů a jak mít přehled, co Gemini z tvého systému vidí.
+            </p>
+            <span class="card-arrow">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <div class="footer-note">
+        <span>Lokální poznámky k Gemini CLI &middot; verze INDEX 00_CLI_INDEX.html</span>
+        <span>Stačí kliknout na jakoukoli kartu výše a otevře se odpovídající HTML kapitola.</span>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini CLI – Kompletní průvodce pro začátečníky</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #080b10;
+  --bg2:      #0d1117;
+  --bg3:      #161b22;
+  --bg4:      #1c2128;
+  --border:   #21262d;
+  --border2:  #30363d;
+  --text:     #cdd9e5;
+  --text2:    #8b949e;
+  --text3:    #6e7681;
+  --amber:    #f0a030;
+  --amber2:   #fbbf24;
+  --teal:     #39d0c0;
+  --teal2:    #0ed2f7;
+  --green:    #3fb950;
+  --green2:   #7ee787;
+  --red:      #f85149;
+  --purple:   #bc8cff;
+  --white:    #e6edf3;
+  --radius:   10px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ===== LAYOUT ===== */
+.page { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  padding: 70px 0 50px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; left: -200px;
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(240,160,48,.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78em;
+  color: var(--amber);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.2em, 5vw, 3.5em);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+.hero h1 span { color: var(--amber); }
+.hero-desc {
+  font-size: 1.1em;
+  color: var(--text2);
+  max-width: 600px;
+  font-style: italic;
+  margin-bottom: 28px;
+}
+.hero-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+.badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75em;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid;
+}
+.badge-green  { color: var(--green2); border-color: rgba(63,185,80,.4); background: rgba(63,185,80,.08); }
+.badge-amber  { color: var(--amber2); border-color: rgba(251,191,36,.4); background: rgba(251,191,36,.08); }
+.badge-teal   { color: var(--teal2);  border-color: rgba(14,210,247,.4); background: rgba(14,210,247,.08); }
+.badge-purple { color: var(--purple); border-color: rgba(188,140,255,.4); background: rgba(188,140,255,.08); }
+
+/* ===== TABLE OF CONTENTS ===== */
+.toc {
+  margin: 40px 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+}
+.toc-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+}
+@media (max-width: 560px) { .toc-grid { grid-template-columns: 1fr; } }
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 0.9em;
+  color: var(--text2);
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color .2s;
+}
+.toc-item:hover { color: var(--amber2); }
+.toc-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78em;
+  color: var(--amber);
+  min-width: 20px;
+}
+
+/* ===== SECTION HEADERS ===== */
+.section {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72em;
+  color: var(--amber);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.section h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.7em;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.section h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15em;
+  font-weight: 600;
+  color: var(--teal);
+  margin: 28px 0 10px;
+}
+.section h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--text);
+  margin: 20px 0 8px;
+}
+p { margin-bottom: 12px; }
+
+/* ===== STEP CARDS ===== */
+.steps { display: flex; flex-direction: column; gap: 16px; margin: 20px 0; }
+
+.step-card {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-card:hover { border-color: var(--border2); }
+
+.step-num {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 18px;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.3em;
+  font-weight: 800;
+  color: var(--amber);
+  background: rgba(240,160,48,.06);
+  border-right: 1px solid var(--border);
+}
+.step-body { padding: 16px 20px; }
+.step-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  color: var(--white);
+  font-size: 1em;
+  margin-bottom: 8px;
+}
+.step-body p { margin-bottom: 8px; font-size: 0.92em; color: var(--text2); }
+.step-body p:last-child { margin-bottom: 0; }
+
+/* ===== CODE BLOCKS ===== */
+.cmd {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.88em;
+  background: rgba(14,210,247,.08);
+  color: var(--teal2);
+  border: 1px solid rgba(14,210,247,.2);
+  border-radius: 5px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.code-block {
+  position: relative;
+  background: #0a0f18;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin: 14px 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.87em;
+  line-height: 1.8;
+  overflow-x: auto;
+  color: var(--teal2);
+}
+.code-block .c  { color: var(--text3); font-style: italic; }    /* comment */
+.code-block .kw { color: var(--purple); }                        /* keyword */
+.code-block .ok { color: var(--green2); }                        /* success */
+.code-block .w  { color: var(--white); }                         /* white text */
+.code-block .am { color: var(--amber2); }                        /* amber */
+
+.code-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72em;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.prompt-block {
+  background: #0d1a0d;
+  border: 1px solid rgba(63,185,80,.3);
+  border-left: 3px solid var(--green2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 12px 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.87em;
+  color: var(--green2);
+  line-height: 1.7;
+}
+.prompt-block::before {
+  content: '> ';
+  color: var(--green);
+  opacity: .6;
+}
+
+/* ===== CALLOUTS ===== */
+.callout {
+  display: flex;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  margin: 18px 0;
+  font-size: 0.92em;
+}
+.callout-icon { font-size: 1.3em; flex-shrink: 0; margin-top: 1px; }
+.callout-body strong { display: block; margin-bottom: 4px; font-family: 'Syne', sans-serif; font-size: 0.95em; }
+.callout-body p { margin-bottom: 0; color: inherit; }
+
+.tip    { background: rgba(63,185,80,.07);   border: 1px solid rgba(63,185,80,.25);   color: #a8d8a8; }
+.tip    .callout-body strong { color: var(--green2); }
+.warn   { background: rgba(251,191,36,.07);  border: 1px solid rgba(251,191,36,.25);  color: #e0c87a; }
+.warn   .callout-body strong { color: var(--amber2); }
+.danger { background: rgba(248,81,73,.07);   border: 1px solid rgba(248,81,73,.25);   color: #e0a0a0; }
+.danger .callout-body strong { color: var(--red); }
+.info   { background: rgba(14,210,247,.07);  border: 1px solid rgba(14,210,247,.25);  color: #90d8e8; }
+.info   .callout-body strong { color: var(--teal2); }
+
+/* ===== OS TABS ===== */
+.os-tabs { margin: 16px 0; }
+.os-tab-btns {
+  display: flex;
+  gap: 4px;
+  margin-bottom: -1px;
+}
+.os-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78em;
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background: var(--bg2);
+  color: var(--text3);
+  cursor: pointer;
+  transition: all .2s;
+}
+.os-btn.active { background: var(--bg3); color: var(--amber2); border-color: var(--border2); }
+.os-panel {
+  display: none;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 0 var(--radius) var(--radius) var(--radius);
+  padding: 20px;
+}
+.os-panel.active { display: block; }
+
+/* ===== GEMINI MD EDITOR ===== */
+.file-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 10px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8em;
+  color: var(--text2);
+}
+.file-dot { width: 10px; height: 10px; border-radius: 50%; }
+.fd-r { background: #ff5f57; }
+.fd-y { background: #febc2e; }
+.fd-g { background: #28c840; }
+.file-name { margin-left: 6px; color: var(--amber2); }
+.file-content {
+  background: #0a0f18;
+  border: 1px solid var(--border);
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.84em;
+  line-height: 1.85;
+  color: var(--teal2);
+  overflow-x: auto;
+  white-space: pre;
+  margin-bottom: 20px;
+}
+.file-content .md-h  { color: var(--amber2); font-weight: 500; }
+.file-content .md-li { color: var(--text); }
+.file-content .md-em { color: var(--text3); }
+
+/* ===== EXAMPLES GRID ===== */
+.examples-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+@media (max-width: 560px) { .examples-grid { grid-template-columns: 1fr; } }
+
+.example-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  transition: border-color .2s, transform .2s;
+}
+.example-card:hover { border-color: var(--green); transform: translateY(-2px); }
+.ex-icon { font-size: 1.4em; margin-bottom: 8px; }
+.ex-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88em;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.ex-prompt {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78em;
+  color: var(--green2);
+  background: rgba(63,185,80,.07);
+  border: 1px solid rgba(63,185,80,.15);
+  border-radius: 5px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.ex-note { font-size: 0.8em; color: var(--text3); font-style: italic; }
+
+/* ===== LINKS ===== */
+.link-list { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .2s, background .2s;
+}
+.link-card:hover { border-color: var(--teal); background: var(--bg3); }
+.link-icon-box {
+  width: 42px; height: 42px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4em;
+  flex-shrink: 0;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+}
+.link-title { font-family: 'Syne', sans-serif; font-size: 0.92em; font-weight: 600; color: var(--teal2); }
+.link-sub { font-size: 0.8em; color: var(--text3); margin-top: 2px; }
+
+/* ===== QUICK REF ===== */
+.quick-ref {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--purple);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 20px 0;
+}
+.quick-ref-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  color: var(--purple);
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 16px;
+}
+.qr-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 8px 16px;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.87em;
+}
+.qr-row:last-child { border-bottom: none; }
+.qr-cmd { font-family: 'DM Mono', monospace; color: var(--teal2); }
+.qr-desc { color: var(--text2); }
+
+/* ===== TERMINAL DEMO ===== */
+.terminal {
+  background: #0a0a0f;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 16px 0;
+}
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+.term-dot { width: 11px; height: 11px; border-radius: 50%; }
+.td-r { background: #ff5f57; }
+.td-y { background: #febc2e; }
+.td-g { background: #28c840; }
+.term-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75em;
+  color: var(--text3);
+  margin-left: 8px;
+}
+.term-body {
+  padding: 18px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85em;
+  line-height: 1.9;
+}
+.term-line { display: block; }
+.t-prompt { color: var(--green2); }
+.t-cmd    { color: var(--white); }
+.t-out    { color: var(--text2); }
+.t-ok     { color: var(--green2); }
+.t-gem    { color: var(--amber2); }
+.t-q      { color: var(--teal2); }
+.t-ans    { color: var(--text); }
+
+/* ===== PROGRESS BAR ===== */
+.progress-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 30px 0;
+  padding: 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+.prog-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+}
+.prog-circle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.85em;
+  border: 2px solid var(--border2);
+  color: var(--text3);
+  background: var(--bg3);
+  position: relative;
+  z-index: 1;
+}
+.prog-step.done .prog-circle  { border-color: var(--green); color: var(--green2); background: rgba(63,185,80,.1); }
+.prog-step.curr .prog-circle  { border-color: var(--amber); color: var(--amber2); background: rgba(240,160,48,.1); box-shadow: 0 0 0 4px rgba(240,160,48,.15); }
+.prog-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68em;
+  color: var(--text3);
+  text-align: center;
+  white-space: nowrap;
+}
+.prog-step.done .prog-label { color: var(--green); }
+.prog-step.curr .prog-label { color: var(--amber2); }
+.prog-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  min-width: 20px;
+  margin-bottom: 22px;
+}
+.prog-line.done { background: var(--green); }
+
+/* ===== CHEATSHEET ===== */
+.cheatsheet {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+@media (max-width: 560px) { .cheatsheet { grid-template-columns: 1fr; } }
+.cheat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.cheat-header {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8em;
+  font-weight: 700;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.cheat-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 12px;
+  align-items: baseline;
+  margin: 6px 0;
+  font-size: 0.82em;
+}
+.cheat-k { font-family: 'DM Mono', monospace; color: var(--teal2); white-space: nowrap; }
+.cheat-v { color: var(--text2); }
+
+/* ===== DIVIDER ===== */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.divider-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72em;
+  color: var(--text3);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  margin-top: 60px;
+  padding: 30px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75em;
+  color: var(--text3);
+  line-height: 2;
+}
+
+/* ===== MISC ===== */
+strong { color: var(--white); font-weight: 600; }
+em { font-style: italic; color: var(--text2); }
+ul, ol { padding-left: 22px; }
+li { margin: 5px 0; color: var(--text2); font-size: 0.95em; }
+li strong { color: var(--white); }
+a { color: var(--teal2); }
+a:hover { text-decoration: underline; }
+
+.highlight-box {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 16px 0;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 14px 0;
+}
+@media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+.mini-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 0.88em;
+}
+.mini-card h4 { font-family: 'Syne', sans-serif; color: var(--teal); margin: 0 0 6px; font-size: 0.92em; }
+.mini-card p { color: var(--text2); margin: 0; }
+
+/* BIG NUMBER */
+.big-stat {
+  text-align: center;
+  padding: 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.big-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.5em;
+  font-weight: 800;
+  color: var(--amber);
+  display: block;
+}
+.big-label { font-size: 0.8em; color: var(--text3); margin-top: 4px; }
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+@media (max-width: 500px) { .stats-row { grid-template-columns: 1fr; } }
+
+/* COMPARE TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88em;
+  margin: 16px 0;
+}
+th {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text3);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg2); }
+td.good  { color: var(--green2); }
+td.bad   { color: var(--red); }
+td.ok    { color: var(--amber2); }
+td:first-child { color: var(--white); font-weight: 500; }
+
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-eyebrow">// průvodce pro projekt rodinný-receptár</div>
+  <h1>Gemini CLI –<br><span>kompletní průvodce</span><br>od nuly</h1>
+  <p class="hero-desc">Krok za krokem, bez přeskakování. Pro toho, kdo se teprve učí a nechce znovu zažít noční můry s Google AI Studiem.</p>
+  <div class="hero-badges">
+    <span class="badge badge-green">✓ Zdarma navždy</span>
+    <span class="badge badge-amber">⭐ 1000 dotazů denně</span>
+    <span class="badge badge-teal">🧠 Vidí celý projekt</span>
+    <span class="badge badge-purple">💬 Mluví česky</span>
+  </div>
+</div>
+
+<!-- ===== TOC ===== -->
+<div class="toc">
+  <div class="toc-title">📋 Obsah průvodce</div>
+  <div class="toc-grid">
+    <a class="toc-item" href="#sec-co-to-je"><span class="toc-num">01</span> Co je Gemini CLI a proč ho chceš</a>
+    <a class="toc-item" href="#sec-porovnani"><span class="toc-num">02</span> Srovnání s Google AI Studiem</a>
+    <a class="toc-item" href="#sec-terminal"><span class="toc-num">03</span> Co je to terminál? (základy)</a>
+    <a class="toc-item" href="#sec-nodejs"><span class="toc-num">04</span> Instalace Node.js</a>
+    <a class="toc-item" href="#sec-instalace"><span class="toc-num">05</span> Instalace Gemini CLI</a>
+    <a class="toc-item" href="#sec-prihlaseni"><span class="toc-num">06</span> Přihlášení Google účtem</a>
+    <a class="toc-item" href="#sec-projekt"><span class="toc-num">07</span> Připojení na tvůj projekt</a>
+    <a class="toc-item" href="#sec-devserver"><span class="toc-num">07b</span> ⭐ Vývojový server – jak vidět změny</a>
+    <a class="toc-item" href="#sec-geminimd"><span class="toc-num">08</span> Soubor GEMINI.md – klíč ke všemu</a>
+    <a class="toc-item" href="#sec-prikazy"><span class="toc-num">09</span> Jak komunikovat – příkazy a tipy</a>
+    <a class="toc-item" href="#sec-priklady"><span class="toc-num">10</span> Praktické příklady pro receptář</a>
+    <a class="toc-item" href="#sec-zalohy"><span class="toc-num">11</span> Zálohy – NIKDY nepřeskoč!</a>
+    <a class="toc-item" href="#sec-problemy"><span class="toc-num">12</span> Když to nefunguje – řešení problémů</a>
+    <a class="toc-item" href="#sec-tahak"><span class="toc-num">13</span> Rychlý tahák příkazů</a>
+    <a class="toc-item" href="#sec-zdroje"><span class="toc-num">14</span> Videa a zdroje pro další studium</a>
+  </div>
+</div>
+
+<!-- ===== 01 CO TO JE ===== -->
+<div class="section" id="sec-co-to-je">
+  <div class="section-label">// sekce 01</div>
+  <h2>Co je Gemini CLI a proč ho chceš</h2>
+
+  <p>Gemini CLI je <strong>AI asistent od Googlu</strong>, který pracuje přímo v tvém terminálu (příkazovém řádku). To zní technicky, ale za tím se skrývá jednoduchá myšlenka:</p>
+
+  <div class="highlight-box">
+    <strong>Místo toho, abys musel kopírovat kód do webového rozhraní, AI vidí celý tvůj projekt přímo na tvém počítači.</strong> Ty mu jen napíšeš česky co chceš, a on to udělá – přečte soubory, opraví chybu, přidá funkci, vysvětlí co kde je.
+  </div>
+
+  <h3>Co konkrétně Gemini CLI umí</h3>
+  <ul>
+    <li><strong>Číst celý projekt najednou</strong> – všechny soubory, strukturu složek, konfiguraci</li>
+    <li><strong>Upravovat soubory</strong> – přidávat kód, opravovat chyby, přejmenovávat věci</li>
+    <li><strong>Vysvětlovat kód</strong> – "co tato funkce dělá?", "proč mi to nefunguje?"</li>
+    <li><strong>Psát nové funkce</strong> – "přidej tlačítko pro oblíbené recepty"</li>
+    <li><strong>Vyhledávat na internetu</strong> – zjistit aktuální řešení problémů</li>
+    <li><strong>Spouštět příkazy</strong> – npm install, build, atd. – ale vždy se tě zeptá</li>
+    <li><strong>Psát dokumentaci</strong> – README, komentáře v kódu, popisy</li>
+  </ul>
+
+  <div class="stats-row">
+    <div class="big-stat">
+      <span class="big-num">1M</span>
+      <div class="big-label">tokenů kontextu<br>(= ~40 000 řádků kódu)</div>
+    </div>
+    <div class="big-stat">
+      <span class="big-num">1000</span>
+      <div class="big-label">dotazů za den<br>zdarma</div>
+    </div>
+    <div class="big-stat">
+      <span class="big-num">60</span>
+      <div class="big-label">dotazů za minutu<br>zdarma</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 SROVNÁNÍ ===== -->
+<div class="section" id="sec-porovnani">
+  <div class="section-label">// sekce 02</div>
+  <h2>Srovnání s Google AI Studiem</h2>
+
+  <p>Ty víš lépe než kdokoliv jiný, co AI Studio dělá. Tady je proč Gemini CLI funguje jinak:</p>
+
+  <table>
+    <thead>
+      <tr><th>Problém</th><th>Google AI Studio</th><th>Gemini CLI</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Vidí projekt jako celek?</td>
+        <td class="bad">❌ Vidí jen co zkopíruješ</td>
+        <td class="good">✅ Vidí celý projekt automaticky</td>
+      </tr>
+      <tr>
+        <td>Pamatuje si kontext?</td>
+        <td class="bad">❌ Každý chat = začínáš znova</td>
+        <td class="good">✅ GEMINI.md = trvalý kontext</td>
+      </tr>
+      <tr>
+        <td>Mění soubory přímo?</td>
+        <td class="bad">❌ Musíš kopírovat ručně</td>
+        <td class="good">✅ Mění přímo, ale ptá se tě</td>
+      </tr>
+      <tr>
+        <td>"Vylepšení" = mazání?</td>
+        <td class="bad">❌ Přesně tohle se děje</td>
+        <td class="good">✅ S GEMINI.md pravidly to lze zakázat</td>
+      </tr>
+      <tr>
+        <td>Cena</td>
+        <td class="ok">Zdarma s limity</td>
+        <td class="good">✅ Zdarma 1000 dotazů/den</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== 03 TERMINÁL ===== -->
+<div class="section" id="sec-terminal">
+  <div class="section-label">// sekce 03</div>
+  <h2>Co je to terminál a jak ho otevřít</h2>
+
+  <p>Terminál (nebo příkazový řádek) je okno, kde se <strong>ovládá počítač textem</strong> místo myší. Vypadá to strašidelně, ale ve skutečnosti jde o psaní jednoduchých příkazů.</p>
+
+  <div class="callout info">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <strong>Nemusíš rozumět Linuxu ani být hacker.</strong>
+      <p>Budeš psát maximálně 3–4 různé příkazy. Zbytek času budeš psát česky Gemini co chceš.</p>
+    </div>
+  </div>
+
+  <h3>Jak otevřít terminál podle systému</h3>
+
+  <div class="os-tabs" id="tabs-terminal">
+    <div class="os-tab-btns">
+      <button class="os-btn active" onclick="showTab('terminal', 'windows', this)">🪟 Windows</button>
+      <button class="os-btn" onclick="showTab('terminal', 'mac', this)">🍎 Mac</button>
+      <button class="os-btn" onclick="showTab('terminal', 'linux', this)">🐧 Linux</button>
+    </div>
+    <div id="terminal-windows" class="os-panel active">
+      <p><strong>Způsob 1 – nejjednodušší:</strong></p>
+      <p>Stiskni klávesy <span class="cmd">Win + R</span>, napiš <span class="cmd">powershell</span> a stiskni Enter.</p>
+      <p style="margin-top:12px;"><strong>Způsob 2 – přes Start menu:</strong></p>
+      <p>Klikni na Start → hledej "PowerShell" nebo "Windows Terminal" → klikni pravým tlačítkem → Spustit jako správce (ne vždy nutné, ale občas pomůže)</p>
+      <p style="margin-top:12px;"><strong>Způsob 3 – přímo ve složce projektu:</strong></p>
+      <p>Otevři složku projektu v Průzkumníku → klikni do adresního řádku (kde je cesta) → smaž text → napiš <span class="cmd">powershell</span> → Enter. Terminál se otevře rovnou ve správné složce! 🎉</p>
+    </div>
+    <div id="terminal-mac" class="os-panel">
+      <p><strong>Způsob 1 – Spotlight:</strong></p>
+      <p>Stiskni <span class="cmd">Cmd + Mezerník</span>, napiš "Terminal" a stiskni Enter.</p>
+      <p style="margin-top:12px;"><strong>Způsob 2 – Finder:</strong></p>
+      <p>Aplikace → Nástroje → Terminál</p>
+      <div class="callout tip" style="margin-top:12px;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body"><strong>Tip pro Mac uživatele</strong><p>Doporučuji stáhnout iTerm2 (zdarma) – je lepší než výchozí terminál. Ale není nutný.</p></div>
+      </div>
+    </div>
+    <div id="terminal-linux" class="os-panel">
+      <p>Stiskni <span class="cmd">Ctrl + Alt + T</span> nebo hledej "Terminál" v aplikacích.</p>
+      <p>Pokud čteš tuto sekci, pravděpodobně to víš lépe než já. 😄</p>
+    </div>
+  </div>
+
+  <h3>Základní příkazy v terminálu – stačí tyhle 3</h3>
+
+  <div class="quick-ref" style="border-top-color: var(--teal);">
+    <div class="quick-ref-title" style="color: var(--teal);">Příkazy pro pohyb</div>
+    <div class="qr-row"><span class="qr-cmd">cd nazev-slozky</span><span class="qr-desc">Přejdi DO složky (cd = change directory)</span></div>
+    <div class="qr-row"><span class="qr-cmd">cd ..</span><span class="qr-desc">Přejdi o složku VÝŠE (dva tečky = nahoru)</span></div>
+    <div class="qr-row"><span class="qr-cmd">ls</span><span class="qr-desc">Zobraz obsah aktuální složky (Mac/Linux)</span></div>
+    <div class="qr-row"><span class="qr-cmd">dir</span><span class="qr-desc">Zobraz obsah aktuální složky (Windows)</span></div>
+    <div class="qr-row"><span class="qr-cmd">pwd</span><span class="qr-desc">Zobraz kde teď jsem (celá cesta)</span></div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <strong>Šipka nahoru = předchozí příkaz</strong>
+      <p>V terminálu stačí stisknout šipku ↑ a opakuješ předchozí příkazy. Nemusíš je psát znova.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 04 NODE.JS ===== -->
+<div class="section" id="sec-nodejs">
+  <div class="section-label">// sekce 04</div>
+  <h2>Instalace Node.js (nutný základ)</h2>
+
+  <p>Gemini CLI je napsané v JavaScriptu a potřebuje Node.js – prostředí pro spouštění JavaScriptu. Naštěstí to tvůj projekt již pravděpodobně má, ale pojďme si to ověřit.</p>
+
+  <h3>Krok 1 – Ověř zda Node.js máš</h3>
+  <p>Otevři terminál a napiš:</p>
+
+  <div class="code-block">
+<span class="c"># Zkontroluj verzi Node.js:</span>
+<span class="w">node --version</span>
+
+<span class="c"># Zkontroluj verzi npm (správce balíčků):</span>
+<span class="w">npm --version</span>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card" style="border-color: rgba(63,185,80,.3);">
+      <h4 style="color: var(--green2);">✅ Tohle je dobrý výsledek</h4>
+      <p>Vidíš číslo jako <span class="cmd">v20.11.0</span> nebo vyšší → Node.js máš a funguje. Přeskoč rovnou na sekci 5.</p>
+    </div>
+    <div class="mini-card" style="border-color: rgba(248,81,73,.3);">
+      <h4 style="color: var(--red);">❌ Tohle je problém</h4>
+      <p>Vidíš <span class="cmd">command not found</span> nebo verzi nižší než 20 → musíš nainstalovat nebo aktualizovat.</p>
+    </div>
+  </div>
+
+  <h3>Krok 2 – Instalace Node.js (pokud chybí nebo je starý)</h3>
+
+  <div class="os-tabs" id="tabs-nodejs">
+    <div class="os-tab-btns">
+      <button class="os-btn active" onclick="showTab('nodejs', 'windows', this)">🪟 Windows</button>
+      <button class="os-btn" onclick="showTab('nodejs', 'mac', this)">🍎 Mac</button>
+    </div>
+    <div id="nodejs-windows" class="os-panel active">
+      <ol>
+        <li>Jdi na <strong>https://nodejs.org</strong></li>
+        <li>Stáhni verzi označenou <strong>LTS</strong> (vlevo – ta stabilní)</li>
+        <li>Spusť stažený instalátor – vše klikni "Next", nechej výchozí nastavení</li>
+        <li>Po instalaci <strong>zavři a znovu otevři terminál</strong> (důležité!)</li>
+        <li>Znovu zadej <span class="cmd">node --version</span> – teď by to mělo fungovat</li>
+      </ol>
+      <div class="callout warn" style="margin-top:12px;">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body"><strong>Nezapomeň restartovat terminál!</strong><p>Windows si nové programy "nevšimne" dokud terminál nezavřeš a neotevřeš znovu.</p></div>
+      </div>
+    </div>
+    <div id="nodejs-mac" class="os-panel">
+      <p><strong>Způsob 1 – přes web (nejjednodušší):</strong></p>
+      <ol>
+        <li>Jdi na <strong>https://nodejs.org</strong></li>
+        <li>Stáhni verzi <strong>LTS</strong></li>
+        <li>Spusť .pkg instalátor, klikej Next</li>
+      </ol>
+      <p style="margin-top:12px;"><strong>Způsob 2 – přes Homebrew (pro zkušenější):</strong></p>
+      <div class="code-block"><span class="w">brew install node</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 05 INSTALACE CLI ===== -->
+<div class="section" id="sec-instalace">
+  <div class="section-label">// sekce 05</div>
+  <h2>Instalace Gemini CLI</h2>
+
+  <p>Tohle je ta jednoduchá část. Jeden příkaz a je hotovo.</p>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Otevři terminál a napiš tento příkaz</div>
+        <div class="code-block"><span class="w">npm install -g @google/gemini-cli</span></div>
+        <p>Příznak <span class="cmd">-g</span> znamená "nainstaluj globálně" – takže příkaz <span class="cmd">gemini</span> bude fungovat odkudkoliv.</p>
+        <p>Instalace trvá 1–3 minuty. Uvidíš hodně textu – to je normální. Čekej než se vrátí řádek s výzvou.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Ověř že instalace proběhla</div>
+        <div class="code-block"><span class="w">gemini --version</span></div>
+        <p>Měl bys vidět číslo verze. Pokud vidíš <span class="cmd">command not found</span>, zkus zavřít a znovu otevřít terminál.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-body">
+      <strong>Chyba "EACCES: permission denied" na Macu?</strong>
+      <p>Zkus příkaz s <span class="cmd">sudo</span> před ním: <span class="cmd">sudo npm install -g @google/gemini-cli</span>  Zadáš heslo k Macu (při psaní se nic nezobrazuje – to je normální) a zmáčkneš Enter.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 06 PŘIHLÁŠENÍ ===== -->
+<div class="section" id="sec-prihlaseni">
+  <div class="section-label">// sekce 06</div>
+  <h2>Přihlášení přes Google účet</h2>
+
+  <p>Tohle proběhne automaticky při prvním spuštění. Potřebuješ jen svůj Gmail.</p>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Spusť Gemini CLI poprvé</div>
+        <div class="code-block"><span class="w">gemini</span></div>
+        <p>Zobrazí se výběr barevného tématu. Vyber šipkami a potvrď Enterem. Klidně vezmi první.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Vyber přihlášení Google účtem</div>
+        <p>Zobrazí se nabídka přihlášení. Vyber číslo <strong>1</strong> pro <em>"Sign in with Google"</em>.</p>
+        <div class="code-block">
+<span class="am">? How would you like to authenticate?</span>
+<span class="ok">❯ 1. Sign in with Google   ←  toto vyber</span>
+<span class="c">  2. Use API key</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Přihlas se v prohlížeči</div>
+        <p>Automaticky se otevře prohlížeč. Přihlas se svým Google/Gmail účtem. Potvrď přístupy. Vrať se do terminálu.</p>
+        <div class="callout tip" style="margin:10px 0 0;">
+          <span class="callout-icon">✅</span>
+          <div class="callout-body"><strong>Hotovo!</strong><p>Přihlášení platí dlouhodobě. Nemusíš ho opakovat každé spuštění.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Co tím přihlášením získáš zdarma?</h3>
+  <div class="highlight-box">
+    <ul>
+      <li><strong>Gemini 2.5 Pro</strong> – nejlepší model Googlu (normálně placený)</li>
+      <li><strong>1 000 000 tokenů</strong> kontextového okna – celý tvůj projekt vejde s přehledem</li>
+      <li><strong>1 000 dotazů denně</strong> a 60 za minutu – pro hobby projekt víc než dost</li>
+      <li>Žádná kreditní karta, žádné předplatné, žádné překvapení</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== 07 PROJEKT ===== -->
+<div class="section" id="sec-projekt">
+  <div class="section-label">// sekce 07</div>
+  <h2>Připojení na tvůj receptář</h2>
+
+  <p>Gemini CLI vždy pracuje v té složce, ve které ho spustíš. Musíš proto nejdřív <strong>přejít do složky projektu</strong>.</p>
+
+  <h3>Jak najít cestu ke svému projektu</h3>
+
+  <div class="os-tabs" id="tabs-projekt">
+    <div class="os-tab-btns">
+      <button class="os-btn active" onclick="showTab('projekt', 'windows', this)">🪟 Windows</button>
+      <button class="os-btn" onclick="showTab('projekt', 'mac', this)">🍎 Mac/Linux</button>
+    </div>
+    <div id="projekt-windows" class="os-panel active">
+      <p>Otevři Průzkumník a najdi složku projektu (rodinny-receptar). Klikni na adresní řádek nahoře – uvidíš celou cestu, např.:</p>
+      <div class="code-block"><span class="am">C:\Users\Pavel\projekty\rodinny-receptar</span></div>
+      <p>Tuto cestu pak použiješ v <span class="cmd">cd</span> příkazu.</p>
+    </div>
+    <div id="projekt-mac" class="os-panel">
+      <p>Ve Finderu najdi složku projektu. Klikni pravým tlačítkem → "Získat informace" → zkopíruj cestu pod "Kde".</p>
+      <p>Nebo jednoduše přetáhni složku do terminálu za <span class="cmd">cd </span> – cesta se vyplní automaticky! 😎</p>
+    </div>
+  </div>
+
+  <h3>Spuštění ve složce projektu</h3>
+
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="term-dot td-r"></div><div class="term-dot td-y"></div><div class="term-dot td-g"></div>
+      <span class="term-title">PowerShell / Terminal</span>
+    </div>
+    <div class="term-body">
+      <span class="term-line"><span class="t-prompt">PS C:\Users\Pavel&gt; </span><span class="t-cmd">cd C:\Users\Pavel\projekty\rodinny-receptar</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-prompt">PS C:\...\rodinny-receptar&gt; </span><span class="t-cmd">gemini</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-gem">╔══════════════════════════════╗</span></span>
+      <span class="term-line"><span class="t-gem">║  Gemini CLI  🤖               ║</span></span>
+      <span class="term-line"><span class="t-gem">╚══════════════════════════════╝</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-out">Loaded context from GEMINI.md</span></span>
+      <span class="term-line"><span class="t-out">Working directory: C:\...\rodinny-receptar</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-gem">Gemini &gt; </span><span class="t-q">Popiš mi strukturu tohoto projektu</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-ans">Čtu soubory projektu... OK</span></span>
+      <span class="term-line"><span class="t-ans">Projekt "rodinny-receptar" je React PWA aplikace (v0.42).</span></span>
+      <span class="term-line"><span class="t-ans">Obsahuje: /src (React komponenty), /public (ikony, manifest)...</span></span>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <strong>Zkratka: Otevři terminál přímo ve složce projektu</strong>
+      <p>Windows: V Průzkumníku klikni do adresního řádku, napiš <span class="cmd">powershell</span>, Enter. Terminál se otevře rovnou tam.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 07b DEV SERVER ===== -->
+<div class="section" id="sec-devserver">
+  <div class="section-label">// sekce 07b  ⭐ bez toho neuvidíš nic</div>
+  <h2>Vývojový server – jak vidět změny okamžitě</h2>
+
+  <p>Tvůj receptář je React aplikace. Nemůžeš ji jednoduše otevřít jako HTML soubor v prohlížeči – potřebuje být <strong>zkompilována</strong> za běhu. To dělá vývojový server. A nemusíš nic nahrávat na GitHub – vše testuje lokálně na svém počítači.</p>
+
+  <div class="highlight-box">
+    <strong>Vývojový server = mini-hosting přímo na tvém PC.</strong>
+    <p style="margin-top:8px;">Spustíš ho jedním příkazem a aplikace je dostupná na adrese <span class="cmd">http://localhost:3000</span> – jen pro tebe, nikdo jiný ji nevidí. A při každé změně souboru se stránka obnoví automaticky.</p>
+  </div>
+
+  <h3>Jak spustit vývojový server</h3>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">V terminálu přejdi do projektu a spusť server</div>
+        <div class="code-block">
+<span class="c"># Přejdi do složky projektu:</span>
+<span class="w">cd cesta/k/rodinny-receptar</span>
+
+<span class="c"># Spusť vývojový server:</span>
+<span class="w">npm run dev</span>
+        </div>
+        <p>Uvidíš výstup podobný tomuto:</p>
+        <div class="terminal">
+          <div class="term-bar"><div class="term-dot td-r"></div><div class="term-dot td-y"></div><div class="term-dot td-g"></div><span class="term-title">Terminál 1 – dev server</span></div>
+          <div class="term-body">
+            <span class="term-line"><span class="t-prompt">$</span> <span class="t-cmd">npm run dev</span></span>
+            <span class="term-line"> </span>
+            <span class="term-line"><span class="t-out">  VITE v6.2.0  ready in 312 ms</span></span>
+            <span class="term-line"> </span>
+            <span class="term-line"><span class="t-out">  ➜  Local:   </span><span class="t-ok">http://localhost:3000/</span></span>
+            <span class="term-line"><span class="t-out">  ➜  Network: http://192.168.1.105:3000/</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Otevři aplikaci v prohlížeči</div>
+        <p>Otevři Chrome a jdi na adresu <span class="cmd">http://localhost:3000</span>. Měl bys vidět svůj receptář živě.</p>
+        <p><strong>localhost</strong> = tvůj počítač &nbsp;|&nbsp; <strong>3000</strong> = číslo portu (jako číslo dveří)</p>
+        <p>Pokud 3000 nefunguje, zkus <span class="cmd">http://localhost:5173</span> – Vite někdy přepne port automaticky.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Nechej server běžet – nezavírej tento terminál!</div>
+        <div class="callout warn" style="margin-top: 6px;">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><strong>Terminál s npm run dev musí zůstat otevřený celou dobu.</strong><p>Pokud ho zavřeš, aplikace v prohlížeči přestane fungovat. Spustíš ho jednou a pak na něj zapomeneš.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Dva terminály vedle sebe – klíčové nastavení</h3>
+
+  <p>Potřebuješ dvě okna terminálu otevřená zároveň. Takhle to vypadá:</p>
+
+  <div class="highlight-box" style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 10px; align-items: center; text-align: center; padding: 20px;">
+    <div>
+      <div style="font-family:'Syne',sans-serif; font-weight:700; color:var(--white); margin-bottom:6px;">Terminál 1</div>
+      <div class="cmd" style="display:block; margin-bottom:4px;">npm run dev</div>
+      <div style="font-size:0.8em; color:var(--text3);">Spustíš jednou<br>a necháš běžet</div>
+    </div>
+    <div style="color:var(--text3); font-size:1.5em;">+</div>
+    <div>
+      <div style="font-family:'Syne',sans-serif; font-weight:700; color:var(--amber2); margin-bottom:6px;">Terminál 2</div>
+      <div class="cmd" style="display:block; margin-bottom:4px; border-color:rgba(240,160,48,.4); color:var(--amber2);">gemini</div>
+      <div style="font-size:0.8em; color:var(--text3);">Tady píšeš<br>instrukce</div>
+    </div>
+    <div style="color:var(--text3); font-size:1.5em;">+</div>
+    <div>
+      <div style="font-family:'Syne',sans-serif; font-weight:700; color:var(--green2); margin-bottom:6px;">Prohlížeč</div>
+      <div class="cmd" style="display:block; margin-bottom:4px; border-color:rgba(63,185,80,.4); color:var(--green2);">localhost:3000</div>
+      <div style="font-size:0.8em; color:var(--text3);">Vidíš výsledek<br>okamžitě</div>
+    </div>
+  </div>
+
+  <div class="os-tabs" id="tabs-dvaterminaly">
+    <div class="os-tab-btns">
+      <button class="os-btn active" onclick="showTab('dvaterminaly', 'windows', this)">🪟 Windows</button>
+      <button class="os-btn" onclick="showTab('dvaterminaly', 'mac', this)">🍎 Mac</button>
+    </div>
+    <div id="dvaterminaly-windows" class="os-panel active">
+      <p><strong>Způsob 1 – Windows Terminal (moderní, doporučeno):</strong></p>
+      <p>Klikni na šipku dolů vedle záložky → "New tab" nebo <span class="cmd">Ctrl+Shift+T</span>. Oba terminály jsou jako záložky v jednom okně.</p>
+      <p style="margin-top:12px;"><strong>Způsob 2 – PowerShell:</strong></p>
+      <p>Klikni pravým tlačítkem na ikonu PowerShell na hlavním panelu → "Otevřít nové okno". Pak okna umísti vedle sebe.</p>
+      <p style="margin-top:12px;"><strong>Způsob 3 – přímo z Průzkumníku (nejrychlejší):</strong></p>
+      <p>V Průzkumníku klikni do adresního řádku složky projektu → napiš <span class="cmd">powershell</span> → Enter. Opakuj pro druhý terminál.</p>
+    </div>
+    <div id="dvaterminaly-mac" class="os-panel">
+      <p><strong>iTerm2 (doporučeno):</strong></p>
+      <p><span class="cmd">Cmd+D</span> = rozděl okno vedle sebe. Ideální pro práci – vidíš oba terminály zároveň.</p>
+      <p style="margin-top:12px;"><strong>Výchozí Terminal:</strong></p>
+      <p><span class="cmd">Cmd+N</span> = nové okno terminálu. Umísti okna vedle sebe na obrazovce.</p>
+      <p style="margin-top:12px;"><strong>VS Code (pokud ho používáš):</strong></p>
+      <p>Má integrovaný terminál dole. <span class="cmd">Ctrl+`</span> ho otevře. Záložky terminálu jsou přímo ve VS Code.</p>
+    </div>
+  </div>
+
+  <h3>HMR – proč se stránka obnovuje sama</h3>
+
+  <p>Vite má zabudovanou funkci zvanou <strong>HMR (Hot Module Replacement)</strong>. Sleduje tvé soubory a při každé změně automaticky aktualizuje jen tu část stránky, která se změnila – bez F5, bez restartu.</p>
+
+  <div class="terminal">
+    <div class="term-bar"><div class="term-dot td-r"></div><div class="term-dot td-y"></div><div class="term-dot td-g"></div><span class="term-title">Terminál 1 – co uvidíš když Gemini změní soubor</span></div>
+    <div class="term-body">
+      <span class="term-line"><span class="t-out">  ➜  Local:   </span><span class="t-ok">http://localhost:3000/</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-out">  <-- čekáš, Gemini mezitím mění soubor v Terminálu 2 --></span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-ok">  [vite] hmr update /src/components/RecipeCard.tsx</span></span>
+      <span class="term-line"><span class="t-out">  <-- prohlížeč se automaticky obnoví do 1-2 sekund --></span></span>
+    </div>
+  </div>
+
+  <h3>Kdy je potřeba server restartovat (ručně)</h3>
+
+  <div class="two-col">
+    <div class="mini-card" style="border-color: rgba(63,185,80,.3);">
+      <h4 style="color: var(--green2);">✅ HMR funguje automaticky pro</h4>
+      <p>Změny v komponentách (.tsx), styly, text, logika – vše v src/ složce.</p>
+    </div>
+    <div class="mini-card" style="border-color: rgba(240,160,48,.3);">
+      <h4 style="color: var(--amber2);">⚠️ Potřeba restartu serveru</h4>
+      <p>Změny v <span class="cmd">vite.config.ts</span>, <span class="cmd">package.json</span>, nebo instalace nových balíčků (npm install). Stiskni Ctrl+C a znovu <span class="cmd">npm run dev</span>.</p>
+    </div>
+  </div>
+
+  <h3>Kompletní npm příkazy pro projekt</h3>
+
+  <table style="width:100%; border-collapse:collapse; font-size:0.87em; margin:14px 0;">
+    <thead>
+      <tr>
+        <th style="font-family:'Syne',sans-serif; font-size:.78em; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--text3); padding:9px 12px; text-align:left; border-bottom:2px solid var(--border);">Příkaz</th>
+        <th style="font-family:'Syne',sans-serif; font-size:.78em; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--text3); padding:9px 12px; text-align:left; border-bottom:2px solid var(--border);">Co dělá</th>
+        <th style="font-family:'Syne',sans-serif; font-size:.78em; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--text3); padding:9px 12px; text-align:left; border-bottom:2px solid var(--border);">Kdy použít</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:9px 12px; font-family:'DM Mono',monospace; color:var(--teal2);">npm run dev</td>
+        <td style="padding:9px 12px; color:var(--text2);">Spustí vývojový server na localhost:3000</td>
+        <td style="padding:9px 12px; color:var(--text3); font-size:.88em;">🟢 Hlavní příkaz – každý den při práci</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:9px 12px; font-family:'DM Mono',monospace; color:var(--teal2);">npm run build</td>
+        <td style="padding:9px 12px; color:var(--text2);">Vytvoří produkční verzi do složky /dist</td>
+        <td style="padding:9px 12px; color:var(--text3); font-size:.88em;">Před nahráním na hosting</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:9px 12px; font-family:'DM Mono',monospace; color:var(--teal2);">npm run preview</td>
+        <td style="padding:9px 12px; color:var(--text2);">Spustí preview buildu lokálně</td>
+        <td style="padding:9px 12px; color:var(--text3); font-size:.88em;">Ověření před nasazením</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:9px 12px; font-family:'DM Mono',monospace; color:var(--teal2);">npm run lint</td>
+        <td style="padding:9px 12px; color:var(--text2);">TypeScript check – zkontroluje chyby</td>
+        <td style="padding:9px 12px; color:var(--text3); font-size:.88em;">Pokud Gemini říká že je vše OK ale nefunguje</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:9px 12px; font-family:'DM Mono',monospace; color:var(--teal2);">npm install</td>
+        <td style="padding:9px 12px; color:var(--text2);">Nainstaluje závislosti ze package.json</td>
+        <td style="padding:9px 12px; color:var(--text3); font-size:.88em;">Po stažení projektu nebo po přidání balíčku</td>
+      </tr>
+      <tr>
+        <td style="padding:9px 12px; font-family:'DM Mono',monospace; color:var(--teal2);">npm run clean</td>
+        <td style="padding:9px 12px; color:var(--text2);">Smaže /dist složku</td>
+        <td style="padding:9px 12px; color:var(--text3); font-size:.88em;">Před čistým novým buildem</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Tip: Testování na mobilu přes WiFi</h3>
+  <div class="callout tip">
+    <span class="callout-icon">📱</span>
+    <div class="callout-body">
+      <strong>Tvůj receptář je PWA – lze testovat přímo na mobilu!</strong>
+      <p>Po spuštění <span class="cmd">npm run dev</span> uvidíš v terminálu adresu "Network: http://192.168.x.x:3000". Tuto adresu otevři v Chrome na mobilu (musí být připojen na stejnou WiFi). Uvidíš aplikaci na mobilu živě, bez nahrávání kamkoliv.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 08 GEMINI.MD ===== -->
+<div class="section" id="sec-geminimd">
+  <div class="section-label">// sekce 08  ⭐ nejdůležitější část</div>
+  <h2>Soubor GEMINI.md – klíč ke všemu</h2>
+
+  <p>Toto je <strong>nejdůležitější věc</strong> celého průvodce. Soubor <span class="cmd">GEMINI.md</span> v kořenové složce projektu Gemini CLI automaticky přečte při každém spuštění. Je to jako "briefing" pro AI – řekneš mu kdo jsi, co dělá projekt, a hlavně <strong>co smí a co nesmí dělat</strong>.</p>
+
+  <div class="callout danger">
+    <span class="callout-icon">🔴</span>
+    <div class="callout-body">
+      <strong>Bez GEMINI.md = Google AI Studio zážitky se opakují</strong>
+      <p>AI neví co je důležité, co nesmí smazat, jak má postupovat. S tímto souborem mu dáš jasná pravidla, která platí celou dobu.</p>
+    </div>
+  </div>
+
+  <h3>Jak soubor vytvořit</h3>
+
+  <p>V kořenové složce projektu (tam kde je <span class="cmd">package.json</span>) vytvoř nový textový soubor s názvem <strong>GEMINI.md</strong>. Lze to přes VS Code, Notepad, nebo klidně přes Průzkumník (nový textový soubor → přejmenuj na GEMINI.md).</p>
+
+  <p>Zkopíruj tento obsah a uprav si ho dle sebe:</p>
+
+  <div class="file-header">
+    <div class="file-dot fd-r"></div><div class="file-dot fd-y"></div><div class="file-dot fd-g"></div>
+    <span class="file-name">GEMINI.md</span>
+    <span style="color:var(--text3); font-size:0.85em;">— umísti do kořenové složky projektu</span>
+  </div>
+  <div class="file-content"><span class="md-h"># Rodinný Receptář – Instrukce pro Gemini CLI</span>
+
+<span class="md-h">## O projektu</span>
+<span class="md-li">- Název: Rodinný receptář (rodinny-receptar)</span>
+<span class="md-li">- Verze: 0.42</span>
+<span class="md-li">- Typ: React PWA (Progressive Web App – dá se nainstalovat v Chrome na mobilu)</span>
+<span class="md-li">- Framework: React 19, TypeScript, Tailwind CSS 4</span>
+<span class="md-li">- Build nástroj: Vite</span>
+<span class="md-li">- Backend: Express.js</span>
+<span class="md-li">- AI integrace: Google Gemini API (@google/genai)</span>
+<span class="md-li">- Vyhledávání: Fuse.js (fuzzy search)</span>
+<span class="md-li">- Animace: Motion (Framer Motion)</span>
+
+<span class="md-h">## Pravidla – VŽDY DODRŽUJ</span>
+
+<span class="md-h">### Před každou změnou</span>
+<span class="md-li">1. Nejdřív mi ŘEKNI co hodláš udělat a proč</span>
+<span class="md-li">2. Počkej na mé výslovné potvrzení (ANO/OK)</span>
+<span class="md-li">3. Nikdy nedělej více věcí najednou – vždy jen jednu změnu</span>
+
+<span class="md-h">### Absolutní zákazy</span>
+<span class="md-li">- NIKDY nemaž existující funkce bez mého souhlasu</span>
+<span class="md-li">- NIKDY nepřepisuj celé soubory – jen uprav co je nutné</span>
+<span class="md-li">- NIKDY nemeň package.json bez ptaní</span>
+<span class="md-li">- NIKDY neodstraňuj CSS třídy nebo styly</span>
+<span class="md-li">- NIKDY sám neinstaluj npm balíčky – nejdřív se zeptej</span>
+
+<span class="md-h">### Styl kódu</span>
+<span class="md-li">- TypeScript (ne plain JavaScript)</span>
+<span class="md-li">- Funkcionální React komponenty (ne class components)</span>
+<span class="md-li">- Tailwind CSS pro styly</span>
+<span class="md-li">- Komentáře v češtině</span>
+
+<span class="md-h">### Jak komunikujeme</span>
+<span class="md-li">- Mluv se mnou ČESKY</span>
+<span class="md-li">- Vysvětluj jednoduše – nejsem profesionální programátor</span>
+<span class="md-li">- Když nevíš, řekni to místo hádání</span>
+<span class="md-li">- Pokud je více možností řešení, nabídni je a vysvětli rozdíly</span>
+
+<span class="md-h">### Zálohy</span>
+<span class="md-li">- Před větší změnou mi připomeň, abych udělal git commit nebo zálohu</span>
+</div>
+
+  <div class="callout tip">
+    <span class="callout-icon">🎯</span>
+    <div class="callout-body">
+      <strong>Uprav si sekci "O projektu" podle skutečnosti</strong>
+      <p>Pokud máš složky pojmenované jinak, nebo máš extra závislosti, doplň to. Čím přesnější popis, tím lepší výsledky.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 09 PŘÍKAZY ===== -->
+<div class="section" id="sec-prikazy">
+  <div class="section-label">// sekce 09</div>
+  <h2>Jak komunikovat s Gemini CLI</h2>
+
+  <h3>Základní ovládání v terminálu Gemini</h3>
+
+  <div class="quick-ref">
+    <div class="quick-ref-title">Klávesové zkratky a příkazy</div>
+    <div class="qr-row"><span class="qr-cmd">Enter</span><span class="qr-desc">Odeslat zprávu (jednořádkovou)</span></div>
+    <div class="qr-row"><span class="qr-cmd">Shift + Enter</span><span class="qr-desc">Nový řádek bez odeslání (pro delší text)</span></div>
+    <div class="qr-row"><span class="qr-cmd">Ctrl + C</span><span class="qr-desc">Přerušit odpověď Gemini (pokud to trvá moc)</span></div>
+    <div class="qr-row"><span class="qr-cmd">↑ šipka nahoru</span><span class="qr-desc">Předchozí zpráva (jako v terminálu)</span></div>
+    <div class="qr-row"><span class="qr-cmd">/help</span><span class="qr-desc">Zobraz všechny dostupné příkazy</span></div>
+    <div class="qr-row"><span class="qr-cmd">/clear</span><span class="qr-desc">Vymaž historii konverzace (nové sezení)</span></div>
+    <div class="qr-row"><span class="qr-cmd">/quit nebo /q</span><span class="qr-desc">Ukonči Gemini CLI</span></div>
+    <div class="qr-row"><span class="qr-cmd">/chat</span><span class="qr-desc">Chat mód – bez přístupu k souborům (jen konverzace)</span></div>
+  </div>
+
+  <h3>Zlatá pravidla pro dobré výsledky</h3>
+
+  <div class="callout tip">
+    <span class="callout-icon">✅</span>
+    <div class="callout-body">
+      <strong>Buď konkrétní</strong>
+      <p>Čím konkrétnější dotaz, tím lepší odpověď. Místo "oprav to" napiš "V komponentě RecipeCard.tsx chybí tlačítko pro sdílení. Přidej ho vedle tlačítka pro oblíbené."</p>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">✅</span>
+    <div class="callout-body">
+      <strong>Popis + kontext + očekávání</strong>
+      <p>Vzorec: <em>"[Co chci] v [kde to je] protože [proč]. Výsledek by měl [jak vypadat]."</em></p>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-body">
+      <strong>Když Gemini píše že "udělá změny" – nejdřív schvaluješ TY</strong>
+      <p>Gemini se vždy zeptá "Smím upravit soubor X?" a ty potvrdíš nebo odmítneš. Nikdy neodpovídej "ano na vše" – schvaluj každou věc zvlášť.</p>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <span class="callout-icon">💬</span>
+    <div class="callout-body">
+      <strong>Gemini CLI mluví česky</strong>
+      <p>Piš mu česky. Odpoví česky. Anglicky nemusíš vůbec.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 10 PŘÍKLADY ===== -->
+<div class="section" id="sec-priklady">
+  <div class="section-label">// sekce 10</div>
+  <h2>Praktické příklady pro tvůj receptář</h2>
+
+  <h3>Na začátku každého sezení – toto napiš jako první</h3>
+
+  <div class="prompt-block">Přečti si GEMINI.md a popiš mi co projekt dělá, jaké soubory jsou v /src složce, a co ty soubory dělají. Pracuj česky.</div>
+
+  <p>Gemini projde projekt, přečte soubory a dá ti přehled. Tím se "naladí" na tvůj projekt.</p>
+
+  <div class="divider"><span class="divider-text">příklady dotazů</span></div>
+
+  <div class="examples-grid">
+    <div class="example-card">
+      <div class="ex-icon">🔍</div>
+      <div class="ex-label">Porozumění kódu</div>
+      <div class="ex-prompt">Vysvětli mi jak funguje vyhledávání receptů. Kde je Fuse.js použit a co dělá?</div>
+      <div class="ex-note">Přečte soubory a vysvětlí jednoduše</div>
+    </div>
+    <div class="example-card">
+      <div class="ex-icon">🐛</div>
+      <div class="ex-label">Oprava chyby</div>
+      <div class="ex-prompt">V konzoli prohlížeče vidím tuto chybu: [vlož text chyby]. Co to znamená a jak to opravit?</div>
+      <div class="ex-note">Najde příčinu, navrhne opravu, zeptá se zda může změnit</div>
+    </div>
+    <div class="example-card">
+      <div class="ex-icon">✨</div>
+      <div class="ex-label">Nová funkce</div>
+      <div class="ex-prompt">Chci přidat možnost označit recept jako oblíbený (hvězdičkou). Jak bys to navrhl? Nezačínej ještě nic měnit.</div>
+      <div class="ex-note">Nejdřív navrhne, pak čeká na souhlas</div>
+    </div>
+    <div class="example-card">
+      <div class="ex-icon">📱</div>
+      <div class="ex-label">PWA / Mobil</div>
+      <div class="ex-prompt">Zkontroluj jestli manifest.json a service worker jsou správně nastaveny pro instalaci jako PWA v Chrome.</div>
+      <div class="ex-note">Přečte konfiguraci a zkontroluje správnost</div>
+    </div>
+    <div class="example-card">
+      <div class="ex-icon">🎨</div>
+      <div class="ex-label">Oprava designu</div>
+      <div class="ex-prompt">Karta receptu na mobilní obrazovce vypadá špatně – text přetéká ven. Najdi kde je CSS chyba, ale neměň nic dokud mi to neukážeš.</div>
+      <div class="ex-note">Najde problematické styly a ukáže je</div>
+    </div>
+    <div class="example-card">
+      <div class="ex-icon">⚡</div>
+      <div class="ex-label">Výkon</div>
+      <div class="ex-prompt">Stránka se načítá pomalu. Podívej se na src/index.tsx a src/App.tsx – vidíš kde by šlo zrychlit načítání?</div>
+      <div class="ex-note">Analyzuje kód a navrhne optimalizace</div>
+    </div>
+    <div class="example-card">
+      <div class="ex-icon">📝</div>
+      <div class="ex-label">Dokumentace</div>
+      <div class="ex-prompt">Projdi soubory v /src a napiš mi jednoduchý README.md, kde popíšeš co projekt dělá a jak ho spustit.</div>
+      <div class="ex-note">Projde kód a napíše dokumentaci</div>
+    </div>
+    <div class="example-card">
+      <div class="ex-icon">🔧</div>
+      <div class="ex-label">Vysvětlení chybové hlášky</div>
+      <div class="ex-prompt">npm run build mi hlásí tuto chybu: [vlož chybu]. Nevím co to znamená. Vysvětli mi to česky jako kdybych neprogramoval.</div>
+      <div class="ex-note">Jednoduché vysvětlení bez technického žargonu</div>
+    </div>
+  </div>
+
+  <h3>Jak vypadá typická konverzace</h3>
+
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="term-dot td-r"></div><div class="term-dot td-y"></div><div class="term-dot td-g"></div>
+      <span class="term-title">Gemini CLI – ukázka rozhovoru</span>
+    </div>
+    <div class="term-body">
+      <span class="term-line"><span class="t-gem">Gemini &gt; </span><span class="t-q">Chci přidat filtr receptů podle doby přípravy. Kde bych to implementoval?</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-ans">Čtu soubory projektu...</span></span>
+      <span class="term-line"><span class="t-ans">Filtrování receptů je teď v souboru src/components/RecipeFilter.tsx.</span></span>
+      <span class="term-line"><span class="t-ans">Navrhuju přidat filtr na řádek 47, kde jsou ostatní filtry.</span></span>
+      <span class="term-line"><span class="t-ans">Chceš vidět jak by kód vypadal, nebo rovnou navrhuji úpravu?</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-gem">Gemini &gt; </span><span class="t-q">Ukaž mi nejdřív jak by to vypadalo</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-ans">Přidal bych tento kód na řádek 47:</span></span>
+      <span class="term-line"><span class="t-ans">[ukáže konkrétní kód]</span></span>
+      <span class="term-line"><span class="t-ans">Chceš to takhle implementovat?</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-gem">Gemini &gt; </span><span class="t-q">Ano, implementuj to</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-ans">📝 Upravuji: src/components/RecipeFilter.tsx</span></span>
+      <span class="term-line"><span class="t-ok">✅ Hotovo. Přidal jsem filtr na řádek 47–53.</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 11 ZÁLOHY ===== -->
+<div class="section" id="sec-zalohy">
+  <div class="section-label">// sekce 11  🔴 přečti si to!</div>
+  <h2>Zálohy – NIKDY nepřeskoč</h2>
+
+  <div class="callout danger">
+    <span class="callout-icon">🔴</span>
+    <div class="callout-body">
+      <strong>AI může udělat chybu. Vždy. I s pravidly v GEMINI.md.</strong>
+      <p>Záloha = 2 minuty práce. Obnova bez zálohy = hodiny nebo ztracená práce navždy. Volba je jasná.</p>
+    </div>
+  </div>
+
+  <h3>Možnost A – Git (doporučeno, ale vyžaduje nastavení)</h3>
+
+  <p>Git je systém pro sledování změn v kódu. Každý "commit" je snapshot projektu ke kterému se lze vrátit. Tvůj projekt ho pravděpodobně již má (pokud vidíš složku <span class="cmd">.git</span>).</p>
+
+  <div class="code-block">
+<span class="c"># Před každou prací s Gemini udělej zálohu (commit):</span>
+<span class="w">git add .</span>
+<span class="w">git commit -m "záloha před Gemini – datum"</span>
+<span class="c"> </span>
+<span class="c"># Pokud Gemini udělá blbost – vrátíš se ke commit:</span>
+<span class="w">git checkout .</span>
+<span class="c"># Toto vrátí VŠECHNY soubory do stavu posledního commitu</span>
+<span class="c"> </span>
+<span class="c"># Zobraz historii záložních bodů:</span>
+<span class="w">git log --oneline</span>
+  </div>
+
+  <h3>Možnost B – Ruční záloha složky (pro jistotu)</h3>
+
+  <p>Jednoduché, funguje vždy, nevyžaduje znalost Gitu:</p>
+
+  <ol>
+    <li>Najdi složku projektu v Průzkumníku</li>
+    <li>Klikni pravým tlačítkem → Kopírovat</li>
+    <li>Vložit někam jinam (plocha, jiná složka)</li>
+    <li>Přejmenuj zálohu na <span class="cmd">rodinny-receptar-zaloha-DATUM</span></li>
+  </ol>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <strong>Ideální combo: Git commit + záloha složky</strong>
+      <p>Git pro rychlé vrácení změn, záloha složky jako pojistka pro případ, že se něco pokazí i s Gitem.</p>
+    </div>
+  </div>
+
+  <h3>Co říct Gemini na začátku každé práce</h3>
+  <div class="prompt-block">Před každou změnou v souboru mi nejdřív řekni co chceš změnit a proč. Dělej vždy jen jednu věc najednou a počkej na mé potvrzení. Pokud si nejsi jistý, raději se zeptej.</div>
+</div>
+
+<!-- ===== 12 PROBLÉMY ===== -->
+<div class="section" id="sec-problemy">
+  <div class="section-label">// sekce 12</div>
+  <h2>Když to nefunguje – řešení běžných problémů</h2>
+
+  <div class="steps">
+    <div class="step-card" style="border-left-color: var(--red);">
+      <div class="step-num" style="color: var(--red);">!</div>
+      <div class="step-body">
+        <div class="step-title">❌ "gemini: command not found"</div>
+        <p><strong>Příčina:</strong> Gemini CLI není nainstalován nebo ho terminál nenachází.</p>
+        <p><strong>Řešení 1:</strong> Zavři terminál a otevři znovu (Windows si nové příkazy načte až po restartu terminálu).</p>
+        <p><strong>Řešení 2:</strong> Znovu spusť instalaci: <span class="cmd">npm install -g @google/gemini-cli</span></p>
+        <p><strong>Řešení 3 (Mac):</strong> Zkus <span class="cmd">npx @google/gemini-cli</span> místo jen <span class="cmd">gemini</span></p>
+      </div>
+    </div>
+
+    <div class="step-card" style="border-left-color: var(--red);">
+      <div class="step-num" style="color: var(--red);">!</div>
+      <div class="step-body">
+        <div class="step-title">❌ "node: command not found" nebo stará verze</div>
+        <p><strong>Příčina:</strong> Node.js není nainstalován nebo je starý (potřeba 20+).</p>
+        <p><strong>Řešení:</strong> Stáhni a nainstaluj Node.js LTS z <span class="cmd">nodejs.org</span>. Po instalaci znovu otevři terminál.</p>
+      </div>
+    </div>
+
+    <div class="step-card" style="border-left-color: var(--red);">
+      <div class="step-num" style="color: var(--red);">!</div>
+      <div class="step-body">
+        <div class="step-title">❌ "EACCES: permission denied" při instalaci (Mac)</div>
+        <p><strong>Řešení:</strong> Přidej <span class="cmd">sudo</span> před příkaz:</p>
+        <div class="code-block"><span class="w">sudo npm install -g @google/gemini-cli</span></div>
+        <p>Zadáš heslo k Macu – při psaní se nic nezobrazuje, ale zadává se. Stiskni Enter.</p>
+      </div>
+    </div>
+
+    <div class="step-card" style="border-left-color: var(--red);">
+      <div class="step-num" style="color: var(--red);">!</div>
+      <div class="step-body">
+        <div class="step-title">❌ Přihlášení nefunguje / prohlížeč se neotevřel</div>
+        <p><strong>Řešení 1:</strong> Zkus příkaz <span class="cmd">gemini auth login</span></p>
+        <p><strong>Řešení 2:</strong> Zkontroluj zda máš funkční připojení k internetu.</p>
+        <p><strong>Řešení 3:</strong> Pokud se prohlížeč neotevřel automaticky, v terminálu bude URL odkaz – zkopíruj ho a vlož ručně do prohlížeče.</p>
+      </div>
+    </div>
+
+    <div class="step-card" style="border-left-color: var(--amber);">
+      <div class="step-num" style="color: var(--amber);">?</div>
+      <div class="step-body">
+        <div class="step-title">⚠️ Gemini "nevidí" soubory projektu</div>
+        <p><strong>Příčina:</strong> Spustil jsi Gemini CLI v jiné složce, ne ve složce projektu.</p>
+        <p><strong>Řešení:</strong> Ukonči Gemini (<span class="cmd">/quit</span>), přejdi do správné složky pomocí <span class="cmd">cd</span>, a znovu spusť <span class="cmd">gemini</span>.</p>
+        <p>Ověř kde jsi: <span class="cmd">pwd</span> (Mac/Linux) nebo <span class="cmd">cd</span> (Windows bez argumentu)</p>
+      </div>
+    </div>
+
+    <div class="step-card" style="border-left-color: var(--amber);">
+      <div class="step-num" style="color: var(--amber);">?</div>
+      <div class="step-body">
+        <div class="step-title">⚠️ Gemini ignoruje pravidla z GEMINI.md</div>
+        <p><strong>Příčina 1:</strong> Soubor GEMINI.md je ve špatné složce. Musí být přímo tam, kde spouštíš Gemini (kořen projektu).</p>
+        <p><strong>Příčina 2:</strong> Překlep v názvu souboru – musí být přesně <span class="cmd">GEMINI.md</span> (velká písmena)</p>
+        <p><strong>Řešení:</strong> Ujisti se, že soubor je vedle <span class="cmd">package.json</span>. Ne ve složce, ale vedle ní.</p>
+      </div>
+    </div>
+
+    <div class="step-card" style="border-left-color: var(--amber);">
+      <div class="step-num" style="color: var(--amber);">?</div>
+      <div class="step-body">
+        <div class="step-title">⚠️ Dosáhl jsi denního limitu (1000 dotazů)</div>
+        <p>To se při hobby projektu stane těžko, ale pokud ano – limit se obnoví druhý den o půlnoci (UTC čas).</p>
+        <p>Pokud to nastane opakovaně, pracuješ fakt hodně. 😄</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <span class="callout-icon">🔍</span>
+    <div class="callout-body">
+      <strong>Kde hledat další pomoc</strong>
+      <p>GitHub Issues: <a href="https://github.com/google-gemini/gemini-cli/issues" target="_blank">github.com/google-gemini/gemini-cli/issues</a> – prohledej jestli někdo měl stejný problém. Je tam komunita a odpovědi.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 13 TAHÁK ===== -->
+<div class="section" id="sec-tahak">
+  <div class="section-label">// sekce 13</div>
+  <h2>Rychlý tahák – vytiskni a přilep na monitor</h2>
+
+  <div class="cheatsheet">
+    <div class="cheat-card">
+      <div class="cheat-header">🚀 Spuštění</div>
+      <div class="cheat-row"><span class="cheat-k">cd cesta/k/projektu</span><span class="cheat-v">přejdi do projektu</span></div>
+      <div class="cheat-row"><span class="cheat-k">gemini</span><span class="cheat-v">spusť Gemini CLI</span></div>
+      <div class="cheat-row"><span class="cheat-k">/quit nebo /q</span><span class="cheat-v">ukonči</span></div>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-header">💾 Git zálohy</div>
+      <div class="cheat-row"><span class="cheat-k">git add .</span><span class="cheat-v">připrav zálohu</span></div>
+      <div class="cheat-row"><span class="cheat-k">git commit -m "txt"</span><span class="cheat-v">ulož zálohu</span></div>
+      <div class="cheat-row"><span class="cheat-k">git checkout .</span><span class="cheat-v">vrátit vše zpět</span></div>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-header">⌨️ Klávesy v Gemini</div>
+      <div class="cheat-row"><span class="cheat-k">Enter</span><span class="cheat-v">odeslat zprávu</span></div>
+      <div class="cheat-row"><span class="cheat-k">Shift+Enter</span><span class="cheat-v">nový řádek</span></div>
+      <div class="cheat-row"><span class="cheat-k">Ctrl+C</span><span class="cheat-v">přerušit odpověď</span></div>
+      <div class="cheat-row"><span class="cheat-k">↑ šipka</span><span class="cheat-v">předchozí dotaz</span></div>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-header">📁 Terminál – pohyb</div>
+      <div class="cheat-row"><span class="cheat-k">cd nazev</span><span class="cheat-v">vstup do složky</span></div>
+      <div class="cheat-row"><span class="cheat-k">cd ..</span><span class="cheat-v">složku výše</span></div>
+      <div class="cheat-row"><span class="cheat-k">ls / dir</span><span class="cheat-v">obsah složky</span></div>
+      <div class="cheat-row"><span class="cheat-k">pwd / cd</span><span class="cheat-v">kde jsem?</span></div>
+    </div>
+  </div>
+
+  <h3>Vzorová první věta při každém sezení</h3>
+  <div class="prompt-block">Přečti si GEMINI.md, popiš mi strukturu projektu, a čekej na mé pokyny. Pracuj česky. Před každou změnou se mě zeptej.</div>
+
+  <h3>Bezpečnostní checklist před každou prací</h3>
+  <div class="highlight-box">
+    <ol>
+      <li>☐ <strong>Záloha hotová</strong> – git commit nebo zkopírovaná složka</li>
+      <li>☐ <strong>Jsem ve správné složce</strong> – vedle package.json je GEMINI.md</li>
+      <li>☐ <strong>Spustil jsem Gemini v projektu</strong> – cd do složky, pak gemini</li>
+      <li>☐ <strong>Začal jsem sezení úvodní větou</strong> – Gemini ví co smí a nesmí</li>
+      <li>☐ <strong>Schvaluji změny po jedné</strong> – ne "ano na vše"</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ===== 14 ZDROJE ===== -->
+<div class="section" id="sec-zdroje">
+  <div class="section-label">// sekce 14</div>
+  <h2>Videa a zdroje pro další studium</h2>
+
+  <div class="callout warn">
+    <span class="callout-icon">📺</span>
+    <div class="callout-body">
+      <strong>Česká videa o Gemini CLI (terminálový nástroj) zatím neexistují</strong>
+      <p>Gemini CLI pro terminál je nový a specifický nástroj. Ale anglická videa jsou hodně vizuální – uvidíš přesně co se děje v terminálu a nemusíš rozumět každému slovu.</p>
+    </div>
+  </div>
+
+  <h3>🎬 YouTube – hledej tato klíčová slova</h3>
+  <div class="link-list">
+    <a class="link-card" href="https://www.youtube.com/results?search_query=gemini+cli+tutorial+beginners+2025" target="_blank">
+      <div class="link-icon-box">▶️</div>
+      <div>
+        <div class="link-title">gemini cli tutorial beginners 2025</div>
+        <div class="link-sub">Videa pro začátečníky – uvidíš přesně co psát do terminálu krok za krokem</div>
+      </div>
+    </a>
+    <a class="link-card" href="https://www.youtube.com/results?search_query=gemini+cli+react+project+coding" target="_blank">
+      <div class="link-icon-box">▶️</div>
+      <div>
+        <div class="link-title">gemini cli react project coding</div>
+        <div class="link-sub">Videa o práci s React projektem – přímo relevantní pro tvůj receptář</div>
+      </div>
+    </a>
+    <a class="link-card" href="https://www.youtube.com/results?search_query=gemini+cli+free+alternative+claude+code" target="_blank">
+      <div class="link-icon-box">▶️</div>
+      <div>
+        <div class="link-title">gemini cli free alternative claude code</div>
+        <div class="link-sub">Srovnání s Claude Code – proč je Gemini CLI skvělá volba pro hobby projekty</div>
+      </div>
+    </a>
+  </div>
+
+  <h3>📚 Oficiální dokumentace</h3>
+  <div class="link-list">
+    <a class="link-card" href="https://geminicli.com" target="_blank">
+      <div class="link-icon-box">🌐</div>
+      <div>
+        <div class="link-title">geminicli.com – Hlavní stránka</div>
+        <div class="link-sub">Instalace, dokumentace, vše na jednom místě</div>
+      </div>
+    </a>
+    <a class="link-card" href="https://geminicli.com/docs/get-started/" target="_blank">
+      <div class="link-icon-box">📖</div>
+      <div>
+        <div class="link-title">Quickstart průvodce (anglicky)</div>
+        <div class="link-sub">Přehledný, s příklady. Pokud budeš číst jednu stránku dokumentace, tak tuto.</div>
+      </div>
+    </a>
+    <a class="link-card" href="https://github.com/google-gemini/gemini-cli" target="_blank">
+      <div class="link-icon-box">🐙</div>
+      <div>
+        <div class="link-title">GitHub – zdrojový kód</div>
+        <div class="link-sub">Sekce "Issues" – pokud něco nefunguje, pravděpodobně tam najdeš řešení</div>
+      </div>
+    </a>
+    <a class="link-card" href="https://medium.com/google-cloud/gemini-cli-tutorial-series-77da7d494718" target="_blank">
+      <div class="link-icon-box">📝</div>
+      <div>
+        <div class="link-title">Medium: Gemini CLI Tutorial Series</div>
+        <div class="link-sub">Podrobná série článků od Google Cloud. Dobré pro hlubší pochopení.</div>
+      </div>
+    </a>
+    <a class="link-card" href="https://codelabs.developers.google.com/gemini-cli-hands-on" target="_blank">
+      <div class="link-icon-box">🧪</div>
+      <div>
+        <div class="link-title">Google Codelabs – interaktivní cvičení</div>
+        <div class="link-sub">Vyzkoušíš různé scénáře v praxi – přímo od Googlu, krok za krokem</div>
+      </div>
+    </a>
+  </div>
+
+  <h3>Pokrok který jsi udělal</h3>
+
+  <div class="progress-track">
+    <div class="prog-step done">
+      <div class="prog-circle">✓</div>
+      <div class="prog-label">Zjistil jsi<br>co to je</div>
+    </div>
+    <div class="prog-line done"></div>
+    <div class="prog-step done">
+      <div class="prog-circle">✓</div>
+      <div class="prog-label">Máš<br>Node.js</div>
+    </div>
+    <div class="prog-line done"></div>
+    <div class="prog-step curr">
+      <div class="prog-circle">3</div>
+      <div class="prog-label">Instaluješ<br>Gemini CLI</div>
+    </div>
+    <div class="prog-line"></div>
+    <div class="prog-step">
+      <div class="prog-circle">4</div>
+      <div class="prog-label">Vytvoříš<br>GEMINI.md</div>
+    </div>
+    <div class="prog-line"></div>
+    <div class="prog-step">
+      <div class="prog-circle">5</div>
+      <div class="prog-label">První<br>dotaz</div>
+    </div>
+    <div class="prog-line"></div>
+    <div class="prog-step">
+      <div class="prog-circle">🎉</div>
+      <div class="prog-label">Pracuješ<br>na projektu!</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="callout tip" style="margin-top: 40px;">
+  <span class="callout-icon">🙌</span>
+  <div class="callout-body">
+    <strong>Naučit se nový nástroj je vždy trochu těžké ze začátku</strong>
+    <p>Ale tohle zvládneš. Máš projekt, motivaci, a teď i průvodce. Gemini CLI je opravdu přátelský nástroj – ptá se, vysvětluje, a pracuje s tebou, ne místo tebe.</p>
+  </div>
+</div>
+
+<footer>
+  Vytvořeno pro projekt <strong style="color: var(--amber);">rodinny-receptar</strong> v0.42 &nbsp;·&nbsp;
+  Gemini CLI od Google (open-source, Apache 2.0) &nbsp;·&nbsp;
+  Průvodce sestavil Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
+</footer>
+
+</div><!-- /.page -->
+
+<script>
+function showTab(group, name, btn) {
+  // Hide all panels in group
+  document.querySelectorAll('[id^="' + group + '-"]').forEach(p => p.classList.remove('active'));
+  // Remove active from buttons in same tabs
+  btn.closest('.os-tab-btns').querySelectorAll('.os-btn').forEach(b => b.classList.remove('active'));
+  // Show selected
+  document.getElementById(group + '-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

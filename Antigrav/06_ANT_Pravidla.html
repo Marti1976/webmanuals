@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vlastní Pravidla – Antigravity průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(168,85,247,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--purple2)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-p{color:var(--purple2);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--purple);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--purple2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--purple2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--purple);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--purple2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(168,85,247,.1);
+  color:var(--purple2);border:1px solid rgba(168,85,247,.2);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:#6ee7b7}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--accent)}
+.info{background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.25);color:#d0b8e8}
+.info .content strong{color:var(--purple2)}
+
+.code-block{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--purple);
+  border-radius:8px;padding:12px;margin:12px 0;font-family:'DM Mono',monospace;font-size:.78em;
+  color:var(--purple2);line-height:1.7;overflow-x:auto}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+.example{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.example-title{font-family:'Syne',sans-serif;font-weight:700;color:var(--purple2);margin-bottom:8px}
+.example-code{font-family:'DM Mono',monospace;font-size:.75em;color:var(--text);line-height:1.6;margin-top:8px}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 06</div>
+  <h1>Vlastní <em>Pravidla</em></h1>
+  <p class="h-desc">Workflows a Rules — jak napsat vlastní instrukce pro agenta které zůstanou platné. Jak se to liší od GEMINI.md. Persistentní pravidla která se dodržují automaticky.</p>
+  <div class="badges">
+    <span class="badge badge-p">📋 Rules Engine</span>
+    <span class="badge badge-c">🔄 Workflows</span>
+    <span class="badge badge-p">🎯 Constraints</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Rules vs Instructions</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> ANTIGRAVITY.rules soubor</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Syntaxe pravidel</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Workflows — sekvence</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Praktické příklady</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Pro tvůj receptář</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Rules vs Instructions — rozdíl</h2>
+
+  <h3>Instructions (v promptu)</h3>
+  <p>Vždy když napíšeš agentovi "Udělej X" — to je jednoční instrukce. Agent ji udělá a pak čeká na další.</p>
+
+  <div class="example">
+    <div class="example-title">Příklad: jednorázová instrukce</div>
+    <p style="font-size:.85em;color:var(--t2)">Ty: "Přidej button Logout"<br/>Agent: Dělá<br/>Ty: "Teď CSS"<br/>Agent: Dělá</p>
+  </div>
+
+  <h3>Rules (v souboru)</h3>
+  <p>Permanentní pravidla která agent používá v KAŽDÉ konverzaci. Jsou to věty jako "VŽDY" nebo "NIKDY".</p>
+
+  <div class="example">
+    <div class="example-title">Příklad: permanentní pravidlo</div>
+    <div class="example-code">
+RULE: Never modify package.json without explicit approval
+RULE: Always check tests pass before finishing
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Rules jsou jako vnitřní instrukcní pro agenta</strong>
+      <p>Ty je jednou napíšeš a agent je követuje navždy, pokud je používáš v tomhle projektu. Perfektní pro osobní hranice.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>ANTIGRAVITY.rules soubor</h2>
+
+  <p>V kořeni projektu vytvoříš soubor <code>.antigravity-rules</code> (nebo <code>ANTIGRAVITY.rules</code>).</p>
+
+  <h3>Jak vytvořit</h3>
+  <p>V Antigravity: File Explorer → project root → New File → <code>.antigravity-rules</code></p>
+
+  <p>Obsah je prostý text. Jedna pravidla na řádek.</p>
+
+  <h3>Struktura</h3>
+  <div class="code-block">
+# Komentáře začínají #<br/>
+<br/>
+RULE: Nikdy neprováduj více změn najednou<br/>
+RULE: Před každou akcí se mě ptej<br/>
+ALLOW: modificar soubory v /src<br/>
+DENY: delete libovolné soubory<br/>
+CONSTRAINT: Zkontroluj že build projde
+  </div>
+
+  <h3>Klíčová slova</h3>
+  <ul>
+    <li><strong>RULE:</strong> Obecné pravidlo kterého si agent pamatuje</li>
+    <li><strong>ALLOW:</strong> Coagent smí dělat (Allow list)</li>
+    <li><strong>DENY:</strong> Co agent nesmí dělat (Deny list)</li>
+    <li><strong>CONSTRAINT:</strong> Omezení — co ověřit na konci</li>
+    <li><strong>WORKFLOW:</strong> Sekvence akcí (viz sekce 04)</li>
+  </ul>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Syntaxe pravidel — konkrétně</h2>
+
+  <h3>Příklad úplného rules souboru</h3>
+  <div class="code-block">
+# Rodinný Receptář — Agent Rules<br/>
+# Vytvořeno: duben 2026<br/>
+<br/>
+# === ZÁKLADNÍ PRAVIDLA ===<br/>
+RULE: Vždy se ptej na schválení než něco mazes<br/>
+RULE: Menš měnit pouze jeden soubor na úkol<br/>
+RULE: Pokud selže build, okamžitě řekni proč<br/>
+<br/>
+# === POVOLENÍ ===<br/>
+ALLOW: modify soubory v /src<br/>
+ALLOW: modify soubory v /public<br/>
+ALLOW: run npm run build<br/>
+ALLOW: run npm run dev<br/>
+<br/>
+# === ZÁKAZY ===<br/>
+DENY: delete jakékoli soubory<br/>
+DENY: modify package.json<br/>
+DENY: run npm install<br/>
+DENY: modify .git<br/>
+<br/>
+# === OMEZENÍ ===<br/>
+CONSTRAINT: Všechny soubory TypeScript musí projít TS check<br/>
+CONSTRAINT: Build musí projít bez warnings<br/>
+CONSTRAINT: Udělej screenshot výsledku
+  </div>
+
+  <h3>Bezpečné pravidlo vs bezpečné nebylo</h3>
+  <div class="grid2">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <p style="font-size:.85em;color:var(--green2);font-weight:600;margin-bottom:8px">✓ Konkrétní</p>
+      <p style="font-size:.8em;color:var(--t2)">"DENY: modify soubory mimo /src"</p>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <p style="font-size:.85em;color:var(--amber2);font-weight:600;margin-bottom:8px">✗ Vágní</p>
+      <p style="font-size:.8em;color:var(--t2)">"DENY: nedělej blbosti"</p>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Workflows — sekvence akcí</h2>
+
+  <p>Pro pokročilé: můžeš definovat celé workflow — sadu akcí které mají být provedeny v pořadí.</p>
+
+  <h3>Syntaxe WORKFLOW</h3>
+  <div class="code-block">
+WORKFLOW: feature-complete<br/>
+  STEP: Vytvoř komponentu<br/>
+  STEP: Naprocvič CSS<br/>
+  STEP: Napiš testy<br/>
+  CONSTRAINT: Všechny testy prochází<br/>
+  CONSTRAINT: Build OK
+  </div>
+
+  <h3>Jak to funguje?</h3>
+  <p>Když napíšeš agentovi: "Spusť workflow feature-complete" — agent to provede krok za krokem.</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Pro tvůj receptář: možná zbytečné</strong>
+      <p>Workflow je pro komplexní projekty. Ty si stačí napsat jednotlivé prompty.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Praktické příklady</h2>
+
+  <h3>Příklad 1: Security rules</h3>
+  <div class="code-block">
+# Security<br/>
+RULE: Nikdy nemaž .env soubory<br/>
+RULE: Nikdy nemaž .git složku<br/>
+RULE: Nikdy nemodifikuj soubory mimo /src<br/>
+DENY: modify .env<br/>
+DENY: modify .env.local
+  </div>
+
+  <h3>Příklad 2: Code quality</h3>
+  <div class="code-block">
+# Code Quality<br/>
+CONSTRAINT: Build musí projít bez TS errors<br/>
+CONSTRAINT: ESLint musí být OK<br/>
+CONSTRAINT: Uděláš screenshot výsledku<br/>
+RULE: Přidej JSDoc komentář k nové funkci<br/>
+RULE: Nepoužívej `any` typ v TypeScript
+  </div>
+
+  <h3>Příklad 3: Communication</h3>
+  <div class="code-block">
+# Communication<br/>
+RULE: Vždy vysvětli co jsi změnil<br/>
+RULE: Před smazáním se zeptej<br/>
+RULE: Při chybě vysvětli proč se to stalo<br/>
+CONSTRAINT: Odpověz v češtině
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Pro tvůj receptář — co napsat</h2>
+
+  <p>Tady je .antigravity-rules soubor kterej bych doporučil:</p>
+
+  <div class="code-block">
+# Rodinný Receptář — Agent Rules<br/>
+# Projekt: rodinny-receptar<br/>
+<br/>
+# === ZÁKLADNÍ PRAVIDLA ===<br/>
+RULE: Jedna změna = jeden commit<br/>
+RULE: Vždy se ptej než smazáš cokoliv<br/>
+RULE: Vysvetli co se zmenilo a proc<br/>
+<br/>
+# === POVOLENI ===<br/>
+ALLOW: modify /src<br/>
+ALLOW: modify /public<br/>
+ALLOW: run npm run dev<br/>
+ALLOW: run npm run build<br/>
+ALLOW: run npm run test<br/>
+ALLOW: git commit<br/>
+<br/>
+# === ZÁKAZY ===<br/>
+DENY: delete soubory<br/>
+DENY: modify package.json<br/>
+DENY: modify .git<br/>
+DENY: run npm install<br/>
+DENY: run npm uninstall<br/>
+<br/>
+# === OMEZENIENIA ===<br/>
+CONSTRAINT: TypeScript build musí projít<br/>
+CONSTRAINT: Udělej screenshot výsledku<br/>
+CONSTRAINT: Všechny změny commituj
+  </div>
+
+  <h3>Jak to nastavit</h3>
+  <ul>
+    <li>Vytvoř soubor <code>.antigravity-rules</code> v kořeni projektu</li>
+    <li>Vlož obsah výše</li>
+    <li>Git add + commit: `git add .antigravity-rules && git commit -m "Add agent rules"`</li>
+    <li>Agent to automaticky detekuje a bude to používat</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Tímto máš jasně daná pravidla</strong>
+      <p>Agent je bude automaticky dodržovat. Měl by být disciplinovaný bez toho aby jsi musel pokaždé říkat co smí a nesmí.</p>
+    </div>
+  </box>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  06_ANT_Pravidla.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  <a href="00_ANT_INDEX.html">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bezpečnost především – Gemini CLI</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09080d;--bg2:#0f0d14;--bg3:#16131e;--bg4:#1e1a28;
+  --border:#221e30;--border2:#302840;
+  --text:#ccc4de;--t2:#7a6e98;--t3:#45395c;
+  --red:#e05555;--red2:#f5a0a0;
+  --amber:#d4922a;--amber2:#f5c060;
+  --green:#2ea84a;--green2:#7ee88a;
+  --blue:#4878d4;--blue2:#90b8f8;
+  --purple:#8855cc;--purple2:#c4a0f0;
+  --white:#ece8f5;
+  --r:10px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:5px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;overflow-x:hidden}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px 80px}
+
+/* HERO */
+.hero{padding:56px 0 38px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;left:-80px;width:500px;height:380px;
+  background:radial-gradient(ellipse,rgba(224,85,85,.1) 0%,transparent 65%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-20px;right:-60px;width:300px;height:200px;
+  background:radial-gradient(ellipse,rgba(136,85,204,.08) 0%,transparent 65%);pointer-events:none}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.72em;color:var(--red);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:12px}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2em,5vw,3.2em);font-weight:800;
+  color:var(--white);line-height:1.05;margin-bottom:14px}
+.hero h1 em{color:var(--red);font-style:normal}
+.hero-sub{color:var(--t2);font-size:1em;max-width:600px;margin-bottom:22px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.72em;padding:4px 12px;border-radius:14px;border:1px solid}
+.br{color:var(--red2);border-color:rgba(224,85,85,.4);background:rgba(224,85,85,.08)}
+.ba{color:var(--amber2);border-color:rgba(212,146,42,.4);background:rgba(212,146,42,.08)}
+.bg{color:var(--green2);border-color:rgba(46,168,74,.4);background:rgba(46,168,74,.08)}
+
+/* TOC */
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--red);
+  border-radius:var(--r);padding:22px 26px;margin:32px 0}
+.toc-t{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--red);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.toc-g{display:grid;grid-template-columns:1fr 1fr;gap:5px 24px}
+@media(max-width:520px){.toc-g{grid-template-columns:1fr}}
+.toc-a{display:flex;align-items:baseline;gap:9px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:3px 0;transition:color .2s}
+.toc-a:hover{color:var(--red2)}
+.toc-n{font-family:'DM Mono',monospace;font-size:.76em;color:var(--red);min-width:18px}
+
+/* SECTIONS */
+.sec{margin-top:52px;padding-top:18px;border-top:1px solid var(--border)}
+.sec-tag{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.13em;
+  text-transform:uppercase;margin-bottom:8px}
+.sec h2{font-family:'Syne',sans-serif;font-size:1.65em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.08em;font-weight:600;color:var(--purple2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.94em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+a{color:var(--blue2);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* CODE */
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(72,120,212,.1);
+  color:var(--blue2);border:1px solid rgba(72,120,212,.25);border-radius:4px;padding:1px 7px}
+.cb{background:#070610;border:1px solid var(--border);border-left:3px solid var(--blue);
+  border-radius:var(--r);padding:15px 18px;margin:12px 0;font-family:'DM Mono',monospace;
+  font-size:.85em;line-height:1.9;overflow-x:auto;color:var(--blue2)}
+.cb .cm{color:var(--t3);font-style:italic}
+.cb .wh{color:var(--white)}
+.cb .gn{color:var(--green2)}
+.cb .am{color:var(--amber2)}
+.cb .rd{color:var(--red2)}
+
+/* CALLOUTS */
+.box{display:flex;gap:13px;padding:15px 18px;border-radius:var(--r);margin:16px 0;font-size:.91em}
+.bi{flex-shrink:0;font-size:1.25em;margin-top:1px}
+.bb strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.bb p,.bb li{margin:0;color:inherit;font-size:.95em}
+.bb ul{padding-left:16px;margin-top:4px}
+.tip2 {background:rgba(46,168,74,.08);border:1px solid rgba(46,168,74,.25);color:#90c89a}
+.tip2 .bb strong{color:var(--green2)}
+.warn2{background:rgba(212,146,42,.08);border:1px solid rgba(212,146,42,.25);color:#d4b870}
+.warn2 .bb strong{color:var(--amber2)}
+.danger2{background:rgba(224,85,85,.09);border:1px solid rgba(224,85,85,.3);color:#d09090}
+.danger2 .bb strong{color:var(--red2)}
+.info2{background:rgba(72,120,212,.08);border:1px solid rgba(72,120,212,.25);color:#90b0d8}
+.info2 .bb strong{color:var(--blue2)}
+.purple2{background:rgba(136,85,204,.08);border:1px solid rgba(136,85,204,.25);color:#c0a0d8}
+.purple2 .bb strong{color:var(--purple2)}
+
+/* RISK TABLE */
+.risk-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.88em}
+.risk-table th{font-family:'Syne',sans-serif;font-size:.76em;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--t3);padding:9px 12px;text-align:left;border-bottom:2px solid var(--border)}
+.risk-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.risk-table tr:last-child td{border-bottom:none}
+.risk-table td:first-child{color:var(--white);font-weight:500;white-space:nowrap}
+.risk-table td:nth-child(2){color:var(--t2)}
+.risk-level{display:inline-block;font-family:'DM Mono',monospace;font-size:.78em;
+  padding:2px 10px;border-radius:10px;border:1px solid;white-space:nowrap}
+.rl-low{color:var(--green2);border-color:rgba(46,168,74,.4);background:rgba(46,168,74,.08)}
+.rl-mid{color:var(--amber2);border-color:rgba(212,146,42,.4);background:rgba(212,146,42,.08)}
+.rl-hi {color:var(--red2); border-color:rgba(224,85,85,.4); background:rgba(224,85,85,.08)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:12px;margin:16px 0}
+.step{display:grid;grid-template-columns:46px 1fr;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.step-n{display:flex;align-items:flex-start;justify-content:center;padding-top:15px;
+  font-family:'Syne',sans-serif;font-size:1.15em;font-weight:800;
+  background:rgba(224,85,85,.06);border-right:1px solid var(--border)}
+.step-b{padding:14px 18px}
+.step-t{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:7px;font-size:.96em}
+.step-b p{font-size:.9em;color:var(--t2);margin-bottom:7px}
+.step-b p:last-child{margin-bottom:0}
+
+/* PERMISSION TABLE */
+.perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:560px){.perm-grid{grid-template-columns:1fr}}
+.perm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:15px}
+.perm-title{font-family:'Syne',sans-serif;font-size:.85em;font-weight:700;margin-bottom:8px;
+  padding-bottom:7px;border-bottom:1px solid var(--border)}
+.perm-row{display:flex;justify-content:space-between;align-items:baseline;
+  padding:4px 0;font-size:.83em;border-bottom:1px solid rgba(255,255,255,.03)}
+.perm-row:last-child{border-bottom:none}
+.perm-name{font-family:'DM Mono',monospace;color:var(--t2)}
+.perm-val{font-family:'DM Mono',monospace;font-size:.9em}
+.pv-r{color:var(--red2)}
+.pv-g{color:var(--green2)}
+.pv-a{color:var(--amber2)}
+
+/* VERDICT */
+.verdict{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px 24px;margin:18px 0}
+.verdict-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.vd-row{display:flex;align-items:flex-start;gap:12px;padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);font-size:.9em}
+.vd-row:last-child{border-bottom:none}
+.vd-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
+.vd-text{color:var(--t2)}
+.vd-text strong{color:var(--white)}
+
+/* DIVIDER */
+.div{display:flex;align-items:center;gap:14px;margin:38px 0 14px}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--border)}
+.div span{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);
+  letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+
+/* CHECKLIST */
+.checklist{background:var(--bg2);border:1px solid var(--border);
+  border-left:4px solid var(--green);border-radius:var(--r);padding:20px 22px;margin:16px 0}
+.checklist h4{color:var(--green2);font-family:'Syne',sans-serif;margin-top:0;margin-bottom:12px;
+  font-size:.9em;text-transform:uppercase;letter-spacing:.08em}
+.cl-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);font-size:.88em;color:var(--t2)}
+.cl-item:last-child{border-bottom:none}
+.cl-box{color:var(--green);flex-shrink:0;margin-top:2px}
+
+/* SUMMARY BOX */
+.summary{background:linear-gradient(135deg,rgba(46,168,74,.08) 0%,rgba(72,120,212,.08) 100%);
+  border:1px solid rgba(46,168,74,.25);border-radius:var(--r);padding:24px 26px;margin:24px 0}
+.summary h3{color:var(--green2);margin-top:0}
+
+footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2.2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">// bezpečnost – co vědět než začneš</div>
+  <h1>🛡️ Bezpečnost<br><em>především</em></h1>
+  <p class="hero-sub">Co přesně instaluješ, jaká jsou rizika, co Gemini CLI smí a nesmí dělat, a jak vše čistě odinstalovat když to přestaneš potřebovat.</p>
+  <div class="badges">
+    <span class="badge br">⚠️ Přečti před instalací</span>
+    <span class="badge ba">🔍 Transparentně vysvětleno</span>
+    <span class="badge bg">✓ Odinstalace: čistá a úplná</span>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-t">Co tady najdeš</div>
+  <div class="toc-g">
+    <a class="toc-a" href="#s1"><span class="toc-n">01</span> Co přesně instaluješ</a>
+    <a class="toc-a" href="#s2"><span class="toc-n">02</span> Oprávnění PowerShellu – co jsme změnili</a>
+    <a class="toc-a" href="#s3"><span class="toc-n">03</span> Co Gemini CLI vidí a posílá Googlu</a>
+    <a class="toc-a" href="#s4"><span class="toc-n">04</span> Tabulka rizik</a>
+    <a class="toc-a" href="#s5"><span class="toc-n">05</span> Zlatá pravidla bezpečnosti</a>
+    <a class="toc-a" href="#s6"><span class="toc-n">06</span> Jak odinstalovat Gemini CLI</a>
+    <a class="toc-a" href="#s7"><span class="toc-n">07</span> Jak odinstalovat Node.js</a>
+    <a class="toc-a" href="#s8"><span class="toc-n">08</span> Jak vrátit oprávnění PowerShellu</a>
+    <a class="toc-a" href="#s9"><span class="toc-n">09</span> Kompletní čistá odinstalace – shrnutí</a>
+    <a class="toc-a" href="#s10"><span class="toc-n">10</span> Výsledný verdikt: bezpečné?</a>
+  </div>
+</div>
+
+<!-- 01 CO INSTALUJEŠ -->
+<div class="sec" id="s1">
+  <div class="sec-tag">// sekce 01</div>
+  <h2>Co přesně instaluješ</h2>
+
+  <p>Je fér přesně vědět co si dáváš na počítač. Jsou to dva oddělené nástroje:</p>
+
+  <h3>Node.js</h3>
+  <p><strong>Node.js</strong> je open-source runtime pro JavaScript. Vyvinul ho Ryan Dahl v roce 2009, dnes ho spravuje nadace OpenJS Foundation. Používají ho miliony vývojářů po celém světě – je to de facto standard pro vývoj webových aplikací. Tvůj projekt (<em>rodinny-receptar</em>) ho už používá – bez Node.js by ses s projektem vůbec nedostal dál.</p>
+  <ul>
+    <li><strong>Zdroj:</strong> <a href="https://nodejs.org" target="_blank">nodejs.org</a> – oficiální stránka, ne žádná podezřelá stránka třetí strany</li>
+    <li><strong>Kód:</strong> Plně open-source, kdokoliv ho může zkontrolovat na GitHubu</li>
+    <li><strong>Co dělá:</strong> Umožňuje spouštět JavaScript mimo prohlížeč – na tvém počítači</li>
+    <li><strong>Co nedělá:</strong> Samo o sobě nekomunikuje s internetem, nic neodesílá</li>
+  </ul>
+
+  <h3>Gemini CLI</h3>
+  <p><strong>Gemini CLI</strong> je nástroj od Google LLC, vydaný pod licencí Apache 2.0 (otevřená licence). Instaluje se přes npm (správce balíčků Node.js) z oficiálního registru npmjs.com.</p>
+  <ul>
+    <li><strong>Zdroj:</strong> <a href="https://github.com/google-gemini/gemini-cli" target="_blank">github.com/google-gemini/gemini-cli</a> – oficiální Google repozitář</li>
+    <li><strong>Kód:</strong> Open-source, veřejně dostupný, pravidelně auditovaný komunitou</li>
+    <li><strong>Co dělá:</strong> Posílá tvoje dotazy na Google Gemini API a vrací odpovědi</li>
+    <li><strong>Co nedělá:</strong> Nespouští se na pozadí, nepracuje bez tvého vědomí, neinstaluje žádné systémové služby</li>
+  </ul>
+
+  <div class="box info2">
+    <span class="bi">💡</span>
+    <div class="bb">
+      <strong>Není to program který "běží na pozadí"</strong>
+      <p>Gemini CLI se spustí pouze když ty napíšeš <code>gemini</code> do terminálu. Když terminál zavřeš, skončí. Není to žádný daemon, služba ani autostart. Na procesech počítače se neobjeví pokud ho sám nespustíš.</p>
+    </div>
+  </div>
+
+  <h3>npm balíčky – co se instaluje s Gemini CLI</h3>
+  <p>Při instalaci příkazem <code>npm install -g @google/gemini-cli</code> se nainstaluje nejen Gemini CLI, ale i jeho závislosti – knihovny které potřebuje k fungování. Typicky to bývá stovka nebo více balíčků.</p>
+
+  <div class="box warn2">
+    <span class="bi">⚠️</span>
+    <div class="bb">
+      <strong>Stovky balíčků – proč a je to problém?</strong>
+      <p>Každý moderní npm balíček závisí na dalších. Je to běžná praxe celého ekosystému Node.js. Není to nic neobvyklého ani nebezpečného – tvůj vlastní projekt (rodinny-receptar) má stovky závislostí v node_modules. Ty balíčky jsou standardní nástroje jako HTTP klient, parser JSON, šifrovací knihovny atd.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 OPRÁVNĚNÍ -->
+<div class="sec" id="s2">
+  <div class="sec-tag">// sekce 02</div>
+  <h2>Oprávnění PowerShellu – co jsme změnili a proč</h2>
+
+  <p>Toto je část, kde máš právo být opatrný. Pojďme si to rozebrat do detailu.</p>
+
+  <h3>Co je Execution Policy a proč existuje</h3>
+  <p>Windows má zabudovanou ochranu, která zabraňuje spouštění PowerShell skriptů (.ps1 souborů). Tato ochrana existuje proto, aby malware nemohl snadno spustit škodlivý skript. Ve výchozím stavu je nastavena na <code>Restricted</code> – žádné skripty nesmí běžet.</p>
+  <p>Problém: npm (správce balíčků) používá .ps1 skripty pro svoji práci. Bez povolení těchto skriptů npm prostě nefunguje.</p>
+
+  <h3>Jaké jsou možnosti nastavení</h3>
+
+  <div class="perm-grid">
+    <div class="perm-card" style="border-color:rgba(224,85,85,.3)">
+      <div class="perm-title" style="color:var(--red2)">🔴 Restricted (výchozí)</div>
+      <p style="font-size:.84em;color:var(--t2);margin-bottom:8px">Žádné skripty nesmí běžet. Nejbezpečnější, ale nefunguje npm.</p>
+    </div>
+    <div class="perm-card" style="border-color:rgba(46,168,74,.3)">
+      <div class="perm-title" style="color:var(--green2)">🟢 RemoteSigned (co jsme nastavili)</div>
+      <p style="font-size:.84em;color:var(--t2);margin-bottom:8px">Lokální skripty (z tvého počítače) smí běžet. Skripty stažené z internetu musí mít digitální podpis od důvěryhodného vydavatele.</p>
+    </div>
+    <div class="perm-card" style="border-color:rgba(212,146,42,.3)">
+      <div class="perm-title" style="color:var(--amber2)">🟡 AllSigned</div>
+      <p style="font-size:.84em;color:var(--t2);margin-bottom:8px">Každý skript musí mít digitální podpis. Bezpečnější než RemoteSigned, ale komplikovanější v praxi.</p>
+    </div>
+    <div class="perm-card" style="border-color:rgba(224,85,85,.5)">
+      <div class="perm-title" style="color:var(--red2)">🔴 Unrestricted</div>
+      <p style="font-size:.84em;color:var(--t2);margin-bottom:8px">Vše smí běžet bez omezení. Nebezpečné – nikdy toto nenastavuj.</p>
+    </div>
+  </div>
+
+  <h3>Co přesně jsme změnili – scope CurrentUser</h3>
+  <p>Klíčové je, že jsme změnili politiku pouze pro <strong>scope CurrentUser</strong> – tedy jen pro tvůj uživatelský účet, ne pro celý systém. Co to znamená v praxi:</p>
+
+  <div class="box tip2">
+    <span class="bi">✅</span>
+    <div class="bb">
+      <strong>Co jsme NEUDĚLALI (důležité)</strong>
+      <ul>
+        <li>Nezměnili jsme nastavení pro <strong>LocalMachine</strong> (celý systém) – to zůstalo beze změny</li>
+        <li>Nezměnili jsme nastavení pro ostatní uživatele počítače</li>
+        <li>Nenastavili jsme <strong>Unrestricted</strong> – to by bylo nebezpečné</li>
+        <li>Neotevřeli jsme žádný port, nevytvořili žádné sdílení</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box warn2">
+    <span class="bi">⚠️</span>
+    <div class="bb">
+      <strong>Co RemoteSigned DOVOLUJE (o čem musíš vědět)</strong>
+      <ul>
+        <li>Lokální .ps1 skripty na tvém počítači se mohou spouštět</li>
+        <li>To znamená: pokud stáhneš a spustíš podezřelý .ps1 soubor, Windows tě nezastaví</li>
+        <li>Stažené skripty bez digitálního podpisu stále nejdou spustit (to je ochrana)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Jak ověřit aktuální stav oprávnění</h3>
+  <div class="cb">
+<span class="cm"># Zobraz kompletní přehled oprávnění pro všechny scope:</span>
+<span class="wh">Get-ExecutionPolicy -List</span>
+
+<span class="cm"># Výsledek by měl vypadat takto (po naší změně):</span>
+<span class="am">        Scope ExecutionPolicy</span>
+<span class="am">        ----- ---------------</span>
+<span class="am">MachinePolicy       Undefined</span>
+<span class="am">   UserPolicy       Undefined</span>
+<span class="am">      Process       Undefined</span>
+<span class="am">  CurrentUser    RemoteSigned  ← jen toto jsme změnili</span>
+<span class="am">  LocalMachine       Undefined  ← systém zůstal nezměněn</span>
+  </div>
+</div>
+
+<!-- 03 CO GEMINI VIDÍ -->
+<div class="sec" id="s3">
+  <div class="sec-tag">// sekce 03</div>
+  <h2>Co Gemini CLI vidí a co posílá Googlu</h2>
+
+  <p>Toto je klíčová otázka. Budu maximálně přímý.</p>
+
+  <h3>Co Gemini CLI MŮŽE přečíst</h3>
+  <p>Gemini CLI pracuje ve složce kde ho spustíš. Má přístup ke:</p>
+  <ul>
+    <li><strong>Všem souborům ve složce projektu</strong> – to je záměrné, proto je tak užitečný</li>
+    <li><strong>Souborům ve složkách výše</strong> – pokud o ně požádáš nebo se jich sám zeptá</li>
+    <li><strong>Obsahu schránky</strong> – pokud mu sám vložíš text</li>
+    <li><strong>Výstupu příkazů</strong> – když spustí npm nebo jiný příkaz, vidí výsledek</li>
+  </ul>
+
+  <div class="box danger2">
+    <span class="bi">🔴</span>
+    <div class="bb">
+      <strong>Nikdy nedávej Gemini CLI tyto věci</strong>
+      <ul>
+        <li>Hesla, API klíče, tokeny – ani v souborech které "jen ukázat"</li>
+        <li>Přihlašovací údaje k bankám, emailu, čemukoliv citlivému</li>
+        <li>Soubor <strong>.env</strong> pokud obsahuje produkční klíče (Gemini API key, databáze)</li>
+        <li>Soubory z jiných složek kde máš citlivá data</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Co se posílá Googlu</h3>
+  <p>Gemini CLI je klient pro Google Gemini API. Komunikace probíhá takto:</p>
+  <ol>
+    <li>Ty napíšeš dotaz (prompt) do terminálu</li>
+    <li>Gemini CLI přidá kontext (co přečetl ze souborů) a odešle vše na <strong>api.googleapis.com</strong></li>
+    <li>Google Gemini API zpracuje dotaz a vrátí odpověď</li>
+    <li>Odpověď se zobrazí v tvém terminálu</li>
+  </ol>
+
+  <div class="box warn2">
+    <span class="bi">⚠️</span>
+    <div class="bb">
+      <strong>Obsah souborů které Gemini čte jde přes Google servery</strong>
+      <p>Kód tvého receptáře, struktura projektu, texty – vše co Gemini přečte a zahrne do kontextu se odesílá na Google. Pro hobby projekt jako receptář je to naprosto v pořádku. Pro komerční projekt s citlivými daty by to byl problém.</p>
+    </div>
+  </div>
+
+  <div class="box tip2">
+    <span class="bi">✅</span>
+    <div class="bb">
+      <strong>Jak Google data zpracovává (podle jejich podmínek)</strong>
+      <ul>
+        <li>Data jsou šifrována při přenosu (HTTPS/TLS)</li>
+        <li>Google tvrdí že data z bezplatného API tier používá ke zlepšení modelů</li>
+        <li>Plné podmínky: <a href="https://ai.google.dev/gemini-api/terms" target="_blank">ai.google.dev/gemini-api/terms</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Co Gemini CLI NEodesílá</h3>
+  <ul>
+    <li>Soubory mimo složku projektu (pokud mu to sám neřekneš)</li>
+    <li>Systémové informace o počítači (verze Windows, nainstalované programy...)</li>
+    <li>Hesla uložená v prohlížeči nebo správci hesel</li>
+    <li>Cokoliv co mu explicitně neřekneš nebo co sám nespustí</li>
+  </ul>
+</div>
+
+<!-- 04 TABULKA RIZIK -->
+<div class="sec" id="s4">
+  <div class="sec-tag">// sekce 04</div>
+  <h2>Tabulka rizik – přímé hodnocení</h2>
+
+  <table class="risk-table">
+    <thead>
+      <tr><th>Riziko</th><th>Vysvětlení</th><th>Úroveň</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Backdoor / zadní vrátka</td>
+        <td>Gemini CLI se nespouští na pozadí, nevytváří síťové servery, nemá autostart. Zadní vrátka ve smyslu trvalého přístupu do systému: NE.</td>
+        <td><span class="risk-level rl-low">Nízké</span></td>
+      </tr>
+      <tr>
+        <td>Odeslání citlivých dat</td>
+        <td>Kód projektu jde přes Google servery. Pro hobby projekt OK. Nikdy nesdílej hesla nebo produkční klíče.</td>
+        <td><span class="risk-level rl-mid">Střední*</span></td>
+      </tr>
+      <tr>
+        <td>Malware v npm balíčcích</td>
+        <td>Teoreticky možné v každém npm balíčku. Gemini CLI je od Googlu a pravidelně auditován. Riziko srovnatelné s instalací jakéhokoliv softwaru.</td>
+        <td><span class="risk-level rl-low">Nízké</span></td>
+      </tr>
+      <tr>
+        <td>Povolení skriptů (RemoteSigned)</td>
+        <td>Lokální skripty nyní smí běžet. Pokud nestahujete a nespouštíte neznámé .ps1 soubory, praktické riziko je minimální.</td>
+        <td><span class="risk-level rl-low">Nízké</span></td>
+      </tr>
+      <tr>
+        <td>Gemini poškodí soubory</td>
+        <td>Gemini CLI smí měnit soubory jen s tvým potvrzením. Bez zálohy (git) může být obnova složitá. Zálohy jsou nutnost.</td>
+        <td><span class="risk-level rl-mid">Střední</span></td>
+      </tr>
+      <tr>
+        <td>Gemini spustí škodlivý příkaz</td>
+        <td>Gemini se vždy ptá před spuštěním příkazu. Pokud potvrdíš škodlivý příkaz, to je lidská chyba. Vždy čti co schvaluješ.</td>
+        <td><span class="risk-level rl-low">Nízké</span></td>
+      </tr>
+      <tr>
+        <td>Únik přihlašovacích údajů</td>
+        <td>Pouze pokud máš hesla uložena přímo v souborech projektu. Nikdy neukládej hesla do kódu – to platí obecně, nejen kvůli Gemini.</td>
+        <td><span class="risk-level rl-hi">Vysoké*</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:.82em; color:var(--t3);">* Hvězdičkou označená rizika jsou podmíněná – závisí na tom jak Gemini CLI používáš. Při správném používání klesají na nízkou úroveň.</p>
+
+  <div class="box purple2">
+    <span class="bi">🔍</span>
+    <div class="bb">
+      <strong>Celkové hodnocení pro tvůj případ použití</strong>
+      <p>Používáš Gemini CLI pro hobby projekt (receptář) bez citlivých dat, bez hesel v kódu, bez produkčních databází. V tomto kontextu je bezpečnostní riziko <strong>srovnatelné s instalací jakéhokoliv softwaru z důvěryhodného zdroje</strong> – jako když instaluješ VLC nebo LibreOffice.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 ZLATÁ PRAVIDLA -->
+<div class="sec" id="s5">
+  <div class="sec-tag">// sekce 05</div>
+  <h2>Zlatá pravidla bezpečnosti při práci s Gemini CLI</h2>
+
+  <div class="checklist">
+    <h4>✅ Vždy dělej toto</h4>
+    <div class="cl-item"><span class="cl-box">☐</span><span>Pracuj vždy <strong>pouze ve složce projektu</strong> – nespouštěj Gemini CLI v kořeni disku C: nebo v systémových složkách</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span><strong>Čti každé potvrzení</strong> které Gemini vyžaduje před spuštěním příkazu nebo změnou souboru – nikdy neklikej "ano na vše" naslepo</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span>Udělej <strong>git commit</strong> (zálohu) před každou prací – takže ztráta dat při chybě = max. hodina práce</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span>Soubor <strong>.env</strong> (pokud ho projekt má) přidej do <strong>.gitignore</strong> – nesmí se dostat ani do Gitu ani ke Gemini CLI pokud obsahuje produkční klíče</span></div>
+    <div class="cl-item"><span class="cl-box">☐</span><span>Po skončení práce Gemini CLI vždy <strong>ukonči</strong> příkazem <code>/quit</code> – nenechávej ho zbytečně běžet</span></div>
+  </div>
+
+  <div class="checklist" style="border-left-color:var(--red)">
+    <h4 style="color:var(--red2)">🚫 Nikdy nedělej toto</h4>
+    <div class="cl-item"><span class="cl-box" style="color:var(--red)">✗</span><span>Neukládej <strong>hesla, API klíče ani tokeny přímo do souborů projektu</strong> – pokud tam jsou, Gemini CLI je bude znát a odešle Googlu</span></div>
+    <div class="cl-item"><span class="cl-box" style="color:var(--red)">✗</span><span>Nespouštěj Gemini CLI jako <strong>správce (Administrator)</strong> – pro běžnou práci to není potřeba a zvyšuje to rizika</span></div>
+    <div class="cl-item"><span class="cl-box" style="color:var(--red)">✗</span><span>Nenastavuj PowerShell execution policy na <strong>Unrestricted</strong> – RemoteSigned která máš nastavena je správná volba</span></div>
+    <div class="cl-item"><span class="cl-box" style="color:var(--red)">✗</span><span>Neinstaluj Gemini CLI z <strong>neoficiálních zdrojů</strong> – pouze <code>npm install -g @google/gemini-cli</code> z officiálního npm registru</span></div>
+    <div class="cl-item"><span class="cl-box" style="color:var(--red)">✗</span><span>Nesouhlasíš-li s tím co Gemini navrhuje – <strong>odmítni</strong>. AI dělá chyby. Ty jsi ten kdo rozhoduje.</span></div>
+  </div>
+</div>
+
+<!-- 06 ODINSTALACE GEMINI -->
+<div class="sec" id="s6">
+  <div class="sec-tag">// sekce 06</div>
+  <h2>Jak odinstalovat Gemini CLI</h2>
+
+  <p>Odinstalace je jednoduchá, čistá a úplná. Jeden příkaz vše odstraní.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n" style="color:var(--red2)">1</div>
+      <div class="step-b">
+        <div class="step-t">Odinstaluj Gemini CLI přes npm</div>
+        <div class="cb"><span class="wh">npm uninstall -g @google/gemini-cli</span></div>
+        <p>Příznak <code>-g</code> říká npm aby odstranil globálně instalovaný balíček. Uvidíš výstup "removed X packages".</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n" style="color:var(--red2)">2</div>
+      <div class="step-b">
+        <div class="step-t">Ověř že byl odstraněn</div>
+        <div class="cb">
+<span class="wh">gemini --version</span>
+<span class="cm"># Měl bys dostat: "The term 'gemini' is not recognized"</span>
+<span class="cm"># nebo podobnou chybu – to znamená že byl úspěšně odstraněn</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n" style="color:var(--red2)">3</div>
+      <div class="step-b">
+        <div class="step-t">Odstraň konfiguraci a historii (volitelné)</div>
+        <p>Gemini CLI si ukládá konfiguraci a historii konverzací do skryté složky ve tvé domovské složce. Pro úplné čistý odinstalaci:</p>
+        <div class="cb">
+<span class="cm"># Windows – zobraz cestu k home složce:</span>
+<span class="wh">echo $HOME</span>
+<span class="cm"># Typicky: C:\Users\marti</span>
+<span class="cm"> </span>
+<span class="cm"># Smaž skrytou složku .gemini (v File Exploreru je skrytá):</span>
+<span class="wh">Remove-Item -Recurse -Force "$HOME\.gemini"</span>
+<span class="cm"># Pokud složka neexistuje, dostaneš chybu – to je v pořádku</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip2">
+    <span class="bi">✅</span>
+    <div class="bb">
+      <strong>Co se odinstalací ODSTRANÍ</strong>
+      <ul>
+        <li>Všechny soubory Gemini CLI a jeho závislostí z npm global složky</li>
+        <li>Příkaz <code>gemini</code> přestane být dostupný v terminálu</li>
+        <li>Složka <code>.gemini</code> s historií (pokud ji odstraníš ručně)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box info2">
+    <span class="bi">💡</span>
+    <div class="bb">
+      <strong>Co se odinstalací NEodstraní</strong>
+      <ul>
+        <li>Node.js – zůstane (odstraníš ho zvlášť v sekci 07)</li>
+        <li>npm – zůstane (je součástí Node.js)</li>
+        <li>Soubory tvého projektu – těch se odinstalace vůbec nedotkne</li>
+        <li>Přihlášení k Google účtu – zruší se automaticky se smazáním složky .gemini</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 07 ODINSTALACE NODE.JS -->
+<div class="sec" id="s7">
+  <div class="sec-tag">// sekce 07</div>
+  <h2>Jak odinstalovat Node.js</h2>
+
+  <div class="box warn2">
+    <span class="bi">⚠️</span>
+    <div class="bb">
+      <strong>Pozor: Tvůj projekt Node.js potřebuje!</strong>
+      <p>Projekt <em>rodinny-receptar</em> ke svému vývoji Node.js vyžaduje (npm run dev, build, atd.). Odinstaluj Node.js pouze pokud chceš přestat s projektem úplně, nebo pokud ho máš jinak zajištěný.</p>
+    </div>
+  </div>
+
+  <h3>Windows – odinstalace přes Nastavení</h3>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n" style="color:var(--red2)">1</div>
+      <div class="step-b">
+        <div class="step-t">Otevři Nastavení → Aplikace</div>
+        <p>Start → Nastavení → Aplikace → Nainstalované aplikace (nebo "Přidat nebo odebrat programy" ve starším Windows)</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="color:var(--red2)">2</div>
+      <div class="step-b">
+        <div class="step-t">Najdi Node.js a odinstaluj</div>
+        <p>Hledej "Node.js" v seznamu. Klikni na tři tečky (nebo Odinstalovat) → Odinstalovat. Průvodce odinstalací odstraní Node.js i npm.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="color:var(--red2)">3</div>
+      <div class="step-b">
+        <div class="step-t">Volitelné – odstraň zbytky</div>
+        <p>Instalátor občas nechá pozůstatky. Pro úplnou čistotu v PowerShellu (jako správce):</p>
+        <div class="cb">
+<span class="cm"># Odstraň Node.js složky pokud existují:</span>
+<span class="wh">Remove-Item -Recurse -Force "C:\Program Files\nodejs" -ErrorAction SilentlyContinue</span>
+<span class="wh">Remove-Item -Recurse -Force "$HOME\AppData\Roaming\npm" -ErrorAction SilentlyContinue</span>
+<span class="wh">Remove-Item -Recurse -Force "$HOME\AppData\Roaming\npm-cache" -ErrorAction SilentlyContinue</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n" style="color:var(--red2)">4</div>
+      <div class="step-b">
+        <div class="step-t">Ověř odinstalaci</div>
+        <div class="cb">
+<span class="wh">node --version</span>
+<span class="cm"># Měl bys dostat: "The term 'node' is not recognized" → úspěch</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Linux – odinstalace</h3>
+  <div class="cb">
+<span class="cm"># Ubuntu / Debian:</span>
+<span class="wh">sudo apt-get remove --purge nodejs npm</span>
+<span class="wh">sudo apt-get autoremove</span>
+
+<span class="cm"># Pokud jsi použil nvm:</span>
+<span class="wh">nvm uninstall node</span>
+<span class="cm"># Pak odstraň nvm samotné:</span>
+<span class="wh">rm -rf "$HOME/.nvm"</span>
+<span class="cm"># A odstraň řádky o nvm z ~/.bashrc nebo ~/.zshrc</span>
+  </div>
+</div>
+
+<!-- 08 VRÁCENÍ OPRÁVNĚNÍ -->
+<div class="sec" id="s8">
+  <div class="sec-tag">// sekce 08</div>
+  <h2>Jak vrátit oprávnění PowerShellu do původního stavu</h2>
+
+  <p>Pokud chceš vrátit execution policy pro svého uživatele zpět do výchozího stavu, je to jeden příkaz. Spusť PowerShell normálně (ne jako správce – tohle nastavení je pro tvého uživatele):</p>
+
+  <div class="cb">
+<span class="cm"># Vrátí CurrentUser policy do původního stavu (Undefined = výchozí):</span>
+<span class="wh">Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser</span>
+
+<span class="cm"># Potvrď stisknutím Y</span>
+
+<span class="cm"># Ověř:</span>
+<span class="wh">Get-ExecutionPolicy -Scope CurrentUser</span>
+<span class="cm"># Měl bys vidět: Undefined</span>
+  </div>
+
+  <div class="box tip2">
+    <span class="bi">✅</span>
+    <div class="bb">
+      <strong>Po tomto příkazu je vše jako před instalací</strong>
+      <p>Execution policy pro tvého uživatele je vrácena na <code>Undefined</code> – systém pak použije nastavení <code>LocalMachine</code> (které jsme nikdy nezměnili). Efektivně jsi zpět ve výchozím stavu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 09 KOMPLETNÍ ODINSTALACE -->
+<div class="sec" id="s9">
+  <div class="sec-tag">// sekce 09</div>
+  <h2>Kompletní čistá odinstalace – vše najednou</h2>
+
+  <p>Pokud chceš smazat vše a vrátit počítač do stavu před instalací, proveď tyto kroky v tomto pořadí:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n" style="color:var(--purple2)">1</div>
+      <div class="step-b">
+        <div class="step-t">Ukonči Gemini CLI pokud běží</div>
+        <div class="cb"><span class="wh">/quit</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n" style="color:var(--purple2)">2</div>
+      <div class="step-b">
+        <div class="step-t">Odinstaluj Gemini CLI přes npm</div>
+        <div class="cb"><span class="wh">npm uninstall -g @google/gemini-cli</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n" style="color:var(--purple2)">3</div>
+      <div class="step-b">
+        <div class="step-t">Smaž konfiguraci Gemini CLI</div>
+        <div class="cb"><span class="wh">Remove-Item -Recurse -Force "$HOME\.gemini" -ErrorAction SilentlyContinue</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n" style="color:var(--purple2)">4</div>
+      <div class="step-b">
+        <div class="step-t">Vrať PowerShell execution policy</div>
+        <div class="cb"><span class="wh">Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser</span></div>
+        <p>Potvrď Y.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n" style="color:var(--purple2)">5</div>
+      <div class="step-b">
+        <div class="step-t">Odinstaluj Node.js (přes Nastavení Windows)</div>
+        <p>Start → Nastavení → Aplikace → hledej "Node.js" → Odinstalovat</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n" style="color:var(--purple2)">6</div>
+      <div class="step-b">
+        <div class="step-t">Odstraň zbytky npm (volitelné)</div>
+        <div class="cb">
+<span class="wh">Remove-Item -Recurse -Force "$HOME\AppData\Roaming\npm" -ErrorAction SilentlyContinue</span>
+<span class="wh">Remove-Item -Recurse -Force "$HOME\AppData\Roaming\npm-cache" -ErrorAction SilentlyContinue</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n" style="color:var(--purple2)">7</div>
+      <div class="step-b">
+        <div class="step-t">Ověř že je vše pryč</div>
+        <div class="cb">
+<span class="wh">node --version</span>   <span class="cm">← měl bys dostat "not recognized"</span>
+<span class="wh">gemini --version</span> <span class="cm">← měl bys dostat "not recognized"</span>
+<span class="wh">Get-ExecutionPolicy -Scope CurrentUser</span> <span class="cm">← měl bys dostat "Undefined"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip2">
+    <span class="bi">✅</span>
+    <div class="bb">
+      <strong>Po těchto 7 krocích je počítač ve stejném stavu jako před instalací.</strong>
+      <p>Žádné zbytky, žádné pozadní procesy, žádné změněné systémové nastavení. Soubory projektu <em>rodinny-receptar</em> zůstanou nedotčeny – odinstalace se jich nedotkne.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 10 VERDIKT -->
+<div class="sec" id="s10">
+  <div class="sec-tag">// sekce 10</div>
+  <h2>Výsledný verdikt: je to bezpečné?</h2>
+
+  <div class="summary">
+    <h3>Krátká odpověď: Pro tvůj případ použití – ANO.</h3>
+
+    <div class="verdict" style="margin-top:16px">
+      <div class="verdict-title" style="color:var(--green2)">✅ Co svědčí PRO bezpečnosti</div>
+      <div class="vd-row"><span class="vd-icon">✅</span><span class="vd-text"><strong>Gemini CLI neběží na pozadí</strong> – spouštíš ho sám, sám ho zavíráš</span></div>
+      <div class="vd-row"><span class="vd-icon">✅</span><span class="vd-text"><strong>Open-source kód</strong> od Googlu, veřejně auditovatelný komunitou</span></div>
+      <div class="vd-row"><span class="vd-icon">✅</span><span class="vd-text"><strong>Nevytváří žádné systémové služby</strong>, porty ani sdílení</span></div>
+      <div class="vd-row"><span class="vd-icon">✅</span><span class="vd-text"><strong>Ptá se tě</strong> před každou změnou souboru nebo spuštěním příkazu</span></div>
+      <div class="vd-row"><span class="vd-icon">✅</span><span class="vd-text"><strong>Projekt bez citlivých dat</strong> – receptář neobsahuje hesla ani produkční klíče</span></div>
+      <div class="vd-row"><span class="vd-icon">✅</span><span class="vd-text"><strong>Úplná odinstalace</strong> je možná, čistá a vše vrací do původního stavu</span></div>
+    </div>
+
+    <div class="verdict" style="margin-top:12px">
+      <div class="verdict-title" style="color:var(--amber2)">⚠️ Na co si dát pozor</div>
+      <div class="vd-row"><span class="vd-icon">⚠️</span><span class="vd-text"><strong>Kód projektu jde přes Google</strong> – ale pro receptář to nevadí</span></div>
+      <div class="vd-row"><span class="vd-icon">⚠️</span><span class="vd-text"><strong>Nikdy nedávej Gemini hesla nebo klíče</strong> – ani "jen na ukázku"</span></div>
+      <div class="vd-row"><span class="vd-icon">⚠️</span><span class="vd-text"><strong>Vždy čti co Gemini žádá potvrdit</strong> – AI může navrhnout špatnou věc</span></div>
+      <div class="vd-row"><span class="vd-icon">⚠️</span><span class="vd-text"><strong>Zálohy (git commit) jsou nutnost</strong> – ne kvůli bezpečnosti, ale kvůli chybám AI</span></div>
+    </div>
+  </div>
+
+  <div class="box info2" style="margin-top:20px">
+    <span class="bi">📌</span>
+    <div class="bb">
+      <strong>Srovnání s čím běžně pracuješ</strong>
+      <p>Google AI Studio také posílá tvůj kód Googlu – a to jsi používal předtím. VS Code, Chrome, Windows Update – všechny tyto nástroje komunikují s externími servery. Gemini CLI v tomto ohledu není výjimkou, pouze o tom mluví otevřeně.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Bezpečnostní průvodce &nbsp;·&nbsp; Gemini CLI &nbsp;·&nbsp;
+  Projekt: <strong style="color:var(--amber)">rodinny-receptar</strong> &nbsp;·&nbsp;
+  Sestavil Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
+  Tento dokument popisuje stav ke dni vytvoření. Podmínky Google se mohou změnit – vždy ověřuj aktuální podmínky na <a href="https://ai.google.dev/gemini-api/terms" target="_blank">ai.google.dev/gemini-api/terms</a>
+</footer>
+
+</div>
+</body>
+</html>
