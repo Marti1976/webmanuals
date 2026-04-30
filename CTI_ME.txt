@@ -9,7 +9,6 @@ Je navržen tak, aby byl snadno přístupný jako klasická webová stránka.
 Struktura repozitáře:
 -------------------------
 - index.html   : Hlavní stránka (rozcestník), která obsahuje odkazy na jednotlivé manuály.
-- style.css    : Společné kaskádové styly pro vizuální vzhled rozcestníku.
 - [složky]     : Složky tvoří jednotlivé konkrétní návody (např. složka Antigrav, GeminiCLI).
 
 -------------------------
