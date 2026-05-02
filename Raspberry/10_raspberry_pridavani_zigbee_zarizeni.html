@@ -11,68 +11,360 @@
   --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
   --border:#2a1f3d;--border2:#3d2855;
   --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c; --rasp1-light:#ff3377;
-  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
   --cyan:#00d9ff;--cyan2:#5fffff;
-  --white:#f0e8ff;
-  --r:12px;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
 }
 html{scroll-behavior:smooth}
 ::-webkit-scrollbar{width:6px;background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
 .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
 .nav-back:hover{gap:12px}
-
-header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light)}
-
-.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
-  margin:28px 0 10px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
 strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
 code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
 pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
-  color:var(--t2);line-height:1.6;overflow-x:auto}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit}
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
+.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
+.step{display:flex;gap:20px;padding:16px 0}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);border:2px solid var(--rasp1);
+  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;
+  font-size:.9em;color:var(--rasp1-light);flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
+.step-desc ul{padding-left:18px;margin:8px 0 4px}
+.step-desc li{margin:5px 0;font-size:1em}
+.step-desc strong{color:var(--white)}
+.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
+.step-desc code{font-size:.9em}
+/* device reset grid */
+.reset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin:18px 0}
+.reset-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.reset-card-title{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:8px}
+.reset-card p{font-size:.84em;color:var(--t2);margin-bottom:0;line-height:1.6}
+/* brand grid */
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px 0}
+.brand-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.brand-card-name{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:4px}
+.brand-card-tag{font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.brand-card p{font-size:.84em;color:var(--t2);margin-bottom:0;line-height:1.6}
+/* shops */
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:16px 0}
+.shop-link{display:block;background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;font-family:'DM Mono',monospace;font-size:.8em;color:var(--t2);
+  text-decoration:none;transition:all .2s;letter-spacing:.04em}
+.shop-link:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.shop-link span{display:block;color:var(--white);font-size:1.05em;margin-bottom:2px;font-family:'Inter',sans-serif;font-weight:600}
+/* mesh diagram */
+.mesh-diagram{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin:18px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
-
 <header>
   <div class="h-num">// kapitola 10</div>
-  <h1>Přidávání Zigbee Zařízení</h1>
+  <h1>Přidávání <em>Zigbee Zařízení</em></h1>
+  <p class="h-desc">Jak zapnout párování, uvést zařízení do párovacího módu, správně pojmenovat entity a zobrazit vše v Home Assistant dashboardu. Plus přehled doporučených značek a obchodů.</p>
 </header>
 
-<div class="content">
+<!-- PAROVANI -->
+<section class="sec">
+  <h2>Postup párování zařízení</h2>
+  <p>Párování probíhá vždy ve dvou krocích: nejprve zapneš <strong>Permit Join</strong> na koordinátoru (otevře síť pro nové zařízení), pak dáš samotné zařízení do párovacího módu.</p>
 
-</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Otevři Z2M webové rozhraní</div>
+        <div class="step-desc">
+          <p>V Home Assistant klikni na <strong>Zigbee2MQTT</strong> v levém menu (nebo přes Nastavení → Doplňky → Zigbee2MQTT → Otevřít webové rozhraní).</p>
+          <p>Nebo přímo v prohlížeči: <code>http://192.168.1.50:8099</code></p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Zapni Permit Join (povolení párování)</div>
+        <div class="step-desc">
+          <p>Klikni na tlačítko <strong>"Permit join (All)"</strong> nebo přepínač <strong>"Allow joining"</strong> v horní liště Z2M rozhraní.</p>
+          <p>Nastav čas: <strong>254 sekund</strong> (maximum – přibližně 4 minuty). To je čas kdy je síť otevřená pro nová zařízení.</p>
+          <p>Odpočítávání se zobrazí v rozhraní.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Uveď zařízení do párovacího módu</div>
+        <div class="step-desc">
+          <p>Postup se liší dle výrobce a modelu zařízení. Obecná pravidla:</p>
+          <ul>
+            <li><strong>Zigbee žárovky:</strong> 5× rychle vypni a zapni (cca 1 sec interval)</li>
+            <li><strong>Zásuvky a přepínače:</strong> drž tlačítko reset 5–10 sekund dokud nezabliká LED</li>
+            <li><strong>Bateriové senzory (teplota, pohyb, dveře):</strong> stiskni resetovací tlačítko (obvykle jehlou) nebo vyjmi a vlož baterii + 3× stiskni tlačítko</li>
+            <li><strong>IKEA zařízení:</strong> přilož programovací tlačítko (4 tlačítko) těsně k tlačítku ON/OFF a drž 10 sekund</li>
+          </ul>
+          <p>Správný párovací mód zařízení obvykle signalizuje rychlé blikání LED.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Zařízení se objeví v Z2M – přejmenuj ho</div>
+        <div class="step-desc">
+          <p>V Z2M záložce <strong>Devices</strong> se zobrazí nové zařízení – obvykle s generickým názvem (<code>0x00158d0001234567</code>).</p>
+          <p>Klikni na zařízení → ikona tužky → zadej <strong>"Friendly name"</strong> (přátelský název).</p>
+          <ul>
+            <li>Používej <strong>bez mezer</strong> a bez diakritiky: <code>svetlo_obyvak</code>, <code>teplomer_loznice</code>, <code>zasuvka_kuchyn</code></li>
+            <li>Název se přenese do Home Assistant jako název entity</li>
+            <li>Lze změnit i později, ale HA vytvoří nové entity – lépe nastavit hned</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Vypni Permit Join!</div>
+        <div class="step-desc">
+          <p>Po spárování vždy <strong>okamžitě vypni</strong> Permit Join. Klikni znovu na "Allow joining" nebo počkej na vypršení časovače.</p>
+          <p>Otevřené párování je bezpečnostní riziko – kdokoliv v dosahu Zigbee signálu by mohl přidat vlastní zařízení do tvé sítě.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<footer>
-  10_raspberry_pridavani_zigbee_zarizeni.html · Raspberry Pi Průvodce · Duben 2026<br/>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
-</footer>
+<!-- PAROVACI MODY -->
+<section class="sec">
+  <h2>Párovací mód pro populární značky</h2>
+  <div class="reset-grid">
+    <div class="reset-card">
+      <div class="reset-card-title">💡 IKEA Tradfri žárovky</div>
+      <p>5× vypni/zapni v intervalu ~1 sekundu (např. vypínačem). Žárovka blikne na potvrzení. Pokud nefunguje: 6× za sebou.</p>
+    </div>
+    <div class="reset-card">
+      <div class="reset-card-title">🔌 IKEA Tradfri zásuvka</div>
+      <p>Drž malé reset tlačítko na boku 5 sekund. LED rychle zabliká = párovací mód.</p>
+    </div>
+    <div class="reset-card">
+      <div class="reset-card-title">🌡️ Xiaomi/Aqara senzory</div>
+      <p>Drž reset tlačítko (často jehlou na přední straně nebo u baterie) 5 sekund. LED blikne 3× = připraveno k párování.</p>
+    </div>
+    <div class="reset-card">
+      <div class="reset-card-title">🚪 Aqara dveřní/okenní senzor</div>
+      <p>Stiskni tlačítko na boku 5 sekund. Pokud máš dvoudílný senzor, drž u hlavní části.</p>
+    </div>
+    <div class="reset-card">
+      <div class="reset-card-title">🔌 Sonoff Zigbee zásuvky</div>
+      <p>Drž tlačítko 5 sekund dokud nezačne rychle blikat LED. Nebo v HA YAML: servisní výzva reset.</p>
+    </div>
+    <div class="reset-card">
+      <div class="reset-card-title">💡 Philips Hue žárovky</div>
+      <p>5× zapni/vypni v cyklu 2 sekundy ZAP + 2 sekundy VYP. Nebo přes Hue app: Factory reset → "Delete from bridge".</p>
+    </div>
+    <div class="reset-card">
+      <div class="reset-card-title">🌡️ Tuya senzory teploty</div>
+      <p>Drž tlačítko 10 sekund. Displej zobrazí "-- --" nebo bliká. Každý výrobce Tuya může mít jiný postup.</p>
+    </div>
+    <div class="reset-card">
+      <div class="reset-card-title">🔎 Nenašel jsem svůj model?</div>
+      <p>Vyhledej na <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank">zigbee2mqtt.io/supported-devices</a> – každé zařízení má stránku s přesným návodem na párování.</p>
+    </div>
+  </div>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Tip: páruj blízko koordinátoru</div>
+    <p>Při prvním párování přines zařízení <strong>do vzdálenosti 1–2 metrů</strong> od Zigbee koordinátoru (USB dongle). Po spárování ho přesuň na místo kde má být. Vzdálené párování přes mesh síť funguje až po ustálení sítě.</p>
+  </div>
+</section>
 
+<!-- HA DASHBOARD -->
+<section class="sec">
+  <h2>Zařízení v Home Assistant</h2>
+  <p>Díky MQTT Discovery se spárovaná Zigbee zařízení <strong>automaticky</strong> objeví v Home Assistant. Nemusíš nic ručně konfigurovat.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-title">Ověř zařízení v HA</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Zařízení a služby → MQTT</strong>. Klikni na integraci MQTT. V sekci <strong>"Zařízení"</strong> uvidíš všechna spárovaná Zigbee zařízení.</p>
+          <p>Každé zařízení má své entity (sensors, switches, lights...). Klikni na zařízení a uvidíš aktuální hodnoty.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <div class="step-title">Přidej karty na Dashboard</div>
+        <div class="step-desc">
+          <p>Jdi na <strong>Přehled</strong> (Home dashboard). Klikni na ikonu tužky (edit mode) → <strong>+ Přidat kartu</strong>.</p>
+          <p>Doporučené typy karet:</p>
+          <ul>
+            <li><strong>Tile</strong> – přehledná dlaždice pro senzory a přepínače</li>
+            <li><strong>Entity</strong> – jednoduchá karta pro jednu entitu</li>
+            <li><strong>Light</strong> – ovládání žárovky s jasem a barvou</li>
+            <li><strong>Gauge</strong> – kruhový ukazatel pro teplotu nebo vlhkost</li>
+            <li><strong>History Graph</strong> – graf historických hodnot</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPY ZARIZENI V SITI -->
+<section class="sec">
+  <h2>Koordinátor, Router a End Device</h2>
+  <p>Zigbee síť je <strong>mesh</strong> – zařízení si mezi sebou předávají zprávy. Pro stabilní síť je důležité rozumět rolím:</p>
+  <div class="mesh-diagram">
+<pre style="background:none;border:none;padding:0;margin:0;color:inherit">
+  [Koordinátor = USB dongle]  ← pouze jeden, střed sítě
+         |
+  ┌──────┼──────┐
+  ↓             ↓
+[Router]     [Router]    ← napájené zásuvky, žárovky = rozšiřují dosah
+  |               |
+[End Device] [End Device] ← bateriové senzory = komunikují přes routery
+</pre>
+  </div>
+  <ul>
+    <li><strong>Koordinátor (1×):</strong> tvůj USB dongle – řídí síť, nelze nahradit jiným zařízením</li>
+    <li><strong>Router (napájené):</strong> zásuvky, žárovky – musí být <strong>vždy zapnuté</strong>, rozšiřují dosah sítě</li>
+    <li><strong>End Device (bateriové):</strong> senzory pohybu, teploty, dveří – komunikují přes nejbližší router</li>
+  </ul>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Routery nesmí být vypínány!</div>
+    <p>Zigbee routery (napájené zásuvky a žárovky) jsou součástí síťové infrastruktury. Pokud je vypneš nebo vyjmeš ze zásuvky, bateriové senzory v jejich dosahu přestanou komunikovat. Pro stabilní síť nech routery trvale zapnuté.</p>
+  </div>
+</section>
+
+<!-- DOPORUCENE ZNACKY -->
+<section class="sec">
+  <h2>Doporučené Zigbee značky a zařízení</h2>
+  <p>Databáze kompatibilních zařízení: <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank">zigbee2mqtt.io/supported-devices</a> – přes 3 500 zařízení.</p>
+
+  <div class="brand-grid">
+    <div class="brand-card">
+      <div class="brand-card-name">IKEA Tradfri / DIRIGERA</div>
+      <div class="brand-card-tag">💡 Žárovky, zásuvky, dálkové ovladače</div>
+      <p>Levné, spolehlivé, výborná podpora v Z2M. Žárovky fungují jako routery. Ideální pro začátek.</p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-card-name">Xiaomi / Aqara</div>
+      <div class="brand-card-tag">🌡️ Senzory teploty, pohybu, dveří</div>
+      <p>Malé, bateriové senzory za výbornou cenu. Aqara P1 Motion, Aqara Door Sensor – ověřené volby.</p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-card-name">Philips Hue</div>
+      <div class="brand-card-tag">💡 Chytré žárovky a světelné pásy</div>
+      <p>Prémiová kvalita, stabilní. Fungují přímo přes Z2M bez Hue Bridge. Dražší, ale spolehlivé.</p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-card-name">Sonoff Zigbee</div>
+      <div class="brand-card-tag">🔌 Zásuvky, relé, přepínače</div>
+      <p>Levné a spolehlivé. ZBMINI relé pro integraci do instalace. ZBMINIL2 nevyžaduje nulový vodič.</p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-card-name">Tuya / Moes</div>
+      <div class="brand-card-tag">🔌 Různá IoT zařízení</div>
+      <p>Velká nabídka za nízkou cenu. Párování může být složitější. Vždy ověř na Z2M databázi před koupí.</p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-card-name">OSRAM / Ledvance</div>
+      <div class="brand-card-tag">💡 Žárovky a svítidla</div>
+      <p>Dobrá alternativa k Hue. Smart+ série plně kompatibilní se Z2M. Dostupné v CZ obchodech.</p>
+    </div>
+  </div>
+</section>
+
+<!-- KDE KUPIT -->
+<section class="sec">
+  <h2>Kde koupit Zigbee zařízení v ČR</h2>
+  <div class="shop-grid">
+    <a href="https://www.alza.cz" class="shop-link" target="_blank">
+      <span>Alza.cz</span>IKEA, Philips Hue
+    </a>
+    <a href="https://www.mall.cz" class="shop-link" target="_blank">
+      <span>Mall.cz</span>Různé Zigbee značky
+    </a>
+    <a href="https://dratek.cz" class="shop-link" target="_blank">
+      <span>Dratek.cz</span>Aqara, Sonoff, moduly
+    </a>
+    <a href="https://www.smartmania.cz" class="shop-link" target="_blank">
+      <span>Smartmania.cz</span>Smart home specializace
+    </a>
+    <a href="https://www.aliexpress.com" class="shop-link" target="_blank">
+      <span>AliExpress</span>Xiaomi, Aqara, Tuya (levněji)
+    </a>
+    <a href="https://www.ismarthome.cz" class="shop-link" target="_blank">
+      <span>iSmarthome.cz</span>Smart home vybavení
+    </a>
+  </div>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ AliExpress vs CZ obchody</div>
+    <p>Na AliExpress koupíš Xiaomi/Aqara senzory za 150–300 Kč oproti 400–600 Kč v ČR. Nevýhoda: dodání 2–4 týdny a záruka je složitější. Pro první zkušenosti doporučuji CZ obchod (rychlé vrácení pokud nefunguje). Pak kup hromadně přes Ali.</p>
+  </div>
+</section>
+
+<nav class="chapter-nav">
+  <a href="09_raspberry_konfigurace_zigbee2mqtt.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Konfigurace Z2M</span></div>
+  </a>
+  <a href="11_raspberry_bezpecnost.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Bezpečnost</span></div>
+    <span>→</span>
+  </a>
+</nav>
+<footer>10_raspberry_pridavani_zigbee_zarizeni.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
 </body>
 </html>

@@ -11,68 +11,319 @@
   --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
   --border:#2a1f3d;--border2:#3d2855;
   --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c; --rasp1-light:#ff3377;
-  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
   --cyan:#00d9ff;--cyan2:#5fffff;
-  --white:#f0e8ff;
-  --r:12px;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
 }
 html{scroll-behavior:smooth}
 ::-webkit-scrollbar{width:6px;background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
 .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
 .nav-back:hover{gap:12px}
-
-header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light)}
-
-.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
-  margin:28px 0 10px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
 strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
 code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
 pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
-  color:var(--t2);line-height:1.6;overflow-x:auto}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit}
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
+.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
+.step{display:flex;gap:20px;padding:16px 0}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);border:2px solid var(--rasp1);
+  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;
+  font-size:.9em;color:var(--rasp1-light);flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
+.step-desc ul{padding-left:18px;margin:8px 0 4px}
+.step-desc li{margin:5px 0;font-size:1em}
+.step-desc strong{color:var(--white)}
+.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
+.step-desc code{font-size:.9em}
+.addon-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+@media(max-width:580px){.addon-grid{grid-template-columns:1fr}}
+.addon-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.addon-card.required{border-color:rgba(227,11,92,.25)}
+.addon-card-name{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:4px}
+.addon-card-type{font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.addon-card.required .addon-card-type{color:var(--rasp1-light)}
+.addon-card p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.6}
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
-
 <header>
   <div class="h-num">// kapitola 06</div>
-  <h1>Základní Nastavení Home Assistant</h1>
+  <h1>Základní nastavení <em>Home Assistant</em></h1>
+  <p class="h-desc">Klíčové kroky hned po přihlášení – pokročilý režim, aktualizace, zálohy před update, souborový editor a přehled add-onů které budeme instalovat.</p>
 </header>
 
-<div class="content">
+<!-- POKROCILY REZIM -->
+<section class="sec">
+  <h2>Pokročilý režim (Advanced Mode)</h2>
+  <p>Home Assistant ve výchozím stavu skrývá pokročilé funkce a add-ony. Aktivace Advanced Mode zpřístupní celý obsah – je to <strong>první věc</strong> po přihlášení.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Aktivuj Advanced Mode</div>
+        <div class="step-desc">
+          <p>Klikni vlevo dole na své <strong>uživatelské jméno / avatar</strong> (ikona osoby). Otevře se profil. Najdi přepínač <strong>"Advanced mode"</strong> a přepni na <strong>ON</strong>.</p>
+          <p>Stránku nemusíš obnovovat – pokročilé funkce se zpřístupní okamžitě. Nyní uvidíš více možností v nastavení i v add-on storu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-</div>
+<!-- AKTUALIZACE -->
+<section class="sec">
+  <h2>Aktualizace systému</h2>
+  <p>Před instalací čehokoliv aktualizuj celý systém. HAOS, Core a Supervisor mívají různé verze – vždy aktualizuj vše.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Spusť dostupné aktualizace</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Systém → Aktualizace</strong>. Červený číslový odznak v levém menu signalizuje čekající aktualizace. Aktualizuj v tomto pořadí:</p>
+          <ul>
+            <li><strong>Home Assistant OS</strong> (operační systém)</li>
+            <li><strong>Home Assistant Supervisor</strong></li>
+            <li><strong>Home Assistant Core</strong></li>
+          </ul>
+          <p>Po každé aktualizaci Core počkej 2–3 minuty – systém se restartuje. Stránka se sama obnoví.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Strategie aktualizací do budoucna</div>
+    <p>Aktualizace sleduj přibližně 1× týdně. U major verzí (např. 2025.1.0) počkej vždy aspoň týden – komunita HA rychle reportuje chyby a patch 2025.1.1 přichází za pár dní. <strong>Vždy před aktualizací proveď ruční zálohu.</strong></p>
+  </div>
+</section>
 
-<footer>
-  06_raspberry_zakladni_nastaveni_home_assistant.html · Raspberry Pi Průvodce · Duben 2026<br/>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
-</footer>
+<!-- AUTOMATICKE ZALOHY -->
+<section class="sec">
+  <h2>Automatické zálohy před aktualizacemi</h2>
+  <p>HAOS umí automaticky vytvořit zálohu <strong>vždy před každou aktualizací</strong>. Ideální pojistka – pokud update něco rozbije, vrátíš se jedním klikem.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Zapni automatické zálohy</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Systém → Zálohy</strong>. V sekci konfigurace nastav:</p>
+          <ul>
+            <li>Automatické zálohy = <strong>ON</strong></li>
+            <li>Záloha před aktualizací = <strong>ON</strong></li>
+            <li>Frekvence: <strong>Denně</strong></li>
+            <li>Čas: <strong>03:00</strong> (v noci kdy systém málo pracuje)</li>
+            <li>Uchovávat posledních: <strong>5–7 záloh</strong> (starší se mažou)</li>
+            <li>Heslo zálohy: <strong>doporučeno nastavit</strong> – šifruje zálohy, ochrana při odcizení</li>
+          </ul>
+          <p>Klikni <strong>Uložit</strong>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Proveď první ruční zálohu</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Systém → Zálohy → + VYTVOŘIT ZÁLOHU</strong>.</p>
+          <ul>
+            <li>Název: např. <code>prvni_instalace_2026</code></li>
+            <li>Typ: <strong>Plná záloha</strong></li>
+            <li>Heslo: (volitelně – stejné jako výše)</li>
+          </ul>
+          <p>Klikni <strong>ZÁLOHOVAT</strong>. Trvá 1–3 minuty. Záloha je uložena v <code>/backup/</code> na SSD.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- FILE EDITOR -->
+<section class="sec">
+  <h2>Instalace souborového editoru</h2>
+  <p>File Editor umožňuje editovat konfigurační soubory HA přímo v prohlížeči – bez SSH. Budeme ho potřebovat pro úpravy <code>configuration.yaml</code>.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Nainstaluj File Editor</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Doplňky → ADD-ON STORE</strong>. Napiš <strong>"File editor"</strong> do hledání. Klikni na <strong>"File editor"</strong> (official, od Nabu Casa).</p>
+          <p>Klikni <strong>NAINSTALOVAT</strong>. Po instalaci:</p>
+          <ul>
+            <li>Záložka Informace → <strong>Show in sidebar = ON</strong></li>
+            <li><strong>Start on boot = ON</strong></li>
+            <li>Klikni <strong>SPUSTIT</strong></li>
+          </ul>
+          <p>V levém menu HA se zobrazí ikona složky. Kliknutím otevřeš editor souborů.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Alternativa: Studio Code Server</div>
+    <p>Pro pokročilejší práci existuje add-on <strong>"Studio Code Server"</strong> – plnohodnotný VS Code v prohlížeči se zvýrazňováním syntaxe YAML a detekcí chyb. Výrazně pohodlnější, ale spotřebuje ~200 MB RAM navíc – na RPi 3 s 1 GB RAM to může být znát. Pokud ti zbývá paměť, určitě stojí za instalaci.</p>
+  </div>
+</section>
+
+<!-- SAMBA -->
+<section class="sec">
+  <h2>Instalace Samba Share</h2>
+  <p>Samba Share zpřístupní konfigurační složku HA jako síťový disk na Windows. Umožňuje procházet soubory přímo z Průzkumníku – velmi užitečné pro přístup k zálohám a konfiguraci.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-title">Nainstaluj a nastav Samba Share</div>
+        <div class="step-desc">
+          <p>V ADD-ON STORE hledej <strong>"Samba share"</strong>. Nainstaluj. Přejdi na záložku <strong>KONFIGURACE</strong> a vyplň přihlašovací údaje:</p>
+          <pre>username: "samba_user"
+password: "tvoje_silne_heslo"</pre>
+          <p>Klikni <strong>Uložit</strong> → záložka Informace → <strong>Start on boot = ON</strong>, <strong>Watchdog = ON</strong> → klikni <strong>SPUSTIT</strong>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <div class="step-title">Připoj síťový disk na Windows</div>
+        <div class="step-desc">
+          <p>Otevři Průzkumník souborů. Do adresního řádku (nahoře) napiš:</p>
+          <pre>\\homeassistant.local</pre>
+          <p>nebo pokud hostname nefunguje:</p>
+          <pre>\\192.168.1.50</pre>
+          <p>Přihlaš se jménem a heslem z kroku výše. Uvidíš sdílené složky: <code>backup</code>, <code>config</code>, <code>addons</code>, <code>media</code> a další.</p>
+          <p>Pro trvalý přístup: pravé tlačítko na <strong>Tento počítač</strong> → <strong>Připojit síťový disk</strong> → zadej cestu <code>\\homeassistant.local\config</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREHLED ADD-ONS -->
+<section class="sec">
+  <h2>Přehled add-onů – co budeme instalovat</h2>
+  <p>Celkový přehled add-onů pro orientaci. Instalujeme postupně v dalších kapitolách:</p>
+  <div class="addon-grid">
+    <div class="addon-card required">
+      <div class="addon-card-name">Mosquitto Broker</div>
+      <div class="addon-card-type">📦 Povinné · Official · Kapitola 07</div>
+      <p>MQTT komunikační broker. Základ pro Zigbee2MQTT i další integrace.</p>
+    </div>
+    <div class="addon-card required">
+      <div class="addon-card-name">Zigbee2MQTT</div>
+      <div class="addon-card-type">📦 Povinné · Community · Kapitola 08–09</div>
+      <p>Zigbee koordinátor → MQTT bridge. Srdce celého Zigbee stacku.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-card-name">Samba Backup</div>
+      <div class="addon-card-type">💾 Zálohy · Community · Kapitola 12</div>
+      <p>Automatické kopírování záloh na Synology NAS přes SMB.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-card-name">Google Drive Backup</div>
+      <div class="addon-card-type">☁️ Zálohy · Community · Kapitola 12</div>
+      <p>Automatické nahrávání záloh na Google Drive.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-card-name">Tailscale</div>
+      <div class="addon-card-type">🔒 Bezpečnost · Community · Kapitola 11</div>
+      <p>VPN pro bezpečný vzdálený přístup. Zdarma, bez otevírání portů.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-card-name">SSH &amp; Web Terminal</div>
+      <div class="addon-card-type">🖥️ Volitelné · Official</div>
+      <p>Přístup přes SSH terminál pro pokročilou diagnostiku a správu.</p>
+    </div>
+  </div>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ RPi 3 má 1 GB RAM – sleduj spotřebu</div>
+    <p>Každý add-on zabírá paměť. Orientační spotřeba: Mosquitto ~30 MB, Zigbee2MQTT ~100 MB, Google Drive Backup ~50 MB, Samba ~20 MB. Pro stabilní provoz doporučuji max. 10–15 aktivních add-onů. Aktuální spotřebu sleduj v <strong>Nastavení → Systém → Hardware</strong>.</p>
+  </div>
+</section>
+
+<!-- MOBIL APP -->
+<section class="sec">
+  <h2>Mobilní aplikace Home Assistant</h2>
+  <p>Mobilní app je klíčová pro push notifikace, sledování přítomnosti doma (geofencing) a pohodlné ovládání z telefonu.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <div class="step-title">Nainstaluj a nastav mobilní aplikaci</div>
+        <div class="step-desc">
+          <p>Stáhni aplikaci <strong>"Home Assistant"</strong> z App Store (iOS) nebo Google Play (Android). Je zdarma.</p>
+          <ul>
+            <li>Otevři app → zadej adresu: <code>http://192.168.1.50:8123</code></li>
+            <li>Přihlaš se svými HA přihlašovacími údaji</li>
+            <li>Povol push notifikace a přístup k poloze</li>
+            <li>Aplikace se automaticky zaregistruje jako <strong>notifikační cíl</strong> v HA</li>
+          </ul>
+          <p>Po registraci můžeš v automatizacích posílat zprávy přímo do telefonu přes akci <strong>"Odeslat upozornění na mobilní aplikaci"</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nav class="chapter-nav">
+  <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">První spuštění HA</span></div>
+  </a>
+  <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Instalace Mosquitto</span></div>
+    <span>→</span>
+  </a>
+</nav>
+<footer>06_raspberry_zakladni_nastaveni_home_assistant.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
 </body>
 </html>

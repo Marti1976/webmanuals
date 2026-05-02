@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Konfigurace Zigbee2Mqtt – Raspberry Pi Průvodce</title>
+<title>Konfigurace Zigbee2MQTT – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -11,68 +11,321 @@
   --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
   --border:#2a1f3d;--border2:#3d2855;
   --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c; --rasp1-light:#ff3377;
-  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
   --cyan:#00d9ff;--cyan2:#5fffff;
-  --white:#f0e8ff;
-  --r:12px;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
 }
 html{scroll-behavior:smooth}
 ::-webkit-scrollbar{width:6px;background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
 .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
 .nav-back:hover{gap:12px}
-
-header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light)}
-
-.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
-  margin:28px 0 10px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
 strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
 code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
 pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
-  color:var(--t2);line-height:1.6;overflow-x:auto}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit}
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
+.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
+.step{display:flex;gap:20px;padding:16px 0}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);border:2px solid var(--rasp1);
+  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;
+  font-size:.9em;color:var(--rasp1-light);flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
+.step-desc ul{padding-left:18px;margin:8px 0 4px}
+.step-desc li{margin:5px 0;font-size:1em}
+.step-desc strong{color:var(--white)}
+.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
+.step-desc code{font-size:.9em}
+/* tab switcher */
+.tab-group{margin:20px 0}
+.tab-btns{display:flex;gap:8px;margin-bottom:0;flex-wrap:wrap}
+.tab-btn{font-family:'DM Mono',monospace;font-size:.78em;padding:8px 16px;border-radius:8px 8px 0 0;
+  border:1px solid var(--border);border-bottom:none;color:var(--t2);background:var(--bg3);
+  cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:all .2s}
+.tab-btn.active{color:var(--rasp1-light);background:var(--bg2);border-color:var(--rasp1)}
+.tab-content{display:none;background:var(--bg2);border:1px solid var(--border);border-radius:0 8px 8px 8px;padding:20px}
+.tab-content.active{display:block}
+/* channel table */
+.channel-table{width:100%;border-collapse:collapse;margin:14px 0}
+.channel-table th{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;border-bottom:2px solid var(--border);text-align:left}
+.channel-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:.88em;vertical-align:middle}
+.channel-table td:first-child{font-family:'DM Mono',monospace;color:var(--white);font-weight:600}
+.channel-table td:last-child{color:var(--t2)}
+.tag-good{display:inline-block;font-family:'DM Mono',monospace;font-size:.72em;padding:2px 8px;
+  border-radius:4px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);color:var(--green2)}
+.tag-warn{display:inline-block;font-family:'DM Mono',monospace;font-size:.72em;padding:2px 8px;
+  border-radius:4px;background:rgba(245,197,66,.1);border:1px solid rgba(245,197,66,.25);color:var(--yellow)}
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
-
 <header>
   <div class="h-num">// kapitola 09</div>
-  <h1>Konfigurace Zigbee2Mqtt</h1>
+  <h1>Konfigurace <em>Zigbee2MQTT</em></h1>
+  <p class="h-desc">Detailní nastavení YAML konfigurace pro oba typy koordinátorů, správný výběr Zigbee kanálu, propojení s MQTT brokerem a první úspěšné spuštění celého stacku.</p>
 </header>
 
-<div class="content">
+<!-- YAML KONFIGURACE -->
+<section class="sec">
+  <h2>Konfigurace add-onu (záložka KONFIGURACE)</h2>
+  <p>Veškerá konfigurace Zigbee2MQTT se zadává v záložce <strong>KONFIGURACE</strong> add-onu. Jde o YAML formát – odsazení mezerami je klíčové, nesmíš použít tabulátor.</p>
 
-</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Otevři záložku KONFIGURACE v Z2M add-onu</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Doplňky → Zigbee2MQTT → KONFIGURACE</strong>.</p>
+          <p>Zobrazí se YAML editor. Smaž výchozí obsah a vlož konfiguraci odpovídající tvému koordinátoru (viz níže).</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<footer>
-  09_raspberry_konfigurace_zigbee2mqtt.html · Raspberry Pi Průvodce · Duben 2026<br/>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
-</footer>
+  <h3>Konfigurace pro SLZB-07 (EFR32MG21) – doporučený dongle</h3>
+  <p>Adaptér je <code>ezsp</code> – pro Silicon Labs čipy (EFR32MG21, EFR32MG24).</p>
+  <pre><code>data_path: /config/zigbee2mqtt
+socat:
+  enabled: false
+  master: pty,raw,echo=0
+  slave: tcp-listen:8485,keepalive,nodelay,reuseaddr,waitlock
+  options: "-S5"
+  log: false
 
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: mqtt_user
+  password: TVOJE_MQTT_HESLO    # heslo z Kapitoly 07
+
+serial:
+  port: /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_XXXX-if00-port0
+  # ↑ NAHRAĎ přesnou adresou z Kapitoly 08 (kroku 5)!
+  adapter: ezsp
+
+homeassistant: true</code></pre>
+
+  <h3>Konfigurace pro Ebyte E72 / Sonoff Dongle-P (CC2652P)</h3>
+  <p>Adaptér je <code>znp</code> – pro Texas Instruments čipy (CC2652P, CC2652R, CC1352).</p>
+  <pre><code>data_path: /config/zigbee2mqtt
+socat:
+  enabled: false
+  master: pty,raw,echo=0
+  slave: tcp-listen:8485,keepalive,nodelay,reuseaddr,waitlock
+  options: "-S5"
+  log: false
+
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: mqtt_user
+  password: TVOJE_MQTT_HESLO    # heslo z Kapitoly 07
+
+serial:
+  port: /dev/serial/by-id/usb-XXXXXX-if00-port0
+  # ↑ NAHRAĎ přesnou adresou z Kapitoly 08!
+  adapter: znp
+
+homeassistant: true</code></pre>
+
+  <div class="callout callout-danger">
+    <div class="callout-title">🔴 Nejčastější chyby v konfiguraci</div>
+    <ul>
+      <li><strong>Špatný adapter:</strong> <code>ezsp</code> pro EFR32, <code>znp</code> pro CC2652 – neplést!</li>
+      <li><strong>Špatná adresa portu:</strong> zkopíruj přesně z Kapitoly 08, nevypisuj ručně</li>
+      <li><strong>Špatné MQTT heslo:</strong> musí odpovídat heslu uživatele z Kapitoly 07</li>
+      <li><strong>Odsazení v YAML:</strong> používej pouze 2 mezery, nikdy tabulátor</li>
+    </ul>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Ulož konfiguraci a spusť Z2M</div>
+        <div class="step-desc">
+          <p>Klikni <strong>ULOŽIT</strong> v dolní části záložky KONFIGURACE.</p>
+          <p>Přejdi na záložku <strong>INFORMACE</strong> → klikni <strong>SPUSTIT</strong>.</p>
+          <p>Přejdi na záložku <strong>PROTOKOL</strong> – sleduj výstupy. Úspěšné spuštění vypadá takto:</p>
+          <pre>Starting Zigbee2MQTT...
+Zigbee2MQTT started!
+Connected to MQTT server</pre>
+          <p>Pokud vidíš chyby, přejdi na sekci troubleshooting níže.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEBOVE ROZHRANI -->
+<section class="sec">
+  <h2>Webové rozhraní Zigbee2MQTT</h2>
+  <p>Po úspěšném spuštění je dostupné webové rozhraní Z2M – přes tlačítko <strong>"OTEVŘÍT WEBOVÉ ROZHRANÍ"</strong> v add-onu, nebo přímo přes URL:</p>
+  <pre><code>http://192.168.1.50:8099</code></pre>
+  <p>Zde budeš spravovat Zigbee síť: přidávat zařízení, přejmenovávat, sledovat stav sítě a konfigurovat pokročilá nastavení.</p>
+</section>
+
+<!-- ZIGBEE KANAL -->
+<section class="sec">
+  <h2>Výběr Zigbee kanálu – důležité!</h2>
+  <p>Zigbee 2.4 GHz pásmo se překrývá s WiFi. Špatný výběr kanálu způsobuje rušení a nestabilní spojení se zařízeními. <strong>Nastav kanál PŘED přidáváním prvního zařízení</strong> – po změně je nutné spárovat vše znovu.</p>
+
+  <table class="channel-table">
+    <thead>
+      <tr><th>Zigbee kanál</th><th>Frekvence</th><th>WiFi konflikt</th><th>Doporučení</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>11</td><td>2405 MHz</td>
+        <td>WiFi kanál 1</td>
+        <td><span class="tag-warn">vyhni se</span></td>
+      </tr>
+      <tr>
+        <td>15</td><td>2425 MHz</td>
+        <td>Žádný konflikt s 1,6,11</td>
+        <td><span class="tag-good">doporučeno</span></td>
+      </tr>
+      <tr>
+        <td>20</td><td>2450 MHz</td>
+        <td>Žádný konflikt s 1,6,11</td>
+        <td><span class="tag-good">doporučeno</span></td>
+      </tr>
+      <tr>
+        <td>25</td><td>2475 MHz</td>
+        <td>Možný konflikt s WiFi 13</td>
+        <td><span class="tag-warn">použij s rozvahou</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Nastav Zigbee kanál ve webovém UI</div>
+        <div class="step-desc">
+          <p>V Z2M webovém rozhraní jdi do <strong>Settings → Settings → Zigbee</strong>.</p>
+          <ul>
+            <li><strong>Channel:</strong> nastav na <code>15</code> nebo <code>20</code></li>
+            <li><strong>Pan ID:</strong> nechej výchozí nebo nastav vlastní 16-bitové číslo</li>
+            <li><strong>Extended Pan ID:</strong> nechej výchozí (generováno automaticky)</li>
+          </ul>
+          <p>Klikni <strong>Submit</strong>. Z2M se restartuje s novým kanálem.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Změna kanálu smaže párování!</div>
+    <p>Pokud změníš Zigbee kanál po tom co už máš spárovaná zařízení, musíš je všechna znovu spárovat od začátku. Koordinátor změní frekvenci, ale zařízení zůstanou na starém kanálu. Vždy nastav kanál <strong>před prvním párováním</strong>.</p>
+  </div>
+</section>
+
+<!-- DALSI NASTAVENI -->
+<section class="sec">
+  <h2>Další důležitá nastavení ve webovém rozhraní</h2>
+
+  <h3>Log Level</h3>
+  <p>Jdi do <strong>Settings → Settings → Advanced → Log level</strong>.</p>
+  <ul>
+    <li><code>info</code> – výchozí, pro běžný provoz</li>
+    <li><code>debug</code> – detailní výpis, jen při hledání problémů (výrazně více zápisů na disk)</li>
+    <li><code>warn</code> – pouze varování a chyby (nejméně zápisů)</li>
+  </ul>
+  <p>Pro denní provoz nastav <code>info</code>.</p>
+
+  <h3>OTA aktualizace zařízení</h3>
+  <p>Zigbee2MQTT umí aktualizovat firmware Zigbee zařízení over-the-air (IKEA, Philips Hue, Aqara...). Jdi do <strong>Settings → OTA Updates</strong> a zapni automatické kontroly. Samotná aktualizace se spustí vždy ručně – Z2M tě upozorní na dostupnost.</p>
+
+  <h3>Propojení s Home Assistant – MQTT Discovery</h3>
+  <p>Díky parametru <code>homeassistant: true</code> v konfiguraci Z2M automaticky posílá popis entit do HA přes MQTT Discovery. Každé spárované Zigbee zařízení se <strong>automaticky objeví</strong> v HA jako nová integrace. Nemusíš nic ručně přidávat.</p>
+  <p>Ověř v HA: <strong>Nastavení → Zařízení a služby → MQTT</strong> – po spárování prvního zařízení se zde zobrazí.</p>
+</section>
+
+<!-- TROUBLESHOOTING -->
+<section class="sec">
+  <h2>Z2M nejde spustit – časté příčiny</h2>
+
+  <h3>Chyba: "Failed to connect to the adapter"</h3>
+  <ul>
+    <li>Zkontroluj fyzické zapojení USB donglu</li>
+    <li>Ověř adresu portu v konfiguraci (přesná shoda s <code>/dev/serial/by-id/...</code>)</li>
+    <li>Zkus odpojit a znovu zapojit USB dongle, pak restartuj Z2M add-on</li>
+    <li>Ověř typ adaptéru: <code>ezsp</code> pro EFR32, <code>znp</code> pro CC2652</li>
+  </ul>
+
+  <h3>Chyba: "Cannot connect to MQTT broker"</h3>
+  <ul>
+    <li>Zkontroluj zda běží Mosquitto (Nastavení → Doplňky → Mosquitto → stav)</li>
+    <li>Ověř MQTT heslo v konfiguraci Z2M – musí odpovídat heslu <code>mqtt_user</code></li>
+    <li>Ověř MQTT server adresu: <code>mqtt://core-mosquitto:1883</code></li>
+  </ul>
+
+  <h3>Z2M se spustí ale zařízení se neobjevují v HA</h3>
+  <ul>
+    <li>Zkontroluj <code>homeassistant: true</code> v konfiguraci Z2M</li>
+    <li>Ověř MQTT integraci v HA (Nastavení → Zařízení a služby → MQTT)</li>
+    <li>Zkontroluj log Z2M pro chybové zprávy při párování</li>
+  </ul>
+</section>
+
+<nav class="chapter-nav">
+  <a href="08_raspberry_instalace_zigbee2mqtt.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Instalace Z2M</span></div>
+  </a>
+  <a href="10_raspberry_pridavani_zigbee_zarizeni.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Přidávání Zigbee zařízení</span></div>
+    <span>→</span>
+  </a>
+</nav>
+<footer>09_raspberry_konfigurace_zigbee2mqtt.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
 </body>
 </html>
