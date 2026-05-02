@@ -11,68 +11,342 @@
   --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
   --border:#2a1f3d;--border2:#3d2855;
   --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c; --rasp1-light:#ff3377;
-  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
   --cyan:#00d9ff;--cyan2:#5fffff;
-  --white:#f0e8ff;
-  --r:12px;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
 }
 html{scroll-behavior:smooth}
 ::-webkit-scrollbar{width:6px;background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
 .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
 .nav-back:hover{gap:12px}
-
-header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light)}
-
-.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
-  margin:28px 0 10px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
 strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
 code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
 pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
-  color:var(--t2);line-height:1.6;overflow-x:auto}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit}
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+/* checklist */
+.checklist{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:18px 0}
+.checklist-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.check-item:last-child{border-bottom:none}
+.check-box{width:18px;height:18px;border:1px solid var(--border2);border-radius:4px;flex-shrink:0;margin-top:2px;background:var(--bg3)}
+.check-item-body{flex:1}
+.check-item-title{font-size:.9em;color:var(--white);margin-bottom:1px}
+.check-item-desc{font-size:.82em;color:var(--t2)}
+/* performance bars */
+.perf-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin:16px 0}
+.perf-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.perf-row:last-child{border-bottom:none}
+.perf-name{font-size:.88em;color:var(--text)}
+.perf-val{font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
+.perf-val.ok{color:var(--green2)}
+.perf-val.warn{color:var(--yellow)}
+.perf-val.bad{color:var(--rasp1-light)}
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
-
 <header>
   <div class="h-num">// kapitola 13</div>
-  <h1>Tipy A Doporučení Pro Provoz</h1>
+  <h1>Tipy a doporučení <em>pro provoz</em></h1>
+  <p class="h-desc">Osvědčené rady pro dlouhodobě stabilní systém – péče o USB SSD, strategie aktualizací, optimalizace Zigbee sítě, sledování výkonu a pravidelná údržba.</p>
 </header>
 
-<div class="content">
+<!-- SSD PECE -->
+<section class="sec">
+  <h2>Péče o mSATA USB SSD</h2>
+  <p>Přechodem ze SD karty na SSD jsi výrazně zvýšil spolehlivost. I tak je dobré znát pár zásad:</p>
+  <ul>
+    <li><strong>Náhlý výpadek napájení</strong> je stále největší riziko – SSD to zvládne lépe než SD karta, ale konzistence databáze může být narušena. Zvažuj UPS (záložní napájení) pro RPi.</li>
+    <li><strong>USB pouzdro s JMS578</strong> může způsobovat problémy – viz Kapitola 02. Pokud máš náhodné pády, přidej UAS quirks.</li>
+    <li><strong>SMART monitoring</strong>: přes SSH spusť <code>smartctl -a /dev/sda</code> – zobrazí zdravotní stav SSD. Doporučuji zkontrolovat 1× ročně.</li>
+    <li><strong>Teplota SSD</strong> v pouzdře je normálně 40–60°C při zátěži – to je v pořádku. Nad 70°C začíná být potenciálně problematické.</li>
+  </ul>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 UPS pro RPi – skvělá investice</div>
+    <p>Malý UPS (záložní napájení) za 500–1500 Kč ochrání RPi před výpadky proudu a překlenutí neplánovaných odstávek. Hledej UPS s USB výstupem 5V/3A nebo použij napájecí powerbank s pass-through nabíjením.</p>
+  </div>
+</section>
 
-</div>
+<!-- AKTUALIZACE -->
+<section class="sec">
+  <h2>Strategie aktualizací</h2>
+  <p>Pravidelné aktualizace přinášejí bezpečnostní záplaty, nové funkce a opravy chyb. Ale špatně načasovaná aktualizace může způsobit problémy.</p>
+  <ul>
+    <li><strong>Major verze (2025.X.0)</strong> – počkej vždy 5–7 dní. Komunita rychle reportuje kritické chyby a patch přichází za pár dní.</li>
+    <li><strong>Patch verze (2025.X.Y)</strong> – aktualizuj bez obav, opravují problémy.</li>
+    <li><strong>Bezpečnostní aktualizace</strong> – instaluj okamžitě bez čekání.</li>
+    <li><strong>Vždy před aktualizací</strong>: vytvořit ruční zálohu (Nastavení → Zálohy → + Vytvořit).</li>
+    <li><strong>Release notes</strong>: čti přehled změn na <a href="https://www.home-assistant.io/blog/" target="_blank">home-assistant.io/blog</a> – upozorňují na breaking changes.</li>
+  </ul>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Breaking changes</div>
+    <p>HA občas zavádí změny které rozbijí existující konfiguraci nebo automatizace (tzv. breaking changes). Vždy přečti release notes sekci "Breaking Changes" před aktualizací major verze.</p>
+  </div>
+</section>
 
-<footer>
-  13_raspberry_tipy_a_doporuceni_pro_provoz.html · Raspberry Pi Průvodce · Duben 2026<br/>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
-</footer>
+<!-- ZIGBEE SIT -->
+<section class="sec">
+  <h2>Optimalizace Zigbee sítě</h2>
 
+  <h3>Umístění USB koordinátoru</h3>
+  <ul>
+    <li>Používej <strong>USB prodlužovací kabel 15–30 cm</strong> – dongle mimo kovové tělo RPi</li>
+    <li>Vzdálenost od WiFi routeru: <strong>minimálně 1 metr</strong> (WiFi 2.4 GHz a Zigbee se překrývají)</li>
+    <li>Ideální výška: <strong>1–1.5 metru od země</strong>, centrálně v bytě/domě</li>
+    <li>Vyhni se umístění v kovových skříních nebo za kovovými příčkami</li>
+  </ul>
+
+  <h3>Budování stabilní mesh sítě</h3>
+  <ul>
+    <li>Pro byt do 60 m²: stačí koordinátor + 2–4 napájené routery (zásuvky)</li>
+    <li>Pro větší prostory: přidávej routery rovnoměrně – každý pokrývá cca 10–15 metrů</li>
+    <li>Routery musí být <strong>vždy napájeny</strong> – tvoří páteř sítě</li>
+    <li>Bateriové senzory (end devices) automaticky hledají nejbližší router</li>
+  </ul>
+
+  <h3>Zigbee vs WiFi rušení</h3>
+  <ul>
+    <li>Zigbee kanál <strong>15 nebo 20</strong> – minimální překryv s WiFi kanály 1, 6, 11</li>
+    <li>Pokud máš WiFi na kanálu 13, vyhni se Zigbee kanálu 25</li>
+    <li>Bluetooth na RPi 3 sdílí anténu s WiFi – pokud Bluetooth nepotřebuješ, v HAOS ho nechej vypnutý</li>
+  </ul>
+
+  <h3>Vizualizace Zigbee sítě</h3>
+  <p>V Z2M webovém rozhraní jdi na záložku <strong>Map</strong>. Zobrazí se grafická mapa sítě – vidíš jak zařízení komunikují, přes které routery a jak silné je spojení. Slabé spoje jsou zobrazeny přerušovanou čárou.</p>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Stabilizace sítě po přidání zařízení</div>
+    <p>Po přidání nových zařízení nebo routerů trvá Zigbee síti cca <strong>24–48 hodin</strong> než se plně stabilizuje. Zařízení hledají optimální routy a mesh se reorganizuje. Pokud senzory hned nefungují dokonale – počkej den.</p>
+  </div>
+</section>
+
+<!-- VYKON -->
+<section class="sec">
+  <h2>Sledování výkonu systému</h2>
+  <p>RPi 3 B+ má 1 GB RAM. Sledování pomáhá odhalit problémy dříve než způsobí nestabilitu.</p>
+
+  <h3>Kde sledovat výkon</h3>
+  <ul>
+    <li><strong>Nastavení → Systém → Hardware</strong> – CPU, RAM, teplota v reálném čase</li>
+    <li><strong>Glances add-on</strong> – podrobný systémový monitor, webové rozhraní</li>
+    <li><strong>SSH</strong> → <code>top</code> nebo <code>htop</code> – interaktivní přehled procesů</li>
+  </ul>
+
+  <div class="perf-bar">
+    <div class="perf-row">
+      <span class="perf-name">RAM využití – v pořádku</span>
+      <span class="perf-val ok">pod 700 MB</span>
+    </div>
+    <div class="perf-row">
+      <span class="perf-name">RAM využití – sleduj</span>
+      <span class="perf-val warn">700–900 MB</span>
+    </div>
+    <div class="perf-row">
+      <span class="perf-name">RAM využití – problém</span>
+      <span class="perf-val bad">nad 900 MB</span>
+    </div>
+    <div class="perf-row">
+      <span class="perf-name">CPU teplota – v pořádku</span>
+      <span class="perf-val ok">pod 70°C</span>
+    </div>
+    <div class="perf-row">
+      <span class="perf-name">CPU teplota – throttling</span>
+      <span class="perf-val bad">nad 80°C (RPi throttluje CPU)</span>
+    </div>
+  </div>
+
+  <h3>Jak ušetřit RAM</h3>
+  <ul>
+    <li>Vypni nebo odinstaluj nepoužívané add-ony</li>
+    <li>Omez historii v <code>configuration.yaml</code>: přidej <code>recorder: purge_keep_days: 7</code> (výchozí je 10 dní)</li>
+    <li>Studio Code Server spotřebuje ~200 MB extra – používej jen při editaci, jinak zastav</li>
+    <li>Pokud HA trvale vyžaduje 900+ MB RAM, zvažuj přechod na RPi 4 (2–4 GB RAM)</li>
+  </ul>
+</section>
+
+<!-- RECORDER OPTIMALIZACE -->
+<section class="sec">
+  <h2>Optimalizace databáze (Recorder)</h2>
+  <p>HA Recorder ukládá historii hodnot senzorů do SQLite databáze. Na RPi 3 může být databáze pomalá pokud neomezeně roste.</p>
+  <p>Přidej do <code>/config/configuration.yaml</code>:</p>
+  <pre><code>recorder:
+  purge_keep_days: 7         # uchovávej historii 7 dní (výchozí 10)
+  exclude:
+    domains:
+      - automation
+      - script
+      - sun
+      - weather
+    entity_globs:
+      - sensor.zigbee2mqtt_*  # vyloučení diagnostických senzorů Z2M</code></pre>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Čištění databáze</div>
+    <p>Pokud databáze narostla a HA je pomalé: Developer Tools → Services → <code>recorder.purge</code> → nastavit <code>keep_days: 5</code> a spustit. Databáze se vyčistí. Může trvat i 30 minut, HA bude dočasně pomalejší.</p>
+  </div>
+</section>
+
+<!-- PRAVIDELNA UDRZBA -->
+<section class="sec">
+  <h2>Pravidelná údržba – checklist</h2>
+
+  <div class="checklist">
+    <div class="checklist-title">📅 Týdně</div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Zkontroluj zálohy</div>
+        <div class="check-item-desc">Google Drive Backup dashboard – poslední záloha proběhla úspěšně?</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Zkontroluj logy na chyby</div>
+        <div class="check-item-desc">Nastavení → Systém → Protokoly – hledej WARNING a ERROR</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Zkontroluj dostupnost Zigbee zařízení</div>
+        <div class="check-item-desc">Z2M rozhraní → Devices – všechna zařízení dostupná (zelená)?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">📅 Měsíčně</div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Aktualizace systému</div>
+        <div class="check-item-desc">Počkej na patch verzi, vytvoř zálohu, pak aktualizuj</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Stav baterií v senzorech</div>
+        <div class="check-item-desc">Nastavení → Zařízení → filtruj dle battery_level entity pod 20 %</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Vymaž staré zálohy</div>
+        <div class="check-item-desc">Ponechej max. 5–7 lokálních záloh, starší smaž</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">OTA aktualizace Zigbee zařízení</div>
+        <div class="check-item-desc">Z2M → Settings → OTA Updates – zkontroluj dostupné aktualizace firmwaru</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">📅 Ročně</div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">SMART kontrola SSD</div>
+        <div class="check-item-desc">SSH → <code>smartctl -a /dev/sda</code> – zkontroluj reallocated sectors a pending sectors</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Ověřit zálohu obnovou</div>
+        <div class="check-item-desc">Jednou ročně otestuj zda záloha je skutečně obnovitelná (test na druhém RPi nebo VM)</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Aktualizace firmware Zigbee koordinátoru</div>
+        <div class="check-item-desc">smlight.tech/flasher – zkontroluj a nainstaluj nový firmware koordinátoru</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTIFIKACE BATERIT -->
+<section class="sec">
+  <h2>Automatizace – notifikace na vybité baterie</h2>
+  <p>Užitečná automatizace: HA tě upozorní když baterie v Zigbee senzoru klesne pod 20 %.</p>
+  <pre><code>alias: "Notifikace: Vybité baterie"
+description: "Upozornění při battery_level pod 20 %"
+trigger:
+  - platform: numeric_state
+    entity_id: sensor.*_battery
+    below: 20
+condition: []
+action:
+  - service: notify.mobile_app_tvuj_telefon
+    data:
+      title: "🔋 Vybité baterie"
+      message: >
+        Zařízení {{ trigger.to_state.name }} má baterii
+        {{ trigger.to_state.state }} %
+mode: single</code></pre>
+  <p>Přidej přes <strong>Nastavení → Automatizace → + Vytvořit → Edit in YAML</strong>.</p>
+</section>
+
+<nav class="chapter-nav">
+  <a href="12_raspberry_zalohovani.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Zálohování</span></div>
+  </a>
+  <a href="14_raspberry_reseni_problemu_troubleshooting.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Řešení problémů</span></div>
+    <span>→</span>
+  </a>
+</nav>
+<footer>13_raspberry_tipy_a_doporuceni_pro_provoz.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
 </body>
 </html>

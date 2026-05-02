@@ -11,203 +11,397 @@
   --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
   --border:#2a1f3d;--border2:#3d2855;
   --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c; --rasp1-light:#ff3377;
-  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
   --cyan:#00d9ff;--cyan2:#5fffff;
-  --white:#f0e8ff;
-  --r:12px;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
 }
 html{scroll-behavior:smooth}
 ::-webkit-scrollbar{width:6px;background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
 .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
 .nav-back:hover{gap:12px}
-
-header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light)}
-
-.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
-  margin:28px 0 10px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
 strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
 code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
 pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
-  color:var(--t2);line-height:1.6;overflow-x:auto}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit}
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
+.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
+.step{display:flex;gap:20px;padding:16px 0}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);border:2px solid var(--rasp1);
+  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;
+  font-size:.9em;color:var(--rasp1-light);flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
+.step-desc ul{padding-left:18px;margin:8px 0 4px}
+.step-desc li{margin:5px 0;font-size:1em}
+.step-desc strong{color:var(--white)}
+.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
+.step-desc code{font-size:.9em}
+/* remote access options */
+.remote-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:20px 0}
+.remote-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
+.remote-card.recommended{border-color:rgba(0,229,160,.3)}
+.remote-card-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:4px}
+.remote-card-sub{font-family:'DM Mono',monospace;font-size:.72em;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;color:var(--t3)}
+.remote-card.recommended .remote-card-sub{color:var(--green2)}
+.remote-card p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.6}
+/* security checklist */
+.sec-check{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:18px 0}
+.sec-check-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.sec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.sec-item:last-child{border-bottom:none}
+.sec-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
+.sec-item-body{flex:1}
+.sec-item-title{font-size:.9em;color:var(--white);font-weight:600;margin-bottom:2px}
+.sec-item-desc{font-size:.83em;color:var(--t2);line-height:1.55}
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
-
 <header>
   <div class="h-num">// kapitola 11</div>
-  <h1>Bezpečnost</h1>
+  <h1><em>Bezpečnost</em></h1>
+  <p class="h-desc">Ochrana Home Assistant před přístupem z internetu, silná autentizace, 2FA, zabezpečení MQTT a možnosti bezpečného vzdáleného přístupu přes VPN.</p>
 </header>
 
-<div class="content">
-<p>DŮLEŽITÉ: Home Assistant by měl být dostupný POUZE z lokální sítě,
-          pokud nevíš přesně co děláš s vzdáleným přístupem!
+<!-- ZAKLADNI PRAVIDLO -->
+<section class="sec">
+  <h2>Základní pravidlo</h2>
+  <div class="callout callout-danger">
+    <div class="callout-title">🔴 Nikdy přímo nevystavuj HA do internetu!</div>
+    <p>Home Assistant by měl být dostupný <strong>pouze z lokální sítě</strong>, pokud nevíš přesně co děláš. Nikdy neotvírej port 8123 (ani žádný jiný HA port) z internetu. Pro vzdálený přístup existují bezpečné alternativy popsané níže.</p>
+  </div>
+</section>
 
-------------------------------------------------------------------------
-11.1 FIREWALL NA ROUTERU (NEJDŮLEŽITĚJŠÍ OCHRANA)
-------------------------------------------------------------------------
+<!-- FIREWALL ROUTER -->
+<section class="sec">
+  <h2>Firewall na routeru</h2>
+  <p>Router je první linie obrany. Standardně blokuje příchozí spojení z internetu – je důležité toto nastavení neporušit.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Zkontroluj Port Forwarding</div>
+        <div class="step-desc">
+          <p>Přihlaš se do routeru (obvykle <code>192.168.1.1</code> nebo <code>192.168.0.1</code>). Najdi sekci:</p>
+          <ul>
+            <li><strong>Port Forwarding</strong> / <strong>NAT</strong> / <strong>Virtual Server</strong></li>
+          </ul>
+          <p>Zkontroluj, že <strong>neexistuje</strong> žádné pravidlo forwardující port <code>8123</code> na IP adresu RPi. Pokud ano – smaž ho ihned.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Zkontroluj a zvažuj vypnutí UPnP</div>
+        <div class="step-desc">
+          <p>UPnP (Universal Plug and Play) umožňuje aplikacím automaticky otevírat porty v routeru bez tvého vědomí. Najdi v routeru sekci <strong>UPnP</strong> a zvažuj jeho vypnutí.</p>
+          <p>Vypnutí UPnP může rozbít některé funkce (online hry, video hovory) – posluď dle potřeby. Pro bezpečnostní paranoidní nastavení ho vypni a přidávej port forwarding ručně jen pro to co skutečně potřebuješ.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-PRAVIDLO Č. 1: NIKDY neforwarduj port 8123 (ani žádný jiný HA port)
-               z internetu na RPi!
+<!-- 2FA -->
+<section class="sec">
+  <h2>Dvoufaktorová autentizace (2FA)</h2>
+  <p>I kdyby někdo znal tvoje heslo, bez 2FA kódu se do HA nepřihlásí. <strong>Doporučuji aktivovat vždy.</strong></p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Aktivuj TOTP (Time-based One-Time Password)</div>
+        <div class="step-desc">
+          <p>Klikni vlevo dole na své <strong>uživatelské jméno</strong>. Najdi sekci <strong>"Zabezpečení"</strong> nebo <strong>"Multi-factor Authentication"</strong>.</p>
+          <p>Klikni <strong>Aktivovat</strong> u položky <strong>TOTP</strong>.</p>
+          <ul>
+            <li>Otevři aplikaci <strong>Google Authenticator</strong> nebo <strong>Authy</strong> na mobilu</li>
+            <li>Naskenuj zobrazený QR kód</li>
+            <li><strong>Zapiš si záložní kódy</strong> na bezpečné místo (papír, password manager) – bez nich se při ztrátě telefonu nedostaneš dovnitř!</li>
+            <li>Zadej první vygenerovaný kód pro potvrzení</li>
+            <li>Klikni <strong>Aktivovat</strong></li>
+          </ul>
+          <p>Od teď při přihlášení zadáš heslo + 6místný kód z aplikace.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Záložní kódy jsou kritické</div>
+    <p>Pokud ztratíš telefon s Google Authenticator a nemáš záložní kódy, ztratíš přístup do HA. Záložní kódy ulož na <strong>dvě různá místa</strong> – např. vytiskni a ulož fyzicky + do password manageru.</p>
+  </div>
+</section>
 
-Jak zkontrolovat nastavení routeru:
-KROK 53: Přihlaš se do routeru (obvykle 192.168.1.1)
-KROK 54: Zkontroluj sekci "Port Forwarding" / "NAT" / "Virtual Server"
-          -> NESMÍ existovat žádné pravidlo forwardující port 8123 na IP RPi
-          -> Pokud existuje: SMAŽ HO IHNED
+<!-- SILNE HESLO -->
+<section class="sec">
+  <h2>Silné heslo a správa přihlašovacích údajů</h2>
+  <p>Základní hygienická pravidla pro přihlašovací údaje:</p>
+  <ul>
+    <li>Heslo HA admina: <strong>min. 16 znaků</strong>, kombinace písmen, čísel a symbolů</li>
+    <li>MQTT heslo: jiné než HA heslo, min. 16 znaků</li>
+    <li>Samba heslo: opět jiné, min. 12 znaků</li>
+    <li>Používej <strong>password manager</strong> (Bitwarden – zdarma a open source, KeePass, 1Password)</li>
+    <li>Nikdy nepoužívej stejné heslo na více místech</li>
+  </ul>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Bitwarden – doporučený password manager</div>
+    <p>Bitwarden je open source, zdarma, dostupný jako browser extension i mobilní app. Synchronizuje hesla přes všechna zařízení. <a href="https://bitwarden.com" target="_blank">bitwarden.com</a></p>
+  </div>
+</section>
 
-KROK 55: Zkontroluj sekci "UPnP" / "Universal Plug and Play"
-          -> UPnP může automaticky otevírat porty!
-          -> Doporučuji VYPNOUT UPnP v routeru pro větší kontrolu
-
-------------------------------------------------------------------------
-11.2 FIREWALL V HOME ASSISTANT OS
-------------------------------------------------------------------------
-
-HAOS má základní firewall, ale je vhodné přidat pravidla:
-
-KROK 56: Nastavení -> Systém -> Host
-          -> Zde lze vidět firewall nastavení
-          
-Přes SSH (volitelné – nutný SSH addon):
-
-Povolit přístup jen z lokální sítě (příklad pro síť 192.168.1.0/24):
-  ha network update eth0 --ipv4-method static --ipv4-address 192.168.1.50/24
-
-------------------------------------------------------------------------
-11.3 SILNÉ HESLO A DVOUFAKTOROVÁ AUTENTIZACE (2FA)
-------------------------------------------------------------------------
-
-KROK 57: Nastav 2FA pro svůj HA účet:
-          -> Klikni na své jméno vlevo dole
-          -> Sekce "Zabezpečení" nebo "Multi-factor Authentication"
-          -> Klikni "Aktivovat" u TOTP (Time-based One-Time Password)
-          -> Naskenuj QR kód aplikací Google Authenticator nebo Authy
-          -> Zapiš si záložní kódy na BEZPEČNÉ místo!
-          -> Klikni "Aktivovat"
-
-Po zapnutí 2FA budeš při přihlášení potřebovat kód z mobilu.
-2FA PLATÍ POUZE PRO PŘIHLÁŠENÍ – přes lokální síť je to extra ochrana.
-
-------------------------------------------------------------------------
-11.4 TRUSTED NETWORKS – BEZPROBLÉMOVÝ LOKÁLNÍ PŘÍSTUP
-------------------------------------------------------------------------
-
-Pokud chceš, aby zařízení v lokální síti nemusela zadávat heslo:
-
-KROK 58: V Home Assistant -> Nastavení -> Lidé -> záložka "Poskytovatelé auth"
-          -> Nebo uprav configuration.yaml:
-
-Přidej do /config/configuration.yaml:
-
-homeassistant:
+<!-- TRUSTED NETWORKS -->
+<section class="sec">
+  <h2>Trusted Networks – přístup bez hesla z lokální sítě</h2>
+  <p>Pokud chceš, aby zařízení v lokální síti (tablety na zdi, domácí PC) nemusela zadávat heslo, lze nakonfigurovat Trusted Networks.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Přidej Trusted Networks do configuration.yaml</div>
+        <div class="step-desc">
+          <p>Otevři File Editor v HA a uprav soubor <code>/config/configuration.yaml</code>. Přidej:</p>
+          <pre><code>homeassistant:
   auth_providers:
     - type: trusted_networks
       trusted_networks:
-        - 192.168.1.0/24       # tvoje lokální síť
+        - 192.168.1.0/24   # tvoje lokální síť
         - 127.0.0.1
-      allow_bypass_login: true  # bez hesla z lokální sítě
-    - type: homeassistant     # standardní přihlášení (záloha)
+      allow_bypass_login: true
+    - type: homeassistant  # záloha – standardní přihlášení</code></pre>
+          <p>Ulož soubor. Jdi do <strong>Nastavení → Systém → Restartovat → Restartovat Home Assistant</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Pozor na bezpečnostní kontext</div>
+    <p>Trusted Networks je vhodné pouze pokud je tvoje WiFi dobře zabezpečená (WPA3 nebo WPA2 se silným heslem) a nemáš hosty s přístupem do hlavní sítě. Pro hosty použij izolovanou guest WiFi síť.</p>
+  </div>
+</section>
 
-!!! POZOR: Tento přístup je vhodný POUZE pokud je tvoje WiFi/LAN
-           zabezpečena a nikdo cizí se k ní nedostane !!!
-
-------------------------------------------------------------------------
-11.5 ZABEZPEČENÍ MQTT
-------------------------------------------------------------------------
-
-KROK 59: Ověř, že Mosquitto poslouchá POUZE na lokálních rozhraních:
-          -> Nastavení -> Doplňky -> Mosquitto broker -> KONFIGURACE
-          -> Přidej nebo ověř:
-
-customize:
-  active: false
-logins:
+<!-- ZABEZPECENI MQTT -->
+<section class="sec">
+  <h2>Zabezpečení MQTT brokeru</h2>
+  <p>Mosquitto v HAOS je ve výchozím nastavení dostupný <strong>pouze uvnitř sítě add-onů</strong> – port 1883 není přístupný z internetu ani z lokální sítě jiných zařízení. To je správné chování.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Ověř konfiguraci Mosquitto</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Doplňky → Mosquitto broker → KONFIGURACE</strong>. Ujisti se, že konfigurace obsahuje přihlašovací údaje a <strong>není prázdná</strong> (prázdná = bez autentizace):</p>
+          <pre><code>logins:
   - username: mqtt_user
-    password: [tvoje heslo]
-certfile: fullchain.pem
-keyfile: privkey.pem
+    password: "tvoje_heslo"</code></pre>
+          <p>Klikni <strong>Uložit</strong> a restartuj Mosquitto add-on pokud jsi dělal změny.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-Mosquitto v HAOS je ve výchozím nastavení dostupný POUZE uvnitř HA sítě
-(port 1883 není přístupný z internetu – je to v pořádku).
+<!-- VZDALENY PRISTUP -->
+<section class="sec">
+  <h2>Vzdálený přístup – bezpečné možnosti</h2>
+  <p>Pokud chceš přistupovat k HA z internetu (mimo domov), nikdy neotvírej porty přímo. Místo toho použi jednu z těchto bezpečných metod:</p>
 
-------------------------------------------------------------------------
-11.6 VZDÁLENÝ PŘÍSTUP – KDYŽ HO PŘECE JEN CHCEŠ
-------------------------------------------------------------------------
+  <div class="remote-grid">
+    <div class="remote-card recommended">
+      <div class="remote-card-title">Nabu Casa (HA Cloud)</div>
+      <div class="remote-card-sub">★ Nejjednodušší · ~65 Kč/měsíc</div>
+      <p>Placená služba od tvůrců HA. Žádná konfigurace – jen aktivovat. Vše šifrováno, bez portforwardingu. Podporuje také Alexa a Google Assistant. <a href="https://www.nabucasa.com" target="_blank">nabucasa.com</a></p>
+    </div>
+    <div class="remote-card recommended">
+      <div class="remote-card-title">Tailscale VPN</div>
+      <div class="remote-card-sub">★ Nejlepší zdarma · 0 Kč</div>
+      <p>WireGuard-based VPN mesh. Telefon a RPi jsou ve virtuální síti – přistupuješ jako bys byl doma. Instalace přes add-on v minutách. <a href="https://tailscale.com" target="_blank">tailscale.com</a></p>
+    </div>
+    <div class="remote-card">
+      <div class="remote-card-title">WireGuard na routeru</div>
+      <div class="remote-card-sub">Pokročilé · Zdarma</div>
+      <p>Nejbezpečnější varianta, veškerý provoz přes VPN. Vyžaduje podporu routeru (Turris, Mikrotik, Asus Merlin). Složitější nastavení.</p>
+    </div>
+    <div class="remote-card">
+      <div class="remote-card-title">Cloudflare Tunnel</div>
+      <div class="remote-card-sub">Pokročilé · Zdarma</div>
+      <p>Tunelování přes Cloudflare CDN. Veřejná URL bez otevírání portů. Vyžaduje doménu a pokročilejší konfiguraci. Zdarma pro základní použití.</p>
+    </div>
+  </div>
 
-POKUD chceš přistupovat k HA z internetu, nikdy neotvírej port 8123!
-Místo toho použij:
+  <h3>Jak nastavit Tailscale (doporučeno pro zdarma přístup)</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-title">Zaregistruj se na Tailscale</div>
+        <div class="step-desc">
+          <p>Přejdi na <a href="https://tailscale.com" target="_blank">tailscale.com</a> → <strong>Get Started</strong>. Registruj se přes Google nebo GitHub účet. Free plán stačí pro domácí použití (max. 3 uživatelé, 100 zařízení).</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <div class="step-title">Nainstaluj Tailscale add-on v HA</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Doplňky → ADD-ON STORE</strong>. Hledej <strong>"Tailscale"</strong>. Nainstaluj. V záložce KONFIGURACE nastav:</p>
+          <pre><code>tags:
+  - tag:homeassistant</code></pre>
+          <p>Spusť add-on. V záložce <strong>PROTOKOL</strong> najdeš autorizační URL – zkopíruj ji a otevři v prohlížeči. Přihlaš se Tailscale účtem a autorizuj zařízení.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <div class="step-title">Nainstaluj Tailscale na telefon / PC</div>
+        <div class="step-desc">
+          <p>Stáhni Tailscale app na všechna zařízení ze kterých chceš přistupovat k HA. Přihlaš se stejným účtem.</p>
+          <p>Po připojení uvidíš v Tailscale admin konzoli (<a href="https://login.tailscale.com/admin" target="_blank">login.tailscale.com/admin</a>) RPi s přiřazenou IP ve formátu <code>100.x.x.x</code>.</p>
+          <p>Přistup k HA z internetu: <code>http://100.x.x.x:8123</code> (Tailscale IP adresa RPi).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-VARIANTA A – Nabu Casa (Home Assistant Cloud):
-  -> Placená služba (cca 65 Kč/měsíc) od tvůrců HA
-  -> Nejjednodušší a nejbezpečnější vzdálený přístup
-  -> Nastavení: Nastavení -> Home Assistant Cloud
-  -> Vše šifrované, bez portforwardingu
+<!-- LOGOVANI -->
+<section class="sec">
+  <h2>Logování a sledování přihlášení</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">9</div>
+      <div class="step-body">
+        <div class="step-title">Sleduj logy v Home Assistant</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Systém → Protokoly</strong>. Filtruj výraz <code>login</code> nebo <code>failed</code> pro hledání neúspěšných pokusů.</p>
+          <p>Každé neúspěšné přihlášení se loguje – pokud vidíš opakované pokusy z neznámé IP, je to signál že někdo zkouší proniknout.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">10</div>
+      <div class="step-body">
+        <div class="step-title">Nastav notifikaci při neúspěšném přihlášení (volitelné)</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Automatizace → + Vytvořit automatizaci</strong>:</p>
+          <ul>
+            <li><strong>Spouštěč:</strong> Událost → <code>homeassistant_start</code> nebo Log entry s klíčovým slovem <code>Login attempt</code></li>
+            <li><strong>Akce:</strong> Odeslat upozornění na mobilní aplikaci</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-VARIANTA B – Tailscale VPN (ZDARMA):
-  -> VPN síť – připojíš se jako bys byl doma
-  -> Nastavení:
-     1. Registruj se na https://tailscale.com (zdarma)
-     2. Nastavení -> Doplňky -> ADD-ON STORE -> hledej "Tailscale"
-     3. Nainstaluj a nastav Tailscale addon v HA
-     4. Na telefonu/PC nainstaluj Tailscale klienta
-     5. Přes Tailscale se připojíš k domácí síti odkudkoli
-  -> Přístup k HA: přes Tailscale IP adresu (100.x.x.x)
+<!-- BEZPECNOSTNI CHECKLIST -->
+<section class="sec">
+  <h2>Bezpečnostní checklist</h2>
+  <div class="sec-check">
+    <div class="sec-check-title">Zkontroluj před nasazením do produkce</div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">Port forwarding na port 8123 NEEXISTUJE</div>
+        <div class="sec-item-desc">Ověřit v routeru → Port Forwarding sekce</div>
+      </div>
+    </div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">Silné heslo HA admina (min. 16 znaků)</div>
+        <div class="sec-item-desc">Uloženo v password manageru</div>
+      </div>
+    </div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">2FA aktivováno na HA účtu</div>
+        <div class="sec-item-desc">Google Authenticator nebo Authy, záložní kódy uloženy</div>
+      </div>
+    </div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">MQTT má přihlašovací údaje</div>
+        <div class="sec-item-desc">Mosquitto konfigurace obsahuje username/password</div>
+      </div>
+    </div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">Vzdálený přístup pouze přes VPN (Tailscale / Nabu Casa)</div>
+        <div class="sec-item-desc">Nikdy přímý portforwarding bez HTTPS a silného hesla</div>
+      </div>
+    </div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">Systém je aktuální</div>
+        <div class="sec-item-desc">Pravidelné aktualizace HAOS, Core a add-onů</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-VARIANTA C – WireGuard VPN na routeru:
-  -> Složitější, vyžaduje podporu v routeru (Turris, Mikrotik, Asus Merlin)
-  -> Nejbezpečnější varianta, veškerý provoz šifrován
-
-DOPORUČENÍ: Nabu Casa pro jednoduchost, Tailscale pro bezplatný přístup.
-NIKDY nepoužívej přímý port forwarding bez HTTPS a silného hesla!
-
-------------------------------------------------------------------------
-11.7 LOGOVÁNÍ A SLEDOVÁNÍ PŘIHLÁŠENÍ
-------------------------------------------------------------------------
-
-KROK 60: Nastavení -> Systém -> Protokoly
-          -> Sleduj neúspěšné pokusy o přihlášení
-          -> Filtruj dle "login" nebo "failed"
-
-KROK 61: Nastav notifikaci při neúspěšném přihlášení (volitelné):
-          -> Automatizace -> Vytvořit automatizaci
-          -> Trigger: "Log entry" s klíčovým slovem "failed login"
-          -> Akce: Odeslat push notifikaci na mobil
-
-POZNÁMKY K BEZPEČNOSTI:
-[zde si pište vlastní poznámky]</p>
-</div>
-
-<footer>
-  11_raspberry_bezpecnost.html · Raspberry Pi Průvodce · Duben 2026<br/>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
-</footer>
-
+<nav class="chapter-nav">
+  <a href="10_raspberry_pridavani_zigbee_zarizeni.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Přidávání zařízení</span></div>
+  </a>
+  <a href="12_raspberry_zalohovani.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Zálohování</span></div>
+    <span>→</span>
+  </a>
+</nav>
+<footer>11_raspberry_bezpecnost.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
 </body>
 </html>

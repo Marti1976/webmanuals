@@ -11,68 +11,299 @@
   --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
   --border:#2a1f3d;--border2:#3d2855;
   --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c; --rasp1-light:#ff3377;
-  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
   --cyan:#00d9ff;--cyan2:#5fffff;
-  --white:#f0e8ff;
-  --r:12px;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
 }
 html{scroll-behavior:smooth}
 ::-webkit-scrollbar{width:6px;background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
 .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
 .nav-back:hover{gap:12px}
-
-header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light)}
-
-.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
-  margin:28px 0 10px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
 strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
 code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
 pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
-  color:var(--t2);line-height:1.6;overflow-x:auto}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit}
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+/* issue cards */
+.issue{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:16px 0}
+.issue-title{font-family:'Syne',sans-serif;font-size:1em;font-weight:700;color:var(--rasp1-light);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.issue-tag{font-family:'DM Mono',monospace;font-size:.7em;padding:2px 8px;border-radius:4px;
+  background:rgba(227,11,92,.1);border:1px solid rgba(227,11,92,.2);color:var(--rasp1-light);letter-spacing:.06em;text-transform:uppercase}
+.issue h4{font-family:'Syne',sans-serif;font-size:.85em;font-weight:600;color:var(--white);margin:14px 0 6px}
+.issue ul{padding-left:18px;margin-bottom:0}
+.issue li{margin:5px 0;font-size:.88em}
+.issue p{font-size:.88em;margin-bottom:8px}
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
-
 <header>
   <div class="h-num">// kapitola 14</div>
-  <h1>Řešení Problémů (Troubleshooting)</h1>
+  <h1>Řešení <em>problémů</em></h1>
+  <p class="h-desc">Systematický průvodce nejčastějšími problémy – od nedostupného webového rozhraní přes problémy se Zigbee2MQTT až po zálohovací chyby. Každý problém má konkrétní postup řešení.</p>
 </header>
 
-<div class="content">
+<!-- LOGIKA DEBUGOVANI -->
+<section class="sec">
+  <h2>Jak přistupovat k problémům</h2>
+  <p>Před zkoumáním konkrétního problému – vždy začni od základů:</p>
+  <ol>
+    <li>Zkontroluj <strong>záložku PROTOKOL</strong> problematického add-onu – chybová zpráva obvykle řekne přesně co je špatně</li>
+    <li>Zkontroluj <strong>Nastavení → Systém → Protokoly</strong> v HA – systémový log</li>
+    <li>Ověř zda jsou všechny závislé služby spuštěny (Mosquitto před Z2M, HA Core před add-ony)</li>
+    <li>Zkus <strong>restart add-onu</strong> – někdy stačí</li>
+    <li>Zkus <strong>restart celého HA</strong> (Nastavení → Systém → Restartovat)</li>
+  </ol>
+</section>
 
-</div>
+<!-- HA NEDOSTUPNE -->
+<section class="sec">
+  <h2>Problémy s dostupností Home Assistant</h2>
 
-<footer>
-  14_raspberry_reseni_problemu_troubleshooting.html · Raspberry Pi Průvodce · Duben 2026<br/>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
-</footer>
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">HA</span> http://homeassistant.local:8123 se nenačte</div>
+    <h4>Možné příčiny a řešení:</h4>
+    <ul>
+      <li><strong>Systém ještě startuje</strong> – první boot trvá 10–25 minut. Počkej a zkus znovu.</li>
+      <li><strong>mDNS nefunguje</strong> – zkus přímou IP adresu místo hostname: <code>http://192.168.1.50:8123</code></li>
+      <li><strong>RPi nemá síť</strong> – zkontroluj Ethernet kabel, bliká LED na portu routeru?</li>
+      <li><strong>RPi se nespustil z USB SSD</strong> – ověř, že USB boot byl aktivován (Kapitola 04). Zkus odpojit a znovu zapojit SSD.</li>
+      <li><strong>Špatné napájení</strong> – používáš zdroj min. 3A? Zkus jiný napájecí zdroj.</li>
+      <li><strong>SSD se nezobrazuje</strong> – zkus jiný USB port na RPi nebo jiný USB kabel</li>
+    </ul>
+  </div>
 
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">HA</span> HA běží ale je extrémně pomalé</div>
+    <ul>
+      <li>Zkontroluj spotřebu RAM: <strong>Nastavení → Systém → Hardware</strong></li>
+      <li>Vypni nebo zastav nepoužívané add-ony</li>
+      <li>Zkontroluj logy – může být infinite loop v automatizaci</li>
+      <li>Spusť čištění databáze: Developer Tools → Services → <code>recorder.purge</code></li>
+      <li>Zkontroluj UAS problém USB pouzdra – problémy s I/O mohou zpomalit celý systém</li>
+    </ul>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">HA</span> Ikonka blesku / varování o podpětí</div>
+    <ul>
+      <li>Vyměň napájecí zdroj za kvalitní 5V/3A zdroj (originální RPi nebo Meanwell)</li>
+      <li>Zkontroluj délku a kvalitu Micro-USB kabelu – dlouhý nebo tenký kabel zvyšuje odpor</li>
+      <li>Odpoj nepotřebná USB zařízení z RPi (snižuje odběr)</li>
+      <li>Varování v HA logu: <code>Under-voltage detected</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ZIGBEE2MQTT -->
+<section class="sec">
+  <h2>Problémy se Zigbee2MQTT</h2>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Z2M</span> Z2M nejde spustit – "Failed to start"</div>
+    <h4>Postup diagnostiky:</h4>
+    <ul>
+      <li>Zkontroluj záložku <strong>PROTOKOL</strong> v Z2M add-onu – co říká přesně?</li>
+      <li><strong>"Failed to connect to the adapter"</strong> → špatná adresa portu nebo dongle není zapojen</li>
+      <li><strong>"Cannot connect to MQTT"</strong> → Mosquitto neběží nebo špatné heslo</li>
+      <li><strong>"Invalid YAML"</strong> → chyba v konfiguraci (odsazení, uvozovky)</li>
+    </ul>
+    <h4>Kontrolní seznam:</h4>
+    <ul>
+      <li>USB Zigbee dongle je fyzicky zapojen do RPi</li>
+      <li>Adresa portu v konfiguraci odpovídá výstupu z Nastavení → Hardware</li>
+      <li>Typ adaptéru je správný: <code>ezsp</code> pro EFR32, <code>znp</code> pro CC2652</li>
+      <li>MQTT heslo v konfiguraci Z2M odpovídá heslu uživatele <code>mqtt_user</code></li>
+      <li>Mosquitto broker běží (zelený stav)</li>
+    </ul>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Z2M</span> Zigbee zařízení nejde spárovat</div>
+    <ul>
+      <li>Ověř, že <strong>Permit Join je zapnutý</strong> v Z2M (modrý přepínač v rozhraní)</li>
+      <li>Přines zařízení <strong>do 1–2 metrů</strong> od koordinátoru při párování</li>
+      <li>Zkus jiný párovací postup – hledej na <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank">zigbee2mqtt.io/supported-devices</a></li>
+      <li>Zkontroluj, že zařízení <strong>není spárováno s jiným systémem</strong> – proveď factory reset</li>
+      <li>Zkus změnit Zigbee kanál (Settings → Settings → Zigbee → Channel) a párovat znovu</li>
+      <li>Zkontroluj zda zařízení je na <strong>seznamu podporovaných</strong> – ne každé Zigbee zařízení funguje s Z2M</li>
+    </ul>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Z2M</span> Zařízení bylo spárováno ale neobjevuje se v HA</div>
+    <ul>
+      <li>Ověř <code>homeassistant: true</code> v konfiguraci Z2M add-onu</li>
+      <li>Zkontroluj MQTT integraci v HA: Nastavení → Zařízení a služby → MQTT musí být aktivní</li>
+      <li>Restartuj Z2M add-on – po restartu znovu publikuje zařízení přes MQTT Discovery</li>
+      <li>V HA: Nastavení → Zařízení a služby → MQTT → Konfigurovat → "Re-add discovered devices"</li>
+    </ul>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Z2M</span> Zařízení "mizí" nebo pravidelně odpojují</div>
+    <ul>
+      <li>Zkontroluj Zigbee mapu (Z2M → Map) – jak je zařízení připojeno k síti?</li>
+      <li>Slabý signál – přidej Zigbee routery (napájené zásuvky) blíže k problematickému zařízení</li>
+      <li>WiFi rušení – zkontroluj Zigbee kanál vs WiFi kanál (Kapitola 09)</li>
+      <li>Dongle je příliš blízko WiFi routeru – zvětši vzdálenost na min. 1 metr</li>
+      <li>Vadná baterie v senzoru – vyměň baterii i když ukazuje 40 %</li>
+    </ul>
+  </div>
+</section>
+
+<!-- MQTT -->
+<section class="sec">
+  <h2>Problémy s MQTT (Mosquitto)</h2>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">MQTT</span> MQTT integrace v HA hlásí "disconnected"</div>
+    <ul>
+      <li>Zkontroluj stav Mosquitto add-onu – běží? (Nastavení → Doplňky → Mosquitto)</li>
+      <li>Ověř přihlašovací údaje v MQTT integraci HA (Nastavení → Zařízení a služby → MQTT → Konfigurovat)</li>
+      <li>Restartuj Mosquitto add-on</li>
+      <li>Zkontroluj log Mosquitto – hledej <code>Connection refused</code> nebo <code>Authentication failed</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ZALOHY -->
+<section class="sec">
+  <h2>Problémy se zálohami</h2>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Zálohy</span> Google Drive záloha se nenahrává</div>
+    <ul>
+      <li>Otevři webové rozhraní Google Drive Backup add-onu – zobrazuje chybu?</li>
+      <li>Zkus znovu autorizovat: v rozhraní klikni "Reauthenticate with Google"</li>
+      <li>Zkontroluj volné místo na Google Drive (<a href="https://drive.google.com" target="_blank">drive.google.com</a>) – max. 15 GB zdarma</li>
+      <li>Ověř internetové připojení RPi: <code>ping 8.8.8.8</code> přes SSH</li>
+      <li>Restartuj add-on</li>
+    </ul>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Zálohy</span> Samba Backup se nekopíruje na Synology</div>
+    <ul>
+      <li>Ověř IP adresu Synology v konfiguraci Samba Backup – změnila se?</li>
+      <li>Zkontroluj, že sdílená složka a uživatel existují v DSM</li>
+      <li>Test: připoj se na NAS z Windows (<code>\\IP_NAS\homeassistant_backup</code>) – funguje?</li>
+      <li>Ověř SMB službu v DSM: Control Panel → File Services → SMB musí být zapnuté</li>
+      <li>Zkontroluj, že SMB verze je 2 nebo 3 (SMB1 může být zakázán)</li>
+      <li>Zkus ping na NAS IP z RPi přes SSH</li>
+    </ul>
+  </div>
+</section>
+
+<!-- USB SSD -->
+<section class="sec">
+  <h2>Problémy s USB SSD</h2>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">SSD</span> RPi se nespouští z USB SSD / pád systému</div>
+    <ul>
+      <li>Ověř, že USB boot byl aktivován na RPi (Kapitola 04 – OTP bit)</li>
+      <li>Zkontroluj USB kabel – zkus jiný kabel a jiný USB port na RPi</li>
+      <li>Podezřelý chipset JMS578 – přidej UAS quirks do cmdline.txt (Kapitola 02)</li>
+      <li>Zkus SSD připojit do PC a zkontrolovat SMART data</li>
+      <li>Zkontroluj napájení – SSD spotřebovává proud, zdroj musí dát 3A</li>
+    </ul>
+    <h4>Jak přidat UAS quirks:</h4>
+    <pre><code># Zjisti VendorID:ProductID (přes SSH nebo Windows Device Manager)
+lsusb | grep -i "your_device"
+
+# Přidej na KONEC jednoho řádku v /mnt/boot/cmdline.txt
+# (NOVÝ ŘÁDEK NEVYTVÁŘEJ!)
+usb-storage.quirks=XXXX:YYYY:u</code></pre>
+  </div>
+</section>
+
+<!-- UZITECNE PRIKAZY -->
+<section class="sec">
+  <h2>Užitečné příkazy pro diagnostiku (SSH)</h2>
+  <p>Pokud máš nainstalovaný SSH add-on, tyto příkazy pomůžou s diagnostikou:</p>
+  <pre><code># Zobrazí seznam sériových zařízení (Zigbee dongle)
+ls -la /dev/serial/by-id/
+
+# Zobrazí USB zařízení s VendorID:ProductID
+lsusb
+
+# Zobrazí SMART data SSD
+smartctl -a /dev/sda
+
+# Zobrazí využití disků
+df -h
+
+# Zobrazí aktuální procesy a RAM
+top
+
+# Zobrazí systémové logy HA
+ha core logs
+
+# Zobrazí logy konkrétního add-onu (např. Z2M)
+ha addons logs a0d7b954_zigbee2mqtt
+
+# Ping test (ověření sítě)
+ping -c 4 8.8.8.8</code></pre>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Přihlášení přes SSH</div>
+    <p>SSH add-on: Nastavení → Doplňky → "SSH &amp; Web Terminal". Po instalaci a spuštění: připoj se přes PuTTY nebo příkazový řádek: <code>ssh root@192.168.1.50</code> (port 22222 pokud je změněn).</p>
+  </div>
+</section>
+
+<nav class="chapter-nav">
+  <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Tipy pro provoz</span></div>
+  </a>
+  <a href="15_raspberry_uzitecne_odkazy.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Užitečné odkazy</span></div>
+    <span>→</span>
+  </a>
+</nav>
+<footer>14_raspberry_reseni_problemu_troubleshooting.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
 </body>
 </html>

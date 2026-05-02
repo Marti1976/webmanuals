@@ -11,142 +11,596 @@
   --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
   --border:#2a1f3d;--border2:#3d2855;
   --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c; --rasp1-light:#ff3377;
-  --rasp2:#c51a4a; --rasp2-light:#ff4d88;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
   --cyan:#00d9ff;--cyan2:#5fffff;
-  --white:#f0e8ff;
-  --r:12px;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
 }
 html{scroll-behavior:smooth}
 ::-webkit-scrollbar{width:6px;background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
 .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s; margin-top:40px;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
 .nav-back:hover{gap:12px}
-
-header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light)}
-
-.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
-  margin:28px 0 10px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
+header{padding:0 0 36px;border-bottom:1px solid var(--border)}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
 strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
 code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:1px 7px}
-pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
-  color:var(--t2);line-height:1.6;overflow-x:auto}
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
 
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+/* Link group */
+.link-group{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+.link-card{display:flex;align-items:flex-start;gap:16px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px 18px;text-decoration:none;transition:border-color .2s,background .2s}
+.link-card:hover{border-color:var(--rasp1);background:rgba(227,11,92,.04);text-decoration:none}
+.link-icon{font-size:1.4em;flex-shrink:0;margin-top:1px}
+.link-body{flex:1;min-width:0}
+.link-title{font-family:'Syne',sans-serif;font-size:.92em;font-weight:700;color:var(--white);margin-bottom:3px}
+.link-url{font-family:'DM Mono',monospace;font-size:.75em;color:var(--rasp1-light);letter-spacing:.03em;
+  display:block;margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.link-desc{font-size:.84em;color:var(--t2);line-height:1.55}
+.link-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:.68em;padding:2px 7px;
+  border-radius:4px;letter-spacing:.06em;text-transform:uppercase;margin-right:6px;margin-bottom:5px}
+.tag-official{background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--green2)}
+.tag-community{background:rgba(0,217,255,.1);border:1px solid rgba(0,217,255,.2);color:var(--cyan2)}
+.tag-czech{background:rgba(227,11,92,.1);border:1px solid rgba(227,11,92,.2);color:var(--rasp1-light)}
+.tag-shop{background:rgba(245,197,66,.1);border:1px solid rgba(245,197,66,.2);color:var(--yellow)}
+
+/* Two-column grid for shops */
+.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+@media(max-width:580px){.link-grid{grid-template-columns:1fr}}
+.link-grid .link-card{margin:0}
+
+/* Password table */
+.creds-table{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:0;margin:20px 0;overflow:hidden}
+.creds-table-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;
+  letter-spacing:.08em;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.creds-row{display:grid;grid-template-columns:1fr 2fr;align-items:center;padding:12px 20px;
+  border-bottom:1px solid var(--border)}
+.creds-row:last-child{border-bottom:none}
+.creds-key{font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
+.creds-val{font-family:'DM Mono',monospace;font-size:.85em;color:var(--border2);border-bottom:1px dashed var(--border2);
+  padding-bottom:2px;min-width:180px}
+
+/* Callout */
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+
+/* Finish banner */
+.finish-banner{background:linear-gradient(135deg,rgba(227,11,92,.12) 0%,rgba(197,26,74,.08) 100%);
+  border:1px solid rgba(227,11,92,.25);border-radius:var(--r);padding:32px 28px;margin:40px 0;text-align:center}
+.finish-banner h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:800;color:var(--white);
+  margin-bottom:10px;border:none;padding:0}
+.finish-banner p{color:var(--t2);font-size:.95em;max-width:560px;margin:0 auto 20px;line-height:1.7}
+.finish-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;
+  background:var(--rasp1);border-radius:8px;color:var(--white);font-family:'Syne',sans-serif;
+  font-size:.9em;font-weight:700;text-decoration:none;transition:background .2s}
+.finish-btn:hover{background:var(--rasp1-light);text-decoration:none;color:var(--white)}
+
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
-
 <header>
   <div class="h-num">// kapitola 15</div>
-  <h1>Užitečné Odkazy</h1>
+  <h1>Užitečné <em>Odkazy</em></h1>
+  <p class="h-desc">Vše co budeš potřebovat na jednom místě – oficiální dokumentace, komunitní fóra, add-on repozitáře, české obchody, YouTube kanály a šablona pro zapsání hesel.</p>
 </header>
 
-<div class="content">
-<p>HOME ASSISTANT:
-  Hlavní web:         https://www.home-assistant.io
-  Dokumentace:        https://www.home-assistant.io/docs/
-  Fórum komunity:     https://community.home-assistant.io
-  YouTube kanál:      https://www.youtube.com/@HomeAssistant
-  České fórum/skupiny: https://www.facebook.com/groups/homeassistantcz
+<!-- HOME ASSISTANT -->
+<section class="sec">
+  <h2>Home Assistant</h2>
+  <div class="link-group">
+    <a href="https://www.home-assistant.io" target="_blank" class="link-card">
+      <span class="link-icon">🏠</span>
+      <div class="link-body">
+        <div class="link-title">Home Assistant – hlavní web</div>
+        <span class="link-url">https://www.home-assistant.io</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Hlavní stránka projektu, novinky, přehled funkcí a odkaz na download.</div>
+      </div>
+    </a>
+    <a href="https://www.home-assistant.io/docs/" target="_blank" class="link-card">
+      <span class="link-icon">📖</span>
+      <div class="link-body">
+        <div class="link-title">Dokumentace</div>
+        <span class="link-url">https://www.home-assistant.io/docs/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Kompletní dokumentace – instalace, konfigurace, integrace, automatizace. Vždy aktuální.</div>
+      </div>
+    </a>
+    <a href="https://community.home-assistant.io" target="_blank" class="link-card">
+      <span class="link-icon">💬</span>
+      <div class="link-body">
+        <div class="link-title">Komunitní fórum</div>
+        <span class="link-url">https://community.home-assistant.io</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Největší HA komunita. Hledej řešení problémů, sdílej konfiguraci, ptej se. Přes 500 000 členů, velmi vstřícná komunita.</div>
+      </div>
+    </a>
+    <a href="https://www.home-assistant.io/blog/" target="_blank" class="link-card">
+      <span class="link-icon">📰</span>
+      <div class="link-body">
+        <div class="link-title">Release Notes &amp; Blog</div>
+        <span class="link-url">https://www.home-assistant.io/blog/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Měsíční přehled novinek v každé verzi HA. Vždy přečti před aktualizací major verze – obsahuje seznam Breaking Changes.</div>
+      </div>
+    </a>
+    <a href="https://github.com/home-assistant/operating-system/releases" target="_blank" class="link-card">
+      <span class="link-icon">💾</span>
+      <div class="link-body">
+        <div class="link-title">HAOS image ke stažení</div>
+        <span class="link-url">https://github.com/home-assistant/operating-system/releases</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Přímé stažení HAOS image pro RPi. Hledej soubor <code>haos_rpi3-X.XX.img.xz</code> pro Raspberry Pi 3.</div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/@HomeAssistant" target="_blank" class="link-card">
+      <span class="link-icon">▶️</span>
+      <div class="link-body">
+        <div class="link-title">Oficiální YouTube kanál</div>
+        <span class="link-url">https://www.youtube.com/@HomeAssistant</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Videonávody, ukázky nových funkcí a komunitní obsah. Ideální pro vizuální učení.</div>
+      </div>
+    </a>
+  </div>
+</section>
 
-ZIGBEE2MQTT:
-  Hlavní web:         https://www.zigbee2mqtt.io
-  Dokumentace:        https://www.zigbee2mqtt.io/guide/getting-started/
-  Podporovaná zařízení: https://www.zigbee2mqtt.io/supported-devices/
-  GitHub (problémy):  https://github.com/Koenkk/zigbee2mqtt/issues
+<!-- ZIGBEE2MQTT -->
+<section class="sec">
+  <h2>Zigbee2MQTT</h2>
+  <div class="link-group">
+    <a href="https://www.zigbee2mqtt.io" target="_blank" class="link-card">
+      <span class="link-icon">📶</span>
+      <div class="link-body">
+        <div class="link-title">Zigbee2MQTT – hlavní web</div>
+        <span class="link-url">https://www.zigbee2mqtt.io</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Domovská stránka projektu, přehled funkcí a aktualit.</div>
+      </div>
+    </a>
+    <a href="https://www.zigbee2mqtt.io/guide/getting-started/" target="_blank" class="link-card">
+      <span class="link-icon">🚀</span>
+      <div class="link-body">
+        <div class="link-title">Getting Started – dokumentace</div>
+        <span class="link-url">https://www.zigbee2mqtt.io/guide/getting-started/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Oficiální průvodce instalací a konfigurací Z2M. Doplňuje tento manuál o detaily specifické pro každou platformu.</div>
+      </div>
+    </a>
+    <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank" class="link-card">
+      <span class="link-icon">🔍</span>
+      <div class="link-body">
+        <div class="link-title">Databáze podporovaných zařízení</div>
+        <span class="link-url">https://www.zigbee2mqtt.io/supported-devices/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Přes 3 500 podporovaných Zigbee zařízení s návodem na párování, přehledem expozovaných entit a hodnocením kompatibility. Vždy ověř před koupí!</div>
+      </div>
+    </a>
+    <a href="https://github.com/Koenkk/zigbee2mqtt/issues" target="_blank" class="link-card">
+      <span class="link-icon">🐛</span>
+      <div class="link-body">
+        <div class="link-title">GitHub Issues – hlášení chyb</div>
+        <span class="link-url">https://github.com/Koenkk/zigbee2mqtt/issues</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Nahlášené chyby a diskuze. Před hlášením nového problému prohledej existující issues – odpověď tam pravděpodobně je.</div>
+      </div>
+    </a>
+    <a href="https://github.com/zigbee2mqtt/hassio-zigbee2mqtt" target="_blank" class="link-card">
+      <span class="link-icon">📦</span>
+      <div class="link-body">
+        <div class="link-title">HA add-on repozitář (hassio-zigbee2mqtt)</div>
+        <span class="link-url">https://github.com/zigbee2mqtt/hassio-zigbee2mqtt</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Repozitář Z2M add-onu pro Home Assistant. URL pro přidání do HA Store: <code>https://github.com/zigbee2mqtt/hassio-zigbee2mqtt</code></div>
+      </div>
+    </a>
+  </div>
+</section>
 
-SLZB-07 DONGLE:
-  Oficální web:       https://smlight.tech/product/slzb-07
-  Manuál:             https://smlight.tech/manual-slzb-07/
-  Firmware flash:     https://smlight.tech/flasher
-  Dratek.cz (CZ eshop): https://dratek.cz
+<!-- SMLIGHT SLZB-07 -->
+<section class="sec">
+  <h2>SMLIGHT SLZB-07 (Zigbee koordinátor)</h2>
+  <div class="link-group">
+    <a href="https://smlight.tech/product/slzb-07" target="_blank" class="link-card">
+      <span class="link-icon">🔌</span>
+      <div class="link-body">
+        <div class="link-title">Oficální stránka SLZB-07</div>
+        <span class="link-url">https://smlight.tech/product/slzb-07</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Specifikace, dokumentace a firmware pro SMLIGHT SLZB-07 (EFR32MG21). Doporučený koordinátor pro tento průvodce.</div>
+      </div>
+    </a>
+    <a href="https://smlight.tech/flasher" target="_blank" class="link-card">
+      <span class="link-icon">⚡</span>
+      <div class="link-body">
+        <div class="link-title">SMLIGHT Web Flasher</div>
+        <span class="link-url">https://smlight.tech/flasher</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Webový nástroj pro aktualizaci firmware koordinátoru SLZB-07 přímo z prohlížeče (Chrome/Edge). Bez instalace softwaru, bez driverů.</div>
+      </div>
+    </a>
+    <a href="https://dratek.cz" target="_blank" class="link-card">
+      <span class="link-icon">🛒</span>
+      <div class="link-body">
+        <div class="link-title">Dratek.cz – CZ prodejce SLZB-07</div>
+        <span class="link-url">https://dratek.cz</span>
+        <span class="link-tag tag-czech">CZ obchod</span>
+        <div class="link-desc">Dratek.cz prodává SLZB-07 s dodáním v ČR. Vyhledej "SLZB-07" nebo "Zigbee koordinátor".</div>
+      </div>
+    </a>
+  </div>
+</section>
 
-ZÁLOHOVACÍ DOPLŇKY:
-  Google Drive Backup: https://github.com/sabeechen/hassio-google-drive-backup
-  Samba Backup:        https://github.com/thomasmauerer/hassio-addons
+<!-- RASPBERRY PI -->
+<section class="sec">
+  <h2>Raspberry Pi</h2>
+  <div class="link-group">
+    <a href="https://www.raspberrypi.com/software/" target="_blank" class="link-card">
+      <span class="link-icon">🍓</span>
+      <div class="link-body">
+        <div class="link-title">Raspberry Pi Imager – stažení</div>
+        <span class="link-url">https://www.raspberrypi.com/software/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Nástroj pro nahrání HAOS image na USB SSD. Stáhni pro Windows, macOS nebo Linux.</div>
+      </div>
+    </a>
+    <a href="https://www.raspberrypi.com/documentation/" target="_blank" class="link-card">
+      <span class="link-icon">📖</span>
+      <div class="link-body">
+        <div class="link-title">Raspberry Pi dokumentace</div>
+        <span class="link-url">https://www.raspberrypi.com/documentation/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Kompletní dokumentace k RPi hardware, bootování, GPIO, USB boot a dalšímu.</div>
+      </div>
+    </a>
+    <a href="https://forums.raspberrypi.com" target="_blank" class="link-card">
+      <span class="link-icon">💬</span>
+      <div class="link-body">
+        <div class="link-title">Raspberry Pi fórum</div>
+        <span class="link-url">https://forums.raspberrypi.com</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Komunitní fórum pro hardware problémy, USB boot, napájení a obecné RPi dotazy.</div>
+      </div>
+    </a>
+  </div>
+</section>
 
-RASPBERRY PI:
-  Dokumentace:        https://www.raspberrypi.com/documentation/
-  Imager download:    https://www.raspberrypi.com/software/
-  Fórum:              https://forums.raspberrypi.com
+<!-- ZALOHOVACI ADDONY -->
+<section class="sec">
+  <h2>Zálohovací add-ony</h2>
+  <div class="link-group">
+    <a href="https://github.com/sabeechen/hassio-google-drive-backup" target="_blank" class="link-card">
+      <span class="link-icon">☁️</span>
+      <div class="link-body">
+        <div class="link-title">Home Assistant Google Drive Backup</div>
+        <span class="link-url">https://github.com/sabeechen/hassio-google-drive-backup</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Add-on pro automatické zálohy na Google Drive. Repozitář pro přidání do HA Store. Aktivně udržovaný, výborné hodnocení.</div>
+      </div>
+    </a>
+    <a href="https://github.com/thomasmauerer/hassio-addons" target="_blank" class="link-card">
+      <span class="link-icon">🖥️</span>
+      <div class="link-body">
+        <div class="link-title">Samba Backup (hassio-addons)</div>
+        <span class="link-url">https://github.com/thomasmauerer/hassio-addons</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Repozitář obsahující Samba Backup add-on pro kopírování záloh na Synology nebo jiný NAS přes SMB.</div>
+      </div>
+    </a>
+  </div>
+</section>
 
-BEZPEČNOST – VZDÁLENÝ PŘÍSTUP:
-  Nabu Casa:          https://www.nabucasa.com
-  Tailscale:          https://tailscale.com
-  Tailscale addon:    https://github.com/hassio-addons/addon-tailscale
+<!-- BEZPECNOST VZDAL PRISTUP -->
+<section class="sec">
+  <h2>Bezpečnost a vzdálený přístup</h2>
+  <div class="link-group">
+    <a href="https://www.nabucasa.com" target="_blank" class="link-card">
+      <span class="link-icon">🔐</span>
+      <div class="link-body">
+        <div class="link-title">Nabu Casa – Home Assistant Cloud</div>
+        <span class="link-url">https://www.nabucasa.com</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Placená cloudová služba (~65 Kč/měsíc) od tvůrců HA. Nejjednodušší vzdálený přístup, Alexa/Google integrace, příjmy podporují vývoj HA.</div>
+      </div>
+    </a>
+    <a href="https://tailscale.com" target="_blank" class="link-card">
+      <span class="link-icon">🌐</span>
+      <div class="link-body">
+        <div class="link-title">Tailscale VPN</div>
+        <span class="link-url">https://tailscale.com</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">WireGuard-based VPN mesh. Zdarma pro domácí použití (do 100 zařízení). Instalace jako HA add-on, telefon a RPi propojí do privátní sítě.</div>
+      </div>
+    </a>
+    <a href="https://github.com/hassio-addons/addon-tailscale" target="_blank" class="link-card">
+      <span class="link-icon">📦</span>
+      <div class="link-body">
+        <div class="link-title">Tailscale – HA add-on repozitář</div>
+        <span class="link-url">https://github.com/hassio-addons/addon-tailscale</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Repozitář Tailscale add-onu pro Home Assistant. Součást hassio-addons kolekce.</div>
+      </div>
+    </a>
+    <a href="https://bitwarden.com" target="_blank" class="link-card">
+      <span class="link-icon">🔑</span>
+      <div class="link-body">
+        <div class="link-title">Bitwarden – password manager</div>
+        <span class="link-url">https://bitwarden.com</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Open source password manager zdarma. Browser extension + mobilní app. Doporučeno pro správu hesel HA, MQTT, Samba a NAS.</div>
+      </div>
+    </a>
+  </div>
+</section>
 
-ČESKÉ OBCHODY PRO RASPBERRY PI A PŘÍSLUŠENSTVÍ:
-  Alza.cz:   https://www.alza.cz/raspberry-pi/18859158.htm
-  Mironet.cz: https://www.mironet.cz
-  RPishop.cz: https://rpishop.cz
-  Botland.cz: https://botland.cz
-  Dratek.cz:  https://dratek.cz
+<!-- MONITOROVANI -->
+<section class="sec">
+  <h2>Monitoring a diagnostika</h2>
+  <div class="link-group">
+    <a href="https://community.home-assistant.io/t/community-hacs/213713" target="_blank" class="link-card">
+      <span class="link-icon">🧩</span>
+      <div class="link-body">
+        <div class="link-title">HACS – Home Assistant Community Store</div>
+        <span class="link-url">hacs.xyz</span>
+        <span class="link-tag tag-community">Community</span>
+        <div class="link-desc">Správce komunitních integrací, témat a lovelace pluginů. Nainstaluj HACS pro přístup k tisícům dalších add-onů a karet. Instalace přes add-on repozitář.</div>
+      </div>
+    </a>
+    <a href="https://www.home-assistant.io/integrations/glances/" target="_blank" class="link-card">
+      <span class="link-icon">📊</span>
+      <div class="link-body">
+        <div class="link-title">Glances – systémový monitor</div>
+        <span class="link-url">https://www.home-assistant.io/integrations/glances/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Add-on pro sledování CPU, RAM, teploty a disků přes webové rozhraní. Lehký, doporučený pro RPi 3.</div>
+      </div>
+    </a>
+  </div>
+</section>
 
-NAPÁJENÍ – KONKRÉTNÍ PRODUKTY V ČR:
-  Originální RPi 2.5A (Alza):
-    https://www.alza.cz/raspberry-pi-2-5a-d4191252.htm
-  Originální RPi 2.5A (Mironet):
-    https://www.mironet.cz/raspberry-pi-napajeci-adapter-25a-pro-rpi-3+dp376066/
+<!-- CESKA KOMUNITA -->
+<section class="sec">
+  <h2>Česká komunita a zdroje</h2>
+  <div class="link-group">
+    <a href="https://www.facebook.com/groups/homeassistantcz" target="_blank" class="link-card">
+      <span class="link-icon">👥</span>
+      <div class="link-body">
+        <div class="link-title">Home Assistant CZ – Facebook skupina</div>
+        <span class="link-url">https://www.facebook.com/groups/homeassistantcz</span>
+        <span class="link-tag tag-czech">CZ komunita</span>
+        <div class="link-desc">Česká Facebook skupina s tisíci členy. Sdílení konfigurací, řešení problémů v češtině, novinky. Vstřícná komunita pro začátečníky.</div>
+      </div>
+    </a>
+    <a href="https://forum.smarthome.cz" target="_blank" class="link-card">
+      <span class="link-icon">💡</span>
+      <div class="link-body">
+        <div class="link-title">Smarthome.cz fórum</div>
+        <span class="link-url">https://forum.smarthome.cz</span>
+        <span class="link-tag tag-czech">CZ komunita</span>
+        <div class="link-desc">České fórum věnované chytré domácnosti. Sekce pro Home Assistant, Zigbee, Z-Wave a další protokoly.</div>
+      </div>
+    </a>
+  </div>
+</section>
 
-MONITORING A DIAGNOSTIKA:
-  Glances (systémové info): add-on "Glances" v HA store
-  Netdata:                  add-on "Netdata" v HA store
+<!-- CESKE OBCHODY -->
+<section class="sec">
+  <h2>České obchody – nákup hardware</h2>
+  <div class="link-grid">
+    <a href="https://www.alza.cz/raspberry-pi/18859158.htm" target="_blank" class="link-card">
+      <span class="link-icon">🛒</span>
+      <div class="link-body">
+        <div class="link-title">Alza.cz</div>
+        <span class="link-url">alza.cz/raspberry-pi</span>
+        <span class="link-tag tag-shop">Obchod</span>
+        <div class="link-desc">RPi kity, napájení, IKEA Tradfri, Philips Hue. Rychlé doručení.</div>
+      </div>
+    </a>
+    <a href="https://rpishop.cz" target="_blank" class="link-card">
+      <span class="link-icon">🍓</span>
+      <div class="link-body">
+        <div class="link-title">RPishop.cz</div>
+        <span class="link-url">rpishop.cz</span>
+        <span class="link-tag tag-shop">Obchod</span>
+        <div class="link-desc">Specializovaný RPi obchod. Originální napájecí zdroje, pouzdra, příslušenství.</div>
+      </div>
+    </a>
+    <a href="https://botland.cz" target="_blank" class="link-card">
+      <span class="link-icon">🤖</span>
+      <div class="link-body">
+        <div class="link-title">Botland.cz</div>
+        <span class="link-url">botland.cz</span>
+        <span class="link-tag tag-shop">Obchod</span>
+        <div class="link-desc">RPi, elektronika, kabely, pouzdra. Polský obchod s CZ pobočkou.</div>
+      </div>
+    </a>
+    <a href="https://dratek.cz" target="_blank" class="link-card">
+      <span class="link-icon">⚡</span>
+      <div class="link-body">
+        <div class="link-title">Dratek.cz</div>
+        <span class="link-url">dratek.cz</span>
+        <span class="link-tag tag-shop">Obchod</span>
+        <div class="link-desc">Elektronika, moduly, Zigbee koordinátory (SLZB-07). Dobrý výběr.</div>
+      </div>
+    </a>
+    <a href="https://www.mironet.cz" target="_blank" class="link-card">
+      <span class="link-icon">💻</span>
+      <div class="link-body">
+        <div class="link-title">Mironet.cz</div>
+        <span class="link-url">mironet.cz</span>
+        <span class="link-tag tag-shop">Obchod</span>
+        <div class="link-desc">Počítačové komponenty, RPi napájení, SSD disky a USB příslušenství.</div>
+      </div>
+    </a>
+    <a href="https://www.hw-shop.cz" target="_blank" class="link-card">
+      <span class="link-icon">🔧</span>
+      <div class="link-body">
+        <div class="link-title">HW-shop.cz</div>
+        <span class="link-url">hw-shop.cz</span>
+        <span class="link-tag tag-shop">Obchod</span>
+        <div class="link-desc">Hardware, elektronika, mikroelektronika. Dobrý pro kabely a konektory.</div>
+      </div>
+    </a>
+    <a href="https://www.smartmania.cz" target="_blank" class="link-card">
+      <span class="link-icon">🏠</span>
+      <div class="link-body">
+        <div class="link-title">Smartmania.cz</div>
+        <span class="link-url">smartmania.cz</span>
+        <span class="link-tag tag-shop">Obchod</span>
+        <div class="link-desc">Specializovaný smarthome obchod. Zigbee zařízení, Aqara, senzory.</div>
+      </div>
+    </a>
+    <a href="https://www.aliexpress.com" target="_blank" class="link-card">
+      <span class="link-icon">📦</span>
+      <div class="link-body">
+        <div class="link-title">AliExpress</div>
+        <span class="link-url">aliexpress.com</span>
+        <span class="link-tag tag-shop">Obchod</span>
+        <div class="link-desc">Levné Zigbee zařízení (Xiaomi, Aqara, Sonoff, Tuya). Dodání 2–4 týdny.</div>
+      </div>
+    </a>
+  </div>
 
-================================================================================
-KONEC MANUÁLU
-================================================================================
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Konkrétní produkty – napájení</div>
+    <ul>
+      <li>Originální RPi napájecí zdroj 2.5A (Alza): <a href="https://www.alza.cz/raspberry-pi-2-5a-d4191252.htm" target="_blank">alza.cz/raspberry-pi-2-5a</a></li>
+      <li>Originální RPi napájecí zdroj 2.5A (Mironet): <a href="https://www.mironet.cz/raspberry-pi-napajeci-adapter-25a-pro-rpi-3+dp376066/" target="_blank">mironet.cz/raspberry-pi-napajeci-adapter</a></li>
+    </ul>
+  </div>
+</section>
 
-Verze: 1.0 | Duben 2026
-Vytvořeno pro: Raspberry Pi 3 B+ + Home Assistant OS + Zigbee2MQTT + mSATA USB SSD
-Zigbee: SMLIGHT SLZB-07 (EFR32MG21) / Ebyte E72-2G4M20S1E (CC2652P)
+<!-- HESLA -->
+<section class="sec">
+  <h2>Šablona pro zápis hesel a síťových údajů</h2>
+  <p>Vyplň tuto tabulku hned při instalaci a ulož na bezpečné místo (vytiskni nebo ulož do password manageru). Nikdy neukládej přihlašovací údaje do sdílených dokumentů.</p>
 
-Hodně štěstí s instalací! Pokud narazíš na problém, komunita HA je
-velmi přátelská a ochotná pomoci na: https://community.home-assistant.io
+  <div class="creds-table">
+    <div class="creds-table-title">🔐 Přihlašovací údaje systému (VYPLNIT!)</div>
+    <div class="creds-row">
+      <span class="creds-key">HA admin uživatel</span>
+      <span class="creds-val">&nbsp;</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">HA admin heslo</span>
+      <span class="creds-val">&nbsp;</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">MQTT uživatel</span>
+      <span class="creds-val">mqtt_user</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">MQTT heslo</span>
+      <span class="creds-val">&nbsp;</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">Samba Backup uživatel</span>
+      <span class="creds-val">samba_user</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">Samba Backup heslo</span>
+      <span class="creds-val">&nbsp;</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">Synology ha_backup user</span>
+      <span class="creds-val">ha_backup</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">Synology ha_backup heslo</span>
+      <span class="creds-val">&nbsp;</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">Záloha šifrování heslo</span>
+      <span class="creds-val">&nbsp;</span>
+    </div>
+  </div>
 
-Klíčová hesla a poznámky (UCHOVEJ BEZPEČNĚ!):
-  HA admin heslo:         ________________________
-  HA admin uživatel:      ________________________
-  MQTT uživatel:          ________________________
-  MQTT heslo:             ________________________
-  Samba Backup uživatel:  ________________________
-  Samba Backup heslo:     ________________________
-  Synology ha_backup user:________________________
-  Synology ha_backup pass:________________________
-  IP adresa HA:           ________________________
-  IP adresa Synology NAS: ________________________
-  Záloha heslo (šifrování):_______________________
+  <div class="creds-table">
+    <div class="creds-table-title">🌐 Síťové adresy</div>
+    <div class="creds-row">
+      <span class="creds-key">IP adresa Home Assistant</span>
+      <span class="creds-val">192.168.1.____</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">IP adresa Synology NAS</span>
+      <span class="creds-val">192.168.1.____</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">IP adresa routeru</span>
+      <span class="creds-val">192.168.1.____</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">Zigbee kanál</span>
+      <span class="creds-val">____</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">Zigbee dongle port</span>
+      <span class="creds-val">/dev/serial/by-id/...</span>
+    </div>
+    <div class="creds-row">
+      <span class="creds-key">Tailscale IP (RPi)</span>
+      <span class="creds-val">100.____.____.____</span>
+    </div>
+  </div>
 
-================================================================================</p>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ 2FA záložní kódy</div>
+    <p>Záložní kódy pro dvoufaktorovou autentizaci HA účtu – ulož fyzicky (vytiskni) NEBO do Bitwarden password manageru. Bez záložních kódů se při ztrátě telefonu nedostaneš do HA.</p>
+  </div>
+</section>
+
+<!-- DOKONCENI -->
+<div class="finish-banner">
+  <h2>🎉 Instalace dokončena!</h2>
+  <p>Pokud jsi prošel všemi kapitolami, máš plně funkční chytrou domácnost postavenou na Raspberry Pi 3 B+ s Home Assistant OS, Zigbee2MQTT a trojvrstvým zálohovacím systémem. Gratulace!</p>
+  <p>Pokud narazíš na problém, komunita HA je přátelská a ochotná pomoci.</p>
+  <a href="https://community.home-assistant.io" target="_blank" class="finish-btn">Přejít na HA komunitu →</a>
 </div>
 
-<footer>
-  15_raspberry_uzitecne_odkazy.html · Raspberry Pi Průvodce · Duben 2026<br/>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light);text-decoration:none">← Zpět na index</a>
-</footer>
-
+<nav class="chapter-nav">
+  <a href="14_raspberry_reseni_problemu_troubleshooting.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Řešení problémů</span></div>
+  </a>
+  <a href="00_raspberry_index.html" class="ch-btn next">
+    <div><span class="ch-label">zpět na</span><span class="ch-name">Index manuálu</span></div>
+    <span>→</span>
+  </a>
+</nav>
+<footer>15_raspberry_uzitecne_odkazy.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
 </body>
 </html>
