@@ -208,11 +208,15 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
     <p><strong>NIKDY nepřerušuj napájení během prvního bootu!</strong> Systém zapisuje databázi, konfiguraci a soubory. Přerušení může způsobit poškození dat a budeš muset celý proces opakovat od začátku.</p>
   </div>
 
-  <h3>Jak poznáš, že je systém připraven?</h3>
-  <p>Otevři webový prohlížeč na jakémkoliv zařízení v síti (PC, telefon, tablet) a přejdi na:</p>
-  <pre><code>http://homeassistant.local:8123</code></pre>
-  <p>Pokud se zobrazí stránka "Welcome to Home Assistant" nebo průvodce nastavením → systém je připraven.</p>
-  <p>Pokud se stránka nenačte nebo zobrazí chybu → počkej dalších 5 minut a zkus znovu. Celý první boot může trvat až 25 minut.</p>
+  <h3>LED indikátory RPi 3 B+ při bootu</h3>
+  <p>Fyzické LED kontrolky na desce RPi prozradí co se děje i bez přístupu k monitoru:</p>
+  <ul>
+    <li><strong>Červená LED (PWR):</strong> svítí trvale = napájení v pořádku. Nesvítí vůbec = napájecí problém, zkontroluj zdroj.</li>
+    <li><strong>Zelená LED (ACT):</strong> rychlé nepravidelné blikání = aktivita SSD, systém načítá data = normální</li>
+    <li><strong>Zelená LED bliká vzorem 4×:</strong> USB boot byl právě aktivován (jen při aktivaci z Kapitoly 04)</li>
+    <li><strong>Zelená LED nesvítí vůbec:</strong> systém se nespustil nebo SSD nelze přečíst – zkontroluj zapojení</li>
+    <li><strong>Po dokončení bootu:</strong> zelená LED bliká pomalu a nepravidelně – systém běží a zpracovává úlohy</li>
+  </ul>
 </section>
 
 <!-- NALEZENÍ IP -->
@@ -239,6 +243,11 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 <section class="sec">
   <h2>Průvodce prvním nastavením</h2>
   <p>Po otevření <code>http://homeassistant.local:8123</code> nebo IP adresy se zobrazí průvodce. Projdeme ho krok za krokem:</p>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Uživatelské jméno nelze po vytvoření změnit!</div>
+    <p>Zvol pečlivě – doporučuji jednoduché, <strong>bez diakritiky a bez mezer</strong> (např. <code>admin</code> nebo tvoje jméno bez háčků a čárek). Heslo změnit jde kdykoli, uživatelské jméno bohužel ne – bez kompletního resetu systému.</p>
+  </div>
 
   <div class="steps">
 
@@ -350,6 +359,23 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Po nastavení statické IP</div>
     <p>Aktualizuj záložku v prohlížeči na novou adresu (např. <code>http://192.168.1.50:8123</code>). Přístup přes hostname <code>homeassistant.local:8123</code> bude nadále fungovat.</p>
+  </div>
+</section>
+
+<!-- WIFI -->
+<section class="sec">
+  <h2>Nastavení WiFi (alternativa k Ethernet)</h2>
+  <p>Pokud nemůžeš přivést Ethernet kabel, Home Assistant OS podporuje WiFi připojení. Konfiguruje se po prvním spuštění přímo v rozhraní HA.</p>
+  <ol>
+    <li>Jdi do <strong>Nastavení → Systém → Síť</strong></li>
+    <li>Klikni na <strong>+ Přidat síť</strong> nebo na bezdrátové rozhraní <strong>wlan0</strong></li>
+    <li>Zadej <strong>SSID</strong> (název WiFi sítě) a <strong>heslo</strong></li>
+    <li>Ulož – RPi se připojí k WiFi</li>
+    <li>Po připojení k WiFi lze Ethernet kabel odpojit</li>
+  </ol>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Ethernet je vždy lepší volba</div>
+    <p>Pro server běžící 24/7 <strong>doporučuji Ethernet</strong>. WiFi může mít výpadky, vyšší latenci a problémy při rušení sítě. HA zapisuje data průběžně – nestabilní spojení způsobuje chyby v databázi. Ethernet kabel = žádné starosti.</p>
   </div>
 </section>
 

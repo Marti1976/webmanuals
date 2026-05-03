@@ -117,6 +117,25 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
   </div>
 </section>
 
+<!-- JAZYK -->
+<section class="sec">
+  <h2>Nastavení jazyka na češtinu</h2>
+  <p>Home Assistant má komunitní překlad do češtiny. Pokud preferuješ české rozhraní, nastav jazyk hned po přihlášení.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1b</div>
+      <div class="step-body">
+        <div class="step-title">Změň jazyk HA na češtinu</div>
+        <div class="step-desc">
+          <p>Klikni na své <strong>uživatelské jméno / avatar</strong> vlevo dole → sekce <strong>Language</strong> → vyber <strong>Čeština</strong>.</p>
+          <p>Nebo: <strong>Nastavení → Systém → Obecné → Jazyk systému</strong> pro globální nastavení pro všechny uživatele.</p>
+          <p>Překlad je komunitní – některé odborné výrazy a nové funkce zůstávají anglicky. Pokud najdeš nepřeložené části, je to normální.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- AKTUALIZACE -->
 <section class="sec">
   <h2>Aktualizace systému</h2>
@@ -244,6 +263,57 @@ password: "tvoje_silne_heslo"</pre>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SSH TERMINAL -->
+<section class="sec">
+  <h2>SSH &amp; Web Terminal – instalace</h2>
+  <p>SSH přístup je nezbytný pro pokročilou diagnostiku – SMART kontrolu SSD, zobrazení logů, opravu problémů a ruční úpravy souborů. Doporučuji nainstalovat hned ze začátku.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">9</div>
+      <div class="step-body">
+        <div class="step-title">Nainstaluj SSH &amp; Web Terminal</div>
+        <div class="step-desc">
+          <p>V ADD-ON STORE hledej <strong>"SSH &amp; Web Terminal"</strong> (official, od hassio-addons). Nainstaluj. Přejdi na záložku <strong>KONFIGURACE</strong> a nastav heslo:</p>
+          <pre><code>authorized_keys: []
+password: "tvoje_silne_ssh_heslo"</code></pre>
+          <p>Klikni <strong>Uložit</strong> → záložka Informace → <strong>Show in sidebar = ON</strong>, <strong>Start on boot = ON</strong> → klikni <strong>SPUSTIT</strong>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">10</div>
+      <div class="step-body">
+        <div class="step-title">Přihlášení přes SSH z Windows</div>
+        <div class="step-desc">
+          <p>Na Windows použij:</p>
+          <ul>
+            <li><strong>Windows Terminal</strong> (vestavěný od Win 10/11): příkaz <code>ssh root@192.168.1.50</code></li>
+            <li><strong>PuTTY</strong> (zdarma ke stažení na putty.org): zadej IP a port 22</li>
+          </ul>
+          <p>Heslo: to které jsi zadal v konfiguraci výše.<br>
+          Alternativně: v levém menu HA klikni na <strong>Terminal</strong> ikonu pro webový přístup přímo v prohlížeči.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECRETS YAML -->
+<section class="sec">
+  <h2>secrets.yaml – oddělení hesel od konfigurace</h2>
+  <p>Home Assistant podporuje soubor <code>/config/secrets.yaml</code> pro bezpečné uchovávání hesel mimo hlavní konfiguraci. Je to dobrý zvyk – zvlášť pokud sdílíš konfiguraci s někým nebo na GitHubu.</p>
+  <p>Vytvoř soubor <code>/config/secrets.yaml</code> (přes File Editor) a přidej:</p>
+  <pre><code>mqtt_password: "tvoje_mqtt_heslo"
+samba_password: "tvoje_samba_heslo"
+backup_password: "heslo_pro_sifrovani_zaloh"</code></pre>
+  <p>Pak v <code>configuration.yaml</code> nebo jiných konfiguracích místo přímého hesla použij:</p>
+  <pre><code>password: !secret mqtt_password</code></pre>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Co nikdy nesdílet</div>
+    <p>Pokud zveřejňuješ svou konfiguraci na fóru nebo GitHubu, vždy sdílej pouze <code>configuration.yaml</code> s direktivami <code>!secret</code> – nikdy samotný <code>secrets.yaml</code>. Soubor secrets.yaml přidej do <code>.gitignore</code> pokud používáš Git.</p>
   </div>
 </section>
 

@@ -325,9 +325,40 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
     <div class="callout-title">💡 OTA aktualizace přes Zigbee2MQTT</div>
     <p>Zigbee2MQTT umí aktualizovat firmware <strong>Zigbee zařízení</strong> (senzory, žárovky) over-the-air přímo ze svého rozhraní (Settings → OTA updates). Koordinátor (USB dongle) se takto aktualizovat nedá – ten vyžaduje přímý flash přes webový nástroj nebo CLI.</p>
   </div>
+
+  <h3>coordinator_backup.json – kritická záloha Zigbee sítě</h3>
+  <p>Zigbee2MQTT automaticky vytváří soubor <strong>coordinator_backup.json</strong> v adresáři <code>/config/zigbee2mqtt/</code>. Tento soubor je <strong>kriticky důležitý</strong> – obsahuje:</p>
+  <ul>
+    <li>Síťový šifrovací klíč (Network Key) – bez něj zařízení nerozumí nové síti</li>
+    <li>Extended PAN ID – identifikátor tvé Zigbee sítě</li>
+    <li>Seznam spárovaných zařízení a jejich adresy</li>
+  </ul>
+  <p>Díky tomuto souboru při výměně nebo selhání koordinátoru <strong>nemusíš znovu párovat všechna zařízení</strong>. Stačí soubor obnovit na nový koordinátor.</p>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Záloha HA tento soubor obsahuje – ale ověř to</div>
+    <p>Automatická záloha Home Assistant obsahuje celý adresář <code>/config/zigbee2mqtt/</code> včetně <code>coordinator_backup.json</code>. Pro jistotu doporučuji zkopírovat soubor <strong>také ručně na Synology NAS</strong> po každé větší změně sítě (přidání nových zařízení). Uložení: <code>\\homeassistant.local\config\zigbee2mqtt\coordinator_backup.json</code></p>
+  </div>
 </section>
 
-<nav class="chapter-nav">
+<!-- ANTENA UMISTENI -->
+<section class="sec">
+  <h2>Umístění antény koordinátoru pro nejlepší dosah</h2>
+  <p>Fyzické umístění Zigbee koordinátoru (donglu) má přímý vliv na kvalitu a dosah celé Zigbee sítě. Pár pravidel pro optimální výkon:</p>
+
+  <ul>
+    <li><strong>Anténa svisle nahoru</strong> – pokud má dongle externí anténu (SLZB-07), nasměruj ji vertikálně. Záření je silnější v horizontální rovině kolem antény.</li>
+    <li><strong>USB prodlužovací kabel povinně</strong> – dongle přímo v RPi je obklopen kovovými komponenty desky. Kabel 15–30 cm dongle vystrčí do volného prostoru.</li>
+    <li><strong>Výška v místnosti: 1–1.5 m</strong> – příliš nízko (u podlahy) nebo příliš vysoko (u stropu) snižuje pokrytí.</li>
+    <li><strong>Centrální umístění v bytě/domě</strong> – dongle uprostřed dispozice pokryje všechny místnosti rovnoměrně.</li>
+    <li><strong>Min. 1 metr od WiFi routeru</strong> – WiFi 2.4 GHz a Zigbee sdílejí pásmo. Blízkost routeru způsobuje rušení.</li>
+    <li><strong>Vyhni se:</strong> blízkosti mikrovlnné trouby (2.45 GHz = přímé rušení), DECT telefonů, kovových skříní a betonových pilířů.</li>
+  </ul>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Sonoff Dongle-E vs Dongle-P – pozor na záměnu!</div>
+    <p>Sonoff prodává dva modely se skoro stejným názvem: <strong>ZBDongle-E</strong> (EFR32MG21, adapter: <code>ezsp</code>) a <strong>ZBDongle-P</strong> (CC2652P, adapter: <code>znp</code>). Liší se pouze jedním písmenem v názvu! Vždy zkontroluj přesné označení modelu před koupí – jinak použiješ špatný typ adaptéru v Z2M konfiguraci a Z2M nepůjde spustit.</p>
+  </div>
+</section>
   <a href="02_raspberry_hardware.html" class="ch-btn">
     <span>←</span>
     <div>

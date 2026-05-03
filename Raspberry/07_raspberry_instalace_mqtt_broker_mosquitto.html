@@ -119,6 +119,16 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
     <div style="margin-top:14px;font-size:.82em;color:var(--t3)">Všechny zprávy prochází Mosquitto – funguje i bez internetu, čistě lokálně</div>
   </div>
   <p>Mosquitto v HAOS je <strong>pouze lokální</strong> – port 1883 je dostupný jen uvnitř sítě add-onů. Z internetu ho nelze dosáhnout, což je přesně to co chceme.</p>
+
+  <h3>Struktura MQTT topics (témat)</h3>
+  <p>MQTT komunikace je organizovaná do <strong>topics</strong> – hierarchických textových cest. Zigbee2MQTT automaticky vytváří topics pro každé zařízení:</p>
+  <ul>
+    <li><code>zigbee2mqtt/teplomer_loznice</code> → JSON data ze senzoru (teplota, vlhkost, baterie)</li>
+    <li><code>zigbee2mqtt/svetlo_obyvak/set</code> → příkaz k žárovce (zapnout, jas, barva)</li>
+    <li><code>zigbee2mqtt/bridge/state</code> → stav Z2M mostu (<code>online</code> / <code>offline</code>)</li>
+    <li><code>zigbee2mqtt/bridge/devices</code> → seznam zařízení (MQTT Discovery pro HA)</li>
+  </ul>
+  <p>Home Assistant poslouchá topics automaticky přes MQTT Discovery – entit nevytváříš ručně.</p>
 </section>
 
 <!-- INSTALACE -->

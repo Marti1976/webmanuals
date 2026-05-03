@@ -324,6 +324,57 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   </div>
 </section>
 
+<!-- SPOTŘEBA ENERGIE -->
+<section class="sec">
+  <h2>Spotřeba energie a provozní náklady</h2>
+  <p>Raspberry Pi 3 B+ je velmi úsporné zařízení. Provoz 24/7 tě nebude stát téměř nic – a to je jedna z velkých výhod oproti plnohodnotnému PC serveru.</p>
+  <ul>
+    <li><strong>Spotřeba v klidu:</strong> cca 3–5 W (HA běží, žádná velká zátěž)</li>
+    <li><strong>Spotřeba při zátěži:</strong> cca 7–8 W (aktualizace, záloha, zpracování dat)</li>
+    <li><strong>Roční spotřeba při 24/7:</strong> cca 35–70 kWh → přibližně <strong>200–400 Kč/rok</strong> (při ceně 6 Kč/kWh)</li>
+    <li><strong>Srovnání:</strong> plnohodnotný PC server spotřebuje 50–150 W = 10–20× více</li>
+  </ul>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Přepěťová ochrana</div>
+    <p>Zapojen RPi do prodlužovacího kabelu s přepěťovou ochranou a vypínačem. Přepěťová ochrana chrání RPi i USB SSD před špičkami napětí při bouřce. Vypínač se hodí při servisním zásahu – abys nemusel tahat kabely ze zásuvky za skříní.</p>
+  </div>
+</section>
+
+<!-- BUDOUCÍ ROZŠÍŘENÍ -->
+<section class="sec">
+  <h2>Co dalšího lze integrovat – budoucí rozšíření</h2>
+  <p>Tento průvodce pokrývá Zigbee zařízení jako základ. Home Assistant ale umí mnohem více – jakmile bude základní systém stabilní, lze ho rozšířit o:</p>
+
+  <h3>Další bezdrátové protokoly</h3>
+  <ul>
+    <li><strong>WiFi zařízení s Tasmota firmware</strong> – obyčejné levné WiFi zásuvky a spínače přeflashované open-source firmware Tasmota. Fungují lokálně bez cloudu, plná integrace do HA.</li>
+    <li><strong>ESPHome</strong> – framework pro vlastní ESP8266/ESP32 senzory. Postav si vlastní teplotní senzor, detektor pohybu nebo ovládání garáže za stovky korun.</li>
+    <li><strong>Z-Wave</strong> – alternativní bezdrátový protokol na 868 MHz (nerušen WiFi/Zigbee). Prémiová zařízení, ale vyšší cena. Vyžaduje Z-Wave USB koordinátor.</li>
+    <li><strong>Bluetooth Low Energy (BLE)</strong> – pasivní sledování přítomnosti osob, teplotní senzory (Govee, Xiaomi MiFlora).</li>
+  </ul>
+
+  <h3>Cloudové a lokální integrace</h3>
+  <ul>
+    <li><strong>Spotify / Chromecast / Apple TV</strong> – ovládání médií přímo z HA dashboardu</li>
+    <li><strong>Google Calendar / Outlook</strong> – automatizace na základě událostí v kalendáři</li>
+    <li><strong>Počasí a předpovědi</strong> – OpenWeatherMap, Yr.no – pro automatizace závislé na počasí</li>
+    <li><strong>IP kamery</strong> – integrace kamerového systému přes RTSP stream nebo Frigate NVR add-on</li>
+    <li><strong>Hlasové asistenty</strong> – propojení s Google Assistant nebo Amazon Alexa přes Nabu Casa</li>
+  </ul>
+
+  <h3>HACS – tisíce dalších rozšíření</h3>
+  <p><strong>HACS (Home Assistant Community Store)</strong> je správce komunitních rozšíření. Po instalaci (add-on repozitář na <a href="https://hacs.xyz" target="_blank">hacs.xyz</a>) získáš přístup k:</p>
+  <ul>
+    <li><strong>Integracím</strong> – stovky zařízení a služeb které nejsou v oficiálním storu</li>
+    <li><strong>Frontend kartám</strong> – Mushroom Cards, ApexCharts, Mini Graph Card a další vizualizace</li>
+    <li><strong>Tématům</strong> – desítky vzhledů dashboardu</li>
+  </ul>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Nejprve stabilizuj základ</div>
+    <p>HACS a pokročilé integrace instaluj až po stabilizaci základního systému z tohoto průvodce. Rozšiřování systému dříve než je stabilní základ vede k obtížnému hledání příčin problémů.</p>
+  </div>
+</section>
+
 <!-- CHAPTER NAV -->
 <nav class="chapter-nav">
   <a href="00_raspberry_index.html" class="ch-btn">

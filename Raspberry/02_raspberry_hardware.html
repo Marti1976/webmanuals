@@ -229,10 +229,23 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
       </ul>
     </div>
 
+    <div class="hw-card">
+      <div class="hw-card-header">
+        <div class="hw-card-title">📦 Pouzdro pro Raspberry Pi</div>
+        <span class="hw-badge hw-badge-recommended">doporučeno</span>
+      </div>
+      <p>Bez pouzdra je RPi nechráněná deska vystavená prachu, zkratům a mechanickému poškození. Pro 24/7 provoz se pouzdro opravdu vyplatí.</p>
+      <ul>
+        <li>Doporučuj pouzdra s <strong>pasivním chlazením</strong> – hliníkové tělo nebo heatsink integrovaný v víčku</li>
+        <li>Vyhni se uzavřeným plastovým krabičkám bez ventilace – RPi se v nich přehřívá při trvalém provozu</li>
+        <li>Nejlepší volba: hliníkové pouzdro s žebry (slouží zároveň jako heatsink) – cca 250–400 Kč</li>
+        <li>Alternativa: plastové pouzdro s otvory + samolepicí heatsink na CPU čip – cca 100–200 Kč celkem</li>
+        <li>Součástí většiny RPi kitů – zkontroluj obsah kitu před dokoupením zvlášť</li>
+      </ul>
+    </div>
+
   </div>
 </section>
-
-<!-- NAPÁJENÍ DETAIL -->
 <section class="sec">
   <h2>Napájení – technické požadavky</h2>
   <p>RPi 3 B+ používá <strong>Micro-USB (ne USB-C)</strong>. Toto je nejčastěji podceňovaná součástka – a nejčastější příčina problémů.</p>
@@ -341,6 +354,45 @@ usb-storage.quirks=152d:0578:u</code></pre>
     <div class="callout-title">ℹ️ Ověřená doporučení komunity HA</div>
     <p>Nejlépe hodnocená pouzdra v komunitě Home Assistant pro mSATA/SATA: <strong>Inateck FE2009</strong> (ASMedia ASM1153E), <strong>UGREEN USB 3.0 SATA</strong>, a pouzdra s JMicron JMS561. Vyhledej recenze na <a href="https://community.home-assistant.io" target="_blank">community.home-assistant.io</a> při výběru.</p>
   </div>
+
+  <h3>Konkrétní doporučené mSATA SSD dostupné v ČR</h3>
+  <ul>
+    <li><strong>Kingston SMS200S3/32G nebo /64G</strong> – dostupný na Alza.cz, cca 250–400 Kč. Ověřená kompatibilita, spolehlivý výkon pro HA.</li>
+    <li><strong>SanDisk X110 SD6SF1M</strong> – starší model, levnější na bazarech (Aukro, Bazoš). Výborná kvalita SanDisk, dlouhá životnost.</li>
+    <li><strong>Crucial M500 mSATA</strong> – dostupný na Alza nebo Mall, cca 300–450 Kč za 32/64 GB verze.</li>
+  </ul>
+</section>
+
+<!-- CHLAZENÍ -->
+<section class="sec">
+  <h2>Chlazení a teplota</h2>
+  <p>RPi 3 B+ automaticky omezuje výkon CPU (throttling) při teplotě nad 80°C. Při trvalém provozu 24/7 je správné chlazení důležité pro stabilitu.</p>
+  <ul>
+    <li><strong>Bez pouzdra / heatsink:</strong> běžná provozní teplota 50–65°C – na hranici doporučeného rozsahu</li>
+    <li><strong>S hliníkovým heatsink na CPU:</strong> cca 40–55°C – ideální pro 24/7 provoz</li>
+    <li><strong>S hliníkovým pouzdrem (passive cooling):</strong> cca 38–50°C – nejlepší bez ventilátoru</li>
+    <li><strong>Aktivní chlazení (ventilátor):</strong> pod 40°C – nutné jen při extrémní zátěži nebo v teplém prostředí</li>
+  </ul>
+
+  <h3>Jak nainstalovat heatsink</h3>
+  <ul>
+    <li>Heatsink je malý hliníkový nebo měděný blok se samolepicí termální podložkou</li>
+    <li>Nalep přímo na hlavní CPU čip (největší čip na desce – Broadcom BCM2837)</li>
+    <li>Volitelně: menší heatsink na RAM čip a USB/Ethernet řadič</li>
+    <li>Součástí většiny RPi kitů a hliníkových pouzder</li>
+  </ul>
+
+  <h3>Jak zkontrolovat teplotu</h3>
+  <p>Aktuální teplotu CPU zjistíš dvěma způsoby:</p>
+  <ul>
+    <li><strong>V Home Assistant:</strong> Nastavení → Systém → Hardware → karta s teplotou procesoru</li>
+    <li><strong>Přes SSH:</strong> příkaz <code>vcgencmd measure_temp</code> zobrazí aktuální teplotu (např. <code>temp=52.1'C</code>)</li>
+  </ul>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Throttling a jeho projev</div>
+    <p>Při teplotě nad 80°C RPi začne automaticky snižovat takt CPU. V HA se to projeví pomalou odezvou, zpomaleným načítáním dashboardu a opožděnými automatizacemi. Pokud to vidíš pravidelně – doplň chlazení nebo zkontroluj větrání v místnosti.</p>
+  </div>
 </section>
 
 <!-- CHECKLIST -->
@@ -349,14 +401,14 @@ usb-storage.quirks=152d:0578:u</code></pre>
   <p>Než půjdeš nakupovat, projdi tento seznam:</p>
   <ul>
     <li>☐ Raspberry Pi 3 Model B+ (nebo kit)</li>
-    <li>☐ mSATA SSD disk (min. 32 GB)</li>
+    <li>☐ mSATA SSD disk (min. 32 GB) – doporučeno Kingston SMS200S3/32G nebo /64G</li>
     <li>☐ USB pouzdro pro mSATA (s ASMedia nebo JMS561 chipsetem)</li>
     <li>☐ Napájecí zdroj Micro-USB <strong>5V / 3A</strong> (originální RPi nebo Meanwell)</li>
     <li>☐ Ethernet kabel (délka dle potřeby)</li>
     <li>☐ USB Zigbee koordinátor (SLZB-07 nebo Sonoff)</li>
     <li>☐ USB prodlužovací kabel 15–30 cm (pro Zigbee dongle)</li>
+    <li>☐ Pouzdro pro RPi s pasivním chlazením nebo heatsink – <strong>doporučeno</strong></li>
     <li>☐ [VOLITELNÉ] Malý USB flash disk 32 GB pro lokální zálohy</li>
-    <li>☐ [VOLITELNÉ] Pouzdro/krabička pro RPi (pokud nekupuješ kit)</li>
   </ul>
 </section>
 
