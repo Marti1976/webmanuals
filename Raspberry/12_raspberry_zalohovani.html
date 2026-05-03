@@ -104,6 +104,47 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 
 <!-- PROC ZALOHOVAT -->
 <section class="sec">
+  <h2>Co záloha HA obsahuje – a co ne</h2>
+  <p>Záloha Home Assistant je <code>.tar</code> archiv. Před spoléháním na zálohu je dobré vědět co v ní skutečně je.</p>
+
+  <h3>Co záloha OBSAHUJE ✅</h3>
+  <ul>
+    <li><code>configuration.yaml</code> a všechny konfigurační soubory</li>
+    <li>Databáze HA (history, logbook, energy) – může být velká!</li>
+    <li>Konfigurace všech add-onů (Mosquitto, Z2M, Samba...)</li>
+    <li><strong>Zigbee2MQTT data</strong> včetně <code>coordinator_backup.json</code> a databáze spárovaných zařízení</li>
+    <li>Automatizace, scény, skripty, dashboardy</li>
+    <li>Uživatelé a hashovaná hesla</li>
+    <li>Integrace a jejich konfigurace</li>
+  </ul>
+
+  <h3>Co záloha NEOBSAHUJE ❌</h3>
+  <ul>
+    <li>Samotný HAOS operační systém (stáhne se znovu při obnově)</li>
+    <li>Docker images add-onů (stáhnou se znovu – proto obnova trvá déle)</li>
+    <li>Mediální soubory pokud je z zálohy vyloučíš</li>
+  </ul>
+
+  <p><strong>Typická velikost zálohy:</strong> 50–500 MB závisí na velikosti databáze a délce uchovávaní historie.</p>
+</section>
+
+<!-- ZMENŠENÍ ZÁLOHY -->
+<section class="sec">
+  <h2>Jak zmenšit velikost zálohy</h2>
+  <p>Velká záloha = pomalé nahrávání na Google Drive a plnění disku. Tyto kroky výrazně sníží velikost:</p>
+  <ul>
+    <li><strong>Omez historii v recorder</strong> – nastav <code>purge_keep_days: 7</code> v <code>configuration.yaml</code> (viz Kapitola 13). Databáze bude menší → záloha menší.</li>
+    <li><strong>Vylučování media složky</strong> – při vytváření zálohy odškrtni sekci "Media" pokud tam nemáš důležitá data</li>
+    <li><strong>Výsledek:</strong> záloha se typicky zmenší z 200–500 MB na 30–100 MB</li>
+  </ul>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Šifrování zálohy</div>
+    <p>Nastav heslo zálohy v nastavení automatického zálohování. Záloha bude šifrována AES-128 – nikdo bez hesla ji neotevře, i kdyby se dostal k souboru na Google Drive nebo NAS. Zapiš si heslo zálohy do šablony hesel v Kapitole 15!</p>
+  </div>
+</section>
+
+<!-- PROC ZALOHOVAT PŮVODNÍ -->
+<section class="sec">
   <h2>Proč zálohy nejsou volitelné</h2>
   <p>SSD disky jsou spolehlivé, ale ne nesmrtelné. Výpadek napájení v nevhodnou chvíli, chybná aktualizace, omylem smazaná konfigurace – každý z těchto scénářů může zničit tvůj pečlivě nastavený systém. Záloha ti ušetří hodiny práce.</p>
   <div class="backup-strategy">

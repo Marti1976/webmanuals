@@ -260,6 +260,73 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
   </div>
 </section>
 
+<!-- INTERVIEW PROCESS -->
+<section class="sec">
+  <h2>Interview process – co Z2M dělá po spárování</h2>
+  <p>Po úspěšném spárování Z2M automaticky provede tzv. <strong>interview</strong> – sérii dotazů na zařízení pro zjištění jeho schopností, dostupných entit a konfigurace.</p>
+  <ul>
+    <li>Interview trvá <strong>10–60 sekund</strong> u napájených zařízení, déle u bateriových (čekají na zprávu)</li>
+    <li>Dokud interview neskončí, zařízení <strong>nemusí hlásit správné hodnoty</strong> nebo se neobjeví v HA</li>
+    <li>Stav interview vidíš v Z2M: záložka <strong>Devices</strong> → sloupec <strong>"Interview state"</strong></li>
+    <li>Stavy: <code>pending</code> (čeká), <code>started</code> (probíhá), <code>successful</code> (hotovo ✅), <code>failed</code> (selhalo ❌)</li>
+  </ul>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Interview selhalo?</div>
+    <p>Pokud interview selhalo, zařízení je spárováno ale nemusí správně fungovat. Řešení: aktivuj zařízení (stiskni tlačítko nebo otevři/zavři senzor) – to přinutí zařízení poslat zprávu a Z2M interview dokončí. U bateriových senzorů někdy pomůže vyjmout a vložit baterii.</p>
+  </div>
+</section>
+
+<!-- ODSTRANENI ZARIZENI -->
+<section class="sec">
+  <h2>Odstranění zařízení ze Z2M</h2>
+  <p>Potřebuješ zařízení odebrat ze sítě – vyměnil jsi ho, přesouváš do jiné sítě nebo je vadné? Postup je jednoduchý.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <div class="step-title">Odeber zařízení v Z2M rozhraní</div>
+        <div class="step-desc">
+          <p>V Z2M webovém rozhraní jdi na záložku <strong>Devices</strong>. Klikni na zařízení které chceš odebrat.</p>
+          <ul>
+            <li>Záložka <strong>Settings</strong> → sekce <strong>Device actions</strong> → tlačítko <strong>"Remove device"</strong></li>
+            <li>Nebo: klikni na ikonu koše vedle zařízení v seznamu</li>
+            <li>Pokud zařízení není dosažitelné (vadné, daleko): zaškrtni <strong>"Force remove"</strong></li>
+          </ul>
+          <p>Po odstranění ze Z2M se entita v HA stane <strong>"unavailable"</strong>. Smaž ji ručně: <strong>Nastavení → Zařízení a služby → MQTT → vybrat zařízení → smazat</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HA AREAS -->
+<section class="sec">
+  <h2>Oblasti (Areas) – organizace zařízení do místností</h2>
+  <p>Home Assistant umožňuje přiřadit každé zařízení do <strong>oblasti</strong> (místnosti). Díky tomu lze ovládat celé místnosti najednou a hlasové asistenty pochopí příkazy jako "zhasni v obýváku".</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">9</div>
+      <div class="step-body">
+        <div class="step-title">Vytvoř oblasti a přiřaď zařízení</div>
+        <div class="step-desc">
+          <p><strong>Krok 1 – Vytvoř oblasti:</strong> Jdi do <strong>Nastavení → Oblasti &amp; zóny → + Přidat oblast</strong>.</p>
+          <ul>
+            <li>Přidej každou místnost: Obývák, Ložnice, Kuchyň, Koupelna, Chodba...</li>
+            <li>Každé oblasti lze přiřadit ikonu a obrázek podlaží</li>
+          </ul>
+          <p><strong>Krok 2 – Přiřaď zařízení:</strong> Jdi do <strong>Nastavení → Zařízení a služby → MQTT</strong>. Klikni na zařízení → <strong>Přiřadit oblast</strong> → vyber místnost.</p>
+          <p><strong>Výhody oblastí:</strong></p>
+          <ul>
+            <li>Dashboard zobrazuje zařízení organizovaně podle místností</li>
+            <li>Hlasové příkazy ("Hej Google, zhasni v obýváku") fungují automaticky</li>
+            <li>Automatizace může cílit na celou oblast ("vypni vše v ložnici při usnutí")</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TYPY ZARIZENI V SITI -->
 <section class="sec">
   <h2>Koordinátor, Router a End Device</h2>

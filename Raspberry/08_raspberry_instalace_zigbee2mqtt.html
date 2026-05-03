@@ -113,6 +113,36 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
   </div>
 </section>
 
+<!-- OVERENI DONGLU -->
+<section class="sec">
+  <h2>Ověření detekce USB donglu před instalací</h2>
+  <p>Ještě <strong>před instalací Z2M</strong> si ověř, že HAOS tvůj Zigbee dongle skutečně vidí. Ušetříš si ladění problémů s portem později.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">0</div>
+      <div class="step-body">
+        <div class="step-title">Ověř detekci donglu v Hardware sekci</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Systém → Hardware → Veškerý hardware</strong>. Hledej záznam s názvem <code>CP210x</code>, <code>CP2102N</code> nebo <code>CH340</code> – to je tvůj Zigbee dongle.</p>
+          <p>Nebo přes SSH (pokud máš nainstalovaný SSH add-on):</p>
+          <pre><code>ls /dev/serial/by-id/</code></pre>
+          <p>Musíš vidět alespoň jeden záznam. Pokud je seznam prázdný:</p>
+          <ul>
+            <li>Zkontroluj fyzické zapojení donglu</li>
+            <li>Zkus jiný USB port na RPi</li>
+            <li>Zkus jiný USB kabel – <strong>musí být datový</strong>, ne jen nabíjecí! Nabíjecí kabely nemají datové vodiče.</li>
+            <li>Restartuj HA: Nastavení → Systém → Restartovat</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Datový vs nabíjecí USB kabel</div>
+    <p>Toto je překvapivě časté úskalí. Spousta USB kabelů v domácnosti jsou <strong>nabíjecí kabely</strong> – mají pouze 2 vodiče (napájení) a přenášejí nulová data. Pro Zigbee dongle potřebuješ kabel se 4 vodiči (data + napájení). Jak to poznat: datový kabel je na dotek tužší a těžší. Nebo zkus jiný kabel – pokud dongle najednou funguje, předchozí byl nabíjecí.</p>
+  </div>
+</section>
+
 <!-- PRIDANI REPOZITARE -->
 <section class="sec">
   <h2>Přidání Zigbee2MQTT repozitáře</h2>
@@ -239,9 +269,20 @@ ls -la /dev/serial/by-id/
   <ul>
     <li>✅ Zigbee2MQTT nainstalován (stabilní verze)</li>
     <li>✅ Start on boot a Watchdog zapnuty</li>
+    <li>✅ Ověřena detekce USB donglu v Hardware sekci</li>
     <li>✅ Znáš přesnou adresu USB Zigbee koordinátoru</li>
     <li>✅ Máš MQTT uživatele a heslo z Kapitoly 07</li>
   </ul>
+
+  <h3>Zobrazení Z2M panelu v postranním menu HA</h3>
+  <p>Po úspěšném spuštění Z2M (v Kapitole 09) je dobré ho mít přístupný přímo z HA menu:</p>
+  <ul>
+    <li>Jdi do <strong>Nastavení → Doplňky → Zigbee2MQTT → záložka INFORMACE</strong></li>
+    <li>Přepni <strong>"Show in sidebar" = ON</strong></li>
+    <li>V levém menu HA se zobrazí ikona Zigbee2MQTT pro rychlý přístup k webovému rozhraní</li>
+    <li>Alternativně: vždy dostupné přes tlačítko <strong>"Otevřít webové rozhraní"</strong> na záložce Informace add-onu</li>
+  </ul>
+
   <p>Pokračuj na <a href="09_raspberry_konfigurace_zigbee2mqtt.html">Kapitolu 09 – Konfigurace Zigbee2MQTT</a> kde propojíme Z2M s MQTT brokerem, nastavíme typ adaptéru a spustíme celý stack.</p>
 </section>
 

@@ -343,6 +343,40 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 
 <!-- BEZPECNOSTNI CHECKLIST -->
 <section class="sec">
+  <h2>Sdílení konfigurace – co nikdy nezveřejňovat</h2>
+  <p>Komunita HA je přátelská a lidé rádi sdílejí své konfigurace. Před sdílením (fórum, GitHub, Slack) vždy zkontroluj, že neobsahuje citlivé informace.</p>
+  <ul>
+    <li><strong>Nikdy nezveřejňuj:</strong> hesla, API tokeny, long-lived access tokeny, IP adresy zařízení</li>
+    <li><strong>Nikdy nezveřejňuj:</strong> Zigbee Network Key (coordinator_backup.json nebo configuration.yaml Z2M)</li>
+    <li><strong>Bezpečné sdílení:</strong> používej <code>!secret</code> direktivu (viz Kapitola 06) – pak sdílej <code>configuration.yaml</code> bez <code>secrets.yaml</code></li>
+    <li><strong>Long-lived tokeny:</strong> Nastavení → Profil → Long-lived access tokens – pravidelně kontroluj, nepoužívané smaž okamžitě</li>
+  </ul>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Long-lived access token = plný přístup k HA</div>
+    <p>Long-lived token v URL nebo kódu je jako heslo – kdokoli ho má, má plný přístup k tvému Home Assistant. Nikdy ho nevkládej do veřejných snippetů, GitHub repozitářů nebo fóra. Pokud se token dostane ven, okamžitě ho smaž a vygeneruj nový.</p>
+  </div>
+</section>
+
+<!-- GUEST WIFI -->
+<section class="sec">
+  <h2>Guest WiFi pro IoT zařízení</h2>
+  <p>Zigbee zařízení WiFi nepotřebují – komunikují přes Zigbee koordinátor. Pokud ale máš v síti WiFi IoT zařízení (chytré televize, IP kamery, WiFi zásuvky s Tasmota firmware), je moudré je izolovat od hlavní sítě.</p>
+  <ul>
+    <li><strong>Proč izolace?</strong> Kompromitované IoT zařízení (hacknutá kamera, zranitelná chytrá TV) může v nechráněné síti napadat ostatní zařízení – tvůj PC, NAS, telefony</li>
+    <li><strong>Řešení:</strong> Vytvoř izolovanou <strong>Guest WiFi síť</strong> v routeru pro IoT zařízení</li>
+    <li><strong>Jak nastavit:</strong> Hledej v routeru "Guest network", "IoT network" nebo "VLAN" – většina moderních routerů (Turris, Asus, TP-Link) tuto funkci podporuje</li>
+    <li><strong>Klíčové nastavení:</strong> zapni <strong>"Client isolation"</strong> – zařízení na Guest WiFi nemohou komunikovat s hlavní sítí</li>
+    <li><strong>HA komunikace:</strong> Home Assistant na Ethernetu může stále komunikovat s IoT zařízeními na Guest WiFi, ale IoT zařízení nemohou navazovat spojení s PC/NAS</li>
+  </ul>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Jednoduché pravidlo</div>
+    <p>Hlavní WiFi: počítače, telefony, tablety, RPi/NAS.<br>
+    Guest/IoT WiFi: chytré televize, IP kamery, WiFi žárovky, WiFi zásuvky, robotické vysavače a vše ostatní "smart".</p>
+  </div>
+</section>
+
+<!-- BEZPECNOSTNI CHECKLIST -->
+<section class="sec">
   <h2>Bezpečnostní checklist</h2>
   <div class="sec-check">
     <div class="sec-check-title">Zkontroluj před nasazením do produkce</div>
@@ -386,6 +420,20 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
       <div class="sec-item-body">
         <div class="sec-item-title">Systém je aktuální</div>
         <div class="sec-item-desc">Pravidelné aktualizace HAOS, Core a add-onů</div>
+      </div>
+    </div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">secrets.yaml neobsahuje sdílené konfigurace</div>
+        <div class="sec-item-desc">Hesla jsou oddělena přes !secret, nikdy nezveřejňovat secrets.yaml</div>
+      </div>
+    </div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">IoT zařízení na izolované Guest WiFi (volitelné)</div>
+        <div class="sec-item-desc">WiFi kamery, TV a smart zásuvky odděleny od hlavní sítě</div>
       </div>
     </div>
   </div>

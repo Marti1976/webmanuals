@@ -288,6 +288,52 @@ Connected to MQTT server</pre>
   <p>Ověř v HA: <strong>Nastavení → Zařízení a služby → MQTT</strong> – po spárování prvního zařízení se zde zobrazí.</p>
 </section>
 
+<!-- NETWORK KEY -->
+<section class="sec">
+  <h2>Network Key – síťový šifrovací klíč</h2>
+  <p>Zigbee komunikace je šifrována síťovým klíčem (Network Key). Zigbee2MQTT ho generuje automaticky při první instalaci – to je správné a bezpečné chování.</p>
+  <ul>
+    <li><strong>Výchozí chování:</strong> Z2M vygeneruje náhodný 128-bit klíč při prvním spuštění → <strong>bezpečné</strong></li>
+    <li><strong>Zobrazení klíče:</strong> Settings → Settings → Security → Network key (nebo v souboru <code>/config/zigbee2mqtt/configuration.yaml</code>)</li>
+    <li><strong>NIKDY</strong> nepoužívej výchozí klíč <code>[1,3,5,7,9,11,13,15,0,2,4,6,8,10,12,13]</code> pokud ho vidíš – to je veřejně známý testovací klíč!</li>
+  </ul>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Network key patří do zálohy</div>
+    <p>Síťový klíč je uložen v souboru <code>/config/zigbee2mqtt/coordinator_backup.json</code>. Automatická záloha HA ho obsahuje. Bez správného síťového klíče při výměně koordinátoru všechna Zigbee zařízení přestanou komunikovat – musíš je znovu spárovat. Proto je <code>coordinator_backup.json</code> tak důležitý.</p>
+  </div>
+</section>
+
+<!-- SKUPINY ZARIZENI -->
+<section class="sec">
+  <h2>Skupiny zařízení v Z2M (Groups)</h2>
+  <p>Zigbee2MQTT umí seskupit více Zigbee zařízení do jedné <strong>skupiny</strong>. Příkaz poslaný skupině se dostane ke všem členům najednou – je to rychlejší a spolehlivější než HA scény pro Zigbee žárovky.</p>
+  <p><strong>Příklad použití:</strong> Skupina "obyvak_svetla" obsahuje 3 žárovky. Jeden příkaz "vypnout" zhasne všechny najednou přes Zigbee mesh – bez zpoždění.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Vytvoř skupinu v Z2M webovém rozhraní</div>
+        <div class="step-desc">
+          <p>V Z2M webovém rozhraní jdi do <strong>Groups</strong> (záložka v horní liště).</p>
+          <ul>
+            <li>Klikni <strong>"Add group"</strong></li>
+            <li>Zadej název skupiny – bez mezer, bez diakritiky: např. <code>obyvak_svetla</code></li>
+            <li>Klikni <strong>"Add"</strong></li>
+          </ul>
+          <p>Poté přidej zařízení do skupiny:</p>
+          <ul>
+            <li>Klikni na skupinu → <strong>"Add device"</strong></li>
+            <li>Vyber zařízení ze seznamu</li>
+            <li>Opakuj pro každé zařízení které chceš přidat</li>
+          </ul>
+          <p>Skupina se automaticky zobrazí v Home Assistant jako nová entita – ovládáš ji jako běžné světlo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TROUBLESHOOTING -->
 <section class="sec">
   <h2>Z2M nejde spustit – časté příčiny</h2>
