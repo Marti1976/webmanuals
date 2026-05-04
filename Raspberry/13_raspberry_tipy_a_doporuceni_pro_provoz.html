@@ -225,9 +225,59 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
     <div class="callout-title">ℹ️ Čištění databáze</div>
     <p>Pokud databáze narostla a HA je pomalé: Developer Tools → Services → <code>recorder.purge</code> → nastavit <code>keep_days: 5</code> a spustit. Databáze se vyčistí. Může trvat i 30 minut, HA bude dočasně pomalejší.</p>
   </div>
+
+  <h3>Pokročilá volba: databáze v RAM</h3>
+  <p>Pro minimalizaci zápisů na SSD lze přesunout databázi zcela do RAM. Data se při restartu ztratí – vhodné pouze pokud historii nepotřebuješ:</p>
+  <pre><code>recorder:
+  db_url: "sqlite:///:memory:"   # databáze v RAM – ztratí se po restartu!</code></pre>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ In-memory databáze – co ztratíš</div>
+    <p>S <code>sqlite:///:memory:</code> ztratíš veškerou historii senzorů při každém restartu HA. Grafy v dashboardu budou prázdné. Automatizace závislé na historii přestanou fungovat. Doporučuji místo toho zkrátit <code>purge_keep_days: 3</code> – ušetříš místo ale historii zachováš.</p>
+  </div>
 </section>
 
-<!-- PRAVIDELNA UDRZBA -->
+<!-- HACS -->
+<section class="sec">
+  <h2>HACS – rozšíření možností Home Assistant</h2>
+  <p><strong>HACS (Home Assistant Community Store)</strong> výrazně rozšiřuje možnosti HA – přidává tisíce komunitních integrací, karet dashboardu a témat které nejsou v oficiálním storu.</p>
+
+  <h3>Co HACS nabízí</h3>
+  <ul>
+    <li><strong>Integrace</strong> – zařízení a služby bez oficiální podpory (Local Tuya, better_thermostat, Xiaomi Home...)</li>
+    <li><strong>Frontend karty</strong> – Mushroom Cards (moderní UI), ApexCharts (pokročilé grafy), Mini Graph Card, Button Card a stovky dalších</li>
+    <li><strong>Témata</strong> – desítky vizuálních témat dashboardu</li>
+    <li><strong>Automatizace a skripty</strong> – ready-made blueprints pro common use cases</li>
+  </ul>
+
+  <h3>Jak nainstalovat HACS</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">A</div>
+      <div class="step-body">
+        <div class="step-title">Přidej HACS repozitář a nainstaluj</div>
+        <div class="step-desc">
+          <p>Potřebuješ SSH nebo File Editor přístup. Jdi na <a href="https://hacs.xyz/docs/setup/download/" target="_blank">hacs.xyz/docs/setup/download</a> a postupuj dle aktuálního návodu – instalace se občas mění.</p>
+          <p>Zjednodušeně: přes SSH spusť instalační skript:</p>
+          <pre><code>wget -O - https://get.hacs.xyz | bash -</code></pre>
+          <p>Po dokončení restartuj HA. Pak jdi do <strong>Nastavení → Zařízení a služby → + Přidat integraci → HACS</strong> a proveď autorizaci přes GitHub účet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Doporučené HACS karty pro začátek</h3>
+  <ul>
+    <li><strong>Mushroom Cards</strong> – krásné moderní karty, náhrada výchozích karet. Instalace: HACS → Frontend → Mushroom</li>
+    <li><strong>ApexCharts Card</strong> – pokročilé grafy teploty, spotřeby, přítomnosti. Výrazně lepší než vestavěný History Graph</li>
+    <li><strong>Mini Graph Card</strong> – kompaktní mini grafy přímo na dashboardu</li>
+    <li><strong>Browser Mod</strong> – proměnit tablet na pevný kiosk s HA dashboardem</li>
+  </ul>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ HACS instaluj až po stabilizaci základu</div>
+    <p>HACS a komunitní karty/integrace přidávají závislosti navíc. Instaluj je až poté co základní systém (Zigbee2MQTT, zálohy, bezpečnost) běží stabilně alespoň týden. Rozšiřování systému dříve než je stabilní základ ztěžuje hledání příčin problémů.</p>
+  </div>
+</section>
 <section class="sec">
   <h2>Pravidelná údržba – checklist</h2>
 

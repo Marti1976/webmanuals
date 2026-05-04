@@ -116,6 +116,18 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
   </div>
 
   <div class="issue">
+    <div class="issue-title"><span class="issue-tag">HA</span> HA se nespouští po aktualizaci / bílá obrazovka</div>
+    <h4>Možné příčiny a řešení:</h4>
+    <ul>
+      <li><strong>Aktualizace stále probíhá</strong> – velké aktualizace Core trvají 5–15 minut. Počkej a obnovuj stránku každé 2 minuty.</li>
+      <li><strong>UI nefunguje ale systém běží</strong> – zkus přímé URL: <code>http://IP:8123/lovelace/0</code> nebo <code>http://IP:8123/config</code></li>
+      <li><strong>Chyba v konfiguraci</strong> – přes SSH spusť <code>ha core logs</code> pro zobrazení přesné chyby která brání startu</li>
+      <li><strong>Breaking change v aktualizaci</strong> – přečti release notes na home-assistant.io/blog pro danou verzi. Chyba může být způsobena změnou syntaxe v configuration.yaml.</li>
+      <li><strong>Nejrychlejší řešení</strong> – obnov zálohu z před aktualizace (Kapitola 12). Nastavení → Zálohy → vybrat zálohu z předešlého dne → Obnovit.</li>
+    </ul>
+  </div>
+
+  <div class="issue">
     <div class="issue-title"><span class="issue-tag">HA</span> HA běží ale je extrémně pomalé</div>
     <ul>
       <li>Zkontroluj spotřebu RAM: <strong>Nastavení → Systém → Hardware</strong></li>
@@ -133,6 +145,19 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
       <li>Zkontroluj délku a kvalitu Micro-USB kabelu – dlouhý nebo tenký kabel zvyšuje odpor</li>
       <li>Odpoj nepotřebná USB zařízení z RPi (snižuje odběr)</li>
       <li>Varování v HA logu: <code>Under-voltage detected</code></li>
+    </ul>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">SSD</span> Disk je plný – HA odmítá zálohu nebo aktualizaci</div>
+    <h4>Příznaky: chyba "No space left on device", záloha selhává, aktualizace se nestáhne</h4>
+    <ul>
+      <li>Zkontroluj místo přes SSH: <code>df -h</code> – sleduj oddíl <code>/data</code></li>
+      <li><strong>Největší spotřebitelé:</strong> zálohy v <code>/backup/</code> a HA databáze v <code>/data/</code></li>
+      <li><strong>Rychlá úleva:</strong> smaž staré zálohy: Nastavení → Zálohy → vybrat staré → ikona koše</li>
+      <li><strong>Databáze:</strong> spusť <code>recorder.purge</code> s <code>keep_days: 3</code> pro agresivní vyčištění</li>
+      <li><strong>Dočasné řešení:</strong> přes SSH: <code>ha backups remove BACKUP_SLUG</code></li>
+      <li><strong>Trvalé řešení:</strong> přejdi na větší SSD (64 GB) nebo nastav agresivnější rotaci záloh (max. 3 lokální zálohy)</li>
     </ul>
   </div>
 </section>
@@ -290,6 +315,44 @@ ping -c 4 8.8.8.8</code></pre>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Přihlášení přes SSH</div>
     <p>SSH add-on: Nastavení → Doplňky → "SSH &amp; Web Terminal". Po instalaci a spuštění: připoj se přes PuTTY nebo příkazový řádek: <code>ssh root@192.168.1.50</code> (port 22222 pokud je změněn).</p>
+  </div>
+</section>
+
+<!-- KDE HLEDAT POMOC -->
+<section class="sec">
+  <h2>Kde hledat pomoc</h2>
+  <p>Pokud nic z výše uvedeného nezabralo, existuje velká komunita kde lidé rádi pomůžou. Doporučené zdroje v pořadí:</p>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Komunita</span> Home Assistant fórum (anglicky)</div>
+    <p><a href="https://community.home-assistant.io" target="_blank">community.home-assistant.io</a> – největší HA komunita, miliony řešených problémů. Před založením nového vlákna vždy nejprve prohledej – odpověď tam s velkou pravděpodobností je.</p>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Komunita</span> Home Assistant CZ – Facebook skupina (česky)</div>
+    <p><a href="https://www.facebook.com/groups/homeassistantcz" target="_blank">facebook.com/groups/homeassistantcz</a> – česká komunita, rychlé odpovědi. Ideální pro rychlý dotaz v češtině.</p>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Komunita</span> GitHub Issues – Zigbee2MQTT</div>
+    <p><a href="https://github.com/Koenkk/zigbee2mqtt/issues" target="_blank">github.com/Koenkk/zigbee2mqtt/issues</a> – pro problémy specificky se Z2M, párovacími problémy konkrétních zařízení nebo chybami add-onu.</p>
+  </div>
+
+  <div class="issue">
+    <div class="issue-title"><span class="issue-tag">Komunita</span> Reddit r/homeassistant (anglicky)</div>
+    <p><a href="https://www.reddit.com/r/homeassistant/" target="_blank">reddit.com/r/homeassistant</a> – neformální komunita, dobré pro inspiraci, tipy a rychlé dotazy.</p>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Jak správně položit otázku – ušetříš čas sobě i ostatním</div>
+    <p>Při žádosti o pomoc vždy uveď:</p>
+    <ul>
+      <li><strong>Verzi HA:</strong> Nastavení → Systém → O systému (např. 2025.12.3)</li>
+      <li><strong>Verzi Z2M add-onu</strong> pokud je problém se Zigbee</li>
+      <li><strong>Přesná chybová zpráva</strong> z protokolu (záložka PROTOKOL v add-onu nebo Nastavení → Protokoly)</li>
+      <li><strong>Co jsi dělal</strong> těsně před tím než problém nastal</li>
+      <li><strong>Co jsi už zkoušel</strong> – ušetří opakování stejných rad</li>
+    </ul>
   </div>
 </section>
 
