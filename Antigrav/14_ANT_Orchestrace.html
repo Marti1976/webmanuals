@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orchestrace Agentů – Antigravity průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(16,185,129,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--green2)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-g{color:var(--green2);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08)}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--green2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--green2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--green);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--green2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(16,185,129,.1);
+  color:var(--green2);border:1px solid rgba(16,185,129,.2);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:#6ee7b7}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--accent)}
+
+.code-block{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--green);
+  border-radius:8px;padding:12px;margin:12px 0;font-family:'DM Mono',monospace;font-size:.75em;
+  color:var(--green2);line-height:1.5;overflow-x:auto}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+/* === CHAPTER NAVIGATION === */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--purple);color:var(--purple2);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+.ch-btn .ch-name{color:var(--purple2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 14</div>
+  <h1>Orchestrace <em>Agentů</em></h1>
+  <p class="h-desc">Jak agenti pracují spolu. Komunikace, interface definice, koordinace, konflikt resolution, best practices pro multi-agent systémy.</p>
+  <div class="badges">
+    <span class="badge badge-g">🔗 Komunikace</span>
+    <span class="badge badge-c">🎯 Koordinace</span>
+    <span class="badge badge-g">⚙️ Integration</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Základy Orchestrace</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Komunikační Kanály</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Interface Definice (Smlouvy)</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Závislosti & Workflow DAG</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Konflikt Resolution</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Best Practices & Anti-Patterns</a>
+  </div>
+</div>
+
+<!-- 01 ZÁKLADY ORCHESTRACE -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Základy Orchestrace — Kdo Řídí Tanec</h2>
+
+  <p><strong>Co je orchestrace?</strong> Orchestrace je řízení. TY jsi dirigent. Agenti jsou hudebníci. Dirigent říká: "Teď violiny (Designer). Pak klarinet (Implementer). Pak bubny (Tester)." Bez dirigenta by to byl chaos.</p>
+
+  <h3>Principy Orchestrace</h3>
+
+  <h4>Princip 1: TY řídíš, Agenti se řídí</h4>
+  <p><strong>Jak to funguje:</strong> Ty určíš workflow. "Designer → Implementer → Tester". Každý agent vidí svou roli v řetězci. Agenti se NEDOMLUVUJÍ navzájem — oni se podřizují tvému plánu.</p>
+
+  <p><strong>Příklad (špatně):</strong> Dáš agentům volnost. "Dělej co chceš, domluv se s ostatními." Výsledek: Chaos. Agenti dělají věci v špatném pořadí.</p>
+
+  <p><strong>Příklad (správně):</strong> Ty řekneš: "1) Designer navrhne UI. 2) Implementer implementuje. 3) Tester testuje." Každý ví co dělá a kdy.</p>
+
+  <h4>Princip 2: Lineární vs Paralelní Tok</h4>
+  <p><strong>Lineární:</strong> Agent A → A skončí → Agent B → B skončí → Agent C. Postupně za sebou.</p>
+  <p><strong>Paralelní:</strong> Agent A a Agent B běží ZÁROVEŇ. Když oba skončí → Agent C.</p>
+
+  <p><strong>Kdy jaký?</strong> Lineární: Pokud B závisí na A (Implementer čeká na Designer). Paralelní: Pokud si nekonfliktují (Frontend & Backend jsou nezávislí).</p>
+
+  <h4>Princip 3: Data Flow</h4>
+  <p><strong>Co to znamená:</strong> Data tekou mezi agenty. Designer → Interface. Implementer dostane interface a implementuje. Tester dostane kód a testuje. Data jdou jedním směrem (nebo cyklicky když je bug).</p>
+
+  <div class="code-block">
+VÝSTUP designeru   →   INPUT implementera<br/>
+    (interface)           (interface + spec)<br/>
+<br/>
+VÝSTUP implementera →   INPUT testera<br/>
+    (kód)                 (kód ke testování)<br/>
+<br/>
+FAILURE testera   →   INPUT implementera<br/>
+    (bug report)          (co fixnout)
+  </div>
+
+  <h3>Orchestrace v Antigravity — Jak To Dělat Prakticky</h3>
+
+  <p><strong>Kde to orchestruj?</strong> V Antigravity Manager View. Vidíš všechny agenty, jejich stav, timeline.</p>
+
+  <p><strong>Postup:</strong></p>
+  <ol>
+    <li>Otevřeš Manager View</li>
+    <li>Vidíš agenty (DESIGNER, IMPLEMENTER, TESTER)</li>
+    <li>Pravý panel: Můžeš nastavit priority, paralelizaci</li>
+    <li>Spustíš: "1) DESIGNER. Pak 2) IMPLEMENTER. Pak 3) TESTER."</li>
+    <li>Sleduj progress — vidíš co dělají, kdy skončili</li>
+  </ol>
+
+  <p><strong>Kontrola:</strong> Quando vidíš že Agent A skončil, můžeš spustit Agenta B. Nebo to nastavíš aby se spustilo automaticky.</p>
+</div>
+
+<!-- 02 KOMUNIKAČNÍ KANÁLY -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Komunikační Kanály — Jak Si Agenti Předávají Věci</h2>
+
+  <p><strong>Zásadní pochopení:</strong> Agenti se NEMLUVUJÍ. Neposílají si zprávy. Komunikují PŘES KÓD. Toto je kritické.</p>
+
+  <h3>5 Hlavních Kanálů</h3>
+
+  <h4>1. Git Commits (Nejjednoduší)</h4>
+  <p><strong>Co to je:</strong> Když agent commituje kód, všichni vidí změnu.</p>
+  <p><strong>Výhoda:</strong> Je to permanentní, traceable, má historii</p>
+  <p><strong>Jak:</strong> Implementer writes code, commits: `git commit -m "feat: PriceTable component"`</p>
+  <p><strong>Tester vidí:</strong> V `git log` vidí co se změnilo, proč</p>
+
+  <div class="code-block">
+DESIGNER commituje:<br/>
+git commit -m "design: PriceTable wireframe"<br/>
+<br/>
+IMPLEMENTER vidí v git log a commituje:<br/>
+git commit -m "feat: PriceTable React component"<br/>
+<br/>
+TESTER vidí v git diff a testuje:<br/>
+git show HEAD (vidí co se změnilo)<br/>
+Píše testy a commituje:<br/>
+git commit -m "test: PriceTable unit tests"
+  </div>
+
+  <h4>2. Artifacts (Antigravity Feature)</h4>
+  <p><strong>Co to je:</strong> Agent generuje Artifact (soubor, preview, design). Ostatní to vidí.</p>
+  <p><strong>Výhoda:</strong> Vizuální, jasné, live preview</p>
+  <p><strong>Jak:</strong> Designer generuje HTML preview v Artifact. Implementer ho vidí.</p>
+
+  <div class="code-block">
+DESIGNER generuje Artifact:<br/>
+[Shows HTML preview of PriceTable design]<br/>
+<br/>
+IMPLEMENTER vidí v Approval panel:<br/>
+"Artifact: HTML preview"<br/>
+[Klikne na něj a vidí design]<br/>
+<br/>
+IMPLEMENTER pak implementuje React:<br/>
+[Generuje svůj Artifact se React komponentou]
+  </div>
+
+  <h4>3. TypeScript Interface Files (.d.ts)</h4>
+  <p><strong>Co to je:</strong> Soubory s typovými definicemi. "Tady je kontrakt."</p>
+  <p><strong>Výhoda:</strong> Přesné, nully ambiguity, machine-readable</p>
+  <p><strong>Jak:</strong> Designer píše interface, všichni si ho odsud vezmou</p>
+
+  <div class="code-block">
+File: src/types/PriceTable.d.ts<br/>
+<br/>
+export interface Recipe {<br/>
+  id: string<br/>
+  name: string<br/>
+  price: number<br/>
+  category: 'soup' | 'main' | 'dessert'<br/>
+}<br/>
+<br/>
+export interface PriceTableProps {<br/>
+  recipes: Recipe[]<br/>
+  onSort?: (field: keyof Recipe) => void<br/>
+}<br/>
+<br/>
+IMPLEMENTER čte toto a ví:<br/>
+"OK, component dostane recipes array.<br/>
+Každý recipe má id, name, price, category.<br/>
+Optional onSort callback."<br/>
+<br/>
+TESTER čte toto a ví:<br/>
+"Testuju s těmito types.<br/>
+Když předám špatný type → fail test."
+  </div>
+
+  <h4>4. Comments & Documentation</h4>
+  <p><strong>Co to je:</strong> Code comments, JSDoc, README notes</p>
+  <p><strong>Výhoda:</strong> Vysvětluje PROČ, ne jen CO</p>
+  <p><strong>Jak:</strong> Agent napíše komentář co vysvětluje rozhodnutí</p>
+
+  <div class="code-block">
+/**<br/>
+ * Designer Agent Note:<br/>
+ * I chose flexbox here (not grid) because<br/>
+ * we need equal height columns on mobile.<br/>
+ * Grid has limitations on older phones.<br/>
+ * — DESIGNER Agent<br/>
+ */<br/>
+.priceTable {<br/>
+  @apply flex flex-col gap-4;<br/>
+}
+  </div>
+
+  <h4>5. Approval & Feedback Panels</h4>
+  <p><strong>Co to je:</strong> V Antigravity vidíš approval panel. Tam se hlasuje / dává feedback.</p>
+  <p><strong>Výhoda:</strong> Synchronní komunikace (live feedback)</p>
+  <p><strong>Jak:</strong> Implementer pushne PR → vidíš v approval panelu → můžeš komentovat → agent vidí a opravuje</p>
+
+  <div class="code-block">
+IMPLEMENTER pushne kód<br/>
+[Approval panel shows the code]<br/>
+<br/>
+TY napíšeš komentář:<br/>
+"Button color is wrong — should be blue"<br/>
+<br/>
+IMPLEMENTER vidí feedback a opravuje:<br/>
+"Changing button color to blue"<br/>
+<br/>
+TY schvaliíš:<br/>
+[Approve] ✓<br/>
+<br/>
+IMPLEMENTER vidí že je schváleno a commituje
+  </div>
+
+  <h3>Strategie: Který Kanál Kdy</h3>
+  <p><strong>Definitivní:</strong> Git commits + TypeScript interfaces (permanentní, machine-readable)</p>
+  <p><strong>Vizuální:</strong> Artifacts (HTML previews, designs)</p>
+  <p><strong>Vysvětlující:</strong> Comments (proč byly rozhodnutí)</p>
+  <p><strong>Feedback:</strong> Approval panel (live discussion)</p>
+
+  <p><strong>Pro tvůj receptář s 3 agenty:</strong> Používej všechny. Git commits primárně, Artifacts pro design, TypeScript interfaces pro kontrakty, Comments pro vysvětlení.</p>
+</div>
+
+<!-- 03 INTERFACE DEFINICE -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Interface Definice — Smlouva Mezi Agenty</h2>
+
+  <p><strong>Co to je?</strong> Interface je smlouva. "Implementer: Já (Designer) ti dávám TOTO. Ty MUSÍŠ RESPEKTOVAT. Nemůžeš to měnit."</p>
+
+  <p><strong>Proč je to kritické?</strong> Bez interface by Implementer mohl změnit design (přidat svou barvu). Ale interface říká: "Barvy jsou READ-ONLY — Designer je nastavila."</p>
+
+  <h3>Interface Hierarchie</h3>
+
+  <h4>Level 1: Component Props (Nejdůležitější)</h4>
+  <p><strong>Co:</strong> Jaké props dostane component?</p>
+  <div class="code-block">
+// DESIGNER definuje:<br/>
+export interface PriceTableProps {<br/>
+  recipes: Array<{<br/>
+    id: string<br/>
+    name: string<br/>
+    price: number<br/>
+  }><br/>
+  sortBy?: 'name' | 'price'<br/>
+  onSort?: (field: string) => void<br/>
+}<br/>
+<br/>
+// IMPLEMENTER vidí a ví:<br/>
+// "Props musím PŘESNĚ takhle implementovat.<br/>
+// Nic víc, nic míň."<br/>
+<br/>
+// TESTER vidí a ví:<br/>
+// "Testuju s těmito props types."
+  </div>
+
+  <h4>Level 2: Data Models (Struktury)</h4>
+  <p><strong>Co:</strong> Jaké jsou datastructures? (Database, API responses)</p>
+  <div class="code-block">
+// ARCHITECT definuje:<br/>
+export interface Recipe {<br/>
+  id: string // UUID<br/>
+  name: string // max 100 chars<br/>
+  description?: string<br/>
+  price: number // in CZK<br/>
+  category: 'soup' | 'main' | 'dessert'<br/>
+  createdAt: Date<br/>
+  updatedAt: Date<br/>
+}<br/>
+<br/>
+// BACKEND API vrací:<br/>
+GET /api/recipes → Recipe[]<br/>
+<br/>
+// FRONTEND čeká tyto fieldy:<br/>
+const recipes: Recipe[] = await fetch(...)<br/>
+<br/>
+// TESTER testuje s těmito types
+  </div>
+
+  <h4>Level 3: API Contracts (Komunikace Backend-Frontend)</h4>
+  <p><strong>Co:</strong> Jaké jsou API endpoints? Jaké data berou/vrací?</p>
+  <div class="code-block">
+// ARCHITECT definuje:<br/>
+<br/>
+GET /api/recipes<br/>
+Response: { data: Recipe[], total: number }<br/>
+<br/>
+POST /api/recipes<br/>
+Body: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'><br/>
+Response: { data: Recipe }<br/>
+<br/>
+GET /api/recipes/:id<br/>
+Response: { data: Recipe }<br/>
+<br/>
+// BACKEND implementuje PŘESNĚ takto<br/>
+// FRONTEND volá PŘESNĚ s těmito parametry<br/>
+// TESTER testuje PŘESNĚ toto
+  </div>
+
+  <h3>Jak Zajistit Compliance (Dodržování)</h3>
+
+  <p><strong>Problém:</strong> Interface je napsaný, ale Agent ho ignoruje.</p>
+  <p><strong>Řešení 1: TypeScript Strict Mode</strong></p>
+  <div class="code-block">
+// tsconfig.json<br/>
+{<br/>
+  "compilerOptions": {<br/>
+    "strict": true, // STRICT!<br/>
+    "exactOptionalPropertyTypes": true,<br/>
+    "noImplicitAny": true<br/>
+  }<br/>
+}<br/>
+<br/>
+// Pokud IMPLEMENTER napíše<br/>
+const MyComponent = ({ recipes, unknown }) => {<br/>
+  // ^^^^^^^^^^ TypeScript FAIL!<br/>
+  // "unknown" není v PriceTableProps<br/>
+}<br/>
+<br/>
+// Build nefunguje. Agent musí fixnout.
+  </div>
+
+  <p><strong>Řešení 2: Explicit Rule v .antigravity-rules</strong></p>
+  <div class="code-block">
+RULE: Interface je READ-ONLY<br/>
+RULE: DESIGNER definuje interface, IMPLEMENTER ji respektuje<br/>
+RULE: Změna interface = potřeba schválení DESIGNERA<br/>
+DENY: IMPLEMENTER měnit interface sám<br/>
+DENY: BACKEND vrátit jiné fieldy než v API contract
+  </div>
+
+  <p><strong>Řešení 3: Runtime Validation</strong></p>
+  <div class="code-block">
+// IMPLEMENTER používá runtime validation<br/>
+import { z } from 'zod'<br/>
+<br/>
+const RecipeSchema = z.object({<br/>
+  id: z.string(),<br/>
+  name: z.string(),<br/>
+  price: z.number(),<br/>
+  category: z.enum(['soup', 'main', 'dessert'])<br/>
+})<br/>
+<br/>
+// API vrací data<br/>
+const response = await fetch('/api/recipes')<br/>
+const data = await response.json()<br/>
+<br/>
+// Validuj!<br/>
+const recipes = RecipeSchema.array().parse(data)<br/>
+// Pokud data neodpovídají → runtime error<br/>
+// BACKEND vidí error a fixne
+  </div>
+</div>
+
+<!-- 04 ZÁVISLOSTI & WORKFLOW DAG -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Závislosti & Workflow DAG — Kdo Čeká Na Koho</h2>
+
+  <p><strong>Co je DAG?</strong> DAG = Directed Acyclic Graph. To je diagram který ukazuje: "Agent A → Agent B → Agent C" nebo "A → B i C paralelně → D".</p>
+
+  <h3>Příklad 1: Receptář (Sekvenční)</h3>
+  <div class="code-block">
+┌─────────┐<br/>
+│ DESIGNER│  Design UI<br/>
+└────┬────┘<br/>
+     │ (outputs interface)<br/>
+     ▼<br/>
+┌──────────────┐<br/>
+│ IMPLEMENTER  │  Code it<br/>
+└────┬─────────┘<br/>
+     │ (outputs kód)<br/>
+     ▼<br/>
+┌────────┐<br/>
+│ TESTER │  Test it<br/>
+└────────┘<br/>
+<br/>
+Závislosti:<br/>
+• IMPLEMENTER čeká na DESIGNER (vstup: interface)<br/>
+• TESTER čeká na IMPLEMENTER (vstup: kód)<br/>
+<br/>
+Čas: Lineární — všichni za sebou<br/>
+Duration: 1h + 1h + 0.5h = 2.5 hodin
+  </div>
+
+  <h3>Příklad 2: Návody (Paralelní)</h3>
+  <div class="code-block">
+           ┌─────────────┐<br/>
+           │ STRUKTURA   │ (outline)<br/>
+           └──────┬──────┘<br/>
+                  │<br/>
+      ┌───────────┼───────────┐<br/>
+      ▼           ▼           ▼<br/>
+  ┌───────┐  ┌────────┐  ┌────────┐<br/>
+  │OBSAH  │  │KÓD     │  │PŘÍKLADY│ (paralelně)<br/>
+  └───┬───┘  └───┬────┘  └───┬────┘<br/>
+      │          │           │<br/>
+      └──────────┼───────────┘<br/>
+                 ▼<br/>
+            ┌────────┐<br/>
+            │ EDITOR │ (final check)<br/>
+            └────────┘<br/>
+<br/>
+Závislosti:<br/>
+• OBSAH, KÓD, PŘÍKLADY — nezávislí (paralelně)<br/>
+• EDITOR čeká na všechny 3 (vstup: výstupy)<br/>
+<br/>
+Čas: Paralelní<br/>
+Duration: 1h (struktura) + 3h (paralelně) = 4h
+vs Sériově: 12h
+  </div>
+
+  <h3>Příklad 3: E-shop (Komplexní DAG)</h3>
+  <div class="code-block">
+┌──────────┐<br/>
+│ ARCHITECT│ DB schema<br/>
+└────┬─────┘<br/>
+     │<br/>
+     ├──────┬──────────┐<br/>
+     │      │          │<br/>
+     ▼      ▼          ▼<br/>
+  ┌────┐ ┌────────┐ ┌────────┐<br/>
+  │BACK│ │FRONTEND│ │[wait]  │<br/>
+  └─┬──┘ └────┬───┘ └────────┘<br/>
+    │         │<br/>
+    └────┬────┘<br/>
+         ▼<br/>
+    ┌──────────┐<br/>
+    │INTEGRATOR│ Payments<br/>
+    └────┬─────┘<br/>
+         │<br/>
+         ▼<br/>
+    ┌────────┐<br/>
+    │ TESTER │ All tests<br/>
+    └────┬───┘<br/>
+         │<br/>
+         ▼<br/>
+    ┌────────┐<br/>
+    │REVIEWER│ Final check<br/>
+    └────────┘<br/>
+<br/>
+Závislosti:<br/>
+• BACKEND čeká na ARCHITECT<br/>
+• FRONTEND je téměř nezávislý (mock server)<br/>
+• INTEGRATOR čeká na BACKEND & FRONTEND<br/>
+• TESTER čeká na INTEGRATOR<br/>
+• REVIEWER vidí všechno<br/>
+<br/>
+Strategie paralelizace:<br/>
+ARCHITECT (1h)<br/>
+  → BACKEND (2h) + FRONTEND (2h) paralelně<br/>
+  → INTEGRATOR (1h)<br/>
+  → TESTER (1h)<br/>
+  → REVIEWER (0.5h)<br/>
+Total: 5.5h (místo 8h sériově)
+  </div>
+
+  <h3>Jak Definovat DAG Pro Tvůj Projekt</h3>
+
+  <p><strong>Postup:</strong></p>
+  <ol>
+    <li><strong>List všechny agenty</strong> které potřebuješ</li>
+    <li><strong>Definuj "co agent dostane" (input)</strong> a "co agent vydá" (output)</li>
+    <li><strong>Nakresli šipky</strong> — "agent A → agent B" znamená "A musí skončit před B"</li>
+    <li><strong>Hledej paralelizaci</strong> — pokud jsou agenti nezávislí, běžou zároveň</li>
+    <li><strong>Spočítej čas</strong> — Max(paralelní) + Sum(sériové)</li>
+  </ol>
+
+  <p><strong>Pro receptář (TVŮJ PROJEKT):</strong></p>
+  <div class="code-block">
+Agenti: DESIGNER, IMPLEMENTER, TESTER<br/>
+<br/>
+Definice:<br/>
+DESIGNER:<br/>
+  Input: Feature spec ("Přidej ceník receptů")<br/>
+  Output: Interface + HTML preview<br/>
+<br/>
+IMPLEMENTER:<br/>
+  Input: DESIGNER output<br/>
+  Output: React komponenta (kód)<br/>
+<br/>
+TESTER:<br/>
+  Input: IMPLEMENTER output<br/>
+  Output: Test soubory + test report<br/>
+<br/>
+DAG:<br/>
+DESIGNER → IMPLEMENTER → TESTER<br/>
+(sériově, není paralelizace)<br/>
+<br/>
+Čas: ~2.5 hodin na featuru
+  </div>
+</div>
+
+<!-- 05 KONFLIKT RESOLUTION -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Konflikt Resolution — Když Se Agenti Neshodnou</h2>
+
+  <p><strong>Kdy se to stane?</strong> IMPLEMENTER dostane design, ale myslí si že to je špatně. "Barva by měla být modrá, ne červená." Konflikt!</p>
+
+  <h3>Typy Konfliktů</h3>
+
+  <h4>Typ 1: Design vs Implementation</h4>
+  <p><strong>Co:</strong> Implementer chce změnit design.</p>
+  <p><strong>Příčina:</strong> Možná je design nerealistický (2s load time na mobilu) nebo technicky nemožný.</p>
+  <p><strong>Řešení:</strong> RULE: "IMPLEMENTER: Nemůžeš měnit design sám. Pokud není možný → reportuj DESIGNEROVI. DESIGNER dělá rozhodnutí."</p>
+
+  <div class="code-block">
+IMPLEMENTER čte design a vidí:<br/>
+"Button animation — 0.2s transition + glow effect"<br/>
+<br/>
+IMPLEMENTER myslí:<br/>
+"To bude pomalé. Sníží performance na mobilu."<br/>
+<br/>
+❌ ŠPATNĚ:<br/>
+IMPLEMENTER odstraní animation (bez schválení)<br/>
+<br/>
+✅ SPRÁVNĚ:<br/>
+IMPLEMENTER napíše komentář:<br/>
+"Designer: Animation 0.2s + glow = 60fps loss on mobile.<br/>
+Suggestion: Reduce to 0.1s or remove glow.<br/>
+What's your priority — animation or performance?"<br/>
+<br/>
+DESIGNER vidí a rozhodne:<br/>
+"OK, 0.1s je OK."<br/>
+<br/>
+IMPLEMENTER pak to implementuje.
+  </div>
+
+  <h4>Typ 2: Implementace vs Testing</h4>
+  <p><strong>Co:</strong> Tester najde bug, ale Implementer nesouhlasí že je to bug.</p>
+  <p><strong>Příčina:</strong> Různé chápání specifikace.</p>
+  <p><strong>Řešení:</strong> RULE: "Pokud Tester říká že je to bug → je to bug. Dokud není fixnuto, nechod dál."</p>
+
+  <div class="code-block">
+TESTER testuje component:<br/>
+test('button is disabled when loading', () => {<br/>
+  // Expected: button disabled<br/>
+  // Actual: button is clickable<br/>
+  expect(isDisabled).toBe(true) // FAIL<br/>
+})<br/>
+<br/>
+IMPLEMENTER vidí a řekne:<br/>
+"To není bug. Uživatel musí být schopný<br/>
+znovu kliknout na button."<br/>
+<br/>
+❌ ŠPATNĚ:<br/>
+IMPLEMENTER ignoruje test, pokračuje dál.<br/>
+<br/>
+✅ SPRÁVNĚ:<br/>
+IMPLEMENTER kouká na spec:<br/>
+"Spec říká: Button DISABLED během loadingu."<br/>
+"Uživatel se mýlil. Musím fixnout."<br/>
+<br/>
+IMPLEMENTER commituje fix.
+  </div>
+
+  <h4>Typ 3: Data Model Conflict</h4>
+  <p><strong>Co:</strong> Frontend čeká `recipe.price`, Backend vrací `recipe.cost`.</p>
+  <p><strong>Příčina:</strong> Interface nebyl jasný, agenti pracovali nezávisle.</p>
+  <p><strong>Řešení:</strong> Tento konflikt se VŮBEC neměl stát. Solution: TypeScript Interface je SOURCE OF TRUTH.</p>
+
+  <div class="code-block">
+❌ ŠPATNĚ (bez interface):<br/>
+BACKEND (nezávisle) vrací:<br/>
+{ id, name, cost }<br/>
+<br/>
+FRONTEND (nezávisle) čeká:<br/>
+{ id, name, price }<br/>
+<br/>
+Runtime: Frontend vidí undefined price → bug<br/>
+<br/>
+✅ SPRÁVNĚ (s interface):<br/>
+Interface (ARCHITECT definuje):<br/>
+interface Recipe { id, name, price }<br/>
+<br/>
+BACKEND: "Musím vrátit `price`" (TypeScript error)<br/>
+FRONTEND: "Čekám `price`" (TypeScript satisfied)<br/>
+<br/>
+Konflikt se nestane — TypeScript to chytí.
+  </div>
+
+  <h3>Generální Strategie Konflikt Resolution</h3>
+
+  <p><strong>Princip 1: Jasný Ownership</strong></p>
+  <p>Každá rozhodnutí má jednoho ownera. Design decisions = DESIGNER (final say). Implementation decisions = IMPLEMENTER (final say). Test coverage = TESTER (final say).</p>
+
+  <p><strong>Princip 2: Interface Je Zákaz</strong></p>
+  <p>Pokud je něco v interface/types → je TO ZÁKAZ. Nemenitelné. Pokud chceš to změnit → schválení owncera.</p>
+
+  <p><strong>Princip 3: Escalation</strong></p>
+  <p>Pokud se dva agenti neshodnou → escalate to YOU (orchestrátor). TY rozhodneš.</p>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Nejčastější chyba: Moc vágní specifikace</strong>
+      <p>Bez jasné specifikace (interface, rules) se konflikty násobí. Čas na specifikaci se vrátí.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 06 BEST PRACTICES & ANTI-PATTERNS -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Best Practices & Anti-Patterns — Co Funguje, Co Ne</h2>
+
+  <h3>✅ BEST PRACTICES</h3>
+
+  <h4>1. Jasné Role & Ownership</h4>
+  <p><strong>Pravidlo:</strong> Každý agent má jasnou roli. "DESIGNER navrhuje, IMPLEMENTER kóduje, TESTER testuje." Žádná nejasnost.</p>
+  <p><strong>Jak:</strong> Napíšeš role definition (viz Kapitola 13). Všichni ji čtou a podřizují se.</p>
+
+  <h4>2. Interface First</h4>
+  <p><strong>Pravidlo:</strong> Předtím než agenti začnou → definuj interface. "Tady je kontrakt. Všichni se podřizují."</p>
+  <p><strong>Jak:</strong> Vytvoříš TypeScript files s interfacemi. ARCHITECT to dělá.</p>
+  <p><strong>Výhoda:</strong> 90% konfliktů se nikdy nestane. TypeScript to chytí compile-time.</p>
+
+  <h4>3. Explicit Communication Rules</h4>
+  <p><strong>Pravidlo:</strong> Jak si agenti předávají věci? Git? Artifacts? Comments? Všichni to vědí.</p>
+  <p><strong>Jak:</strong> V .antigravity-rules: "DESIGNER outputs: Artifact + interface. IMPLEMENTER consumes: Artifact + interface. TESTER consumes: code from git."</p>
+
+  <h4>4. Review-Driven Approval</h4>
+  <p><strong>Pravidlo:</strong> Když agent skončí → vidíš to, můžeš schválit nebo poprosit o změnu.</p>
+  <p><strong>Jak:</strong> V Antigravity Manager View nastaviš Approval Mode = Review-Driven</p>
+  <p><strong>Výhoda:</strong> Plná kontrola. Žádné surprise.</p>
+
+  <h4>5. Atomic Commits</h4>
+  <p><strong>Pravidlo:</strong> Jeden agent = jeden commit. Není chaos. Git history je čistá.</p>
+  <p><strong>Jak:</strong> RULE: "One task = one commit"</p>
+  <div class="code-block">
+✅ DOBRÉ:<br/>
+git commit -m "feat: PriceTable component"<br/>
+git commit -m "test: PriceTable unit tests"<br/>
+git commit -m "docs: PriceTable JSDoc"<br/>
+<br/>
+❌ ŠPATNÉ:<br/>
+git commit -m "did stuff"<br/>
+(3 věci v jednom commit — historia je nepřehledná)
+  </div>
+
+  <h4>6. Constraint-Driven Design</h4>
+  <p><strong>Pravidlo:</strong> Agenti mají limity. "DESIGNER: dark theme only. IMPLEMENTER: TypeScript strict. TESTER: 80%+ coverage."</p>
+  <p><strong>Jak:</strong> Rules a Constraints v system promptu + .antigravity-rules</p>
+  <p><strong>Výhoda:</strong> Konzistentnost. Všichni víděl kam mohou, kam ne.</p>
+
+  <h3>❌ ANTI-PATTERNS (Co Vyhnout)</h3>
+
+  <h4>Anti-Pattern 1: Vágní Specifikace</h4>
+  <p><strong>Problém:</strong> "Urci feature X" — co je feature X?</p>
+  <p><strong>Výsledek:</strong> Všichni to chápou jinak. Chaos.</p>
+  <p><strong>Jak se vyhnout:</strong> Napíšeš spec. "Feature X je: form s 3 inputy, validation, submit button, error handling. Interface je [types]. UI je [wireframe]."</p>
+
+  <h4>Anti-Pattern 2: Agenti Si Posílají Zprávy (V Chatu)</h4>
+  <p><strong>Problém:</strong> IMPLEMENTER píše v chatu: "Designer, je to OK?". Chaos. Agenti nejsou chataři.</p>
+  <p><strong>Výsledek:</strong> Chyby v komunikaci, delay.</p>
+  <p><strong>Jak se vyhnout:</strong> Komunikace JE KÓD. Agenti si předávají věci přes Git, Artifacts, TypeScript files. Ne přes chat.</p>
+
+  <h4>Anti-Pattern 3: Žádný Approval Gate</h4>
+  <p><strong>Problém:</strong> Agenti dělají co chtějí, bez tvého schválení.</p>
+  <p><strong>Výsledek:</strong> Špatná kvalita. Bugs jdou do production.</p>
+  <p><strong>Jak se vyhnout:</strong> Approval Mode = Review-Driven. VŠECHNO musí schválit TY (nebo REVIEWER agent).</p>
+
+  <h4>Anti-Pattern 4: Příliš Mnoho Agentů</h4>
+  <p><strong>Problém:</strong> Máš 10 agentů. Orchestrace je nightmare.</p>
+  <p><strong>Výsledek:</strong> Konflikty, overhead, komunikační chaos.</p>
+  <p><strong>Jak se vyhnout:</strong> Start with 1-3 agenti. Přidej když je to nutné. Méně je víc.</p>
+
+  <h4>Anti-Pattern 5: Interface Ignorování</h4>
+  <p><strong>Problém:</strong> Interface existuje, ale agenti ho ignorují.</p>
+  <p><strong>Výsledek:</strong> Data mismatches, runtime errors.</p>
+  <p><strong>Jak se vyhnout:</strong> TypeScript strict mode. Pokud agent ignoruje interface → build selže. Nutí se dodržovat.</p>
+
+  <h4>Anti-Pattern 6: Circular Dependencies</h4>
+  <p><strong>Problém:</strong> Agent A čeká na B, B čeká na A. Deadlock.</p>
+  <div class="code-block">
+❌ ŠPATNĚ:<br/>
+FRONTEND: "Čekám na Backend API"<br/>
+BACKEND: "Čekám na Frontend types"<br/>
+[Deadlock — nic se nedělá]<br/>
+<br/>
+✅ SPRÁVNĚ:<br/>
+ARCHITECT: Definuje interface PRVNÍ<br/>
+FRONTEND: Chce interface, dostane ji<br/>
+BACKEND: Chce interface, dostane ji<br/>
+Oba kódují proti rozhraní, bez čekání
+  </div>
+
+  <p><strong>Jak se vyhnout:</strong> Interface first. Nikdy circular dependencies. DAG musí být acyclic (bez cyklů).</p>
+
+  <h3>Checklist: Je Orchestrace Správná?</h3>
+  <ul>
+    <li>✅ Všichni agenti mají jasnou roli?</li>
+    <li>✅ Existuje interface/kontrakt?</li>
+    <li>✅ Komunikace je přes kód (ne chat)?</li>
+    <li>✅ DAG je definovaný (bez cyklů)?</li>
+    <li>✅ Approval mode je Review-Driven?</li>
+    <li>✅ Rules jsou jasné a vynucované?</li>
+    <li>✅ Není příliš mnoho agentů?</li>
+  </ul>
+
+  <p><strong>Pokud všechno OK → Orchestrace je správná!</strong></p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Shrnutí: Orchestrace Je o Kontrole & Klaritě</strong>
+      <p>TY řídíš. Interface je zákaz. Komunikace je kód. Agenti se řídí. Konflikty jsou řídké a snadné vyřešit. Vše je jasné a traceable.</p>
+    </div>
+  </box>
+</div>
+
+<!-- FOOTER -->
+<!-- CHAPTER NAV -->
+<nav class="chapter-nav">
+  <a href="13_ANT_New_Agent.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Nový Agent</span></div>
+  </a>
+  <a href="15_ANT_Scenare.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Scénáře</span></div>
+    <span>→</span>
+  </a>
+</nav>
+
+<footer>
+  14_ANT_Orchestrace.html · Antigravity průvodce · Claude (Anthropic) · Květen 2026<br/>
+  <a href="00_ANT_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

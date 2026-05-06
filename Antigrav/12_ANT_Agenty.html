@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Další Agenty – Antigravity průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --pink:#ec4899;--pink2:#f472b6;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(236,72,153,.1) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--pink2)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-p{color:var(--pink2);border-color:rgba(236,72,153,.3);background:rgba(236,72,153,.08)}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--pink);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--pink2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--pink2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--pink);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--pink2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(236,72,153,.1);
+  color:var(--pink2);border:1px solid rgba(236,72,153,.2);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:#6ee7b7}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--accent)}
+.info{background:rgba(236,72,153,.08);border-color:rgba(236,72,153,.25);color:#d89db8}
+.info .content strong{color:var(--pink2)}
+
+.placeholder{background:var(--bg2);border:2px dashed var(--border);border-radius:8px;padding:20px;
+  text-align:center;color:var(--t2);font-size:.9em;margin:20px 0}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+/* === CHAPTER NAVIGATION === */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--purple);color:var(--purple2);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+.ch-btn .ch-name{color:var(--purple2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 12</div>
+  <h1>Další <em>Agenty</em></h1>
+  <p class="h-desc">Více agentů, různé role a specializace. Jak je orchestrovat, jak se spolu domluví, jaké strategie jsou nejlepší pro komplexní projekty.</p>
+  <div class="badges">
+    <span class="badge badge-p">🤖 Multi-Agent</span>
+    <span class="badge badge-c">🎯 Role & Specialization</span>
+    <span class="badge badge-p">🔗 Orchestrace</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Jeden vs Více agentů</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Různé role agentů</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Jak je koexistují</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Komunikace mezi agenty</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Praktické scénáře</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Pro tvůj receptář</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Jeden vs Více agentů</h2>
+
+  <h3>Kdy jeden agent stačí</h3>
+  <p><strong>Jednoduchý projekt, lineární tok:</strong> Máš řetězec kroků kde každý krok logicky následuje. Například: "Přidej feature" → agent to implementuje. Nebo: "Napiš test" → agent to dělá. Jeden agent s jasným fokusem je nejjednodušší a nejrychlejší.</p>
+
+  <p><strong>Příklady:</strong> Editace jednoho souboru, drobné opravy, jednorázové úkoly. Tvůj receptář v počátcích — když jsi jen přidával recepty a editoval UI.</p>
+
+  <h3>Kdy potřebuješ více agentů</h3>
+  <p><strong>Komplexní projekt s paralelními streamy:</strong> Když máš věci které se mohou dělat nezávisle. Například: Frontend design se dělá ZÁROVEŇ s backend logikou, zatímco testy se píší paralelně. Jeden agent by dělal všechno sériově — bylo by to pomalé.</p>
+
+  <p><strong>Specializované role:</strong> Agent na testy vidí kód jinak než agent na design. Každý má specifický mindset a constraints. Designer řeší CSS, architekt řeší databázi — jejich stavy jsou jiné.</p>
+
+  <p><strong>Kontrola kvality:</strong> Když máš REVIEWER agenta, ten je čistě na code review a nic jiného nedělá. Není "zašumění" - je zaměřený.</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Heuristica: Více agentů když máš 3+ nezávislých streamů</strong>
+      <p>Pokud máš Feature A, Feature B a Testy — to jsou 3 věci. Mohou běžet paralelně? Pokud ano → více agentů. Pokud ne (testy závisí na Feature A) → sekvence je OK.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Různé role agentů — 10 TOP typů</h2>
+
+  <p>Tady je orientace co všechno může být agent. Není to seznam "měl by sem mít tyto 10" — je to "z těchto typů si vezmi co potřebuješ".</p>
+
+  <h3>1. ANALYZER (Čtenář & Konzultant)</h3>
+  <p>Role: Čte kód/dokumentaci a radí co s ním. Neimplementuje, jen analyzuje. "Jaká je struktura tohoto souboru?" → vrací detailní analýzu. Ideální pro code review, architekturní rozhodnutí, identifikaci problémů.</p>
+
+  <h3>2. IMPLEMENTER (Kodér)</h3>
+  <p>Role: Píše kód. Frontend, backend, cokoliv. Nejčastější role. "Přidej tuto funkci" → implementuje. Pracuje s kompilátorem, rozumí TypeScript/JavaScript, spouští build.</p>
+
+  <h3>3. TESTER (Tester)</h3>
+  <p>Role: Píše testy. Unit testy, integration testy. Zná testing frameworky. Kontroluje že kód FUNGUJE. Má přístup k test runnerům.</p>
+
+  <h3>4. DESIGNER (UI/UX Developer)</h3>
+  <p>Role: CSS, designové rozhodnutí. Pracuje s Tailwind, zná principy designu. Nemá v pověření psát business logiku — fokus jen na vzhled.</p>
+
+  <h3>5. ARCHITECT (Stavitel Struktury)</h3>
+  <p>Role: Návrh databází, API structure, project layout. "Jak bychom měli organizovat data?" → vymyslí schéma. Vysokoúrovňová rozhodnutí.</p>
+
+  <h3>6. REVIEWER (Code Review Expert)</h3>
+  <p>Role: Jen review. Čte co ostatní agenti napsali. Kontroluje style, security, performance. Gatekeeping role — povoluje nebo zamítá PR.</p>
+
+  <h3>7. OPTIMIZER (Rychlostář)</h3>
+  <p>Role: Perf optimizace. "Tahle funkcí je pomalá" → zkrátí ji. Zná algoritmy, caching, lazy loading. Fokus na metriky.</p>
+
+  <h3>8. DOCUMENTER (Dokumentaři)</h3>
+  <p>Role: Píše docs, README, JSDoc comments. Komunikátor. Umí vysvětlit věci jednoduše.</p>
+
+  <h3>9. DEBUGGER (Lovec Bugů)</h3>
+  <p>Role: Když selže build nebo runtime error — tento agent to fixuje. Čte error messages, zná debug tooling. Expert na "co se stalo".</p>
+
+  <h3>10. GENERALIST (Uniwersální Hráč)</h3>
+  <p>Role: Kombinuje víc věcí. Není jen developer ani jen designer — je multi-tool. Ideální pro malé projekty. Může nahradit 3-4 specializované agenty, ale s menší přesností.</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Praktické pravidlo: Máš-li čas a rozpočet → více specializovaných</strong>
+      <p>Máš-li málo času → jeden GENERALIST. Naše receptář? Designer + Implementer + Tester (3 agenti) je sweet spot.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Jak spolu agenti pracují</h2>
+
+  <p>Multi-agent systém není chaos. Je to orchestrovaný tanec. Tady je jak to funguje:</p>
+
+  <h3>Fáze 1: Definice Task & Role</h3>
+  <p>TY definuješ: "Agent Designer navrhne nový interface pro feature X. Pak Agent Implementer jej postaví. Pak Agent Tester jej testuje." Každý ví co má dělat a co ČEKá od ostatních.</p>
+
+  <h3>Fáze 2: Designer pracuje</h3>
+  <p>Agent Designer dostane: "Navrhni strukturu UI pro ceník receptáře. Výstup: Figma soubor / wireframe / popis layoutu." Pracuje, generuje Artifacts (designové návrhy).</p>
+
+  <h3>Fáze 3: Handoff — Implementer dostane input</h3>
+  <p>Agent Implementer vidí co Designer udělal. Dostane output: "Tady je wireframe, tady jsou barvy, tady jsou komponenty." Implementer říká: "OK, teď kóduji" a píše React komponenty podle návrhu.</p>
+
+  <h3>Fáze 4: Implementer hotov</h3>
+  <p>Výstup: Kód (Pull Request, nové soubory). Agent Tester vidí kód.</p>
+
+  <h3>Fáze 5: Tester kontroluje</h3>
+  <p>Agent Tester: "OK vidím React kód. Teď napíšu testy." Píše unit testy pro komponenty. Spouští <code>npm test</code>. Všechno green? Hotovo. Failure? Report agentovi Implementer co fixnout.</p>
+
+  <h3>Výměna dat — jak si předávají věci</h3>
+  <p>Agenti si předávají věci přes:</p>
+  <ul>
+    <li><strong>Git commits:</strong> Implementer commituje kód, Tester vidí v repo</li>
+    <li><strong>Comments v kódu:</strong> "Agent Designer sem napíšu komentář co to má být"</li>
+    <li><strong>Interface soubory:</strong> <code>types.ts</code> — "tady je kontrakt co očekávám"</li>
+    <li><strong>Artifacts v Antigravity:</strong> Agenti si vidí chystané změny v Approval panelu</li>
+  </ul>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Komunikace mezi agenty</h2>
+
+  <p>Agenti nekomunikují "mluvením" (nejsou v chatu spolu). Komunikují přes:</p>
+
+  <h3>1. Kód & Artifacts</h3>
+  <p>Agent Designer generuje Design Artifact. Agent Implementer ho vidí v panelu. To je komunikace — vizuální, jasná.</p>
+
+  <h3>2. Git History</h3>
+  <p>Commit message: "Designer: Added primary colors palette". Implementer vidí <code>git log</code> a ví co se změnilo a proč.</p>
+
+  <h3>3. TypeScript Interfaces (Smlouva)</h3>
+  <p>V souboru <code>types.ts</code>:</p>
+  <div style="background:var(--bg3);border:1px solid var(--border);padding:10px;border-radius:6px;margin:10px 0;font-family:'DM Mono',monospace;font-size:.75em;color:var(--purple2);line-height:1.6">
+interface RecipeCard {<br/>
+&nbsp;id: string;<br/>
+&nbsp;name: string;<br/>
+&nbsp;image: string; // Agent Designer: URL to image<br/>
+}</p>
+  </div>
+  <p>To je smlouva: "Implementer — ty MUSÍŠ poskytnou tyto fieldy. Designer — ty MUSÍŠ respektovat tuto strukturu."</p>
+
+  <h3>4. RULES & Comments</h3>
+  <p>V <code>.antigravity-rules</code> nebo v comments: "Agent Implementer: Neměň CSS, to je role Designeru" → explicitní komunikace.</p>
+
+  <h3>5. Approval & Feedback</h3>
+  <p>Když Implementer commituje — ty (orchestrující) můžeš napsat: "Agent Tester: tohle je špatně, fixni" → Tester vidí a opravuje.</p>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Agenti si NEMŮŽOU psát zprávy přímo</strong>
+      <p>Nedělají to tak: Agent1 píše agentovi Agent2 v chatu. To by bylo chaos. Místo toho: Předávají si věci přes kód, commits, artifacts.</p>
+    </div>
+  </box>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Orchestrace — Kdo řídí</h2>
+
+  <p><strong>TY jsi orchestrátor.</strong> Ty říkáš: "Teď Designer. Pak Implementer. Pak Tester." Ty spravuješ workflow.</p>
+
+  <p>Antigravity ti v tom pomáhá. Manager View je právě na tohle — vidíš všechny agenty, jejich stav, timeline.</p>
+
+  <h3>Možnosti orchestrace</h3>
+
+  <h4>Sériová (sekvenční)</h4>
+  <p>Designer → hotov → Implementer → hotov → Tester. Jeden po druhém. Pomalé ale jasné.</p>
+
+  <h4>Paralelní</h4>
+  <p>Designer + Implementer běží zároveň (pracují na různých částech). Tester až oba skončí. Rychlejší.</p>
+
+  <h4>Hybrid</h4>
+  <p>Designer končí feature A → Implementer začíná A. Zároveň Designer začíná feature B. Efektivní.</p>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Typické problémy & Jak se vyhnou</h2>
+
+  <h3>❌ Problém 1: Agenti si konflikují</h3>
+  <p>Designer říká "Barva je modrá", Implementer to změní na červenou. Konflikt!</p>
+  <p><strong>Řešení:</strong> Jasné RULES. "Agent Implementer: CSS barvy jsou ONLY Designerova rozhodnutí. Ty je implementuješ, nemění je."</p>
+
+  <h3>❌ Problém 2: Agenti nevědí co dělat</h3>
+  <p>Dáš jsi Implementerovi kód bez jasné specifikace. Neví co se očekává.</p>
+  <p><strong>Řešení:</strong> Interface definice. TypeScript <code>.d.ts</code> soubor co říká "tady je kontrakt".</p>
+
+  <h3>❌ Problém 3: Čekání a deadlock</h3>
+  <p>Implementer čeká na Designera, Designera blokuje něco jiného. Nic se nedělá.</p>
+  <p><strong>Řešení:</strong> Parallelizace. Pokud Implementer může pracovat na Feature A zatímco Designer dělá Feature B — pověz mu to.</p>
+
+  <h3>❌ Problém 4: Nerealizovatelné očekávání</h3>
+  <p>"Agent Tester: pokryj 100% kódu testy" — ale někdy je to nereálné.</p>
+  <p><strong>Řešení:</strong> Realistické cíle. "80% pokrytí" je lepší.</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Součet všech problémů: Nedostatečná komunikace</strong>
+      <p>Jasné role + jasné interface + jasné RULES = 90% problémů vyřešeno.</p>
+    </div>
+  </box>
+</div>
+
+<!-- FOOTER -->
+<!-- CHAPTER NAV -->
+<nav class="chapter-nav">
+  <a href="11_ANT_Instalace.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Instalace</span></div>
+  </a>
+  <a href="13_ANT_New_Agent.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Nový Agent</span></div>
+    <span>→</span>
+  </a>
+</nav>
+
+<footer>
+  12_ANT_Agenty.html · Antigravity průvodce · Claude (Anthropic) · Květen 2026<br/>
+  <a href="00_ANT_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

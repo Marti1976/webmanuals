@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doplňky (Extensions) – Antigravity průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
+  background:radial-gradient(ellipse,rgba(0,217,255,.08) 0%,transparent 65%);pointer-events:none}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--cyan2)}
+.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+.badge-p{color:var(--purple2);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+.badge-g{color:var(--green2);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08)}
+
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--cyan);
+  border-radius:var(--r);padding:20px 24px;margin:32px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--cyan2);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:4px 0;transition:color .2s}
+.toc-item:hover{color:var(--cyan2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--cyan);min-width:16px}
+
+.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--cyan2);
+  margin:28px 0 10px}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(0,217,255,.08);
+  color:var(--cyan2);border:1px solid rgba(0,217,255,.15);border-radius:4px;padding:1px 7px}
+
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:var(--green2)}
+.warn{background:rgba(255,0,110,.08);border-color:rgba(255,0,110,.25);color:#f08aa0}
+.warn .content strong{color:var(--accent2)}
+.info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);color:#9dd8e8}
+.info .content strong{color:var(--cyan2)}
+
+.code-block{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--cyan);
+  border-radius:8px;padding:12px 16px;margin:12px 0;font-family:'DM Mono',monospace;font-size:.78em;
+  color:var(--cyan2);line-height:1.8;overflow-x:auto}
+
+/* TOP 10 karty */
+.ext-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:20px 0}
+.ext-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:18px 20px;position:relative;transition:border-color .2s}
+.ext-card:hover{border-color:var(--border2)}
+.ext-card.top1{border-left:3px solid var(--cyan)}
+.ext-rank{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:6px}
+.ext-rank span{font-size:1.1em;font-weight:700}
+.ext-name{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:700;color:var(--white);margin-bottom:4px}
+.ext-id{font-family:'DM Mono',monospace;font-size:.75em;color:var(--cyan2);margin-bottom:10px}
+.ext-desc{font-size:.9em;color:var(--t2);line-height:1.65;margin-bottom:8px}
+.ext-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ext-tag{font-family:'DM Mono',monospace;font-size:.68em;padding:3px 9px;border-radius:6px;
+  border:1px solid rgba(168,85,247,.25);background:rgba(168,85,247,.06);color:var(--purple2)}
+.ext-tag.green{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.06);color:var(--green2)}
+.ext-tag.cyan{border-color:rgba(0,217,255,.25);background:rgba(0,217,255,.06);color:var(--cyan2)}
+.ext-where{font-size:.8em;color:var(--t3);margin-top:8px}
+.ext-where a{color:var(--cyan);text-decoration:none}
+.ext-where a:hover{text-decoration:underline}
+
+.step-list{margin:16px 0}
+.step-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.step-item:last-child{border-bottom:none}
+.step-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--cyan);font-weight:700;
+  min-width:24px;margin-top:3px}
+.step-body{flex:1}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--white);margin-bottom:4px}
+.step-text{font-size:.88em;color:var(--t2);line-height:1.65}
+
+.sources{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px 24px;margin:20px 0}
+.sources-title{font-family:'Syne',sans-serif;font-size:.85em;font-weight:700;color:var(--white);
+  margin-bottom:14px}
+.source-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;
+  border-bottom:1px solid var(--border);font-size:.88em}
+.source-row:last-child{border-bottom:none}
+.source-name{color:var(--white);font-weight:600}
+.source-url{font-family:'DM Mono',monospace;font-size:.8em}
+.source-url a{color:var(--cyan);text-decoration:none}
+.source-url a:hover{text-decoration:underline}
+.source-note{color:var(--t2);font-size:.82em;margin-top:3px}
+
+/* === CHAPTER NAVIGATION === */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--purple);color:var(--purple2);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+.ch-btn .ch-name{color:var(--purple2)}
+
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a href="00_ANT_INDEX.html" class="nav-back">← Zpět na index</a>
+
+<header>
+  <div class="h-num">// kapitola 16</div>
+  <h1>Doplňky <em>(Extensions)</em></h1>
+  <p class="h-desc">Jak instalovat rozšíření v programu i externě, kde je hledat, a TOP 10 doplňků které mají smysl — včetně české jazykové sady na prvním místě.</p>
+  <div class="badges">
+    <span class="badge badge-c">🧩 Extensions</span>
+    <span class="badge badge-p">📦 OpenVSX</span>
+    <span class="badge badge-g">🛒 Marketplace</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Co jsou doplňky v Antigravity</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Instalace v programu</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Instalace externě (.vsix)</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Přepnutí na VS Code Marketplace</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Kde hledat doplňky</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> TOP 10 doplňků</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Co jsou doplňky v Antigravity</h2>
+
+  <p>Antigravity je fork VS Code — takže doplňky fungují úplně stejně jako ve VS Code. Nainstalovaný doplněk přidá nové funkce, zvýrazňování, formátování, nebo celý UI panel.</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Důležitý rozdíl: OpenVSX vs VS Code Marketplace</strong>
+      <p>Antigravity ve výchozím nastavení používá <strong>OpenVSX registry</strong> (open-vsx.org), ne Microsoft VS Code Marketplace. To znamená, že některé oblíbené doplňky ve vyhledávání nenajdeš — existují jen na VS Code Marketplace. Řešení je buď ruční instalace (.vsix), nebo přepnutí marketplace (viz sekce 04).</p>
+    </div>
+  </div>
+
+  <h3>Co Antigravity má již zabudované (nepotřebuješ doplněk)</h3>
+  <ul>
+    <li><strong>Git integrace</strong> — history, blame, diff jsou nativní, nepotřebuješ GitLens pro základní použití</li>
+    <li><strong>AI asistent</strong> — Gemini 3 je zabudovaný, nepotřebuješ Copilot ani jiný AI doplněk</li>
+    <li><strong>Firebase integrace</strong> — přímé propojení bez bridge pluginu</li>
+    <li><strong>Multi-root workspace</strong> — správa více projektů nativně</li>
+    <li><strong>Browser testing</strong> — Chrome extension je zabudovaná součást, ne plugin</li>
+  </ul>
+
+  <p>Přesto existuje řada doplňků které práci výrazně zlepší — zejména jazyková podpora, formátování kódu a vizuální vylepšení.</p>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Instalace v programu</h2>
+
+  <p>Nejjednodušší způsob — přímo z Antigravity přes Extensions panel.</p>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-title">Otevři Extensions panel</div>
+        <div class="step-text">Klávesová zkratka <code>Ctrl+Shift+X</code> (Windows/Linux) nebo <code>Cmd+Shift+X</code> (Mac). Nebo klikni na ikonu čtverce v levém postranním panelu.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-title">Vyhledej doplněk</div>
+        <div class="step-text">Do vyhledávacího pole napiš název nebo ID doplňku (např. <code>ms-ceintl.vscode-language-pack-cs</code>). Výsledky jsou z OpenVSX registry.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-title">Klikni Install</div>
+        <div class="step-text">Klikni na modré tlačítko <strong>Install</strong> u vybraného doplňku. Antigravity ho stáhne a nainstaluje automaticky — bez restartu.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <div class="step-title">Aktivace (pokud je potřeba)</div>
+        <div class="step-text">Některé doplňky (jako jazykové balíčky) zobrazí notifikaci "Restart to activate" nebo "Set as display language". Klikni na nabízenou akci.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Správa nainstalovaných doplňků</strong>
+      <p>V Extensions panelu přepni na záložku "Installed" (ikona filtru nebo text "Installed") abys viděl co máš nainstalováno. Každý doplněk lze deaktivovat (Disable) nebo odebrat (Uninstall) bez ztráty dat projektu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Instalace externě (.vsix)</h2>
+
+  <p>Pokud doplněk není na OpenVSX, stáhneš ho jako soubor <code>.vsix</code> a nainstaluješ ručně. Jsou dvě cesty.</p>
+
+  <h3>Způsob A — přes UI (jednodušší)</h3>
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-title">Stáhni .vsix soubor</div>
+        <div class="step-text">Jdi na <strong>marketplace.visualstudio.com</strong>, najdi doplněk, klikni na záložku "Version History" a stáhni poslední <code>.vsix</code> soubor.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-title">Extensions panel → tři tečky (···)</div>
+        <div class="step-text">V Extensions panelu klikni na ikonu <strong>···</strong> (nebo ozubené kolečko) v pravém horním rohu panelu. Vyber <strong>"Install from VSIX..."</strong></div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-title">Vyber stažený soubor</div>
+        <div class="step-text">Najdi a otevři stažený <code>.vsix</code> soubor. Antigravity ho nainstaluje okamžitě.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Způsob B — přes příkazový řádek (přesnější)</h3>
+  <p>Otevři terminál (mimo Antigravity) a spusť příkaz pro tvůj systém:</p>
+
+  <div class="code-block">
+# macOS<br/>
+/Applications/Antigravity.app/Contents/Resources/app/bin/antigravity --install-extension nazev-doplnku-1.0.0.vsix<br/>
+<br/>
+# Windows (PowerShell)<br/>
+& "C:\Users\[uzivatel]\AppData\Local\Programs\Antigravity\resources\app\bin\antigravity.cmd" --install-extension nazev-doplnku-1.0.0.vsix<br/>
+<br/>
+# Linux<br/>
+/usr/share/antigravity/bin/antigravity --install-extension nazev-doplnku-1.0.0.vsix
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Nepoužívej příkaz code ani cursor</strong>
+      <p>Příkaz <code>code --install-extension</code> nebo <code>cursor --install-extension</code> nainstaluje doplněk do VS Code / Cursor, ne do Antigravity. Každý editor má vlastní registry. Musíš použít příkaz <code>antigravity</code>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Přepnutí na VS Code Marketplace</h2>
+
+  <p>Chceš-li mít přímý přístup k celému VS Code ekosystému bez ruční instalace, přepni Antigravity na Microsoft marketplace. Pak vyhledávání funguje stejně jako ve VS Code.</p>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Pozor — Microsoft to technicky nedovoluje</strong>
+      <p>Microsoft licenčně omezuje přístup k VS Code Marketplace jen pro VS Code. Funguje to technicky, ale narušuješ licenční podmínky. Pro bezpečnou cestu používej OpenVSX nebo ruční .vsix instalaci.</p>
+    </div>
+  </div>
+
+  <h3>Postup (na vlastní riziko)</h3>
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-title">Otevři Nastavení</div>
+        <div class="step-text"><code>Ctrl+,</code> → vlevo vyhledej "extensionsGallery" nebo jdi do <strong>Settings → Antigravity Settings → Editor</strong></div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-title">Uprav marketplace URLs</div>
+        <div class="step-text">Nahraď hodnoty za Microsoft URLs:<br/>
+        <code>serviceUrl</code> → <code>https://marketplace.visualstudio.com/_apis/public/gallery</code><br/>
+        <code>itemUrl</code> → <code>https://marketplace.visualstudio.com/items</code></div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-title">Restart Antigravity</div>
+        <div class="step-text">Po restartu bude Extensions panel prohledávat VS Code Marketplace. Instalace a aktualizace fungují standardně.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Kde hledat doplňky</h2>
+
+  <div class="sources">
+    <div class="sources-title">📍 Hlavní zdroje</div>
+
+    <div class="source-row">
+      <div>
+        <div class="source-name">OpenVSX Registry</div>
+        <div class="source-note">Nativní marketplace Antigravity. Otevřená alternativa k VS Code Marketplace, stále roste.</div>
+      </div>
+      <div class="source-url"><a href="https://open-vsx.org" target="_blank">open-vsx.org</a></div>
+    </div>
+
+    <div class="source-row">
+      <div>
+        <div class="source-name">VS Code Marketplace</div>
+        <div class="source-note">Největší zdroj. Doplňky jsou z 99 % kompatibilní. Stáhni jako .vsix a nainstaluj ručně.</div>
+      </div>
+      <div class="source-url"><a href="https://marketplace.visualstudio.com" target="_blank">marketplace.visualstudio.com</a></div>
+    </div>
+
+    <div class="source-row">
+      <div>
+        <div class="source-name">awesome-antigravity (GitHub)</div>
+        <div class="source-note">Komunitní seznam nejlepších doplňků a workflowů přímo pro Antigravity.</div>
+      </div>
+      <div class="source-url"><a href="https://github.com/MichaelZelbel/awesome-antigravity" target="_blank">github.com/awesome-antigravity</a></div>
+    </div>
+
+    <div class="source-row">
+      <div>
+        <div class="source-name">Antigravity Discord</div>
+        <div class="source-note">Komunita sdílí tipy na doplňky, vlastní skripty a řeší problémy s kompatibilitou.</div>
+      </div>
+      <div class="source-url"><a href="https://discord.gg/antigravity" target="_blank">discord.gg/antigravity</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>TOP 10 doplňků</h2>
+
+  <p>Výběr vychází z praktického použití. Na prvním místě je čeština — záměrně, protože to první co chceš udělat je přepnout UI do svého jazyka.</p>
+
+  <div class="ext-grid">
+
+    <!-- 1 -->
+    <div class="ext-card top1">
+      <div class="ext-rank"># <span>01</span> — Doporučujeme začít tímto</div>
+      <div class="ext-name">Czech Language Pack</div>
+      <div class="ext-id">ms-ceintl.vscode-language-pack-cs</div>
+      <div class="ext-desc">Přeloží celé UI Antigravity do češtiny — menu, tlačítka, dialogy, nastavení. Po instalaci tě Antigravity vyzve ke změně jazyka. Jediný klik a máš celý program v češtině. Nezasahuje do funkčnosti, pouze přeloží texty.</div>
+      <div class="ext-tags">
+        <span class="ext-tag cyan">Jazyk</span>
+        <span class="ext-tag green">Doporučeno</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/MS-CEINTL/vscode-language-pack-cs" target="_blank">OpenVSX</a> (přímá instalace v programu)</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>02</span></div>
+      <div class="ext-name">Prettier – Code Formatter</div>
+      <div class="ext-id">esbenp.prettier-vscode</div>
+      <div class="ext-desc">Automaticky formátuje kód při uložení souboru. Podporuje JavaScript, TypeScript, CSS, HTML, JSON, Markdown a další. Zajistí že kód agenta i tvůj vlastní bude vždy konzistentně naformátovaný — žádné hádky o mezerách a středníky.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">Formátování</span>
+        <span class="ext-tag green">Doporučeno</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/esbenp/prettier-vscode" target="_blank">OpenVSX</a></div>
+    </div>
+
+    <!-- 3 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>03</span></div>
+      <div class="ext-name">ESLint</div>
+      <div class="ext-id">dbaeumer.vscode-eslint</div>
+      <div class="ext-desc">Linting pro JavaScript a TypeScript — podtrhuje chyby a špatné vzory přímo v editoru ještě před spuštěním. Pracuje spolu s agentem: agent vidí ESLint varování a může je opravit ještě před commitem. Nezbytné pro TypeScript projekty.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">Linting</span>
+        <span class="ext-tag">TypeScript</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/dbaeumer/vscode-eslint" target="_blank">OpenVSX</a></div>
+    </div>
+
+    <!-- 4 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>04</span></div>
+      <div class="ext-name">Error Lens</div>
+      <div class="ext-id">usernamehw.errorlens</div>
+      <div class="ext-desc">Zobrazuje chybové hlášky a varování přímo na řádku kde nastaly — ne jen jako ikona na konci řádku. Výrazně zrychluje debugging: okamžitě vidíš co a kde je špatně, aniž bys přejížděl myší nebo otevíral Problems panel.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">Debugging</span>
+        <span class="ext-tag green">Velký dopad</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/usernamehw/errorlens" target="_blank">OpenVSX</a></div>
+    </div>
+
+    <!-- 5 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>05</span></div>
+      <div class="ext-name">GitLens — Git supercharged</div>
+      <div class="ext-id">eamodio.gitlens</div>
+      <div class="ext-desc">Rozšiřuje nativní Git integraci Antigravity o inline blame (kdo napsal řádek a kdy), detailní historii souboru, vizualizaci větví a porovnání commitů. Antigravity má základní Git zabudovaný — GitLens přidá hloubku pro pokročilou práci s historií.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">Git</span>
+        <span class="ext-tag">Historie</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/eamodio/gitlens" target="_blank">OpenVSX</a></div>
+    </div>
+
+    <!-- 6 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>06</span></div>
+      <div class="ext-name">Tailwind CSS IntelliSense</div>
+      <div class="ext-id">bradlc.vscode-tailwindcss</div>
+      <div class="ext-desc">Autocomplete pro Tailwind CSS třídy přímo při psaní v HTML, JSX, TSX. Zobrazuje náhled barev, varuje před neplatnými třídami a zobrazuje generované CSS při hoveru. Pokud používáš Tailwind (a v projektech s agentem ho pravděpodobně budeš), je tohle nutnost.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">CSS</span>
+        <span class="ext-tag">Tailwind</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/bradlc/vscode-tailwindcss" target="_blank">OpenVSX</a></div>
+    </div>
+
+    <!-- 7 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>07</span></div>
+      <div class="ext-name">Thunder Client</div>
+      <div class="ext-id">rangav.vscode-thunder-client</div>
+      <div class="ext-desc">Lehký REST API klient přímo v editoru — alternativa k Postman. Testuj API endpointy bez opuštění Antigravity. Výhodné pokud agent vytvoří backend: hned ho otestuješ v jednom okně. Podporuje kolekce requestů, environment proměnné a spouštění v rámci testů.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">API</span>
+        <span class="ext-tag">Testing</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/rangav/vscode-thunder-client" target="_blank">OpenVSX</a></div>
+    </div>
+
+    <!-- 8 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>08</span></div>
+      <div class="ext-name">Auto Rename Tag</div>
+      <div class="ext-id">formulahendry.auto-rename-tag</div>
+      <div class="ext-desc">Při přejmenování HTML/JSX opening tagu automaticky přejmenuje i closing tag. Malá věc, ale šetří obrovské množství zbytečných úprav při práci s HTML a JSX komponentami. Funguje spolehlivě a bez konfigurace.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">HTML</span>
+        <span class="ext-tag">JSX</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/formulahendry/auto-rename-tag" target="_blank">OpenVSX</a></div>
+    </div>
+
+    <!-- 9 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>09</span></div>
+      <div class="ext-name">Material Icon Theme</div>
+      <div class="ext-id">PKief.material-icon-theme</div>
+      <div class="ext-desc">Nahrazuje výchozí ikony souborů a složek v Explorer panelu barevnými Material Design ikonami. Každý typ souboru (.ts, .json, .md, .env…) má vlastní rozlišitelnou ikonu. Velký projekt se pak orientuje rychleji — na první pohled víš co je co.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">UI</span>
+        <span class="ext-tag">Ikony</span>
+      </div>
+      <div class="ext-where">📦 Dostupné na: <a href="https://open-vsx.org/extension/PKief/material-icon-theme" target="_blank">OpenVSX</a></div>
+    </div>
+
+    <!-- 10 -->
+    <div class="ext-card">
+      <div class="ext-rank"># <span>10</span></div>
+      <div class="ext-name">GitHub Theme</div>
+      <div class="ext-id">GitHub.github-vscode-theme</div>
+      <div class="ext-desc">Populární barevné téma inspirované GitHub rozhraním — světlé i tmavé varianty. Pokud přicházíš z VS Code a chceš si zachovat vizuální zvyk, nebo prostě chceš čisté profesionální téma, je GitHub Dark Default nebo GitHub Dark Dimmed skvělá volba.</div>
+      <div class="ext-tags">
+        <span class="ext-tag">Téma</span>
+        <span class="ext-tag">Vzhled</span>
+      </div>
+      <div class="ext-where">📦 Stáhnout jako .vsix: <a href="https://marketplace.visualstudio.com/items?itemName=GitHub.github-vscode-theme" target="_blank">marketplace.visualstudio.com</a></div>
+    </div>
+
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Tip: Méně je více</strong>
+      <p>Antigravity má hodně zabudovaného. Nestříkej doplňky po hrstech jako ve VS Code — každý doplněk navíc může zpomalit editor nebo kolidovat s agentem. Začni s češtinou + Prettier + ESLint a přidávej jen co reálně potřebuješ.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER NAV -->
+<nav class="chapter-nav">
+  <a href="15_ANT_Scenare.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Scénáře</span></div>
+  </a>
+  <a href="00_ANT_INDEX.html" class="ch-btn next">
+    <div><span class="ch-label">zpět na</span><span class="ch-name">Index</span></div>
+    <span>→</span>
+  </a>
+</nav>
+
+<footer>
+  16_ANT_Doplnky.html · Antigravity průvodce · Claude (Anthropic) · Květen 2026<br/>
+  <a href="00_ANT_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
+</footer>
+
+</div>
+</body>
+</html>

@@ -115,6 +115,15 @@ code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(168,85,247,
 
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+/* === CHAPTER NAVIGATION === */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--purple);color:var(--purple2);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+.ch-btn .ch-name{color:var(--purple2)}
 </style>
 </head>
 <body>
@@ -499,9 +508,22 @@ workflow:
 </div>
 
 <!-- FOOTER -->
+<!-- CHAPTER NAV -->
+<nav class="chapter-nav">
+  <a href="01_ANT_Editor_View.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Editor View</span></div>
+  </a>
+  <a href="03_ANT_Nastaveni.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Nastavení</span></div>
+    <span>→</span>
+  </a>
+</nav>
+
+<!-- FOOTER -->
 <footer>
   02_ANT_Manager_View.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
-  <a href="00_ANT_INDEX.html">← Zpět na index</a>
+  <a href="00_ANT_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
 </footer>
 
 </div>

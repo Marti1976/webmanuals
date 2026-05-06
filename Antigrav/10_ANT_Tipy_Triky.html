@@ -93,13 +93,19 @@ code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(16,185,129,
 .ex-bad{border-left-color:var(--amber)}
 .ex-bad .ex-title{color:var(--amber2)}
 
-.pattern{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
-.pattern-title{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:8px;font-size:.95em}
-.pattern-desc{font-size:.85em;color:var(--t2);margin-bottom:8px}
-.pattern-code{font-family:'DM Mono',monospace;font-size:.8em;color:var(--green2);line-height:1.6}
+.pattern{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0;
+  display:flex;flex-direction:column;min-height:100%;word-wrap:break-word;overflow-wrap:break-word}
+.pattern-title{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:8px;font-size:.95em;
+  word-break:break-word}
+.pattern-desc{font-size:.85em;color:var(--t2);margin-bottom:8px;line-height:1.5;word-break:break-word}
+.pattern-code{font-family:'DM Mono',monospace;font-size:.75em;color:var(--green2);line-height:1.6;
+  overflow-wrap:break-word;word-wrap:break-word}
 
 .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
-@media(max-width:560px){.compare-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.compare-grid{grid-template-columns:1fr;gap:8px}}
+@media(max-width:560px){.compare-grid{grid-template-columns:1fr;gap:8px}}
+
+.pattern p{word-break:break-word;overflow-wrap:break-word}
 
 .checklist{background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--green);
   border-radius:8px;padding:14px;margin:12px 0}
@@ -111,6 +117,15 @@ code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(16,185,129,
 
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+/* === CHAPTER NAVIGATION === */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--purple);color:var(--purple2);text-decoration:none}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
+.ch-btn .ch-name{color:var(--purple2)}
 </style>
 </head>
 <body>
@@ -209,40 +224,34 @@ Ověř že:<br/>
 
   <div class="compare-grid">
     <div class="pattern">
-      <div class="pattern-title" style="color:var(--green2)">✓ FUNGUJE</div>
-      <p style="font-size:.85em;color:var(--t2);margin:0">Konkrétní soubory a řádky</p>
-      <p style="font-size:.8em;color:var(--green2);margin-top:6px">src/App.tsx line 23</p>
+      <div class="pattern-title" style="color:var(--green2)">✓ KONKRÉTNÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">Soubor + řádek:<br/>src/App.tsx<br/>line 23</p>
     </div>
     <div class="pattern">
-      <div class="pattern-title" style="color:var(--amber2)">✗ NEFUNGUJE</div>
-      <p style="font-size:.85em;color:var(--t2);margin:0">Vágní místa</p>
-      <p style="font-size:.8em;color:var(--amber2);margin-top:6px">"někde v kódu"</p>
+      <div class="pattern-title" style="color:var(--amber2)">✗ VÁGNÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">"Někde v kódu<br/>to opravit"</p>
     </div>
   </div>
 
   <div class="compare-grid">
     <div class="pattern">
-      <div class="pattern-title" style="color:var(--green2)">✓ FUNGUJE</div>
-      <p style="font-size:.85em;color:var(--t2);margin:0">Slova: Přidej, Změní, Oprav, Odstraň</p>
-      <p style="font-size:.8em;color:var(--green2);margin-top:6px">Přesná akce</p>
+      <div class="pattern-title" style="color:var(--green2)">✓ AKČNÍ SLOVA</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">Přidej, Změní,<br/>Oprav, Odstraň</p>
     </div>
     <div class="pattern">
-      <div class="pattern-title" style="color:var(--amber2)">✗ NEFUNGUJE</div>
-      <p style="font-size:.85em;color:var(--t2);margin:0">Slova: Vylepši, Posílej, Zdokonali</p>
-      <p style="font-size:.8em;color:var(--amber2);margin-top:6px">Subjektivní</p>
+      <div class="pattern-title" style="color:var(--amber2)">✗ SUBJEKTIVNÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">Vylepši, Posílej,<br/>Zdokonali</p>
     </div>
   </div>
 
   <div class="compare-grid">
     <div class="pattern">
-      <div class="pattern-title" style="color:var(--green2)">✓ FUNGUJE</div>
-      <p style="font-size:.85em;color:var(--t2);margin:0">S ověřením: "Build by měl projít"</p>
-      <p style="font-size:.8em;color:var(--green2);margin-top:6px">Jasný end state</p>
+      <div class="pattern-title" style="color:var(--green2)">✓ S KRITÉRIÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">"Build musí<br/>projít bez chyb"</p>
     </div>
     <div class="pattern">
-      <div class="pattern-title" style="color:var(--amber2)">✗ NEFUNGUJE</div>
-      <p style="font-size:.85em;color:var(--t2);margin:0">Bez kritérií: "Udělej to"</p>
-      <p style="font-size:.8em;color:var(--amber2);margin-top:6px">Agent neví jestli je hotovo</p>
+      <div class="pattern-title" style="color:var(--amber2)">✗ BEZ KRITÉRIÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">"Udělej to"<br/>(agent neví jestli OK)</p>
     </div>
   </div>
 
@@ -526,9 +535,21 @@ Tak to implementuj."</p>
 </div>
 
 <!-- FOOTER -->
+<!-- CHAPTER NAV -->
+<nav class="chapter-nav">
+  <a href="09_ANT_Chyby_Limity.html" class="ch-btn">
+    <span>←</span>
+    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Chyby & Limity</span></div>
+  </a>
+  <a href="11_ANT_Instalace.html" class="ch-btn next">
+    <div><span class="ch-label">další kapitola</span><span class="ch-name">Instalace</span></div>
+    <span>→</span>
+  </a>
+</nav>
+
 <footer>
   10_ANT_Tipy_Triky.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
-  <a href="00_ANT_INDEX.html">← Zpět na index</a>
+  <a href="00_ANT_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
 </footer>
 
 </div>
