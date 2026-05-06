@@ -150,6 +150,13 @@ td:nth-child(2){color:var(--t2)}
 
 footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   text-align:center;font-size:.7em;color:var(--t3);line-height:2}
+/* ===== CHAPTER NAV ===== */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--b)}
+.ch-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 20px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rad);color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--a);color:var(--a2);text-decoration:none;box-shadow:0 0 0 1px rgba(232,160,32,.15) inset}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em}
+.ch-btn .ch-name{display:block;color:var(--text);font-size:1.05em;margin-top:1px}
 </style>
 </head>
 <body>
@@ -594,10 +601,28 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 </div>
 
+<nav class="chapter-nav">
+  <a href="02_CLI_DEV_SERVER.html" class="ch-btn">
+    <span>←</span>
+    <div>
+      <span class="ch-label">předchozí kapitola</span>
+      <span class="ch-name">Vývojový server</span>
+    </div>
+  </a>
+  <a href="04_CLI_BEZPECNOST.html" class="ch-btn next">
+    <div>
+      <span class="ch-label">další kapitola</span>
+      <span class="ch-name">Bezpečnost</span>
+    </div>
+    <span>→</span>
+  </a>
+</nav>
+
 <footer>
-  Průvodce č. 3 ze 3 &nbsp;·&nbsp; Tahák &nbsp;·&nbsp;
-  Projekt: <strong style="color:var(--a)">rodinny-receptar</strong> &nbsp;·&nbsp;
-  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
+  03_CLI_GEMINI_TAHAK.html &nbsp;·&nbsp;
+  Gemini CLI Průvodce &nbsp;·&nbsp;
+  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
+  <a href="00_CLI_INDEX.html" style="color:var(--a)">← Zpět na index</a>
 </footer>
 </div>
 </body>

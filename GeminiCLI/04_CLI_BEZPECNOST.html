@@ -178,6 +178,13 @@ code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(72,120,212,
 
 footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
   text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2.2}
+/* ===== CHAPTER NAV ===== */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--amber);color:var(--amber2);text-decoration:none;box-shadow:0 0 0 1px rgba(212,146,42,.15) inset}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em}
+.ch-btn .ch-name{display:block;color:var(--white);font-size:1.05em;margin-top:1px}
 </style>
 </head>
 <body>
@@ -769,11 +776,22 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
   </div>
 </div>
 
+<nav class="chapter-nav">
+  <a href="03_CLI_GEMINI_TAHAK.html" class="ch-btn">
+    <span>←</span>
+    <div>
+      <span class="ch-label">předchozí kapitola</span>
+      <span class="ch-name">Tahák příkazů</span>
+    </div>
+  </a>
+  <div></div>
+</nav>
+
 <footer>
-  Bezpečnostní průvodce &nbsp;·&nbsp; Gemini CLI &nbsp;·&nbsp;
-  Projekt: <strong style="color:var(--amber)">rodinny-receptar</strong> &nbsp;·&nbsp;
-  Sestavil Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
-  Tento dokument popisuje stav ke dni vytvoření. Podmínky Google se mohou změnit – vždy ověřuj aktuální podmínky na <a href="https://ai.google.dev/gemini-api/terms" target="_blank">ai.google.dev/gemini-api/terms</a>
+  04_CLI_BEZPECNOST.html &nbsp;·&nbsp;
+  Gemini CLI Průvodce &nbsp;·&nbsp;
+  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
+  <a href="00_CLI_INDEX.html" style="color:var(--amber)">← Zpět na index</a>
 </footer>
 
 </div>

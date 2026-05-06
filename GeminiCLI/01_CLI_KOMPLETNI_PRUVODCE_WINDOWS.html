@@ -715,6 +715,21 @@ td.bad   { color: var(--red); }
 td.ok    { color: var(--amber2); }
 td:first-child { color: var(--white); font-weight: 500; }
 
+
+/* ===== CHAPTER NAV ===== */
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
+.ch-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 20px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--radius);color:var(--text2);
+  font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.ch-btn:hover{border-color:var(--amber);color:var(--amber2);text-decoration:none;
+  box-shadow:0 0 0 1px rgba(240,160,48,.15) inset}
+.ch-btn.next{justify-content:flex-end;text-align:right}
+.ch-btn .ch-label{font-size:.85em;color:var(--text3);display:block;margin-bottom:3px;
+  text-transform:uppercase;letter-spacing:.1em}
+.ch-btn .ch-name{display:block;color:var(--text);font-size:1.05em;margin-top:1px}
+.page-footer{margin-top:40px;padding:24px 0 10px;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:0.75em;color:var(--text3);line-height:2}
 </style>
 </head>
 <body>
@@ -948,7 +963,7 @@ td:first-child { color: var(--white); font-weight: 500; }
 
 <!-- ===== 05 INSTALACE CLI ===== -->
 <div class="section" id="sec-instalace">
-            <div class="section-label">sekce 05</div>
+            <div class="section-label">// sekce 05</div>
             <h2>Instalace Gemini CLI</h2>
             <p>Tohle je část, kde se to na Windows může zaseknout. Samotná instalace je jednoduchá, ale PowerShell někdy blokuje spuštění souboru <strong>npm.ps1</strong> kvůli nastavení oprávnění.</p>
 
@@ -1873,14 +1888,9 @@ td:first-child { color: var(--white); font-weight: 500; }
   </div>
 </div>
 
-<footer>
-  Vytvořeno pro projekt <strong style="color: var(--amber);">rodinny-receptar</strong> v0.42 &nbsp;·&nbsp;
-  Gemini CLI od Google (open-source, Apache 2.0) &nbsp;·&nbsp;
-  Průvodce sestavil Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
-
         <!-- 15 BEZPEČNOST -->
         <div class="section" id="sec-bezpecnost">
-            <div class="section-label">sekce 15</div>
+            <div class="section-label">// sekce 15</div>
             <h2>Bezpečnost především</h2>
             <p>Gemini CLI je výborný pomocník, protože umí číst soubory, navrhovat změny a pracovat přímo v projektu. Právě proto je důležité držet jednoduchá pravidla a mít pořád pod kontrolou, <strong>co se má změnit a co se měnit nesmí</strong>.</p>
             <div class="callout danger">
@@ -1915,7 +1925,24 @@ td:first-child { color: var(--white); font-weight: 500; }
             <div class="prompt-block">Nejdřív mi popiš, co chceš změnit, které soubory se dotknou, jaké je riziko a počkej na moje potvrzení. Bezpečnost Především.</div>
             <p>Tuhle větu můžeš klidně používat i přímo v komunikaci s Gemini. Připomeneš mu tím, že nechceš bezhlavé zásahy, ale opatrný a kontrolovaný postup.</p>
         </div>
-        </footer>
+
+<nav class="chapter-nav">
+  <div></div>
+  <a href="02_CLI_DEV_SERVER.html" class="ch-btn next">
+    <div>
+      <span class="ch-label">další kapitola</span>
+      <span class="ch-name">Vývojový server</span>
+    </div>
+    <span>→</span>
+  </a>
+</nav>
+
+<div class="page-footer">
+  01_CLI_KOMPLETNI_PRUVODCE_WINDOWS.html &nbsp;·&nbsp;
+  Gemini CLI Průvodce &nbsp;·&nbsp;
+  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
+  <a href="00_CLI_INDEX.html" style="color:var(--amber)">← Zpět na index</a>
+</div>
 
 </div><!-- /.page -->
 
