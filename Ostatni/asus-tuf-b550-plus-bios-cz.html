@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASUS TUF Gaming B550-PLUS – Průvodce BIOSem (CZ)</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0d0f14;
+    --surface:  #13161e;
+    --card:     #181c27;
+    --border:   #252b3b;
+    --accent:   #e8a020;
+    --accent2:  #f0c050;
+    --tuf:      #c8860a;
+    --green:    #3ecf76;
+    --red:      #e85050;
+    --blue:     #4a9eff;
+    --text:     #d8dce8;
+    --muted:    #6e7590;
+    --mono:     'IBM Plex Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%);
+    border-bottom: 2px solid var(--tuf);
+    padding: 48px 32px 36px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; }
+  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .tuf-badge {
+    background: var(--accent);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+  .ver-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+  }
+  .hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 600px;
+  }
+  .hero-meta {
+    display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .meta-chip {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text);
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+  }
+  .meta-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* ── LAYOUT ── */
+  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 24px 60px; }
+
+  /* ── NAV ── */
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    margin: 32px 0;
+    padding: 24px 28px;
+  }
+  .toc h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin: 5px 0; }
+  .toc a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color .2s;
+  }
+  .toc a:hover { color: var(--accent); }
+
+  /* ── ALERTS ── */
+  .alert {
+    display: flex; gap: 14px; align-items: flex-start;
+    border: 1px solid;
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 14px;
+    border-radius: 2px;
+  }
+  .alert-warn  { border-color: var(--accent); background: rgba(232,160,32,.07); }
+  .alert-tip   { border-color: var(--green);  background: rgba(62,207,118,.07); }
+  .alert-info  { border-color: var(--blue);   background: rgba(74,158,255,.07); }
+  .alert-icon  { font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── SECTIONS ── */
+  .section { margin: 44px 0; }
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    background: rgba(232,160,32,.1);
+    border: 1px solid rgba(232,160,32,.3);
+    padding: 2px 8px;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .5px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 10px;
+  }
+
+  /* ── STEPS ── */
+  .steps { counter-reset: step; list-style: none; padding: 0; }
+  .steps li {
+    counter-increment: step;
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(37,43,59,.8);
+    font-size: 14px;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(step);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: #000;
+    background: var(--accent);
+    min-width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  }
+  .steps li b { color: var(--accent2); }
+
+  /* ── KEY BADGE ── */
+  kbd {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 2px 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-bottom: 2px solid var(--border);
+    color: var(--accent2);
+    border-radius: 3px;
+  }
+
+  /* ── PATH ── */
+  .path {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    background: rgba(232,160,32,.08);
+    border: 1px solid rgba(232,160,32,.25);
+    padding: 10px 16px;
+    margin: 12px 0;
+    display: block;
+    word-break: break-all;
+  }
+
+  /* ── TABLE ── */
+  .bios-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  .bios-table th {
+    background: var(--surface);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+  .bios-table td {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .bios-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+  .bios-table .tag-ok  { color: var(--green); font-family: var(--mono); font-size: 11px; }
+  .bios-table .tag-warn { color: var(--accent); font-family: var(--mono); font-size: 11px; }
+  .bios-table .tag-def { color: var(--blue); font-family: var(--mono); font-size: 11px; }
+
+  /* ── BIOS MOCK ── */
+  .bios-mock {
+    background: #0b1220;
+    border: 2px solid #1e3a6e;
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 0;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .bios-mock-bar {
+    background: linear-gradient(90deg, #1a2e5a, #152348);
+    padding: 6px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #1e3a6e;
+  }
+  .bios-mock-bar span { color: #aab8d8; font-size: 11px; letter-spacing: 1px; }
+  .bios-mock-tabs {
+    display: flex;
+    border-bottom: 1px solid #1e3a6e;
+    background: #0d1828;
+  }
+  .bios-tab {
+    padding: 7px 14px;
+    font-size: 12px;
+    color: #5a6a8a;
+    cursor: default;
+    letter-spacing: .5px;
+  }
+  .bios-tab.active {
+    color: #fff;
+    background: #1a2e5a;
+    border-bottom: 2px solid var(--accent);
+  }
+  .bios-menu { padding: 8px 0; }
+  .bios-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px 18px;
+    color: #8aadcc;
+    font-size: 12px;
+  }
+  .bios-item.selected {
+    background: #162240;
+    color: #fff;
+  }
+  .bios-item .val { color: var(--accent); }
+  .bios-item .val.on  { color: var(--green); }
+  .bios-item .val.off { color: var(--red); }
+  .bios-item.sub { color: #4a6a8a; font-style: italic; padding-left: 32px; }
+
+  /* ── DIAGRAM ── */
+  .board-diagram {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .board-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 600px;
+  }
+  .board-slot {
+    background: #0d1220;
+    border: 1px solid #2a3550;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    position: relative;
+  }
+  .board-slot .label {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .board-slot .name { color: var(--accent2); }
+  .board-slot.highlight { border-color: var(--accent); }
+  .board-slot.highlight .name { color: var(--accent); }
+
+  /* ── Q&A HIGHLIGHT ── */
+  .qa-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    margin: 24px 0;
+    overflow: hidden;
+  }
+  .qa-question {
+    background: rgba(232,160,32,.1);
+    padding: 14px 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    display: flex; gap: 10px; align-items: center;
+  }
+  .qa-answer { padding: 18px 20px; }
+  .qa-answer p { margin-bottom: 10px; font-size: 14px; }
+  .qa-answer p:last-child { margin-bottom: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 24px 32px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 999;
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    width: 260px; height: 100vh;
+    background: rgba(19, 22, 30, 0.97);
+    border-right: 1px solid var(--border);
+    border-right-color: var(--tuf);
+    display: flex; flex-direction: column;
+    z-index: 200;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Tenký zlatý proužek nahoře */
+  .sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+  }
+
+  .sidebar-brand {
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .sidebar-back {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin-bottom: 16px;
+  }
+  .sidebar-back:hover { color: var(--accent); }
+
+  .sidebar-product {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sidebar-tuf-badge {
+    background: var(--accent);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    padding: 3px 7px;
+    clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+    flex-shrink: 0;
+  }
+  .sidebar-model {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .sidebar-model small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 2px;
+  }
+
+  /* Nav skupiny */
+  .nav-group-label {
+    padding: 16px 20px 6px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 20px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    line-height: 1.3;
+  }
+  .nav-item:hover, .nav-item.active {
+    color: var(--text);
+    background: rgba(232, 160, 32, 0.06);
+    border-left-color: var(--accent);
+  }
+
+  .nav-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(232, 160, 32, 0.1);
+    border: 1px solid rgba(232, 160, 32, 0.25);
+    padding: 1px 5px;
+    flex-shrink: 0;
+    min-width: 28px;
+    text-align: center;
+    clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
+  }
+  .nav-num.red   { color: var(--red);   background: rgba(232,80,80,.1);   border-color: rgba(232,80,80,.3); }
+  .nav-num.green { color: var(--green); background: rgba(62,207,118,.1);  border-color: rgba(62,207,118,.3); }
+  .nav-num.blue  { color: var(--blue);  background: rgba(74,158,255,.1);  border-color: rgba(74,158,255,.3); }
+
+  .nav-item-text { flex: 1; min-width: 0; }
+
+  /* ── LAYOUT ÚPRAVY PRO SIDEBAR ── */
+  .hero { margin-left: 260px; }
+  .wrapper { margin-left: 260px; }
+  footer { margin-left: 260px; }
+
+  /* ── FOOTER ÚPRAVA ── */
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .footer-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    background: rgba(232,160,32,0.08);
+    border: 1px solid rgba(232,160,32,0.25);
+    padding: 6px 14px;
+    transition: background 0.2s;
+  }
+  .footer-back:hover { background: rgba(232,160,32,0.15); color: var(--accent2); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .hero, .wrapper, footer { margin-left: 0; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="sidebar-brand">
+    <a href="../index.html" class="sidebar-back">← Zpět na rozcestník</a>
+    <div class="sidebar-product">
+      <span class="sidebar-tuf-badge">TUF</span>
+      <div class="sidebar-model">
+        B550-PLUS
+        <small>Průvodce BIOSem · CZ</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-group-label">Základní sekce</div>
+
+  <a href="#vstup" class="nav-item active">
+    <span class="nav-num">01</span>
+    <span class="nav-item-text">Vstup do BIOSu</span>
+  </a>
+  <a href="#ezmodes" class="nav-item">
+    <span class="nav-num">02</span>
+    <span class="nav-item-text">EZ vs. Advanced Mode</span>
+  </a>
+  <a href="#main" class="nav-item">
+    <span class="nav-num">03</span>
+    <span class="nav-item-text">Main Menu</span>
+  </a>
+  <a href="#aitweaker" class="nav-item">
+    <span class="nav-num">04</span>
+    <span class="nav-item-text">Ai Tweaker</span>
+  </a>
+  <a href="#advanced" class="nav-item">
+    <span class="nav-num">05</span>
+    <span class="nav-item-text">Advanced</span>
+  </a>
+  <a href="#monitor" class="nav-item">
+    <span class="nav-num">06</span>
+    <span class="nav-item-text">Monitor &amp; ventilátory</span>
+  </a>
+  <a href="#boot" class="nav-item">
+    <span class="nav-num">07</span>
+    <span class="nav-item-text">Boot – spouštění</span>
+  </a>
+  <a href="#tool" class="nav-item">
+    <span class="nav-num">08</span>
+    <span class="nav-item-text">Tool – nástroje</span>
+  </a>
+
+  <div class="nav-group-label">Časté otázky</div>
+
+  <a href="#wol" class="nav-item">
+    <span class="nav-num red">❶</span>
+    <span class="nav-item-text">Wake on LAN</span>
+  </a>
+  <a href="#ezflash" class="nav-item">
+    <span class="nav-num green">❷</span>
+    <span class="nav-item-text">Update BIOSu (EZ Flash)</span>
+  </a>
+  <a href="#wifibios" class="nav-item">
+    <span class="nav-num blue">❸</span>
+    <span class="nav-item-text">WiFi &amp; BT v BIOSu?</span>
+  </a>
+  <a href="#manual" class="nav-item">
+    <span class="nav-num" style="font-size:11px; min-width:28px;">ℹ</span>
+    <span class="nav-item-text">Oficíální manuál</span>
+  </a>
+
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="logo-row">
+      <span class="tuf-badge">TUF GAMING</span>
+      <span class="ver-badge">B550-PLUS · AM4 · AMD B550</span>
+    </div>
+    <h1>Průvodce <span>BIOSem</span><br>v češtině</h1>
+    <p>Kompletní přehled nastavení UEFI/BIOS pro základní desku ASUS TUF Gaming B550-PLUS — od prvního spuštění po pokročilou konfiguraci.</p>
+    <div class="hero-meta">
+      <div class="meta-chip"><span class="dot"></span> UEFI BIOS · EZ Mode + Advanced Mode</div>
+      <div class="meta-chip"><span class="dot"></span> Socket AM4 · Ryzen 3000/5000</div>
+      <div class="meta-chip"><span class="dot"></span> Odpovědi na tvoje 3 otázky ↓</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- SEKCE 1 -->
+  <div class="section" id="vstup">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Jak vstoupit do BIOSu</h2>
+    </div>
+    <p>Ihned po zapnutí počítače (před načtením operačního systému) použij jeden z těchto způsobů:</p>
+    <ul class="steps">
+      <li>Zmáčkni klávesu <kbd>Delete</kbd> nebo <kbd>F2</kbd> při POST obrazovce (logo ASUS).</li>
+      <li>Alternativně: ve Windows 10/11 jdi do <b>Nastavení → Aktualizace → Obnovení → Rozšířené spuštění → Restartovat nyní</b> → Poradce při potížích → Rozšířené možnosti → Nastavení firmwaru UEFI.</li>
+      <li>Zmáčkni tlačítko Reset na šasi – okamžitě drž <kbd>Delete</kbd>.</li>
+    </ul>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Nesprávné nastavení BIOSu může způsobit nestabilitu nebo nespustitelnost systému. Pokud si nejsi jistý, použij <kbd>F5</kbd> pro načtení výchozích hodnot nebo <kbd>F10</kbd> pro uložení a odchod.</span>
+    </div>
+  </div>
+
+  <!-- SEKCE 2 -->
+  <div class="section" id="ezmodes">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>EZ Mode vs. Advanced Mode</h2>
+    </div>
+
+    <div class="bios-mock">
+      <div class="bios-mock-bar">
+        <span>ASUS UEFI BIOS Utility</span>
+        <span>TUF GAMING B550-PLUS</span>
+      </div>
+      <div class="bios-mock-tabs">
+        <div class="bios-tab active">⚡ EZ Mode</div>
+        <div class="bios-tab">Advanced Mode (F7)</div>
+        <div class="bios-tab">My Favorites (F3)</div>
+      </div>
+      <div class="bios-menu">
+        <div class="bios-item selected"><span>Jazyk / Language</span><span class="val">English</span></div>
+        <div class="bios-item"><span>CPU Teplota</span><span class="val">38°C</span></div>
+        <div class="bios-item"><span>CPU Fan Speed</span><span class="val">850 RPM</span></div>
+        <div class="bios-item"><span>Pamě ť</span><span class="val">2× 8 GB DDR4-3200</span></div>
+        <div class="bios-item"><span>Boot Priority</span><span class="val">SSD → USB → ODD</span></div>
+        <div class="bios-item"><span>ASUS EZ Tuning Wizard</span><span class="val">[Enter]</span></div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px;">
+      <div class="card">
+        <h3>⚡ EZ Mode</h3>
+        <p style="font-size:13px;">Výchozí zobrazení. Zobrazuje přehled systému, teploty, rychlosti ventilátorů a pořadí bootování. Vhodný pro rychlou kontrolu nebo změnu priorit spouštění.</p>
+        <p style="font-size:12px; color:var(--muted); margin-top:8px;">Vstup: automaticky při otevření BIOSu</p>
+      </div>
+      <div class="card">
+        <h3>🔧 Advanced Mode</h3>
+        <p style="font-size:13px;">Plný přístup ke všem nastavením — přetaktování, napájení, PCIe konfigurace, ventilátory a více. Potřebné pro většinu pokročilých úprav.</p>
+        <p style="font-size:12px; color:var(--muted); margin-top:8px;">Vstup: klávesa <kbd>F7</kbd> nebo kliknutí v pravém dolním rohu</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEKCE 3 -->
+  <div class="section" id="main">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Main Menu – Hlavní nabídka</h2>
+    </div>
+    <p>Základní informace o systému a nastavení jazyka, data a času.</p>
+    <table class="bios-table">
+      <thead><tr><th>Položka</th><th>Popis</th><th>Výchozí</th></tr></thead>
+      <tbody>
+        <tr><td>BIOS Version</td><td>Aktuální verze firmware</td><td class="tag-def">INFO</td></tr>
+        <tr><td>Build Date</td><td>Datum sestavení BIOS</td><td class="tag-def">INFO</td></tr>
+        <tr><td>System Language</td><td>Jazyk rozhraní BIOS</td><td class="tag-def">English</td></tr>
+        <tr><td>System Date</td><td>Datum systému (den/měsíc/rok)</td><td class="tag-warn">Ručně</td></tr>
+        <tr><td>System Time</td><td>Čas systému (hh:mm:ss)</td><td class="tag-warn">Ručně</td></tr>
+        <tr><td>SPD Information</td><td>Detaily o RAM modulech (výrobce, kapacita, rychlost)</td><td class="tag-def">INFO</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-tip">
+      <span class="alert-icon">💡</span>
+      <span>Čas v BIOSu se zobrazuje v UTC. Pokud si přeješ lokální čas, nastav ho odpovídajícím způsobem nebo nech Windows synchronizaci přes internet.</span>
+    </div>
+  </div>
+
+  <!-- SEKCE 4 -->
+  <div class="section" id="aitweaker">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Ai Tweaker – Výkon &amp; paměti</h2>
+    </div>
+    <p>Tato sekce slouží k přetaktování CPU, nastavení pamětí (EXPO/XMP) a napájecích limitů.</p>
+    <table class="bios-table">
+      <thead><tr><th>Položka</th><th>Popis</th><th>Doporučeno</th></tr></thead>
+      <tbody>
+        <tr><td>Ai Overclock Tuner</td><td>Automatické nebo manuální OC. <b>Auto</b> = bezpečné výchozí.</td><td class="tag-ok">Auto</td></tr>
+        <tr><td>EXPO / D.O.C.P.</td><td>Aktivace XMP profilu RAM – umožní RAM běžet na deklarované rychlosti (např. 3200 MHz).</td><td class="tag-warn">Enabled (doporučeno)</td></tr>
+        <tr><td>CPU Core Ratio</td><td>Násobič CPU. <b>Auto</b> = AMD Precision Boost.</td><td class="tag-ok">Auto</td></tr>
+        <tr><td>CPU Core Voltage</td><td>Napájení CPU jádra. Ponech Auto nebo nastav manuálně při OC.</td><td class="tag-ok">Auto</td></tr>
+        <tr><td>DRAM Frequency</td><td>Frekvence RAM v MHz. Nastavení profilu EXPO/DOCP ji upraví automaticky.</td><td class="tag-ok">Auto / EXPO</td></tr>
+        <tr><td>DRAM Timing Control</td><td>Ruční úprava latencí paměti (CL, tRCD, tRP…)</td><td class="tag-ok">Auto</td></tr>
+        <tr><td>PBO (Precision Boost Overdrive)</td><td>Povolí AMD PBO – automaticky zvýší výkon Ryzen CPU v rámci bezpečných limitů.</td><td class="tag-warn">Auto / Enabled</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Vždy aktivuj <b>EXPO/D.O.C.P.</b> profil, pokud máš rychlou RAM (3200+ MHz). Bez něj poběží RAM jen na 2133 MHz.</span>
+    </div>
+  </div>
+
+  <!-- SEKCE 5 -->
+  <div class="section" id="advanced">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Advanced – Pokročilá nastavení</h2>
+    </div>
+    <p>Sekce obsahuje podmenuy pro CPU, USB, napájení (APM), PCIe sloty, onboard zařízení a další.</p>
+
+    <div class="card">
+      <h3>CPU Configuration</h3>
+      <table class="bios-table">
+        <thead><tr><th>Položka</th><th>Popis</th></tr></thead>
+        <tbody>
+          <tr><td>SVM Mode</td><td>Virtualizace AMD (AMD-V) – nutné pro VirtualBox, VMware, Hyper-V. Doporučeno: <b>Enabled</b></td></tr>
+          <tr><td>PSS Support</td><td>Správa napájení CPU (P-stavy). Nech <b>Enabled</b>.</td></tr>
+          <tr><td>Global C-state Control</td><td>Povolí/zakáže C-stavy pro úsporu energie.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>APM Configuration (Napájení)</h3>
+      <table class="bios-table">
+        <thead><tr><th>Položka</th><th>Popis</th></tr></thead>
+        <tbody>
+          <tr><td><b>ErP Ready</b></td><td>Splnění normy ErP – zakáže napájení USB a WoL ve spánku/vypnutí. Pro WoL: <b>Disabled</b>.</td></tr>
+          <tr><td><b>Power On By PCI-E</b></td><td>Probuzení přes síťovou kartu (WoL). Pro vypnutí WoL: <b>Disabled</b>.</td></tr>
+          <tr><td>Power On By RTC</td><td>Probuzení podle časového plánu (hodiny).</td></tr>
+          <tr><td>Restore AC Power Loss</td><td>Chování po výpadku napájení: Power Off / Power On / Last State.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Onboard Devices Configuration</h3>
+      <table class="bios-table">
+        <thead><tr><th>Položka</th><th>Popis</th></tr></thead>
+        <tbody>
+          <tr><td>HD Audio Controller</td><td>Zapne/vypne zvukový čip Realtek.</td></tr>
+          <tr><td>Intel LAN Controller</td><td>LAN kontrolér — u B550-PLUS je to <b>Realtek RTL8125B 2.5G</b>. Zde jej lze vypnout.</td></tr>
+          <tr><td>Wi-Fi Controller</td><td>Viditelné kvůli sdílené BIOS image — viz sekce ❸ níže.</td></tr>
+          <tr><td>Bluetooth Controller</td><td>Totéž jako Wi-Fi — sdílený BIOS s WiFi variantou.</td></tr>
+          <tr><td>RGB LED Control</td><td>Zapne/vypne Aura Sync RGB podsvícení.</td></tr>
+          <tr><td>ARGB LED Power</td><td>Napájení ARGB hlaviček při vypnutém PC.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>PCIe / NVMe Konfigurace</h3>
+      <table class="bios-table">
+        <thead><tr><th>Položka</th><th>Popis</th></tr></thead>
+        <tbody>
+          <tr><td>PCIe x16 Speed</td><td>Rychlost prvního PCIe slotu – normálně Auto nebo Gen4.</td></tr>
+          <tr><td>M.2_1 / M.2_2</td><td>Nastavení pro NVMe nebo SATA M.2 disky. Sdílená šířka pásma s SATA porty.</td></tr>
+          <tr><td>Above 4G Decoding</td><td>Nutné pro GPU s >4 GB VRAM nebo resize BAR (SAM). Doporučeno: <b>Enabled</b>.</td></tr>
+          <tr><td>Re-Size BAR Support</td><td>AMD Smart Access Memory. Zapni pokud máš Ryzen 5000 + RX 6000.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SEKCE 6 -->
+  <div class="section" id="monitor">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Monitor – Teploty &amp; ventilátory</h2>
+    </div>
+    <p>Přehled teplot, napětí a nastavení Q-Fan pro řízení ventilátorů.</p>
+    <table class="bios-table">
+      <thead><tr><th>Položka</th><th>Popis</th></tr></thead>
+      <tbody>
+        <tr><td>CPU Temperature</td><td>Aktuální teplota CPU v °C</td></tr>
+        <tr><td>Motherboard Temperature</td><td>Teplota základní desky</td></tr>
+        <tr><td>CPU Fan Speed</td><td>Otáčky CPU chladiče (RPM)</td></tr>
+        <tr><td>Chassis Fan 1–3</td><td>Otáčky skříňových ventilátorů</td></tr>
+        <tr><td>CPU Core Voltage</td><td>Aktuální napětí CPU jádra</td></tr>
+        <tr><td>DRAM Voltage</td><td>Napětí RAM modulů</td></tr>
+        <tr><td><b>Q-Fan Tuning</b></td><td>Automatická kalibrace a nastavení křivky ventilátoru (Standard / Silent / Turbo / Full Speed / manuální bod po bodu)</td></tr>
+        <tr><td>CPU Fan Upper Limit</td><td>Ochrana: pokud CPU Fan pod tímto limitem RPM → výstraha / vypnutí</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-tip">
+      <span class="alert-icon">💡</span>
+      <span>Použij <b>Q-Fan Tuning → Auto Tuning</b> pro automatické nastavení křivky ventilátoru dle tvého chladicího řešení — funkce sama změří minimální a maximální otáčky.</span>
+    </div>
+  </div>
+
+  <!-- SEKCE 7 -->
+  <div class="section" id="boot">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Boot – Spouštění systému</h2>
+    </div>
+    <table class="bios-table">
+      <thead><tr><th>Položka</th><th>Popis</th><th>Doporučeno</th></tr></thead>
+      <tbody>
+        <tr><td>Fast Boot</td><td>Přeskočí POST testy pro rychlejší start. Může zabránit vstupu do BIOS při problémech.</td><td class="tag-warn">Disabled (pro jistotu)</td></tr>
+        <tr><td>Boot Logo Display</td><td>Zobrazí logo ASUS při startu. Disabled = viditelné POST informace.</td><td class="tag-ok">Auto</td></tr>
+        <tr><td>POST Delay Time</td><td>Prodleva v sekundách pro vstup do BIOS. Výchozí: 3 s.</td><td class="tag-ok">3 sec</td></tr>
+        <tr><td>Boot Option #1</td><td>První bootovací zařízení – tvůj NVMe/SSD s OS.</td><td class="tag-warn">Nastavit dle disku</td></tr>
+        <tr><td>Setup Mode</td><td>Výchozí zobrazení při vstupu do BIOS: EZ Mode nebo Advanced Mode.</td><td class="tag-ok">EZ Mode</td></tr>
+        <tr><td>Secure Boot</td><td>UEFI Secure Boot – nutné pro Windows 11. Zapni v podmenú.</td><td class="tag-warn">Enabled (Win 11)</td></tr>
+        <tr><td>CSM (Compatibility Support Module)</td><td>Legacy BIOS kompatibilita. Pro Win 10/11 na NVMe: <b>Disabled</b>.</td><td class="tag-ok">Disabled</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SEKCE 8 -->
+  <div class="section" id="tool">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Tool – Nástroje</h2>
+    </div>
+    <div class="card">
+      <h3>Dostupné nástroje v menu Tool</h3>
+      <table class="bios-table">
+        <thead><tr><th>Nástroj</th><th>Popis</th></tr></thead>
+        <tbody>
+          <tr><td>ASUS EZ Flash 3</td><td>Aktualizace BIOSu z USB disku nebo přes internet (MyASUS). Viz sekce ❷ níže.</td></tr>
+          <tr><td>ASUS Secure Erase</td><td>Bezpečné smazání SSD disků připojených přes SATA.</td></tr>
+          <tr><td>ASUS User Profile</td><td>Uložení/obnovení celého profilu nastavení BIOS na USB disk.</td></tr>
+          <tr><td>ASUS SPD Information</td><td>Podrobné informace o RAM (výrobce, XMP profily, timing tabulky).</td></tr>
+          <tr><td>ASUS CrashFree BIOS 3</td><td>Automatické obnovení BIOS z USB při poškozené firmware (hledá soubor *.CAP na USB).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- OTÁZKA 1: Wake on LAN -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="wol">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(232,80,80,.15); border-color:rgba(232,80,80,.4); color:var(--red);">❶</span>
+      <h2>Jak vypnout Wake on LAN (WoL)</h2>
+    </div>
+
+    <div class="qa-box">
+      <div class="qa-question">❓ „Jak vypnu Wake on LAN?"</div>
+      <div class="qa-answer">
+        <p>Wake on LAN umožňuje vzdálené probuzení počítače přes síť. Pokud jej nechceš, potřebuješ ho vypnout na <b>dvou místech</b>: v BIOSu a ve Windows.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Krok 1 – Vypnutí v BIOSu</h3>
+      <span class="path">Advanced Mode (F7) → Advanced → APM Configuration</span>
+      <ul class="steps">
+        <li>Zapni PC a zmáčkni <kbd>Delete</kbd> pro vstup do BIOSu.</li>
+        <li>Přejdi do <b>Advanced Mode</b> klávesou <kbd>F7</kbd>.</li>
+        <li>V horním menu vyber záložku <b>Advanced</b>.</li>
+        <li>Klikni na <b>APM Configuration</b>.</li>
+        <li>Nastav <b>Power On By PCI-E</b> → <span style="color:var(--red)">Disabled</span>.</li>
+        <li>Volitelně: nastav <b>ErP Ready</b> → <b>Enabled</b> (zakáže i USB napájení a další WoL zdroje).</li>
+        <li>Ulož a odejdi: <kbd>F10</kbd> → OK.</li>
+      </ul>
+    </div>
+
+    <div class="bios-mock" style="max-width:520px;">
+      <div class="bios-mock-bar">
+        <span>Advanced → APM Configuration</span>
+      </div>
+      <div class="bios-menu">
+        <div class="bios-item"><span>ErP Ready</span><span class="val">Disabled</span></div>
+        <div class="bios-item selected"><span>▶ Power On By PCI-E</span><span class="val off">Disabled ✓</span></div>
+        <div class="bios-item"><span>Power On By RTC</span><span class="val off">Disabled</span></div>
+        <div class="bios-item"><span>Restore AC Power Loss</span><span class="val">Power Off</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>Krok 2 – Vypnutí ve Windows (nutné pro úplné deaktivování)</h3>
+      <ul class="steps">
+        <li>Klikni pravým tlačítkem na Start → <b>Správce zařízení</b>.</li>
+        <li>Rozbal <b>Síťové adaptéry</b> → pravý klik na <b>Realtek Gaming 2.5GbE</b> → <b>Vlastnosti</b>.</li>
+        <li>Záložka <b>Upřesnit</b>: najdi <b>Wake on Magic Packet</b> a nastav na <b>Zakázáno</b>.</li>
+        <li>Záložka <b>Správa napájení</b>: odškrtni <b>Povolit tomuto zařízení probouzení počítače</b>.</li>
+        <li>Potvrď <b>OK</b>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- OTÁZKA 2: EZ Flash BIOS update -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="ezflash">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(62,207,118,.1); border-color:rgba(62,207,118,.3); color:var(--green);">❷</span>
+      <h2>Jak aktualizovat BIOS (EZ Flash 3)</h2>
+    </div>
+
+    <div class="qa-box">
+      <div class="qa-question">❓ „Jak na aktualizaci BIOSu?"</div>
+      <div class="qa-answer">
+        <p>ASUS TUF B550-PLUS podporuje metodu <b>EZ Flash 3</b> přímo z BIOSu. Potřebuješ pouze USB flashdisk. Celý proces trvá přibližně 5–10 minut.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Příprava – stažení BIOS souboru</h3>
+      <ul class="steps">
+        <li>Navštiv <b>asus.com/cz</b> → vyhledej <i>TUF GAMING B550-PLUS</i> → <b>Podpora → Ovladače a nástroje → BIOS</b>.</li>
+        <li>Stáhni nejnovější BIOS verzi (soubor <b>*.CAP</b>, například <code>TUF-GAMING-B550-PLUS-ASUS-3006.CAP</code>).</li>
+        <li>Zkopíruj soubor <b>*.CAP</b> přímo do kořene USB disku (ne do složky). Disk formátuj jako <b>FAT32</b>.</li>
+        <li>USB disk zasuň do PC <b>před</b> zapnutím.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Aktualizace přes EZ Flash 3 v BIOSu</h3>
+      <span class="path">Advanced Mode (F7) → Tool → ASUS EZ Flash 3 Utility</span>
+      <ul class="steps">
+        <li>Vstup do BIOSu (<kbd>Delete</kbd>), přejdi do <b>Advanced Mode</b> (<kbd>F7</kbd>).</li>
+        <li>V horním menu vyber záložku <b>Tool</b>.</li>
+        <li>Klikni na <b>ASUS EZ Flash 3 Utility</b> a potvrď <kbd>Enter</kbd>.</li>
+        <li>Vyber metodu <b>via Storage Device(s)</b> (z USB disku).</li>
+        <li>Zmáčkni <kbd>Tab</kbd> pro přechod do sloupce disku — vyber svůj USB disk.</li>
+        <li>Zmáčkni <kbd>Tab</kbd> znovu → přejdi do sloupce souborů — vyber soubor <b>*.CAP</b>.</li>
+        <li>Potvrď aktualizaci. <b>Nevypínej PC</b> ani neodpojuj USB po celou dobu!</li>
+        <li>PC se automaticky restartuje po dokončení. BIOS je aktualizován. ✅</li>
+      </ul>
+    </div>
+
+    <div class="bios-mock" style="max-width:560px;">
+      <div class="bios-mock-bar">
+        <span>Tool → ASUS EZ Flash 3 Utility</span>
+      </div>
+      <div class="bios-menu">
+        <div class="bios-item selected"><span>▶ via Storage Device(s)</span><span class="val">USB Drive</span></div>
+        <div class="bios-item sub"><span>Drive: USB Flash Disk (FAT32)</span></div>
+        <div class="bios-item sub"><span>File: TUF-GAMING-B550-PLUS-ASUS-3006.CAP</span></div>
+        <div class="bios-item"><span>via Internet (MyASUS)</span><span class="val">Online update</span></div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span><b>Záloha před updatem:</b> V menu <b>Tool → ASUS User Profile</b> ulož aktuální BIOS nastavení na USB disk. Po aktualizaci se nastavení resetuje na výchozí hodnoty — profil pak snadno obnovíš.</span>
+    </div>
+
+    <div class="alert alert-tip">
+      <span class="alert-icon">💡</span>
+      <span><b>BIOS FlashBack™:</b> Deska také podporuje flashování bez CPU a RAM. Zasuň USB s BIOS souborem <code>B550PLUS.CAP</code> do označeného USB portu a drž FlashBack tlačítko na zadním panelu 3 sekundy. LED bliká = probíhá update. Vhodné pro záchranné flashování.</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- OTÁZKA 3: WiFi/BT v BIOSu -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="wifibios">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(74,158,255,.1); border-color:rgba(74,158,255,.3); color:var(--blue);">❸</span>
+      <h2>Proč BIOS ukazuje WiFi a Bluetooth?</h2>
+    </div>
+
+    <div class="qa-box">
+      <div class="qa-question">❓ „Proč vidím BT a WiFi v BIOSu, když to deska nemá?"</div>
+      <div class="qa-answer">
+        <p>Jedná se o <b>záměrné chování</b> a je to naprosto normální. Důvod je technický a výrobní:</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔍 Technické vysvětlení</h3>
+      <p style="font-size:14px; margin-bottom:12px;">ASUS vyrábí <b>dvě varianty</b> téměř identické desky:</p>
+      <div class="board-grid">
+        <div class="board-slot">
+          <div class="label">Tvoje deska</div>
+          <div class="name">TUF Gaming B550-PLUS</div>
+          <div style="font-size:11px; color:var(--muted); margin-top:6px;">Bez WiFi modulu<br>M.2 Key-E slot: <span style="color:var(--green)">přítomen na PCB</span></div>
+        </div>
+        <div class="board-slot highlight">
+          <div class="label">Jiná varianta</div>
+          <div class="name">TUF Gaming B550-PLUS WiFi</div>
+          <div style="font-size:11px; color:var(--muted); margin-top:6px;">S WiFi 6 + BT 5.0 modulem<br>M.2 Key-E slot: <span style="color:var(--accent)">obsazený WiFi kartou</span></div>
+        </div>
+      </div>
+      <p style="font-size:14px; margin-top:16px;">Oba modely používají <b>totožný BIOS firmware</b>. ASUS nešije zvlášť BIOS pro každou verzi desky — sdílí jednu image, která obsahuje ovladače a nabídky pro WiFi/BT <b>i pokud hardware není přítomen</b>.</p>
+      <p style="font-size:14px; margin-top:10px;">Fyzicky má tvá deska na PCB <b>M.2 Key-E slot</b> (malý konektor určený pro WiFi karty) — ale do balení nebyla WiFi karta přiložena. Pokud bys chtěl WiFi doplnit, stačí zakoupit kompatibilní M.2 WiFi modul (např. Intel AX200 nebo AX210).</p>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span><b>Závěr:</b> Zobrazení WiFi a BT v BIOSu ti nevadí ani nezpůsobuje problémy. Jedná se jen o neaktivní menu položky ze sdíleného BIOS kódu. Pokud chceš WiFi opravdu využívat, doplň M.2 WiFi kartu do Key-E slotu — BIOS ji okamžitě rozpozná.</span>
+    </div>
+
+    <div class="card">
+      <h3>📦 Chci přidat WiFi — co koupit?</h3>
+      <table class="bios-table">
+        <thead><tr><th>Modul</th><th>WiFi standard</th><th>Bluetooth</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr><td>Intel AX200</td><td>WiFi 6 (802.11ax)</td><td>BT 5.2</td><td>Nejpopulárnější volba, plug &amp; play</td></tr>
+          <tr><td>Intel AX210</td><td>WiFi 6E (6 GHz)</td><td>BT 5.3</td><td>Nejnovější, vyšší cena</td></tr>
+          <tr><td>Intel Wi-Fi 6 AX201</td><td>WiFi 6</td><td>BT 5.2</td><td>Levnější alternativa</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px; color:var(--muted); margin-top:10px;">Karta se zasune do M.2 Key-E slotu na desce (blízko zadního panelu). Jsou k ní přiloženy antény na závit — zašroubují se do výřezu na zadním panelu skříně nebo na štít.</p>
+    </div>
+  </div>
+
+  <!-- Manuál informace -->
+  <div class="section" id="manual">
+    <div class="section-header">
+      <span class="section-num">ℹ</span>
+      <h2>Stažení oficíálního BIOS manuálu</h2>
+    </div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <div>
+        <b>Česká verze BIOSu/manuálu neexistuje.</b> ASUS vydal BIOS manuál pro sérii B550 pouze v: angličtině, němčině, francouzštině, japonštině, čínštině (zjednodušené i tradiční).<br><br>
+        Officiální BIOS manuál v angličtině ke stažení zdarma:<br>
+        <a href="https://dlcdnets.asus.com/pub/ASUS/misc/Manual/PRIME_TUF_GAMING_B550_Series_BIOS_EM_WEB_EN.pdf" style="color:var(--accent);">PRIME/TUF GAMING B550 Series BIOS Manual (EN) – PDF</a><br><br>
+        Celá stránka podpory (CZ):<br>
+        <a href="https://www.asus.com/cz/supportonly/tuf%20gaming%20b550-plus/helpdesk_manual/" style="color:var(--accent);">asus.com/cz – TUF GAMING B550-PLUS manuály</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<footer>
+  <div>
+    <p>Sestaveno z oficiální ASUS dokumentace &amp; BIOS manuálu pro <b>TUF GAMING B550-PLUS</b>.</p>
+    <p style="margin-top:4px;">Officiální podpora: <a href="https://www.asus.com/cz/support">asus.com/cz/support</a> · Verze průvodce: 2026</p>
+  </div>
+  <a href="../index.html" class="footer-back">← Zpět na rozcestník</a>
+</footer>
+
+<script>
+  // Progress bar při scrollování
+  window.addEventListener('scroll', () => {
+    const bar = document.getElementById('progressBar');
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (scrollTop / height * 100) + '%';
+  });
+
+  // Aktivní odkaz v sidebar dle scrollu
+  const sections = document.querySelectorAll('.section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(l => l.classList.remove('active'));
+        const target = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (target) target.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
