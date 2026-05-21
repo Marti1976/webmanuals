@@ -97,9 +97,74 @@ pre code{background:none;border:none;padding:0;color:inherit}
 .ch-btn.next{justify-content:flex-end;text-align:right}
 .ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--rasp1-light)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
+  background:rgba(227,11,92,.12);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* ── LAYOUT ── */
+.wrap{margin-left:260px}
+footer{margin-left:260px}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .wrap,footer{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">🔒</div>
+      <div class="sidebar-name">Bezpečnost<small>Firewall · 2FA · VPN</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah kapitoly</div>
+  <a href="#zakladni-pravidlo" class="nav-link active"><span class="nav-step">01</span>Základní pravidlo</a>
+  <a href="#firewall" class="nav-link"><span class="nav-step">02</span>Firewall routeru</a>
+  <a href="#dvfa" class="nav-link"><span class="nav-step">03</span>2FA autentizace</a>
+  <a href="#silne-heslo" class="nav-link"><span class="nav-step">04</span>Silné heslo</a>
+  <a href="#trusted-nets" class="nav-link"><span class="nav-step">05</span>Trusted Networks</a>
+  <a href="#mqtt-bezpecnost" class="nav-link"><span class="nav-step">06</span>MQTT zabezpečení</a>
+  <a href="#vzdaleny-pristup" class="nav-link"><span class="nav-step">07</span>Vzdálený přístup</a>
+  <a href="#logovani" class="nav-link"><span class="nav-step">08</span>Logování</a>
+  <a href="#sdilet-config" class="nav-link"><span class="nav-step">09</span>Sdílení konfigurace</a>
+  <a href="#guest-wifi" class="nav-link"><span class="nav-step">10</span>Guest WiFi</a>
+  <a href="#bezp-checklist" class="nav-link"><span class="nav-step">11</span>Bezpečnostní checklist</a>
+</nav>
 <div class="wrap">
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
 <header>
@@ -109,7 +174,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </header>
 
 <!-- ZAKLADNI PRAVIDLO -->
-<section class="sec">
+<section class="sec" id="zakladni-pravidlo">>
   <h2>Základní pravidlo</h2>
   <div class="callout callout-danger">
     <div class="callout-title">🔴 Nikdy přímo nevystavuj HA do internetu!</div>
@@ -118,7 +183,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- FIREWALL ROUTER -->
-<section class="sec">
+<section class="sec" id="firewall">>
   <h2>Firewall na routeru</h2>
   <p>Router je první linie obrany. Standardně blokuje příchozí spojení z internetu – je důležité toto nastavení neporušit.</p>
   <div class="steps">
@@ -149,7 +214,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- 2FA -->
-<section class="sec">
+<section class="sec" id="dvfa">>
   <h2>Dvoufaktorová autentizace (2FA)</h2>
   <p>I kdyby někdo znal tvoje heslo, bez 2FA kódu se do HA nepřihlásí. <strong>Doporučuji aktivovat vždy.</strong></p>
   <div class="steps">
@@ -179,7 +244,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- SILNE HESLO -->
-<section class="sec">
+<section class="sec" id="silne-heslo">>
   <h2>Silné heslo a správa přihlašovacích údajů</h2>
   <p>Základní hygienická pravidla pro přihlašovací údaje:</p>
   <ul>
@@ -196,7 +261,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- TRUSTED NETWORKS -->
-<section class="sec">
+<section class="sec" id="trusted-nets">>
   <h2>Trusted Networks – přístup bez hesla z lokální sítě</h2>
   <p>Pokud chceš, aby zařízení v lokální síti (tablety na zdi, domácí PC) nemusela zadávat heslo, lze nakonfigurovat Trusted Networks.</p>
   <div class="steps">
@@ -226,7 +291,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- ZABEZPECENI MQTT -->
-<section class="sec">
+<section class="sec" id="mqtt-bezpecnost">>
   <h2>Zabezpečení MQTT brokeru</h2>
   <p>Mosquitto v HAOS je ve výchozím nastavení dostupný <strong>pouze uvnitř sítě add-onů</strong> – port 1883 není přístupný z internetu ani z lokální sítě jiných zařízení. To je správné chování.</p>
   <div class="steps">
@@ -247,7 +312,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- VZDALENY PRISTUP -->
-<section class="sec">
+<section class="sec" id="vzdaleny-pristup">>
   <h2>Vzdálený přístup – bezpečné možnosti</h2>
   <p>Pokud chceš přistupovat k HA z internetu (mimo domov), nikdy neotvírej porty přímo. Místo toho použi jednu z těchto bezpečných metod:</p>
 
@@ -312,7 +377,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- LOGOVANI -->
-<section class="sec">
+<section class="sec" id="logovani">>
   <h2>Logování a sledování přihlášení</h2>
   <div class="steps">
     <div class="step">
@@ -342,7 +407,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- BEZPECNOSTNI CHECKLIST -->
-<section class="sec">
+<section class="sec" id="sdilet-config">>
   <h2>Sdílení konfigurace – co nikdy nezveřejňovat</h2>
   <p>Komunita HA je přátelská a lidé rádi sdílejí své konfigurace. Před sdílením (fórum, GitHub, Slack) vždy zkontroluj, že neobsahuje citlivé informace.</p>
   <ul>
@@ -358,7 +423,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- GUEST WIFI -->
-<section class="sec">
+<section class="sec" id="guest-wifi">>
   <h2>Guest WiFi pro IoT zařízení</h2>
   <p>Zigbee zařízení WiFi nepotřebují – komunikují přes Zigbee koordinátor. Pokud ale máš v síti WiFi IoT zařízení (chytré televize, IP kamery, WiFi zásuvky s Tasmota firmware), je moudré je izolovat od hlavní sítě.</p>
   <ul>
@@ -376,7 +441,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- BEZPECNOSTNI CHECKLIST -->
-<section class="sec">
+<section class="sec" id="bezp-checklist">>
   <h2>Bezpečnostní checklist</h2>
   <div class="sec-check">
     <div class="sec-check-title">Zkontroluj před nasazením do produkce</div>
@@ -451,5 +516,25 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </nav>
 <footer>11_raspberry_bezpecnost.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
+<script>
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('progressBar');
+  const t=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  b.style.width=(t/h*100)+'%';
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const t=document.querySelector('[href="#'+e.target.id+'"]');
+      if(t)t.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>

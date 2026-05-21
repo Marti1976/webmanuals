@@ -129,9 +129,70 @@ pre code{background:none;border:none;padding:0;color:inherit;font-size:1em}
 
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--rasp1-light)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
+  background:rgba(227,11,92,.12);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* ── LAYOUT ── */
+.wrap{margin-left:260px}
+footer{margin-left:260px}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .wrap,footer{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">🏗️</div>
+      <div class="sidebar-name">Přehled Systému<small>Architektura systému</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah kapitoly</div>
+  <a href="#co-mas" class="nav-link active"><span class="nav-step">01</span>Co budeš mít</a>
+  <a href="#architektura" class="nav-link"><span class="nav-step">02</span>Architektura</a>
+  <a href="#stack" class="nav-link"><span class="nav-step">03</span>Softwarový stack</a>
+  <a href="#hw-prehled" class="nav-link"><span class="nav-step">04</span>Hardware – přehled</a>
+  <a href="#cas-narocnost" class="nav-link"><span class="nav-step">05</span>Časová náročnost</a>
+  <a href="#spotreba" class="nav-link"><span class="nav-step">06</span>Spotřeba energie</a>
+  <a href="#rozsireni" class="nav-link"><span class="nav-step">07</span>Budoucí rozšíření</a>
+</nav>
 <div class="wrap">
 
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
@@ -143,7 +204,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </header>
 
 <!-- CO BUDEŠ MÍT -->
-<section class="sec">
+<section class="sec" id="co-mas">>
   <h2>Co budeš mít po dokončení</h2>
   <p>Po splnění všech kapitol tohoto průvodce budeš mít plně funkční systém chytré domácnosti. Všechny komponenty běží lokálně na Raspberry Pi – žádná data neopouštějí tvoji síť, pokud ty sám nechceš.</p>
 
@@ -182,7 +243,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- ARCHITEKTURA -->
-<section class="sec">
+<section class="sec" id="architektura">>
   <h2>Architektura systému</h2>
   <p>Celý systém je postaven do vrstev. Každá vrstva komunikuje pouze s bezprostředně sousední – to zaručuje jednoduchost, přehlednost a snadné ladění.</p>
 
@@ -236,7 +297,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- SOFTWAROVÝ STACK -->
-<section class="sec">
+<section class="sec" id="stack">>
   <h2>Přehled softwarového stacku</h2>
   <table class="stack-table">
     <thead>
@@ -287,7 +348,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- HARDWARE PŘEHLED -->
-<section class="sec">
+<section class="sec" id="hw-prehled">>
   <h2>Hardware na první pohled</h2>
   <p>Detaily k nákupu jsou v <a href="02_raspberry_hardware.html">Kapitole 02 – Hardware</a>. Tady je rychlý přehled co budeš fyzicky potřebovat:</p>
   <ul>
@@ -306,7 +367,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- ČASOVÁ NÁROČNOST -->
-<section class="sec">
+<section class="sec" id="cas-narocnost">>
   <h2>Časová náročnost instalace</h2>
   <p>Odhadem si připrav tento čas – záleží na tvých zkušenostech a rychlosti internetu:</p>
   <ul>
@@ -325,7 +386,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- SPOTŘEBA ENERGIE -->
-<section class="sec">
+<section class="sec" id="spotreba">>
   <h2>Spotřeba energie a provozní náklady</h2>
   <p>Raspberry Pi 3 B+ je velmi úsporné zařízení. Provoz 24/7 tě nebude stát téměř nic – a to je jedna z velkých výhod oproti plnohodnotnému PC serveru.</p>
   <ul>
@@ -341,7 +402,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- BUDOUCÍ ROZŠÍŘENÍ -->
-<section class="sec">
+<section class="sec" id="rozsireni">>
   <h2>Co dalšího lze integrovat – budoucí rozšíření</h2>
   <p>Tento průvodce pokrývá Zigbee zařízení jako základ. Home Assistant ale umí mnohem více – jakmile bude základní systém stabilní, lze ho rozšířit o:</p>
 
@@ -399,5 +460,25 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </footer>
 
 </div>
+<script>
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('progressBar');
+  const t=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  b.style.width=(t/h*100)+'%';
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const t=document.querySelector('[href="#'+e.target.id+'"]');
+      if(t)t.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>

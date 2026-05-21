@@ -93,9 +93,68 @@ pre code{background:none;border:none;padding:0;color:inherit}
 .ch-btn.next{justify-content:flex-end;text-align:right}
 .ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--rasp1-light)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
+  background:rgba(227,11,92,.12);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* ── LAYOUT ── */
+.wrap{margin-left:260px}
+footer{margin-left:260px}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .wrap,footer{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">📨</div>
+      <div class="sidebar-name">Mosquitto MQTT<small>MQTT Broker</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah kapitoly</div>
+  <a href="#co-je-mqtt" class="nav-link active"><span class="nav-step">01</span>Co je MQTT</a>
+  <a href="#instalace" class="nav-link"><span class="nav-step">02</span>Instalace Mosquitto</a>
+  <a href="#mqtt-uzivatel" class="nav-link"><span class="nav-step">03</span>MQTT uživatel</a>
+  <a href="#mqtt-integrace" class="nav-link"><span class="nav-step">04</span>MQTT integrace v HA</a>
+  <a href="#overeni" class="nav-link"><span class="nav-step">05</span>Ověření</a>
+</nav>
 <div class="wrap">
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
 <header>
@@ -105,7 +164,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </header>
 
 <!-- CO JE MQTT -->
-<section class="sec">
+<section class="sec" id="co-je-mqtt">>
   <h2>Co je MQTT a proč ho potřebujeme</h2>
   <p>MQTT (Message Queuing Telemetry Transport) je odlehčený komunikační protokol na principu <strong>publish / subscribe</strong>. Zařízení a služby se přihlásí k odběru témat (topics) a posílají si zprávy přes centrální broker – v našem případě Mosquitto.</p>
   <div class="mqtt-flow">
@@ -132,7 +191,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- INSTALACE -->
-<section class="sec">
+<section class="sec" id="instalace">>
   <h2>Instalace Mosquitto Broker</h2>
   <div class="steps">
     <div class="step">
@@ -174,7 +233,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- MQTT UZIVATEL -->
-<section class="sec">
+<section class="sec" id="mqtt-uzivatel">>
   <h2>Vytvoření dedikovaného MQTT uživatele</h2>
   <p>Mosquitto může využívat standardní HA uživatele. Pro čistotu a bezpečnost doporučuji vytvořit <strong>samostatného uživatele pouze pro MQTT</strong> – nebude mít práva správce ani přístup do UI.</p>
   <div class="steps">
@@ -217,7 +276,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- MQTT INTEGRACE -->
-<section class="sec">
+<section class="sec" id="mqtt-integrace">>
   <h2>Přidání MQTT integrace do Home Assistant</h2>
   <p>Aby HA věděl o Mosquitto brokerovi a uměl přijímat zprávy od Zigbee2MQTT, musíme přidat MQTT integraci.</p>
   <div class="steps">
@@ -247,7 +306,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- OVERENI -->
-<section class="sec">
+<section class="sec" id="overeni">>
   <h2>Ověření – co by mělo fungovat</h2>
   <ul>
     <li>✅ Mosquitto broker běží (zelený stav "Running" v add-onu)</li>
@@ -270,5 +329,25 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </nav>
 <footer>07_raspberry_instalace_mqtt_broker_mosquitto.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
+<script>
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('progressBar');
+  const t=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  b.style.width=(t/h*100)+'%';
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const t=document.querySelector('[href="#'+e.target.id+'"]');
+      if(t)t.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>

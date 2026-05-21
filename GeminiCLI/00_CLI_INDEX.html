@@ -258,22 +258,20 @@
       gap: 8px;
       flex-wrap: wrap;
     }
-
-    .page-footer {
-      margin-top: 32px;
-      padding: 20px 0 8px;
-      border-top: 1px solid var(--border-subtle);
-      text-align: center;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72em;
-      color: var(--fg-soft);
-      line-height: 2;
-    }
+	
+	/* FOOTER */
+	footer{margin-top:10px;padding:1px 0;
+	border-top:1px solid var(--border);
+	text-align:center;
+	font-family:'DM Mono',monospace;
+	font-size:.75em;color:var(--t3);line-height:2}
+  
   </style>
 </head>
 <body>
   <div class="page">
     <header>
+	<a href="../index.html" style="color:var(--t2);text-decoration:none;font-family:'DM Mono',monospace;font-size:0.85em;display:block;text-align:left;margin-bottom:25px;">← Zpět na Rozcestník</a>
       <div class="eyebrow-row">
         <div class="eyebrow-left">
           <span class="eyebrow-dot"></span>
@@ -364,13 +362,15 @@
         <span>Stačí kliknout na jakoukoli kartu výše a otevře se odpovídající HTML kapitola.</span>
       </div>
     </main>
+	<footer>
 
-    <div class="page-footer">
       00_CLI_INDEX.html &nbsp;·&nbsp;
       Gemini CLI Průvodce &nbsp;·&nbsp;
-      Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
-	  <a href="../index.html">← Zpět na rozcestník</a>
-    </div>
+      Claude (Anthropic) &nbsp;·&nbsp; Duben 2026&nbsp;&nbsp; &nbsp;
+
+	  <br><br>  
+	  <a href="../index.html" style="color:var(--t2);text-decoration:none;font-family:'DM Mono',monospace;font-size:1.10em;display:block;text-align:left;margin-bottom:10px;">← Zpět na Rozcestník</a>
+	</footer>
 
   </div>
 </body>

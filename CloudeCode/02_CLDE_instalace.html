@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 · Instalace — CLDE průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;}
+.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
+.sb-home:hover{background:var(--sf);}.sb-home::before{content:'←';}
+.sb-chapters{padding:6px 0 24px;}.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
+.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
+.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
+.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
+.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}.sb-ch-link.active .n{opacity:1;}
+.sb-subs{padding:2px 0 6px 36px;list-style:none;}
+.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
+.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
+.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
+.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
+.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
+.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
+.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
+h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
+p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
+strong{color:var(--hd);font-weight:600;}
+.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
+.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
+.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
+.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
+.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
+.callout.gn .callout-title{color:var(--gn);}.callout.rd .callout-title{color:var(--rd);}.callout.bl .callout-title{color:var(--bl);}
+.callout p{font-size:.86rem;margin:0;line-height:1.7;}
+.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
+.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
+.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre;}
+.cb pre .c{color:var(--mu);}.cb pre .k{color:var(--bl);}.cb pre .v{color:var(--gn);}.cb pre .a{color:var(--ac);}
+code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
+.tw{overflow-x:auto;margin:20px 0;}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
+th{background:var(--sf);color:var(--mu);text-align:left;padding:9px 13px;border:1px solid var(--br);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:.63rem;}
+td{padding:9px 13px;border:1px solid var(--br);color:var(--tx);vertical-align:top;}
+tr:hover td{background:rgba(255,255,255,.013);}
+.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
+.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
+.tl li:last-child{border-bottom:none;}
+.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
+.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
+.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
+.pn a:hover{color:var(--ac);}
+.pn .nx{margin-left:auto;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a href="00_CLDE_index.html" class="sb-home">Zpět na obsah</a>
+  <div class="sb-chapters">
+    <div class="sb-ch"><a href="01_CLDE_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a><ul class="sb-subs"><li><a href="01_CLDE_salary.html#platebni-modely">Platební modely</a></li><li><a href="01_CLDE_salary.html#prehled-planu">Přehled plánů</a></li><li><a href="01_CLDE_salary.html#api-sazby">API sazby</a></li><li><a href="01_CLDE_salary.html#jak-usetrit">Jak ušetřit</a></li><li><a href="01_CLDE_salary.html#realne-naklady">Reálné náklady</a></li></ul></div>
+    <div class="sb-ch">
+      <a href="02_CLDE_instalace.html" class="sb-ch-link active"><span class="n">02</span>Instalace</a>
+      <ul class="sb-subs">
+        <li><a href="#prehled">Přehled rozhraní</a></li>
+        <li><a href="#cli">CLI — native installer</a></li>
+        <li><a href="#homebrew">macOS Homebrew</a></li>
+        <li><a href="#windows-install">Windows</a></li>
+        <li><a href="#linux-install">Linux</a></li>
+        <li><a href="#desktop">Desktop aplikace</a></li>
+        <li><a href="#ide">IDE rozšíření</a></li>
+        <li><a href="#web">Webové rozhraní</a></li>
+        <li><a href="#autentizace">Autentizace</a></li>
+        <li><a href="#overeni">Ověření instalace</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch"><a href="03_CLDE_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDE_nastaveni.html#struktura">Struktura souborů</a></li><li><a href="03_CLDE_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDE_nastaveni.html#settings">settings.json</a></li><li><a href="03_CLDE_nastaveni.html#env">ENV proměnné</a></li></ul></div>
+    <div class="sb-ch"><a href="04_CLDE_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDE_zaklady.html#prvni-session">První session</a></li><li><a href="04_CLDE_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDE_zaklady.html#workflow">Workflow</a></li></ul></div>
+    <div class="sb-ch"><a href="05_CLDE_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a><ul class="sb-subs"><li><a href="05_CLDE_pokrocile.html#mcp">MCP</a></li><li><a href="05_CLDE_pokrocile.html#hooks">Hooks</a></li></ul></div>
+    <div class="sb-ch"><a href="06_CLDE_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDE_agenti.html#subagenti">Subagenti</a></li></ul></div>
+    <div class="sb-ch"><a href="07_CLDE_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="07_CLDE_bezpecnost.html#opravneni">Oprávnění</a></li></ul></div>
+    <div class="sb-ch"><a href="08_CLDE_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy</a><ul class="sb-subs"><li><a href="08_CLDE_zalohy.html#git-sit">Git záchranná síť</a></li></ul></div>
+    <div class="sb-ch"><a href="09_CLDE_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD</a><ul class="sb-subs"><li><a href="09_CLDE_cicd.html#github-actions">GitHub Actions</a></li></ul></div>
+    <div class="sb-ch"><a href="10_CLDE_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="10_CLDE_troubleshooting.html#instalace-err">Instalační chyby</a></li></ul></div>
+    <div class="sb-ch"><a href="11_CLDE_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy</a><ul class="sb-subs"><li><a href="11_CLDE_odkazy.html#cesky">Česky</a></li></ul></div>
+  </div>
+</nav>
+<main class="main">
+<div class="ph">
+  <div class="ph-num">DÍL 02 / 11</div>
+  <h1>Instalace</h1>
+  <p>Všechny způsoby jak spustit Claude Code — native installer pro CLI, Desktop aplikace pro macOS a Windows, IDE pluginy pro VS Code a JetBrains, a webové rozhraní bez instalace.</p>
+</div>
+
+<h2 id="prehled">Přehled rozhraní — co si vybrat</h2>
+<div class="tw"><table>
+<thead><tr><th>Rozhraní</th><th>Platformy</th><th>Funkce</th><th>Ideální pro</th></tr></thead>
+<tbody>
+<tr><td><strong>CLI (terminál)</strong></td><td>macOS · Linux · Windows</td><td style="color:var(--gn)">Plné</td><td>Vývojáři znalí terminálu, scripting, CI/CD</td></tr>
+<tr><td><strong>Desktop App</strong></td><td>macOS · Windows</td><td style="color:var(--gn)">Plné + GUI</td><td>Vizuální diff, paralelní sessions, mobil sync</td></tr>
+<tr><td><strong>VS Code plugin</strong></td><td>macOS · Linux · Windows</td><td>Téměř plné</td><td>VS Code, Cursor, Windsurf uživatelé</td></tr>
+<tr><td><strong>JetBrains plugin</strong></td><td>macOS · Linux · Windows</td><td>Téměř plné</td><td>IntelliJ, WebStorm, PyCharm, GoLand</td></tr>
+<tr><td><strong>Web rozhraní</strong></td><td>Prohlížeč</td><td>Omezené</td><td>Rychlý start, jiné zařízení, GitHub projekty</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout bl">
+  <div class="callout-title">Doporučení pro začátečníky</div>
+  <p>Začněte s <strong>Desktop App</strong> pokud jste na macOS nebo Windows — má grafické rozhraní a nemusíte řešit nastavení terminálu. Pokud jste pokročilý uživatel nebo pracujete na Linux, CLI je výkonnější a flexibilnější.</p>
+</div>
+
+<h2 id="cli">CLI — native installer (doporučená metoda)</h2>
+<p>Od roku 2026 je nativní instalátor <strong>jediná doporučená cesta</strong> pro CLI. Nevyžaduje Node.js, automaticky se aktualizuje na pozadí a je k dispozici pro všechny platformy.</p>
+
+<h3 id="homebrew">macOS a Linux — jeden příkaz</h3>
+<div class="cb"><div class="cb-label">Terminal · bash / zsh</div><pre>
+<span class="c"># Instalace přes native installer</span>
+<span class="a">curl</span> -fsSL https://claude.ai/install.sh | bash
+
+<span class="c"># Instalace přes Homebrew (macOS)</span>
+<span class="a">brew</span> install --cask claude-code
+
+<span class="c"># Homebrew neaktualizuje automaticky — spouštějte periodicky:</span>
+<span class="a">brew</span> upgrade claude-code
+
+<span class="c"># Ověření instalace</span>
+<span class="a">claude</span> --version
+<span class="c">→ claude 1.x.x (nebo aktuální verze)</span>
+</pre></div>
+
+<p>Po instalaci se příkaz <code>claude</code> přidá do PATH. Pokud shell hlásí "command not found", spusťte <code>source ~/.zshrc</code> (nebo <code>~/.bashrc</code> pro bash) — tímto refreshnete PATH bez restartu terminálu.</p>
+
+<h3 id="windows-install">Windows — instalace</h3>
+<div class="cb"><div class="cb-label">PowerShell (jako administrátor)</div><pre>
+<span class="c"># Varianta 1: Native PowerShell instalátor (doporučeno)</span>
+irm https://claude.ai/install.ps1 | iex
+
+<span class="c"># Varianta 2: WinGet</span>
+<span class="a">winget</span> install Anthropic.ClaudeCode
+
+<span class="c"># WinGet neaktualizuje automaticky:</span>
+<span class="a">winget</span> upgrade Anthropic.ClaudeCode
+
+<span class="c"># Varianta 3: Stáhněte .msi instalátor z</span>
+<span class="c"># https://claude.com/download</span>
+</pre></div>
+
+<p><strong>Git Bash vs PowerShell:</strong> Claude Code interně vždy používá Git Bash pro spouštění příkazů, i když ho spustíte z PowerShell. Nainstalujte Git for Windows z <strong>git-scm.com</strong> — při instalaci vyberte "Add to PATH". Bez Git Bash bash příkazy v Claude Code selžou.</p>
+
+<p><strong>WSL2:</strong> Pokud pracujete s Linux projekty z Windows, spouštějte Claude Code přímo z WSL2 terminálu (Ubuntu) — funguje identicky jako na Linux a Git Bash nepotřebujete.</p>
+
+<h3 id="linux-install">Linux — balíčkové systémy</h3>
+<div class="cb"><div class="cb-label">Různé distribuce</div><pre>
+<span class="c"># Debian / Ubuntu</span>
+<span class="a">sudo</span> apt install claude-code
+
+<span class="c"># Fedora / RHEL / CentOS</span>
+<span class="a">sudo</span> dnf install claude-code
+
+<span class="c"># Arch Linux (AUR)</span>
+<span class="a">yay</span> -S claude-code
+
+<span class="c"># Alpine Linux</span>
+<span class="a">apk</span> add claude-code
+
+<span class="c"># Nebo universal native installer</span>
+<span class="a">curl</span> -fsSL https://claude.ai/install.sh | bash
+</pre></div>
+
+<div class="callout rd">
+  <div class="callout-title">npm instalace — zastaralé</div>
+  <p>Instalace přes <code>npm install -g @anthropic-ai/claude-code</code> je od roku 2026 <strong>deprecated</strong>. Pokud ji máte, odinstalujte ji a přejděte na native installer. Native installer nevyžaduje Node.js a aktualizuje se automaticky.</p>
+</div>
+
+<h2 id="desktop">Desktop aplikace (vydána duben 2026)</h2>
+<p>Desktop App není jen wrapper nad CLI — je to plnohodnotné vývojové prostředí optimalizované pro agentic práci. Klíčová funkce jsou <strong>paralelní sessions</strong>: každá session dostane vlastní izolovanou kopii projektu přes Git worktrees. Můžete spustit refaktoring frontendu a backendu zároveň, sledovat oba živě a merge výsledky standardním PR workflow.</p>
+
+<ul class="tl">
+  <li><strong>Monaco editor</strong> (stejný základ jako VS Code) — vizuální diff před zápisem, zvýrazňování syntaxe</li>
+  <li><strong>Integrovaný terminál</strong> — spouštění testů přímo v aplikaci ve working directory session</li>
+  <li><strong>Vzdálené ovládání z mobilu</strong> — spouštění a monitoring desktop sessions z Claude mobilní aplikace</li>
+  <li><strong>Přehled všech sessions</strong> — jedna karta = jedna session, vidíte stav, spotřebu, progress</li>
+</ul>
+
+<div class="cb"><div class="cb-label">Stažení Desktop App</div><pre>
+<span class="c"># Stáhněte z claude.com/download</span>
+<span class="c"># macOS: .dmg installer</span>
+<span class="c"># Windows: .msi nebo .exe installer</span>
+<span class="c"># Linux: NENÍ dostupné, použijte CLI</span>
+
+<span class="c"># Po instalaci se Desktop App a CLI sdílí autentizaci —</span>
+<span class="c"># přihlaste se jednou a funguje obojí</span>
+</pre></div>
+
+<h2 id="ide">IDE rozšíření</h2>
+<h3>VS Code (+ Cursor, Windsurf)</h3>
+<ul class="tl">
+  <li>Otevřete VS Code → Extensions (Ctrl+Shift+X) → hledejte <strong>Claude Code</strong></li>
+  <li>Instalujte rozšíření od Anthropic (ověřte vydavatele)</li>
+  <li>Po instalaci se logo Claude objeví v pravém horním rohu editoru a v activity baru</li>
+  <li>Přihlaste se přes claude.com nebo API klíč — sdílí session s CLI</li>
+  <li>Funguje stejně v <strong>Cursor</strong> a <strong>Windsurf</strong> (oba jsou forky VS Code)</li>
+</ul>
+
+<h3>JetBrains (IntelliJ, WebStorm, PyCharm, GoLand…)</h3>
+<ul class="tl">
+  <li>Otevřete Settings → Plugins → Marketplace → hledejte <strong>Claude Code</strong></li>
+  <li>Instalujte a restartujte IDE</li>
+  <li>Plugin přidá panel Claude Code do pravého sidebaru</li>
+  <li>Stejná autentizace jako CLI — API klíč nebo předplatné</li>
+</ul>
+
+<h2 id="web">Webové rozhraní</h2>
+<p>Claude Code lze spustit přímo z prohlížeče na <strong>claude.ai</strong>. Pro práci s kódem v GitHub repozitáři autorizujte Claude App v GitHub Settings → Applications.</p>
+<p>Omezení webového rozhraní: pomalejší než CLI, omezené bash příkazy, nelze nainstalovat vlastní MCP servery. Vhodné pro: rychlé jednorázové dotazy ke kódu, práci z jiného zařízení (tablet, školní počítač) nebo onboarding nových členů týmu bez instalace.</p>
+
+<h2 id="autentizace">Autentizace — přihlášení po instalaci</h2>
+<p>Existují dva způsoby autentizace a každý se hodí pro jiný platební model:</p>
+
+<div class="cb"><div class="cb-label">Způsoby přihlášení</div><pre>
+<span class="c">══ VARIANTA 1: Předplatné (Pro/Max) ══</span>
+<span class="c"># Přihlaste se přes browser — otevře claude.com/login</span>
+<span class="a">claude</span> auth login
+<span class="c"># Přihlaste se Claude účtem v prohlížeči</span>
+<span class="c"># Token se automaticky uloží → hotovo</span>
+
+<span class="c">══ VARIANTA 2: API klíč (pay-per-token) ══</span>
+<span class="c"># Získejte klíč na console.anthropic.com → API Keys</span>
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+
+<span class="c"># Pro trvalé uložení přidejte do ~/.zshrc nebo ~/.bashrc:</span>
+echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshrc
+source ~/.zshrc
+
+<span class="c">══ VARIANTA 3: Login loop nefunguje? ══</span>
+<span class="a">claude</span> auth login --print-redirect-url
+<span class="c"># Zkopírujte URL s tokenem a vložte ručně</span>
+</pre></div>
+
+<div class="callout gn">
+  <div class="callout-title">Kde získat API klíč</div>
+  <p>Přihlaste se na <strong>console.anthropic.com</strong> → API Keys → Create new key. Nový účet dostane $5 v kreditech zdarma pro vyzkoušení. API klíče začínají prefixem <code>sk-ant-</code>.</p>
+</div>
+
+<h2 id="overeni">Ověření a první spuštění</h2>
+<div class="cb"><div class="cb-label">Rychlé ověření</div><pre>
+<span class="c"># Ověření verze</span>
+<span class="a">claude</span> --version
+<span class="c">→ claude 1.x.x  ✓</span>
+
+<span class="c"># Ověření autentizace</span>
+<span class="a">claude</span> -p "Ahoj, funguje to?"
+<span class="c">→ Claude odpoví  ✓</span>
+
+<span class="c"># První skutečné spuštění v projektu</span>
+<span class="a">cd</span> ~/muj-projekt
+<span class="a">claude</span>
+<span class="c">→ Claude načte strukturu, přečte CLAUDE.md (pokud existuje)</span>
+<span class="c">→ Zadejte první úkol přirozeným jazykem</span>
+</pre></div>
+
+<div class="pn">
+  <a href="01_CLDE_salary.html">← 01 · Ceny &amp; Plány</a>
+  <a href="03_CLDE_nastaveni.html" class="nx">03 · Nastavení →</a>
+</div>
+</main></body></html>

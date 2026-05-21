@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05 · Pokročilé — CLDE průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;}
+.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
+.sb-home:hover{background:var(--sf);}.sb-home::before{content:'←';}
+.sb-chapters{padding:6px 0 24px;}.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
+.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
+.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
+.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
+.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}.sb-ch-link.active .n{opacity:1;}
+.sb-subs{padding:2px 0 6px 36px;list-style:none;}
+.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
+.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
+.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
+.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
+.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
+.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
+.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
+h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
+p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
+strong{color:var(--hd);font-weight:600;}
+.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
+.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
+.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
+.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
+.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
+.callout.gn .callout-title{color:var(--gn);}.callout.rd .callout-title{color:var(--rd);}.callout.bl .callout-title{color:var(--bl);}
+.callout p{font-size:.86rem;margin:0;line-height:1.7;}
+.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
+.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
+.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre;}
+.cb pre .c{color:var(--mu);}.cb pre .k{color:var(--bl);}.cb pre .v{color:var(--gn);}.cb pre .a{color:var(--ac);}
+code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
+.tw{overflow-x:auto;margin:20px 0;}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
+th{background:var(--sf);color:var(--mu);text-align:left;padding:9px 13px;border:1px solid var(--br);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:.63rem;}
+td{padding:9px 13px;border:1px solid var(--br);color:var(--tx);vertical-align:top;}
+tr:hover td{background:rgba(255,255,255,.013);}
+.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
+.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
+.tl li:last-child{border-bottom:none;}
+.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:9px;margin:18px 0;}
+.mcp-card{border:1px solid var(--br);padding:13px 15px;background:var(--sf);}
+.mcp-card-name{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--bl);margin-bottom:4px;}
+.mcp-card-desc{font-size:.76rem;color:var(--mu);line-height:1.5;}
+.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
+.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
+.pn a:hover{color:var(--ac);}.pn .nx{margin-left:auto;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a href="00_CLDE_index.html" class="sb-home">Zpět na obsah</a>
+  <div class="sb-chapters">
+    <div class="sb-ch"><a href="01_CLDE_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a><ul class="sb-subs"><li><a href="01_CLDE_salary.html#platebni-modely">Platební modely</a></li><li><a href="01_CLDE_salary.html#jak-usetrit">Jak ušetřit</a></li></ul></div>
+    <div class="sb-ch"><a href="02_CLDE_instalace.html" class="sb-ch-link"><span class="n">02</span>Instalace</a><ul class="sb-subs"><li><a href="02_CLDE_instalace.html#cli">CLI instalace</a></li><li><a href="02_CLDE_instalace.html#desktop">Desktop app</a></li></ul></div>
+    <div class="sb-ch"><a href="03_CLDE_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDE_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDE_nastaveni.html#settings">settings.json</a></li><li><a href="03_CLDE_nastaveni.html#opravneni">Oprávnění</a></li></ul></div>
+    <div class="sb-ch"><a href="04_CLDE_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDE_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDE_zaklady.html#plan-mode">Plan mode</a></li><li><a href="04_CLDE_zaklady.html#workflow">Workflow</a></li><li><a href="04_CLDE_zaklady.html#git">Git</a></li></ul></div>
+    <div class="sb-ch">
+      <a href="05_CLDE_pokrocile.html" class="sb-ch-link active"><span class="n">05</span>Pokročilé</a>
+      <ul class="sb-subs">
+        <li><a href="#mcp">MCP servery</a></li>
+        <li><a href="#mcp-konfig">Konfigurace MCP</a></li>
+        <li><a href="#hooks">Hooks</a></li>
+        <li><a href="#hooks-typy">Typy hooks</a></li>
+        <li><a href="#vlastni-prikazy">Vlastní slash příkazy</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#worktrees">Git worktrees</a></li>
+        <li><a href="#thinking">Extended thinking</a></li>
+        <li><a href="#claudeignore">.claudeignore</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch"><a href="06_CLDE_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDE_agenti.html#co-jsou-agenti">Co jsou agenti</a></li><li><a href="06_CLDE_agenti.html#subagenti">Subagenti</a></li><li><a href="06_CLDE_agenti.html#cloud-routines">Routines</a></li></ul></div>
+    <div class="sb-ch"><a href="07_CLDE_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="07_CLDE_bezpecnost.html#opravneni">Oprávnění</a></li><li><a href="07_CLDE_bezpecnost.html#secrets">Secrets</a></li></ul></div>
+    <div class="sb-ch"><a href="08_CLDE_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy</a><ul class="sb-subs"><li><a href="08_CLDE_zalohy.html#git-sit">Git záchranná síť</a></li></ul></div>
+    <div class="sb-ch"><a href="09_CLDE_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD</a><ul class="sb-subs"><li><a href="09_CLDE_cicd.html#github-actions">GitHub Actions</a></li></ul></div>
+    <div class="sb-ch"><a href="10_CLDE_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="10_CLDE_troubleshooting.html#claude-bloudí">Claude bloudí</a></li></ul></div>
+    <div class="sb-ch"><a href="11_CLDE_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy</a><ul class="sb-subs"><li><a href="11_CLDE_odkazy.html#nastroje">Nástroje</a></li></ul></div>
+  </div>
+</nav>
+<main class="main">
+<div class="ph">
+  <div class="ph-num">DÍL 05 / 11</div>
+  <h1>Pokročilé</h1>
+  <p>MCP servery pro napojení na externí systémy, hooks pro automatizaci, vlastní příkazy a Skills pro opakované workflow, Git worktrees a ovládání Extended thinking.</p>
+</div>
+
+<h2 id="mcp">MCP servery — co to je a proč to chcete</h2>
+<p>MCP (Model Context Protocol) je otevřený standard, který umožňuje Claudovi připojit se k externím systémům a nástrojům. Místo toho, abyste kopírovali data z Jiry do chatu, Claude si je přečte sám. Místo ručního volání GitHub API Claude vytvoří PR přímo.</p>
+<p>MCP server je malý program (lokální nebo vzdálený), který Claudovi zpřístupňuje sadu nástrojů. Anthropic a komunita poskytují servery pro desítky populárních služeb — a nové přibývají každý týden.</p>
+
+<h3>Populární MCP servery</h3>
+<div class="mcp-grid">
+  <div class="mcp-card"><div class="mcp-card-name">filesystem</div><div class="mcp-card-desc">Rozšířený přístup k souborům mimo projekt, rekurzivní vyhledávání</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">github</div><div class="mcp-card-desc">Issues, PRs, releases, komentáře — vše přes GitHub API</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">postgres</div><div class="mcp-card-desc">Přímé SQL dotazy na PostgreSQL databázi</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">sqlite</div><div class="mcp-card-desc">Lokální SQLite databáze — bez nutnosti serveru</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">brave-search</div><div class="mcp-card-desc">Webové vyhledávání přímo ze session</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">puppeteer</div><div class="mcp-card-desc">Ovládání prohlížeče, screenshoty, web scraping</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">slack</div><div class="mcp-card-desc">Čtení a posílání zpráv na Slacku</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">memory</div><div class="mcp-card-desc">Persistentní paměť mezi sessions (key-value store)</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">linear</div><div class="mcp-card-desc">Správa issues, projects a workflows v Linear</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">jira</div><div class="mcp-card-desc">Tickety a workflows v Atlassian Jira</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">notion</div><div class="mcp-card-desc">Čtení a zápis do Notion dokumentů a databází</div></div>
+  <div class="mcp-card"><div class="mcp-card-name">docker</div><div class="mcp-card-desc">Správa kontejnerů, images a volumes</div></div>
+</div>
+
+<h3 id="mcp-konfig">Jak nakonfigurovat MCP server</h3>
+<div class="cb"><div class="cb-label">.claude/settings.json — přidání MCP serverů</div><pre>
+{
+  <span class="k">"mcpServers"</span>: {
+
+    <span class="c">// GitHub — vyžaduje Personal Access Token</span>
+    <span class="k">"github"</span>: {
+      <span class="k">"command"</span>: <span class="v">"npx"</span>,
+      <span class="k">"args"</span>: [<span class="v">"-y"</span>, <span class="v">"@modelcontextprotocol/server-github"</span>],
+      <span class="k">"env"</span>: {
+        <span class="k">"GITHUB_TOKEN"</span>: <span class="v">"ghp_váš_token"</span>
+      }
+    },
+
+    <span class="c">// PostgreSQL — lokální nebo vzdálená DB</span>
+    <span class="k">"postgres"</span>: {
+      <span class="k">"command"</span>: <span class="v">"npx"</span>,
+      <span class="k">"args"</span>: [<span class="v">"-y"</span>, <span class="v">"@modelcontextprotocol/server-postgres"</span>,
+               <span class="v">"postgresql://localhost/myapp_dev"</span>]
+    },
+
+    <span class="c">// Brave Search — API klíč z brave.com/search/api</span>
+    <span class="k">"brave-search"</span>: {
+      <span class="k">"command"</span>: <span class="v">"npx"</span>,
+      <span class="k">"args"</span>: [<span class="v">"-y"</span>, <span class="v">"@modelcontextprotocol/server-brave-search"</span>],
+      <span class="k">"env"</span>: {
+        <span class="k">"BRAVE_API_KEY"</span>: <span class="v">"váš_api_klíč"</span>
+      }
+    }
+  }
+}
+</pre></div>
+
+<p>Po přidání do settings.json restartujte Claude Code. Server se spustí automaticky a Claude bude mít přístup k jeho nástrojům. Ověřte funkčnost příkazem jako: <em>"Jaké jsou otevřené issues v mém GitHub repozitáři?"</em></p>
+
+<div class="callout bl">
+  <div class="callout-title">Kde najít MCP servery</div>
+  <p>Oficální seznam: <strong>modelcontextprotocol.io/servers</strong>. Komunitní servery: GitHub hledání "mcp-server". Claude.ai má připravené vizuální konektory pro Gmail, Google Calendar, Google Drive a Slack — stačí kliknout "Connect" v nastavení.</p>
+</div>
+
+<h2 id="hooks">Hooks — automatizace kolem akcí Clauda</h2>
+<p>Hooks jsou shell příkazy nebo skripty, které se automaticky spustí před nebo po tom, co Claude provede určitou akci. Umožňují validaci, notifikace, formátování a integraci s externími systémy — bez nutnosti psát to do každého promptu.</p>
+
+<h3 id="hooks-typy">Typy hooks a jejich použití</h3>
+<div class="cb"><div class="cb-label">.claude/settings.json — hooks konfigurace</div><pre>
+{
+  <span class="k">"hooks"</span>: {
+
+    <span class="c">// Před zápisem souboru — automatický lint</span>
+    <span class="k">"PreToolUse"</span>: [
+      {
+        <span class="k">"matcher"</span>: <span class="v">"Write"</span>,
+        <span class="k">"hooks"</span>: [{
+          <span class="k">"type"</span>: <span class="v">"command"</span>,
+          <span class="k">"command"</span>: <span class="v">"npm run lint --fix"</span>
+        }]
+      }
+    ],
+
+    <span class="c">// Po bash příkazu — notifikace po dlouhém buildu</span>
+    <span class="k">"PostToolUse"</span>: [
+      {
+        <span class="k">"matcher"</span>: <span class="v">"Bash(npm run build)"</span>,
+        <span class="k">"hooks"</span>: [{
+          <span class="k">"type"</span>: <span class="v">"command"</span>,
+          <span class="k">"command"</span>: <span class="v">"osascript -e 'display notification \"Build hotov\" with title \"Claude Code\"'"</span>
+        }]
+      }
+    ],
+
+    <span class="c">// Při ukončení session — reminder na commit</span>
+    <span class="k">"Stop"</span>: [
+      {
+        <span class="k">"hooks"</span>: [{
+          <span class="k">"type"</span>: <span class="v">"command"</span>,
+          <span class="k">"command"</span>: <span class="v">"git status --short && echo 'Nezapomeňte commitnout!'"</span>
+        }]
+      }
+    ]
+  }
+}
+</pre></div>
+
+<div class="callout gn">
+  <div class="callout-title">Praktické use cases pro hooks</div>
+  <p>Automatický <code>prettier</code> po každém zápisu souboru · Slack notifikace po dokončení agentic tasku · Zápis do logu které soubory Claude změnil · Automatické spuštění testů po každém <code>Write</code> · Upozornění na mobilu když dlouhý build skončí.</p>
+</div>
+
+<h2 id="vlastni-prikazy">Vlastní slash příkazy</h2>
+<p>Vlastní příkazy jsou Markdown soubory v adresáři <code>.claude/commands/</code>. Jejich název (bez <code>.md</code>) se stane příkazem. Jsou skvělé pro opakující se workflow specifické pro váš projekt — code review podle vašich standardů, release checklist, onboarding skript.</p>
+
+<div class="cb"><div class="cb-label">.claude/commands/review.md — příkaz /review</div><pre>
+<span class="c"># /review — Code review podle týmových standardů</span>
+
+Proveď code review aktuálních změn oproti main větvi.
+
+Zkontroluj tyto oblasti a pro každý nález uveď:
+- Soubor a číslo řádku
+- Závažnost: [BLOCKER / WARNING / SUGGESTION]
+- Stručný popis problému
+- Konkrétní oprava nebo doporučení
+
+**Oblasti kontroly:**
+1. Bezpečnost — SQL injection, XSS, odhalení dat, autentizace
+2. Výkon — N+1 dotazy, chybějící indexy, velké payloady
+3. TypeScript — žádné `any`, správné typy, strict mode
+4. Testy — pokrytí edge cases, správné mocking závislostí
+5. Konvence — dodržení standardů z CLAUDE.md
+
+Pokud je $ARGUMENTS zadán, reviewuj pouze daný soubor.
+Výstup: stručný souhrn + seznam konkrétních problémů.
+</pre></div>
+
+<div class="cb"><div class="cb-label">Použití vlastních příkazů</div><pre>
+<span class="c"># Review všech změn</span>
+<span class="a">/review</span>
+
+<span class="c"># Review konkrétního souboru ($ARGUMENTS v příkazu)</span>
+<span class="a">/review</span> src/auth/login.ts
+
+<span class="c"># Další příklady příkazů k vytvoření:</span>
+<span class="c"># /release  — release checklist (build, testy, tag, changelog)</span>
+<span class="c"># /onboard  — úvod projektu pro nového vývojáře</span>
+<span class="c"># /perf     — analýza výkonu aktuální stránky</span>
+<span class="c"># /docs     — aktualizace dokumentace pro změněné funkce</span>
+</pre></div>
+
+<h2 id="skills">Skills — znalostní moduly pro opakované postupy</h2>
+<p>Skills jsou strukturované Markdown soubory, které předávají Claudovi specifické technické znalosti nebo step-by-step postupy. Na rozdíl od CLAUDE.md jsou modulární — načtete je jen quando je potřebujete, ne při každé session.</p>
+<div class="cb"><div class="cb-label">.claude/skills/deploy.md — skill pro nasazení</div><pre>
+<span class="c"># Deploy Skill — postup nasazení na produkci</span>
+
+## Předpoklady
+Zkontroluj před začátkem:
+- [ ] Všechny testy prochází: `npm run test`
+- [ ] Build je úspěšný: `npm run build`
+- [ ] Není otevřené BLOCKER issue v GitHub
+
+## Postup
+1. Vytvoř release tag: `git tag v$(date +%Y.%m.%d) && git push --tags`
+2. Počkej na GitHub Actions (typicky 4–6 minut)
+3. Zkontroluj Vercel deploy log — hledej ERROR řádky
+4. Otestuj produkci na staging.myapp.com/health
+5. Zkontroluj Sentry na nové errory (prvních 15 minut)
+
+## Rollback
+Pokud deploy selže nebo Sentry ukáže spike errorů:
+`vercel rollback` nebo v Vercel Dashboard → Deployments → Revert
+</pre></div>
+
+<h2 id="worktrees">Git worktrees — paralelní práce</h2>
+<p>Git worktrees umožňují mít více větví projektu naklonovaných současně, každou ve vlastním adresáři. Claude Code to využívá pro izolované paralelní sessions — změny v jedné větvi neovlivní ostatní.</p>
+<div class="cb"><div class="cb-label">Worktrees — základní použití</div><pre>
+<span class="c"># Vytvoření worktree pro novou feature</span>
+<span class="a">git</span> worktree add ../projekt-feature feature/dark-mode
+
+<span class="c"># Spuštění Claude Code v tomto worktree</span>
+<span class="a">cd</span> ../projekt-feature && <span class="a">claude</span>
+
+<span class="c"># Paralelně v dalším terminálu — jiný úkol, jiná větev</span>
+<span class="a">git</span> worktree add ../projekt-bugfix hotfix/login-bug
+<span class="a">cd</span> ../projekt-bugfix && <span class="a">claude</span>
+
+<span class="c"># Výpis všech aktivních worktrees</span>
+<span class="a">git</span> worktree list
+
+<span class="c"># Úklid po mergi</span>
+<span class="a">git</span> worktree remove ../projekt-feature
+</pre></div>
+
+<div class="callout gn">
+  <div class="callout-title">Desktop App + Worktrees = magie</div>
+  <p>Desktop App (od dubna 2026) vytváří worktrees automaticky pro každou paralelní session. Nemusíte nic ručně konfigurovat — klikněte "New Parallel Session", zadejte úkol a Desktop App zajistí izolaci. Výsledky pak slučujete přes standardní PR review.</p>
+</div>
+
+<h2 id="thinking">Extended Thinking — kdy pomáhá a kdy jen stojí</h2>
+<p>Extended thinking dává Claudovi prostor "přemýšlet" před odpovědí — interně prochází kroky řešení, zvažuje alternativy a kontroluje svou logiku. Výsledkem je kvalitnější odpověď na složité problémy.</p>
+<p>Háček: thinking tokeny se účtují jako <strong>output tokeny</strong> ($25/MTok na Opus 4.7). Na jednoduchých úkolech to nepřidá žádnou hodnotu — ale stojí vás to 20–50 % extra.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Úkol</th><th>Thinking potřeba?</th><th>Doporučení</th></tr></thead>
+<tbody>
+<tr><td>Návrh systémové architektury</td><td style="color:var(--gn)">✓ Ano</td><td><code>/effort high</code></td></tr>
+<tr><td>Debugging záhadného bugu</td><td style="color:var(--gn)">✓ Ano</td><td><code>/effort medium</code></td></tr>
+<tr><td>Psaní unit testů</td><td style="color:var(--rd)">✗ Ne</td><td><code>/effort low</code></td></tr>
+<tr><td>Přejmenování proměnných</td><td style="color:var(--rd)">✗ Ne</td><td><code>/effort low</code></td></tr>
+<tr><td>Code review</td><td style="color:var(--ac)">⚡ Záleží</td><td><code>/effort medium</code></td></tr>
+<tr><td>Generování dokumentace</td><td style="color:var(--rd)">✗ Ne</td><td><code>/effort low</code></td></tr>
+</tbody>
+</table></div>
+
+<div class="cb"><div class="cb-label">Ovládání thinking tokenů</div><pre>
+<span class="c">## Globální strop v ENV (doporučeno vždy nastavit)</span>
+export MAX_THINKING_TOKENS=8000
+
+<span class="c">## V session — přepínání úrovně</span>
+<span class="a">/effort</span> low     <span class="c">-- minimum, rychlé odpovědi</span>
+<span class="a">/effort</span> medium  <span class="c">-- vyvážené (výchozí)</span>
+<span class="a">/effort</span> high    <span class="c">-- maximum — jen pro opravdu těžké úkoly</span>
+
+<span class="c">## Vypnutí pro celou session</span>
+<span class="a">/config</span> thinking: false
+</pre></div>
+
+<h2 id="claudeignore">.claudeignore — co Claude nemá číst</h2>
+<p>Soubor <code>.claudeignore</code> v kořeni projektu říká Claude Code, které soubory a adresáře má ignorovat při čtení projektu. Funguje stejně jako <code>.gitignore</code>. Klíčové pro bezpečnost (ignorovat <code>.env</code>) a výkon (ignorovat build výstupy).</p>
+<div class="cb"><div class="cb-label">.claudeignore — doporučená konfigurace</div><pre>
+<span class="c"># Citlivé soubory</span>
+<span class="v">.env</span>
+<span class="v">.env.*</span>
+<span class="v">*.pem</span>
+<span class="v">*.key</span>
+
+<span class="c"># Build výstupy — zbytečně zvětšují kontext</span>
+<span class="v">.next/</span>
+<span class="v">dist/</span>
+<span class="v">build/</span>
+<span class="v">node_modules/</span>
+
+<span class="c"># Logy a dumps</span>
+<span class="v">*.log</span>
+<span class="v">logs/</span>
+<span class="v">dumps/</span>
+
+<span class="c"># Velké datové soubory</span>
+<span class="v">*.csv</span>
+<span class="v">*.json.bak</span>
+<span class="v">fixtures/large/</span>
+</pre></div>
+
+<div class="pn">
+  <a href="04_CLDE_zaklady.html">← 04 · Základy</a>
+  <a href="06_CLDE_agenti.html" class="nx">06 · Agenti →</a>
+</div>
+</main></body></html>

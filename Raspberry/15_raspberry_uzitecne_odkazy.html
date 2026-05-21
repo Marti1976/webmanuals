@@ -106,9 +106,74 @@ code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.
 .ch-btn.next{justify-content:flex-end;text-align:right}
 .ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--rasp1-light)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
+  background:rgba(227,11,92,.12);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* ── LAYOUT ── */
+.wrap{margin-left:260px}
+footer{margin-left:260px}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .wrap,footer{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">🔗</div>
+      <div class="sidebar-name">Užitečné Odkazy<small>Dokumentace · Obchody</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah kapitoly</div>
+  <a href="#ha-odkazy" class="nav-link active"><span class="nav-step">01</span>Home Assistant</a>
+  <a href="#z2m-odkazy" class="nav-link"><span class="nav-step">02</span>Zigbee2MQTT</a>
+  <a href="#slzb07-odkazy" class="nav-link"><span class="nav-step">03</span>SMLIGHT SLZB-07</a>
+  <a href="#rpi-odkazy" class="nav-link"><span class="nav-step">04</span>Raspberry Pi</a>
+  <a href="#zalohy-odkazy" class="nav-link"><span class="nav-step">05</span>Zálohovací add-ony</a>
+  <a href="#bezp-odkazy" class="nav-link"><span class="nav-step">06</span>Bezpečnost / VPN</a>
+  <a href="#monitoring" class="nav-link"><span class="nav-step">07</span>Monitoring a nástroje</a>
+  <a href="#youtube" class="nav-link"><span class="nav-step">08</span>YouTube kanály</a>
+  <a href="#cz-komunita" class="nav-link"><span class="nav-step">09</span>Česká komunita</a>
+  <a href="#cz-obchody" class="nav-link"><span class="nav-step">10</span>České obchody</a>
+  <a href="#sablona-hesel" class="nav-link"><span class="nav-step">11</span>Šablona hesel</a>
+</nav>
 <div class="wrap">
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
 <header>
@@ -118,7 +183,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </header>
 
 <!-- HOME ASSISTANT -->
-<section class="sec">
+<section class="sec" id="ha-odkazy">>
   <h2>Home Assistant</h2>
   <div class="link-group">
     <a href="https://www.home-assistant.io" target="_blank" class="link-card">
@@ -179,7 +244,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- ZIGBEE2MQTT -->
-<section class="sec">
+<section class="sec" id="z2m-odkazy">>
   <h2>Zigbee2MQTT</h2>
   <div class="link-group">
     <a href="https://www.zigbee2mqtt.io" target="_blank" class="link-card">
@@ -231,7 +296,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- SMLIGHT SLZB-07 -->
-<section class="sec">
+<section class="sec" id="slzb07-odkazy">>
   <h2>SMLIGHT SLZB-07 (Zigbee koordinátor)</h2>
   <div class="link-group">
     <a href="https://smlight.tech/product/slzb-07" target="_blank" class="link-card">
@@ -265,7 +330,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- RASPBERRY PI -->
-<section class="sec">
+<section class="sec" id="rpi-odkazy">>
   <h2>Raspberry Pi</h2>
   <div class="link-group">
     <a href="https://www.raspberrypi.com/software/" target="_blank" class="link-card">
@@ -299,7 +364,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- ZALOHOVACI ADDONY -->
-<section class="sec">
+<section class="sec" id="zalohy-odkazy">>
   <h2>Zálohovací add-ony</h2>
   <div class="link-group">
     <a href="https://github.com/sabeechen/hassio-google-drive-backup" target="_blank" class="link-card">
@@ -324,7 +389,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- BEZPECNOST VZDAL PRISTUP -->
-<section class="sec">
+<section class="sec" id="bezp-odkazy">>
   <h2>Bezpečnost a vzdálený přístup</h2>
   <div class="link-group">
     <a href="https://www.nabucasa.com" target="_blank" class="link-card">
@@ -367,7 +432,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- MONITOROVANI -->
-<section class="sec">
+<section class="sec" id="monitoring">>
   <h2>Monitoring, diagnostika a nástroje</h2>
   <div class="link-group">
     <a href="https://community.home-assistant.io/t/community-hacs/213713" target="_blank" class="link-card">
@@ -410,7 +475,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- YOUTUBE A VZDĚLÁVACÍ ZDROJE -->
-<section class="sec">
+<section class="sec" id="youtube">>
   <h2>YouTube kanály a vzdělávací zdroje</h2>
   <div class="link-group">
     <a href="https://www.youtube.com/@HomeAssistant" target="_blank" class="link-card">
@@ -453,7 +518,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- CESKA KOMUNITA -->
-<section class="sec">
+<section class="sec" id="cz-komunita">>
   <h2>Česká komunita a zdroje</h2>
   <div class="link-group">
     <a href="https://www.facebook.com/groups/homeassistantcz" target="_blank" class="link-card">
@@ -478,7 +543,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- CESKE OBCHODY -->
-<section class="sec">
+<section class="sec" id="cz-obchody">>
   <h2>České obchody – nákup hardware</h2>
   <div class="link-grid">
     <a href="https://www.alza.cz/raspberry-pi/18859158.htm" target="_blank" class="link-card">
@@ -565,7 +630,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- HESLA -->
-<section class="sec">
+<section class="sec" id="sablona-hesel">>
   <h2>Šablona pro zápis hesel a síťových údajů</h2>
   <p>Vyplň tuto tabulku hned při instalaci a ulož na bezpečné místo (vytiskni nebo ulož do password manageru). Nikdy neukládej přihlašovací údaje do sdílených dokumentů.</p>
 
@@ -663,5 +728,25 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </nav>
 <footer>15_raspberry_uzitecne_odkazy.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
+<script>
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('progressBar');
+  const t=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  b.style.width=(t/h*100)+'%';
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const t=document.querySelector('[href="#'+e.target.id+'"]');
+      if(t)t.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>

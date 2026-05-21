@@ -183,10 +183,62 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .ch-btn.next{justify-content:flex-end;text-align:right}
 .ch-btn .ch-label{font-size:.85em;color:var(--text3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em}
 .ch-btn .ch-name{display:block;color:var(--text);font-size:1.05em;margin-top:1px}
+
+/* ===== SIDEBAR ===== */
+.progress-bar{position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+  z-index:999;width:0%;transition:width 0.1s}
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(14,17,23,.97);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--teal),transparent)}
+.sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--text2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;display:flex;gap:6px;
+  margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--blue)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.4rem;border-radius:10px;
+  background:rgba(79,156,249,.12);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-size:.95rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.7rem;color:var(--text2);display:block;margin-top:2px}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--text3);font-family:monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--text2);text-decoration:none;font-size:13px;
+  border-left:2px solid transparent;transition:all .2s}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(79,156,249,.05);border-left-color:var(--blue)}
+.nav-step{font-family:monospace;font-size:10px;min-width:22px;
+  color:var(--teal);background:rgba(0,212,184,.10);
+  border:1px solid rgba(0,212,184,.25);padding:2px 5px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+@media(max-width:900px){.sidebar{display:none}.wrap{margin-left:0 !important}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_CLI_INDEX.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">💻</div>
+      <div class="sidebar-name">Vývojový server<small>Gemini CLI průvodce</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah</div>
+  <a href="#s1" class="nav-link active"><span class="nav-step">01</span> Co je vývojový server</a>
+  <a href="#s2" class="nav-link"><span class="nav-step">02</span> Jak spustit dev server</a>
+  <a href="#s3" class="nav-link"><span class="nav-step">03</span> Dva terminály vedle sebe</a>
+  <a href="#s4" class="nav-link"><span class="nav-step">04</span> HMR – auto obnovení</a>
+  <a href="#s5" class="nav-link"><span class="nav-step">05</span> Všechny npm příkazy</a>
+  <a href="#s6" class="nav-link"><span class="nav-step">06</span> Pracovní postup A–Z</a>
+  <a href="#s7" class="nav-link"><span class="nav-step">07</span> Problémy a řešení</a>
+  <a href="#s8" class="nav-link"><span class="nav-step">08</span> Adresy a porty</a>
+</nav>
+<div class="wrap" style="margin-left:260px">
 
 <!-- HERO -->
 <div class="hero">
@@ -201,19 +253,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </div>
 
 <!-- TOC -->
-<div class="toc">
-  <div class="toc-t">Co tady najdeš</div>
-  <div class="toc-g">
-    <a class="toc-i" href="#s1"><span class="toc-n">01</span> Co je vývojový server</a>
-    <a class="toc-i" href="#s2"><span class="toc-n">02</span> Jak spustit dev server</a>
-    <a class="toc-i" href="#s3"><span class="toc-n">03</span> Dva terminály – nastavení</a>
-    <a class="toc-i" href="#s4"><span class="toc-n">04</span> HMR – automatické obnovení</a>
-    <a class="toc-i" href="#s5"><span class="toc-n">05</span> Všechny npm příkazy</a>
-    <a class="toc-i" href="#s6"><span class="toc-n">06</span> Kompletní pracovní postup</a>
-    <a class="toc-i" href="#s7"><span class="toc-n">07</span> Problémy a řešení</a>
-    <a class="toc-i" href="#s8"><span class="toc-n">08</span> Adresy a porty</a>
-  </div>
-</div>
+
 
 <!-- 01 -->
 <div class="sec" id="s1">
@@ -730,6 +770,26 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </footer>
 </div>
 <script>
+
+  window.addEventListener('scroll', () => {
+    const bar = document.getElementById('progressBar');
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (scrollTop / height * 100) + '%';
+  });
+  const sections = document.querySelectorAll('.sec[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const t = document.querySelector('[href="#' + e.target.id + '"]');
+        if (t) t.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
 </script>
 </body>
 </html>

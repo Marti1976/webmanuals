@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLDE · Průvodce Claude Code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0c0f;--surface:#111519;--border:#1e2530;--accent:#e8a020;--accent-dim:rgba(232,160,32,0.1);--text:#c9d1d9;--muted:#6e7681;--heading:#f0f6fc;--green:#3fb950;--blue:#79c0ff;--red:#f85149;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Lora',Georgia,serif;min-height:100vh;}
+  .hero{position:relative;padding:80px 60px 60px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,160,32,0.07) 0%,transparent 70%);pointer-events:none;}
+  .hero-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;color:var(--accent);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+  .hero-label::before{content:'▶';font-size:0.6rem;}
+  .hero h1{font-family:'IBM Plex Mono',monospace;font-size:clamp(2rem,5vw,3.6rem);font-weight:600;color:var(--heading);line-height:1.1;margin-bottom:16px;letter-spacing:-0.02em;}
+  .hero h1 span{color:var(--accent);}
+  .hero-sub{font-size:1rem;color:var(--muted);max-width:560px;line-height:1.75;margin-bottom:36px;}
+  .hero-meta{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--muted);display:flex;gap:24px;flex-wrap:wrap;}
+  .hero-meta span::before{content:'·';color:var(--accent);margin-right:6px;}
+  .section-header{padding:36px 60px 16px;display:flex;align-items:center;gap:16px;}
+  .section-header h2{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;font-weight:400;white-space:nowrap;}
+  .section-header::after{content:'';flex:1;height:1px;background:var(--border);}
+  .chapters{padding:0 60px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;background:var(--border);}
+  .card{background:var(--bg);padding:30px 26px;text-decoration:none;color:var(--text);display:block;transition:background 0.18s;position:relative;}
+  .card:hover{background:var(--surface);}
+  .card:hover .arrow{transform:translateX(4px);opacity:1;}
+  .card-num{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:0.15em;margin-bottom:12px;opacity:.8;}
+  .card h3{font-family:'IBM Plex Mono',monospace;font-size:0.92rem;font-weight:500;color:var(--heading);margin-bottom:8px;}
+  .card p{font-size:0.82rem;color:var(--muted);line-height:1.65;}
+  .card-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px;}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:2px 7px;border:1px solid var(--border);color:var(--muted);}
+  .arrow{position:absolute;bottom:26px;right:26px;color:var(--accent);font-size:1rem;opacity:.2;transition:transform .2s,opacity .2s;}
+  .card.hl{border-left:2px solid var(--accent);}
+  .badge{position:absolute;top:14px;right:14px;font-family:'IBM Plex Mono',monospace;font-size:0.52rem;letter-spacing:.12em;color:var(--green);border:1px solid rgba(63,185,80,.4);padding:2px 5px;}
+  footer{padding:24px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer p{font-family:'IBM Plex Mono',monospace;font-size:0.64rem;color:var(--muted);}
+  footer a{color:var(--accent);text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+  @media(max-width:700px){.hero,.section-header,footer{padding-left:22px;padding-right:22px;}.chapters{padding:0 0 40px;grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-label">průvodce · claude code · 2026</div>
+  <h1>CLDE<br><span>Průvodce</span></h1>
+  <p class="hero-sub">Kompletní průvodce Claude Code v češtině — od výběru plánu a instalace přes pokročilé agenty až po bezpečnost, zálohy a CI/CD automatizaci. Pro začátečníky i pokročilé.</p>
+  <div class="hero-meta">
+    <span>11 dílů</span><span>Česky</span><span>Aktualizováno květen 2026</span><span>Sonnet 4.6 / Opus 4.7</span>
+  </div>
+</div>
+
+<div class="section-header"><h2>Obsah průvodce</h2></div>
+<div class="chapters">
+
+<a href="01_CLDE_salary.html" class="card hl">
+  <div class="card-num">DÍL 01</div>
+  <h3>Ceny &amp; Plány</h3>
+  <p>Měsíční předplatné vs. tokeny. Plány Pro, Max, Team. Prompt caching, Batch API, výběr modelu — jak reálně ušetřit 40–93 % s konkrétními čísly a kalkulacemi.</p>
+  <div class="card-tags"><span class="tag">Pro $20</span><span class="tag">Max $200</span><span class="tag">API tokeny</span><span class="tag">úspora</span></div>
+  <div class="arrow">→</div>
+</a>
+
+<a href="02_CLDE_instalace.html" class="card">
+  <div class="card-num">DÍL 02</div>
+  <h3>Instalace</h3>
+  <p>Native installer, Homebrew, WinGet. Desktop app pro macOS a Windows. VS Code a JetBrains pluginy. Webové rozhraní. Řešení nejčastějších problémů.</p>
+  <div class="card-tags"><span class="tag">macOS</span><span class="tag">Linux</span><span class="tag">Windows</span><span class="tag">VS Code</span></div>
+  <div class="arrow">→</div>
+</a>
+
+<a href="03_CLDE_nastaveni.html" class="card">
+  <div class="card-num">DÍL 03</div>
+  <h3>Nastavení</h3>
+  <p>CLAUDE.md — nejdůležitější soubor projektu. settings.json, ENV proměnné, oprávnění nástrojů. Hierarchie globální vs. projektová konfigurace s příklady.</p>
+  <div class="card-tags"><span class="tag">CLAUDE.md</span><span class="tag">settings.json</span><span class="tag">oprávnění</span></div>
+  <div class="arrow">→</div>
+</a>
+
+<a href="04_CLDE_zaklady.html" class="card">
+  <div class="card-num">DÍL 04</div>
+  <h3>Základy</h3>
+  <p>První session, slash příkazy, one-shot příkazy. Plan mode vs Auto mode. Kompletní workflow od zadání po commit. Git, testy, PR — vše přirozeným jazykem.</p>
+  <div class="card-tags"><span class="tag">slash příkazy</span><span class="tag">workflow</span><span class="tag">git</span><span class="tag">prompty</span></div>
+  <div class="arrow">→</div>
+</a>
+
+<a href="05_CLDE_pokrocile.html" class="card">
+  <div class="card-num">DÍL 05</div>
+  <h3>Pokročilé</h3>
+  <p>MCP servery — napojení na databáze, GitHub, Slack. Hooks pro automatizaci. Vlastní slash příkazy a Skills. Git worktrees. Extended thinking a jeho cena.</p>
+  <div class="card-tags"><span class="tag">MCP</span><span class="tag">hooks</span><span class="tag">worktrees</span><span class="tag">skills</span></div>
+  <div class="arrow">→</div>
+</a>
+
+<a href="06_CLDE_agenti.html" class="card">
+  <div class="card-num">DÍL 06</div>
+  <h3>Agenti</h3>
+  <p>Co jsou agenti a jak fungují. Subagenti, paralelní zpracování, Agent Teams. Cloud Routines. Monitoring a řízení nákladů. Kdy agenty nasadit a kdy ne.</p>
+  <div class="card-tags"><span class="tag">subagenti</span><span class="tag">paralelní</span><span class="tag">routines</span><span class="tag">orchestrace</span></div>
+  <div class="arrow">→</div>
+</a>
+
+<a href="07_CLDE_bezpecnost.html" class="card">
+  <div class="card-num">DÍL 07</div>
+  <h3>Bezpečnost</h3>
+  <p>Rizika přímého přístupu k filesystému. Deny pravidla, ochrana secrets, .env soubory. Sandbox, audit log. Doporučení pro týmy a produkční prostředí.</p>
+  <div class="card-tags"><span class="tag">oprávnění</span><span class="tag">secrets</span><span class="tag">audit</span><span class="tag">produkce</span></div>
+  <div class="arrow">→</div>
+  <span class="badge">NOVÉ</span>
+</a>
+
+<a href="08_CLDE_zalohy.html" class="card">
+  <div class="card-num">DÍL 08</div>
+  <h3>Zálohy před změnou</h3>
+  <p>Git jako záchranná síť — branch strategie a checkpointy. Jak obnovit kód po chybě agenta. Automatické zálohy. Recovery postupy krok za krokem.</p>
+  <div class="card-tags"><span class="tag">git</span><span class="tag">backup</span><span class="tag">recovery</span><span class="tag">checkpoint</span></div>
+  <div class="arrow">→</div>
+  <span class="badge">NOVÉ</span>
+</a>
+
+<a href="09_CLDE_cicd.html" class="card">
+  <div class="card-num">DÍL 09</div>
+  <h3>CI/CD &amp; Automatizace</h3>
+  <p>Claude Code v GitHub Actions. Automatické code review, generování testů, dokumentace. Cloud Routines na schedule. Integrace do existujícího pipeline.</p>
+  <div class="card-tags"><span class="tag">GitHub Actions</span><span class="tag">pipeline</span><span class="tag">schedule</span><span class="tag">webhooks</span></div>
+  <div class="arrow">→</div>
+  <span class="badge">NOVÉ</span>
+</a>
+
+<a href="10_CLDE_troubleshooting.html" class="card">
+  <div class="card-num">DÍL 10</div>
+  <h3>Troubleshooting</h3>
+  <p>Instalační a autentizační chyby. Limity a rate limiting. Debugging sessions — kdy Claude bloudí a jak ho nasměrovat. Kde hledat pomoc a hlásit bugy.</p>
+  <div class="card-tags"><span class="tag">chyby</span><span class="tag">limity</span><span class="tag">debug</span><span class="tag">pomoc</span></div>
+  <div class="arrow">→</div>
+  <span class="badge">NOVÉ</span>
+</a>
+
+<a href="11_CLDE_odkazy.html" class="card">
+  <div class="card-num">DÍL 11</div>
+  <h3>Odkazy &amp; Zdroje</h3>
+  <p>Česká komunita, videa a návody v češtině. Oficální dokumentace. Nástroje pro monitoring nákladů. GitHub repozitáře, newslettery a novinky.</p>
+  <div class="card-tags"><span class="tag">česky</span><span class="tag">videa</span><span class="tag">komunita</span><span class="tag">nástroje</span></div>
+  <div class="arrow">→</div>
+  <span class="badge">NOVÉ</span>
+</a>
+
+</div>
+<footer>
+  <p>CLDE průvodce v češtině · <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank">oficální dokumentace ↗</a> · <a href="https://claude.com/pricing" target="_blank">aktuální ceník ↗</a></p>
+  <p>verze 2.0 · květen 2026</p>&nbsp; &nbsp; &nbsp;
+  <a href="../index.html">← Zpět na rozcestník</a>
+</footer>
+</body>
+</html>

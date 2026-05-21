@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09 · CI/CD &amp; Automatizace — CLDE průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;}
+.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
+.sb-home:hover{background:var(--sf);}
+.sb-home::before{content:'←';}
+.sb-chapters{padding:6px 0 24px;}
+.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
+.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
+.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
+.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
+.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}
+.sb-ch-link.active .n{opacity:1;}
+.sb-subs{padding:2px 0 6px 36px;list-style:none;}
+.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
+.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
+.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
+.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
+.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
+.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
+.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
+h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
+p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
+strong{color:var(--hd);font-weight:600;}
+.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
+.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
+.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
+.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
+.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
+.callout.gn .callout-title{color:var(--gn);}.callout.rd .callout-title{color:var(--rd);}.callout.bl .callout-title{color:var(--bl);}
+.callout p{font-size:.86rem;margin:0;line-height:1.7;}
+.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
+.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
+.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.77rem;color:var(--tx);line-height:1.7;white-space:pre;}
+.cb pre .c{color:var(--mu);}.cb pre .k{color:var(--bl);}.cb pre .v{color:var(--gn);}.cb pre .a{color:var(--ac);}
+code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
+.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
+.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
+.tl li:last-child{border-bottom:none;}
+.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
+.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
+.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
+.pn a:hover{color:var(--ac);}
+.pn .nx{margin-left:auto;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a href="00_CLDE_index.html" class="sb-home">Zpět na obsah</a>
+  <div class="sb-chapters">
+    <div class="sb-ch"><a href="01_CLDE_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a><ul class="sb-subs"><li><a href="01_CLDE_salary.html#platebni-modely">Platební modely</a></li><li><a href="01_CLDE_salary.html#prehled-planu">Přehled plánů</a></li><li><a href="01_CLDE_salary.html#jak-usetrit">Jak ušetřit</a></li></ul></div>
+    <div class="sb-ch"><a href="02_CLDE_instalace.html" class="sb-ch-link"><span class="n">02</span>Instalace</a><ul class="sb-subs"><li><a href="02_CLDE_instalace.html#cli">CLI instalace</a></li><li><a href="02_CLDE_instalace.html#desktop">Desktop app</a></li><li><a href="02_CLDE_instalace.html#autentizace">Autentizace</a></li></ul></div>
+    <div class="sb-ch"><a href="03_CLDE_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDE_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDE_nastaveni.html#settings">settings.json</a></li><li><a href="03_CLDE_nastaveni.html#env">ENV proměnné</a></li></ul></div>
+    <div class="sb-ch"><a href="04_CLDE_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDE_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDE_zaklady.html#one-shot">One-shot</a></li><li><a href="04_CLDE_zaklady.html#workflow">Workflow</a></li></ul></div>
+    <div class="sb-ch"><a href="05_CLDE_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a><ul class="sb-subs"><li><a href="05_CLDE_pokrocile.html#mcp">MCP</a></li><li><a href="05_CLDE_pokrocile.html#hooks">Hooks</a></li><li><a href="05_CLDE_pokrocile.html#worktrees">Worktrees</a></li></ul></div>
+    <div class="sb-ch"><a href="06_CLDE_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDE_agenti.html#subagenti">Subagenti</a></li><li><a href="06_CLDE_agenti.html#paralelni">Paralelní</a></li><li><a href="06_CLDE_agenti.html#cloud-routines">Routines</a></li></ul></div>
+    <div class="sb-ch"><a href="07_CLDE_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="07_CLDE_bezpecnost.html#opravneni">Oprávnění</a></li><li><a href="07_CLDE_bezpecnost.html#secrets">Secrets</a></li></ul></div>
+    <div class="sb-ch"><a href="08_CLDE_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy</a><ul class="sb-subs"><li><a href="08_CLDE_zalohy.html#git-sit">Git záchranná síť</a></li><li><a href="08_CLDE_zalohy.html#obnova">Obnova po chybě</a></li></ul></div>
+    <div class="sb-ch"><a href="09_CLDE_cicd.html" class="sb-ch-link active"><span class="n">09</span>CI/CD &amp; Automatizace</a><ul class="sb-subs"><li><a href="#uvod">Úvod do CI/CD</a></li><li><a href="#github-actions">GitHub Actions</a></li><li><a href="#code-review">Automatické review</a></li><li><a href="#testy">Generování testů</a></li><li><a href="#dokumentace">Auto dokumentace</a></li><li><a href="#routines">Cloud Routines</a></li><li><a href="#naklady">Náklady v CI</a></li></ul></div>
+    <div class="sb-ch"><a href="10_CLDE_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="10_CLDE_troubleshooting.html#instalace-err">Instalační chyby</a></li><li><a href="10_CLDE_troubleshooting.html#debug">Debugging</a></li></ul></div>
+    <div class="sb-ch"><a href="11_CLDE_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a><ul class="sb-subs"><li><a href="11_CLDE_odkazy.html#cesky">Česky</a></li><li><a href="11_CLDE_odkazy.html#nastroje">Nástroje</a></li></ul></div>
+  </div>
+</nav>
+<main class="main">
+<div class="ph">
+  <div class="ph-num">DÍL 09 / 11</div>
+  <h1>CI/CD &amp; Automatizace</h1>
+  <p>Claude Code není jen nástroj pro interaktivní práci — lze ho zapojit do celého pipeline jako automatizovaného účastníka, který code reviewuje, píše testy nebo generuje dokumentaci.</p>
+</div>
+
+<h2 id="uvod">Co je CI/CD a proč s Claude Code</h2>
+<p><strong>CI (Continuous Integration)</strong> je praxe, kdy se každá změna kódu automaticky otestuje před mergem. <strong>CD (Continuous Deployment)</strong> pak automaticky nasazuje otestovaný kód na server. Dohromady: váš kód nikdy "nehnije" v lokálním prostředí.</p>
+<p>Claude Code do tohoto pipeline přidává inteligentní vrstvu — místo pouhého spouštění testů (pass/fail) dokáže kód skutečně číst, hodnotit kvalitu, navrhovat zlepšení a vysvětlit, proč test selhal a jak to opravit.</p>
+
+<h2 id="github-actions">Claude Code v GitHub Actions</h2>
+<p>GitHub Actions je nejrozšířenější platforma pro CI/CD u GitHub projektů. Anthropic poskytuje oficální GitHub Action pro Claude Code integraci.</p>
+
+<div class="callout bl">
+  <div class="callout-title">Předpoklad</div>
+  <p>Potřebujete Anthropic API klíč (ne předplatné). V GitHub repozitáři ho uložte jako secret: Settings → Secrets → New repository secret → <code>ANTHROPIC_API_KEY</code>.</p>
+</div>
+
+<h3>Základní workflow soubor</h3>
+<div class="cb"><div class="cb-label">.github/workflows/claude-review.yml</div><pre>
+<span class="k">name:</span> <span class="v">Claude Code Review</span>
+
+<span class="k">on:</span>
+  <span class="k">pull_request:</span>
+    <span class="k">types:</span> <span class="v">[opened, synchronize]</span>
+
+<span class="k">jobs:</span>
+  <span class="k">claude-review:</span>
+    <span class="k">runs-on:</span> <span class="v">ubuntu-latest</span>
+    <span class="k">permissions:</span>
+      <span class="k">contents:</span> <span class="v">read</span>
+      <span class="k">pull-requests:</span> <span class="v">write</span>  <span class="c"># potřeba pro komentáře k PR</span>
+
+    <span class="k">steps:</span>
+      - <span class="k">uses:</span> <span class="v">actions/checkout@v4</span>
+        <span class="k">with:</span>
+          <span class="k">fetch-depth:</span> <span class="v">0</span>  <span class="c"># celá Git historie</span>
+
+      - <span class="k">name:</span> <span class="v">Claude Code Review</span>
+        <span class="k">uses:</span> <span class="v">anthropics/claude-code-action@v1</span>
+        <span class="k">with:</span>
+          <span class="k">anthropic_api_key:</span> <span class="v">${{ secrets.ANTHROPIC_API_KEY }}</span>
+          <span class="k">model:</span> <span class="v">claude-sonnet-4-6</span>
+          <span class="c"># Co má Claude udělat pro každý PR</span>
+          <span class="k">prompt:</span> |
+            Zreviewuj změny v tomto PR. Zaměř se na:
+            1. Potenciální bugy nebo logické chyby
+            2. Bezpečnostní problémy (SQL injection, XSS, odhalení dat)
+            3. Výkonnostní problémy (N+1 dotazy, memory leaks)
+            4. Srozumitelnost a udržovatelnost kódu
+            
+            Přidej komentáře přímo k relevantním řádkům.
+            Pokud je PR v pořádku, napiš stručné schválení.
+</pre></div>
+
+<h2 id="code-review">Automatické code review — pokročilé nastavení</h2>
+<p>Základní review je jen začátek. Můžete Clauda nastavit jako specializovaného reviewera pro různé aspekty — bezpečnost, výkon, test coverage nebo dodržování konvencí týmu.</p>
+
+<h3>Review zaměřené na bezpečnost</h3>
+<div class="cb"><div class="cb-label">Prompt pro security review</div><pre>
+<span class="k">prompt:</span> |
+  Jsi bezpečnostní reviewer. Prohledej tento PR pro:
+  
+  **Kritické** (blokuje merge):
+  - SQL injection (nepoužívání prepared statements)
+  - Přímé vkládání user input do HTML (XSS)
+  - Odhalení API klíčů nebo hesel v kódu
+  - Použití md5/sha1 pro hashování hesel
+  
+  **Varování** (doporučení):
+  - Chybějící input validace
+  - Příliš permisivní CORS nastavení
+  - Logování citlivých dat
+  
+  Pro každý nález uveď: závažnost, řádek kódu, vysvětlení rizika, 
+  konkrétní oprava.
+</pre></div>
+
+<h3>@claude trigger — review na vyžádání</h3>
+<p>Místo automatického review na každý PR můžete Clauda zavolat manuálně tagem v komentáři:</p>
+<div class="cb"><div class="cb-label">Volání Clauda v PR komentáři</div><pre>
+<span class="c"># Napište do komentáře PR:</span>
+@claude zreviewuj bezpečnost změn v auth modulu
+
+<span class="c"># Nebo:</span>
+@claude napiš unit testy pro nové funkce v tomto PR
+
+<span class="c"># Nebo:</span>
+@claude vysvětli proč testy selhávají a jak to opravit
+</pre></div>
+
+<h2 id="testy">Automatické generování testů</h2>
+<p>Claude Code dokáže generovat testy pro nový kód v každém PR — bez toho, aby to vývojář musel dělat ručně. To dramaticky zvyšuje test coverage bez přidané zátěže.</p>
+
+<div class="cb"><div class="cb-label">.github/workflows/generate-tests.yml</div><pre>
+<span class="k">name:</span> <span class="v">Generate Tests for New Code</span>
+
+<span class="k">on:</span>
+  <span class="k">pull_request:</span>
+    <span class="k">types:</span> <span class="v">[opened]</span>
+
+<span class="k">jobs:</span>
+  <span class="k">generate-tests:</span>
+    <span class="k">runs-on:</span> <span class="v">ubuntu-latest</span>
+    <span class="k">steps:</span>
+      - <span class="k">uses:</span> <span class="v">actions/checkout@v4</span>
+
+      - <span class="k">name:</span> <span class="v">Nainstaluj závislosti</span>
+        <span class="k">run:</span> <span class="v">npm ci</span>
+
+      - <span class="k">name:</span> <span class="v">Generuj testy přes Claude</span>
+        <span class="k">uses:</span> <span class="v">anthropics/claude-code-action@v1</span>
+        <span class="k">with:</span>
+          <span class="k">anthropic_api_key:</span> <span class="v">${{ secrets.ANTHROPIC_API_KEY }}</span>
+          <span class="k">prompt:</span> |
+            Podívej se na změněné soubory v tomto PR.
+            Pro každou novou funkci nebo metodu bez testu:
+            1. Napiš unit testy (Jest/Vitest syntax)
+            2. Zahrň edge cases a error handling
+            3. Ulož testy do příslušného __tests__ adresáře
+            4. Ověř že testy procházejí (npm test)
+            
+            Pokud testy selhávají, oprav kód nebo testy
+            dokud vše neprochází.
+</pre></div>
+
+<h2 id="dokumentace">Automatická aktualizace dokumentace</h2>
+<p>Dokumentace zastarávání je klasický problém. Claude Code ho může řešit automaticky — při každém mergi do main zkontroluje, jestli se změnilo API nebo chování funkcí, a aktualizuje dokumentaci.</p>
+
+<div class="cb"><div class="cb-label">.github/workflows/update-docs.yml</div><pre>
+<span class="k">on:</span>
+  <span class="k">push:</span>
+    <span class="k">branches:</span> <span class="v">[main]</span>
+    <span class="k">paths:</span>
+      - <span class="v">'src/**'</span>           <span class="c"># spustí se jen při změně kódu</span>
+      - <span class="v">'!src/**/*.test.*'</span>  <span class="c"># ale ne při změně testů</span>
+
+<span class="k">jobs:</span>
+  <span class="k">update-docs:</span>
+    <span class="k">steps:</span>
+      - <span class="k">name:</span> <span class="v">Aktualizuj dokumentaci</span>
+        <span class="k">uses:</span> <span class="v">anthropics/claude-code-action@v1</span>
+        <span class="k">with:</span>
+          <span class="k">anthropic_api_key:</span> <span class="v">${{ secrets.ANTHROPIC_API_KEY }}</span>
+          <span class="k">prompt:</span> |
+            Porovnej změny od posledního commitu se soubory v docs/.
+            Aktualizuj dokumentaci kde:
+            - Přibyla nová funkce nebo parametr
+            - Změnilo se chování nebo návratová hodnota
+            - Byl opravený popsaný bug
+            
+            Commit změny v docs/ se zprávou "docs: auto-update"
+</pre></div>
+
+<h2 id="routines">Cloud Routines v CI kontextu</h2>
+<p>Cloud Routines (viz díl 06) lze kombinovat s GitHub Actions — Routine spustí agenta, který vytvoří PR s návrhem změn, a GitHub Actions PR automaticky otestuje.</p>
+<ul class="tl">
+  <li><strong>Dependency updates Routine</strong> — každé pondělí Claude vytvoří PR s aktualizovanými závislostmi → GitHub Actions otestuje build → pokud testy prochází, PR jde automaticky do review.</li>
+  <li><strong>Security scan Routine</strong> — každou noc prohledá závislosti → při nálezu High/Critical vytvoří GitHub Issue nebo PR s opravou.</li>
+  <li><strong>Code quality Routine</strong> — každý pátek projde kód a navrhne refaktoring → vytvoří PR s komentářem "Tech debt — nízká priorita".</li>
+</ul>
+
+<h2 id="naklady">Náklady Claude v CI pipeline</h2>
+<p>Každý spuštěný workflow spotřebovává API tokeny. Pro tým s 10 vývojáři a 20 PR týdně se náklady rychle sčítají.</p>
+
+<div class="callout">
+  <div class="callout-title">Kalkulace příkladu</div>
+  <p>Review jednoho PR (průměr 500 řádků kódu) spotřebuje zhruba 50 000–100 000 tokenů na Sonnet 4.6 ($3/MTok input). To je $0.15–0.30 na review. Při 20 PR týdně = $3–6 týdně = $12–24 měsíčně. Rozumné — ale nastavte monthly cap v Anthropic Console pro jistotu.</p>
+</div>
+
+<div class="pn">
+  <a href="08_CLDE_zalohy.html">← 08 · Zálohy</a>
+  <a href="10_CLDE_troubleshooting.html" class="nx">10 · Troubleshooting →</a>
+</div>
+</main>
+</body>
+</html>

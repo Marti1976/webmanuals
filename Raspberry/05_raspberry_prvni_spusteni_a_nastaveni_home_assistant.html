@@ -130,9 +130,70 @@ pre code{background:none;border:none;padding:0;color:inherit}
 
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--rasp1-light)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
+  background:rgba(227,11,92,.12);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* ── LAYOUT ── */
+.wrap{margin-left:260px}
+footer{margin-left:260px}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .wrap,footer{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">🚀</div>
+      <div class="sidebar-name">První spuštění<small>Home Assistant OS</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah kapitoly</div>
+  <a href="#fyzicke-zapojeni" class="nav-link active"><span class="nav-step">01</span>Fyzické zapojení</a>
+  <a href="#prvni-boot" class="nav-link"><span class="nav-step">02</span>První boot</a>
+  <a href="#ip-adresa" class="nav-link"><span class="nav-step">03</span>Nalezení IP adresy</a>
+  <a href="#prvni-nastaveni" class="nav-link"><span class="nav-step">04</span>Průvodce nastavením</a>
+  <a href="#staticka-ip" class="nav-link"><span class="nav-step">05</span>Pevná IP adresa</a>
+  <a href="#wifi-setup" class="nav-link"><span class="nav-step">06</span>Nastavení WiFi</a>
+  <a href="#dokonceni" class="nav-link"><span class="nav-step">07</span>Co jsi dokončil</a>
+</nav>
 <div class="wrap">
 
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
@@ -144,7 +205,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </header>
 
 <!-- FYZICKÉ ZAPOJENÍ -->
-<section class="sec">
+<section class="sec" id="fyzicke-zapojeni">>
   <h2>Fyzické zapojení</h2>
   <p>Pořadí zapojení je důležité. Napájení zapojuj vždy jako <strong>poslední</strong> – tím se RPi spustí. Vše ostatní musí být připojeno dřív.</p>
 
@@ -192,7 +253,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- PRVNÍ BOOT -->
-<section class="sec">
+<section class="sec" id="prvni-boot">>
   <h2>První boot – co se děje</h2>
   <p>Po připojení napájení se spustí první boot. Tento proces trvá výrazně déle než normální start – systém se rozbaluje, konfiguruje a nastavuje. <strong>Buď trpělivý.</strong></p>
 
@@ -220,7 +281,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- NALEZENÍ IP -->
-<section class="sec">
+<section class="sec" id="ip-adresa">>
   <h2>Nalezení IP adresy v síti</h2>
   <p>Adresa <code>homeassistant.local</code> funguje přes mDNS a nemusí fungovat na všech sítích (zejména starší routery). Jako zálohu si zjisti přímou IP adresu:</p>
 
@@ -240,7 +301,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- PRVNÍ NASTAVENÍ -->
-<section class="sec">
+<section class="sec" id="prvni-nastaveni">>
   <h2>Průvodce prvním nastavením</h2>
   <p>Po otevření <code>http://homeassistant.local:8123</code> nebo IP adresy se zobrazí průvodce. Projdeme ho krok za krokem:</p>
 
@@ -320,7 +381,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- STATICKÁ IP -->
-<section class="sec">
+<section class="sec" id="staticka-ip">>
   <h2>Nastavení pevné IP adresy (doporučeno)</h2>
   <p>DHCP router přiděluje IP adresy dynamicky – po restartu se může IP RPi změnit. Pro server který běží 24/7 chceme <strong>pevnou IP</strong>, aby záložky v prohlížeči vždy fungovaly.</p>
 
@@ -363,7 +424,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- WIFI -->
-<section class="sec">
+<section class="sec" id="wifi-setup">>
   <h2>Nastavení WiFi (alternativa k Ethernet)</h2>
   <p>Pokud nemůžeš přivést Ethernet kabel, Home Assistant OS podporuje WiFi připojení. Konfiguruje se po prvním spuštění přímo v rozhraní HA.</p>
   <ol>
@@ -380,7 +441,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- CO DÁL -->
-<section class="sec">
+<section class="sec" id="dokonceni">>
   <h2>Co jsi právě dokončil</h2>
   <ul>
     <li>✅ RPi 3 B+ fyzicky zapojen a spuštěn z USB SSD</li>
@@ -415,5 +476,25 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </footer>
 
 </div>
+<script>
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('progressBar');
+  const t=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  b.style.width=(t/h*100)+'%';
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const t=document.querySelector('[href="#'+e.target.id+'"]');
+      if(t)t.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>

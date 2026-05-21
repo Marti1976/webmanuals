@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>07 · Bezpečnost — CLDE průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;scrollbar-color:var(--br) transparent;}
+.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
+.sb-home:hover{background:var(--sf);}
+.sb-home::before{content:'←';font-size:0.85rem;}
+.sb-chapters{padding:6px 0 24px;}
+.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
+.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
+.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
+.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
+.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}
+.sb-ch-link.active .n{opacity:1;}
+.sb-subs{padding:2px 0 6px 36px;list-style:none;}
+.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
+.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
+.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
+.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
+.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
+.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
+.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
+h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
+p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
+strong{color:var(--hd);font-weight:600;}
+.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
+.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
+.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
+.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
+.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
+.callout.gn .callout-title{color:var(--gn);}
+.callout.rd .callout-title{color:var(--rd);}
+.callout.bl .callout-title{color:var(--bl);}
+.callout p{font-size:.86rem;margin:0;line-height:1.7;}
+.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
+.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
+.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre;}
+.cb pre .c{color:var(--mu);}
+.cb pre .k{color:var(--bl);}
+.cb pre .v{color:var(--gn);}
+.cb pre .a{color:var(--ac);}
+.cb pre .r{color:var(--rd);}
+code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
+.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
+.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
+.tl li:last-child{border-bottom:none;}
+.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
+.tw{overflow-x:auto;margin:20px 0;}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
+th{background:var(--sf);color:var(--mu);text-align:left;padding:9px 13px;border:1px solid var(--br);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:.63rem;}
+td{padding:9px 13px;border:1px solid var(--br);color:var(--tx);vertical-align:top;}
+tr:hover td{background:rgba(255,255,255,.013);}
+.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
+.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
+.pn a:hover{color:var(--ac);}
+.pn .nx{margin-left:auto;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a href="00_CLDE_index.html" class="sb-home">Zpět na obsah</a>
+  <div class="sb-chapters">
+    <div class="sb-ch"><a href="01_CLDE_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a><ul class="sb-subs"><li><a href="01_CLDE_salary.html#platebni-modely">Platební modely</a></li><li><a href="01_CLDE_salary.html#prehled-planu">Přehled plánů</a></li><li><a href="01_CLDE_salary.html#api-sazby">API sazby</a></li><li><a href="01_CLDE_salary.html#jak-usetrit">Jak ušetřit</a></li><li><a href="01_CLDE_salary.html#realne-naklady">Reálné náklady</a></li></ul></div>
+    <div class="sb-ch"><a href="02_CLDE_instalace.html" class="sb-ch-link"><span class="n">02</span>Instalace</a><ul class="sb-subs"><li><a href="02_CLDE_instalace.html#prehled">Přehled rozhraní</a></li><li><a href="02_CLDE_instalace.html#cli">CLI instalace</a></li><li><a href="02_CLDE_instalace.html#desktop">Desktop aplikace</a></li><li><a href="02_CLDE_instalace.html#ide">IDE rozšíření</a></li><li><a href="02_CLDE_instalace.html#autentizace">Autentizace</a></li></ul></div>
+    <div class="sb-ch"><a href="03_CLDE_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDE_nastaveni.html#struktura">Struktura souborů</a></li><li><a href="03_CLDE_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDE_nastaveni.html#settings">settings.json</a></li><li><a href="03_CLDE_nastaveni.html#env">Proměnné prostředí</a></li><li><a href="03_CLDE_nastaveni.html#model">Výběr modelu</a></li></ul></div>
+    <div class="sb-ch"><a href="04_CLDE_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDE_zaklady.html#prvni-session">První session</a></li><li><a href="04_CLDE_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDE_zaklady.html#one-shot">One-shot příkazy</a></li><li><a href="04_CLDE_zaklady.html#plan-mode">Plan vs Auto mode</a></li><li><a href="04_CLDE_zaklady.html#workflow">Základní workflow</a></li><li><a href="04_CLDE_zaklady.html#git">Práce s Gitem</a></li></ul></div>
+    <div class="sb-ch"><a href="05_CLDE_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a><ul class="sb-subs"><li><a href="05_CLDE_pokrocile.html#mcp">MCP servery</a></li><li><a href="05_CLDE_pokrocile.html#hooks">Hooks</a></li><li><a href="05_CLDE_pokrocile.html#vlastni-prikazy">Vlastní příkazy</a></li><li><a href="05_CLDE_pokrocile.html#skills">Skills</a></li><li><a href="05_CLDE_pokrocile.html#worktrees">Git worktrees</a></li><li><a href="05_CLDE_pokrocile.html#thinking">Extended thinking</a></li></ul></div>
+    <div class="sb-ch"><a href="06_CLDE_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDE_agenti.html#co-jsou-agenti">Co jsou agenti</a></li><li><a href="06_CLDE_agenti.html#subagenti">Subagenti</a></li><li><a href="06_CLDE_agenti.html#paralelni">Paralelní zpracování</a></li><li><a href="06_CLDE_agenti.html#agent-teams">Agent Teams</a></li><li><a href="06_CLDE_agenti.html#cloud-routines">Cloud Routines</a></li><li><a href="06_CLDE_agenti.html#monitoring">Monitoring</a></li></ul></div>
+    <div class="sb-ch"><a href="07_CLDE_bezpecnost.html" class="sb-ch-link active"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="#rizika">Rizika a hrozby</a></li><li><a href="#opravneni">Oprávnění nástrojů</a></li><li><a href="#secrets">Ochrana secrets</a></li><li><a href="#gitignore">Co do .gitignore</a></li><li><a href="#audit">Audit &amp; logging</a></li><li><a href="#tymy">Doporučení pro týmy</a></li></ul></div>
+    <div class="sb-ch"><a href="08_CLDE_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy před změnou</a><ul class="sb-subs"><li><a href="08_CLDE_zalohy.html#proc">Proč zálohovat</a></li><li><a href="08_CLDE_zalohy.html#git-sit">Git záchranná síť</a></li><li><a href="08_CLDE_zalohy.html#checkpoint">Checkpointy</a></li><li><a href="08_CLDE_zalohy.html#obnova">Obnova po chybě</a></li><li><a href="08_CLDE_zalohy.html#checklist">Checklist</a></li></ul></div>
+    <div class="sb-ch"><a href="09_CLDE_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD &amp; Automatizace</a><ul class="sb-subs"><li><a href="09_CLDE_cicd.html#uvod">Úvod do CI/CD</a></li><li><a href="09_CLDE_cicd.html#github-actions">GitHub Actions</a></li><li><a href="09_CLDE_cicd.html#code-review">Automatické review</a></li><li><a href="09_CLDE_cicd.html#testy">Generování testů</a></li><li><a href="09_CLDE_cicd.html#routines">Cloud Routines</a></li></ul></div>
+    <div class="sb-ch"><a href="10_CLDE_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="10_CLDE_troubleshooting.html#instalace-err">Instalační chyby</a></li><li><a href="10_CLDE_troubleshooting.html#auth-err">Autentizace</a></li><li><a href="10_CLDE_troubleshooting.html#limity">Limity</a></li><li><a href="10_CLDE_troubleshooting.html#debug">Debugging</a></li><li><a href="10_CLDE_troubleshooting.html#pomoc">Kde hledat pomoc</a></li></ul></div>
+    <div class="sb-ch"><a href="11_CLDE_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a><ul class="sb-subs"><li><a href="11_CLDE_odkazy.html#cesky">Česky</a></li><li><a href="11_CLDE_odkazy.html#anglicky">Anglicky</a></li><li><a href="11_CLDE_odkazy.html#nastroje">Nástroje</a></li><li><a href="11_CLDE_odkazy.html#komunita">Komunita</a></li></ul></div>
+  </div>
+</nav>
+<main class="main">
+<div class="ph">
+  <div class="ph-num">DÍL 07 / 11</div>
+  <h1>Bezpečnost</h1>
+  <p>Claude Code má přímý přístup k vašemu filesystému, Gitu a příkazové řádce. To je jeho síla — ale také zdroj rizik, pokud se bezpečnost podcení.</p>
+</div>
+
+<h2 id="rizika">Rizika a hrozby — co se může pokazit</h2>
+<p>Claude Code není nebezpečný nástroj, ale má reálný vliv na váš systém. Než pochopíte rizika, těžko je budete řešit. Zde jsou nejčastější problémy, ke kterým dochází:</p>
+
+<h3>1. Neúmyslné smazání nebo přepsání souborů</h3>
+<p>Agent při refaktoringu "vyčistí" soubory, které považuje za zastaralé — ale vy jste je stále potřebovali. Nebo přepíše konfiguraci produkčního serveru, protože jste spustili Claude Code ve špatném adresáři.</p>
+
+<h3>2. Odhalení citlivých dat v kontextu</h3>
+<p>Claude Code čte soubory v projektu — včetně <code>.env</code> souborů s hesly, AWS klíčů v konfiguracích nebo databázových connection stringů. Tyto hodnoty se pak nacházejí v kontextovém okně a mohou být zahrnuty do promptů odesílaných Anthropic API.</p>
+
+<h3>3. Nežádoucí Git operace</h3>
+<p>Agenti mohou pushovat přímo do main větve, mazat větve nebo vytvářet commity s citlivými daty (pokud je náhodou zahrnete do kontextu).</p>
+
+<h3>4. Eskalace oprávnění přes shellové příkazy</h3>
+<p>Pokud povolíte volné spouštění bash příkazů, může Claude (v teorii, zejména při prompt injection útocích přes načtená data) provést operace, které jste nezamýšleli. Toto riziko je nízké při normálním použití, ale při práci s nedůvěryhodným kódem nebo daty roste.</p>
+
+<div class="callout rd">
+  <div class="callout-title">Zdokumentovaný incident z praxe</div>
+  <p>V roce 2025 vývojář spustil Claude Code s <code>--dangerously-skip-permissions</code> na projektu s připojenou produkční databází. Claude v rámci "cleanup" úkolu smazal tabulky, které považoval za dočasné. Záloha nebyla. Ztracena data za 2 dny práce.</p>
+</div>
+
+<h2 id="opravneni">Oprávnění nástrojů — klíčové nastavení</h2>
+<p>Systém oprávnění v Claude Code funguje na principu <strong>allowlist a denylist</strong>. Vše, co není explicitně povoleno, Claude Code před provedením potvrdí s uživatelem. Denylist blokuje příkazy úplně — Claude nemůže ani navrhnout jejich použití.</p>
+
+<h3>Doporučená základní konfigurace</h3>
+<div class="cb"><div class="cb-label">.claude/settings.json — bezpečná konfigurace</div><pre>
+{
+  "permissions": {
+    <span class="c">// Co Claude smí dělat BEZ potvrzení</span>
+    "allow": [
+      "Bash(npm run test)",
+      "Bash(npm run test:unit)",
+      "Bash(npm run lint)",
+      "Bash(npm run build)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log --oneline -20)",
+      "Bash(git add -p)",
+      "Read(**)"   <span class="c">// čtení libovolného souboru</span>
+    ],
+    <span class="c">// Co Claude NESMÍ nikdy provést</span>
+    "deny": [
+      "Bash(git push origin main)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)",
+      "Bash(rm -rf*)",
+      "Bash(DROP TABLE*)",
+      "Bash(sudo*)",
+      "Bash(chmod 777*)",
+      "Bash(curl* | bash)",
+      "Bash(npm publish*)"
+    ]
+  }
+}
+</pre></div>
+
+<h3>Jak fungují wildcards v deny pravidlech</h3>
+<p>Hvězdička <code>*</code> na konci pravidla matchuje cokoli za ní. <code>Bash(git push --force*)</code> zablokuje jak <code>git push --force</code> tak <code>git push --force-with-lease origin main</code>. Pravidla jsou porovnávána s celým příkazem, ne jen začátkem.</p>
+
+<div class="callout">
+  <div class="callout-title">Zlaté pravidlo</div>
+  <p>Deny list je vaše pojistka. Do allowlistu patří jen příkazy, které jsou <strong>bezpečně reverzibilní</strong> nebo <strong>pouze čtou data</strong>. Vše, co mění produkční data nebo repo bez možnosti vrácení, patří do denylists.</p>
+</div>
+
+<h2 id="secrets">Ochrana citlivých dat a API klíčů</h2>
+<p>Claude Code čte soubory v pracovním adresáři. Pokud váš projekt obsahuje <code>.env</code> soubory, konfigurační soubory s hesly nebo certifikáty, jsou tyto hodnoty součástí kontextu posílaného do API.</p>
+
+<h3>Co nikdy nemá být v kontextu Clauda</h3>
+<ul class="tl">
+  <li><strong>.env soubory s produkčními hodnotami</strong> — databázová hesla, API klíče třetích stran, JWT secret</li>
+  <li><strong>AWS / GCP / Azure credentials</strong> — soubory <code>~/.aws/credentials</code> nebo service account JSON</li>
+  <li><strong>SSL certifikáty a privátní klíče</strong> — soubory <code>.pem</code>, <code>.key</code>, <code>.p12</code></li>
+  <li><strong>OAuth tokeny</strong> v konfiguračních souborech</li>
+  <li><strong>Databázové dumps</strong> s reálnými uživatelskými daty (GDPR)</li>
+</ul>
+
+<h3>Praktické opatření — .claudeignore</h3>
+<p>Stejně jako <code>.gitignore</code> říká Gitu co ignorovat, soubor <code>.claudeignore</code> říká Claude Code co nečíst. Vytvořte ho v kořeni projektu:</p>
+<div class="cb"><div class="cb-label">.claudeignore</div><pre>
+<span class="c"># Citlivé konfigurace</span>
+<span class="v">.env</span>
+<span class="v">.env.local</span>
+<span class="v">.env.production</span>
+<span class="v">.env.*.local</span>
+
+<span class="c"># Credentials a klíče</span>
+<span class="v">*.pem</span>
+<span class="v">*.key</span>
+<span class="v">*.p12</span>
+<span class="v">secrets/</span>
+<span class="v">.secrets/</span>
+
+<span class="c"># Databázové dumps</span>
+<span class="v">*.sql</span>
+<span class="v">dumps/</span>
+<span class="v">backups/</span>
+
+<span class="c"># Logy s potenciálně citlivými daty</span>
+<span class="v">logs/</span>
+<span class="v">*.log</span>
+</pre></div>
+
+<h2 id="gitignore">Co musí být v .gitignore (bezpečnostní minimum)</h2>
+<p>Toto je základní bezpečnostní minimum pro každý projekt. Claude Code může navrhnout commitnutí souborů — pokud nejsou v <code>.gitignore</code>, je riziko odhalení reálné:</p>
+<div class="cb"><div class="cb-label">.gitignore — bezpečnostní minimum</div><pre>
+<span class="c"># Nikdy do Gitu</span>
+<span class="v">.env</span>
+<span class="v">.env.*</span>
+<span class="v">!.env.example</span>   <span class="c"># výjimka: vzorový soubor BEZ hodnot je OK</span>
+
+<span class="v">*.pem</span>
+<span class="v">*.key</span>
+<span class="v">*.p12</span>
+<span class="v">*.pfx</span>
+
+<span class="c"># AWS a cloud credentials</span>
+<span class="v">.aws/</span>
+<span class="v">credentials.json</span>
+<span class="v">service-account*.json</span>
+
+<span class="c"># IDE a lokální konfigurace</span>
+<span class="v">.claude/settings.local.json</span>
+</pre></div>
+
+<div class="callout gn">
+  <div class="callout-title">Bezpečný vzor pro .env</div>
+  <p>Commitujte <strong>.env.example</strong> s ukázkovými (falešnými) hodnotami a komentáři — tým tak ví, jaké proměnné nastavit. Reálné hodnoty sdílejte přes password manager (1Password, Bitwarden) nebo secrets manager (AWS Secrets Manager, Vault).</p>
+</div>
+
+<h2 id="audit">Audit a logování</h2>
+<p>Claude Code loguje všechny provedené akce do adresáře <code>~/.claude/logs/</code>. Logy obsahují timestamp, typ operace, soubory a příkazy. Pro týmy je auditování klíčové.</p>
+
+<div class="cb"><div class="cb-label">Čtení logů — příklady</div><pre>
+<span class="c"># Zobrazit log dnešní session</span>
+cat ~/.claude/logs/session-$(date +%Y%m%d).json | python3 -m json.tool
+
+<span class="c"># Hledat všechny bash příkazy v logu</span>
+cat ~/.claude/logs/*.json | grep '"type":"bash"' | jq '.command'
+
+<span class="c"># Hledat zápisy souborů</span>
+cat ~/.claude/logs/*.json | grep '"type":"write"' | jq '.path'
+</pre></div>
+
+<h2 id="tymy">Bezpečnostní doporučení pro týmy</h2>
+<ul class="tl">
+  <li><strong>Commitujte .claude/settings.json do repozitáře</strong> — celý tým sdílí stejná deny pravidla. Nikdo nemůže říct "já o tom pravidle nevěděl."</li>
+  <li><strong>Nikdy <code>--dangerously-skip-permissions</code> na produkci</strong> — Tento přepínač deaktivuje veškerá bezpečnostní potvrzení. Použitelný jen v izolovaném testovacím prostředí.</li>
+  <li><strong>Separátní API klíče pro Claude Code</strong> — Pokud platíte přes API, vytvořte dedikovaný klíč s monthly budget limitem v Anthropic Console. Nekompromituje ostatní systémy.</li>
+  <li><strong>Sandbox pro neznámý kód</strong> — Při práci s externím kódem (open source contributions, code review) spouštějte Claude Code ve virtuálním prostředí nebo kontejneru.</li>
+  <li><strong>Review agentních PR</strong> — Nikdy neautomaticky mergujte PR vytvořené agentem bez lidské kontroly. Agenti mohou udělat správné věci špatným způsobem.</li>
+  <li><strong>Rotace API klíčů po incidentu</strong> — Pokud byl API klíč potenciálně odhalený (commit do public repo), okamžitě ho deaktivujte v Anthropic Console a vytvořte nový.</li>
+</ul>
+
+<div class="pn">
+  <a href="06_CLDE_agenti.html">← 06 · Agenti</a>
+  <a href="08_CLDE_zalohy.html" class="nx">08 · Zálohy →</a>
+</div>
+</main>
+</body>
+</html>

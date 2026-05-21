@@ -157,10 +157,65 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 .ch-btn.next{justify-content:flex-end;text-align:right}
 .ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em}
 .ch-btn .ch-name{display:block;color:var(--text);font-size:1.05em;margin-top:1px}
+
+/* ===== SIDEBAR ===== */
+.progress-bar{position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--g),var(--a));
+  z-index:999;width:0%;transition:width 0.1s}
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(12,14,22,.97);border-right:1px solid var(--b);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--g),var(--a),transparent)}
+.sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--b)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;display:flex;gap:6px;
+  margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--g)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.4rem;border-radius:10px;
+  background:rgba(0,210,106,.12);border:1px solid var(--b);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-size:.95rem;font-weight:700;color:var(--wh)}
+.sidebar-name small{font-size:.7rem;color:var(--t2);display:block;margin-top:2px}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:13px;
+  border-left:2px solid transparent;transition:all .2s}
+.nav-link:hover,.nav-link.active{color:var(--wh);
+  background:rgba(0,210,106,.05);border-left-color:var(--g)}
+.nav-step{font-family:monospace;font-size:10px;min-width:22px;
+  color:var(--a);background:rgba(232,160,32,.10);
+  border:1px solid rgba(232,160,32,.25);padding:2px 5px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+@media(max-width:900px){.sidebar{display:none}.page{margin-left:0 !important}}
 </style>
 </head>
 <body>
-<div class="page">
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_CLI_INDEX.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">⌨️</div>
+      <div class="sidebar-name">Tahák příkazů<small>Gemini CLI cheatsheet</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah</div>
+  <a href="#sh-workflow" class="nav-link active"><span class="nav-step">01</span> Denní workflow</a>
+  <a href="#sh-slash" class="nav-link"><span class="nav-step">02</span> Slash příkazy</a>
+  <a href="#sh-klavesy" class="nav-link"><span class="nav-step">03</span> Klávesy v CLI</a>
+  <a href="#sh-npm" class="nav-link"><span class="nav-step">04</span> npm příkazy</a>
+  <a href="#sh-terminal" class="nav-link"><span class="nav-step">05</span> Pohyb v terminálu</a>
+  <a href="#sh-git" class="nav-link"><span class="nav-step">06</span> Git – zálohy</a>
+  <a href="#sh-aplikace" class="nav-link"><span class="nav-step">07</span> Kde je aplikace</a>
+  <a href="#sh-sablony" class="nav-link"><span class="nav-step">08</span> Šablony promptů</a>
+  <a href="#sh-geminimd" class="nav-link"><span class="nav-step">09</span> GEMINI.md šablona</a>
+  <a href="#sh-checklist" class="nav-link"><span class="nav-step">10</span> Checklist</a>
+  <a href="#sh-problemy" class="nav-link"><span class="nav-step">11</span> Časté problémy</a>
+</nav>
+<div class="page" style="margin-left:260px">
 
 <div class="hero">
   <div class="hero-tag">// průvodce č. 3 ze 3 – rychlý tahák</div>
@@ -174,7 +229,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- DAILY WORKFLOW -->
-<div class="sh">
+<div class="sh" id="sh-workflow">
   <div class="sh-tag">// denní rutina</div>
   <h2>Pracovní postup každý den</h2>
 </div>
@@ -244,7 +299,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- GEMINI COMMANDS -->
-<div class="sh">
+<div class="sh" id="sh-slash">
   <div class="sh-tag">// příkazy v gemini cli</div>
   <h2>Slash příkazy (/příkaz)</h2>
 </div>
@@ -292,7 +347,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- KEYBOARD -->
-<div class="sh">
+<div class="sh" id="sh-klavesy">
   <div class="sh-tag">// klávesové zkratky</div>
   <h2>Klávesy v Gemini CLI</h2>
 </div>
@@ -320,7 +375,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- NPM COMMANDS -->
-<div class="sh">
+<div class="sh" id="sh-npm">
   <div class="sh-tag">// npm příkazy</div>
   <h2>npm – správce projektu</h2>
 </div>
@@ -347,7 +402,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- TERMINAL COMMANDS -->
-<div class="sh">
+<div class="sh" id="sh-terminal">
   <div class="sh-tag">// terminál – základní navigace</div>
   <h2>Pohyb v terminálu</h2>
 </div>
@@ -385,7 +440,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- GIT COMMANDS -->
-<div class="sh">
+<div class="sh" id="sh-git">
   <div class="sh-tag">// git – zálohy</div>
   <h2>Git – zálohy a správa verzí</h2>
 </div>
@@ -413,7 +468,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- PORTS -->
-<div class="sh">
+<div class="sh" id="sh-aplikace">
   <div class="sh-tag">// adresy v prohlížeči</div>
   <h2>Kde je tvá aplikace</h2>
 </div>
@@ -438,7 +493,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- PROMPTS -->
-<div class="sh">
+<div class="sh" id="sh-sablony">
   <div class="sh-tag">// vzorové prompty</div>
   <h2>Co psát Gemini – šablony</h2>
 </div>
@@ -480,7 +535,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- GEMINI.MD TEMPLATE -->
-<div class="sh">
+<div class="sh" id="sh-geminimd">
   <div class="sh-tag">// šablona</div>
   <h2>GEMINI.md – zkopíruj a vlož</h2>
 </div>
@@ -526,7 +581,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- CHECKLIST -->
-<div class="sh">
+<div class="sh" id="sh-checklist">
   <div class="sh-tag">// checklist</div>
   <h2>Checklist – před každou prací</h2>
 </div>
@@ -557,7 +612,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <!-- PROBLEMS -->
-<div class="sh">
+<div class="sh" id="sh-problemy">
   <div class="sh-tag">// rychlé řešení problémů</div>
   <h2>Nejčastější problémy – zkrácené řešení</h2>
 </div>
@@ -625,5 +680,27 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   <a href="00_CLI_INDEX.html" style="color:var(--a)">← Zpět na index</a>
 </footer>
 </div>
+<script>
+
+  window.addEventListener('scroll', () => {
+    const bar = document.getElementById('progressBar');
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (scrollTop / height * 100) + '%';
+  });
+  const sections = document.querySelectorAll('.sh[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const t = document.querySelector('[href="#' + e.target.id + '"]');
+        if (t) t.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+</script>
 </body>
 </html>

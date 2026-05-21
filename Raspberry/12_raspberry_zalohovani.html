@@ -91,9 +91,71 @@ pre code{background:none;border:none;padding:0;color:inherit}
 .ch-btn.next{justify-content:flex-end;text-align:right}
 .ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--rasp1-light)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
+  background:rgba(227,11,92,.12);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* ── LAYOUT ── */
+.wrap{margin-left:260px}
+footer{margin-left:260px}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .wrap,footer{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">💾</div>
+      <div class="sidebar-name">Zálohování<small>3-2-1 strategie</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah kapitoly</div>
+  <a href="#obsah-zalohy" class="nav-link active"><span class="nav-step">01</span>Co záloha obsahuje</a>
+  <a href="#zmensit" class="nav-link"><span class="nav-step">02</span>Zmenšení zálohy</a>
+  <a href="#proc-zalohovat" class="nav-link"><span class="nav-step">03</span>Proč zálohovat</a>
+  <a href="#auto-zaloha" class="nav-link"><span class="nav-step">04</span>Automatické zálohy</a>
+  <a href="#synology" class="nav-link"><span class="nav-step">05</span>Synology DiskStation</a>
+  <a href="#gdrive" class="nav-link"><span class="nav-step">06</span>Google Drive</a>
+  <a href="#strategie" class="nav-link"><span class="nav-step">07</span>Zálohovací strategie</a>
+  <a href="#obnova" class="nav-link"><span class="nav-step">08</span>Obnova ze zálohy</a>
+</nav>
 <div class="wrap">
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
 <header>
@@ -103,7 +165,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </header>
 
 <!-- PROC ZALOHOVAT -->
-<section class="sec">
+<section class="sec" id="obsah-zalohy">>
   <h2>Co záloha HA obsahuje – a co ne</h2>
   <p>Záloha Home Assistant je <code>.tar</code> archiv. Před spoléháním na zálohu je dobré vědět co v ní skutečně je.</p>
 
@@ -129,7 +191,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- ZMENŠENÍ ZÁLOHY -->
-<section class="sec">
+<section class="sec" id="zmensit">>
   <h2>Jak zmenšit velikost zálohy</h2>
   <p>Velká záloha = pomalé nahrávání na Google Drive a plnění disku. Tyto kroky výrazně sníží velikost:</p>
   <ul>
@@ -144,7 +206,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- PROC ZALOHOVAT PŮVODNÍ -->
-<section class="sec">
+<section class="sec" id="proc-zalohovat">>
   <h2>Proč zálohy nejsou volitelné</h2>
   <p>SSD disky jsou spolehlivé, ale ne nesmrtelné. Výpadek napájení v nevhodnou chvíli, chybná aktualizace, omylem smazaná konfigurace – každý z těchto scénářů může zničit tvůj pečlivě nastavený systém. Záloha ti ušetří hodiny práce.</p>
   <div class="backup-strategy">
@@ -174,7 +236,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- AUTOMATICKE ZALOHY HA -->
-<section class="sec">
+<section class="sec" id="auto-zaloha">>
   <h2>Automatické zálohy v Home Assistant</h2>
   <div class="steps">
     <div class="step">
@@ -214,7 +276,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- SYNOLOGY -->
-<section class="sec">
+<section class="sec" id="synology">>
   <h2>Zálohy na Synology DiskStation</h2>
   <p>Synology NAS je ideální sekundární zálohovací cíl v lokální síti. Použijeme add-on Samba Backup který automaticky kopíruje zálohy na NAS.</p>
 
@@ -303,7 +365,7 @@ trigger_days:
 </section>
 
 <!-- GOOGLE DRIVE -->
-<section class="sec">
+<section class="sec" id="gdrive">>
   <h2>Zálohy na Google Drive</h2>
   <p>Google Drive Backup add-on automaticky nahrává zálohy do cloudu – ochrana i při fyzické ztrátě nebo poškození všech lokálních zařízení.</p>
   <div class="steps">
@@ -359,7 +421,7 @@ trigger_days:
 </section>
 
 <!-- STRATEGIE ZALOHOVANI -->
-<section class="sec">
+<section class="sec" id="strategie">>
   <h2>Zálohovací strategie pro tvoji konfiguraci</h2>
   <p>Shrnutí doporučeného časového harmonogramu:</p>
   <ul>
@@ -374,7 +436,7 @@ trigger_days:
 </section>
 
 <!-- OBNOVA -->
-<section class="sec">
+<section class="sec" id="obnova">>
   <h2>Obnova ze zálohy</h2>
   <p>Postup při havárii – jak obnovit HA ze zálohy. Čas obnovy: cca 10–20 minut.</p>
 
@@ -414,5 +476,25 @@ trigger_days:
 </nav>
 <footer>12_raspberry_zalohovani.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
+<script>
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('progressBar');
+  const t=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  b.style.width=(t/h*100)+'%';
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const t=document.querySelector('[href="#'+e.target.id+'"]');
+      if(t)t.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>

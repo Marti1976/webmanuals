@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11 · Odkazy &amp; Zdroje — CLDE průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;}
+.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
+.sb-home:hover{background:var(--sf);}
+.sb-home::before{content:'←';}
+.sb-chapters{padding:6px 0 24px;}
+.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
+.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
+.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
+.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
+.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}
+.sb-ch-link.active .n{opacity:1;}
+.sb-subs{padding:2px 0 6px 36px;list-style:none;}
+.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
+.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
+.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
+.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
+.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
+.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
+.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
+h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
+p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
+strong{color:var(--hd);font-weight:600;}
+/* LINK CARDS */
+.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:20px 0;}
+.lcard{border:1px solid var(--br);padding:18px 20px;background:var(--sf);text-decoration:none;color:var(--tx);display:block;transition:border-color .15s,background .15s;}
+.lcard:hover{border-color:var(--ac);background:#13171d;}
+.lcard-tag{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+.lcard h4{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--hd);margin-bottom:6px;}
+.lcard p{font-size:.78rem;color:var(--mu);line-height:1.55;margin:0;}
+.lcard .url{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--ac);margin-top:8px;display:block;}
+/* FEATURED LINKS */
+.flink{border:1px solid var(--br);padding:20px;margin:14px 0;background:var(--sf);display:flex;gap:16px;align-items:flex-start;text-decoration:none;color:var(--tx);transition:border-color .15s;}
+.flink:hover{border-color:var(--ac);}
+.flink-icon{font-family:'IBM Plex Mono',monospace;font-size:1.2rem;color:var(--ac);flex-shrink:0;width:32px;text-align:center;}
+.flink-body h4{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--hd);margin-bottom:4px;}
+.flink-body p{font-size:.8rem;color:var(--mu);line-height:1.55;margin:0;}
+.flink-body .url{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--ac);margin-top:6px;display:block;}
+.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
+.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
+.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
+.callout.bl .callout-title{color:var(--bl);}
+.callout p{font-size:.86rem;margin:0;line-height:1.7;}
+.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
+.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
+.pn a:hover{color:var(--ac);}
+.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
+.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
+.tl li:last-child{border-bottom:none;}
+.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a href="00_CLDE_index.html" class="sb-home">Zpět na obsah</a>
+  <div class="sb-chapters">
+    <div class="sb-ch"><a href="01_CLDE_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a><ul class="sb-subs"><li><a href="01_CLDE_salary.html#platebni-modely">Platební modely</a></li><li><a href="01_CLDE_salary.html#prehled-planu">Přehled plánů</a></li><li><a href="01_CLDE_salary.html#jak-usetrit">Jak ušetřit</a></li></ul></div>
+    <div class="sb-ch"><a href="02_CLDE_instalace.html" class="sb-ch-link"><span class="n">02</span>Instalace</a><ul class="sb-subs"><li><a href="02_CLDE_instalace.html#cli">CLI instalace</a></li><li><a href="02_CLDE_instalace.html#desktop">Desktop app</a></li><li><a href="02_CLDE_instalace.html#autentizace">Autentizace</a></li></ul></div>
+    <div class="sb-ch"><a href="03_CLDE_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDE_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDE_nastaveni.html#settings">settings.json</a></li></ul></div>
+    <div class="sb-ch"><a href="04_CLDE_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDE_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDE_zaklady.html#workflow">Workflow</a></li></ul></div>
+    <div class="sb-ch"><a href="05_CLDE_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a><ul class="sb-subs"><li><a href="05_CLDE_pokrocile.html#mcp">MCP</a></li><li><a href="05_CLDE_pokrocile.html#hooks">Hooks</a></li></ul></div>
+    <div class="sb-ch"><a href="06_CLDE_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDE_agenti.html#subagenti">Subagenti</a></li><li><a href="06_CLDE_agenti.html#cloud-routines">Routines</a></li></ul></div>
+    <div class="sb-ch"><a href="07_CLDE_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="07_CLDE_bezpecnost.html#opravneni">Oprávnění</a></li><li><a href="07_CLDE_bezpecnost.html#secrets">Secrets</a></li></ul></div>
+    <div class="sb-ch"><a href="08_CLDE_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy</a><ul class="sb-subs"><li><a href="08_CLDE_zalohy.html#git-sit">Git záchranná síť</a></li><li><a href="08_CLDE_zalohy.html#obnova">Obnova</a></li></ul></div>
+    <div class="sb-ch"><a href="09_CLDE_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD</a><ul class="sb-subs"><li><a href="09_CLDE_cicd.html#github-actions">GitHub Actions</a></li><li><a href="09_CLDE_cicd.html#code-review">Auto review</a></li></ul></div>
+    <div class="sb-ch"><a href="10_CLDE_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="10_CLDE_troubleshooting.html#instalace-err">Instalační chyby</a></li><li><a href="10_CLDE_troubleshooting.html#claude-bloudí">Claude bloudí</a></li></ul></div>
+    <div class="sb-ch"><a href="11_CLDE_odkazy.html" class="sb-ch-link active"><span class="n">11</span>Odkazy &amp; Zdroje</a><ul class="sb-subs"><li><a href="#cesky">Česky</a></li><li><a href="#videa-cs">Videa česky</a></li><li><a href="#anglicky">Anglicky</a></li><li><a href="#nastroje">Nástroje</a></li><li><a href="#github">GitHub repos</a></li><li><a href="#komunita">Komunita</a></li></ul></div>
+  </div>
+</nav>
+<main class="main">
+<div class="ph">
+  <div class="ph-num">DÍL 11 / 11</div>
+  <h1>Odkazy &amp; Zdroje</h1>
+  <p>Rozcestník pro další vzdělávání — česká komunita, videa, oficální dokumentace, užitečné nástroje a komunity kde najdete pomoc nebo inspiraci.</p>
+</div>
+
+<div class="callout bl">
+  <div class="callout-title">Poznámka k odkazům</div>
+  <p>Komunita kolem Claude Code je mladá a rychle roste — obsah v češtině přibývá každý měsíc. Pokud narazíte na skvělý český zdroj který tu chybí, sdílejte ho v komunitách níže. Anglické zdroje jsou obecně aktuálnější a rozsáhlejší.</p>
+</div>
+
+<h2 id="cesky">Česky — návody a články</h2>
+<p>Český obsah o Claude Code je zatím omezený, ale roste. Nejaktivnější jsou komunity na Discordu a YouTube kanály zaměřené na AI produktivitu.</p>
+
+<a href="https://www.youtube.com/@AIproduktivita" target="_blank" class="flink">
+  <div class="flink-icon">▶</div>
+  <div class="flink-body">
+    <h4>AI Produktivita (YouTube CZ)</h4>
+    <p>Kanál zaměřený na praktické použití AI nástrojů v češtině. Obsahuje série o Claude Code od instalace po pokročilé použití. Nová videa každý týden.</p>
+    <span class="url">youtube.com/@AIproduktivita</span>
+  </div>
+</a>
+
+<a href="https://www.root.cz" target="_blank" class="flink">
+  <div class="flink-icon">◉</div>
+  <div class="flink-body">
+    <h4>Root.cz — sekce AI</h4>
+    <p>Odborný český portál pro vývojáře, pravidelně publikuje recenze a návody k AI vývojářským nástrojům včetně Claude Code. Kvalitní technické zázemí.</p>
+    <span class="url">root.cz/clanky/ai/</span>
+  </div>
+</a>
+
+<a href="https://www.zdrojak.cz" target="_blank" class="flink">
+  <div class="flink-icon">◉</div>
+  <div class="flink-body">
+    <h4>Zdroják.cz</h4>
+    <p>Český portál pro webové vývojáře. Občasné články o AI asistovaném vývoji, přehledná čeština, praktické příklady.</p>
+    <span class="url">zdrojak.cz</span>
+  </div>
+</a>
+
+<h2 id="videa-cs">Videa v češtině</h2>
+<p>Videoformát je pro učení Claude Code velmi efektivní — vidíte reálné workflow v terminálu. Hledejte na YouTube klíčová slova "Claude Code česky", "Claude AI vývojář", "Anthropic Claude tutorial CZ".</p>
+
+<div class="link-grid">
+  <a href="https://www.youtube.com/results?search_query=claude+code+česky" target="_blank" class="lcard">
+    <div class="lcard-tag">YouTube · CZ</div>
+    <h4>Hledat: Claude Code česky</h4>
+    <p>Přímý odkaz na YouTube vyhledávání pro český obsah o Claude Code.</p>
+    <span class="url">youtube.com — vyhledávání</span>
+  </a>
+  <a href="https://www.youtube.com/results?search_query=claude+code+tutorial+2026" target="_blank" class="lcard">
+    <div class="lcard-tag">YouTube · EN přeložitelné</div>
+    <h4>Hledat: Claude Code tutorial 2026</h4>
+    <p>Anglická videa — moderní prohlížeče zvládnou auto-titulky přeložené do češtiny.</p>
+    <span class="url">youtube.com — vyhledávání</span>
+  </a>
+</div>
+
+<h3>Doporučené kanály (anglicky s titulky)</h3>
+<ul class="tl">
+  <li><strong>Anthropic (oficální)</strong> — demo videa a webináře, technicky přesné, trochu suché</li>
+  <li><strong>ThePrimeagen</strong> — vývojář streaming Claude Code v reálném workflow, praktické a zábavné</li>
+  <li><strong>Fireship</strong> — rychlé přehledy novinek, skvělé pro "co je nového"</li>
+  <li><strong>AI Jason</strong> — hlubší návody na agentic použití, MCP a automatizace</li>
+</ul>
+
+<h2 id="anglicky">Oficální a primární anglické zdroje</h2>
+
+<div class="link-grid">
+  <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" class="lcard">
+    <div class="lcard-tag">Oficální · Dokumentace</div>
+    <h4>Claude Code Docs</h4>
+    <p>Oficální dokumentace Anthropic. Nejpřesnější zdroj, ale místy stručný. Vždy aktuální.</p>
+    <span class="url">docs.anthropic.com/claude-code</span>
+  </a>
+  <a href="https://claude.com/pricing" target="_blank" class="lcard">
+    <div class="lcard-tag">Oficální · Ceník</div>
+    <h4>Aktuální ceník plánů</h4>
+    <p>Ceny se mění — vždy ověřujte aktuální stav přímo na webu Anthropic.</p>
+    <span class="url">claude.com/pricing</span>
+  </a>
+  <a href="https://console.anthropic.com" target="_blank" class="lcard">
+    <div class="lcard-tag">Oficální · Console</div>
+    <h4>Anthropic Console</h4>
+    <p>Správa API klíčů, monitoring nákladů, nastavení limitů a billing.</p>
+    <span class="url">console.anthropic.com</span>
+  </a>
+  <a href="https://modelcontextprotocol.io/servers" target="_blank" class="lcard">
+    <div class="lcard-tag">MCP · Servery</div>
+    <h4>MCP Server Registry</h4>
+    <p>Oficální seznam MCP serverů — GitHub, Postgres, filesystem, Slack a stovky dalších.</p>
+    <span class="url">modelcontextprotocol.io/servers</span>
+  </a>
+  <a href="https://support.anthropic.com" target="_blank" class="lcard">
+    <div class="lcard-tag">Podpora</div>
+    <h4>Anthropic Support</h4>
+    <p>Hlášení problémů, billing dotazy, account management. Anglická podpora.</p>
+    <span class="url">support.anthropic.com</span>
+  </a>
+  <a href="https://www.anthropic.com/news" target="_blank" class="lcard">
+    <div class="lcard-tag">Novinky</div>
+    <h4>Anthropic Blog</h4>
+    <p>Oznámení nových funkcí, výzkumné články, bezpečnostní zprávy.</p>
+    <span class="url">anthropic.com/news</span>
+  </a>
+</div>
+
+<h2 id="nastroje">Nástroje pro práci s Claude Code</h2>
+
+<a href="https://github.com/ryoppippi/cc-usage" target="_blank" class="flink">
+  <div class="flink-icon">◈</div>
+  <div class="flink-body">
+    <h4>cc-usage — monitoring spotřeby tokenů</h4>
+    <p>Open-source CLI nástroj pro sledování historické spotřeby tokenů. Zobrazí grafy, denní průměry a trendy. Nezbytné pro API uživatele kteří chtějí kontrolovat náklady. Instalace: <code>npx cc-usage</code>.</p>
+    <span class="url">github.com/ryoppippi/cc-usage</span>
+  </div>
+</a>
+
+<a href="https://github.com/anthropics/claude-code" target="_blank" class="flink">
+  <div class="flink-icon">◈</div>
+  <div class="flink-body">
+    <h4>Claude Code — oficální GitHub repo</h4>
+    <p>Zdrojový kód, changelog, issues tracker, discussions. Nejlepší místo pro sledování novinek a hlášení bugů. Star repo pro notifikace o nových vydáních.</p>
+    <span class="url">github.com/anthropics/claude-code</span>
+  </div>
+</a>
+
+<div class="link-grid">
+  <a href="https://github.com/anthropics/anthropic-cookbook" target="_blank" class="lcard">
+    <div class="lcard-tag">GitHub · Příklady</div>
+    <h4>Anthropic Cookbook</h4>
+    <p>Kolekce hotových ukázek — MCP, agentic workflows, prompt engineering, integrace.</p>
+    <span class="url">github.com/anthropics/anthropic-cookbook</span>
+  </a>
+  <a href="https://github.com/modelcontextprotocol/servers" target="_blank" class="lcard">
+    <div class="lcard-tag">GitHub · MCP</div>
+    <h4>MCP Servers (oficální)</h4>
+    <p>Zdrojové kódy oficálních MCP serverů — filesystem, GitHub, Postgres, Brave Search...</p>
+    <span class="url">github.com/modelcontextprotocol/servers</span>
+  </a>
+</div>
+
+<h2 id="github">Komunitní GitHub repozitáře</h2>
+<ul class="tl">
+  <li><strong>awesome-claude-code</strong> — kurátorovaný seznam nástrojů, skriptů a CLAUDE.md šablon pro různé typy projektů (Next.js, Django, Go, Rust...)</li>
+  <li><strong>claude-code-prompts</strong> — sbírka osvědčených promptů pro časté vývojářské úkoly — code review, refaktoring, dokumentace</li>
+  <li><strong>claude-md-templates</strong> — hotové CLAUDE.md šablony pro populární frameworky — stačí zkopírovat a upravit pro svůj projekt</li>
+</ul>
+<p>Tyto repozitáře hledejte přímo na GitHub.com — zadejte "claude code" nebo "claude-md" do vyhledávání a seřaďte podle stars.</p>
+
+<h2 id="komunita">Komunity a diskuze</h2>
+
+<div class="link-grid">
+  <a href="https://discord.gg/anthropic" target="_blank" class="lcard">
+    <div class="lcard-tag">Discord · Oficální</div>
+    <h4>Anthropic Discord</h4>
+    <p>Kanál #claude-code — rychlá pomoc od komunity, sdílení tipů, oznámení novinek.</p>
+    <span class="url">discord.gg/anthropic</span>
+  </a>
+  <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" class="lcard">
+    <div class="lcard-tag">Reddit</div>
+    <h4>r/ClaudeAI</h4>
+    <p>Neoficiální subreddit — diskuze, tipy, srovnání s konkurencí, česky se ptát jde.</p>
+    <span class="url">reddit.com/r/ClaudeAI</span>
+  </a>
+  <a href="https://x.com/search?q=claude+code" target="_blank" class="lcard">
+    <div class="lcard-tag">X / Twitter</div>
+    <h4>Claude Code na X</h4>
+    <p>Nejrychlejší novinky o nových funkcích. Sledujte @AnthropicAI a hashtagy #ClaudeCode.</p>
+    <span class="url">x.com — vyhledávání</span>
+  </a>
+  <a href="https://news.ycombinator.com/search?q=claude+code" target="_blank" class="lcard">
+    <div class="lcard-tag">Hacker News</div>
+    <h4>HN — Claude Code diskuze</h4>
+    <p>Technicky hluboké diskuze, srovnání s Cursor/Copilot, zkušenosti vývojářů.</p>
+    <span class="url">news.ycombinator.com</span>
+  </a>
+</div>
+
+<h3>Newslettery (anglicky)</h3>
+<ul class="tl">
+  <li><strong>The Batch (DeepLearning.AI)</strong> — týdenní přehled AI novinek včetně Anthropic, srozumitelná čeština titulků přes auto-translate</li>
+  <li><strong>Latent Space</strong> — hlubší technické analýzy AI nástrojů, občasný obsah o Claude</li>
+  <li><strong>AI Tool Report</strong> — praktické srovnání AI vývojářských nástrojů každý týden</li>
+</ul>
+
+<div class="pn">
+  <a href="10_CLDE_troubleshooting.html">← 10 · Troubleshooting</a>
+  <a href="00_CLDE_index.html">↑ Zpět na obsah</a>
+</div>
+</main>
+</body>
+</html>

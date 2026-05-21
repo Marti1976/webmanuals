@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08 · Zálohy před změnou — CLDE průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;}
+.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
+.sb-home:hover{background:var(--sf);}
+.sb-home::before{content:'←';font-size:.85rem;}
+.sb-chapters{padding:6px 0 24px;}
+.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
+.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
+.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
+.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
+.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}
+.sb-ch-link.active .n{opacity:1;}
+.sb-subs{padding:2px 0 6px 36px;list-style:none;}
+.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
+.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
+.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
+.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
+.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
+.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
+.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
+h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
+p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
+strong{color:var(--hd);font-weight:600;}
+.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
+.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
+.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
+.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
+.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
+.callout.gn .callout-title{color:var(--gn);}.callout.rd .callout-title{color:var(--rd);}.callout.bl .callout-title{color:var(--bl);}
+.callout p{font-size:.86rem;margin:0;line-height:1.7;}
+.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
+.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
+.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre;}
+.cb pre .c{color:var(--mu);}.cb pre .k{color:var(--bl);}.cb pre .v{color:var(--gn);}.cb pre .a{color:var(--ac);}
+code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
+.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
+.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
+.tl li:last-child{border-bottom:none;}
+.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
+.steps{margin:20px 0;}
+.step{display:grid;grid-template-columns:36px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--br);}
+.step:last-child{border-bottom:none;}
+.step-n{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ac);background:var(--ad);width:26px;height:26px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(232,160,32,.3);flex-shrink:0;}
+.step h4{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--hd);margin-bottom:6px;}
+.step p{font-size:.85rem;color:var(--mu);margin:0;line-height:1.65;}
+.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
+.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
+.pn a:hover{color:var(--ac);}
+.pn .nx{margin-left:auto;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a href="00_CLDE_index.html" class="sb-home">Zpět na obsah</a>
+  <div class="sb-chapters">
+    <div class="sb-ch"><a href="01_CLDE_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a><ul class="sb-subs"><li><a href="01_CLDE_salary.html#platebni-modely">Platební modely</a></li><li><a href="01_CLDE_salary.html#prehled-planu">Přehled plánů</a></li><li><a href="01_CLDE_salary.html#api-sazby">API sazby</a></li><li><a href="01_CLDE_salary.html#jak-usetrit">Jak ušetřit</a></li><li><a href="01_CLDE_salary.html#realne-naklady">Reálné náklady</a></li></ul></div>
+    <div class="sb-ch"><a href="02_CLDE_instalace.html" class="sb-ch-link"><span class="n">02</span>Instalace</a><ul class="sb-subs"><li><a href="02_CLDE_instalace.html#prehled">Přehled rozhraní</a></li><li><a href="02_CLDE_instalace.html#cli">CLI instalace</a></li><li><a href="02_CLDE_instalace.html#desktop">Desktop aplikace</a></li><li><a href="02_CLDE_instalace.html#ide">IDE rozšíření</a></li><li><a href="02_CLDE_instalace.html#autentizace">Autentizace</a></li></ul></div>
+    <div class="sb-ch"><a href="03_CLDE_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDE_nastaveni.html#struktura">Struktura souborů</a></li><li><a href="03_CLDE_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDE_nastaveni.html#settings">settings.json</a></li><li><a href="03_CLDE_nastaveni.html#env">Proměnné prostředí</a></li></ul></div>
+    <div class="sb-ch"><a href="04_CLDE_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDE_zaklady.html#prvni-session">První session</a></li><li><a href="04_CLDE_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDE_zaklady.html#plan-mode">Plan vs Auto mode</a></li><li><a href="04_CLDE_zaklady.html#workflow">Workflow</a></li><li><a href="04_CLDE_zaklady.html#git">Git</a></li></ul></div>
+    <div class="sb-ch"><a href="05_CLDE_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a><ul class="sb-subs"><li><a href="05_CLDE_pokrocile.html#mcp">MCP servery</a></li><li><a href="05_CLDE_pokrocile.html#hooks">Hooks</a></li><li><a href="05_CLDE_pokrocile.html#worktrees">Git worktrees</a></li><li><a href="05_CLDE_pokrocile.html#thinking">Extended thinking</a></li></ul></div>
+    <div class="sb-ch"><a href="06_CLDE_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDE_agenti.html#co-jsou-agenti">Co jsou agenti</a></li><li><a href="06_CLDE_agenti.html#subagenti">Subagenti</a></li><li><a href="06_CLDE_agenti.html#paralelni">Paralelní</a></li><li><a href="06_CLDE_agenti.html#cloud-routines">Cloud Routines</a></li></ul></div>
+    <div class="sb-ch"><a href="07_CLDE_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="07_CLDE_bezpecnost.html#rizika">Rizika</a></li><li><a href="07_CLDE_bezpecnost.html#opravneni">Oprávnění</a></li><li><a href="07_CLDE_bezpecnost.html#secrets">Secrets</a></li><li><a href="07_CLDE_bezpecnost.html#tymy">Pro týmy</a></li></ul></div>
+    <div class="sb-ch"><a href="08_CLDE_zalohy.html" class="sb-ch-link active"><span class="n">08</span>Zálohy před změnou</a><ul class="sb-subs"><li><a href="#proc">Proč zálohovat</a></li><li><a href="#git-sit">Git záchranná síť</a></li><li><a href="#checkpoint">Checkpointy</a></li><li><a href="#pred-velkou-zmenou">Před velkou změnou</a></li><li><a href="#obnova">Obnova po chybě</a></li><li><a href="#checklist">Checklist</a></li></ul></div>
+    <div class="sb-ch"><a href="09_CLDE_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD &amp; Automatizace</a><ul class="sb-subs"><li><a href="09_CLDE_cicd.html#github-actions">GitHub Actions</a></li><li><a href="09_CLDE_cicd.html#code-review">Auto review</a></li><li><a href="09_CLDE_cicd.html#testy">Generování testů</a></li></ul></div>
+    <div class="sb-ch"><a href="10_CLDE_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="10_CLDE_troubleshooting.html#instalace-err">Instalační chyby</a></li><li><a href="10_CLDE_troubleshooting.html#limity">Limity</a></li><li><a href="10_CLDE_troubleshooting.html#debug">Debugging</a></li></ul></div>
+    <div class="sb-ch"><a href="11_CLDE_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a><ul class="sb-subs"><li><a href="11_CLDE_odkazy.html#cesky">Česky</a></li><li><a href="11_CLDE_odkazy.html#nastroje">Nástroje</a></li></ul></div>
+  </div>
+</nav>
+<main class="main">
+<div class="ph">
+  <div class="ph-num">DÍL 08 / 11</div>
+  <h1>Zálohy před změnou</h1>
+  <p>Agenti a rozsáhlé automatizované změny jsou mocné nástroje — a právě proto vyžadují záchrannou síť. Tento díl vás naučí, jak se chránit, než něco pustíte.</p>
+</div>
+
+<h2 id="proc">Proč zálohovat — i když používáte Git</h2>
+<p>Možná si říkáte: mám Git, co se mi může stát? Odpověď je víc, než byste čekali. Git vás ochrání před ztrátou commitnutého kódu — ale <em>ne</em> před všemi scénáři, ke kterým při práci s AI agenty dochází.</p>
+<p>Problematické situace, ke kterým dochází v praxi:</p>
+<ul class="tl">
+  <li><strong>Agent smaže soubory, které nikdy nebyly commitnuty</strong> — nové soubory vytvořené v session, experimentální konfigurace, lokální skripty.</li>
+  <li><strong>Agent přepíše databázová data</strong> — pokud má přístup k lokální databázi a provede migraci špatným směrem.</li>
+  <li><strong>Stash se smaže</strong> — git stash je místní a dočasný; agent může spustit <code>git stash drop</code>.</li>
+  <li><strong>Agent pushne do remote větve</strong> — pokud to není zablokované v deny pravidlech, remote změny jsou viditelné ostatním.</li>
+  <li><strong>Velký refaktoring rozbije testy</strong> — a agent "opraví" testy tím, že je smaže místo opravy kódu.</li>
+</ul>
+
+<div class="callout rd">
+  <div class="callout-title">Nejčastější ztráta: uncommitted soubory</div>
+  <p>Průzkum komunity z roku 2025 ukázal, že 73 % nechtěných ztrát při práci s AI agenty se týkalo souborů, které <strong>nikdy nebyly commitnuty do Gitu</strong>. Git vám nepomůže, pokud jste zapomněli přidat soubor do repozitáře.</p>
+</div>
+
+<h2 id="git-sit">Git jako záchranná síť — správné použití</h2>
+<p>Git je nejlepší záchranná síť — pokud ho správně používáte. Klíčový princip: <strong>commitujte před každou session</strong>, kde plánujete větší změny.</p>
+
+<h3>Zlaté pravidlo před každou Claude session</h3>
+<div class="cb"><div class="cb-label">Povinný ritual před spuštěním agenta</div><pre>
+<span class="c"># 1. Zkontrolujte stav — co je necommitnuté?</span>
+<span class="a">git</span> status
+
+<span class="c"># 2. Commitněte vše, co nechcete ztratit</span>
+<span class="a">git</span> add -A
+<span class="a">git</span> commit -m "WIP: záloha před Claude session $(date +%Y%m%d-%H%M)"
+
+<span class="c"># 3. Vytvořte novou větev pro změny agenta</span>
+<span class="a">git</span> checkout -b claude/$(date +%Y%m%d)-popis-ukolu
+
+<span class="c"># 4. Teď teprve spusťte Claude Code</span>
+<span class="a">claude</span>
+</pre></div>
+
+<h3>Proč nová větev pro každý větší úkol?</h3>
+<p>Pokud agent udělá něco špatně, stačí větev smazat a jste zpět na výchozím stavu. Bez nové větve musíte revertovat commity nebo používat <code>git reflog</code> — což je stresující a chybové.</p>
+
+<h2 id="checkpoint">Checkpointy během dlouhé session</h2>
+<p>Při delší agentic session (více hodin, rozsáhlý refaktoring) je dobré pravidelně vytvářet checkpointy. Claude Code v Desktop App to umí semi-automaticky — po každé dokončené fázi nabídne možnost commitu.</p>
+<p>V CLI to uděláte ručně:</p>
+<div class="cb"><div class="cb-label">Manuální checkpoint v průběhu session</div><pre>
+<span class="c"># Pozastavte Claude (Ctrl+C nebo nechte dokončit krok)</span>
+<span class="c"># Pak v novém terminálu:</span>
+
+<span class="a">git</span> add -A
+<span class="a">git</span> commit -m "checkpoint: po dokončení auth modulu"
+
+<span class="c"># Nebo automaticky každých N minut přes cron / watch:</span>
+<span class="a">watch</span> -n 300 'git add -A && git commit -m "auto-checkpoint $(date)"'
+</pre></div>
+
+<h2 id="pred-velkou-zmenou">Před velkou změnou — komplexní postup</h2>
+<p>Chystáte se na rozsáhlou migraci, refaktoring celé vrstvy nebo přechod na nový framework? Tady je kompletní postup:</p>
+
+<div class="steps">
+  <div class="step"><div class="step-n">1</div><div><h4>Záloha celého projektu mimo Git</h4><p>Zkopírujte celý adresář projektu na jiné místo. Jednoduché, ale zachrání vás i při smazání <code>.git</code> adresáře.</p></div></div>
+  <div class="step"><div class="step-n">2</div><div><h4>Commitněte aktuální stav</h4><p>Udělejte commit s jasnou zprávou jako "BEFORE: migrace na PostgreSQL". Tento commit bude váš záchytný bod.</p></div></div>
+  <div class="step"><div class="step-n">3</div><div><h4>Vytvořte novou větev</h4><p>Pojmenujte ji popisně: <code>claude/postgres-migration-2026-05</code>. Veškerá práce agenta jde do této větve.</p></div></div>
+  <div class="step"><div class="step-n">4</div><div><h4>Záloha databáze (pokud relevantní)</h4><p>Před jakýmikoli databázovými operacemi: <code>pg_dump</code>, <code>mysqldump</code> nebo snapshot v cloudové konzoli.</p></div></div>
+  <div class="step"><div class="step-n">5</div><div><h4>Spusťte agenta v Plan mode</h4><p>Před skutečnými změnami nechte Clauda vysvětlit plán. Zkontrolujte ho — hledejte destruktivní operace.</p></div></div>
+  <div class="step"><div class="step-n">6</div><div><h4>Schvalte a sledujte</h4><p>Nechte agenta pracovat, ale neklikejte "approve all" slepě. Prohlédněte diffy před každým zápisem.</p></div></div>
+</div>
+
+<h2 id="obnova">Obnova po chybě agenta — krok za krokem</h2>
+<p>Stalo se. Agent udělal něco špatně. Nepanikujte — záchrana je téměř vždy možná.</p>
+
+<h3>Scénář A: Agent zkazil commitnutý kód</h3>
+<div class="cb"><div class="cb-label">Návrat k poslednímu dobrému stavu</div><pre>
+<span class="c"># Zobrazit historii commitů</span>
+<span class="a">git</span> log --oneline -20
+
+<span class="c"># Vrátit se k poslednímu dobrému commitu (zachová změny jako unstaged)</span>
+<span class="a">git</span> reset --mixed HEAD~3   <span class="c"># vrátí 3 commity zpět</span>
+
+<span class="c"># NEBO: tvrdý reset — zahodí vše od daného commitu</span>
+<span class="a">git</span> reset --hard abc1234   <span class="c"># nahraďte hash dobrého commitu</span>
+
+<span class="c"># NEBO: bezpečný revert — vytvoří nový commit "undo"</span>
+<span class="a">git</span> revert HEAD~2..HEAD    <span class="c"># revertuje poslední 2 commity</span>
+</pre></div>
+
+<h3>Scénář B: Agent smazal soubory, které nebyly commitnuté</h3>
+<div class="cb"><div class="cb-label">Záchrana přes git reflog</div><pre>
+<span class="c"># Reflog zaznamená VŠECHNY pohyby HEAD — i před-commitové</span>
+<span class="a">git</span> reflog
+
+<span class="c"># Uvidíte výpis jako:</span>
+<span class="c"># abc1234 HEAD@{0}: commit: Claude session změny</span>
+<span class="c"># def5678 HEAD@{1}: checkout: přesun na claude/feature</span>
+<span class="c"># ghi9012 HEAD@{2}: commit: WIP záloha před session  &lt;-- TADY</span>
+
+<span class="c"># Obnovte stav z reflogu</span>
+<span class="a">git</span> checkout ghi9012 -- .   <span class="c"># obnoví všechny soubory z daného stavu</span>
+</pre></div>
+
+<h3>Scénář C: Agent provedl nežádoucí git push</h3>
+<div class="cb"><div class="cb-label">Stažení nežádoucího pushe z remote</div><pre>
+<span class="c"># Zobrazit historii remote větve</span>
+<span class="a">git</span> log origin/feature-branch --oneline
+
+<span class="c"># Force push zpět na dobrý stav (pozor: přepíše remote historii)</span>
+<span class="a">git</span> push origin feature-branch --force-with-lease
+
+<span class="c"># --force-with-lease je bezpečnější než --force:</span>
+<span class="c"># selže, pokud mezitím někdo jiný pushoval</span>
+</pre></div>
+
+<div class="callout gn">
+  <div class="callout-title">Git reflog — váš tajný záchranář</div>
+  <p>Git reflog uchovává historii na <strong>90 dní</strong> ve výchozím nastavení. I když smažete větev, resetujete HEAD nebo přepíšete commity, reflog vám umožní se vrátit. Je to jedna z nejdůležitějších Git funkcí, o které většina vývojářů neví.</p>
+</div>
+
+<h2 id="checklist">Checklist zálohy — rychlá reference</h2>
+<p>Vytiskněte si nebo přidejte do CLAUDE.md jako připomínku:</p>
+<div class="cb"><div class="cb-label">Předsession checklist (přidejte do CLAUDE.md)</div><pre>
+<span class="c">## Před každou větší Claude session:</span>
+<span class="v">[ ]</span> git status — nic důležitého není necommitnuté
+<span class="v">[ ]</span> git checkout -b claude/$(datum)-$(popis)
+<span class="v">[ ]</span> Záloha DB pokud session mění databázi
+<span class="v">[ ]</span> .claudeignore obsahuje citlivé soubory
+<span class="v">[ ]</span> settings.json má deny pravidla pro destruktivní příkazy
+<span class="v">[ ]</span> Plan mode zkontrolován před spuštěním
+</pre></div>
+
+<div class="pn">
+  <a href="07_CLDE_bezpecnost.html">← 07 · Bezpečnost</a>
+  <a href="09_CLDE_cicd.html" class="nx">09 · CI/CD &amp; Automatizace →</a>
+</div>
+</main>
+</body>
+</html>

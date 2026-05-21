@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 · Troubleshooting — CLDE průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;}
+.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
+.sb-home:hover{background:var(--sf);}
+.sb-home::before{content:'←';}
+.sb-chapters{padding:6px 0 24px;}
+.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
+.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
+.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
+.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
+.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}
+.sb-ch-link.active .n{opacity:1;}
+.sb-subs{padding:2px 0 6px 36px;list-style:none;}
+.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
+.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
+.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
+.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
+.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
+.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
+.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
+h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
+p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
+strong{color:var(--hd);font-weight:600;}
+.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
+.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
+.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
+.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
+.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
+.callout.gn .callout-title{color:var(--gn);}.callout.rd .callout-title{color:var(--rd);}.callout.bl .callout-title{color:var(--bl);}
+.callout p{font-size:.86rem;margin:0;line-height:1.7;}
+.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
+.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
+.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre;}
+.cb pre .c{color:var(--mu);}.cb pre .k{color:var(--bl);}.cb pre .v{color:var(--gn);}.cb pre .a{color:var(--ac);}.cb pre .r{color:var(--rd);}
+code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
+.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
+.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
+.tl li:last-child{border-bottom:none;}
+.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
+/* ERROR BOX */
+.err-block{border:1px solid var(--br);margin:20px 0;}
+.err-head{background:var(--sf);padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--rd);border-bottom:1px solid var(--br);display:flex;align-items:center;gap:8px;}
+.err-head::before{content:'✖';font-size:.7rem;}
+.err-body{padding:14px 16px;}
+.err-body p{font-size:.84rem;margin-bottom:8px;}
+.err-body p:last-child{margin:0;}
+.err-fix{background:rgba(63,185,80,.05);border-top:1px solid var(--br);padding:10px 16px;font-size:.82rem;color:var(--gn);}
+.err-fix::before{content:'✔ Oprava: ';font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;}
+.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
+.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
+.pn a:hover{color:var(--ac);}
+.pn .nx{margin-left:auto;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a href="00_CLDE_index.html" class="sb-home">Zpět na obsah</a>
+  <div class="sb-chapters">
+    <div class="sb-ch"><a href="01_CLDE_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a><ul class="sb-subs"><li><a href="01_CLDE_salary.html#platebni-modely">Platební modely</a></li><li><a href="01_CLDE_salary.html#prehled-planu">Přehled plánů</a></li><li><a href="01_CLDE_salary.html#jak-usetrit">Jak ušetřit</a></li></ul></div>
+    <div class="sb-ch"><a href="02_CLDE_instalace.html" class="sb-ch-link"><span class="n">02</span>Instalace</a><ul class="sb-subs"><li><a href="02_CLDE_instalace.html#cli">CLI instalace</a></li><li><a href="02_CLDE_instalace.html#desktop">Desktop app</a></li><li><a href="02_CLDE_instalace.html#autentizace">Autentizace</a></li></ul></div>
+    <div class="sb-ch"><a href="03_CLDE_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDE_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDE_nastaveni.html#settings">settings.json</a></li><li><a href="03_CLDE_nastaveni.html#env">ENV proměnné</a></li></ul></div>
+    <div class="sb-ch"><a href="04_CLDE_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDE_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDE_zaklady.html#plan-mode">Plan mode</a></li><li><a href="04_CLDE_zaklady.html#workflow">Workflow</a></li></ul></div>
+    <div class="sb-ch"><a href="05_CLDE_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a><ul class="sb-subs"><li><a href="05_CLDE_pokrocile.html#mcp">MCP</a></li><li><a href="05_CLDE_pokrocile.html#hooks">Hooks</a></li><li><a href="05_CLDE_pokrocile.html#worktrees">Worktrees</a></li></ul></div>
+    <div class="sb-ch"><a href="06_CLDE_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDE_agenti.html#subagenti">Subagenti</a></li><li><a href="06_CLDE_agenti.html#paralelni">Paralelní</a></li><li><a href="06_CLDE_agenti.html#cloud-routines">Routines</a></li></ul></div>
+    <div class="sb-ch"><a href="07_CLDE_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="07_CLDE_bezpecnost.html#opravneni">Oprávnění</a></li><li><a href="07_CLDE_bezpecnost.html#secrets">Secrets</a></li></ul></div>
+    <div class="sb-ch"><a href="08_CLDE_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy</a><ul class="sb-subs"><li><a href="08_CLDE_zalohy.html#git-sit">Git záchranná síť</a></li><li><a href="08_CLDE_zalohy.html#obnova">Obnova po chybě</a></li></ul></div>
+    <div class="sb-ch"><a href="09_CLDE_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD</a><ul class="sb-subs"><li><a href="09_CLDE_cicd.html#github-actions">GitHub Actions</a></li><li><a href="09_CLDE_cicd.html#code-review">Auto review</a></li></ul></div>
+    <div class="sb-ch"><a href="10_CLDE_troubleshooting.html" class="sb-ch-link active"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="#instalace-err">Instalační chyby</a></li><li><a href="#auth-err">Autentizace</a></li><li><a href="#limity">Limity &amp; rate limiting</a></li><li><a href="#claude-bloudí">Claude bloudí</a></li><li><a href="#debug">Debugging session</a></li><li><a href="#windows">Windows specifika</a></li><li><a href="#pomoc">Kde hledat pomoc</a></li></ul></div>
+    <div class="sb-ch"><a href="11_CLDE_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a><ul class="sb-subs"><li><a href="11_CLDE_odkazy.html#cesky">Česky</a></li><li><a href="11_CLDE_odkazy.html#nastroje">Nástroje</a></li></ul></div>
+  </div>
+</nav>
+<main class="main">
+<div class="ph">
+  <div class="ph-num">DÍL 10 / 11</div>
+  <h1>Troubleshooting</h1>
+  <p>Přehled nejčastějších chyb a jejich řešení — od instalace přes autentizaci až po situace, kdy Claude bloudí nebo spotřebovává příliš mnoho tokenů.</p>
+</div>
+
+<h2 id="instalace-err">Instalační chyby</h2>
+
+<div class="err-block">
+  <div class="err-head">command not found: claude</div>
+  <div class="err-body">
+    <p>Po instalaci příkaz <code>claude</code> systém nenachází. PATH není nastavena správně nebo instalace se nezapsala do shellu.</p>
+  </div>
+  <div class="err-fix">
+    Spusťte <code>source ~/.zshrc</code> nebo <code>source ~/.bashrc</code> (podle vašeho shellu) a zkuste znovu. Pokud nepomůže, restartujte terminál. Na macOS zkontrolujte <code>echo $PATH</code> — musí obsahovat <code>~/.local/bin</code> nebo adresář z výstupu instalátoru.
+  </div>
+</div>
+
+<div class="err-block">
+  <div class="err-head">EACCES: permission denied při npm instalaci</div>
+  <div class="err-body">
+    <p>Npm se pokouší zapisovat do systémového adresáře, ke kterému nemáte oprávnění. Typické na macOS bez správně nastaveného npm prefix.</p>
+  </div>
+  <div class="err-fix">
+    Přejděte na nativní instalátor: <code>curl -fsSL https://claude.ai/install.sh | bash</code>. Nevyžaduje sudo ani změny npm prefixu.
+  </div>
+</div>
+
+<div class="err-block">
+  <div class="err-head">Error: Node.js version X.X is not supported</div>
+  <div class="err-body">
+    <p>Pokud stále používáte npm instalaci, Claude Code vyžaduje Node.js 18 nebo novější.</p>
+  </div>
+  <div class="err-fix">
+    Nainstalujte Node.js přes nvm: <code>nvm install 20 &amp;&amp; nvm use 20</code>. Nebo přejděte na nativní instalátor, který Node.js nevyžaduje.
+  </div>
+</div>
+
+<div class="err-block">
+  <div class="err-head">winget : No package found matching input criteria</div>
+  <div class="err-body">
+    <p>WinGet nenachází balíček Anthropic.ClaudeCode. Obvykle jde o zastaralou verzi WinGet nebo zpoždění v aktualizaci katalogu.</p>
+  </div>
+  <div class="err-fix">
+    Aktualizujte WinGet: <code>winget upgrade winget</code>. Alternativně stáhněte instalátor přímo z <code>claude.com/download</code>.
+  </div>
+</div>
+
+<h2 id="auth-err">Autentizační chyby</h2>
+
+<div class="err-block">
+  <div class="err-head">Authentication failed: invalid API key</div>
+  <div class="err-body">
+    <p>API klíč v ENV proměnné je neplatný, vypršel nebo byl zrušen.</p>
+  </div>
+  <div class="err-fix">
+    Přihlaste se na <strong>console.anthropic.com</strong> → API Keys → zkontrolujte aktivní klíče. Vygenerujte nový klíč a aktualizujte <code>~/.zshrc</code>: <code>export ANTHROPIC_API_KEY="sk-ant-nový-klíč"</code>, pak <code>source ~/.zshrc</code>.
+  </div>
+</div>
+
+<div class="err-block">
+  <div class="err-head">Login loop — browser otevře ale nevrátí token</div>
+  <div class="err-body">
+    <p>Autentizace přes předplatné (<code>claude auth login</code>) spustí prohlížeč, ale po přihlášení se token nepřenese do CLI. Obvyklé na Linux nebo při nestandardním nastavení prohlížeče.</p>
+  </div>
+  <div class="err-fix">
+    Zkuste <code>claude auth login --print-redirect-url</code> — zobrazí URL s tokenem, který zkopírujete ručně. Nebo použijte API klíč jako alternativu: <code>export ANTHROPIC_API_KEY="sk-ant-..."</code>.
+  </div>
+</div>
+
+<div class="err-block">
+  <div class="err-head">Error: You are not subscribed to Claude Code</div>
+  <div class="err-body">
+    <p>Váš plán nezahrnuje Claude Code. Týká se to zejména Team Standard ($20/seat) a Free plánu.</p>
+  </div>
+  <div class="err-fix">
+    Claude Code je dostupný od Pro ($20/měs) nebo Team Premium ($100/seat). Přejděte na <strong>claude.com/upgrade</strong> a upgradujte plán.
+  </div>
+</div>
+
+<h2 id="limity">Limity a rate limiting</h2>
+
+<div class="err-block">
+  <div class="err-head">Claude Code limit reached — please wait</div>
+  <div class="err-body">
+    <p>Dosáhli jste limitu token budgetu pro aktuální 5hodinové okno (Pro plán ~44 000 tokenů, Max plán závisí na tieru). Claude Code přestane odpovídat nebo zobrazí varovnou hlášku.</p>
+  </div>
+  <div class="err-fix">
+    Počkejte na reset okna (zobrazí se zbývající čas v <code>/status</code>). Nebo zapněte <strong>Extra Usage</strong> v nastavení předplatného — Claude Code bude pokračovat za API sazbu s vaším nastaveným měsíčním stropem.
+  </div>
+</div>
+
+<div class="err-block">
+  <div class="err-head">429 Too Many Requests (API users)</div>
+  <div class="err-body">
+    <p>Překročili jste rate limit API. Každý tier (Free, Build, Scale) má jiné limity — počet požadavků za minutu a tokeny za minutu (TPM).</p>
+  </div>
+  <div class="err-fix">
+    Claude Code má automatický retry s exponential backoff — počkejte chvíli, zkusí to sám. Pokud limit narážíte pravidelně, upgradujte API tier v Anthropic Console nebo optimalizujte prompty (viz díl 01, sekce Jak ušetřit).
+  </div>
+</div>
+
+<h2 id="claude-bloudí">Claude bloudí — co dělat</h2>
+<p>Jedním z nejčastějších problémů není technická chyba, ale <em>behaviorální</em>: Claude začne dělat věci, které jste nezamýšleli, nebo se opakovaně vrací ke stejné nesprávné implementaci.</p>
+
+<h3>Příznaky bloudění</h3>
+<ul class="tl">
+  <li>Claude opravuje bug → vytvoří nový bug → opravuje nový bug → smyčka</li>
+  <li>Claude ignoruje váš požadavek a dělá "lepší" řešení po svém</li>
+  <li>Claude tvrdí, že soubor upravil, ale změny nejsou vidět</li>
+  <li>Claude generuje stále delší a delší odpovědi bez pokroku</li>
+</ul>
+
+<h3>Jak z toho ven</h3>
+<div class="cb"><div class="cb-label">Postup při bloudění</div><pre>
+<span class="c"># Krok 1: Zastavte agenta</span>
+Ctrl+C
+
+<span class="c"># Krok 2: Vyčistěte kontext</span>
+<span class="a">/clear</span>
+
+<span class="c"># Krok 3: Zkontrolujte stav projektu</span>
+<span class="a">git</span> diff   <span class="c">-- co Claude skutečně změnil</span>
+<span class="a">git</span> status
+
+<span class="c"># Krok 4: Vraťte nežádoucí změny</span>
+<span class="a">git</span> checkout -- .   <span class="c">-- zahodí všechny uncommitted změny</span>
+
+<span class="c"># Krok 5: Restartujte s přesnějším zadáním</span>
+<span class="a">claude</span>
+<span class="c">-- napište konkrétnější prompt, viz tipy níže</span>
+</pre></div>
+
+<h3>Jak napsat lepší prompt aby Claude nebloudil</h3>
+<ul class="tl">
+  <li><strong>Specifikujte soubory explicitně:</strong> "Uprav POUZE soubor src/auth/login.ts, jiné soubory neměň."</li>
+  <li><strong>Definujte co NECHCETE:</strong> "Nerefaktoruj existující kód, jen přidej validaci emailu."</li>
+  <li><strong>Použijte Plan mode:</strong> <code>/plan</code> nejdřív — Claude vysvětlí záměr, vy schválíte nebo opravíte před psaním kódu.</li>
+  <li><strong>Rozdělte velký úkol:</strong> "Přidej pouze type definice" → schválit → "Teď implementuj funkce" → schválit → "Napiš testy".</li>
+  <li><strong>Dejte příklad:</strong> "Podobně jako funkce validateEmail na řádku 45, přidej validatePhone."</li>
+</ul>
+
+<h2 id="debug">Debugging session — diagnostické příkazy</h2>
+<div class="cb"><div class="cb-label">Diagnostika při problémech</div><pre>
+<span class="c"># Verze a aktuální stav</span>
+<span class="a">claude</span> --version
+<span class="a">claude</span> --help
+
+<span class="c"># V session — přehled kontextu a tokenů</span>
+<span class="a">/context</span>    <span class="c">-- jaké soubory jsou načteny, kolik tokenů</span>
+<span class="a">/status</span>     <span class="c">-- zbývající budget (Pro/Max uživatelé)</span>
+<span class="a">/cost</span>       <span class="c">-- aktuální náklady session (API uživatelé)</span>
+
+<span class="c"># Verbose logging — detailní výpis co Claude dělá</span>
+<span class="a">claude</span> --verbose
+
+<span class="c"># Resetovat konfiguraci na výchozí</span>
+<span class="a">claude</span> config reset
+
+<span class="c"># Zkontrolovat logy</span>
+ls ~/.claude/logs/
+cat ~/.claude/logs/session-$(date +%Y%m%d).json | python3 -m json.tool
+</pre></div>
+
+<h2 id="windows">Windows specifické problémy</h2>
+
+<div class="err-block">
+  <div class="err-head">Bash příkazy selhávají na Windows</div>
+  <div class="err-body">
+    <p>Claude Code interně používá Git Bash pro spouštění příkazů. Pokud Git Bash není nainstalovaný nebo není v PATH, bash příkazy selžou.</p>
+  </div>
+  <div class="err-fix">
+    Nainstalujte Git for Windows z <strong>git-scm.com</strong>. V instalaci vyberte "Git Bash" a "Add to PATH". Pak nastavte: <code>CLAUDE_CODE_GIT_BASH_PATH="C:\Program Files\Git\bin\bash.exe"</code> v systémových proměnných.
+  </div>
+</div>
+
+<div class="err-block">
+  <div class="err-head">Znaky se zobrazují špatně — lomená čeština</div>
+  <div class="err-body">
+    <p>Windows cmd a starší PowerShell používají kódování CP1250 místo UTF-8, což způsobuje rozsypaný text.</p>
+  </div>
+  <div class="err-fix">
+    Spusťte: <code>chcp 65001</code> v cmd/PowerShell pro přepnutí na UTF-8. Nebo používejte Windows Terminal (moderní terminál) — ten UTF-8 zvládá správně z výroby.
+  </div>
+</div>
+
+<h2 id="pomoc">Kde hledat pomoc a hlásit bugy</h2>
+<ul class="tl">
+  <li><strong>Oficální dokumentace:</strong> <code>docs.anthropic.com/en/docs/claude-code</code> — první zastávka, často obsahuje řešení</li>
+  <li><strong>GitHub Issues:</strong> <code>github.com/anthropics/claude-code</code> — hlášení bugů, sledování known issues</li>
+  <li><strong>Anthropic Discord:</strong> Server #claude-code kanál — komunita vývojářů, rychlé odpovědi</li>
+  <li><strong>Support ticket:</strong> <code>support.anthropic.com</code> — pro platební problémy a account issues</li>
+  <li><strong>In-app reporting:</strong> příkaz <code>/bug</code> v Claude Code session — pošle kontext přímo Anthropic</li>
+  <li><strong>Reddit:</strong> r/ClaudeAI — neoficiální, ale aktivní komunita s praktickými tipy</li>
+</ul>
+
+<div class="callout gn">
+  <div class="callout-title">Tip při hlášení bugu</div>
+  <p>Přiložte výstup <code>claude --version</code>, operační systém, a pokud možno výstup <code>claude --verbose</code> ze session, kde chyba nastala. To drasticky urychlí diagnostiku ze strany Anthropic.</p>
+</div>
+
+<div class="pn">
+  <a href="09_CLDE_cicd.html">← 09 · CI/CD</a>
+  <a href="11_CLDE_odkazy.html" class="nx">11 · Odkazy &amp; Zdroje →</a>
+</div>
+</main>
+</body>
+</html>

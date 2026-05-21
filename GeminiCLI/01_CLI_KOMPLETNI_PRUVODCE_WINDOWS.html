@@ -730,10 +730,70 @@ td:first-child { color: var(--white); font-weight: 500; }
 .ch-btn .ch-name{display:block;color:var(--text);font-size:1.05em;margin-top:1px}
 .page-footer{margin-top:40px;padding:24px 0 10px;border-top:1px solid var(--border);
   text-align:center;font-family:'DM Mono',monospace;font-size:0.75em;color:var(--text3);line-height:2}
+
+/* ===== SIDEBAR ===== */
+.progress-bar{position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--amber),var(--teal));
+  z-index:999;width:0%;transition:width 0.1s}
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(13,17,23,.97);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--amber),var(--teal),transparent)}
+.sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--text2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;display:flex;gap:6px;
+  margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--amber)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.4rem;border-radius:10px;
+  background:rgba(240,160,48,.12);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-size:.95rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.7rem;color:var(--text2);display:block;margin-top:2px}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--text3);font-family:monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--text2);text-decoration:none;font-size:13px;
+  border-left:2px solid transparent;transition:all .2s}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(240,160,48,.05);border-left-color:var(--amber)}
+.nav-step{font-family:monospace;font-size:10px;min-width:22px;
+  color:var(--teal);background:rgba(57,208,192,.10);
+  border:1px solid rgba(57,208,192,.25);padding:2px 5px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+@media(max-width:900px){.sidebar{display:none}.page{margin-left:0 !important}}
 </style>
 </head>
 <body>
-<div class="page">
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_CLI_INDEX.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">🤖</div>
+      <div class="sidebar-name">Kompletní průvodce<small>Gemini CLI pro Windows</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah</div>
+  <a href="#sec-co-to-je" class="nav-link active"><span class="nav-step">01</span> Co je Gemini CLI</a>
+  <a href="#sec-porovnani" class="nav-link"><span class="nav-step">02</span> Srovnání s AI Studiem</a>
+  <a href="#sec-terminal" class="nav-link"><span class="nav-step">03</span> Co je terminál</a>
+  <a href="#sec-nodejs" class="nav-link"><span class="nav-step">04</span> Instalace Node.js</a>
+  <a href="#sec-instalace" class="nav-link"><span class="nav-step">05</span> Instalace Gemini CLI</a>
+  <a href="#sec-prihlaseni" class="nav-link"><span class="nav-step">06</span> Přihlášení Google</a>
+  <a href="#sec-projekt" class="nav-link"><span class="nav-step">07</span> Připojení na projekt</a>
+  <a href="#sec-devserver" class="nav-link"><span class="nav-step">07b</span> ⭐ Vývojový server</a>
+  <a href="#sec-geminimd" class="nav-link"><span class="nav-step">08</span> ⭐ GEMINI.md</a>
+  <a href="#sec-prikazy" class="nav-link"><span class="nav-step">09</span> Komunikace s CLI</a>
+  <a href="#sec-priklady" class="nav-link"><span class="nav-step">10</span> Praktické příklady</a>
+  <a href="#sec-zalohy" class="nav-link"><span class="nav-step">11</span> 🔴 Zálohy</a>
+  <a href="#sec-problemy" class="nav-link"><span class="nav-step">12</span> Řešení problémů</a>
+  <a href="#sec-tahak" class="nav-link"><span class="nav-step">13</span> Rychlý tahák</a>
+  <a href="#sec-zdroje" class="nav-link"><span class="nav-step">14</span> Videa a zdroje</a>
+  <a href="#sec-bezpecnost" class="nav-link"><span class="nav-step">15</span> Bezpečnost</a>
+</nav>
+<div class="page" style="margin-left:260px">
 
 <!-- ===== HERO ===== -->
 <div class="hero">
@@ -749,26 +809,7 @@ td:first-child { color: var(--white); font-weight: 500; }
 </div>
 
 <!-- ===== TOC ===== -->
-<div class="toc">
-  <div class="toc-title">📋 Obsah průvodce</div>
-  <div class="toc-grid">
-    <a class="toc-item" href="#sec-co-to-je"><span class="toc-num">01</span> Co je Gemini CLI a proč ho chceš</a>
-    <a class="toc-item" href="#sec-porovnani"><span class="toc-num">02</span> Srovnání s Google AI Studiem</a>
-    <a class="toc-item" href="#sec-terminal"><span class="toc-num">03</span> Co je to terminál? (základy)</a>
-    <a class="toc-item" href="#sec-nodejs"><span class="toc-num">04</span> Instalace Node.js</a>
-    <a class="toc-item" href="#sec-instalace"><span class="toc-num">05</span> Instalace Gemini CLI</a>
-    <a class="toc-item" href="#sec-prihlaseni"><span class="toc-num">06</span> Přihlášení Google účtem</a>
-    <a class="toc-item" href="#sec-projekt"><span class="toc-num">07</span> Připojení na tvůj projekt</a>
-    <a class="toc-item" href="#sec-devserver"><span class="toc-num">07b</span> ⭐ Vývojový server – jak vidět změny</a>
-    <a class="toc-item" href="#sec-geminimd"><span class="toc-num">08</span> Soubor GEMINI.md – klíč ke všemu</a>
-    <a class="toc-item" href="#sec-prikazy"><span class="toc-num">09</span> Jak komunikovat – příkazy a tipy</a>
-    <a class="toc-item" href="#sec-priklady"><span class="toc-num">10</span> Praktické příklady pro receptář</a>
-    <a class="toc-item" href="#sec-zalohy"><span class="toc-num">11</span> Zálohy – NIKDY nepřeskoč!</a>
-    <a class="toc-item" href="#sec-problemy"><span class="toc-num">12</span> Když to nefunguje – řešení problémů</a>
-    <a class="toc-item" href="#sec-tahak"><span class="toc-num">13</span> Rychlý tahák příkazů</a>
-    <a class="toc-item" href="#sec-zdroje"><span class="toc-num">14</span> Videa a zdroje pro další studium</a>
-  </div>
-</div>
+
 
 <!-- ===== 01 CO TO JE ===== -->
 <div class="section" id="sec-co-to-je">
@@ -1947,6 +1988,26 @@ td:first-child { color: var(--white); font-weight: 500; }
 </div><!-- /.page -->
 
 <script>
+
+  window.addEventListener('scroll', () => {
+    const bar = document.getElementById('progressBar');
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (scrollTop / height * 100) + '%';
+  });
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const t = document.querySelector('[href="#' + e.target.id + '"]');
+        if (t) t.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
 function showTab(group, name, btn) {
   // Hide all panels in group
   document.querySelectorAll('[id^="' + group + '-"]').forEach(p => p.classList.remove('active'));

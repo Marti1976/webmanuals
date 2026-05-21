@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 · Ceny &amp; Plány — CLDE průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;scrollbar-color:var(--br) transparent;}
+.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
+.sb-home:hover{background:var(--sf);}
+.sb-home::before{content:'←';font-size:.85rem;}
+.sb-chapters{padding:6px 0 24px;}
+.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
+.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
+.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
+.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
+.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}
+.sb-ch-link.active .n{opacity:1;}
+.sb-subs{padding:2px 0 6px 36px;list-style:none;}
+.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
+.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
+.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
+.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
+.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
+.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
+.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
+h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
+p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
+strong{color:var(--hd);font-weight:600;}
+em{color:var(--ac);font-style:italic;}
+.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
+.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
+.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
+.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
+.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
+.callout.gn .callout-title{color:var(--gn);}.callout.rd .callout-title{color:var(--rd);}.callout.bl .callout-title{color:var(--bl);}
+.callout p{font-size:.86rem;margin:0;line-height:1.7;}
+.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
+.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
+.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre;}
+.cb pre .c{color:var(--mu);}.cb pre .k{color:var(--bl);}.cb pre .v{color:var(--gn);}.cb pre .a{color:var(--ac);}
+code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
+.tw{overflow-x:auto;margin:20px 0;}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
+th{background:var(--sf);color:var(--mu);text-align:left;padding:9px 13px;border:1px solid var(--br);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:.63rem;}
+td{padding:9px 13px;border:1px solid var(--br);color:var(--tx);vertical-align:top;}
+tr:hover td{background:rgba(255,255,255,.013);}
+td.ac{color:var(--ac);font-weight:500;}td.gn{color:var(--gn);}td.mu{color:var(--mu);}td.rd{color:var(--rd);}
+.plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px;margin:20px 0;}
+.plan{border:1px solid var(--br);padding:18px 16px;background:var(--sf);}
+.plan.hl{border-color:var(--ac);}
+.plan-name{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+.plan-price{font-family:'IBM Plex Mono',monospace;font-size:1.5rem;font-weight:600;color:var(--hd);margin-bottom:3px;}
+.plan-price span{font-size:.72rem;color:var(--mu);font-weight:400;}
+.plan-desc{font-size:.76rem;color:var(--mu);line-height:1.55;margin-top:10px;}
+.plan-tag{display:inline-block;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:.58rem;padding:2px 6px;background:var(--ad);color:var(--ac);border:1px solid rgba(232,160,32,.3);}
+.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
+.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
+.tl li:last-child{border-bottom:none;}
+.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
+.saving-box{border:1px solid var(--br);padding:20px;margin:16px 0;background:var(--sf);}
+.saving-head{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--hd);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--br);}
+.saving-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(30,37,48,.5);font-size:.82rem;}
+.saving-row:last-child{border-bottom:none;}
+.saving-val{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--gn);}
+.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
+.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
+.pn a:hover{color:var(--ac);}
+.pn .nx{margin-left:auto;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a href="00_CLDE_index.html" class="sb-home">Zpět na obsah</a>
+  <div class="sb-chapters">
+    <div class="sb-ch">
+      <a href="01_CLDE_salary.html" class="sb-ch-link active"><span class="n">01</span>Ceny &amp; Plány</a>
+      <ul class="sb-subs">
+        <li><a href="#platebni-modely">Platební modely</a></li>
+        <li><a href="#prehled-planu">Přehled plánů</a></li>
+        <li><a href="#api-sazby">API sazby za tokeny</a></li>
+        <li><a href="#jak-usetrit">Jak ušetřit náklady</a></li>
+        <li><a href="#prompt-caching">→ Prompt Caching</a></li>
+        <li><a href="#batch-api">→ Batch API</a></li>
+        <li><a href="#model-vyber">→ Výběr modelu</a></li>
+        <li><a href="#session-hygiena">→ Session hygiena</a></li>
+        <li><a href="#realne-naklady">Reálné náklady</a></li>
+        <li><a href="#open-source">Open Source program</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch"><a href="02_CLDE_instalace.html" class="sb-ch-link"><span class="n">02</span>Instalace</a><ul class="sb-subs"><li><a href="02_CLDE_instalace.html#prehled">Přehled rozhraní</a></li><li><a href="02_CLDE_instalace.html#cli">CLI instalace</a></li><li><a href="02_CLDE_instalace.html#desktop">Desktop app</a></li><li><a href="02_CLDE_instalace.html#ide">IDE rozšíření</a></li><li><a href="02_CLDE_instalace.html#autentizace">Autentizace</a></li></ul></div>
+    <div class="sb-ch"><a href="03_CLDE_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDE_nastaveni.html#struktura">Struktura souborů</a></li><li><a href="03_CLDE_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDE_nastaveni.html#settings">settings.json</a></li><li><a href="03_CLDE_nastaveni.html#env">ENV proměnné</a></li><li><a href="03_CLDE_nastaveni.html#model">Výběr modelu</a></li></ul></div>
+    <div class="sb-ch"><a href="04_CLDE_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDE_zaklady.html#prvni-session">První session</a></li><li><a href="04_CLDE_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDE_zaklady.html#one-shot">One-shot</a></li><li><a href="04_CLDE_zaklady.html#plan-mode">Plan vs Auto</a></li><li><a href="04_CLDE_zaklady.html#workflow">Workflow</a></li><li><a href="04_CLDE_zaklady.html#git">Git</a></li></ul></div>
+    <div class="sb-ch"><a href="05_CLDE_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a><ul class="sb-subs"><li><a href="05_CLDE_pokrocile.html#mcp">MCP servery</a></li><li><a href="05_CLDE_pokrocile.html#hooks">Hooks</a></li><li><a href="05_CLDE_pokrocile.html#vlastni-prikazy">Vlastní příkazy</a></li><li><a href="05_CLDE_pokrocile.html#skills">Skills</a></li><li><a href="05_CLDE_pokrocile.html#worktrees">Worktrees</a></li><li><a href="05_CLDE_pokrocile.html#thinking">Extended thinking</a></li></ul></div>
+    <div class="sb-ch"><a href="06_CLDE_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDE_agenti.html#co-jsou-agenti">Co jsou agenti</a></li><li><a href="06_CLDE_agenti.html#subagenti">Subagenti</a></li><li><a href="06_CLDE_agenti.html#paralelni">Paralelní</a></li><li><a href="06_CLDE_agenti.html#cloud-routines">Cloud Routines</a></li></ul></div>
+    <div class="sb-ch"><a href="07_CLDE_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="07_CLDE_bezpecnost.html#rizika">Rizika</a></li><li><a href="07_CLDE_bezpecnost.html#opravneni">Oprávnění</a></li><li><a href="07_CLDE_bezpecnost.html#secrets">Secrets</a></li></ul></div>
+    <div class="sb-ch"><a href="08_CLDE_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy</a><ul class="sb-subs"><li><a href="08_CLDE_zalohy.html#git-sit">Git záchranná síť</a></li><li><a href="08_CLDE_zalohy.html#obnova">Obnova</a></li></ul></div>
+    <div class="sb-ch"><a href="09_CLDE_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD</a><ul class="sb-subs"><li><a href="09_CLDE_cicd.html#github-actions">GitHub Actions</a></li></ul></div>
+    <div class="sb-ch"><a href="10_CLDE_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="10_CLDE_troubleshooting.html#instalace-err">Instalační chyby</a></li><li><a href="10_CLDE_troubleshooting.html#claude-bloudí">Claude bloudí</a></li></ul></div>
+    <div class="sb-ch"><a href="11_CLDE_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a><ul class="sb-subs"><li><a href="11_CLDE_odkazy.html#cesky">Česky</a></li><li><a href="11_CLDE_odkazy.html#nastroje">Nástroje</a></li></ul></div>
+  </div>
+</nav>
+<main class="main">
+<div class="ph">
+  <div class="ph-num">DÍL 01 / 11</div>
+  <h1>Ceny &amp; Plány</h1>
+  <p>Rozcestník platebních modelů, přehled všech plánů a detailní návod jak reálně ušetřit 40–93 % nákladů — s konkrétními čísly, kalkulacemi a příklady z praxe.</p>
+</div>
+
+<h2 id="platebni-modely">Jak Claude Code funguje platebně</h2>
+<p>Claude Code není samostatný produkt s vlastním ceníkem — je to nástroj, který se napojuje na vaše stávající předplatné nebo API účet. Existují tři hlavní cesty, a každá se hodí pro jiný způsob práce:</p>
+<ul class="tl">
+  <li><strong>Předplatné (Pro / Max / Team)</strong> — Paušální měsíční poplatek. Token budget se obnovuje každých 5 hodin a má týdenní strop. Ideal pro pravidelné každodenní použití. Předvídatelné náklady.</li>
+  <li><strong>API (platba za token)</strong> — Žádný měsíční poplatek, platíte přesně co spotřebujete. Každý request se účtuje zvlášť. Ideální pro nárazové workloady, CI/CD pipeline nebo pokud nechcete platit za dny kdy nepracujete.</li>
+  <li><strong>Extra Usage (hybridní)</strong> — Máte předplatné, ale po dosažení limitu Claude Code pokračuje za API sazbu. Nastavíte si měsíční strop, do kterého se nesmí jít. Nejlepší ze světů pro intenzivní práci.</li>
+</ul>
+
+<div class="callout bl">
+  <div class="callout-title">Klíčová otázka: předplatné nebo API?</div>
+  <p>Jednoduché pravidlo: sečtěte, kolik byste zaplatili za API za průměrný měsíc. Pokud je to víc než $20 → Pro. Víc než $100 → Max 5×. Víc než $200 → Max 20×. Přesné číslo zjistíte za 2 týdny s API a nástrojem cc-usage.</p>
+</div>
+
+<h2 id="prehled-planu">Přehled plánů (stav: květen 2026)</h2>
+<div class="plans">
+  <div class="plan">
+    <div class="plan-name">Free</div>
+    <div class="plan-price">$0</div>
+    <div class="plan-desc">Web a mobilní chat. Claude Code v terminálu <strong>není</strong> zahrnuto. Denní limity pro chat.</div>
+  </div>
+  <div class="plan">
+    <div class="plan-name">Pro</div>
+    <div class="plan-price">$20 <span>/měs</span></div>
+    <div class="plan-desc">Claude Code ✓<br>~44 000 tokenů / 5 hod<br>Sonnet 4.6 + Opus 4.6<br>Roční: $17/měs</div>
+    <div class="plan-tag">Začátečník</div>
+  </div>
+  <div class="plan hl">
+    <div class="plan-name">Max 5×</div>
+    <div class="plan-price">$100 <span>/měs</span></div>
+    <div class="plan-desc">5× více než Pro<br>Opus 4.7 bez omezení<br>Prioritní přístup<br>Nejoblíbenější u devs</div>
+    <div class="plan-tag">Doporučeno</div>
+  </div>
+  <div class="plan">
+    <div class="plan-name">Max 20×</div>
+    <div class="plan-price">$200 <span>/měs</span></div>
+    <div class="plan-desc">20× více než Pro<br>Full agentic workloady<br>Nejlepší poměr při intenzivním Opus použití</div>
+  </div>
+  <div class="plan">
+    <div class="plan-name">Team Premium</div>
+    <div class="plan-price">$100 <span>/seat</span></div>
+    <div class="plan-desc">Min. 5 seats<br>SSO, SCIM, billing<br>Claude Code zahrnuto<br>Roční: $100/seat</div>
+  </div>
+</div>
+
+<div class="callout rd">
+  <div class="callout-title">Pozor — Team Standard</div>
+  <p>Team Standard za $20/seat Claude Code <strong>nezahrnuje vůbec</strong>. Potřebujete Team Premium ($100/seat). Tato chyba stojí týmy drahé překvapení na faktuře.</p>
+</div>
+
+<h2 id="api-sazby">API sazby za tokeny</h2>
+<p>Při platbě za tokeny (API klíč, nebo Extra Usage nad limit předplatného) platíte za každý milion tokenů zvlášť — jinak za vstupní (input) a výstupní (output) tokeny. Output tokeny jsou vždy dražší, protože Claude je musí vygenerovat.</p>
+<div class="tw"><table>
+<thead><tr><th>Model</th><th>Input / 1M tok.</th><th>Output / 1M tok.</th><th>Cache read / 1M</th><th>Kdy použít</th></tr></thead>
+<tbody>
+<tr><td class="ac">Claude Opus 4.7</td><td>$5</td><td>$25</td><td>$0.50</td><td>Architektura, komplexní refaktory</td></tr>
+<tr><td class="ac">Claude Opus 4.6</td><td>$5</td><td>$25</td><td>$0.50</td><td>Srovnatelný výkon s 4.7</td></tr>
+<tr><td class="ac">Claude Sonnet 4.6</td><td>$3</td><td>$15</td><td>$0.30</td><td>Každodenní kódování (výchozí)</td></tr>
+<tr><td class="ac">Claude Haiku 4.5</td><td>$1</td><td>$5</td><td>$0.10</td><td>Subagenti, dávkové operace</td></tr>
+</tbody>
+</table></div>
+
+<p><strong>Co je token?</strong> Přibližně 4 znaky anglického textu nebo 2–3 znaky češtiny. Věta "Refaktoruj tuto funkci pro lepší čitelnost" má zhruba 12 tokenů. Typická session s 100 soubory kódu může snadno dosáhnout 200 000+ tokenů.</p>
+
+<h2 id="jak-usetrit">Jak reálně ušetřit 40–93 % nákladů</h2>
+<p>Toto je nejdůležitější část celého průvodce pro API uživatele. Každá z následujících technik se aplikuje samostatně — kombinací jich dosáhnete největší úspory.</p>
+
+<h3 id="prompt-caching">1. Prompt Caching — největší úspora</h3>
+<p>Prompt caching je funkce, při které Anthropic API uloží část vašeho contextu do cache. Při dalším requestu, který tento kontext znovu potřebuje, se místo plného přepočítání použije cache — a vy zaplatíte jen <strong>10 % ceny běžného input tokenu</strong>.</p>
+
+<p><strong>Jak to funguje v Claude Code konkrétně:</strong> Při každé session Claude Code čte strukturu projektu, CLAUDE.md a relevantní soubory. Tyto "systémové" informace se uloží do cache. Pokud spustíte další prompt ve stejné session (nebo novou session se stejným projektem do 5 minut), Claude Code nepřepočítává načtený kontext znovu — použije cache.</p>
+
+<div class="saving-box">
+  <div class="saving-head">Kalkulace úspory — projekt 50 000 tokenů kontextu, 20 promptů/den</div>
+  <div class="saving-row"><span>Bez cache: 20 × 50 000 tok × $3/MTok</span><span class="saving-val" style="color:var(--rd)">$3.00/den</span></div>
+  <div class="saving-row"><span>S cache: 1× plný load + 19× cache read (10 %)</span><span class="saving-val">$0.435/den</span></div>
+  <div class="saving-row"><span><strong>Úspora: 85 % na input tokenech</strong></span><span class="saving-val">$2.57/den → $77/měs</span></div>
+</div>
+
+<p><strong>Jak cache aktivovat:</strong> Claude Code ji používá automaticky — nemusíte nic konfigurovat. Cache je aktivní 5 minut od posledního použití (pak se prodlužuje na 1 hodinu při opakovaném použití). Pro maximální efekt proto pracujte v nepřerušených blocích, ne s hodinovými pauzami.</p>
+
+<div class="callout gn">
+  <div class="callout-title">Praktický tip pro maximální cache hit rate</div>
+  <p>Dávejte system prompt a CLAUDE.md na <strong>začátek</strong> každého requestu a nijak je neměňte mezi prompty. Cache se invaliduje při jakékoli změně obsahu — i přidání jedné mezery na konci CLAUDE.md resetuje cache pro celý soubor.</p>
+</div>
+
+<h3 id="batch-api">2. Batch API — 50 % sleva na vše</h3>
+<p>Batch API umožňuje zpracovat velký objem requestů asynchronně — místo okamžité odpovědi je pošlete najednou a výsledky dostanete do 24 hodin. Za tuto "neurgentnost" dostanete <strong>50% slevu na input i output tokeny</strong>.</p>
+
+<p><strong>Kdy Batch API dává smysl:</strong></p>
+<ul class="tl">
+  <li><strong>Hromadná analýza kódu</strong> — review celého repositáře (stovky souborů), dokumentace existujícího kódu, hledání anti-patterns</li>
+  <li><strong>Generování testů přes noc</strong> — pošlete všechny soubory bez testů večer, ráno máte výsledky</li>
+  <li><strong>Jazykové lokalizace</strong> — překlad textů aplikace do 5 jazyků najednou</li>
+  <li><strong>Zpracování dat</strong> — analýza logů, kategorizing issues, reporting</li>
+</ul>
+
+<div class="cb"><div class="cb-label">Batch API — základní použití</div><pre>
+<span class="c"># Batch API se volá přímo přes Anthropic API, ne přes claude CLI</span>
+<span class="c"># Příklad: analyzuj 100 souborů za 50% cenu</span>
+
+curl https://api.anthropic.com/v1/messages/batches \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "requests": [
+      {
+        "custom_id": "soubor-001",
+        "params": {
+          "model": "claude-sonnet-4-6",
+          "max_tokens": 1024,
+          "messages": [{"role": "user", 
+            "content": "Zreviewuj: [obsah souboru]"}]
+        }
+      }
+      <span class="c">// ... dalších 99 requestů</span>
+    ]
+  }'
+<span class="c"># Výsledky dostanete přes GET /v1/messages/batches/{id}</span>
+<span class="c"># Typická doba zpracování: 15 minut až 24 hodin</span>
+</pre></div>
+
+<h3 id="model-vyber">3. Chytrý výběr modelu — ušetřete 3–5×</h3>
+<p>Největší chyba, které se vývojáři dopouštějí: používají Opus na vše. Opus je výjimečný model — ale pro 80 % každodenní práce je Sonnet stejně dobrý a třikrát levnější. A pro jednoduché opakující se operace je Haiku pětkrát levnější než Sonnet.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Úkol</th><th>Doporučený model</th><th>Proč</th></tr></thead>
+<tbody>
+<tr><td>Kompletní refaktoring architektury</td><td class="ac">Opus 4.7</td><td>Potřebuje hluboké porozumění systému</td></tr>
+<tr><td>Oprava konkrétního bugu</td><td class="gn">Sonnet 4.6</td><td>Jasný kontext, Sonnet stačí</td></tr>
+<tr><td>Generování unit testů</td><td class="gn">Sonnet 4.6</td><td>Opakující se vzory, Sonnet zvládá výborně</td></tr>
+<tr><td>Přejmenování proměnných</td><td class="gn">Haiku 4.5</td><td>Jednoduchý find&replace, Haiku je 15× levnější než Opus</td></tr>
+<tr><td>Generování dokumentace</td><td class="gn">Haiku 4.5</td><td>Strukturovaný výstup, Haiku spolehlivě</td></tr>
+<tr><td>Code review bezpečnosti</td><td class="ac">Opus 4.7</td><td>Hledá subtilní vzory — Opus vidí více</td></tr>
+<tr><td>Subagenti v pipeline</td><td class="gn">Haiku 4.5</td><td>Levné opakování, 100 callů = $0.50</td></tr>
+</tbody>
+</table></div>
+
+<div class="cb"><div class="cb-label">Přepínání modelu v session</div><pre>
+<span class="c"># Spuštění s konkrétním modelem</span>
+<span class="a">claude</span> --model claude-haiku-4-5 "Přejmenuj všechny proměnné z camelCase na snake_case"
+
+<span class="c"># V průběhu session</span>
+<span class="a">/model</span> claude-opus-4-7
+<span class="c"># → Claude přepne model pro další prompty v této session</span>
+
+<span class="c"># Výchozí model v settings.json</span>
+{ "model": "claude-sonnet-4-6" }
+</pre></div>
+
+<h3>4. Extended Thinking — kdy vypnout</h3>
+<p>Extended thinking dává Claudovi prostor k hlubší úvaze před odpovědí. Je zapnuto výchozně a "thinking tokeny" se účtují jako <strong>output tokeny</strong> — tedy $25/MTok na Opus 4.7. To je největší skrytý náklad, o kterém spousta vývojářů neví.</p>
+<p>Na jednoduchých úkolech (přejmenování, formátování, přidání komentářů) thinking nepřidává žádnou hodnotu — ale stojí vás desítky procent extra. Nastavte strop nebo ho selektivně vypněte:</p>
+<div class="cb"><div class="cb-label">Ovládání thinking tokenů</div><pre>
+<span class="c"># Globální strop v ENV — doporučeno pro každodenní práci</span>
+export MAX_THINKING_TOKENS=8000
+
+<span class="c"># V session — přepínání úrovně přemýšlení</span>
+<span class="a">/effort</span> low     <span class="c">-- minimum thinking, rychlé odpovědi</span>
+<span class="a">/effort</span> medium  <span class="c">-- výchozí vyvážení</span>
+<span class="a">/effort</span> high    <span class="c">-- maximum — jen pro skutečně složité úkoly</span>
+
+<span class="c"># Vypnutí pro celou session</span>
+<span class="a">/config</span> thinking: false
+</pre></div>
+
+<h3 id="session-hygiena">5. Session hygiena — kontext a tokeny</h3>
+<p>Každá zpráva v session, každý přečtený soubor a každý výsledek spuštěného příkazu se přidá do "okna kontextu" — a celé toto okno se posílá s každým dalším requestem. Čím déle session trvá a čím více souborů Claude načte, tím dražší každý další prompt je.</p>
+
+<p><strong>Praktická pravidla pro kontextovou hygienu:</strong></p>
+<ul class="tl">
+  <li><strong>Používejte <code>/clear</code> mezi nesouvisejícími úkoly.</strong> Přechod z opravy bugu k psaní testů pro jiný modul? <code>/clear</code> uvolní kontext a ušetří tokeny na každém dalším promptu.</li>
+  <li><strong>Nezačínejte den pokračováním včerejší session.</strong> Stará session má akumulovaný kontext — raději otevřete novou a přidejte jen to, co je relevantní.</li>
+  <li><strong>Buďte specifičtí o souborech.</strong> Místo "podívej se na projekt" napište "přečti src/auth/login.ts". Claude nenačte zbytečné soubory.</li>
+  <li><strong>Vymazávejte velké output bloky.</strong> Výsledky spuštěných testů (tisíce řádků) zbytečně zvětšují kontext — pokud jste je přečetli, <code>/clear</code> a pokračujte.</li>
+</ul>
+
+<div class="saving-box">
+  <div class="saving-head">Vliv session hygieny na náklady — praktický příklad</div>
+  <div class="saving-row"><span>Session s 50 prompty, bez <code>/clear</code>, kontext roste na 300 000 tok</span><span class="saving-val" style="color:var(--rd)">~$0.90 na input</span></div>
+  <div class="saving-row"><span>Stejná práce, 5 čistých sessions × 10 promptů, kontext ~60 000 tok</span><span class="saving-val">~$0.18 na input</span></div>
+  <div class="saving-row"><span><strong>Úspora 80 % — jen lepší organizací sessions</strong></span><span class="saving-val">bez ztráty výsledku</span></div>
+</div>
+
+<h3>6. Kvalitní CLAUDE.md snižuje počet potřebných promptů</h3>
+<p>Dobré CLAUDE.md znamená, že Claude hned ví co dělat — nemusí se ptát na konvence, architekturu nebo příkazy. Každý "ujasňovací" prompt navíc stojí tokeny. Investice do dobrého CLAUDE.md se vrátí desetinásobně.</p>
+<p>Konkrétně: bez CLAUDE.md strávíte první 2–3 prompty každé session tím, že Claudovi vysvětlujete kontext. S dobrým CLAUDE.md rovnou začínáte pracovat. Při 20 sessions týdně to ušetří 40–60 promtů — v API tokenech klidně $5–15 měsíčně na Opus.</p>
+
+<h3>7. Plan mode před drahými operacemi</h3>
+<p>Plan mode (<code>/plan</code>) nechá Clauda přečíst soubory a navrhnout přístup, aniž by psal kód. Teprve po vašem schválení začne implementovat. Toto zachrání situace, kdy Claude by šel špatnou cestou a vy byste platili za velký refaktoring, který pak zahodíte.</p>
+
+<h2 id="realne-naklady">Reálné měsíční náklady — přehledy typů uživatelů</h2>
+<div class="tw"><table>
+<thead><tr><th>Profil</th><th>Doporučení</th><th>Cena/měs</th><th>Proč</th></tr></thead>
+<tbody>
+<tr><td>Začátečník, hobby projekt</td><td>Pro $20 nebo API</td><td class="gn">$0–20</td><td>Limity Pro stačí, API při malém využití vychází levněji</td></tr>
+<tr><td>Dev, Sonnet, 4–6 h/den</td><td>Max 5× nebo Pro + Extra Usage</td><td>$20–100</td><td>Pro naráží na limity, Max 5× má komfort</td></tr>
+<tr><td>Dev, Opus, agentic workloady</td><td>Max 20× ($200)</td><td class="ac">$200</td><td>Vs. API by stálo $800–2000/měs — úspora 75–90 %</td></tr>
+<tr><td>Tým 5 vývojářů</td><td>Team Premium roční</td><td>$500/měs</td><td>$100/seat, SSO, centrální billing</td></tr>
+<tr><td>CI/CD pipeline (neinteraktivní)</td><td>API s Batch API</td><td class="gn">Variabilní</td><td>50% sleva Batch API, platíte jen co spustíte</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout gn">
+  <div class="callout-title">Reálný příběh — 93 % úspora</div>
+  <p>Vývojář, který dokumentoval spotřebu v roce 2025: 10 miliard tokenů za 8 měsíců, z toho převážně Opus. Ekvivalentní náklady na API by přesáhly $15 000. Na Max 20× předplatném zaplatil zhruba $1 600 celkem. Úspora 90 %.</p>
+</div>
+
+<h2 id="open-source">Open Source program</h2>
+<p>Anthropic spustil začátkem roku 2026 program <strong>Claude for Open Source</strong>. Kvalifikovaní správci open-source projektů dostávají 6 měsíců Max 20× zdarma (hodnota $1 200). Kritéria: projekt musí být aktivní, veřejný, s licencí uznávanou OSI, a mít alespoň 100 hvězdiček na GitHubu. Žádost přes Anthropic website.</p>
+
+<div class="pn">
+  <a href="00_CLDE_index.html">← Obsah</a>
+  <a href="02_CLDE_instalace.html" class="nx">02 · Instalace →</a>
+</div>
+</main>
+</body>
+</html>

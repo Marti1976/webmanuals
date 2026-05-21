@@ -111,9 +111,69 @@ pre code{background:none;border:none;padding:0;color:inherit}
 
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--rasp1-light)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
+  background:rgba(227,11,92,.12);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* ── LAYOUT ── */
+.wrap{margin-left:260px}
+footer{margin-left:260px}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .wrap,footer{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">💽</div>
+      <div class="sidebar-name">Příprava SSD<small>Windows · USB boot</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah kapitoly</div>
+  <a href="#co-potrebujes" class="nav-link active"><span class="nav-step">01</span>Co potřebuješ</a>
+  <a href="#usb-boot" class="nav-link"><span class="nav-step">02</span>Povolení USB boot</a>
+  <a href="#haos-image" class="nav-link"><span class="nav-step">03</span>Nahrání HAOS image</a>
+  <a href="#win-situace" class="nav-link"><span class="nav-step">04</span>Situace na Windows</a>
+  <a href="#oddily" class="nav-link"><span class="nav-step">05</span>Velikost oddílů</a>
+  <a href="#shrnuti" class="nav-link"><span class="nav-step">06</span>Shrnutí</a>
+</nav>
 <div class="wrap">
 
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
@@ -125,7 +185,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </header>
 
 <!-- CO BUDEŠ POTŘEBOVAT -->
-<section class="sec">
+<section class="sec" id="co-potrebujes">>
   <h2>Co potřebuješ před začátkem</h2>
 
   <div class="status-bar">
@@ -147,7 +207,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- KROK 1: USB BOOT -->
-<section class="sec">
+<section class="sec" id="usb-boot">>
   <h2>Část 1 – Povolení USB boot na RPi 3 B+</h2>
   <p>RPi 3 B+ ve výchozím nastavení bootuje ze SD karty. Aby bootoval z USB SSD, musíme toto nastavení jednou změnit – zapsat OTP (One-Time Programmable) bit do procesoru.</p>
 
@@ -227,7 +287,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- KROK 2: HAOS NA SSD -->
-<section class="sec">
+<section class="sec" id="haos-image">>
   <h2>Část 2 – Nahrání Home Assistant OS na USB SSD</h2>
   <p>Teď nahrajeme samotný Home Assistant OS na mSATA USB SSD. Toto je skutečný bootovací disk systému.</p>
 
@@ -317,7 +377,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- CO DĚLAT S WINDOWS DIALOGY -->
-<section class="sec">
+<section class="sec" id="win-situace">>
   <h2>Časté situace při nahrávání na Windows</h2>
 
   <h3>Windows chce naformátovat disk po dokončení</h3>
@@ -345,7 +405,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- VELIKOST ODDÍLŮ -->
-<section class="sec">
+<section class="sec" id="oddily">>
   <h2>Velikost oddílů a automatické rozšíření</h2>
   <p>HAOS při <strong>prvním bootu automaticky rozšíří datový oddíl</strong> na celou dostupnou kapacitu SSD. Nemusíš nic dělat ručně.</p>
   <ul>
@@ -363,7 +423,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </section>
 
 <!-- SHRNUTÍ -->
-<section class="sec">
+<section class="sec" id="shrnuti">>
   <h2>Shrnutí – co teď máš připravené</h2>
   <ul>
     <li>✅ RPi 3 B+ s aktivovaným USB boot (OTP bit)</li>
@@ -396,5 +456,25 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 </footer>
 
 </div>
+<script>
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('progressBar');
+  const t=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  b.style.width=(t/h*100)+'%';
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const t=document.querySelector('[href="#'+e.target.id+'"]');
+      if(t)t.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>

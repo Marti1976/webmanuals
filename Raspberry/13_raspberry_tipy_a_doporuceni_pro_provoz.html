@@ -83,9 +83,71 @@ pre code{background:none;border:none;padding:0;color:inherit}
 .ch-btn.next{justify-content:flex-end;text-align:right}
 .ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
 footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
+.sidebar-back:hover{color:var(--rasp1-light)}
+.sidebar-title{display:flex;align-items:center;gap:12px}
+.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
+  background:rgba(227,11,92,.12);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
+.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.nav-link:hover,.nav-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* ── LAYOUT ── */
+.wrap{margin-left:260px}
+footer{margin-left:260px}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .wrap,footer{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">💡</div>
+      <div class="sidebar-name">Tipy pro provoz<small>SSD · Zigbee · Výkon</small></div>
+    </div>
+  </div>
+  <div class="nav-group-label">Obsah kapitoly</div>
+  <a href="#pece-ssd" class="nav-link active"><span class="nav-step">01</span>Péče o SSD</a>
+  <a href="#aktualizace" class="nav-link"><span class="nav-step">02</span>Aktualizace</a>
+  <a href="#zigbee-optimalizace" class="nav-link"><span class="nav-step">03</span>Zigbee síť</a>
+  <a href="#vykon" class="nav-link"><span class="nav-step">04</span>Výkon systému</a>
+  <a href="#recorder" class="nav-link"><span class="nav-step">05</span>Databáze (Recorder)</a>
+  <a href="#hacs" class="nav-link"><span class="nav-step">06</span>HACS rozšíření</a>
+  <a href="#udrzba" class="nav-link"><span class="nav-step">07</span>Pravidelná údržba</a>
+  <a href="#notifikace-bat" class="nav-link"><span class="nav-step">08</span>Notifikace baterií</a>
+</nav>
 <div class="wrap">
 <a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
 <header>
@@ -95,7 +157,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </header>
 
 <!-- SSD PECE -->
-<section class="sec">
+<section class="sec" id="pece-ssd">>
   <h2>Péče o mSATA USB SSD</h2>
   <p>Přechodem ze SD karty na SSD jsi výrazně zvýšil spolehlivost. I tak je dobré znát pár zásad:</p>
   <ul>
@@ -111,7 +173,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- AKTUALIZACE -->
-<section class="sec">
+<section class="sec" id="aktualizace">>
   <h2>Strategie aktualizací</h2>
   <p>Pravidelné aktualizace přinášejí bezpečnostní záplaty, nové funkce a opravy chyb. Ale špatně načasovaná aktualizace může způsobit problémy.</p>
   <ul>
@@ -128,7 +190,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- ZIGBEE SIT -->
-<section class="sec">
+<section class="sec" id="zigbee-optimalizace">>
   <h2>Optimalizace Zigbee sítě</h2>
 
   <h3>Umístění USB koordinátoru</h3>
@@ -163,7 +225,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- VYKON -->
-<section class="sec">
+<section class="sec" id="vykon">>
   <h2>Sledování výkonu systému</h2>
   <p>RPi 3 B+ má 1 GB RAM. Sledování pomáhá odhalit problémy dříve než způsobí nestabilitu.</p>
 
@@ -207,7 +269,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- RECORDER OPTIMALIZACE -->
-<section class="sec">
+<section class="sec" id="recorder">>
   <h2>Optimalizace databáze (Recorder)</h2>
   <p>HA Recorder ukládá historii hodnot senzorů do SQLite databáze. Na RPi 3 může být databáze pomalá pokud neomezeně roste.</p>
   <p>Přidej do <code>/config/configuration.yaml</code>:</p>
@@ -237,7 +299,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- HACS -->
-<section class="sec">
+<section class="sec" id="hacs">>
   <h2>HACS – rozšíření možností Home Assistant</h2>
   <p><strong>HACS (Home Assistant Community Store)</strong> výrazně rozšiřuje možnosti HA – přidává tisíce komunitních integrací, karet dashboardu a témat které nejsou v oficiálním storu.</p>
 
@@ -278,7 +340,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
     <p>HACS a komunitní karty/integrace přidávají závislosti navíc. Instaluj je až poté co základní systém (Zigbee2MQTT, zálohy, bezpečnost) běží stabilně alespoň týden. Rozšiřování systému dříve než je stabilní základ ztěžuje hledání příčin problémů.</p>
   </div>
 </section>
-<section class="sec">
+<section class="sec" id="udrzba">>
   <h2>Pravidelná údržba – checklist</h2>
 
   <div class="checklist">
@@ -365,7 +427,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-al
 </section>
 
 <!-- NOTIFIKACE BATERIT -->
-<section class="sec">
+<section class="sec" id="notifikace-bat">>
   <h2>Automatizace – notifikace na vybité baterie</h2>
   <p>Užitečná automatizace: HA tě upozorní když baterie v Zigbee senzoru klesne pod 20 %.</p>
   <pre><code>alias: "Notifikace: Vybité baterie"
@@ -398,5 +460,25 @@ mode: single</code></pre>
 </nav>
 <footer>13_raspberry_tipy_a_doporuceni_pro_provoz.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
 </div>
+<script>
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('progressBar');
+  const t=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  b.style.width=(t/h*100)+'%';
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const t=document.querySelector('[href="#'+e.target.id+'"]');
+      if(t)t.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>
