@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bezpečnost Antigravity – průvodce</title>
+<title>Bezpečnost Antigravity IDE – průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -165,7 +165,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   <div class="sec-label">// sekce 01</div>
   <h2>Co agent vidí v tvém projektu</h2>
 
-  <p>Antigravity agent pracuje v Workspace ve kterém ho otevřeš. <strong>Vidí všechny soubory ve všech přidaných složkách.</strong></p>
+  <p>Antigravity IDE agent pracuje v Workspace ve kterém ho otevřeš. <strong>Vidí všechny soubory ve všech přidaných složkách.</strong></p>
 
   <h3>Co vidí agent?</h3>
   <ul>
@@ -180,9 +180,9 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
     <span class="icon">🔴</span>
     <div class="content">
       <strong>Nikdy neukládej hesla či klíče v .env nebo v kódu</strong>
-      <p>Pokud je tam API klíč, heslo k databázi nebo cokoliv citlivého — agent to vidí a může to poslat Google serverům. <strong>Vždy</strong> używaj <code>.env</code> který je v <code>.gitignore</code> a v Antigravity project settings ho ignorovat.</p>
+      <p>Pokud je tam API klíč, heslo k databázi nebo cokoliv citlivého — agent to vidí a může to poslat Google serverům. <strong>Vždy</strong> używaj <code>.env</code> který je v <code>.gitignore</code> a v Antigravity IDE project settings ho ignorovat.</p>
     </div>
-  </box>
+  </div>
 
   <h3>Co agent NEVIDÍ?</h3>
   <ul>
@@ -234,9 +234,9 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
     <span class="icon">✓</span>
     <div class="content">
       <strong>To je rozdíl od AI Studio</strong>
-      <p>V AI Studiu agent viděl tvůj kód, řekl si "hmm, k tomu by se hodilo i tohle" a dělal to bez ptaní. V Antigravity: "Chceš aby já taky udělal X?" A ty můžeš říct "NE, jenom Y!"</p>
+      <p>V AI Studiu agent viděl tvůj kód, řekl si "hmm, k tomu by se hodilo i tohle" a dělal to bez ptaní. V Antigravity IDE: "Chceš aby já taky udělal X?" A ty můžeš říct "NE, jenom Y!"</p>
     </div>
-  </box>
+  </div>
 </div>
 
 <!-- 03 -->
@@ -296,7 +296,7 @@ Deny:
       <strong>Pozor: Allow list je přísnější</strong>
       <p>Pokud máš Allow list — agent NIČEHO jiného nemůže dělat. Pokud máš Deny list — agent smí všechno kromě zakázaného. Validu pro receptář: Deny list.</p>
     </div>
-  </box>
+  </div>
 </div>
 
 <!-- 04 -->
@@ -320,7 +320,7 @@ Deny:
     <h4>✓ Bezpečný postup</h4>
     <div class="cl-item"><span class="cl-box">☐</span> Vytvoř soubor <code>.env.local</code> — tam všechny klíče</div>
     <div class="cl-item"><span class="cl-box">☐</span> Přidej <code>.env.local</code> do <code>.gitignore</code> — nesmí jít na GitHub</div>
-    <div class="cl-item"><span class="cl-box">☐</span> V Antigravity Settings → Project → Ignore Files → přidej <code>.env.local</code></div>
+    <div class="cl-item"><span class="cl-box">☐</span> V Antigravity IDE Settings → Project → Ignore Files → přidej <code>.env.local</code></div>
     <div class="cl-item"><span class="cl-box">☐</span> Agent nebude vidět <code>.env.local</code> — ochrana</div>
   </div>
 
@@ -340,7 +340,7 @@ DATABASE_PASSWORD=super-tajne
       <strong>Env variables v kódu</strong>
       <p>V kódu pak užívaš <code>process.env.VITE_GOOGLE_API_KEY</code> — a ta se na runtime načte z <code>.env.local</code>. Agent vidí jen že tu je reference, ale ne hodnotu.</p>
     </div>
-  </box>
+  </div>
 </div>
 
 <!-- 05 -->
@@ -387,10 +387,10 @@ DATABASE_PASSWORD=super-tajne
       <strong>Kód = data na Google serverech</strong>
       <p>Když agent pracuje, tvůj kód jde na Google API. To je normální pro Gemini/AI. Pokud máš velmi citlivý kód (na produkční data, bezpečnostní logiku) — měl bys si to uvědomit.</p>
     </div>
-  </box>
+  </div>
 
   <h3>Local-only režim (pokud je dostupný)</h3>
-  <p>Některé Antigravity verze mají "Local Only Mode" — agent pracuje bez posílání do cloudu. Pokud je to pro tebe kritické, zjisti si jestli je dostupné.</p>
+  <p>Některé Antigravity IDE verze mají "Local Only Mode" — agent pracuje bez posílání do cloudu. Pokud je to pro tebe kritické, zjisti si jestli je dostupné.</p>
 </div>
 
 <!-- 06 -->
@@ -398,7 +398,7 @@ DATABASE_PASSWORD=super-tajne
   <div class="sec-label">// sekce 06</div>
   <h2>Audit trail — coje se dělo</h2>
 
-  <p>Antigravity si pamatuje co agent dělal. Můžeš si to prohlédnout.</p>
+  <p>Antigravity IDE si pamatuje co agent dělal. Můžeš si to prohlédnout.</p>
 
   <h3>Kde je historii akcí?</h3>
   <p>View → Agent History (nebo Command Palette → Show Agent Activity)</p>
@@ -418,7 +418,7 @@ DATABASE_PASSWORD=super-tajne
       <strong>Praktické užití: "Kontrola zpět"</strong>
       <p>Pokud si myslíš že agent něco podivného dělal — otevři historii, podívej se přesně co se změnilo. Pak můžeš <code>git checkout</code> nebo <code>undo</code>.</p>
     </div>
-  </box>
+  </div>
 </div>
 
 <!-- 07 -->
@@ -446,8 +446,8 @@ DATABASE_PASSWORD=super-tajne
 
   <div class="checklist">
     <h4>🔒 Tvůj checklist bezpečnosti</h4>
-    <div class="cl-item"><span class="cl-box">☐</span> Spusť Antigravity s Review-Driven režimem (ne Full Autonomy)</div>
-    <div class="cl-item"><span class="cl-box">☐</span> Vytvoř .gitignore s .env.local a jeho zákaz v Antigravity</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Spusť Antigravity IDE s Review-Driven režimem (ne Full Autonomy)</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Vytvoř .gitignore s .env.local a jeho zákaz v Antigravity IDE</div>
     <div class="cl-item"><span class="cl-box">☐</span> Postav Deny list: delete, package.json, .env, npm install</div>
     <div class="cl-item"><span class="cl-box">☐</span> Před prací s agentem: git commit (záloha)</div>
     <div class="cl-item"><span class="cl-box">☐</span> Čti každý plán. Nepřeskakuj schvalování.</div>
@@ -462,7 +462,7 @@ DATABASE_PASSWORD=super-tajne
       <strong>Při prvního spuštění s agentem</strong>
       <p>Dej agentovi malý, nekritický task. Třeba "Přidej komentář do souboru README". Uvidíš jak pracuje, jak vypadá workflow. Pak když budeš jistý — komplexnější věci.</p>
     </div>
-  </box>
+  </div>
 
   <h3>Když se agent choval divně:</h3>
   <ol>
@@ -487,7 +487,7 @@ DATABASE_PASSWORD=super-tajne
 
 <!-- FOOTER -->
 <footer>
-  04_IDE_Bezpecnost.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  04_IDE_Bezpecnost.html · Antigravity IDE průvodce · Claude (Anthropic) · Duben 2026<br/>
   <a href="00_IDE_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
 </footer>
 

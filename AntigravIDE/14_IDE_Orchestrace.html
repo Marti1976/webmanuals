@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orchestrace Agentů – Antigravity průvodce</title>
+<title>Orchestrace Agentů – Antigravity IDE průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -164,9 +164,9 @@ FAILURE testera   →   INPUT implementera<br/>
     (bug report)          (co fixnout)
   </div>
 
-  <h3>Orchestrace v Antigravity — Jak To Dělat Prakticky</h3>
+  <h3>Orchestrace v Antigravity IDE — Jak To Dělat Prakticky</h3>
 
-  <p><strong>Kde to orchestruj?</strong> V Antigravity Manager View. Vidíš všechny agenty, jejich stav, timeline.</p>
+  <p><strong>Kde to orchestruj?</strong> V Antigravity IDE Manager View. Vidíš všechny agenty, jejich stav, timeline.</p>
 
   <p><strong>Postup:</strong></p>
   <ol>
@@ -208,7 +208,7 @@ Píše testy a commituje:<br/>
 git commit -m "test: PriceTable unit tests"
   </div>
 
-  <h4>2. Artifacts (Antigravity Feature)</h4>
+  <h4>2. Artifacts (Antigravity IDE Feature)</h4>
   <p><strong>Co to je:</strong> Agent generuje Artifact (soubor, preview, design). Ostatní to vidí.</p>
   <p><strong>Výhoda:</strong> Vizuální, jasné, live preview</p>
   <p><strong>Jak:</strong> Designer generuje HTML preview v Artifact. Implementer ho vidí.</p>
@@ -274,7 +274,7 @@ Když předám špatný type → fail test."
   </div>
 
   <h4>5. Approval & Feedback Panels</h4>
-  <p><strong>Co to je:</strong> V Antigravity vidíš approval panel. Tam se hlasuje / dává feedback.</p>
+  <p><strong>Co to je:</strong> V Antigravity IDE vidíš approval panel. Tam se hlasuje / dává feedback.</p>
   <p><strong>Výhoda:</strong> Synchronní komunikace (live feedback)</p>
   <p><strong>Jak:</strong> Implementer pushne PR → vidíš v approval panelu → můžeš komentovat → agent vidí a opravuje</p>
 
@@ -704,7 +704,7 @@ Konflikt se nestane — TypeScript to chytí.
 
   <h4>4. Review-Driven Approval</h4>
   <p><strong>Pravidlo:</strong> Když agent skončí → vidíš to, můžeš schválit nebo poprosit o změnu.</p>
-  <p><strong>Jak:</strong> V Antigravity Manager View nastaviš Approval Mode = Review-Driven</p>
+  <p><strong>Jak:</strong> V Antigravity IDE Manager View nastaviš Approval Mode = Review-Driven</p>
   <p><strong>Výhoda:</strong> Plná kontrola. Žádné surprise.</p>
 
   <h4>5. Atomic Commits</h4>
@@ -789,7 +789,7 @@ Oba kódují proti rozhraní, bez čekání
       <strong>Shrnutí: Orchestrace Je o Kontrole & Klaritě</strong>
       <p>TY řídíš. Interface je zákaz. Komunikace je kód. Agenti se řídí. Konflikty jsou řídké a snadné vyřešit. Vše je jasné a traceable.</p>
     </div>
-  </box>
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -806,7 +806,7 @@ Oba kódují proti rozhraní, bez čekání
 </nav>
 
 <footer>
-  14_IDE_Orchestrace.html · Antigravity průvodce · Claude (Anthropic) · Květen 2026<br/>
+  14_IDE_Orchestrace.html · Antigravity IDE průvodce · Claude (Anthropic) · Květen 2026<br/>
   <a href="00_IDE_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
 </footer>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Editor View – Antigravity průvodce</title>
+<title>Editor View – Antigravity IDE průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -183,7 +183,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   <div class="sec-label">// sekce 01</div>
   <h2>Co je Editor View a co není</h2>
 
-  <p>Antigravity má dva různé módy práce. Právě teď se zaměříme na <strong>Editor View</strong> — to je ten tradičnější, více "pod tvou kontrolou".</p>
+  <p>Antigravity IDE má dva různé módy práce. Právě teď se zaměříme na <strong>Editor View</strong> — to je ten tradičnější, více "pod tvou kontrolou".</p>
 
   <h3>Editor View = VS Code + bočný agent panel</h3>
   <p>Levá strana: klasické VS Code — soubory, struktura projektu, editace kódu, všechno co znáš. Pravá strana (nebo v panelu): agent kterého můžeš psát. Můžeš sám kódovat, agent ti pomáhá — nebo mu dáš úkol a on kóduje zatímco ty čekáš.</p>
@@ -220,7 +220,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   <div class="sec-label">// sekce 02</div>
   <h2>Rozhraní — kde co je</h2>
 
-  <p>Antigravity Editor View je upravená verze VS Code. Pokud znáš VS Code, půjde ti to snadno. Pokud ne, tady je orientace:</p>
+  <p>Antigravity IDE Editor View je upravená verze VS Code. Pokud znáš VS Code, půjde ti to snadno. Pokud ne, tady je orientace:</p>
 
   <h3>Levá strana — editor a files (klasické)</h3>
   <ul>
@@ -237,7 +237,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
     <li><strong>Preview</strong> — pokud jsi otevřel HTML/Markdown, vidíš náhled.</li>
   </ul>
 
-  <h3>Pravá strana — agent panel (nové v Antigravity)</h3>
+  <h3>Pravá strana — agent panel (nové v Antigravity IDE)</h3>
   <ul>
     <li><strong>Chat s agentem</strong> — napíšeš task, agent mu rozumí v kontextu celého projektu, může se ptát dál.</li>
     <li><strong>Artifacts panel</strong> — agent zde zobrazuje to co dělá: plány, diffs kódu, screenshoty (pokud má Chrome extension).</li>
@@ -282,7 +282,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   <div class="sec-label">// sekce 03</div>
   <h2>Jak agent v Editor View funguje</h2>
 
-  <p>Přihlášeníš si v Antigravity, otevřeš Editor View, a vidíš agent panel. Co se stane když mu cokoliv řekneš?</p>
+  <p>Přihlášeníš si v Antigravity IDE, otevřeš Editor View, a vidíš agent panel. Co se stane když mu cokoliv řekneš?</p>
 
   <h3>Typický workflow agenta</h3>
   <div class="steps">
@@ -378,7 +378,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   <p>Toto je ta část která tě ochrání před problémem z AI Studio. Agent se MUSÍ ptát než něco významného udělá.</p>
 
   <h3>Režimy schválení (Approval Modes)</h3>
-  <p>V nastavení Antigravity si můžeš zvolit jak přísný máš být s agentem:</p>
+  <p>V nastavení Antigravity IDE si můžeš zvolit jak přísný máš být s agentem:</p>
 
   <div class="compare">
     <div class="comp-card">
@@ -448,14 +448,14 @@ Chyba: Jeden test selhal. Opravuji.
   <div class="sec-label">// sekce 06</div>
   <h2>Vs. AI Studio — co se změnilo</h2>
 
-  <p>Pojďme si srovnat tvůj problém z AI Studio s tím jak funguje Antigravity Editor View.</p>
+  <p>Pojďme si srovnat tvůj problém z AI Studio s tím jak funguje Antigravity IDE Editor View.</p>
 
   <table style="width:100%;border-collapse:collapse;font-size:.87em;margin:14px 0">
     <thead>
       <tr style="border-bottom:2px solid var(--border)">
         <th style="padding:9px 12px;text-align:left;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.78em">Situace</th>
         <th style="padding:9px 12px;text-align:left;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.78em">Google AI Studio</th>
-        <th style="padding:9px 12px;text-align:left;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.78em">Antigravity</th>
+        <th style="padding:9px 12px;text-align:left;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.78em">Antigravity IDE</th>
       </tr>
     </thead>
     <tbody>
@@ -496,7 +496,7 @@ Chyba: Jeden test selhal. Opravuji.
     <span class="icon">💡</span>
     <div class="content">
       <strong>Konkrétně k tvé situaci — smazání databáze</strong>
-      <p>V Antigravity by to vypadalo takto: Agent v planu řekne "Smaž databázi a nahraď ji novou strukturou". Ty to vidíš, a klikneš [Reject] nebo [Edit]. Databáze se NEZMĚNÍ pokud ty to neschválíš. Bod.</p>
+      <p>V Antigravity IDE by to vypadalo takto: Agent v planu řekne "Smaž databázi a nahraď ji novou strukturou". Ty to vidíš, a klikneš [Reject] nebo [Edit]. Databáze se NEZMĚNÍ pokud ty to neschválíš. Bod.</p>
     </div>
   </div>
 </div>
@@ -506,7 +506,7 @@ Chyba: Jeden test selhal. Opravuji.
   <div class="sec-label">// sekce 07</div>
   <h2>Psaní promptu agentovi</h2>
 
-  <p>Jak psát task aby agent dělal přesně to co chceš? Stejná pravidla jako u Gemini CLI, ale s jedním rozdílem — Antigravity agent vidí tvůj kód.</p>
+  <p>Jak psát task aby agent dělal přesně to co chceš? Stejná pravidla jako u Gemini CLI, ale s jedním rozdílem — Antigravity IDE agent vidí tvůj kód.</p>
 
   <h3>Vzorce které fungují</h3>
 
@@ -548,7 +548,7 @@ Chyba: Jeden test selhal. Opravuji.
   <div class="sec-label">// sekce 08</div>
   <h2>Praktický příklad — krok za krokem</h2>
 
-  <p>Představme si že otevřeš Antigravity, načteš svůj projekt receptáře a chceš aby agent přidal jednu novou feature.</p>
+  <p>Představme si že otevřeš Antigravity IDE, načteš svůj projekt receptáře a chceš aby agent přidal jednu novou feature.</p>
 
   <h3>Příklad: "Přidej filtr na cenu receptu"</h3>
 
@@ -664,7 +664,7 @@ $ npm run build<br/>
 
 <!-- FOOTER -->
 <footer>
-  01_IDE_Editor_View.html · Antigravity průvodce · Claude (Anthropic) · Duben 2026<br/>
+  01_IDE_Editor_View.html · Antigravity IDE průvodce · Claude (Anthropic) · Duben 2026<br/>
   <a href="00_IDE_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
 </footer>
 

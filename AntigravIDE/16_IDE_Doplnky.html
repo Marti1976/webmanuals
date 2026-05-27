@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Doplňky (Extensions) – Antigravity průvodce</title>
+<title>Doplňky (Extensions) – Antigravity IDE průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -215,7 +215,7 @@ footer  { margin-left: 260px; }
   <div class="nav-group-label">Obsah</div>
 
   <a href="#s1" class="nav-link active">
-    <span class="nav-step">01</span> Co jsou doplňky v Antigravity
+    <span class="nav-step">01</span> Co jsou doplňky v Antigravity IDE
   </a>
   <a href="#s2" class="nav-link">
     <span class="nav-step">02</span> Instalace v programu
@@ -253,19 +253,19 @@ footer  { margin-left: 260px; }
 <!-- 01 -->
 <div class="sec" id="s1">
   <div class="sec-label">// sekce 01</div>
-  <h2>Co jsou doplňky v Antigravity</h2>
+  <h2>Co jsou doplňky v Antigravity IDE</h2>
 
-  <p>Antigravity je fork VS Code — takže doplňky fungují úplně stejně jako ve VS Code. Nainstalovaný doplněk přidá nové funkce, zvýrazňování, formátování, nebo celý UI panel.</p>
+  <p>Antigravity IDE je fork VS Code — takže doplňky fungují úplně stejně jako ve VS Code. Nainstalovaný doplněk přidá nové funkce, zvýrazňování, formátování, nebo celý UI panel.</p>
 
   <div class="box info">
     <span class="icon">ℹ️</span>
     <div class="content">
       <strong>Důležitý rozdíl: OpenVSX vs VS Code Marketplace</strong>
-      <p>Antigravity ve výchozím nastavení používá <strong>OpenVSX registry</strong> (open-vsx.org), ne Microsoft VS Code Marketplace. To znamená, že některé oblíbené doplňky ve vyhledávání nenajdeš — existují jen na VS Code Marketplace. Řešení je buď ruční instalace (.vsix), nebo přepnutí marketplace (viz sekce 04).</p>
+      <p>Antigravity IDE ve výchozím nastavení používá <strong>OpenVSX registry</strong> (open-vsx.org), ne Microsoft VS Code Marketplace. To znamená, že některé oblíbené doplňky ve vyhledávání nenajdeš — existují jen na VS Code Marketplace. Řešení je buď ruční instalace (.vsix), nebo přepnutí marketplace (viz sekce 04).</p>
     </div>
   </div>
 
-  <h3>Co Antigravity má již zabudované (nepotřebuješ doplněk)</h3>
+  <h3>Co Antigravity IDE má již zabudované (nepotřebuješ doplněk)</h3>
   <ul>
     <li><strong>Git integrace</strong> — history, blame, diff jsou nativní, nepotřebuješ GitLens pro základní použití</li>
     <li><strong>AI asistent</strong> — Gemini 3 je zabudovaný, nepotřebuješ Copilot ani jiný AI doplněk</li>
@@ -282,7 +282,7 @@ footer  { margin-left: 260px; }
   <div class="sec-label">// sekce 02</div>
   <h2>Instalace v programu</h2>
 
-  <p>Nejjednodušší způsob — přímo z Antigravity přes Extensions panel.</p>
+  <p>Nejjednodušší způsob — přímo z Antigravity IDE přes Extensions panel.</p>
 
   <div class="step-list">
     <div class="step-item">
@@ -303,7 +303,7 @@ footer  { margin-left: 260px; }
       <div class="step-num">03</div>
       <div class="step-body">
         <div class="step-title">Klikni Install</div>
-        <div class="step-text">Klikni na modré tlačítko <strong>Install</strong> u vybraného doplňku. Antigravity ho stáhne a nainstaluje automaticky — bez restartu.</div>
+        <div class="step-text">Klikni na modré tlačítko <strong>Install</strong> u vybraného doplňku. Antigravity IDE ho stáhne a nainstaluje automaticky — bez restartu.</div>
       </div>
     </div>
     <div class="step-item">
@@ -351,20 +351,20 @@ footer  { margin-left: 260px; }
       <div class="step-num">03</div>
       <div class="step-body">
         <div class="step-title">Vyber stažený soubor</div>
-        <div class="step-text">Najdi a otevři stažený <code>.vsix</code> soubor. Antigravity ho nainstaluje okamžitě.</div>
+        <div class="step-text">Najdi a otevři stažený <code>.vsix</code> soubor. Antigravity IDE ho nainstaluje okamžitě.</div>
       </div>
     </div>
   </div>
 
   <h3>Způsob B — přes příkazový řádek (přesnější)</h3>
-  <p>Otevři terminál (mimo Antigravity) a spusť příkaz pro tvůj systém:</p>
+  <p>Otevři terminál (mimo Antigravity IDE) a spusť příkaz pro tvůj systém:</p>
 
   <div class="code-block">
 # macOS<br/>
-/Applications/Antigravity.app/Contents/Resources/app/bin/antigravity --install-extension nazev-doplnku-1.0.0.vsix<br/>
+/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity --install-extension nazev-doplnku-1.0.0.vsix<br/>
 <br/>
 # Windows (PowerShell)<br/>
-& "C:\Users\[uzivatel]\AppData\Local\Programs\Antigravity\resources\app\bin\antigravity.cmd" --install-extension nazev-doplnku-1.0.0.vsix<br/>
+& "C:\Users\[uzivatel]\AppData\Local\Programs\Antigravity IDE\resources\app\bin\antigravity.cmd" --install-extension nazev-doplnku-1.0.0.vsix<br/>
 <br/>
 # Linux<br/>
 /usr/share/antigravity/bin/antigravity --install-extension nazev-doplnku-1.0.0.vsix
@@ -374,7 +374,7 @@ footer  { margin-left: 260px; }
     <span class="icon">⚠️</span>
     <div class="content">
       <strong>Nepoužívej příkaz code ani cursor</strong>
-      <p>Příkaz <code>code --install-extension</code> nebo <code>cursor --install-extension</code> nainstaluje doplněk do VS Code / Cursor, ne do Antigravity. Každý editor má vlastní registry. Musíš použít příkaz <code>antigravity</code>.</p>
+      <p>Příkaz <code>code --install-extension</code> nebo <code>cursor --install-extension</code> nainstaluje doplněk do VS Code / Cursor, ne do Antigravity IDE. Každý editor má vlastní registry. Musíš použít příkaz <code>antigravity</code>.</p>
     </div>
   </div>
 </div>
@@ -384,7 +384,7 @@ footer  { margin-left: 260px; }
   <div class="sec-label">// sekce 04</div>
   <h2>Přepnutí na VS Code Marketplace</h2>
 
-  <p>Chceš-li mít přímý přístup k celému VS Code ekosystému bez ruční instalace, přepni Antigravity na Microsoft marketplace. Pak vyhledávání funguje stejně jako ve VS Code.</p>
+  <p>Chceš-li mít přímý přístup k celému VS Code ekosystému bez ruční instalace, přepni Antigravity IDE na Microsoft marketplace. Pak vyhledávání funguje stejně jako ve VS Code.</p>
 
   <div class="box warn">
     <span class="icon">⚠️</span>
@@ -400,7 +400,7 @@ footer  { margin-left: 260px; }
       <div class="step-num">01</div>
       <div class="step-body">
         <div class="step-title">Otevři Nastavení</div>
-        <div class="step-text"><code>Ctrl+,</code> → vlevo vyhledej "extensionsGallery" nebo jdi do <strong>Settings → Antigravity Settings → Editor</strong></div>
+        <div class="step-text"><code>Ctrl+,</code> → vlevo vyhledej "extensionsGallery" nebo jdi do <strong>Settings → Antigravity IDE Settings → Editor</strong></div>
       </div>
     </div>
     <div class="step-item">
@@ -415,7 +415,7 @@ footer  { margin-left: 260px; }
     <div class="step-item">
       <div class="step-num">03</div>
       <div class="step-body">
-        <div class="step-title">Restart Antigravity</div>
+        <div class="step-title">Restart Antigravity IDE</div>
         <div class="step-text">Po restartu bude Extensions panel prohledávat VS Code Marketplace. Instalace a aktualizace fungují standardně.</div>
       </div>
     </div>
@@ -433,7 +433,7 @@ footer  { margin-left: 260px; }
     <div class="source-row">
       <div>
         <div class="source-name">OpenVSX Registry</div>
-        <div class="source-note">Nativní marketplace Antigravity. Otevřená alternativa k VS Code Marketplace, stále roste.</div>
+        <div class="source-note">Nativní marketplace Antigravity IDE. Otevřená alternativa k VS Code Marketplace, stále roste.</div>
       </div>
       <div class="source-url"><a href="https://open-vsx.org" target="_blank">open-vsx.org</a></div>
     </div>
@@ -449,14 +449,14 @@ footer  { margin-left: 260px; }
     <div class="source-row">
       <div>
         <div class="source-name">awesome-antigravity (GitHub)</div>
-        <div class="source-note">Komunitní seznam nejlepších doplňků a workflowů přímo pro Antigravity.</div>
+        <div class="source-note">Komunitní seznam nejlepších doplňků a workflowů přímo pro Antigravity IDE.</div>
       </div>
       <div class="source-url"><a href="https://github.com/MichaelZelbel/awesome-antigravity" target="_blank">github.com/awesome-antigravity</a></div>
     </div>
 
     <div class="source-row">
       <div>
-        <div class="source-name">Antigravity Discord</div>
+        <div class="source-name">Antigravity IDE Discord</div>
         <div class="source-note">Komunita sdílí tipy na doplňky, vlastní skripty a řeší problémy s kompatibilitou.</div>
       </div>
       <div class="source-url"><a href="https://discord.gg/antigravity" target="_blank">discord.gg/antigravity</a></div>
@@ -478,7 +478,7 @@ footer  { margin-left: 260px; }
       <div class="ext-rank"># <span>01</span> — Doporučujeme začít tímto</div>
       <div class="ext-name">Czech Language Pack</div>
       <div class="ext-id">ms-ceintl.vscode-language-pack-cs</div>
-      <div class="ext-desc">Přeloží celé UI Antigravity do češtiny — menu, tlačítka, dialogy, nastavení. Po instalaci tě Antigravity vyzve ke změně jazyka. Jediný klik a máš celý program v češtině. Nezasahuje do funkčnosti, pouze přeloží texty.</div>
+      <div class="ext-desc">Přeloží celé UI Antigravity IDE do češtiny — menu, tlačítka, dialogy, nastavení. Po instalaci tě Antigravity IDE vyzve ke změně jazyka. Jediný klik a máš celý program v češtině. Nezasahuje do funkčnosti, pouze přeloží texty.</div>
       <div class="ext-tags">
         <span class="ext-tag cyan">Jazyk</span>
         <span class="ext-tag green">Doporučeno</span>
@@ -530,7 +530,7 @@ footer  { margin-left: 260px; }
       <div class="ext-rank"># <span>05</span></div>
       <div class="ext-name">GitLens — Git supercharged</div>
       <div class="ext-id">eamodio.gitlens</div>
-      <div class="ext-desc">Rozšiřuje nativní Git integraci Antigravity o inline blame (kdo napsal řádek a kdy), detailní historii souboru, vizualizaci větví a porovnání commitů. Antigravity má základní Git zabudovaný — GitLens přidá hloubku pro pokročilou práci s historií.</div>
+      <div class="ext-desc">Rozšiřuje nativní Git integraci Antigravity IDE o inline blame (kdo napsal řádek a kdy), detailní historii souboru, vizualizaci větví a porovnání commitů. Antigravity IDE má základní Git zabudovaný — GitLens přidá hloubku pro pokročilou práci s historií.</div>
       <div class="ext-tags">
         <span class="ext-tag">Git</span>
         <span class="ext-tag">Historie</span>
@@ -556,7 +556,7 @@ footer  { margin-left: 260px; }
       <div class="ext-rank"># <span>07</span></div>
       <div class="ext-name">Thunder Client</div>
       <div class="ext-id">rangav.vscode-thunder-client</div>
-      <div class="ext-desc">Lehký REST API klient přímo v editoru — alternativa k Postman. Testuj API endpointy bez opuštění Antigravity. Výhodné pokud agent vytvoří backend: hned ho otestuješ v jednom okně. Podporuje kolekce requestů, environment proměnné a spouštění v rámci testů.</div>
+      <div class="ext-desc">Lehký REST API klient přímo v editoru — alternativa k Postman. Testuj API endpointy bez opuštění Antigravity IDE. Výhodné pokud agent vytvoří backend: hned ho otestuješ v jednom okně. Podporuje kolekce requestů, environment proměnné a spouštění v rámci testů.</div>
       <div class="ext-tags">
         <span class="ext-tag">API</span>
         <span class="ext-tag">Testing</span>
@@ -609,7 +609,7 @@ footer  { margin-left: 260px; }
     <span class="icon">✓</span>
     <div class="content">
       <strong>Tip: Méně je více</strong>
-      <p>Antigravity má hodně zabudovaného. Nestříkej doplňky po hrstech jako ve VS Code — každý doplněk navíc může zpomalit editor nebo kolidovat s agentem. Začni s češtinou + Prettier + ESLint a přidávej jen co reálně potřebuješ.</p>
+      <p>Antigravity IDE má hodně zabudovaného. Nestříkej doplňky po hrstech jako ve VS Code — každý doplněk navíc může zpomalit editor nebo kolidovat s agentem. Začni s češtinou + Prettier + ESLint a přidávej jen co reálně potřebuješ.</p>
     </div>
   </div>
 </div>
@@ -629,7 +629,7 @@ footer  { margin-left: 260px; }
 </div>
 
 <footer>
-  <span>16_IDE_Doplnky.html · Antigravity průvodce · Claude (Anthropic) · Květen 2026</span>
+  <span>16_IDE_Doplnky.html · Antigravity IDE průvodce · Claude (Anthropic) · Květen 2026</span>
   <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
 </footer>
 
