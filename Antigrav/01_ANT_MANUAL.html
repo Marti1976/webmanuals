@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antigravity 2.0 – Kompletní průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230a0810'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='5' fill='none' stroke='%2300d9ff' stroke-width='1.5' transform='rotate(-30 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='5' fill='none' stroke='%23a855f7' stroke-width='1.5' transform='rotate(30 16 16)'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%2300d9ff'/%3E%3Ccircle cx='16' cy='7' r='2' fill='%2300d9ff' opacity='.6'/%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --purple:#a855f7;--purple2:#d8a8ff;
+  --accent:#ff006e;--accent2:#ff5599;
+  --green:#10b981;--green2:#6ee7b7;
+  --amber:#f59e0b;--amber2:#fcd34d;
+  --red:#ef4444;--red2:#fca5a5;
+  --white:#f0e8ff;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.wrap{max-width:940px;margin:0 auto;padding:0 24px 80px}
+
+/* NAV ZPĚT */
+.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
+  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
+  text-transform:uppercase;transition:gap .2s}
+.nav-back:hover{gap:12px}
+
+/* HEADER */
+header{padding:48px 0 40px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-150px;width:600px;height:450px;
+  background:radial-gradient(ellipse,rgba(0,217,255,.08) 0%,rgba(168,85,247,.05) 40%,transparent 70%);pointer-events:none}
+header::after{content:'';position:absolute;bottom:-60px;left:-100px;width:400px;height:300px;
+  background:radial-gradient(ellipse,rgba(168,85,247,.06) 0%,transparent 65%);pointer-events:none}
+.h-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase}
+.h-version{font-family:'DM Mono',monospace;font-size:.72em;padding:3px 10px;border-radius:8px;
+  background:rgba(0,217,255,.12);border:1px solid rgba(0,217,255,.25);color:var(--cyan);letter-spacing:.08em}
+h1{font-family:'Syne',sans-serif;font-size:2.6em;font-weight:800;color:var(--white);
+  line-height:1.08;margin-bottom:16px}
+h1 em{color:var(--cyan);font-style:normal}
+h1 .sub{color:var(--purple2)}
+.h-desc{color:var(--t2);font-size:1.02em;max-width:720px;margin-bottom:28px;line-height:1.65}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+.badge-p{color:var(--purple2);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+.badge-g{color:var(--green2);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08)}
+.badge-a{color:var(--amber2);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.08)}
+.badge-r{color:var(--red2);border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.08)}
+
+/* TOC */
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--cyan);
+  border-radius:var(--r);padding:22px 26px;margin:36px 0}
+.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--cyan);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px}
+@media(max-width:600px){.toc-list{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
+  text-decoration:none;padding:5px 0;transition:color .2s;border-bottom:1px solid transparent}
+.toc-item:hover{color:var(--cyan2)}
+.toc-dot{font-family:'DM Mono',monospace;font-size:.78em;color:var(--cyan);min-width:20px}
+
+/* SECTION */
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h2{font-family:'Syne',sans-serif;font-size:1.65em;font-weight:700;color:var(--white);
+  margin-bottom:18px;line-height:1.2}
+h2 em{color:var(--cyan);font-style:normal}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--purple2);
+  margin:30px 0 10px;display:flex;align-items:center;gap:8px}
+h3::before{content:'';display:inline-block;width:3px;height:14px;background:var(--purple);
+  border-radius:2px;flex-shrink:0}
+h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
+p{margin-bottom:11px}
+ul,ol{padding-left:22px}
+li{margin:6px 0;color:var(--t2);font-size:.93em}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+em{color:var(--t2);font-style:italic}
+a{color:var(--cyan2);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* CODE */
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(0,217,255,.1);
+  color:var(--cyan2);border:1px solid rgba(0,217,255,.2);border-radius:4px;padding:1px 7px}
+.codeblock{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);
+  padding:18px 20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.8em;
+  color:var(--cyan2);line-height:1.9;overflow-x:auto;white-space:pre}
+.codeblock .comment{color:var(--t3)}
+.codeblock .kw{color:var(--purple2)}
+.codeblock .str{color:var(--green2)}
+.codeblock .num{color:var(--amber2)}
+
+/* BOXES */
+.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
+.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
+.content p{margin:0;font-size:.9em;color:inherit}
+.content ul{margin:4px 0 0;padding-left:16px}
+.content li{margin:3px 0;font-size:.88em}
+
+.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
+.tip .content strong{color:var(--green2)}
+.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
+.warn .content strong{color:var(--amber2)}
+.danger{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25);color:#d09090}
+.danger .content strong{color:var(--red2)}
+.info{background:rgba(0,217,255,.08);border-color:rgba(0,217,255,.25);color:#90d8e8}
+.info .content strong{color:var(--cyan2)}
+.purple-box{background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.25);color:#c4a0e0}
+.purple-box .content strong{color:var(--purple2)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:.86em}
+thead th{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);text-align:left;
+  padding:10px 14px;border-bottom:2px solid var(--border2);background:var(--bg2)}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--t2);vertical-align:top}
+tbody tr:hover td{background:rgba(0,217,255,.03)}
+.td-hl{color:var(--cyan2)!important;font-weight:500}
+.td-ok{color:var(--green2)!important}
+.td-no{color:var(--t3)!important}
+
+/* COMPARISON */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:560px){.compare{grid-template-columns:1fr}}
+.comp-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.comp-card.highlighted{border-color:rgba(0,217,255,.4);box-shadow:0 0 20px rgba(0,217,255,.06)}
+.comp-title{font-family:'Syne',sans-serif;font-size:.85em;font-weight:700;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--border)}
+.comp-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:.82em}
+.comp-icon{color:var(--cyan);flex-shrink:0;margin-top:1px}
+.comp-text{color:var(--t2)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:12px;margin:14px 0}
+.step{display:grid;grid-template-columns:44px 1fr;gap:0;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.step-n{display:flex;align-items:flex-start;justify-content:center;padding-top:14px;
+  font-family:'Syne',sans-serif;font-size:1.1em;font-weight:800;color:var(--cyan);
+  background:rgba(0,217,255,.06);border-right:1px solid var(--border)}
+.step-b{padding:12px 16px}
+.step-t{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:6px;font-size:.95em}
+.step-b p{font-size:.88em;color:var(--t2);margin-bottom:5px}
+.step-b p:last-child{margin-bottom:0}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.card-icon{font-size:1.6em;margin-bottom:10px}
+.card-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.card-body{font-size:.86em;color:var(--t2);line-height:1.55}
+
+/* SURFACE PILL */
+.surface-pill{display:inline-flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;
+  font-size:.72em;padding:3px 10px;border-radius:10px;letter-spacing:.05em;text-transform:uppercase;
+  background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);color:var(--purple2)}
+
+/* DIAGRAM */
+.diagram{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.79em;
+  color:var(--cyan2);line-height:2;overflow-x:auto}
+.diag-box{display:inline-block;border:1px solid rgba(0,217,255,.35);border-radius:6px;
+  padding:4px 14px;background:rgba(0,217,255,.08);color:var(--cyan2)}
+.diag-arrow{color:var(--t3);margin:0 4px}
+.diag-line{margin:4px 0;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+
+/* PRICING CARDS */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}
+@media(max-width:700px){.price-grid{grid-template-columns:1fr}}
+.price-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;display:flex;flex-direction:column;gap:6px}
+.price-card.featured{border-color:rgba(0,217,255,.4);box-shadow:0 0 30px rgba(0,217,255,.07)}
+.price-card.premium{border-color:rgba(168,85,247,.4);box-shadow:0 0 30px rgba(168,85,247,.07)}
+.price-plan{font-family:'Syne',sans-serif;font-size:.85em;font-weight:700;color:var(--t2);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.price-amt{font-family:'Syne',sans-serif;font-size:2em;font-weight:800;color:var(--white);line-height:1}
+.price-amt span{font-size:.45em;color:var(--t2);font-weight:400}
+.price-limit{font-family:'DM Mono',monospace;font-size:.75em;color:var(--cyan);margin:6px 0 12px;
+  padding:4px 10px;background:rgba(0,217,255,.08);border-radius:6px;display:inline-block}
+.price-feat{font-size:.85em;color:var(--t2);padding:5px 0;border-bottom:1px solid var(--border)}
+.price-feat:last-child{border-bottom:none}
+.price-feat strong{color:var(--white)}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0;margin:14px 0}
+.tl-item{display:grid;grid-template-columns:100px 1fr;gap:0;position:relative}
+.tl-item::before{content:'';position:absolute;left:99px;top:24px;bottom:-4px;
+  width:1px;background:var(--border);z-index:0}
+.tl-item:last-child::before{display:none}
+.tl-date{font-family:'DM Mono',monospace;font-size:.76em;color:var(--t3);letter-spacing:.05em;
+  padding:14px 16px 14px 0;text-align:right;line-height:1.3}
+.tl-body{padding:12px 0 12px 20px;position:relative}
+.tl-body::before{content:'';position:absolute;left:8px;top:20px;width:8px;height:8px;
+  border-radius:50%;background:var(--border2);border:2px solid var(--bg);z-index:1}
+.tl-title{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);font-size:.95em;margin-bottom:4px}
+.tl-desc{font-size:.86em;color:var(--t2)}
+
+/* FOOTER */
+footer{margin-top:64px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+
+/* ICON in title */
+.title-icon{display:inline-block;vertical-align:middle;margin-right:10px}
+
+/* NEW TAG */
+.new-tag{font-family:'DM Mono',monospace;font-size:.62em;padding:2px 7px;border-radius:5px;
+  background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:var(--green2);
+  letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;margin-left:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<header>
+  <div class="h-eyebrow">
+    <span class="h-num">// google i/o 2026</span>
+    <span class="h-version">v 2.0</span>
+  </div>
+  <h1>
+    <svg class="title-icon" width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="19" cy="19" r="19" fill="#0a0810"/>
+      <ellipse cx="19" cy="19" rx="14" ry="6" fill="none" stroke="#00d9ff" stroke-width="1.8" transform="rotate(-35 19 19)"/>
+      <ellipse cx="19" cy="19" rx="14" ry="6" fill="none" stroke="#a855f7" stroke-width="1.8" transform="rotate(35 19 19)"/>
+      <circle cx="19" cy="19" r="4.5" fill="#00d9ff"/>
+      <circle cx="19" cy="8" r="2.4" fill="#00d9ff" opacity=".5"/>
+    </svg>
+    <em>Antigravity</em> <span class="sub">2.0</span>
+  </h1>
+  <p class="h-desc">Kompletní průvodce novou platformou od Google. Od standalone desktop aplikace přes CLI a SDK až po Managed Agents API a Enterprise tier — vše co potřebuješ vědět o nejvýznamnějším vývojářském launchi roku 2026.</p>
+  <div class="badges">
+    <span class="badge badge-c">🚀 Nová platforma</span>
+    <span class="badge badge-p">🤖 Agent orchestration</span>
+    <span class="badge badge-g">⚡ Gemini 3.5 Flash</span>
+    <span class="badge badge-a">📅 I/O 2026</span>
+    <span class="badge badge-r">⚠ Gemini CLI končí 18. 6. 2026</span>
+  </div>
+</header>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">Obsah tohoto průvodce</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Co je Antigravity 2.0 — původ &amp; kontext</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Architektura — 5 surfaces platformy</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Desktop App 2.0 — novinky v detailu</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Antigravity CLI</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Antigravity SDK</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Managed Agents API</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Enterprise Agent Platform</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Podporované modely</a>
+    <a class="toc-item" href="#s9"><span class="toc-dot">09</span> Pricing — plány a limity</a>
+    <a class="toc-item" href="#s10"><span class="toc-dot">10</span> Srovnání s Cursor, Windsurf, Claude Code</a>
+    <a class="toc-item" href="#s11"><span class="toc-dot">11</span> Migrace z Gemini CLI</a>
+    <a class="toc-item" href="#s12"><span class="toc-dot">12</span> Instalace &amp; quickstart</a>
+    <a class="toc-item" href="#s13"><span class="toc-dot">13</span> Praktické příklady &amp; best practices</a>
+    <a class="toc-item" href="#s14"><span class="toc-dot">14</span> Omezení a known issues</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Co je Antigravity 2.0</h2>
+
+  <p>Antigravity 2.0 bylo oznámeno na <strong>Google I/O 2026, 19. května 2026</strong> a představuje radikální přestavbu původního nástroje. Není to update — je to nová kategorie produktu.</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Zkrácená definice</strong>
+      <p>Antigravity 2.0 je <strong>standalone, agent-first desktop platforma</strong> pro macOS, Windows a Linux. Přirozený jazyk je primární programovací rozhraní. Popisuješ co chceš — agenti naplánují architekturu, napíší kód, otestují ho v prohlížeči a nasadí.</p>
+    </div>
+  </div>
+
+  <h3>Původ jména a produktu</h3>
+  <p>Název není náhodný. Má tři vrstvy:</p>
+  <ul>
+    <li><strong>Python Easter Egg:</strong> <code>import antigravity</code> v Pythonu 3 otevře XKCD komiks #353 — vtip o tom jak Python dělá nemožné snadným</li>
+    <li><strong>Doslova:</strong> Antigravity odstraňuje tíhu boilerplate kódu, debugování a deployment friction z ramen developera</li>
+    <li><strong>Windsurf dědictví:</strong> Produkt byl z velké části postaven týmem bývalého Windsurf IDE, který Google získal licenční a talent deal v roce 2025. Windsurf byl pojmenován po sportu, který vzdoruje gravitaci — tematická návaznost je záměrná</li>
+  </ul>
+
+  <h3>Historická osa</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">Nov 2025</div>
+      <div class="tl-body">
+        <div class="tl-title">Antigravity 1.0 launch</div>
+        <div class="tl-desc">Uvolněno veřejně jako free public preview. VS Code fork s multi-agent capabilities. Podporoval Gemini 3 Pro, Claude Sonnet 4.5, GPT-OSS. Obsahoval: Editor View, Manager Surface, Artifacts, Knowledge Base.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Dec 2025</div>
+      <div class="tl-body">
+        <div class="tl-title">Rate limit update</div>
+        <div class="tl-desc">Pro/Ultra uživatelé dostali priority access. Free tier přešel na weekly kvóty.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Kvě 2026</div>
+      <div class="tl-body">
+        <div class="tl-title">Antigravity 2.0 — Google I/O 2026</div>
+        <div class="tl-desc">Kompletní přestavba na platformu o pěti površích. Dynamic subagents, CLI, SDK, Managed Agents API, Enterprise tier.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">18. 6. 2026</div>
+      <div class="tl-body">
+        <div class="tl-title">⚠ Konec Gemini CLI</div>
+        <div class="tl-desc">Consumer access ke Gemini CLI a Gemini Code Assist IDE extensions skončí pro AI Pro, AI Ultra i free-tier uživatele.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Co se změnilo oproti v1.0</h3>
+  <div class="compare">
+    <div class="comp-card">
+      <div class="comp-title" style="color:var(--t3)">Antigravity 1.0</div>
+      <div class="comp-row"><span class="comp-icon">·</span><span class="comp-text">Jeden editor (VS Code fork)</span></div>
+      <div class="comp-row"><span class="comp-icon">·</span><span class="comp-text">AI-powered IDE</span></div>
+      <div class="comp-row"><span class="comp-icon">·</span><span class="comp-text">Jeden agent najednou</span></div>
+      <div class="comp-row"><span class="comp-icon">·</span><span class="comp-text">Repository-centric workflow</span></div>
+      <div class="comp-row"><span class="comp-icon">·</span><span class="comp-text">Bez CLI, bez SDK</span></div>
+      <div class="comp-row"><span class="comp-icon">·</span><span class="comp-text">Bez scheduled tasks</span></div>
+    </div>
+    <div class="comp-card highlighted">
+      <div class="comp-title" style="color:var(--cyan2)">Antigravity 2.0</div>
+      <div class="comp-row"><span class="comp-icon" style="color:var(--green2)">✓</span><span class="comp-text"><strong>Standalone app</strong> — nepotřebuje VS Code</span></div>
+      <div class="comp-row"><span class="comp-icon" style="color:var(--green2)">✓</span><span class="comp-text"><strong>Plná platforma</strong> — 5 surfaces</span></div>
+      <div class="comp-row"><span class="comp-icon" style="color:var(--green2)">✓</span><span class="comp-text"><strong>Dynamic subagents</strong> paralelně</span></div>
+      <div class="comp-row"><span class="comp-icon" style="color:var(--green2)">✓</span><span class="comp-text"><strong>Project-centric</strong> model</span></div>
+      <div class="comp-row"><span class="comp-icon" style="color:var(--green2)">✓</span><span class="comp-text"><strong>CLI, SDK</strong> přidány</span></div>
+      <div class="comp-row"><span class="comp-icon" style="color:var(--green2)">✓</span><span class="comp-text"><strong>Scheduled tasks</strong> (cron-like)</span></div>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Důležité: 2.0 není upgrade 1.0</strong>
+      <p>Antigravity 2.0 je <em>jiný produkt</em> vedle IDE. Původní Antigravity IDE (VS Code fork) stále existuje a funguje dál. 2.0 je standalone command center — můžeš je používat souběžně (tzv. dual-wield workflow).</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Architektura — <em>5 surfaces</em></h2>
+
+  <p>Antigravity 2.0 není jedna appka — je to platforma o pěti odlišných površích, určených různým uživatelům a use-casům.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Surface</th>
+          <th>Co to je</th>
+          <th>Pro koho</th>
+          <th>Novinka?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-hl">Desktop App 2.0</td>
+          <td>Aktualizovaný standalone IDE s dynamic subagenty, scheduled tasks, voice</td>
+          <td>Individuální developeři</td>
+          <td class="td-ok">Update</td>
+        </tr>
+        <tr>
+          <td class="td-hl">Antigravity CLI</td>
+          <td>Terminálový agent harness, bez GUI</td>
+          <td>Power users, CI/CD automation</td>
+          <td class="td-ok">Nové v 2.0</td>
+        </tr>
+        <tr>
+          <td class="td-hl">Antigravity SDK</td>
+          <td>Programmatic access k agent harness</td>
+          <td>Týmy hostující vlastní agenty</td>
+          <td class="td-ok">Nové v 2.0</td>
+        </tr>
+        <tr>
+          <td class="td-hl">Managed Agents API</td>
+          <td>API endpoints pro hostované agentic workflows (Gemini API)</td>
+          <td>Kdokoliv volající Gemini dnes</td>
+          <td class="td-ok">Nové v 2.0</td>
+        </tr>
+        <tr>
+          <td class="td-hl">Enterprise Agent Platform</td>
+          <td>Enterprise deployment přes Gemini Enterprise Agent Platform</td>
+          <td>Google Cloud zákazníci</td>
+          <td class="td-ok">Nové v 2.0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Diagram platformy</h3>
+  <div class="diagram">
+<div class="diag-line"><span style="color:var(--t2)">              ┌─────────────────────────────────────────────────┐</span></div>
+<div class="diag-line"><span style="color:var(--t2)">              │</span>          <span class="diag-box">Google Antigravity 2.0 Platform</span>         <span style="color:var(--t2)">│</span></div>
+<div class="diag-line"><span style="color:var(--t2)">              └───────────────────┬─────────────────────────────┘</span></div>
+<div class="diag-line"><span style="color:var(--t3)">        ┌──────────┬─────────────┼──────────────┬─────────────┐</span></div>
+<div class="diag-line"><span class="diag-box">Desktop App</span> <span class="diag-box">CLI</span> &nbsp;<span class="diag-box">SDK</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="diag-box">Managed API</span> &nbsp;<span class="diag-box">Enterprise</span></div>
+<div class="diag-line"><span style="color:var(--t3)">        │                        └──── Gemini API ────┘</span></div>
+<div class="diag-line"><span style="color:var(--t3)">        │                                  │</span></div>
+<div class="diag-line"><span class="diag-box" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:var(--purple2)">Gemini 3.5 Flash</span> &nbsp;<span class="diag-box" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:var(--purple2)">Gemini 3 Pro</span> &nbsp;<span class="diag-box" style="border-color:var(--border);color:var(--t2)">Claude Sonnet</span> &nbsp;<span class="diag-box" style="border-color:var(--border);color:var(--t2)">GPT-OSS</span>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Klíčové pochopení architektury</strong>
+      <p>IDE (editor, kde píšeš kód) a 2.0 (command center pro orchestraci agentů) jsou dva separátní produkty. Můžeš mít otevřený VSCode nebo Antigravity IDE a vedle toho Antigravity 2.0 jako dispatcher agentů. To je <strong>dual-wield workflow</strong>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Desktop App 2.0 — <em>novinky v detailu</em></h2>
+
+  <p>Flagship surface. Standalone aplikace bez závislosti na VS Code nebo jiném editoru. Čtyři zásadní novinky oproti v1:</p>
+
+  <h3>1. Dynamic Subagents <span class="new-tag">nové</span></h3>
+  <p>Ve verzi 1.0 Manager Surface zobrazoval jednoho agenta najednou a ostatní spouštěl asynchronně. Ve 2.0 mohou agenti sami <strong>dynamicky spawnovat subagenty</strong> pro paralelizaci práce.</p>
+
+  <div class="box info">
+    <span class="icon">🔀</span>
+    <div class="content">
+      <strong>Jak to funguje v praxi</strong>
+      <p>Zadáš: <em>"Audit the auth flow across all microservices."</em> Hlavní agent rozdělí práci do stromu subagentů — každý scope na jednu službu, všechny běží souběžně. Výsledky streamují zpět do Manager Surface. V živém demu na I/O 2026 bylo nasazeno 93 AI agentů paralelně za 12 hodin za méně než $1,000 compute — výsledek: funkční operační systém schopný spustit Doom.</p>
+    </div>
+  </div>
+
+  <h3>2. Scheduled Tasks <span class="new-tag">nové</span></h3>
+  <p>Background automation má poprvé first-class místo v editoru. Nastavíš cron-like schedule a agent běží bez toho, abys musel mít appku otevřenou.</p>
+  <ul>
+    <li><strong>Nightly dependency upgrades</strong> — každou noc zkontroluje a navrhne aktualizace</li>
+    <li><strong>Weekly security scans</strong> — automatický audit bezpečnostních zranitelností</li>
+    <li><strong>Post-release refactor sweeps</strong> — spustí se automaticky po každém release tagu</li>
+    <li><strong>Continuous monitoring</strong> — sledování performance regression v CI</li>
+  </ul>
+
+  <h3>3. Native Voice Commands <span class="new-tag">nové</span></h3>
+  <p>Diktuj kód, ptej se agenta na diff, spusť testy hlasem. Real-time přepis je poháněn Gemini audio modely. Konzistentní s nedávnými voice rollouts v Gmailu a Docs.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-icon">🎙️</div>
+      <div class="card-title">Live Voice Transcription</div>
+      <div class="card-body">Mluv přirozeně, Gemini audio modely přepíší a odešlou jako task agentovi. Bez přepínání kontextu.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔊</div>
+      <div class="card-title">Voice-driven sessions</div>
+      <div class="card-body">Celá coding session jen hlasem — "show me the diff", "approve the plan", "run tests". Heavy users s Ultra plánem využijí naplno.</div>
+    </div>
+  </div>
+
+  <h3>4. Nové integrace <span class="new-tag">nové</span></h3>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <div class="card-title">Google AI Studio</div>
+      <div class="card-body">Export projektů přímo z AI Studia do lokální instance Antigravity včetně plného kontextu. Žádný context-switch.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <div class="card-title">Android</div>
+      <div class="card-body">Nativní agent loops pro vývoj mobilních aplikací. Build Android appky s agentem který vidí emulátor.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔥</div>
+      <div class="card-title">Firebase</div>
+      <div class="card-body">Deploy bez context switch — agent nasadí přímo na Firebase z Antigravity workspace bez extra konfigurace.</div>
+    </div>
+  </div>
+
+  <h3>Projects a Scoped Permissions</h3>
+  <p>2.0 přechází z <strong>repository-centric</strong> na <strong>project-centric</strong> model. Agenti mohou pracovat přes více složek, nástrojů a tasků s jasnými hranicemi.</p>
+  <ul>
+    <li><strong>Project-level settings</strong> — každý projekt má vlastní konfiguraci agenta</li>
+    <li><strong>Bounded access</strong> — agent vidí jen to, co mu projekt dovolí</li>
+    <li><strong>Persistent permission trust</strong> — jednou schválené akce si project pamatuje</li>
+    <li><strong>Multiple workspaces</strong> — přepínáš mezi projekty bez ztráty kontextu</li>
+  </ul>
+
+  <h3>Co zůstalo z v1.0</h3>
+  <p>Všechny core features původního IDE jsou stále přítomné:</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-icon">👀</div>
+      <div class="card-title">Editor View</div>
+      <div class="card-body">Klasický pohled pro přímou práci s kódem. Agent vidí otevřený soubor, píše diff, čeká na schválení.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎛️</div>
+      <div class="card-title">Manager Surface</div>
+      <div class="card-body">Asynchronní orchestrace více agentů. Nyní rozšířena o dynamic subagents a scheduled tasks.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Artifacts</div>
+      <div class="card-body">Task-level deliverables — plán, diff, screenshot, summary. Vše na jednom místě pro ověření.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Knowledge Base</div>
+      <div class="card-body">Kontextová paměť projektu. Agent čte i zapisuje — self-improvement jako core primitive.</div>
+    </div>
+  </div>
+
+  <div class="box purple-box">
+    <span class="icon">🤖</span>
+    <div class="content">
+      <strong>Čtyři tenets Antigravity</strong>
+      <ul>
+        <li><strong>Trust</strong> — kontext na přirozené task-level abstrakci, artifacts a verification pro důvěru uživatele</li>
+        <li><strong>Autonomy</strong> — agenti operují přes všechny surfaces zároveň, uživatel interaguje asynchronně</li>
+        <li><strong>Feedback</strong> — intuitivní async feedback (Google-doc-style komentáře, select-and-comment na screenshots)</li>
+        <li><strong>Self-improvement</strong> — agent akce přispívají do knowledge base pro kontinuální zlepšení</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Antigravity <em>CLI</em> <span class="new-tag">nové v 2.0</span></h2>
+
+  <p>Terminálový binary napsaný v Go — rychlejší a responzivnější než předchůdce (Gemini CLI). Stejný agent harness jako desktop app, ale bez GUI.</p>
+
+  <div class="box info">
+    <span class="icon">⚡</span>
+    <div class="content">
+      <strong>Proč Go?</strong>
+      <p>Google zvolil Go pro CLI z důvodu rychlosti startu, nízké memory footprint a jednoduché distribuce jako single binary. Gemini CLI bylo v Node.js — nástupce je výrazně rychlejší.</p>
+    </div>
+  </div>
+
+  <h3>Instalace CLI</h3>
+  <div class="codeblock"><span class="comment"># macOS / Linux — jednopříkazová instalace</span>
+curl -sSL https://antigravity.google/install.sh | bash
+
+<span class="comment"># Python SDK (alternativa)</span>
+pip install google-antigravity
+
+<span class="comment"># Ověř instalaci</span>
+antigravity --version</div>
+
+  <h3>Základní použití</h3>
+  <div class="codeblock"><span class="comment"># Spuštění agenta na refaktoring</span>
+antigravity agent run <span class="str">"refactor the rate-limit middleware"</span> \
+  --repo ./services/api \
+  --model gemini-3.5-flash
+
+<span class="comment"># Agent s více povoleními</span>
+antigravity agent run <span class="str">"add unit tests to all auth handlers"</span> \
+  --repo ./src \
+  --allow shell,code_edit,web_search \
+  --model gemini-3.5-flash
+
+<span class="comment"># Naplánovaný task (cron)</span>
+antigravity schedule add \
+  --cron <span class="str">"0 3 * * *"</span> \
+  --task <span class="str">"run security audit and create report"</span> \
+  --repo ./
+
+<span class="comment"># Zobrazit výsledky scheduled runů</span>
+antigravity schedule results --last 7</div>
+
+  <h3>CLI vs Claude Code vs ostatní</h3>
+  <p>Antigravity CLI orchestruje <strong>více agentů z terminálu</strong> a může dispatchovat subagenty. Claude Code je single-agent CLI. To je zásadní rozdíl pro komplexní workflows.</p>
+
+  <div class="box tip">
+    <span class="icon">🔧</span>
+    <div class="content">
+      <strong>Napojení na CI/CD pipeline</strong>
+      <p>CLI se dá drátovat přímo do pre-commit hooks, GitHub Actions a pre-deploy gates. V kombinaci s Apidog headless: agentic CI pipeline která píše testy, spouští je na mock serveru a merguje jen při splněných kontraktech.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Antigravity <em>SDK</em> <span class="new-tag">nové v 2.0</span></h2>
+
+  <p>SDK zpřístupňuje agent harness programaticky. Definuješ vlastní agent behaviors a hostíš je kdekoliv — vlastní EC2, Vertex AI nebo on-prem.</p>
+
+  <h3>Definice vlastního agenta</h3>
+  <div class="codeblock"><span class="kw">from</span> antigravity <span class="kw">import</span> Agent, Tool
+
+<span class="comment"># Definice backend code reviewer agenta</span>
+agent = Agent(
+    model=<span class="str">"gemini-3.5-flash"</span>,
+    tools=[Tool.shell, Tool.code_edit, Tool.web_search],
+    system=<span class="str">"You are a backend code reviewer. "</span>
+           <span class="str">"Block any PR that ships SQL without an index."</span>,
+)
+
+result = agent.run(<span class="str">"review PR #421"</span>)
+print(result.artifacts)   <span class="comment"># List[Artifact]</span>
+print(result.summary)     <span class="comment"># str — co agent udělal</span>
+print(result.approved)    <span class="comment"># bool — schválit PR?</span></div>
+
+  <h3>Dostupné nástroje v SDK</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Tool</th><th>Co umí</th><th>Poznámka</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-hl">Tool.shell</td><td>Spouštět shell příkazy</td><td>Vyžaduje explicitní povolení</td></tr>
+        <tr><td class="td-hl">Tool.code_edit</td><td>Číst a zapisovat soubory</td><td>Scoped na projekt root</td></tr>
+        <tr><td class="td-hl">Tool.web_search</td><td>Vyhledávat na webu</td><td>Gemini Search grounding</td></tr>
+        <tr><td class="td-hl">Tool.browser</td><td>Ovládat prohlížeč (Playwright)</td><td>Pro UI testing a screenshot verification</td></tr>
+        <tr><td class="td-hl">Tool.git</td><td>Git operace (diff, commit, PR)</td><td>Read-only nebo full write dle konfigurace</td></tr>
+        <tr><td class="td-hl">Tool.firebase</td><td>Deploy na Firebase</td><td>Vyžaduje service account</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Gemini optimalizace v SDK</h3>
+  <div class="box info">
+    <span class="icon">⚡</span>
+    <div class="content">
+      <strong>Nižší latence a náklady s Gemini</strong>
+      <p>SDK je optimalizovaný pro Gemini modely — nižší latence a nižší cena díky cache hits a tool-call optimalizaci. Ostatní providery (Claude, GPT) fungují, ale Gemini dostává výhody. Rozhoduj dle toho, za jakou model family již platíš.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Managed Agents <em>API</em> <span class="new-tag">nové v 2.0</span></h2>
+
+  <p>Největší novinka pro API konzumenty. Managed Agents přidává novou endpoint rodinu do Gemini API kde popisuješ cíl, uvádíš povolené nástroje a Google spustí agenta za tebe. <strong>Serverless agenti</strong> — platíš za runs, Google zajišťuje loop, scaling, retries a tool execution.</p>
+
+  <h3>Tři úrovně kontroly</h3>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <div class="card-title">Direct model calls</div>
+      <div class="card-body">Spravuješ loop, tools a state sám. Nejlevnější, nejvíce flexibilní, nejvíce kódu.</div>
+    </div>
+    <div class="card" style="border-color:rgba(0,217,255,.3)">
+      <div class="card-icon">☁️</div>
+      <div class="card-title">Managed Agents</div>
+      <div class="card-body">Deklaruješ cíl a tools. Google spravuje loop. Méně kódu, více guardrailů. Pro long-running tasks.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <div class="card-title">Desktop / CLI / SDK</div>
+      <div class="card-body">Spouštíš agenta lokálně. Plná kontrola, žádný managed scaling. Pro citlivé workloads mimo VPC.</div>
+    </div>
+  </div>
+
+  <h3>Kdy použít co</h3>
+  <ul>
+    <li><strong>Direct calls</strong> — high-volume, single-step inference (klasické Gemini volání)</li>
+    <li><strong>Managed Agents</strong> — long-running tasks kde spolehlivost > per-call cost</li>
+    <li><strong>SDK/Desktop</strong> — citlivé workloads které nesmí opustit tvůj VPC</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Cena managed agents</strong>
+      <p>Managed Agents tasky mohou trvat minuty. Platíš za celý run, ne jen za jednu inference. Při vývoji frontendu použij Apidog smart mock pro canned "completed" response — živý endpoint zapoj až když UI zvládne async flow.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Enterprise Agent <em>Platform</em> <span class="new-tag">nové v 2.0</span></h2>
+
+  <p>Pro organizace na Google Cloud se Antigravity pluguje přímo do <strong>Gemini Enterprise Agent Platform</strong>. Stejné agent definice se pohybují mezi SDK (developer-hosted) a Enterprise Platform (Google-hosted).</p>
+
+  <h3>Co Enterprise tier přináší</h3>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-icon">🔐</div>
+      <div class="card-title">SSO přes Google Workspace</div>
+      <div class="card-body">Žádné separátní účty. Single sign-on z Workspace, role management přes existující Google groups.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Audit logy každé akce</div>
+      <div class="card-body">Každý agent tool call, každá změna souboru, každý shell příkaz je zalogován a exportovatelný.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏗️</div>
+      <div class="card-title">VPC-Service-Controls</div>
+      <div class="card-body">Scoping agentních akcí na definované VPC perimetry. Kód neopustí tvou infrastrukturu.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <div class="card-title">BigQuery analytics</div>
+      <div class="card-body">Run analytics — kolik tokenů, jaké modely, jaké tools, kteří agenti. Business intelligence nad agentic workloads.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔑</div>
+      <div class="card-title">Cloud KMS credentials</div>
+      <div class="card-body">Tool credentials (API klíče, service accounts) jsou uloženy v Cloud KMS — ne v agent konfiguraci.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">Portabilita definic</div>
+      <div class="card-body">Buildni lokálně (SDK), shipni na platformu (Enterprise). Security tým dostane kontroly bez přepisování agenta.</div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">🏢</span>
+    <div class="content">
+      <strong>Competitive edge oproti Cursor a Windsurf</strong>
+      <p>Cursor nemá enterprise platformu této hloubky. Windsurf je blíže, ale chybí Google Cloud surface. Pro Google Cloud shops Enterprise tier mění celou rovnici — security a compliance requirements jsou splněny out-of-the-box.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Podporované <em>modely</em></h2>
+
+  <p>Antigravity 2.0 podporuje multi-model setup. Primárně je optimalizován pro Gemini, ale funguje i s ostatními providery.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>Provider</th><th>Primární use-case</th><th>Výhody v Antigravity</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-hl">Gemini 3.5 Flash</td>
+          <td>Google</td>
+          <td>Scheduled automation, rychlé agent interakce</td>
+          <td class="td-ok">Nativní, nejnižší latence, cache hits, tool-call optimalizace</td>
+        </tr>
+        <tr>
+          <td class="td-hl">Gemini 3.5 Pro Eye</td>
+          <td>Google</td>
+          <td>Komplexní reasoning, multimodal (screenshots)</td>
+          <td class="td-ok">Nativní, usage limits platí</td>
+        </tr>
+        <tr>
+          <td class="td-hl">Gemini 3 Pro</td>
+          <td>Google</td>
+          <td>Legacy projekty, 1.0 kompatibilita</td>
+          <td>Nativní, starší model</td>
+        </tr>
+        <tr>
+          <td class="td-hl">Claude Sonnet 4.5</td>
+          <td>Anthropic</td>
+          <td>Coding tasks kde Claude exceluje, fallback při cooldownu</td>
+          <td>Funguje, bez Google optimalizací</td>
+        </tr>
+        <tr>
+          <td class="td-hl">GPT-OSS</td>
+          <td>OpenAI</td>
+          <td>Specifické use-cases, experimenty</td>
+          <td>Funguje, bez Google optimalizací</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Usage limits — Gemini 3.5 Pro Eye</strong>
+      <p>Heavy users narazí na dočasné cooldowns. Strategie: přepni na Claude 4.5 nebo lokální modely dokud se kvóta neobnoví. Ultra plán ($100/měsíc) dává 5x víc, Ultra Premium ($200) 20x víc.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 09 -->
+<div class="sec" id="s9">
+  <div class="sec-label">// sekce 09</div>
+  <h2>Pricing — <em>plány a limity</em></h2>
+
+  <p>Tři plány — dva aktualizovány na I/O 2026. Ultra Premium zlevnil z $250 na $200/měsíc.</p>
+
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-plan">Free / Pro</div>
+      <div class="price-amt">$0 <span>/ měsíc</span></div>
+      <div class="price-limit">Základní limity</div>
+      <div class="price-feat"><strong>Přístup:</strong> Součást Google AI Pro</div>
+      <div class="price-feat"><strong>Gemini 3.5 Flash</strong> generický přístup</div>
+      <div class="price-feat">Weekly kvóty pro free tier</div>
+      <div class="price-feat">Desktop App, CLI, SDK</div>
+      <div class="price-feat" style="color:var(--t3)">Priority access ✗</div>
+      <div class="price-feat" style="color:var(--t3)">Voice commands omezeny</div>
+    </div>
+    <div class="price-card featured">
+      <div class="price-plan">AI Ultra</div>
+      <div class="price-amt">$100 <span>/ měsíc</span></div>
+      <div class="price-limit">5× limity oproti Pro</div>
+      <div class="price-feat"><strong>Priority access</strong> — žádné fronty</div>
+      <div class="price-feat">Gemini 3.5 Flash + Pro Eye plný přístup</div>
+      <div class="price-feat">Scheduled tasks bez limitu</div>
+      <div class="price-feat"><strong>Voice commands</strong> plně</div>
+      <div class="price-feat">Desktop + CLI + SDK + Managed API</div>
+      <div class="price-feat">Konkurenceschopné s Claude Max, ChatGPT Pro</div>
+    </div>
+    <div class="price-card premium">
+      <div class="price-plan">AI Ultra Premium</div>
+      <div class="price-amt">$200 <span>/ měsíc</span></div>
+      <div class="price-limit">20× limity oproti Pro</div>
+      <div class="price-feat" style="color:var(--purple2)">Zlevněno z $250 → $200</div>
+      <div class="price-feat">Team plan v disguise</div>
+      <div class="price-feat">Multi-repo refactors, heavy parallel agents</div>
+      <div class="price-feat">Nejvyšší priorita, nejnižší latence</div>
+      <div class="price-feat">Vhodné pro Enterprise + Google Cloud combo</div>
+    </div>
+  </div>
+
+  <div class="box info">
+    <span class="icon">💰</span>
+    <div class="content">
+      <strong>Kdy upgradovat?</strong>
+      <p>Pro plán stačí na exploraci a základní projekty. Na Free narazíš rychle na weekly kvóty. <strong>$100 Ultra</strong> je správná volba pro každodenní heavy use — multi-repo refaktory, scheduled background sweeps, voice-driven sessions. <strong>$200 Premium</strong> je fakticky team plan — pro firmy nebo freelancery s více projekty souběžně.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 10 -->
+<div class="sec" id="s10">
+  <div class="sec-label">// sekce 10</div>
+  <h2>Srovnání s <em>konkurencí</em></h2>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Feature</th><th>Antigravity 2.0</th><th>Cursor</th><th>Windsurf</th><th>Claude Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Desktop IDE</td><td class="td-ok">✓ Standalone</td><td class="td-ok">✓ (VS Code fork)</td><td class="td-ok">✓ (VS Code fork)</td><td class="td-no">✗</td></tr>
+        <tr><td>CLI nástroj</td><td class="td-ok">✓ (nové v 2.0)</td><td class="td-no">✗</td><td class="td-no">✗</td><td class="td-ok">✓</td></tr>
+        <tr><td>SDK / programmatic API</td><td class="td-ok">✓ (nové v 2.0)</td><td class="td-no">✗</td><td>Omezené</td><td class="td-ok">✓ Agent SDK</td></tr>
+        <tr><td>Multi-agent orchestrace</td><td class="td-ok">✓ Manager + dynamic subagents</td><td>Composer (1 agent)</td><td>Cascade (1 agent)</td><td>Subagents</td></tr>
+        <tr><td>Scheduled background tasks</td><td class="td-ok">✓ (nové v 2.0)</td><td class="td-no">✗</td><td class="td-no">✗</td><td>Continuously-running mode</td></tr>
+        <tr><td>Voice commands</td><td class="td-ok">✓ (nové v 2.0)</td><td class="td-no">✗</td><td class="td-no">✗</td><td class="td-no">✗</td></tr>
+        <tr><td>Managed Agents API</td><td class="td-ok">✓ (Gemini API)</td><td class="td-no">✗</td><td class="td-no">✗</td><td>Claude Managed Agents</td></tr>
+        <tr><td>Enterprise platforma</td><td class="td-ok">✓ Gemini Enterprise</td><td>Cursor for Business</td><td>Windsurf Enterprise</td><td>Anthropic Enterprise</td></tr>
+        <tr><td>Výchozí model</td><td>Gemini 3.5 Flash</td><td>Claude Sonnet 4.5</td><td>Různé</td><td>Claude Sonnet 4.5</td></tr>
+        <tr><td>VS Code kompatibilita</td><td>Lze dual-wield</td><td class="td-ok">✓ Nativní</td><td class="td-ok">✓ Nativní</td><td class="td-ok">✓ Přes extension</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Kdy zvolit co</h3>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-icon">🚀</div>
+      <div class="card-title">Antigravity 2.0 — ideální pro...</div>
+      <div class="card-body">Agent orchestration depth. Google Cloud / Firebase / Android stack. Scheduled background automation. Voice-driven workflows. Enterprise compliance requirements na Google Cloud.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⌨️</div>
+      <div class="card-title">Cursor — stále lepší pro...</div>
+      <div class="card-body">Pure code-completion experience. VS Code familiarity — nepotřebuješ měnit setup. Jednoduchá AI asistence bez orchestration overhead.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <div class="card-title">Claude Code — pro...</div>
+      <div class="card-body">Headless CLI agents — Claude Code má větší maturitu v tomto prostoru. Anthropic-first stack. Preference Claude modelu jako primárního.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌊</div>
+      <div class="card-title">Windsurf — pro...</div>
+      <div class="card-body">VS Code komfort s AI. Menší projekty bez enterprise požadavků. Cursor alternativa pro uživatele kteří hledají varietu.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 11 -->
+<div class="sec" id="s11">
+  <div class="sec-label">// sekce 11</div>
+  <h2>Migrace <em>z Gemini CLI</em></h2>
+
+  <div class="box danger">
+    <span class="icon">🚨</span>
+    <div class="content">
+      <strong>Deadline: 18. června 2026</strong>
+      <p>Consumer access ke <strong>Gemini CLI</strong> a <strong>Gemini Code Assist IDE extensions</strong> skončí 18. 6. 2026 pro všechny uživatele — AI Pro, AI Ultra i free tier. Nastav si připomínku!</p>
+    </div>
+  </div>
+
+  <h3>Co se vypíná</h3>
+  <ul>
+    <li><strong>Gemini CLI</strong> — terminálový příkaz <code>gemini</code> přestane fungovat</li>
+    <li><strong>Gemini Code Assist VS Code extension</strong> — inline suggestions v editoru skončí</li>
+    <li><strong>Gemini Code Assist JetBrains plugin</strong> — totéž</li>
+  </ul>
+
+  <h3>Migrační kroky</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Instaluj Antigravity CLI</div>
+        <p>Spusť: <code>curl -sSL https://antigravity.google/install.sh | bash</code></p>
+        <p>Ověř: <code>antigravity --version</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Přenes skripty a aliasy</div>
+        <p>Každý <code>gemini run "..."</code> nahraď za <code>antigravity agent run "..."</code>. Většina příkazů má přímý ekvivalent.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Aktualizuj CI/CD pipeline</div>
+        <p>GitHub Actions, GitLab CI a jiné pipeline soubory — nahraď Gemini CLI příkazy za Antigravity CLI. Nová CLI používá stejný API klíč jako Gemini.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">Odinstaluj Gemini Code Assist extension</div>
+        <p>V VS Code: Extensions → vyhledej "Gemini Code Assist" → Uninstall. Nahraď Antigravity IDE nebo nech Antigravity 2.0 jako standalone orchestrátor vedle libovolného editoru.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">5</div>
+      <div class="step-b">
+        <div class="step-t">Otestuj před deadlinem</div>
+        <p>Spusť paralelně oba nástroje na stejném projektu ještě před 18. 6. — ověř že výstupy jsou ekvivalentní a všechna CI přechází.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 12 -->
+<div class="sec" id="s12">
+  <div class="sec-label">// sekce 12</div>
+  <h2>Instalace &amp; <em>quickstart</em></h2>
+
+  <h3>Desktop App</h3>
+  <p>Stáhni z <a href="https://antigravity.google" target="_blank">antigravity.google</a> nebo <a href="https://antigravityide.org/download" target="_blank">antigravityide.org/download</a>. Dostupné pro macOS, Windows a Linux jako standalone app — nepotřebuje VS Code ani žádný jiný IDE.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Platforma</th><th>Formát</th><th>Systém</th></tr></thead>
+      <tbody>
+        <tr><td>macOS</td><td>.dmg (Universal — Intel + Apple Silicon)</td><td>macOS 12+</td></tr>
+        <tr><td>Windows</td><td>.exe installer, winget</td><td>Windows 10+</td></tr>
+        <tr><td>Linux</td><td>.deb, .rpm, .AppImage, snap</td><td>Ubuntu 20.04+, Fedora 35+</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>CLI instalace</h3>
+  <div class="codeblock"><span class="comment"># macOS / Linux</span>
+curl -sSL https://antigravity.google/install.sh | bash
+
+<span class="comment"># Windows (PowerShell)</span>
+irm https://antigravity.google/install.ps1 | iex
+
+<span class="comment"># Python SDK (všechny platformy)</span>
+pip install google-antigravity
+
+<span class="comment"># winget (Windows)</span>
+winget install Google.Antigravity</div>
+
+  <h3>První spuštění — Desktop App</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">A</div>
+      <div class="step-b">
+        <div class="step-t">Přihlásit se Google účtem</div>
+        <p>Při prvním startu klikni <strong>Sign in with Google</strong>. Tvůj plán (Free/Pro/Ultra) se načte automaticky.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">B</div>
+      <div class="step-b">
+        <div class="step-t">Vytvořit projekt</div>
+        <p>New Project → vyber složku (nebo více složek) → pojmenuj projekt → nastav permissions (doporučeno: <em>Ask before shell commands</em> pro začátek).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">C</div>
+      <div class="step-b">
+        <div class="step-t">Otevřít Manager Surface</div>
+        <p>Vlevo panel <strong>Agents</strong> → vidíš prázdný seznam aktivních agentů. Vpravo <strong>Artifacts</strong> panel pro výsledky.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">D</div>
+      <div class="step-b">
+        <div class="step-t">Odeslat první task</div>
+        <p>Do input boxu dole napiš task v přirozeném jazyce. Agent vytvoří PLAN → schválíš → provede → zobrazí Artifacts (diff + summary).</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Dual-wield workflow</h3>
+  <div class="box tip">
+    <span class="icon">🤝</span>
+    <div class="content">
+      <strong>Kombinace s tvým stávajícím IDE</strong>
+      <p>Máš otevřený VS Code nebo Cursor? Otevři Antigravity 2.0 jako druhé okno. Editor = ty píšeš kód. Antigravity 2.0 = agenti dělají komplexní tasks asynchronně. Změny se projeví v editoru (hot reload přes file system watcher).</p>
+    </div>
+  </div>
+</div>
+
+<!-- 13 -->
+<div class="sec" id="s13">
+  <div class="sec-label">// sekce 13</div>
+  <h2>Praktické příklady &amp; <em>best practices</em></h2>
+
+  <h3>Vzorce které fungují</h3>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Specifický task s kontextem souboru</strong>
+      <p>"V souboru <code>src/auth/middleware.ts</code> na řádku 48 přidej rate limiting. Limit: 100 requestů za minutu na IP. Použij existující Redis client z <code>src/lib/redis.ts</code>. Přidej unit test do <code>tests/auth/middleware.test.ts</code>."</p>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Task s definovaným výsledkem</strong>
+      <p>"Refaktoruj <code>src/utils/api.ts</code>: odděl fetch logiku do <code>api-client.ts</code>. Výsledek: <code>api.ts</code> = business logika, <code>api-client.ts</code> = HTTP klient. Všechny existující testy musí projít."</p>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Multi-service audit (využij subagenty)</strong>
+      <p>"Zkontroluj všechny microservices v <code>./services/</code> jestli správně validují JWT tokeny. Vytvoř report pro každou službu a souhrnný Markdown dokument."</p>
+      <p>→ Antigravity automaticky spawnuje subagenta pro každou službu paralelně.</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Vyhni se vágním taskům</strong>
+      <p>❌ "Vylepši kód"<br/>❌ "Oprav to"<br/>❌ "Udělej to lépe"<br/><br/>Agent neví co znamená "lépe". Vždy specifikuj: co, kde, jak, a jaký je očekávaný výsledek.</p>
+    </div>
+  </div>
+
+  <h3>Scheduled tasks — best practices</h3>
+  <div class="codeblock"><span class="comment"># Nightly dependency check — každou noc ve 3:00</span>
+antigravity schedule add \
+  --cron <span class="str">"0 3 * * *"</span> \
+  --task <span class="str">"Check for outdated dependencies in package.json, create PR with updates if any found"</span>
+
+<span class="comment"># Weekly security scan — každé pondělí ráno</span>
+antigravity schedule add \
+  --cron <span class="str">"0 8 * * 1"</span> \
+  --task <span class="str">"Run OWASP dependency check, scan for known CVEs, create issue if severity > high"</span>
+
+<span class="comment"># Post-release cleanup — po každém merge do main</span>
+<span class="comment"># (via webhook trigger, ne cron)</span>
+antigravity trigger add \
+  --event git.merge \
+  --branch main \
+  --task <span class="str">"Clean up feature flags older than 30 days, create PR"</span></div>
+
+  <h3>Artifacts — jak je číst</h3>
+  <p>Každý agent task generuje Artifacts panel s těmito sekcemi:</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <div class="card-title">PLAN Artifact</div>
+      <div class="card-body">Zobrazí se PŘED provedením. Vidíš co agent plánuje udělat. Schválíš nebo odmítneš. Nikdy se nic nemění bez tvého OK.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📝</div>
+      <div class="card-title">DIFF Artifact</div>
+      <div class="card-body">Přesně co se změnilo v jakém souboru. Klasický git diff formát — zelená přidáno, červená odebrána.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📸</div>
+      <div class="card-title">Screenshot Artifact</div>
+      <div class="card-body">Pokud agent spustil browser (Chrome extension), dostaneš screenshot výsledku. Vizuální ověření UI changes.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">✅</div>
+      <div class="card-title">Summary Artifact</div>
+      <div class="card-body">"Hotovo, 3 soubory změněny, 0 chyb, build OK, 12 testů prošlo." Strojově čitelný + human-readable.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 14 -->
+<div class="sec" id="s14">
+  <div class="sec-label">// sekce 14</div>
+  <h2>Omezení &amp; <em>known issues</em></h2>
+
+  <div class="box danger">
+    <span class="icon">🚨</span>
+    <div class="content">
+      <strong>Usage limits a cooldowns</strong>
+      <p>Gemini 3.5 Pro Eye má usage limits. Heavy users (parallel subagents, voice sessions, scheduled tasks souběžně) narazí na dočasné cooldowns. Řešení: přepni na Claude 4.5 nebo počkej na obnovení kvóty. Ultra plán dává 5× headroom.</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Složitá prostředí</strong>
+      <p>Velmi custom build environments, obscure frameworky nebo masivní legacy codebases mohou způsobit problémy. Agent může selhat nebo vygenerovat nekorektní kód při práci s nestandartními nástroji. Vždy kontroluj PLAN před schválením.</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Managed Agents latence</strong>
+      <p>Long-running Managed Agents tasky mohou trvat minuty. Při vývoji frontendu nezapomeň na async handling — app musí zvládnout čekat na response. Použij mock response pro development.</p>
+    </div>
+  </div>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>SDK Gemini optimalizace</strong>
+      <p>SDK je optimalizovaný pro Gemini modely. Při použití Claude nebo GPT přes SDK neočekávej stejnou latenci ani cenu — optimalizace cache hits a tool-call pipeline fungují pouze s Gemini family.</p>
+    </div>
+  </div>
+
+  <h3>Srovnání omezení vs. konkurence</h3>
+  <ul>
+    <li><strong>VS Code chybí nativně</strong> — Antigravity 2.0 standalone app není VS Code fork. Uživatelé zvyklí na VS Code prostředí musí adoptovat dual-wield nebo přejít na Antigravity IDE (v1.0 style)</li>
+    <li><strong>Editor familiarity</strong> — Cursor stále vede v čistém code-completion UX pro VS Code uživatele</li>
+    <li><strong>Headless CLI maturity</strong> — Claude Code má větší maturitu jako headless CLI agent pro specifické use-cases</li>
+    <li><strong>Vendor lock-in</strong> — Google Cloud integrace jsou výhoda pro GCP uživatele, ale komplikace pro AWS/Azure-first shops</li>
+  </ul>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  01_ANT_MANUAL.html · Antigravity 2.0 průvodce · Google I/O 2026 · Květen 2026<br>
+  Zdroje: antigravity.google · apidog.com/blog/google-antigravity-2 · thenextweb.com · antigravityide.org
+</footer>
+
+</div>
+</body>
+</html>
