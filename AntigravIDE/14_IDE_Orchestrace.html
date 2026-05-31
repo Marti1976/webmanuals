@@ -87,8 +87,8 @@ code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(16,185,129,
   border-radius:8px;padding:12px;margin:12px 0;font-family:'DM Mono',monospace;font-size:.75em;
   color:var(--green2);line-height:1.5;overflow-x:auto}
 
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
+footer{margin-top:60px;padding:24px 32px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
 /* === CHAPTER NAVIGATION === */
 .chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
 .ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
@@ -98,9 +98,92 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .ch-btn.next{justify-content:flex-end;text-align:right}
 .ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
 .ch-btn .ch-name{color:var(--purple2)}
+/* === SIDEBAR === */
+.progress-bar {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  z-index: 999; width: 0%; transition: width 0.1s;
+}
+.sidebar {
+  position: fixed; left: 0; top: 0; width: 260px; height: 100vh;
+  background: rgba(15, 12, 24, 0.97); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; z-index: 100; overflow-y: auto;
+}
+.sidebar::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple), transparent);
+}
+.sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); }
+.sidebar-back { color: var(--t2); text-decoration: none; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.08em; display: flex; gap: 6px;
+  margin-bottom: 16px; transition: color 0.2s; }
+.sidebar-back:hover { color: var(--cyan); }
+.sidebar-icon { width: 38px; height: 38px; font-size: 1.4rem; border-radius: 10px;
+  background: rgba(168, 85, 247, 0.12); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; }
+.sidebar-name { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+.sidebar-name small { font-size: 0.7rem; color: var(--t2); display: block; margin-top: 2px; }
+.nav-group-label { padding: 16px 20px 6px; font-size: 9px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--t3); font-family: monospace; }
+.nav-link, .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 20px;
+  color: var(--t2); text-decoration: none; font-size: 13px;
+  border-left: 2px solid transparent; transition: all 0.2s; }
+.nav-link:hover, .nav-link.active,
+.nav-item:hover, .nav-item.active { color: var(--white);
+  background: rgba(0, 217, 255, 0.05); border-left-color: var(--cyan); }
+.nav-step, .nav-num { font-family: monospace; font-size: 10px; min-width: 22px;
+  color: var(--purple); background: rgba(168, 85, 247, 0.10);
+  border: 1px solid rgba(168, 85, 247, 0.25); padding: 2px 5px;
+  border-radius: 4px; text-align: center; flex-shrink: 0; }
+
+/* Layout */
+.wrap   { margin-left: 260px; }
+footer  { margin-left: 260px; }
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .wrap, footer { margin-left: 0; }
+}
+
 </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="00_IDE_INDEX.html" class="sidebar-back">← Zpět na rozcestník</a>
+    <div class="sidebar-title">
+      <div class="sidebar-icon">🎭</div>
+      <div class="sidebar-name">
+        Orchestrace
+        <small>Multi-agent · Kapitola 14</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-group-label">Obsah</div>
+
+  <a href="#s1" class="nav-link active">
+    <span class="nav-step">01</span> Základy orchestrace
+  </a>
+  <a href="#s2" class="nav-link">
+    <span class="nav-step">02</span> Komunikační kanály
+  </a>
+  <a href="#s3" class="nav-link">
+    <span class="nav-step">03</span> Interface definice
+  </a>
+  <a href="#s4" class="nav-link">
+    <span class="nav-step">04</span> Workflow DAG
+  </a>
+  <a href="#s5" class="nav-link">
+    <span class="nav-step">05</span> Konflikt resolution
+  </a>
+  <a href="#s6" class="nav-link">
+    <span class="nav-step">06</span> Best practices
+  </a>
+</nav>
+
 <div class="wrap">
 
 <a href="00_IDE_INDEX.html" class="nav-back">← Zpět na index</a>
@@ -806,10 +889,32 @@ Oba kódují proti rozhraní, bez čekání
 </nav>
 
 <footer>
-  14_IDE_Orchestrace.html · Antigravity IDE průvodce · Claude (Anthropic) · Květen 2026<br/>
-  <a href="00_IDE_INDEX.html" style="color:var(--purple2)">← Zpět na index</a>
+  <span>14_IDE_Orchestrace.html · Antigravity IDE průvodce · Claude (Anthropic) · Květen 2026</span>
+  <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
 </footer>
 
 </div>
+<script>
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progressBar');
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  bar.style.width = (scrollTop / height * 100) + '%';
+});
+
+const sections = document.querySelectorAll('.sec[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const target = document.querySelector(`[href="#${e.target.id}"]`);
+      if (target) target.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+
 </body>
 </html>

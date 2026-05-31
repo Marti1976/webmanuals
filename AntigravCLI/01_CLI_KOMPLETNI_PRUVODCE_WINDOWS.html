@@ -772,15 +772,15 @@ td:first-child { color: var(--white); font-weight: 500; }
     <a href="00_CLI_INDEX.html" class="sidebar-back">← Zpět na index</a>
     <div class="sidebar-title">
       <div class="sidebar-icon">🤖</div>
-      <div class="sidebar-name">Kompletní průvodce<small>Gemini CLI pro Windows</small></div>
+      <div class="sidebar-name">Kompletní průvodce<small>Antigravity CLI pro Windows</small></div>
     </div>
   </div>
   <div class="nav-group-label">Obsah</div>
   <a href="#sec-co-to-je" class="nav-link active"><span class="nav-step">01</span> Co je Gemini CLI</a>
   <a href="#sec-porovnani" class="nav-link"><span class="nav-step">02</span> Srovnání s AI Studiem</a>
   <a href="#sec-terminal" class="nav-link"><span class="nav-step">03</span> Co je terminál</a>
-  <a href="#sec-nodejs" class="nav-link"><span class="nav-step">04</span> Instalace Node.js</a>
-  <a href="#sec-instalace" class="nav-link"><span class="nav-step">05</span> Instalace Gemini CLI</a>
+  <a href="#sec-nodejs" class="nav-link"><span class="nav-step">04</span> Node.js – co se změnilo</a>
+  <a href="#sec-instalace" class="nav-link"><span class="nav-step">05</span> Instalace Antigravity CLI</a>
   <a href="#sec-prihlaseni" class="nav-link"><span class="nav-step">06</span> Přihlášení Google</a>
   <a href="#sec-projekt" class="nav-link"><span class="nav-step">07</span> Připojení na projekt</a>
   <a href="#sec-devserver" class="nav-link"><span class="nav-step">07b</span> ⭐ Vývojový server</a>
@@ -798,11 +798,11 @@ td:first-child { color: var(--white); font-weight: 500; }
 <!-- ===== HERO ===== -->
 <div class="hero">
   <div class="hero-eyebrow">// průvodce pro projekt rodinný-receptár</div>
-  <h1>Gemini CLI –<br><span>kompletní průvodce</span><br>od nuly</h1>
-  <p class="hero-desc">Krok za krokem, bez přeskakování. Pro toho, kdo se teprve učí a nechce znovu zažít noční můry s Google AI Studiem.</p>
+  <h1>Antigravity CLI –<br><span>kompletní průvodce</span><br>od nuly</h1>
+  <p class="hero-desc">Krok za krokem, bez přeskakování. Pro toho, kdo chce používat Antigravity CLI od prvního spuštění správně.</p>
   <div class="hero-badges">
     <span class="badge badge-green">✓ Zdarma navždy</span>
-    <span class="badge badge-amber">⭐ 1000 dotazů denně</span>
+    <span class="badge badge-amber" style="border-color:rgba(248,81,73,.5);color:var(--red);background:rgba(248,81,73,.08)">⚠️ Týdenní limit dotazů</span>
     <span class="badge badge-teal">🧠 Vidí celý projekt</span>
     <span class="badge badge-purple">💬 Mluví česky</span>
   </div>
@@ -814,7 +814,7 @@ td:first-child { color: var(--white); font-weight: 500; }
 <!-- ===== 01 CO TO JE ===== -->
 <div class="section" id="sec-co-to-je">
   <div class="section-label">// sekce 01</div>
-  <h2>Co je Gemini CLI a proč ho chceš</h2>
+  <h2>Co je Antigravity CLI a proč ho chceš</h2>
 
   <p>Gemini CLI je <strong>AI asistent od Googlu</strong>, který pracuje přímo v tvém terminálu (příkazovém řádku). To zní technicky, ale za tím se skrývá jednoduchá myšlenka:</p>
 
@@ -852,7 +852,7 @@ td:first-child { color: var(--white); font-weight: 500; }
 <!-- ===== 02 SROVNÁNÍ ===== -->
 <div class="section" id="sec-porovnani">
   <div class="section-label">// sekce 02</div>
-  <h2>Srovnání s Google AI Studiem</h2>
+  <h2>Srovnání Antigravity CLI s Google AI Studiem</h2>
 
   <p>Ty víš lépe než kdokoliv jiný, co AI Studio dělá. Tady je proč Gemini CLI funguje jinak:</p>
 
@@ -943,9 +943,16 @@ td:first-child { color: var(--white); font-weight: 500; }
 <!-- ===== 04 NODE.JS ===== -->
 <div class="section" id="sec-nodejs">
   <div class="section-label">// sekce 04</div>
-  <h2>Instalace Node.js (nutný základ)</h2>
+  <h2>Node.js – co se změnilo s Antigravity CLI</h2>
 
-  <p>Gemini CLI je napsané v JavaScriptu a potřebuje Node.js – prostředí pro spouštění JavaScriptu. Naštěstí to tvůj projekt již pravděpodobně má, ale pojďme si to ověřit.</p>
+  <div class="callout warn" style="border-color:rgba(232,160,32,.6);background:rgba(232,160,32,.06)">
+    <span class="callout-icon">🔀</span>
+    <div class="callout-body">
+      <strong>Dvě různé situace – čti pozorně</strong>
+      <p><strong>Antigravity CLI (agy):</strong> je napsané v Go — Node.js <em>nepotřebuje</em>. Instaluje se jako binární soubor přes curl installer.<br>
+      <strong>Tvůj projekt (npm run dev, build):</strong> Node.js stále potřebuje. Bez Node.js Vite dev server nespustíš.</p>
+    </div>
+  </div>
 
   <h3>Krok 1 – Ověř zda Node.js máš</h3>
   <p>Otevři terminál a napiš:</p>
@@ -1005,14 +1012,15 @@ td:first-child { color: var(--white); font-weight: 500; }
 <!-- ===== 05 INSTALACE CLI ===== -->
 <div class="section" id="sec-instalace">
             <div class="section-label">// sekce 05</div>
-            <h2>Instalace Gemini CLI</h2>
-            <p>Tohle je část, kde se to na Windows může zaseknout. Samotná instalace je jednoduchá, ale PowerShell někdy blokuje spuštění souboru <strong>npm.ps1</strong> kvůli nastavení oprávnění.</p>
+            <h2>Instalace Antigravity CLI</h2>
+            <p>Antigravity CLI se instaluje jako binární soubor — žádný npm, žádný Node.js potřeba. Instalátor sám detekuje platformu, stáhne správnou verzi a přidá <span class="cmd">agy</span> do PATH.</p>
 
-            <div class="callout warn">
-                <span class="callout-icon">⚠️</span>
+            <div class="callout warn" style="border-color:rgba(232,160,32,.6);background:rgba(232,160,32,.06)">
+                <span class="callout-icon">🔀</span>
                 <div class="callout-body">
-                    <strong>Když se objeví chyba s npm.ps1</strong>
-                    <p>Po zadání <span class="cmd">npm install -g @google/gemini-cli</span> se může objevit hláška, že soubor <span class="cmd">npm.ps1</span> nelze načíst, protože spouštění skriptů je v tomto systému zakázáno. Není to chyba Gemini CLI ani Node.js. Je to ochrana PowerShellu.</p>
+                    <strong>Dvě varianty instalace</strong>
+                    <p><strong>Nová metoda (doporučená):</strong> curl installer — funguje ihned, bez Node.js, bez npm oprávnění.<br>
+                    <strong>Stará metoda:</strong> <span class="cmd">curl -fsSL https://antigravity.google/cli/install.sh | bash</span> — přestane fungovat <strong>18. června 2026</strong>. Nepoužívej.</p>
                 </div>
             </div>
 
@@ -1057,9 +1065,9 @@ td:first-child { color: var(--white); font-weight: 500; }
                     <div class="step-body">
                         <div class="step-title">Teď proveď samotnou instalaci Gemini CLI</div>
                         <div class="code-block">
-                            <span class="w">npm install -g @google/gemini-cli</span>
+                            <span class="w">curl -fsSL https://antigravity.google/cli/install.sh | bash</span>
                         </div>
-                        <p>Příznak <span class="cmd">-g</span> znamená „nainstaluj globálně“, takže příkaz <span class="cmd">gemini</span> bude fungovat odkudkoliv.</p>
+                        <p>Příznak <span class="cmd">-g</span> znamená „nainstaluj globálně“, takže příkaz <span class="cmd">agy</span> bude fungovat odkudkoliv.</p>
                         <p>Instalace trvá 1–3 minuty. Uvidíš hodně textu. To je normální. Počkej, až se vrátí řádek s výzvou.</p>
                     </div>
                 </div>
@@ -1069,30 +1077,14 @@ td:first-child { color: var(--white); font-weight: 500; }
                     <div class="step-body">
                         <div class="step-title">Ověř, že instalace proběhla</div>
                         <div class="code-block">
-                            <span class="w">gemini --version</span>
+                            <span class="w">agy --version</span>
                         </div>
                         <p>Měl bys vidět číslo verze. Pokud ne, zavři PowerShell a otevři ho znovu.</p>
                     </div>
                 </div>
             </div>
 
-            <h3>Jednorázové povolení jen pro tuto jednu instalaci</h3>
-            <p>Pokud nechceš měnit oprávnění natrvalo ani pro svůj účet, můžeš povolit skripty jen v aktuálně otevřeném PowerShellu:</p>
-            <div class="code-block">
-                <span class="w">Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</span>
-            </div>
-            <p>Potom ve stejném okně hned spusť instalaci:</p>
-            <div class="code-block">
-                <span class="w">npm install -g @google/gemini-cli</span>
-            </div>
 
-            <div class="callout info">
-                <span class="callout-icon">ℹ️</span>
-                <div class="callout-body">
-                    <strong>Kdy použít kterou variantu?</strong>
-                    <p><span class="cmd">CurrentUser</span> je praktičtější, pokud budeš npm a podobné nástroje používat častěji. <span class="cmd">Process</span> je opatrnější varianta, pokud chceš povolit skripty jen pro toto jedno okno PowerShellu.</p>
-                </div>
-            </div>
 
             <div class="callout tip">
                 <span class="callout-icon">💡</span>
@@ -1115,7 +1107,7 @@ td:first-child { color: var(--white); font-weight: 500; }
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Spusť Gemini CLI poprvé</div>
-        <div class="code-block"><span class="w">gemini</span></div>
+        <div class="code-block"><span class="w">agy</span></div>
         <p>Zobrazí se výběr barevného tématu. Vyber šipkami a potvrď Enterem. Klidně vezmi první.</p>
       </div>
     </div>
@@ -1186,7 +1178,7 @@ td:first-child { color: var(--white); font-weight: 500; }
     <div class="term-body">
       <span class="term-line"><span class="t-prompt">PS C:\Users\Pavel&gt; </span><span class="t-cmd">cd C:\Users\Pavel\projekty\rodinny-receptar</span></span>
       <span class="term-line"> </span>
-      <span class="term-line"><span class="t-prompt">PS C:\...\rodinny-receptar&gt; </span><span class="t-cmd">gemini</span></span>
+      <span class="term-line"><span class="t-prompt">PS C:\...\rodinny-receptar&gt; </span><span class="t-cmd">agy</span></span>
       <span class="term-line"> </span>
       <span class="term-line"><span class="t-gem">╔══════════════════════════════╗</span></span>
       <span class="term-line"><span class="t-gem">║  Gemini CLI  🤖               ║</span></span>
@@ -1288,7 +1280,7 @@ td:first-child { color: var(--white); font-weight: 500; }
     <div style="color:var(--text3); font-size:1.5em;">+</div>
     <div>
       <div style="font-family:'Syne',sans-serif; font-weight:700; color:var(--amber2); margin-bottom:6px;">Terminál 2</div>
-      <div class="cmd" style="display:block; margin-bottom:4px; border-color:rgba(240,160,48,.4); color:var(--amber2);">gemini</div>
+      <div class="cmd" style="display:block; margin-bottom:4px; border-color:rgba(240,160,48,.4); color:var(--amber2);">agy</div>
       <div style="font-size:0.8em; color:var(--text3);">Tady píšeš<br>instrukce</div>
     </div>
     <div style="color:var(--text3); font-size:1.5em;">+</div>
@@ -1305,7 +1297,7 @@ td:first-child { color: var(--white); font-weight: 500; }
                 </div>
                 <div id="dvaterminaly-windows" class="os-panel active">
                     <p><strong>Způsob 1 – Windows Terminal (doporučeno)</strong></p>
-                    <p>Otevři dvě karty nebo dvě okna. V jednom poběží <span class="cmd">npm run dev</span>, v druhém <span class="cmd">gemini</span>.</p>
+                    <p>Otevři dvě karty nebo dvě okna. V jednom poběží <span class="cmd">npm run dev</span>, v druhém <span class="cmd">agy</span>.</p>
                     <p style="margin-top:12px;"><strong>Způsob 2 – dvě okna PowerShellu</strong></p>
                     <p>Otevři PowerShell dvakrát a dej okna vedle sebe.</p>
                     <p style="margin-top:12px;"><strong>Způsob 3 – z Průzkumníku</strong></p>
@@ -1399,7 +1391,7 @@ td:first-child { color: var(--white); font-weight: 500; }
 <!-- ===== 08 GEMINI.MD ===== -->
 <div class="section" id="sec-geminimd">
   <div class="section-label">// sekce 08  ⭐ nejdůležitější část</div>
-  <h2>Soubor GEMINI.md – klíč ke všemu</h2>
+  <h2>Soubor AGENTS.md / GEMINI.md – klíč ke všemu</h2>
 
   <p>Toto je <strong>nejdůležitější věc</strong> celého průvodce. Soubor <span class="cmd">GEMINI.md</span> v kořenové složce projektu Gemini CLI automaticky přečte při každém spuštění. Je to jako "briefing" pro AI – řekneš mu kdo jsi, co dělá projekt, a hlavně <strong>co smí a co nesmí dělat</strong>.</p>
 
@@ -1686,8 +1678,8 @@ td:first-child { color: var(--white); font-weight: 500; }
         <div class="step-title">❌ "gemini: command not found"</div>
         <p><strong>Příčina:</strong> Gemini CLI není nainstalován nebo ho terminál nenachází.</p>
         <p><strong>Řešení 1:</strong> Zavři terminál a otevři znovu (Windows si nové příkazy načte až po restartu terminálu).</p>
-        <p><strong>Řešení 2:</strong> Znovu spusť instalaci: <span class="cmd">npm install -g @google/gemini-cli</span></p>
-        <p><strong>Řešení 3 (Mac):</strong> Zkus <span class="cmd">npx @google/gemini-cli</span> místo jen <span class="cmd">gemini</span></p>
+        <p><strong>Řešení 2:</strong> Znovu spusť instalaci: <span class="cmd">curl -fsSL https://antigravity.google/cli/install.sh | bash</span></p>
+        <p><strong>Řešení 3 (Mac):</strong> Zkus <span class="cmd">agy</span> místo jen <span class="cmd">agy</span></p>
       </div>
     </div>
 
@@ -1695,8 +1687,8 @@ td:first-child { color: var(--white); font-weight: 500; }
       <div class="step-num" style="color: var(--red);">!</div>
       <div class="step-body">
         <div class="step-title">❌ "node: command not found" nebo stará verze</div>
-        <p><strong>Příčina:</strong> Node.js není nainstalován nebo je starý (potřeba 20+).</p>
-        <p><strong>Řešení:</strong> Stáhni a nainstaluj Node.js LTS z <span class="cmd">nodejs.org</span>. Po instalaci znovu otevři terminál.</p>
+        <p><strong>Příčina:</strong> Antigravity CLI (agy) není na PATH.</p>
+        <p><strong>Řešení:</strong> Zavři terminál, otevři znovu. Ověř že <span class="cmd">%LOCALAPPDATA%\Antigravity\</span> je v systémové PATH.</p>
       </div>
     </div>
 
@@ -1714,7 +1706,7 @@ td:first-child { color: var(--white); font-weight: 500; }
       <div class="step-num" style="color: var(--red);">!</div>
       <div class="step-body">
         <div class="step-title">❌ Přihlášení nefunguje / prohlížeč se neotevřel</div>
-        <p><strong>Řešení 1:</strong> Zkus příkaz <span class="cmd">gemini auth login</span></p>
+        <p><strong>Řešení 1:</strong> Zkus příkaz <span class="cmd">agy</span></p>
         <p><strong>Řešení 2:</strong> Zkontroluj zda máš funkční připojení k internetu.</p>
         <p><strong>Řešení 3:</strong> Pokud se prohlížeč neotevřel automaticky, v terminálu bude URL odkaz – zkopíruj ho a vlož ručně do prohlížeče.</p>
       </div>
@@ -1725,7 +1717,7 @@ td:first-child { color: var(--white); font-weight: 500; }
       <div class="step-body">
         <div class="step-title">⚠️ Gemini "nevidí" soubory projektu</div>
         <p><strong>Příčina:</strong> Spustil jsi Gemini CLI v jiné složce, ne ve složce projektu.</p>
-        <p><strong>Řešení:</strong> Ukonči Gemini (<span class="cmd">/quit</span>), přejdi do správné složky pomocí <span class="cmd">cd</span>, a znovu spusť <span class="cmd">gemini</span>.</p>
+        <p><strong>Řešení:</strong> Ukonči Gemini (<span class="cmd">/quit</span>), přejdi do správné složky pomocí <span class="cmd">cd</span>, a znovu spusť <span class="cmd">agy</span>.</p>
         <p>Ověř kde jsi: <span class="cmd">pwd</span> () nebo <span class="cmd">cd</span> (Windows bez argumentu)</p>
       </div>
     </div>
@@ -1801,7 +1793,7 @@ td:first-child { color: var(--white); font-weight: 500; }
     <ol>
       <li>☐ <strong>Záloha hotová</strong> – git commit nebo zkopírovaná složka</li>
       <li>☐ <strong>Jsem ve správné složce</strong> – vedle package.json je GEMINI.md</li>
-      <li>☐ <strong>Spustil jsem Gemini v projektu</strong> – cd do složky, pak gemini</li>
+      <li>☐ <strong>Spustil jsem Antigravity CLI v projektu</strong> – cd do složky, pak agy</li>
       <li>☐ <strong>Začal jsem sezení úvodní větou</strong> – Gemini ví co smí a nesmí</li>
       <li>☐ <strong>Schvaluji změny po jedné</strong> – ne "ano na vše"</li>
     </ol>
@@ -1826,21 +1818,21 @@ td:first-child { color: var(--white); font-weight: 500; }
     <a class="link-card" href="https://www.youtube.com/results?search_query=gemini+cli+tutorial+beginners+2025" target="_blank">
       <div class="link-icon-box">▶️</div>
       <div>
-        <div class="link-title">gemini cli tutorial beginners 2025</div>
+        <div class="link-title">antigravity cli tutorial beginners 2026</div>
         <div class="link-sub">Videa pro začátečníky – uvidíš přesně co psát do terminálu krok za krokem</div>
       </div>
     </a>
     <a class="link-card" href="https://www.youtube.com/results?search_query=gemini+cli+react+project+coding" target="_blank">
       <div class="link-icon-box">▶️</div>
       <div>
-        <div class="link-title">gemini cli react project coding</div>
+        <div class="link-title">antigravity cli agy react project coding</div>
         <div class="link-sub">Videa o práci s React projektem – přímo relevantní pro tvůj receptář</div>
       </div>
     </a>
     <a class="link-card" href="https://www.youtube.com/results?search_query=gemini+cli+free+alternative+claude+code" target="_blank">
       <div class="link-icon-box">▶️</div>
       <div>
-        <div class="link-title">gemini cli free alternative claude code</div>
+        <div class="link-title">antigravity cli agy alternative claude code</div>
         <div class="link-sub">Srovnání s Claude Code – proč je Gemini CLI skvělá volba pro hobby projekty</div>
       </div>
     </a>
@@ -1895,7 +1887,7 @@ td:first-child { color: var(--white); font-weight: 500; }
     <div class="prog-line done"></div>
     <div class="prog-step done">
       <div class="prog-circle">✓</div>
-      <div class="prog-label">Máš<br>Node.js</div>
+      <div class="prog-label">Máš<br>agy</div>
     </div>
     <div class="prog-line done"></div>
     <div class="prog-step curr">
@@ -1980,7 +1972,7 @@ td:first-child { color: var(--white); font-weight: 500; }
 
 <div class="page-footer">
   01_CLI_KOMPLETNI_PRUVODCE_WINDOWS.html &nbsp;·&nbsp;
-  Gemini CLI Průvodce &nbsp;·&nbsp;
+  Antigravity CLI Průvodce &nbsp;·&nbsp;
   Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
   <a href="00_CLI_INDEX.html" style="color:var(--amber)">← Zpět na index</a>
 </div>

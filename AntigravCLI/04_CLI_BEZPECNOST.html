@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bezpečnost především – Gemini CLI</title>
+<title>Bezpečnost – Antigravity CLI průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -227,7 +227,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     <a href="00_CLI_INDEX.html" class="sidebar-back">← Zpět na index</a>
     <div class="sidebar-title">
       <div class="sidebar-icon">🛡️</div>
-      <div class="sidebar-name">Bezpečnost<small>Gemini CLI průvodce</small></div>
+      <div class="sidebar-name">Bezpečnost<small>Antigravity CLI průvodce</small></div>
     </div>
   </div>
   <div class="nav-group-label">Obsah</div>
@@ -246,7 +246,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-tag">// bezpečnost – co vědět než začneš</div>
+  <div class="hero-tag">// bezpečnost – co vědět než začneš s Antigravity CLI</div>
   <h1>🛡️ Bezpečnost<br><em>především</em></h1>
   <p class="hero-sub">Co přesně instaluješ, jaká jsou rizika, co Gemini CLI smí a nesmí dělat, a jak vše čistě odinstalovat když to přestaneš potřebovat.</p>
   <div class="badges">
@@ -262,12 +262,20 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
 <!-- 01 CO INSTALUJEŠ -->
 <div class="sec" id="s1">
   <div class="sec-tag">// sekce 01</div>
-  <h2>Co přesně instaluješ</h2>
+  <h2>Co přesně instaluješ (Antigravity CLI)</h2>
 
   <p>Je fér přesně vědět co si dáváš na počítač. Jsou to dva oddělené nástroje:</p>
 
-  <h3>Node.js</h3>
-  <p><strong>Node.js</strong> je open-source runtime pro JavaScript. Vyvinul ho Ryan Dahl v roce 2009, dnes ho spravuje nadace OpenJS Foundation. Používají ho miliony vývojářů po celém světě – je to de facto standard pro vývoj webových aplikací. Tvůj projekt (<em>rodinny-receptar</em>) ho už používá – bez Node.js by ses s projektem vůbec nedostal dál.</p>
+  <h3>Node.js – dvě různé situace</h3>
+  <div class="callout warn" style="border-color:rgba(232,160,32,.6);background:rgba(232,160,32,.06);margin-bottom:12px">
+    <span class="callout-icon">🔀</span>
+    <div class="callout-body">
+      <strong>Antigravity CLI (agy) Node.js nepotřebuje</strong>
+      <p>Antigravity CLI je napsané v Go a instaluje se jako binární soubor. Node.js pro jeho spuštění nepotřebuješ.<br>
+      <strong>Ale:</strong> Tvůj projekt stále Node.js vyžaduje — bez něj nespustíš <span class="cmd">npm run dev</span> ani build.</p>
+    </div>
+  </div>
+  <p><strong>Node.js</strong> je open-source runtime pro JavaScript. Tvůj projekt ho stále používá – bez Node.js by ses s vývojem projektu vůbec nedostal dál. Antigravity CLI (agy) je ale napsáno v Go a Node.js nepotřebuje.</p>
   <ul>
     <li><strong>Zdroj:</strong> <a href="https://nodejs.org" target="_blank">nodejs.org</a> – oficiální stránka, ne žádná podezřelá stránka třetí strany</li>
     <li><strong>Kód:</strong> Plně open-source, kdokoliv ho může zkontrolovat na GitHubu</li>
@@ -288,18 +296,18 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     <span class="bi">💡</span>
     <div class="bb">
       <strong>Není to program který "běží na pozadí"</strong>
-      <p>Gemini CLI se spustí pouze když ty napíšeš <code>gemini</code> do terminálu. Když terminál zavřeš, skončí. Není to žádný daemon, služba ani autostart. Na procesech počítače se neobjeví pokud ho sám nespustíš.</p>
+      <p>Antigravity CLI se spustí pouze když ty napíšeš <code>agy</code> do terminálu. Když terminál zavřeš, skončí. Není to žádný daemon, služba ani autostart. Na procesech počítače se neobjeví pokud ho sám nespustíš.</p>
     </div>
   </div>
 
   <h3>npm balíčky – co se instaluje s Gemini CLI</h3>
-  <p>Při instalaci příkazem <code>npm install -g @google/gemini-cli</code> se nainstaluje nejen Gemini CLI, ale i jeho závislosti – knihovny které potřebuje k fungování. Typicky to bývá stovka nebo více balíčků.</p>
+  <p>Antigravity CLI se instaluje jako jeden binární soubor (Go) přes curl installer. Žádné npm závislosti. Uloží se do <code>%LOCALAPPDATA%\Antigravity\agy.exe</code> (Windows) nebo <code>~/.local/bin/agy</code> (Unix).</p>
 
   <div class="box warn2">
     <span class="bi">⚠️</span>
     <div class="bb">
       <strong>Stovky balíčků – proč a je to problém?</strong>
-      <p>Každý moderní npm balíček závisí na dalších. Je to běžná praxe celého ekosystému Node.js. Není to nic neobvyklého ani nebezpečného – tvůj vlastní projekt (rodinny-receptar) má stovky závislostí v node_modules. Ty balíčky jsou standardní nástroje jako HTTP klient, parser JSON, šifrovací knihovny atd.</p>
+      <p>Každý moderní npm balíček závisí na dalších. Je to běžná praxe celého ekosystému Node.js. Tvůj projekt má stovky závislostí v node_modules – standardní nástroje jako HTTP klient, parser JSON atd. Antigravity CLI (agy) žádné npm závislosti nemá – je to jediný binární soubor v Go.</p>
     </div>
   </div>
 </div>
@@ -582,8 +590,8 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
       <strong>Co se odinstalací ODSTRANÍ</strong>
       <ul>
         <li>Všechny soubory Gemini CLI a jeho závislostí z npm global složky</li>
-        <li>Příkaz <code>gemini</code> přestane být dostupný v terminálu</li>
-        <li>Složka <code>.gemini</code> s historií (pokud ji odstraníš ručně)</li>
+        <li>Příkaz <code>agy</code> přestane být dostupný v terminálu</li>
+        <li>Složka <code>.agents</code> s historií (nebo <code>.gemini</code> – pokud ji odstraníš ručně)</li>
       </ul>
     </div>
   </div>
@@ -593,10 +601,10 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     <div class="bb">
       <strong>Co se odinstalací NEodstraní</strong>
       <ul>
-        <li>Node.js – zůstane (odstraníš ho zvlášť v sekci 07)</li>
+        <li>Node.js – zůstane (odstraníš ho zvlášť v sekci 07, ale projekt ho stále potřebuje!)</li>
         <li>npm – zůstane (je součástí Node.js)</li>
         <li>Soubory tvého projektu – těch se odinstalace vůbec nedotkne</li>
-        <li>Přihlášení k Google účtu – zruší se automaticky se smazáním složky .gemini</li>
+        <li>Přihlášení k Google účtu – zruší se automaticky se smazáním složky .agents (nebo .gemini)</li>
       </ul>
     </div>
   </div>
@@ -610,8 +618,8 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
   <div class="box warn2">
     <span class="bi">⚠️</span>
     <div class="bb">
-      <strong>Pozor: Tvůj projekt Node.js potřebuje!</strong>
-      <p>Projekt <em>rodinny-receptar</em> ke svému vývoji Node.js vyžaduje (npm run dev, build, atd.). Odinstaluj Node.js pouze pokud chceš přestat s projektem úplně, nebo pokud ho máš jinak zajištěný.</p>
+      <strong>Pozor: Tvůj projekt Node.js stále potřebuje!</strong>
+      <p>Antigravity CLI (agy) Node.js nevyžaduje — ale projekt ke svému vývoji Node.js potřebuje (npm run dev, build, atd.). Odinstaluj Node.js pouze pokud chceš přestat s vývojem projektu úplně.</p>
     </div>
   </div>
 
@@ -829,7 +837,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
 
 <footer>
   04_CLI_BEZPECNOST.html &nbsp;·&nbsp;
-  Gemini CLI Průvodce &nbsp;·&nbsp;
+  Antigravity CLI Průvodce &nbsp;·&nbsp;
   Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
   <a href="00_CLI_INDEX.html" style="color:var(--amber)">← Zpět na index</a>
 </footer>
