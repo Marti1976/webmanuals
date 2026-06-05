@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 Tiskárna Kobra X — 3D Tisk průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0d0f14;
+    --surface:  #13161e;
+    --card:     #181c27;
+    --border:   #252b3b;
+    --accent:   #e8a020;
+    --accent2:  #f0c050;
+    --tuf:      #c8860a;
+    --green:    #3ecf76;
+    --red:      #e85050;
+    --blue:     #4a9eff;
+    --text:     #d8dce8;
+    --muted:    #6e7590;
+    --mono:     'IBM Plex Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
+
+  /* ── SIDEBAR ── */
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
+  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
+  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .sidebar-product { display: flex; align-items: center; gap: 10px; }
+  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
+  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
+  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+
+  .sb-search { padding: 15px 20px 5px; }
+  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
+  .sb-search input:focus { border-color: var(--accent); }
+
+  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
+  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
+  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
+  .nav-item-text { flex: 1; min-width: 0; }
+  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
+  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
+  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
+
+  /* ── MAIN ── */
+  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
+
+  /* ── HERO ── */
+  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
+  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
+  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
+  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
+  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 640px; }
+
+  /* ── HERO STAT BAR ── */
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero-stat { background: rgba(255,255,255,.04); border: 1px solid var(--border); padding: 10px 18px; display: flex; flex-direction: column; gap: 2px; }
+  .hero-stat-val { font-family: var(--mono); font-size: 15px; color: var(--accent); font-weight: 500; }
+  .hero-stat-lbl { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+
+  /* ── LAYOUT ── */
+  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
+
+  /* ── SECTIONS ── */
+  .section { margin: 48px 0; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  .section h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 32px 0 14px; }
+  .section p { margin-bottom: 14px; }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ── CARDS ── */
+  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+  .card { background: var(--card); border: 1px solid var(--border); padding: 20px 24px; transition: border-color 0.2s; }
+  .card:hover { border-color: var(--accent); }
+  .card h4 { color: #fff; margin-bottom: 6px; font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 600; }
+  .card p { font-size: 13.5px; color: var(--text); line-height: 1.6; }
+
+  /* ── TABULKA ── */
+  .spec-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+  .spec-table thead tr { background: var(--surface); }
+  .spec-table th { font-family: var(--mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+  .spec-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .spec-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+  .spec-table td:first-child { color: var(--muted); font-family: var(--mono); font-size: 12px; width: 42%; }
+  .spec-table td:last-child { color: var(--text); font-weight: 500; }
+
+  /* ── SROVNÁVACÍ TABULKA ── */
+  .cmp-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13.5px; }
+  .cmp-table th { background: var(--surface); font-family: var(--mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .cmp-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .cmp-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+  .cmp-table td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); width: 22%; }
+
+  /* ── HOTEND DIAGRAM ── */
+  .hotend-diagram { display: flex; flex-direction: column; gap: 0; margin: 20px 0; max-width: 460px; }
+  .hd-row { display: flex; align-items: center; gap: 0; }
+  .hd-label { font-family: var(--mono); font-size: 12px; color: var(--muted); width: 180px; text-align: right; padding-right: 16px; flex-shrink: 0; }
+  .hd-bar { flex: 1; padding: 9px 14px; border: 1px solid var(--border); font-size: 13.5px; font-weight: 500; color: #fff; }
+  .hd-arrow { display: flex; justify-content: center; padding: 3px 0 3px 180px; color: var(--muted); font-size: 16px; }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; line-height: 1.6; }
+  .alert-icon { font-size: 18px; line-height: 1.3; flex-shrink: 0; }
+  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07); }
+  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07); }
+  .alert-gold  { border: 1px solid var(--tuf);   background: rgba(200,134,10,.1); }
+  .alert-kobra { border: 1px solid var(--accent); background: rgba(232,160,32,.07); }
+
+  /* ── YT ODKAZ ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin-top: 10px; }
+  .yt-link:hover { opacity: .8; }
+
+  /* ── PAGE NAV ── */
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-product">
+      <span class="sidebar-tuf-badge">3D</span>
+      <div class="sidebar-model">
+        ANYCUBIC KOBRA X
+        <small>Průvodce 3D tiskem · CZ</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-search">
+    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
+  </div>
+
+  <div class="nav-group-label">Základní sekce</div>
+
+  <a href="00_3D_index.html" class="nav-item">
+    <span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span>
+  </a>
+  <a href="01_3D_uvod.html" class="nav-item">
+    <span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span>
+  </a>
+  <a href="02_3D_tiskarna.html" class="nav-item active">
+    <span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span>
+  </a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item">
+    <span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span>
+  </a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item">
+    <span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span>
+  </a>
+
+  <div class="nav-item" style="cursor:default;">
+    <span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span>
+  </div>
+  <ul class="nav-subs">
+    <li><a href="05a_3D_slicer_tisk.html"     class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
+  </ul>
+
+  <a href="06_3D_prvni_tisk.html" class="nav-item">
+    <span class="nav-num">06</span><span class="nav-item-text">První tisk</span>
+  </a>
+  <a href="07_3D_post_processing.html" class="nav-item">
+    <span class="nav-num">07</span><span class="nav-item-text">Post-processing</span>
+  </a>
+  <a href="08_3D_filamenty.html" class="nav-item">
+    <span class="nav-num">08</span><span class="nav-item-text">Filamenty</span>
+  </a>
+  <a href="09_3D_modely_cad.html" class="nav-item">
+    <span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span>
+  </a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item">
+    <span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span>
+  </a>
+  <a href="11_3D_udrzba.html" class="nav-item">
+    <span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span>
+  </a>
+  <a href="12_3D_tipy.html" class="nav-item">
+    <span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span>
+  </a>
+  <a href="13_3D_troubleshooting.html" class="nav-item">
+    <span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span>
+  </a>
+
+  <div class="nav-group-label">Ostatní přílohy</div>
+  <a href="Manual Anycubic Kobra X.pdf" target="_blank" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">PDF</span>
+    <span class="nav-item-text">Originál manuál</span>
+  </a>
+  <div class="nav-group-label">Oblíbené odkazy</div>
+  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">WEB</span>
+    <span class="nav-item-text">Výběr odkazů</span>
+  </a>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main-content">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="logo-row">
+        <span class="tuf-badge">KAPITOLA 02</span>
+        <span class="ver-badge">HARDWARE</span>
+      </div>
+      <h1>Tiskárna <span>Kobra X</span></h1>
+      <p>Detailní rozbor vašeho stroje. Naučte se, co každá součástka dělá, abyste věděli co ovlivňujete, když měníte nastavení.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-val">260 × 260 × 260 mm</span>
+          <span class="hero-stat-lbl">Tiskový objem</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">0,4 mm</span>
+          <span class="hero-stat-lbl">Průměr trysky (standard)</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">max 100 °C</span>
+          <span class="hero-stat-lbl">Teplota podložky</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">FDM · Direct Drive</span>
+          <span class="hero-stat-lbl">Technologie · Extruder</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 1 — SPECIFIKACE
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Technické specifikace</h2>
+      </div>
+      <p>Přehledná tabulka všech parametrů přímo z oficiálního manuálu. Hodí se jako rychlá reference kdykoli si budete nastavovat slicer nebo řešit kompatibilitu materiálů.</p>
+
+      <table class="spec-table">
+        <thead>
+          <tr><th>Parametr</th><th>Hodnota</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Technologie tisku</td><td>FDM (Fused Deposition Modeling)</td></tr>
+          <tr><td>Tiskový objem</td><td>260 × 260 × 260 mm</td></tr>
+          <tr><td>Tloušťka vrstvy</td><td>0,08 – 0,28 mm</td></tr>
+          <tr><td>Průměr trysky (standard)</td><td>0,4 mm</td></tr>
+          <tr><td>Max. teplota trysky</td><td>260 °C</td></tr>
+          <tr><td>Max. teplota podložky</td><td>100 °C</td></tr>
+          <tr><td>Počet trysek</td><td>1 tryska (multi-filament přes selektor)</td></tr>
+          <tr><td>Podporované materiály</td><td>PLA, PLA+, PETG, TPU, ABS (omezeno teplotou beddu)</td></tr>
+          <tr><td>Wi-Fi</td><td>2,4 GHz + 5 GHz (STA / AP+STA)</td></tr>
+          <tr><td>Konektivita</td><td>Anycubic App, Anycubic Slicer (cloud + LAN)</td></tr>
+          <tr><td>Vstupní napětí</td><td>110 V~, 60 Hz</td></tr>
+          <tr><td>Jmenovitý výkon</td><td>1 450 W</td></tr>
+          <tr><td>Pojistka</td><td>250 V / 10 A</td></tr>
+          <tr><td>Rozměry (bez příslušenství)</td><td>455 × 445 × 461 mm</td></tr>
+          <tr><td>Max. rozměry (s držákem cívky)</td><td>455 × 635 × 685 mm</td></tr>
+          <tr><td>Hmotnost (netto)</td><td>9,5 kg</td></tr>
+          <tr><td>Slicer</td><td>Anycubic Slicer Next, PrusaSlicer, Cura</td></tr>
+          <tr><td>Vstupní formáty</td><td>STL, OBJ</td></tr>
+          <tr><td>Výstupní formát</td><td>G-code</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 2 — POPIS DÍLŮ
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Popis dílů tiskárny</h2>
+      </div>
+      <p>Každá součástka má svůj název — v češtině i angličtině, protože v návodech, fórech a videích na YouTube se setkáte převážně s anglickými pojmy. Znát je je základ pro pochopení dalších kapitol.</p>
+
+      <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));">
+        <div class="card">
+          <h4>Spool Holder · Držák cívky</h4>
+          <p>Horizontální stojan na vrcholu rámu, na který se navlékají cívky filamentu. Kobra X jich má dva (vlevo a vpravo) pro systém více barev.</p>
+        </div>
+        <div class="card">
+          <h4>Spool Holder Shaft · Hřídel</h4>
+          <p>Tyče zasunuté do držáku cívky, na které cívky sedí a volně se otáčejí při odvíjení. Kobra X má 4 kusy (2 na každý držák).</p>
+        </div>
+        <div class="card">
+          <h4>Printhead · Tisková hlava</h4>
+          <p>Celý vozík pohybující se po ose X. Obsahuje extruder (motor), hotend (tavná část), trysku, termistor a oba větráky.</p>
+        </div>
+        <div class="card">
+          <h4>Camera · Kamera</h4>
+          <p>Integrovaná kamera montovaná pod tiskovou hlavou. Slouží ke vzdálenému sledování tisku přes Anycubic aplikaci v reálném čase.</p>
+        </div>
+        <div class="card">
+          <h4>Purge Wiper · Čisticí stěrka</h4>
+          <p>Silikonová stěrka upevněná na levém okraji rámu. Před každým tiskem a při změně barvy tiskárna automaticky přejede tryskou přes stěrku a očistí ji od zbytku taveniny.</p>
+        </div>
+        <div class="card">
+          <h4>Heatbed · Vyhřívaná podložka</h4>
+          <p>Pohyblivá tisková podložka pohybující se po ose Y (dopředu a dozadu). Zahřívá se na nastavenou teplotu a zajišťuje přilnavost první vrstvy.</p>
+        </div>
+        <div class="card">
+          <h4>Screen · Dotykový displej</h4>
+          <p>Barevný dotykový displej umístěný vpravo dole na základně. Slouží k ovládání tiskárny, nastavením, spouštění tisků z karty a zobrazení stavu.</p>
+        </div>
+        <div class="card">
+          <h4>Light · Osvětlení</h4>
+          <p>LED pásky osvětlující tiskový prostor. Umožňují sledovat průběh tisku i při slabém okolním světle nebo přes kameru.</p>
+        </div>
+        <div class="card">
+          <h4>Heatbed Cable Organizer</h4>
+          <p>Plastový klip na zadní části základny, který drží kabel vyhřívané podložky v čistém oblouku a brání jeho zachycení do pohyblivých částí.</p>
+        </div>
+        <div class="card">
+          <h4>Power Interface · Napájecí konektor</h4>
+          <p>Vstupní konektor pro napájecí kabel (IEC C14). Nachází se na zadní straně základny spolu s vypínačem.</p>
+        </div>
+        <div class="card">
+          <h4>Power Switch · Vypínač</h4>
+          <p>Kolébkový hlavní vypínač napájení. Vždy vypínejte tiskárnu tímto vypínačem — ne jen odpojením kabelu.</p>
+        </div>
+        <div class="card">
+          <h4>Teflon Tube · Teflonová trubice</h4>
+          <p>Čtyři hladké PTFE hadičky vedoucí filament od cívek přes selektor do tiskové hlavy. Jsou <strong>číslované 1–4</strong> — záměna způsobí chyby v podávání materiálu.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 3 — TRYSKY
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Trysky (Nozzle)</h2>
+      </div>
+      <p>Tryska je malá kovová špička na konci tiskové hlavy, ze které vytéká roztavený plast. Je to spotřební díl — časem se opotřebuje, ucpe nebo prostě přestane vyhovovat vašemu projektu. Dobrou zprávou je, že výměna trvá pár minut a tryska stojí pár desítek korun.</p>
+
+      <div class="alert alert-kobra">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X:</strong> Z výroby je osazena <strong>mosaznou tryskou 0,4 mm</strong>. To je ideální volba pro 95 % začátečnických projektů — není důvod ji hned měnit.</div>
+      </div>
+
+      <h3>Průměry trysek — k čemu která?</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>0,2 mm — Detaily</h4>
+          <p>Velmi jemné linky, nádherné detaily (figurky, text, šperky). Tisk trvá 3–4× déle, tryska se snadno ucpává. Pro pokročilé.</p>
+        </div>
+        <div class="card">
+          <h4>0,4 mm — Standard ★</h4>
+          <p>Ideální kompromis. Rychlost tisku vs. kvalita povrchu. Výška vrstvy 0,12–0,28 mm. Doporučená tryska pro všechny začátečníky.</p>
+        </div>
+        <div class="card">
+          <h4>0,6 mm — Rychlost</h4>
+          <p>Hrubší linky, výrazně rychlejší tisk. Vhodné pro velké funkční díly kde nezáleží na vzhledu. Výška vrstvy až 0,4 mm.</p>
+        </div>
+        <div class="card">
+          <h4>0,8 mm — Prototypy</h4>
+          <p>Nejhrubší linie, nejrychlejší tisk. Viditelné vrstvy, ale model je hotový mnohonásobně rychleji. Výborné pro testovací díly.</p>
+        </div>
+      </div>
+
+      <h3>Materiály trysek</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Mosaz (Brass) — standard</h4>
+          <p>Nejlevnější a nejrozšířenější. Výborná tepelná vodivost. Vhodná pro PLA, PETG, ABS. <strong>Nevhodná pro abrazivní filamenty</strong> (CF, dřevo, kov) — ty ji rychle zničí.</p>
+        </div>
+        <div class="card">
+          <h4>Nerezová ocel (Stainless)</h4>
+          <p>Odolná vůči abrazivním materiálům. Horší tepelná vodivost → je potřeba zvýšit teplotu o 5–10 °C. Vhodná pro food-safe aplikace.</p>
+        </div>
+        <div class="card">
+          <h4>Tvrzená ocel (Hardened)</h4>
+          <p>Nejodolnější volba pro CF, skleněná vlákna, keramické a kovové kompozity. Delší životnost, vyšší cena.</p>
+        </div>
+        <div class="card">
+          <h4>Ruby Tip</h4>
+          <p>Mosazná tryska s rubínovou špičkou. Extrémně odolná, velmi dlouhá životnost. Vyšší cena. Pro náročné uživatele s abrazivními materiály.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-info" style="margin-top: 24px;">
+        <div class="alert-icon">💡</div>
+        <div>
+          <strong>Kdy trysku vyměnit?</strong> Poznáte to podle toho, že se tisk zhoršuje bez zjevného důvodu — stringing, špatná přilnavost vrstev, nerovnoměrný průtok. Mosazná 0,4 mm tryska při běžném tisku PLA vydrží 200–500 hodin. Vždy vyměňujte <strong>za tepla</strong> (tryska zahřátá na tiskovou teplotu) a na čisto utahujte.
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+tiskarna+vymena+trysky+nozzle&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: výměna trysky 3D tiskárna</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 4 — TISKOVÁ PODLOŽKA
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Tisková podložka (Print Surface)</h2>
+      </div>
+      <p>Kobra X je vybavena <strong>magnetickým pružinovým plátem s PEI povrchem</strong>. PEI (polyetherimid) je speciální plast s jedinečnou vlastností — za tepla se na něj plast přilepí, za studena pustí. To znamená, že po dokončení tisku stačí nechat podložku vychladnout a model odskočí sám.</p>
+
+      <div class="alert alert-gold">
+        <div class="alert-icon">🔥</div>
+        <div>
+          <strong>Zlaté pravidlo PEI: drží za tepla, pustí za studena.</strong> Nikdy nestrhávejte model z horké podložky silou — poškodíte PEI povrch. Počkejte na vychladnutí, pak plát lehce ohněte a model bezpečně odpadne.
+        </div>
+      </div>
+
+      <h3>Textured vs. Smooth PEI</h3>
+      <div class="chapter-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h4>Textured PEI · Strukturovaný</h4>
+          <p>Jemná textura na povrchu podložky se otiskne na spodní stranu modelu. Výsledek vypadá jako matný, rovnoměrně broušený povrch. Vhodné pro většinu použití — skryje nedokonalosti první vrstvy.</p>
+        </div>
+        <div class="card">
+          <h4>Smooth PEI · Hladký</h4>
+          <p>Zrcadlově hladký povrch — spodní strana modelu bude lesklá. Esteticky hezčí pro ozdobné předměty, ale vyžaduje dokonale čistou podložku, jinak se model nelepí.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-kobra" style="margin-top: 20px;">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X:</strong> Dodávána s <strong>textured PEI</strong> plátem. Magnet pod podložkou drží plát pevně na místě — pro vyjmutí modelu plát jednoduše sundejte a ohněte.</div>
+      </div>
+
+      <h3>Jak správně čistit podložku</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>✓ IPA (izopropylalkohol)</h4>
+          <p>Hlavní čistící prostředek. Otřete podložku před každými 5–10 tisky hadříkem bez vláken namočeným v IPA 90%+. Odstraní mastnotu z prstů, která způsobuje špatnou přilnavost.</p>
+        </div>
+        <div class="card">
+          <h4>✓ Mýdlová voda</h4>
+          <p>Hluboké čištění při silném znečištění nebo pokud IPA nestačí. Podložku omyjte, opláchněte čistou vodou a nechte zcela uschnout.</p>
+        </div>
+        <div class="card">
+          <h4>✗ Acetón — NIKDY</h4>
+          <p>Acetón rozpouští PEI povrch a trvale zničí podložku. I malé množství způsobí nevratné poškození. Používejte pouze IPA.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 5 — EXTRUDER A PODÁVÁNÍ
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Extruder a podávací systém</h2>
+      </div>
+      <p>Extruder je motor s ozubeným kolečkem, který uchopí plastovou strunu a tlačí ji (nebo tahá zpět — retrakce) k trysce. Způsob, jakým je motor umístěn, zásadně ovlivňuje tiskové vlastnosti tiskárny.</p>
+
+      <h3>Direct Drive vs. Bowden</h3>
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Vlastnost</th>
+            <th>Direct Drive (Kobra X)</th>
+            <th>Bowden</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Umístění motoru</td>
+            <td>Přímo na tiskové hlavě nad tryskou</td>
+            <td>Na rámu, daleko od trysky</td>
+          </tr>
+          <tr>
+            <td>Délka cesty filamentu</td>
+            <td>Krátká (2–5 cm)</td>
+            <td>Dlouhá (30–60 cm)</td>
+          </tr>
+          <tr>
+            <td>Flexibilní materiály (TPU)</td>
+            <td>Výborné — struna se nemáčká</td>
+            <td>Problematické</td>
+          </tr>
+          <tr>
+            <td>Retrakce</td>
+            <td>Krátká (0,5–2 mm)</td>
+            <td>Dlouhá (4–7 mm)</td>
+          </tr>
+          <tr>
+            <td>Přesnost podávání</td>
+            <td>Vyšší</td>
+            <td>Nižší (pružnost hadičky)</td>
+          </tr>
+          <tr>
+            <td>Hmotnost hlavy</td>
+            <td>Těžší (motor na hlavě)</td>
+            <td>Lehčí hlava</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-tip" style="margin-top: 20px;">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tip:</strong> Díky Direct Drive systému Kobry X používejte pro retrakci hodnoty <strong>0,5–2 mm</strong>, ne 5–7 mm jak uvádějí obecné tutoriály psané pro Bowden tiskárny. Příliš agresivní retrakce u Direct Drive způsobuje grinding (omlení) struny.</div>
+      </div>
+
+      <h3>Multi-filament systém (4 cívky)</h3>
+      <p>Kobra X podporuje tisk ze 4 různých cívek filamentu. Princip je jednoduchý — každá cívka má svou teflonovou trubici označenou číslem 1–4, která vede filament přes selektor (ACE Hub) do jedné společné tiskové hlavy. Při změně barvy nebo materiálu selektor přepne na jinou trubici a tiskárna automaticky vyčistí zbytek předchozího materiálu pomocí Purge Wiperu.</p>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>KOBRA X — číslování trubic:</strong> Teflonové trubice jsou označeny čísly <strong>1, 2, 3, 4</strong> a musí být zasunuty do příslušně označených portů. Záměna způsobí, že tiskárna podává špatný materiál nebo netiskne vůbec. Zkontrolujte číslování při každé reinstalaci.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 6 — TISKOVÁ HLAVA A HOTEND
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Tisková hlava a Hotend</h2>
+      </div>
+      <p>Hotend je celá horká část tiskové hlavy. Skládá se z několika vzájemně propojených dílů, z nichž každý má přesnou funkci. Pochopení struktury vám pomůže diagnostikovat problémy jako heat creep nebo ucpaná tryska.</p>
+
+      <div class="hotend-diagram">
+        <div class="hd-row">
+          <div class="hd-label">filament ↓</div>
+          <div class="hd-bar" style="background:rgba(74,158,255,.08); border-color: var(--blue);">
+            <strong style="color:var(--blue);">Heatsink · Chladič</strong> — hliníkový blok chlazený větrákem. Udržuje horní část studenu, aby se filament nezačal tavit příliš brzo.
+          </div>
+        </div>
+        <div class="hd-arrow">↓</div>
+        <div class="hd-row">
+          <div class="hd-label">tepelná bariéra</div>
+          <div class="hd-bar" style="background:rgba(232,160,32,.06); border-color: var(--tuf);">
+            <strong style="color:var(--accent);">Heat Break · Tepelná přepážka</strong> — tenká trubička z nerez oceli. Odděluje studenou a horkou zónu. Klíčový díl pro prevenci heat creepu.
+          </div>
+        </div>
+        <div class="hd-arrow">↓</div>
+        <div class="hd-row">
+          <div class="hd-label">topení + teploměr</div>
+          <div class="hd-bar" style="background:rgba(232,80,80,.08); border-color: var(--red);">
+            <strong style="color:var(--red);">Heat Block · Topný blok</strong> — hliníkový blok s topným tělesem (cartridge heater) a termistorem. Zahřívá se na 180–260 °C.
+          </div>
+        </div>
+        <div class="hd-arrow">↓</div>
+        <div class="hd-row">
+          <div class="hd-label">výstup taveniny</div>
+          <div class="hd-bar" style="background:rgba(212,160,23,.08); border-color: var(--accent);">
+            <strong style="color:var(--accent2);">Nozzle · Tryska</strong> — malá kovová špička s kalibrovanou dírkou. Odtud vytéká hotový roztavený plast.
+          </div>
+        </div>
+      </div>
+
+      <h3>Větráky tiskové hlavy — nejsou stejné!</h3>
+      <div class="chapter-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h4>Hotend Fan · Větrák hotendu</h4>
+          <p>Chladí chladič (heatsink). Běží <strong>neustále</strong>, dokud je tiskárna zapnutá. Nikdy ho nevypínejte — bez chlazení by se filament začal tavit i v chladné zóně (heat creep) a zacpala by se trubice nad tryskou.</p>
+        </div>
+        <div class="card">
+          <h4>Part Cooling Fan · Větrák chlazení výtisku</h4>
+          <p>Fouká přímo na čerstvě vytisknutou vrstvu a rychle ji tuhne. <strong>Řídí se nastavením v sliceru</strong> — PLA = plný výkon, ABS/ASA = vypnutý nebo minimum (jinak praskají vrstvy).</p>
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin-top: 16px;">
+        <div class="alert-icon">⚠</div>
+        <div>
+          <strong>Co je Heat Creep?</strong> Pokud větrák hotendu nefouká nebo je slabý, teplo začne "plazit" nahoru do chladné zóny. Filament se roztaví příliš brzy, zasekne se a vytvoří ucpávku uvnitř heat breaku. Příznak: tiskárna přestane podávat materiál po 15–30 minutách tisku i když tryska je v pořádku.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 7 — VYHŘÍVANÁ PODLOŽKA (HEATBED)
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Vyhřívaná podložka (Heatbed)</h2>
+      </div>
+      <p>Vyhřívaná podložka řeší jeden z největších problémů 3D tisku — <strong>warping</strong> (zkroucení a odlepování rohů modelu). Plast se při ochlazování smršťuje. Pokud je podložka studená, spodní vrstvy chladnou příliš rychle a smršťují se dřív než horní — model se začne zvedat ze stran. Teplá podložka zpomalí chladnutí a dá plastu čas rovnoměrně tuhnout.</p>
+
+      <h3>Doporučené teploty podložky dle materiálu</h3>
+      <table class="spec-table">
+        <thead>
+          <tr><th>Materiál</th><th>Teplota podložky</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PLA</td><td>55–65 °C</td></tr>
+          <tr><td>PLA+</td><td>60–70 °C</td></tr>
+          <tr><td>PETG</td><td>70–85 °C</td></tr>
+          <tr><td>TPU</td><td>30–60 °C</td></tr>
+          <tr><td>ABS</td><td>100–110 °C (ideálně 110 °C)</td></tr>
+          <tr><td>ASA</td><td>100–110 °C (ideálně 110 °C)</td></tr>
+          <tr><td>Nylon (PA)</td><td>70–90 °C</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-warn" style="margin-top: 20px;">
+        <div class="alert-icon">🐍</div>
+        <div>
+          <strong>KOBRA X — limit 100 °C:</strong> Maximální teplota podložky je <strong>100 °C</strong>. ABS a ASA potřebují pro spolehlivý tisk ideálně 110 °C. Na Kobře X je tisk těchto materiálů možný, ale na hranici možností — vyšší riziko warpingu. Doporučujeme použít uzavřenou skříň (enclosure) a pomoci si lepidlem na sklo (Kores tyčinka) nebo adhezním sprejem.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 8 — POHYBOVÝ SYSTÉM
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Pohybový systém</h2>
+      </div>
+      <p>Kobra X je tzv. <strong>bedslinger</strong> — tiskárna, kde se podložka pohybuje dopředu a dozadu (osa Y), zatímco tisková hlava se pohybuje zleva doprava (osa X) a nahoru a dolů (osa Z). Jde o nejrozšířenější architekturu pro domácí tiskárny.</p>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Osa Y — podložka</h4>
+          <p>Vyhřívaná podložka jezdí na dvou lineárních tyčích. Pohyb zajišťuje ozubený řemen poháněný krokovým motorem. Pravidelná kontrola napnutí řemene je důležitá — povolený řemen způsobuje ghosting.</p>
+        </div>
+        <div class="card">
+          <h4>Osa X — tisková hlava</h4>
+          <p>Tisková hlava se pohybuje po vodorovné kolejnici (portálu) zleva doprava. Také ozubený řemen a krokový motor. Tato osa nese hmotnost celé tiskové hlavy (motor + hotend).</p>
+        </div>
+        <div class="card">
+          <h4>Osa Z — výška</h4>
+          <p>Celý portál s osou X se zvedá a spouští po trapézovém šroubu (nebo dvou). Šroub je samosvorný — osa Z drží polohu i bez proudu. Vyžaduje pravidelné mazání tukem.</p>
+        </div>
+        <div class="card">
+          <h4>Lineární vedení</h4>
+          <p>Tyče a lišty po kterých jezdí pojezdové vozíky. Vyžadují pravidelné mazání strojním olejem (osy X a Y) a tukem (osa Z). Suchý kluz zvyšuje opotřebení a způsobuje nerovnoměrný pohyb.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-tip" style="margin-top: 20px;">
+        <div class="alert-icon">✓</div>
+        <div>
+          <strong>Input Shaping (Rezonanční kompenzace):</strong> Kobra X má v přednastaveném firmwaru aktivní rezonanční kompenzaci. Tato funkce při inicializaci tiskárny změří vibrace rámu a automaticky upraví pohybové parametry, aby potlačila ghosting. Díky tomu můžete tisknout rychleji než na starých tiskárnách bez obav z vlnění na stěnách modelu.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 9 — ELEKTRONIKA A KONEKTIVITA
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Elektronika a konektivita</h2>
+      </div>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Řídicí deska (Motherboard)</h4>
+          <p>Mozek tiskárny. Spouští firmware, ovládá všechny motory, topení, ventilátory a komunikuje s displejem a Wi-Fi modulem. Nedoporučujeme zasahovat do nastavení desky bez zkušeností — chyba může způsobit poruchu.</p>
+        </div>
+        <div class="card">
+          <h4>Filament Runout Sensor</h4>
+          <p>Hallův senzor u každého extruderu, který detekuje průchod filamentu. Když struna dojde nebo se přetrhne, tiskárna automaticky pozastaví tisk, přejede do parkovací pozice a čeká na výměnu cívky.</p>
+        </div>
+        <div class="card">
+          <h4>Auto-leveling senzor</h4>
+          <p>Indukční senzor měřící vzdálenost trysky od podložky ve více bodech. Při každém spuštění tisku proběhne automatická kalibrace — tiskárna si "zmapuje" povrch podložky a kompenzuje případné nerovnosti.</p>
+        </div>
+        <div class="card">
+          <h4>Kamera</h4>
+          <p>Vestavěná kamera pro vzdálené monitorování. Video stream je dostupný přes Anycubic aplikaci v reálném čase. Umožňuje zkontrolovat tisk z mobilu odkudkoli — nebo zastavit tisk který zjevně selhává.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-kobra" style="margin-top: 20px;">
+        <div class="alert-icon">🐍</div>
+        <div>
+          <strong>KOBRA X — Wi-Fi:</strong> Podporuje obě frekvenční pásma <strong>2,4 GHz i 5 GHz</strong>. Spárování probíhá přes QR kód na displeji tiskárny — naskenujete ho v aplikaci Anycubic a tiskárna je okamžitě připojena k vašemu účtu. Stejný účet funguje pro mobilní aplikaci i desktopový Anycubic Slicer.
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin-top: 16px;">
+        <div class="alert-icon">⚠</div>
+        <div>
+          <strong>Pojistka — pouze 250 V / 10 A:</strong> V případě výměny pojistky používejte výhradně hodnotu <strong>250 V / 10 A</strong>. Jiná hodnota může způsobit zkrat nebo poškození elektroniky.
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=Anycubic+Kobra+X+setup+wifi+app&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Kobra X setup a aplikace</a>
+    </div>
+
+    <!-- ── PAGE NAV ── -->
+    <div class="pn">
+      <a href="01_3D_uvod.html">← 01 · Úvod do FDM tisku</a>
+      <a href="03_3D_slicer_zaklad.html" class="nx">03 · Slicer — základy →</a>
+    </div>
+
+  </div>
+</main>
+
+<script>
+const searchInput = document.getElementById('sb-search-input');
+searchInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') {
+    const q = e.target.value.trim();
+    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+  }
+});
+</script>
+</body>
+</html>
