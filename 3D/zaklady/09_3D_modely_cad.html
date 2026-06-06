@@ -7,49 +7,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:       #0d0f14;
-    --surface:  #13161e;
-    --card:     #181c27;
-    --border:   #252b3b;
-    --accent:   #e8a020;
-    --accent2:  #f0c050;
-    --tuf:      #c8860a;
-    --green:    #3ecf76;
-    --red:      #e85050;
-    --blue:     #4a9eff;
-    --text:     #d8dce8;
-    --muted:    #6e7590;
-    --mono:     'IBM Plex Mono', monospace;
+    --bg:      #0d0f14;
+    --surface: #13161e;
+    --card:    #181c27;
+    --border:  #252b3b;
+    --accent:  #e8a020;
+    --accent2: #f0c050;
+    --tuf:     #c8860a;
+    --green:   #3ecf76;
+    --red:     #e85050;
+    --blue:    #4a9eff;
+    --text:    #d8dce8;
+    --muted:   #6e7590;
+    --mono:    'IBM Plex Mono', monospace;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
 
   /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--border); border-right-color: var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19,22,30,.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
   .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
   .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .sidebar-product { display: flex; align-items: center; gap: 10px; }
   .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
   .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
   .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-
   .sb-search { padding: 15px 20px 5px; }
   .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
   .sb-search input:focus { border-color: var(--accent); }
-
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
+  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all .2s; border-left: 2px solid transparent; line-height: 1.3; }
+  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232,160,32,.06); border-left-color: var(--accent); }
+  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
   .nav-item-text { flex: 1; min-width: 0; }
+  .nav-subs { margin: 0; padding: 0 0 10px; list-style: none; display: flex; flex-direction: column; }
+  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all .2s; }
+  .nav-sub-item:hover { color: #fff; background: rgba(255,255,255,.03); border-left-color: var(--accent); }
 
-  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
-  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
-
-  /* ── MAIN CONTENT AREA ── */
+  /* ── MAIN ── */
   .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
 
   /* ── HERO ── */
@@ -61,20 +56,92 @@
   .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
   .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
   .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 640px; }
 
   /* ── LAYOUT ── */
   .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
 
   /* ── SECTIONS ── */
-  .section { margin: 44px 0; }
+  .section { margin: 48px 0; }
   .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
   .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  .section h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 32px 0 14px; }
+  .section p { margin-bottom: 14px; }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ── PLATFORM KARTY ── */
+  .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+  .platform-card { background: var(--card); border: 1px solid var(--border); padding: 20px 24px; transition: border-color .2s; display: flex; flex-direction: column; gap: 10px; }
+  .platform-card:hover { border-color: var(--accent); }
+  .platform-card-top { display: flex; align-items: center; gap: 12px; }
+  .platform-icon { width: 38px; height: 38px; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .platform-name { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; }
+  .platform-name a { color: var(--accent); text-decoration: none; }
+  .platform-name a:hover { color: var(--accent2); }
+  .platform-tag { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .platform-desc { font-size: 13.5px; color: var(--text); line-height: 1.6; }
+  .platform-badge { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 7px; border: 1px solid; margin-top: 4px; }
+  .badge-free  { color: var(--green); border-color: rgba(62,207,118,.35); background: rgba(62,207,118,.07); }
+  .badge-paid  { color: var(--accent); border-color: rgba(232,160,32,.35); background: rgba(232,160,32,.07); }
+  .badge-mixed { color: var(--blue);   border-color: rgba(74,158,255,.35);  background: rgba(74,158,255,.07); }
+
+  /* ── FORMÁTY ── */
+  .format-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-top: 16px; }
+  .format-card { background: var(--card); border: 1px solid var(--border); padding: 16px 20px; }
+  .format-ext { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--accent); display: block; margin-bottom: 8px; }
+  .format-card h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; color: #fff; margin-bottom: 5px; }
+  .format-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* ── CAD KARTA ── */
+  .cad-card { background: var(--card); border: 1px solid var(--border); margin-bottom: 24px; }
+  .cad-header { display: flex; align-items: center; gap: 16px; padding: 18px 24px 14px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .cad-icon { font-size: 30px; flex-shrink: 0; }
+  .cad-title-wrap { flex: 1; }
+  .cad-title { font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; color: #fff; }
+  .cad-subtitle { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .cad-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .cad-tag { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); color: var(--muted); }
+  .cad-body { padding: 18px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .cad-body p { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .cad-footer { padding: 0 24px 18px; }
+
+  /* ── WORKFLOW PIPELINE ── */
+  .pipeline { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 14px 0; }
+  .pipe-step { background: var(--surface); border: 1px solid var(--border); padding: 8px 14px; font-family: var(--mono); font-size: 12px; color: var(--text); white-space: nowrap; }
+  .pipe-arrow { color: var(--accent); font-size: 16px; padding: 0 6px; flex-shrink: 0; }
+
+  /* ── MINI KARTY (alternativy) ── */
+  .mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-top: 16px; }
+  .mini-card { background: var(--card); border: 1px solid var(--border); padding: 16px 20px; transition: border-color .2s; }
+  .mini-card:hover { border-color: var(--accent); }
+  .mini-card h4 { font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 600; color: var(--accent2); margin-bottom: 6px; }
+  .mini-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .mini-card a { color: var(--accent); text-decoration: none; font-size: 12px; font-family: var(--mono); display: inline-block; margin-top: 8px; }
+
+  /* ── MESH REPAIR KROKY ── */
+  .repair-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 16px; }
+  .repair-card { background: var(--card); border: 1px solid var(--border); padding: 16px 20px; }
+  .repair-card h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; color: #fff; margin-bottom: 6px; }
+  .repair-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .repair-card a { color: var(--accent); text-decoration: none; font-size: 12px; font-family: var(--mono); display: inline-block; margin-top: 8px; }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 16px 0; font-size: 14px; line-height: 1.6; }
+  .alert-icon { font-size: 18px; line-height: 1.3; flex-shrink: 0; }
+  .alert-info  { border: 1px solid var(--blue);   background: rgba(74,158,255,.07); }
+  .alert-tip   { border: 1px solid var(--green);  background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);    background: rgba(232,80,80,.07); }
+  .alert-gold  { border: 1px solid var(--tuf);    background: rgba(200,134,10,.1); }
+
+  /* ── YT ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin-top: 8px; }
+  .yt-link:hover { opacity: .8; }
 
   /* ── PAGE NAV ── */
-  .pn { margin-top:60px; padding-top:26px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
-  .pn a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; transition:color .15s; }
-  .pn a:hover { color:var(--accent); } .pn .nx { margin-left:auto; }
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
@@ -83,130 +150,404 @@
 <body>
 
 <!-- ── SIDEBAR ── -->
-<nav class="sidebar" id="sidebar">
-
+<nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-product">
       <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">
-        ANYCUBIC KOBRA X
-        <small>Průvodce 3D tiskem · CZ</small>
-      </div>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
     </div>
   </div>
-
-  <div class="sb-search">
-    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
-  </div>
-
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
   <div class="nav-group-label">Základní sekce</div>
-
-  <a href="00_3D_index.html" class="nav-item">
-    <span class="nav-num">00</span>
-    <span class="nav-item-text">Obsah & Hledání</span>
-  </a>
-  <a href="01_3D_uvod.html" class="nav-item ">
-    <span class="nav-num">01</span>
-    <span class="nav-item-text">Úvod do FDM tisku</span>
-  </a>
-  <a href="02_3D_tiskarna.html" class="nav-item ">
-    <span class="nav-num">02</span>
-    <span class="nav-item-text">Tiskárna Kobra X</span>
-  </a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item ">
-    <span class="nav-num">03</span>
-    <span class="nav-item-text">Slicer — základy</span>
-  </a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item ">
-    <span class="nav-num">04</span>
-    <span class="nav-item-text">Slicer — pokročilý</span>
-  </a>
-
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">05</span>
-    <span class="nav-item-text">Detailní parametry</span>
-  </div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
   <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item ">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item ">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item ">05c · Parametry filamentu</a></li>
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
   </ul>
-
-  <a href="06_3D_prvni_tisk.html" class="nav-item ">
-    <span class="nav-num">06</span>
-    <span class="nav-item-text">První tisk</span>
-  </a>
-  <a href="07_3D_post_processing.html" class="nav-item ">
-    <span class="nav-num">07</span>
-    <span class="nav-item-text">Post-processing</span>
-  </a>
-  <a href="08_3D_filamenty.html" class="nav-item ">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </a>
-  <a href="09_3D_modely_cad.html" class="nav-item active">
-    <span class="nav-num">09</span>
-    <span class="nav-item-text">3D Modely & CAD</span>
-  </a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item ">
-    <span class="nav-num">10</span>
-    <span class="nav-item-text">Prostředí & upgrady</span>
-  </a>
-  <a href="11_3D_udrzba.html" class="nav-item ">
-    <span class="nav-num">11</span>
-    <span class="nav-item-text">Údržba & spot. mat.</span>
-  </a>
-  <a href="12_3D_tipy.html" class="nav-item ">
-    <span class="nav-num">12</span>
-    <span class="nav-item-text">Tipy & triky</span>
-  </a>
-  <a href="13_3D_troubleshooting.html" class="nav-item ">
-    <span class="nav-num">13</span>
-    <span class="nav-item-text">Troubleshooting</span>
-  </a>
-
+  <a href="06_3D_prvni_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">První tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item active"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="Manual Anycubic Kobra X.pdf" target="_blank" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">PDF</span>
-    <span class="nav-item-text">Originál manuál</span>
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">PDF</span><span class="nav-item-text">Originál manuál</span>
   </a>
-  
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">WEB</span>
-    <span class="nav-item-text">Výběr odkazů</span>
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">WEB</span><span class="nav-item-text">Výběr odkazů</span>
   </a>
-
 </nav>
 
+<!-- ── MAIN ── -->
 <main class="main-content">
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 09</span>
-        <span class="ver-badge">MODELOVÁNÍ</span>
+        <span class="ver-badge">TVORBA</span>
       </div>
-      <h1>3D Modely <span>& CAD</span></h1>
-      <p>Tato kapitola čeká na zpracování. Zde se dozvíte vše potřebné k tématu "3D Modely & CAD".</p>
+      <h1>3D Modely & <span>CAD</span></h1>
+      <p>Kde bezpečně stahovat tisíce modelů zdarma a jak udělat první vlastní v programech Tinkercad nebo Fusion 360.</p>
     </div>
   </div>
 
   <div class="wrapper">
+
+    <!-- ═══════════════════════════════════════
+         SEKCE 1 — KDE STAHOVAT
+    ════════════════════════════════════════ -->
     <div class="section">
-      <div class="section-header">
-        <h2>Prázdná kapitola</h2>
+      <div class="section-header"><h2>Kde stahovat modely</h2></div>
+      <p>Než se pustíte do vlastního modelování, je dobré vědět, že existují tisíce kvalitních modelů zdarma — vytvořených komunitou, odborníky i výrobci. Většinu věcí, které chcete tisknout, někdo už navrhoval.</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Než cokoliv tisknete:</strong> Zkontrolujte hodnocení (★★★★+) a počet stažení. Populární modely jsou prověřené — ostatní uživatelé odhalí chyby v designu a napíší je do komentářů. Přečtěte si i popis autora — doporučené nastavení tisku vám ušetří hodiny ladění.</div>
       </div>
-      <p>Obsah bude brzy doplněn. Zvolte zatím jinou kapitolu z levého menu.</p>
+
+      <div class="platform-grid">
+
+        <div class="platform-card">
+          <div class="platform-card-top">
+            <div class="platform-icon">🌍</div>
+            <div>
+              <div class="platform-name"><a href="https://makerworld.com" target="_blank">MakerWorld.com</a></div>
+              <div class="platform-tag">od Bambu Lab · rychle rostoucí</div>
+            </div>
+          </div>
+          <p class="platform-desc">Nejrychleji rostoucí platforma momentálně. Moderní UI, výborné filtrování, systém odměn pro autory (body za stažení). Hodně kvalitních modelů s detailními tisk. parametry. Bezplatná registrace.</p>
+          <div><span class="platform-badge badge-free">Zdarma</span></div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-card-top">
+            <div class="platform-icon">🦁</div>
+            <div>
+              <div class="platform-name"><a href="https://printables.com" target="_blank">Printables.com</a></div>
+              <div class="platform-tag">od Prusa Research · nejčistší komunita</div>
+            </div>
+          </div>
+          <p class="platform-desc">Nejkvalitnější komunita a nejlépe moderovaný obsah. Žádné reklamy, žádné placené modely — vše zdarma. Systém Prusament bodů motivuje autory. Výborné pro hledání funkčních dílů a náhradních součástek.</p>
+          <div><span class="platform-badge badge-free">Zdarma</span></div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-card-top">
+            <div class="platform-icon">🔧</div>
+            <div>
+              <div class="platform-name"><a href="https://thingiverse.com" target="_blank">Thingiverse.com</a></div>
+              <div class="platform-tag">od Makerbot · nejstarší, největší databáze</div>
+            </div>
+          </div>
+          <p class="platform-desc">Nejstarší a největší databáze s miliony modelů. Nevýhoda: mnoho starých, nekvalitních nebo nefunkčních modelů. Stahujte pouze modely s kladnými komentáři a obrázky skutečných výtisků. UI je zastaralé.</p>
+          <div><span class="platform-badge badge-free">Zdarma</span></div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-card-top">
+            <div class="platform-icon">✨</div>
+            <div>
+              <div class="platform-name"><a href="https://cults3d.com" target="_blank">Cults3d.com</a></div>
+              <div class="platform-tag">detailní figurky · část placená</div>
+            </div>
+          </div>
+          <p class="platform-desc">Zaměřeno na prémiové a umělecké modely — figurky, miniaturky, šperky, architekturu. Část modelů je placená (1–10 €), část zdarma. Kvalita modelů je obecně velmi vysoká. Oblíbené pro cosplay a sběratelské předměty.</p>
+          <div><span class="platform-badge badge-mixed">Zdarma i placené</span></div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-card-top">
+            <div class="platform-icon">🔍</div>
+            <div>
+              <div class="platform-name"><a href="https://thangs.com" target="_blank">Thangs.com</a></div>
+              <div class="platform-tag">cross-site vyhledávač</div>
+            </div>
+          </div>
+          <p class="platform-desc">Vyhledávač agregující výsledky z Thingiverse, Printables, MyMiniFactory a dalších platforem najednou. Výborné pokud nevíte kde hledat — jedno místo, jeden dotaz, výsledky ze všech databází. Vlastní databáze modelů také roste.</p>
+          <div><span class="platform-badge badge-free">Zdarma</span></div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-card-top">
+            <div class="platform-icon">🐍</div>
+            <div>
+              <div class="platform-name"><a href="https://makerworld.com" target="_blank">MakerOnline.com</a></div>
+              <div class="platform-tag">Anycubic komunita</div>
+            </div>
+          </div>
+          <p class="platform-desc">Komunita přímo od Anycubic. Modely jsou testovány na tiskárnách Anycubic — včetně Kobry X. Tiskové parametry jsou pro váš stroj již přednastaveny. Menší databáze než ostatní, ale relevantní obsah.</p>
+          <div><span class="platform-badge badge-free">Zdarma</span></div>
+        </div>
+
+      </div>
+
+      <div class="alert alert-info" style="margin-top:8px;">
+        <div class="alert-icon">💡</div>
+        <div><strong>Tip — hledání náhradních dílů:</strong> Na Printables a Thingiverse hledejte přímo název produktu + "replacement part" nebo "repair". Obrovské množství komerčních produktů má vytisknutelné náhradní díly navržené komunitou — od krytů zásuvek po náhradní díly domácích spotřebičů.</div>
+      </div>
     </div>
+
+    <!-- ═══════════════════════════════════════
+         SEKCE 2 — FORMÁTY SOUBORŮ
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Formáty souborů</h2></div>
+      <p>Než model otevřete ve sliceru, je dobré vědět, jaký formát stahujete a co z něj slicer dokáže přečíst.</p>
+
+      <div class="format-grid">
+        <div class="format-card">
+          <span class="format-ext">.STL</span>
+          <h4>Nejrozšířenější</h4>
+          <p>Standard od 80. let. Popisuje pouze povrchovou geometrii (trojúhelníkové sítě). Neobsahuje barvy, materiály ani doporučená nastavení tisku. Podporován všemi slicery.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">.OBJ</span>
+          <h4>Barvy a materiály</h4>
+          <p>Původně formát pro 3D grafiku. Zachovává barevné informace a materiálové skupiny — užitečné pro multi-materiálový tisk. Slicer přečte geometrii, barvy zobrazí jako vizuální nápovědu.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">.3MF</span>
+          <h4>Moderní standard ★</h4>
+          <p>Preferovaný formát nové generace. Obsahuje geometrii, barvy, doporučená nastavení tisku, pozici na podložce i vícebarevné definice. Anycubic Slicer i PrusaSlicer ho plně podporují.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">.AMF</span>
+          <h4>Starší alternativa k 3MF</h4>
+          <p>XML-based formát s podporou barev a materiálů. V praxi méně rozšířený než 3MF. Slicer ho přečte, ale setkáte se s ním zřídka.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin-top: 8px;">
+        <div class="alert-icon">⚠</div>
+        <div><strong>STL neobsahuje nastavení tisku.</strong> Pokud stahujete STL a autor uvádí doporučená nastavení (teplotu, výplň, výšku vrstvy) — jsou jen v textu popisu, ne v souboru. Při slicování je musíte nastavit ručně. Formát 3MF tato data nese přímo v souboru.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SEKCE 3 — TINKERCAD
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Vlastní modelování — kde začít</h2></div>
+      <p>Stahovat cizí modely je skvělé, ale ten opravdový pocit přijde, když vytisknete věc, kterou jste navrhli sami. Zde jsou dvě cesty — jedna pro úplné začátečníky, druhá pro ty kteří chtějí víc.</p>
+
+      <div class="cad-card">
+        <div class="cad-header">
+          <div class="cad-icon">🟧</div>
+          <div class="cad-title-wrap">
+            <div class="cad-title">Tinkercad</div>
+            <div class="cad-subtitle">tinkercad.com · od Autodesk · prohlížečový · zdarma</div>
+            <div class="cad-tags">
+              <span class="cad-tag">Začátečníci</span>
+              <span class="cad-tag">Prohlížeč — bez instalace</span>
+              <span class="cad-tag">Geometrické tvary</span>
+              <span class="cad-tag">Zdarma</span>
+            </div>
+          </div>
+        </div>
+        <div class="cad-body">
+          <p>Tinkercad je bezplatný prohlížečový CAD nástroj od Autodesku. Funguje na principu skládání a odečítání jednoduchých geometrických tvarů (kostky, válce, koule, jehlany) — žádné složité příkazy, žádná instalace, žádná křivka učení. Ideální pro: jmenovky, krabičky, držáky, jednoduché ozdoby, úpravy existujících modelů.</p>
+
+          <div style="margin-top: 4px;">
+            <strong style="font-family:'Rajdhani',sans-serif; color:var(--accent2); font-size:16px;">Základní workflow</strong>
+            <div class="pipeline" style="margin-top:10px;">
+              <div class="pipe-step">Přihlásit se na tinkercad.com</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Nový projekt</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Přetáhnout tvary na podložku</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Resize + kombinovat</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Export STL</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Slicer → tisk</div>
+            </div>
+          </div>
+
+          <p style="margin-top:8px;">Základní operace jsou jen tři: <strong>přetáhnout tvar</strong> na pracovní plochu, <strong>změnit rozměry</strong> přetažením rohů, a <strong>kombinovat nebo odečítat</strong> tvary od sebe (Union / Hole). Tím zvládnete 90 % běžných projektů.</p>
+        </div>
+        <div class="cad-footer">
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div><strong>Pro koho je Tinkercad ideální:</strong> Naprostí začátečníci, děti a školy, rychlé prototypy jednoduchých dílů, úpravy existujících modelů (přidání děr, výřezů), výuka 3D myšlení bez technické zátěže.</div>
+          </div>
+          <a href="https://www.tinkercad.com" target="_blank" style="font-family:var(--mono); font-size:12px; color:var(--accent); text-decoration:none; display:inline-block; margin-right:20px; margin-top: 4px;">→ tinkercad.com</a>
+          <a href="https://www.youtube.com/results?search_query=Tinkercad+tutorial+czech+3D+tisk&hl=cs" target="_blank" class="yt-link" style="display:inline-flex; margin-top:4px;">▶ YouTube: Tinkercad tutorial CZ</a>
+        </div>
+      </div>
+
+      <!-- FUSION 360 -->
+      <div class="cad-card">
+        <div class="cad-header">
+          <div class="cad-icon">🔵</div>
+          <div class="cad-title-wrap">
+            <div class="cad-title">Fusion 360</div>
+            <div class="cad-subtitle">autodesk.com/fusion · zdarma pro hobbyisty · Windows / macOS</div>
+            <div class="cad-tags">
+              <span class="cad-tag">Středně pokročilí</span>
+              <span class="cad-tag">Parametrické modelování</span>
+              <span class="cad-tag">Precizní rozměry</span>
+              <span class="cad-tag">Zdarma (Personal)</span>
+            </div>
+          </div>
+        </div>
+        <div class="cad-body">
+          <p>Fusion 360 je profesionální CAD/CAM software od Autodesku dostupný zdarma pro hobbyisty a studenty (Personal Use licence). Parametrické modelování znamená, že každý rozměr je definován číslem nebo vzorcem — změna jednoho rozměru automaticky přepočítá celý model. Ideální pro: mechanické díly, přesné náhradní součástky, díly vyžadující specifické tolerance, sestavy více dílů.</p>
+
+          <div style="margin-top: 4px;">
+            <strong style="font-family:'Rajdhani',sans-serif; color:var(--accent2); font-size:16px;">Základní workflow</strong>
+            <div class="pipeline" style="margin-top:10px;">
+              <div class="pipe-step">Nový Sketch</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Nakreslit 2D profil</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Extrude (vytáhnout do 3D)</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Fillet / Chamfer (zaoblení hran)</div>
+              <div class="pipe-arrow">→</div>
+              <div class="pipe-step">Export STL / 3MF</div>
+            </div>
+          </div>
+
+          <p style="margin-top:8px;">Klíčové pojmy: <strong>Sketch</strong> = 2D náčrt s rozměry; <strong>Extrude</strong> = vytažení do 3D; <strong>Fillet</strong> = zaoblení hran; <strong>Hole</strong> = přesný otvor; <strong>Assembly</strong> = sestava více dílů.</p>
+        </div>
+        <div class="cad-footer">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div><strong>Křivka učení:</strong> Fusion 360 vyžaduje více času na zvládnutí než Tinkercad. Počítejte s 5–10 hodinami tutoriálů než budete schopni modelovat samostatně. Je to ale investice, která se vyplatí — Fusion je průmyslový standard a s ním naučené principy platí i v jiných CAD nástrojích.</div>
+          </div>
+          <div class="alert alert-info">
+            <div class="alert-icon">💡</div>
+            <div><strong>Personal Use licence:</strong> Zdarma pro nekomerční použití. Limit: max 10 aktivních dokumentů, žádný export do některých průmyslových formátů. Pro hobby 3D tisk naprosto dostačující.</div>
+          </div>
+          <a href="https://www.autodesk.com/products/fusion-360/personal" target="_blank" style="font-family:var(--mono); font-size:12px; color:var(--accent); text-decoration:none; display:inline-block; margin-right:20px; margin-top:4px;">→ Fusion 360 Personal</a>
+          <a href="https://www.youtube.com/results?search_query=Fusion+360+tutorial+czech+3D+tisk+zacinatecnik&hl=cs" target="_blank" class="yt-link" style="display:inline-flex; margin-top:4px;">▶ YouTube: Fusion 360 tutorial CZ</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SEKCE 5 — DALŠÍ ALTERNATIVY
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Další CAD alternativy</h2></div>
+      <p>Tinkercad a Fusion 360 pokryjí potřeby 95 % začátečníků. Pokud ale hledáte něco specifického — organické tvary, open-source řešení nebo modelování kódem — zde jsou osvědčené alternativy.</p>
+
+      <div class="mini-grid">
+
+        <div class="mini-card">
+          <h4>Blender</h4>
+          <p>Bezplatný open-source nástroj pro 3D modelování, animaci a rendering. Výborný pro organické tvary, figurky a umělecké modely. Velmi strmá křivka učení — ne pro začátečníky s CAD. Community sculpting mód je pro FDM figurky nejlepší volba.</p>
+          <a href="https://www.blender.org" target="_blank">→ blender.org</a>
+        </div>
+
+        <div class="mini-card">
+          <h4>FreeCAD</h4>
+          <p>Bezplatný open-source parametrický CAD — alternativa k Fusion 360 bez licenčních omezení. Méně polished UI, ale plně funkční pro technické modelování. Vhodný pokud nechcete být závislí na cloudovém Autodesk účtu.</p>
+          <a href="https://www.freecad.org" target="_blank">→ freecad.org</a>
+        </div>
+
+        <div class="mini-card">
+          <h4>OpenSCAD</h4>
+          <p>Modelování pomocí kódu (skriptovací jazyk). Místo kreslení píšete příkazy: <code style="font-family:var(--mono); font-size:12px; color:var(--accent2);">cube([20,20,10])</code>. Výborné pro parametrické a generativní modely — ideální pro programátory. Výsledek je zcela přesný a snadno měnitelný.</p>
+          <a href="https://www.openscad.org" target="_blank">→ openscad.org</a>
+        </div>
+
+        <div class="mini-card">
+          <h4>Shapr3D</h4>
+          <p>Profesionální parametrický CAD optimalizovaný pro iPad s Apple Pencil. Intuitivní ovládání dotykem, přímý export do STL/3MF. Výborný pro uživatele kteří modelují na cestách nebo preferují tablet. Placené po zkušební době.</p>
+          <a href="https://www.shapr3d.com" target="_blank">→ shapr3d.com</a>
+        </div>
+
+        <div class="mini-card">
+          <h4>OnShape</h4>
+          <p>Plně cloudový profesionální CAD — žádná instalace, funguje v prohlížeči. Parametrické modelování na úrovni SolidWorks. Zdarma pro veřejné projekty. Výborný pokud chcete spolupracovat nebo přistupovat z různých zařízení.</p>
+          <a href="https://www.onshape.com" target="_blank">→ onshape.com</a>
+        </div>
+
+        <div class="mini-card">
+          <h4>Meshmixer</h4>
+          <p>Bezplatný nástroj od Autodesku zaměřený na úpravy a opravu STL souborů. Výborný pro: kombinování modelů, sculpturing, generování podpor, mesh repair. Doplněk k CAD nástrojům, ne náhrada.</p>
+          <a href="https://meshmixer.com" target="_blank">→ meshmixer.com</a>
+        </div>
+
+      </div>
+
+      <div class="alert alert-gold" style="margin-top: 8px;">
+        <div class="alert-icon">💡</div>
+        <div><strong>Doporučená cesta pro začátečníka:</strong> Začněte s Tinkercadem — za víkend budete schopni tvořit funkční díly. Až pocítíte jeho limity (složité tvary, přesné tolerance), přejděte na Fusion 360. Blender doplňte pokud vás zajímají figurky nebo vizualizace.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SEKCE 6 — MESH REPAIR
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Oprava modelů (Mesh Repair)</h2></div>
+      <p>Stažený nebo vlastnoručně vymodelovaný soubor někdy obsahuje chyby — díry v povrchu, obrácené normály trojúhelníků, nebo neuzavřené hrany. Slicer pak model špatně naslicuje nebo odmítne vůbec načíst. Naštěstí jde většinu problémů opravit automaticky.</p>
+
+      <h3>Co znamená „watertight" (vodotěsný) model</h3>
+      <p>Správný 3D model pro FDM tisk musí být <strong>watertight</strong> — všechny povrchy jsou uzavřené, bez děr nebo volných hran. Představte si model jako nádobu: pokud byste do ní nalili vodu, nesmí nikde vytéct. Pokud vytéká (díra v geometrii), slicer neví jak model správně oříznout vrstvami.</p>
+
+      <div class="repair-grid">
+
+        <div class="repair-card">
+          <h4>Anycubic / PrusaSlicer<br>Auto-repair</h4>
+          <p>Oba slicery automaticky opravují drobné chyby při importu STL. Pro 90 % modelů stažených z internetu to plně postačuje — importujte a tiskněte bez starostí.</p>
+        </div>
+
+        <div class="repair-card">
+          <h4>Meshmixer</h4>
+          <p>Bezplatný nástroj od Autodesku s pokročilými opravnými funkcemi. Analysis → Inspector odhalí a jedním klikem opraví díry, obrácené normály a volné hrany.</p>
+          <a href="https://meshmixer.com" target="_blank">→ meshmixer.com (zdarma)</a>
+        </div>
+
+        <div class="repair-card">
+          <h4>Netfabb Online</h4>
+          <p>Online nástroj od Autodesku — nahrajte STL, server automaticky opraví chyby a vrátí vám opravený soubor. Bez instalace, zdarma pro základní opravy. Výborné pro rychlé řešení.</p>
+          <a href="https://netfabb.azurewebsites.net" target="_blank">→ netfabb online</a>
+        </div>
+
+        <div class="repair-card">
+          <h4>Microsoft 3D Builder</h4>
+          <p>Součást Windows 10/11 — bezplatná aplikace která automaticky opraví model při otevření. Rychlé a jednoduché řešení pro Windows uživatele bez instalace dalšího softwaru.</p>
+        </div>
+
+      </div>
+
+      <div class="alert alert-tip" style="margin-top: 8px;">
+        <div class="alert-icon">✓</div>
+        <div><strong>Praktický postup:</strong> Importujte model do Anycubic Slicer Next — pokud ho slicer zobrazí správně a vygeneruje G-code bez varování, model je v pořádku. Pokud se zobrazí chybová hláška nebo model vypadá divně v náhledu vrstev, zkuste Meshmixer nebo Netfabb online opravit před dalším slicováním.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+model+repair+meshmixer+STL+fix&hl=cs" target="_blank" class="yt-link">▶ YouTube: oprava STL modelu Meshmixer</a>
+    </div>
+
+    <!-- ── PAGE NAV ── -->
+    <div class="pn">
+      <a href="08_3D_filamenty.html">← 08 · Filamenty</a>
+      <a href="10_3D_prostredi_upgrady.html" class="nx">10 · Prostředí & upgrady →</a>
+    </div>
+
   </div>
 </main>
+
 <script>
 const searchInput = document.getElementById('sb-search-input');
 searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') {
+  if (e.key === 'Enter') {
     const q = e.target.value.trim();
-    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
   }
 });
 </script>

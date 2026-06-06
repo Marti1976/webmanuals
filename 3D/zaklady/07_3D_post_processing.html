@@ -7,26 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:       #0d0f14;
-    --surface:  #13161e;
-    --card:     #181c27;
-    --border:   #252b3b;
-    --accent:   #e8a020;
-    --accent2:  #f0c050;
-    --tuf:      #c8860a;
-    --green:    #3ecf76;
-    --red:      #e85050;
-    --blue:     #4a9eff;
-    --text:     #d8dce8;
-    --muted:    #6e7590;
-    --mono:     'IBM Plex Mono', monospace;
+    --bg:      #0d0f14;
+    --surface: #13161e;
+    --card:    #181c27;
+    --border:  #252b3b;
+    --accent:  #e8a020;
+    --accent2: #f0c050;
+    --tuf:     #c8860a;
+    --green:   #3ecf76;
+    --red:     #e85050;
+    --blue:    #4a9eff;
+    --text:    #d8dce8;
+    --muted:   #6e7590;
+    --mono:    'IBM Plex Mono', monospace;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
 
   /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--border); border-right-color: var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19,22,30,.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
   .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
   .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .sidebar-product { display: flex; align-items: center; gap: 10px; }
@@ -38,18 +38,16 @@
   .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
   .sb-search input:focus { border-color: var(--accent); }
 
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
+  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all .2s; border-left: 2px solid transparent; line-height: 1.3; }
+  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232,160,32,.06); border-left-color: var(--accent); }
+  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
   .nav-item-text { flex: 1; min-width: 0; }
+  .nav-subs { margin: 0; padding: 0 0 10px; list-style: none; display: flex; flex-direction: column; }
+  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all .2s; }
+  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,.03); border-left-color: var(--accent); }
 
-  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
-  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
-
-  /* ── MAIN CONTENT AREA ── */
+  /* ── MAIN ── */
   .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
 
   /* ── HERO ── */
@@ -61,20 +59,80 @@
   .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
   .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
   .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 640px; }
 
   /* ── LAYOUT ── */
   .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
 
   /* ── SECTIONS ── */
-  .section { margin: 44px 0; }
+  .section { margin: 48px 0; }
   .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
   .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  .section h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 32px 0 14px; }
+  .section p { margin-bottom: 14px; }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ── CARDS ── */
+  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; margin-top: 16px; }
+  .card { background: var(--card); border: 1px solid var(--border); padding: 20px 24px; transition: border-color .2s; }
+  .card:hover { border-color: var(--accent); }
+  .card h4 { color: #fff; margin-bottom: 6px; font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 600; }
+  .card p { font-size: 13.5px; color: var(--text); line-height: 1.6; }
+
+  /* ── KROKY (číslovaný postup) ── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin-top: 16px; }
+  .step-row { display: flex; gap: 16px; align-items: flex-start; padding: 0 0 22px; position: relative; }
+  .step-row::before { content: ''; position: absolute; left: 17px; top: 36px; bottom: 0; width: 1px; background: var(--border); }
+  .step-row:last-child::before { display: none; }
+  .step-row:last-child { padding-bottom: 0; }
+  .step-dot { width: 36px; height: 36px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--tuf); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; color: var(--accent); clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+  .step-body strong { display: block; font-family: 'Rajdhani', sans-serif; font-size: 16px; color: #fff; margin-bottom: 4px; padding-top: 7px; }
+  .step-body p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+  /* ── NÁSTROJE GRID ── */
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+  .tool-card { background: var(--card); border: 1px solid var(--border); padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; transition: border-color .2s; }
+  .tool-card:hover { border-color: rgba(232,160,32,.4); }
+  .tool-card-icon { font-size: 22px; }
+  .tool-card h4 { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600; color: var(--accent2); }
+  .tool-card p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  /* ── BRUSLENÍ — stupňová lišta ── */
+  .grit-bar { display: flex; gap: 0; margin-top: 16px; border: 1px solid var(--border); overflow: hidden; }
+  .grit-step { flex: 1; padding: 12px 10px; text-align: center; border-right: 1px solid var(--border); }
+  .grit-step:last-child { border-right: none; }
+  .grit-step-num { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--accent); display: block; }
+  .grit-step-lbl { font-size: 11px; color: var(--muted); display: block; margin-top: 3px; }
+  .grit-step-desc { font-size: 12px; color: var(--text); display: block; margin-top: 6px; line-height: 1.4; }
+  .grit-step:nth-child(1) { background: rgba(232,160,32,.04); }
+  .grit-step:nth-child(2) { background: rgba(232,160,32,.06); }
+  .grit-step:nth-child(3) { background: rgba(232,160,32,.09); }
+  .grit-step:nth-child(4) { background: rgba(232,160,32,.12); }
+
+  /* ── ACETÓN VAROVNÝ BOX ── */
+  .danger-box { border: 2px solid var(--red); background: rgba(232,80,80,.06); padding: 20px 22px; margin: 20px 0; }
+  .danger-box-title { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: var(--red); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .danger-box ul { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .danger-box li { font-size: 13.5px; color: var(--text); line-height: 1.5; }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; line-height: 1.6; }
+  .alert-icon { font-size: 18px; line-height: 1.3; flex-shrink: 0; }
+  .alert-info  { border: 1px solid var(--blue);   background: rgba(74,158,255,.07); }
+  .alert-tip   { border: 1px solid var(--green);  background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);    background: rgba(232,80,80,.07); }
+  .alert-gold  { border: 1px solid var(--tuf);    background: rgba(200,134,10,.1); }
+  .alert-kobra { border: 1px solid var(--accent); background: rgba(232,160,32,.07); }
+
+  /* ── YT ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin-top: 10px; }
+  .yt-link:hover { opacity: .8; }
 
   /* ── PAGE NAV ── */
-  .pn { margin-top:60px; padding-top:26px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
-  .pn a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; transition:color .15s; }
-  .pn a:hover { color:var(--accent); } .pn .nx { margin-left:auto; }
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
@@ -83,8 +141,7 @@
 <body>
 
 <!-- ── SIDEBAR ── -->
-<nav class="sidebar" id="sidebar">
-
+<nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-product">
       <span class="sidebar-tuf-badge">3D</span>
@@ -102,85 +159,70 @@
   <div class="nav-group-label">Základní sekce</div>
 
   <a href="00_3D_index.html" class="nav-item">
-    <span class="nav-num">00</span>
-    <span class="nav-item-text">Obsah & Hledání</span>
+    <span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span>
   </a>
-  <a href="01_3D_uvod.html" class="nav-item ">
-    <span class="nav-num">01</span>
-    <span class="nav-item-text">Úvod do FDM tisku</span>
+  <a href="01_3D_uvod.html" class="nav-item">
+    <span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span>
   </a>
-  <a href="02_3D_tiskarna.html" class="nav-item ">
-    <span class="nav-num">02</span>
-    <span class="nav-item-text">Tiskárna Kobra X</span>
+  <a href="02_3D_tiskarna.html" class="nav-item">
+    <span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span>
   </a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item ">
-    <span class="nav-num">03</span>
-    <span class="nav-item-text">Slicer — základy</span>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item">
+    <span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span>
   </a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item ">
-    <span class="nav-num">04</span>
-    <span class="nav-item-text">Slicer — pokročilý</span>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item">
+    <span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span>
   </a>
 
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">05</span>
-    <span class="nav-item-text">Detailní parametry</span>
+  <div class="nav-item" style="cursor:default;">
+    <span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span>
   </div>
   <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item ">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item ">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item ">05c · Parametry filamentu</a></li>
+    <li><a href="05a_3D_slicer_tisk.html"     class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
   </ul>
 
-  <a href="06_3D_prvni_tisk.html" class="nav-item ">
-    <span class="nav-num">06</span>
-    <span class="nav-item-text">První tisk</span>
+  <a href="06_3D_prvni_tisk.html" class="nav-item">
+    <span class="nav-num">06</span><span class="nav-item-text">První tisk</span>
   </a>
   <a href="07_3D_post_processing.html" class="nav-item active">
-    <span class="nav-num">07</span>
-    <span class="nav-item-text">Post-processing</span>
+    <span class="nav-num">07</span><span class="nav-item-text">Post-processing</span>
   </a>
-  <a href="08_3D_filamenty.html" class="nav-item ">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
+  <a href="08_3D_filamenty.html" class="nav-item">
+    <span class="nav-num">08</span><span class="nav-item-text">Filamenty</span>
   </a>
-  <a href="09_3D_modely_cad.html" class="nav-item ">
-    <span class="nav-num">09</span>
-    <span class="nav-item-text">3D Modely & CAD</span>
+  <a href="09_3D_modely_cad.html" class="nav-item">
+    <span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span>
   </a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item ">
-    <span class="nav-num">10</span>
-    <span class="nav-item-text">Prostředí & upgrady</span>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item">
+    <span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span>
   </a>
-  <a href="11_3D_udrzba.html" class="nav-item ">
-    <span class="nav-num">11</span>
-    <span class="nav-item-text">Údržba & spot. mat.</span>
+  <a href="11_3D_udrzba.html" class="nav-item">
+    <span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span>
   </a>
-  <a href="12_3D_tipy.html" class="nav-item ">
-    <span class="nav-num">12</span>
-    <span class="nav-item-text">Tipy & triky</span>
+  <a href="12_3D_tipy.html" class="nav-item">
+    <span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span>
   </a>
-  <a href="13_3D_troubleshooting.html" class="nav-item ">
-    <span class="nav-num">13</span>
-    <span class="nav-item-text">Troubleshooting</span>
+  <a href="13_3D_troubleshooting.html" class="nav-item">
+    <span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span>
   </a>
 
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="Manual Anycubic Kobra X.pdf" target="_blank" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">PDF</span>
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">PDF</span>
     <span class="nav-item-text">Originál manuál</span>
   </a>
-  
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">WEB</span>
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">WEB</span>
     <span class="nav-item-text">Výběr odkazů</span>
   </a>
-
 </nav>
 
+<!-- ── MAIN ── -->
 <main class="main-content">
-  <!-- HERO -->
+
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
@@ -188,25 +230,458 @@
         <span class="ver-badge">DOKONČENÍ</span>
       </div>
       <h1>Post-<span>processing</span></h1>
-      <p>Tato kapitola čeká na zpracování. Zde se dozvíte vše potřebné k tématu "Post-processing".</p>
+      <p>Jak modely zbavit podpor bez poškození, vybrousit je do hladka, bezpečně slepit nebo do nich vložit kovové závitové vložky.</p>
     </div>
   </div>
 
   <div class="wrapper">
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 1 — ODSTRANĚNÍ PODPOR
+    ════════════════════════════════════════════ -->
     <div class="section">
       <div class="section-header">
-        <h2>Prázdná kapitola</h2>
+        <h2>Odstranění podpor</h2>
       </div>
-      <p>Obsah bude brzy doplněn. Zvolte zatím jinou kapitolu z levého menu.</p>
+      <p>Podpěry (supports) jsou nezbytné pro tisk převisů a mostů, ale jejich odstraňování je jednou z nejnáročnějších fází post-processingu. Špatný postup zanechá ošklivé jizvy nebo poškodí model. Správný nástroj a správná chvíle jsou klíč.</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Zlaté pravidlo:</strong> Podpěry odstraňujte vždy po úplném vychladnutí modelu. Za tepla je plast stále lehce pružný a podpěry se trhají místo lámání — zanechávají delší jizvy a hrozí deformace okolí.</div>
+      </div>
+
+      <h3>Správné nástroje</h3>
+      <div class="tool-grid">
+        <div class="tool-card">
+          <div class="tool-card-icon">🔧</div>
+          <h4>Kombinované kleště</h4>
+          <p>Nejuniverzálnější nástroj. Uchopte podporu co nejblíže modelu a odlomte pomalým, rovnoměrným tlakem — ne trhnutím.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card-icon">🔪</div>
+          <h4>Skalpel / X-Acto nůž</h4>
+          <p>Pro detailní práci u jemných spojů. Podřízněte základnu podpěry u modelu a pak odlomte kleštěmi. Nezbytný pro figurky a detailní díly.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card-icon">🪚</div>
+          <h4>Plochá špachtle</h4>
+          <p>Pro ploché podpěry na spodní straně modelu. Zasuňte pod podpěru a jemně páčte podél plochy, ne bodově.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card-icon">✂️</div>
+          <h4>Boční štípací kleště</h4>
+          <p>Přesné štípání tenkých podpěrových sloupků těsně u modelu. Výborné pro tree supports a jemné struktury.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card-icon">🦷</div>
+          <h4>Zubní špátle / jehla</h4>
+          <p>Pro záludná místa kde se jiný nástroj nevejde — dutiny, otvory, mezery v mechanických dílech.</p>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card-icon">💨</div>
+          <h4>Horkovzdušná pistole</h4>
+          <p>Krátký závan teplého vzduchu (50–60 °C) změkčí jizvy po podporách a usnadní jejich dobroušení. Používejte opatrně a krátce.</p>
+        </div>
+      </div>
+
+      <h3>Jak minimalizovat jizvy po podporách</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Správné nastavení v sliceru</h4>
+          <p>Klíč je <strong>Z Distance</strong> (vzdálenost podpěry od modelu). Větší vzdálenost = snadnější odstranění, horší povrch pod podporou. Rozsah 0,1–0,2 mm pro PLA je dobrý kompromis.</p>
+        </div>
+        <div class="card">
+          <h4>Interface vrstvy</h4>
+          <p>Zapnuté <strong>Support Interface</strong> vrstvy (2–3 vrstvy) vytvoří hladkou kontaktní plochu mezi podporou a modelem — jizvy jsou výrazně menší a povrch hladší.</p>
+        </div>
+        <div class="card">
+          <h4>Přebroušení jizev</h4>
+          <p>Zbytky podpěrových kontaktů odstraňte brusným papírem 220 zrno. Pohybujte rovnoměrně v jednom směru, nebruste krouživě — tím vznikají viditelné šmouhy.</p>
+        </div>
+        <div class="card">
+          <h4>Tepelné zahlazení</h4>
+          <p>Krátký přelet horkovzdušnou pistolí (2–3 sekundy z 10 cm) jemně roztaví povrch jizvy a vizuálně ji smaže. Funguje dobře pro PLA, velmi opatrně pro PETG.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin-top: 8px;">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Pozor na detaily a tenké stěny:</strong> U modelů s tenkými výstupky, jemnými reliéfy nebo miniaturními detaily buďte velmi opatrní. Podpěry odstraňujte malými kroky od okraje — agresivní trhnutí může ulomit kus modelu, který chcete zachovat.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+tisk+odstraneni+podpor+support+removal&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: odstranění podpor 3D tisk</a>
     </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 2 — BROUŠENÍ A ÚPRAVA POVRCHU
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Broušení a úprava povrchu</h2>
+      </div>
+      <p>Vrstvové linie jsou charakteristickým znakem FDM tisku. Pokud vám vadí, broušením je lze výrazně potlačit nebo zcela odstranit. Jde o trpělivou práci — nesnažte se přeskočit hrubší zrna a přejít rovnou na jemné.</p>
+
+      <h3>Postup broušení — od hrubého k jemnému</h3>
+
+      <div class="grit-bar">
+        <div class="grit-step">
+          <span class="grit-step-num">120</span>
+          <span class="grit-step-lbl">Hrubé</span>
+          <span class="grit-step-desc">Odstranění viditelných přesahů, jizev po podporách a velkých nerovností. Agresivní — brusit krátce a rovnoměrně.</span>
+        </div>
+        <div class="grit-step">
+          <span class="grit-step-num">220</span>
+          <span class="grit-step-lbl">Střední</span>
+          <span class="grit-step-desc">Vyhlazení rýh po 120. Vrstvové linie začínají mizet. Největší část práce probíhá na tomto zrnu.</span>
+        </div>
+        <div class="grit-step">
+          <span class="grit-step-num">400</span>
+          <span class="grit-step-lbl">Jemné</span>
+          <span class="grit-step-desc">Povrch se stává matně hladkým. Vrstvy jsou jen lehce znatelné hmatem. Vhodná chvíle pro základ (primer).</span>
+        </div>
+        <div class="grit-step">
+          <span class="grit-step-num">800+</span>
+          <span class="grit-step-lbl">Ultra jemné</span>
+          <span class="grit-step-desc">Povrch je hladký na pohled i na dotek. Pro lakování nebo lesklý finish. Pokračovat lze až na 2000 pro zrcadlový efekt.</span>
+        </div>
+      </div>
+
+      <h3>Mokré broušení (Wet sanding)</h3>
+      <p>Mokré broušení znamená namočit brusný papír ve vodě (nebo IPA) před broušením. Voda odvádí prach a zbytky plastu, zabraňuje zanášení papíru a výsledek je výrazně hladší než suchým broušením. Používejte od zrna 400 výše. Brusný papír namočte, přebytečnou vodu setřete a bruste krátkými rovnoměrnými tahy.</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tip:</strong> Po každém zrnu otřete model vlhkým hadříkem a nechte zaschnout, než přejdete na jemnější papír. Zbytky brusiva z hrubšího papíru by poškrábaly práci jemnějšího.</div>
+      </div>
+
+      <h3>Tepelné zahlazení (Heat Gun)</h3>
+      <div class="chapter-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h4>Jak to funguje</h4>
+          <p>Horkovzdušná pistole (50–80 °C) jemně roztaví povrchovou vrstvu plastu. Povrchové napětí roztavené vrstvy vyplní mikroskopické mezery mezi vrstvovými liniemi a po zatuhnutí je povrch hladší.</p>
+        </div>
+        <div class="card">
+          <h4>Kdy a pro co</h4>
+          <p><strong>PLA</strong> — funguje dobře, ale je třeba pracovat rychle (teplota tuhnutí je nízká). <strong>PETG</strong> — velmi opatrně, snadno se deformuje. <strong>ABS/ASA</strong> — raději acetón smoothing (viz sekce 6). Nikdy na TPU.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Pozor:</strong> Nikdy nezastavujte horkovzdušnou pistoli na jednom místě — model se deformuje nebo se roztaví díra. Pohybujte pistolí plynule, s odstupem alespoň 8–10 cm. Výsledek zkontrolujte až po úplném vychladnutí.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+print+sanding+smoothing+postprocessing&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print sanding and smoothing</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 3 — LEPENÍ
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Lepení dílů k sobě</h2>
+      </div>
+      <p>Velké modely se často tisknou po částech a pak lepí dohromady — buď kvůli velikosti (přesahují tiskový objem), nebo pro snadnější tisk bez podpor. Výběr správného lepidla závisí na materiálu a požadované pevnosti spoje.</p>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Sekundin (CA Glue) — rychlé spoje</h4>
+          <p>Kyanoakrylátové lepidlo — schnout začne okamžitě, plná pevnost za 60 sekund. Výborné pro PLA, PETG. Spoj je pevný, ale křehký při rázu. Tip: gel varianta dává více času na ustavení polohy.</p>
+        </div>
+        <div class="card">
+          <h4>Epoxy (dvousložkové) — silové spoje</h4>
+          <p>Míchaná pryskyřice s tvrdidlem. Schne 5–60 minut (dle typu). Výsledný spoj je houževnatý a odolný vůči rázům. Vhodné pro díly nesoucí zatížení. Nevýhoda: viditelná spára pokud díly přesně nepasují.</p>
+        </div>
+        <div class="card">
+          <h4>Plastové svářecí lepidlo (Plastic Weld)</h4>
+          <p>Speciální lepidlo chemicky spojující ABS a HIPS — roztaví povrch obou dílů a po zatuhnutí vytvoří monolitický spoj. Výsledek je téměř neviditelný a velmi pevný.</p>
+        </div>
+        <div class="card">
+          <h4>Horký tmel (Hot Glue)</h4>
+          <p>Rychlé, netrvalé spoje nebo dočasné přichycení. Nevhodné pro funkční díly (nízká pevnost, tepelná odolnost). Dobré pro prototypy a dekorace kde nezáleží na přesnosti.</p>
+        </div>
+      </div>
+
+      <h3>Jak připravit povrch pro lepení</h3>
+      <div class="steps">
+        <div class="step-row">
+          <div class="step-dot">1</div>
+          <div class="step-body">
+            <strong>Odmaštění IPA</strong>
+            <p>Otřete lepené plochy hadříkem namočeným v izopropylalkoholu. Zbytky mastnoty, prachu a brusiva brání správnému přilnutí lepidla.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">2</div>
+          <div class="step-body">
+            <strong>Zdrsněte povrch brusným papírem (120–220)</strong>
+            <p>Lehce nabruste lepené plochy — hladký povrch FDM tisku má nízkou přilnavost. Drsnější povrch dá lepidlu více plochy k zachycení a pevnost spoje se znásobí.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">3</div>
+          <div class="step-body">
+            <strong>Zkuste nanečisto (dry fit)</strong>
+            <p>Před nanesením lepidla vždy zkuste díly spojit bez lepidla. Zkontrolujte že lícují správně — po nanesení sekundinu máte jen 5–10 sekund na ustavení polohy.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">4</div>
+          <div class="step-body">
+            <strong>Naneste lepidlo tenkce a rovnoměrně</strong>
+            <p>Méně je více — přebytek lepidla vyteče na strany a způsobí nežádoucí šmouhy. U sekundinu stačí kapka na cm² plochy.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">5</div>
+          <div class="step-body">
+            <strong>Přidržte nebo upněte do doby zatuhnutí</strong>
+            <p>Sekundin: 30–60 sekund přidržet. Epoxy: upnout svorkami nebo gumičkami na dobu schnutí (viz pokyny výrobce). Při schnutí díly nepohybujte.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-tip" style="margin-top: 8px;">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tip — kolíky a piny:</strong> Pro přesné ustavení a silnější spoj vytiskněte na styčné ploše dílů odpovídající <strong>kolíkové spoje</strong> (pin + otvor). Kolíky zabraňují posunutí při lepení a dramaticky zvyšují pevnost i u běžného sekundinu.</div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Acetón — POUZE pro ABS a ASA, nikdy pro PLA!</strong> Acetón rozkládá ABS a vytváří velmi silné spoje (chemické svaření). Na PLA nefunguje — PLA acetón nerozpouští. Záměna způsobí jen rozlitou kaluž bez efektu.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 4 — ZÁVITOVÉ VLOŽKY
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Závitové (tepelné) vložky</h2>
+      </div>
+      <p>Pokud chcete do 3D tisknutého dílu šroubovat kovové šrouby opakovaně — například pro kryt elektroniky, mechanické sestavy nebo připevnění k jinému dílu — tištěný závit nestačí. Po 2–3 zatažení se plast vytrhne. Řešením jsou <strong>heat-set inserts</strong> (tepelné závitové vložky).</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Standardní praxe:</strong> Tepelné vložky jsou standardem u všech seriózních funkčních dílů — přístrojových krytů, držáků, mechanických sestav, dílů pro robotiku. Jakmile je jednou použijete, nebudete chtít tisknout závity jinak.</div>
+      </div>
+
+      <h3>Jak fungují a jak se vsazují</h3>
+      <div class="chapter-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h4>Co to je</h4>
+          <p>Malý mosazný váleček s vnitřním závitem a vroubkovaným vnějším povrchem. Vsazuje se do předtisknutého otvoru pomocí páječky — teplo roztaví plast a vložka se zaryje do materiálu. Po zatuhnutí drží pevněji než samotný plast.</p>
+        </div>
+        <div class="card">
+          <h4>Výhody oproti tištěnému závitu</h4>
+          <p>Kovový závit vydrží desítky zatažení bez opotřebení. Rovnoměrné rozložení síly díky vroubkování. Možnost velmi pevného dotažení. Snadná výměna pokud se závit poškodí.</p>
+        </div>
+      </div>
+
+      <h3>Postup vsazení páječkou</h3>
+      <div class="steps">
+        <div class="step-row">
+          <div class="step-dot">1</div>
+          <div class="step-body">
+            <strong>Vytiskněte díl s otvorem správného průměru</strong>
+            <p>Průměr otvoru = vnější průměr vložky − 0,2 mm. Pro M3 vložku (vnější průměr ~4,5 mm) tiskněte otvor 4,3 mm. Hloubka otvoru = délka vložky + 0,5 mm pro zapuštění pod povrch.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">2</div>
+          <div class="step-body">
+            <strong>Zahřejte páječku na 180–220 °C</strong>
+            <p>Pro PLA stačí 180–200 °C. Pro PETG a ABS 200–220 °C. Speciální vsazovací hrot (trychtýřový tvar) usnadní práci, ale standardní hrot funguje také.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">3</div>
+          <div class="step-body">
+            <strong>Položte vložku na otvor a přiložte hrot páječky</strong>
+            <p>Vložka se začne sama zanořovat do roztaveného plastu pod vlastní vahou + tlakem. Přidržujte hrot kolmo — šikmá vložka bude mít šikmý závit.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">4</div>
+          <div class="step-body">
+            <strong>Zatlačte do hloubky a odstraňte páječku</strong>
+            <p>Vložka má být 0,2–0,5 mm pod povrchem (mírně zapuštěná). Odstraňte páječku a okamžitě přitlačte plochou kovovou předmět (šroubovák) pro vyrovnání — plast je ještě roztavený.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">5</div>
+          <div class="step-body">
+            <strong>Nechte 60 sekund vychladnout</strong>
+            <p>Nedotýkejte se vložky ani dílu. Plast zatuhne kolem vroubkování a vložka bude pevně zajištěna. Pak zkuste šroub — měl by jít hladce a pevně.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Doporučené velikosti</h3>
+      <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+        <div class="card">
+          <h4>M2 — miniaturní</h4>
+          <p>Pro drobnou elektroniku, PCB desky a miniaturní díly. Vyžaduje přesný tisk otvoru.</p>
+        </div>
+        <div class="card">
+          <h4>M3 — standard ★</h4>
+          <p>Nejpoužívanější velikost. Vhodné pro většinu dílů — kryty, robotické části, montážní díly. Šrouby M3 jsou všude.</p>
+        </div>
+        <div class="card">
+          <h4>M4 — silové aplikace</h4>
+          <p>Pro díly nesoucí větší zatížení. Širší kontaktní plocha = vyšší síla vytrhnutí.</p>
+        </div>
+        <div class="card">
+          <h4>M5 / M6 — těžká zátěž</h4>
+          <p>Průmyslové aplikace, rámy strojů, nosné konstrukce. V běžném hobby tisku méně časté.</p>
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=heat+set+inserts+3D+print+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: heat set inserts 3D print</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 5 — LAKOVÁNÍ A POVRCHOVÁ ÚPRAVA
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Lakování a povrchová úprava</h2>
+      </div>
+      <p>Vybroušený a zbavený podpor model je připravený k lakování. Správný postup — základ, barva, lak — dramaticky změní výsledný vizuální dojem a ochrání povrch před oděrem a UV zářením.</p>
+
+      <div class="steps">
+        <div class="step-row">
+          <div class="step-dot">1</div>
+          <div class="step-body">
+            <strong>Základ (Primer)</strong>
+            <p>Základní sprej vytvoří rovnoměrný povrch a odhalí zbývající nedokonalosti (škrábance, díry), které by přes barvu vynikly. Nastříkejte tenkou rovnoměrnou vrstvu ze vzdálenosti 20–25 cm. Nechte 30–60 minut schnout. Pak prolehce probrusit 400 zrnem a opakovat pro dokonalý základ. Doporučené produkty: Tamiya Surface Primer, Vallejo Surface Primer, Mr. Surfacer.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">2</div>
+          <div class="step-body">
+            <strong>Akrylové barvy</strong>
+            <p>Vodou ředitelné akrylové barvy jsou nejpohodlnější volba — bez silného zápachu, rychle schnou, snadno se mísí a čistí vodou. Nanášejte více tenkých vrstev místo jedné silné. Na drobnější detaily a přechody používejte štětce (Vallejo, Citadel), na velké plochy airbrush nebo sprej.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">3</div>
+          <div class="step-body">
+            <strong>Transparentní lak (Clear Coat)</strong>
+            <p>Závěrečná ochranná vrstva chrání barvu před oděrem, vlhkostí a UV zářením. Dostupný v matné, pololesklé a lesklé variantě — vyberte dle požadovaného výsledku. Doporučené produkty: Vallejo Matte Varnish, Tamiya Clear, Rust-Oleum 2X.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">4</div>
+          <div class="step-body">
+            <strong>Epoxy Resin Coating — zrcadlový povrch</strong>
+            <p>Dvousložková pryskyřice (např. XTC-3D, ArtResin) se nanese štětcem na povrch modelu a vytvoří po vytvrzení tvrdou, průhlednou a dokonale hladkou vrstvu. Skryje vrstvové linie bez broušení. Výsledek je lesklý jako plast. Vytvrzení 12–24 hodin. Vhodné pro exponáty a modely kde záleží na vizuálním efektu.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Pro figurky a cosplay — Vallejo akryl:</strong> Vallejo Model Color a Game Color jsou průmyslovým standardem pro ručně malované figurky. Výborné krytí, obrovský výběr barev, prémiová kvalita. Koupit v hobby shopech nebo online.</div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Tip — lakujte zavěšené:</strong> Propíchněte model v nenápadném místě drátkem a zavěste ho při lakování. Sprej se rovnoměrně dostane na všechny strany a model neleží na papíru kde by se povrch poškodil.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+print+painting+primer+acrylic&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print painting and primer</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 6 — ACETÓN SMOOTHING
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Acetón smoothing (ABS / ASA)</h2>
+      </div>
+      <p>Acetón smoothing je technika, která využívá chemické vlastnosti acetónu — rozpouštění ABS a ASA — k dosažení téměř injekčně hladkého povrchu bez broušení. Výsledek je dramatický: viditelné vrstvové linie zcela zmizí a model vypadá jako odlitek.</p>
+
+      <div class="chapter-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 20px;">
+        <div class="card">
+          <h4>Jak to funguje</h4>
+          <p>Páry acetónu pomalu roztaví tenkou vnější vrstvu ABS/ASA. Povrchové napětí roztavené vrstvy vyhlazuje nerovnosti a vrstvové linie. Po odpaření acetónu povrch zase zatuhne — dokonale hladký.</p>
+        </div>
+        <div class="card">
+          <h4>Výsledek</h4>
+          <p>Téměř zrcadlový matný povrch bez vrstvových linií. Model si zachovává přesné rozměry (shrnutí je minimální — desetiny mm). Povrch je pevnější a méně pórovitý.</p>
+        </div>
+      </div>
+
+      <h3>Postup — metoda uzavřené nádoby</h3>
+      <div class="steps">
+        <div class="step-row">
+          <div class="step-dot">1</div>
+          <div class="step-body">
+            <strong>Vyjděte ven nebo do dobře větrané místnosti</strong>
+            <p>Acetón je vysoce těkavý a hořlavý. Nikdy neprovádějte tento postup v uzavřeném prostoru, v blízkosti otevřeného ohně, cigaret nebo elektrických spotřebičů jiskřících.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">2</div>
+          <div class="step-body">
+            <strong>Připravte nádobu s víkem</strong>
+            <p>Velká skleněná nebo kovová nádoba s víkem. Plastové nádoby acetón naruší. Na dno dejte kousek papírové kuchyňské utěrky namočené v acetónu — ne příliš mnoho, stačí 5–10 ml.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">3</div>
+          <div class="step-body">
+            <strong>Vložte model na kovovou mřížku nad acetón</strong>
+            <p>Model nesmí ležet přímo v acetónu — jen v parách. Improvizovaná mřížka ze silného drátu nebo kovové mřížky na pečení poslouží výborně.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">4</div>
+          <div class="step-body">
+            <strong>Uzavřete nádobu a čekejte 10–30 minut</strong>
+            <p>Kontrolujte průběh každých 5 minut. Čím déle, tím hladší povrch — ale tím více se model smršťuje a ztrácí ostré hrany. 15–20 minut je obvykle ideální.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-dot">5</div>
+          <div class="step-body">
+            <strong>Vyjměte model a nechte 2–4 hodiny schnout</strong>
+            <p>Model je po vyjmutí povrchově měkký — nedotýkejte se ho. Položte na rovný povrch (nebo zavěste) a nechte zaschnout na vzduchu. Povrch zatuhne za 2–4 hodiny, plná pevnost za 24 hodin.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="danger-box">
+        <div class="danger-box-title">🔥 Bezpečnostní pravidla — acetón</div>
+        <ul>
+          <li><strong>Pouze venku nebo v silně větrané místnosti</strong> — páry acetónu jsou výbušné při koncentraci 2,5–12,8 % ve vzduchu</li>
+          <li><strong>Žádný otevřený oheň</strong> — cigarety, svíčky, plynové hořáky, jiskry</li>
+          <li><strong>Žádné elektrické spotřebiče</strong> v blízkosti — spínače, elektromotory a ventilátory jiskří</li>
+          <li><strong>Pouze sklo nebo kov</strong> — acetón rozpouští většinu plastů, včetně nádoby z PET nebo polystyrénu</li>
+          <li><strong>Ochranné rukavice</strong> (nitrylové) — acetón se vstřebává kůží a způsobuje dermatitidu při opakovaném kontaktu</li>
+          <li><strong>Pouze pro ABS a ASA</strong> — na PLA nefunguje, na PETG funguje omezeně, na TPU vůbec</li>
+        </ul>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=acetone+smoothing+ABS+3D+print+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: acetone smoothing ABS 3D print</a>
+    </div>
+
+    <!-- ── PAGE NAV ── -->
+    <div class="pn">
+      <a href="06_3D_prvni_tisk.html">← 06 · První tisk</a>
+      <a href="08_3D_filamenty.html" class="nx">08 · Filamenty →</a>
+    </div>
+
   </div>
 </main>
+
 <script>
 const searchInput = document.getElementById('sb-search-input');
 searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') {
+  if (e.key === 'Enter') {
     const q = e.target.value.trim();
-    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
   }
 });
 </script>

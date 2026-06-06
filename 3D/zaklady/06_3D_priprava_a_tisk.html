@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06 Příprava tisku a tisk — 3D Tisk průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0d0f14;
+    --surface: #13161e;
+    --card:    #181c27;
+    --border:  #252b3b;
+    --accent:  #e8a020;
+    --accent2: #f0c050;
+    --tuf:     #c8860a;
+    --green:   #3ecf76;
+    --red:     #e85050;
+    --blue:    #4a9eff;
+    --text:    #d8dce8;
+    --muted:   #6e7590;
+    --mono:    'IBM Plex Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
+
+  /* ── SIDEBAR ── */
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19,22,30,.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
+  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
+  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .sidebar-product { display: flex; align-items: center; gap: 10px; }
+  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
+  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
+  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+  .sb-search { padding: 15px 20px 5px; }
+  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
+  .sb-search input:focus { border-color: var(--accent); }
+  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all .2s; border-left: 2px solid transparent; line-height: 1.3; }
+  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232,160,32,.06); border-left-color: var(--accent); }
+  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
+  .nav-item-text { flex: 1; min-width: 0; }
+  .nav-subs { margin: 0; padding: 0 0 10px; list-style: none; display: flex; flex-direction: column; }
+  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all .2s; }
+  .nav-sub-item:hover { color: #fff; background: rgba(255,255,255,.03); border-left-color: var(--accent); }
+
+  /* ── MAIN ── */
+  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
+
+  /* ── HERO ── */
+  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
+  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
+  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
+  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
+  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 680px; }
+
+  /* ── PART DIVIDER ── */
+  .part-divider { display: flex; align-items: center; gap: 16px; margin: 52px 0 8px; }
+  .part-num { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.12); border: 1px solid rgba(232,160,32,.3); padding: 4px 12px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); flex-shrink: 0; letter-spacing: .1em; }
+  .part-title { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: #fff; }
+  .part-title span { color: var(--accent); }
+  .part-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--tuf), transparent); }
+
+  /* ── LAYOUT ── */
+  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
+
+  /* ── SECTIONS ── */
+  .section { margin: 36px 0; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  .section h3 { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 600; color: var(--accent2); margin: 28px 0 12px; }
+  .section p { margin-bottom: 14px; }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ── KARTY ── */
+  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; margin-top: 14px; }
+  .card { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; transition: border-color .2s; }
+  .card:hover { border-color: var(--accent); }
+  .card h4 { color: #fff; margin-bottom: 6px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 600; }
+  .card p { font-size: 13.5px; color: var(--text); line-height: 1.6; }
+
+  /* ── CHECKLIST KROKY ── */
+  .checklist { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .check-item { display: flex; align-items: flex-start; gap: 14px; background: var(--card); border: 1px solid var(--border); padding: 13px 18px; transition: border-color .2s; }
+  .check-item:hover { border-color: rgba(232,160,32,.35); }
+  .check-num { font-family: var(--mono); font-size: 12px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 7px; clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%); flex-shrink: 0; margin-top: 2px; min-width: 30px; text-align: center; }
+  .check-body strong { display: block; font-family: 'Rajdhani', sans-serif; font-size: 15px; color: #fff; margin-bottom: 2px; }
+  .check-body p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+  .check-body a { color: var(--accent); text-decoration: none; font-size: 12px; font-family: var(--mono); }
+  .check-body a:hover { color: var(--accent2); }
+
+  /* ── TABULKA POVRCH/MATERIÁL ── */
+  .surf-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
+  .surf-table th { background: var(--surface); font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .surf-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .surf-table tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+  .surf-table td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); width: 18%; }
+  .ok   { color: var(--green); font-weight: 700; }
+  .warn { color: var(--accent); font-weight: 700; }
+  .bad  { color: var(--red); font-weight: 700; }
+
+  /* ── PIPELINE ── */
+  .pipeline { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 14px 0; }
+  .pipe-step { background: var(--surface); border: 1px solid var(--border); padding: 8px 13px; font-family: var(--mono); font-size: 11px; color: var(--text); white-space: nowrap; }
+  .pipe-arrow { color: var(--accent); font-size: 15px; padding: 0 5px; flex-shrink: 0; }
+
+  /* ── INIT STEPS ── */
+  .init-steps { display: flex; flex-direction: column; gap: 0; margin-top: 14px; }
+  .init-step { display: flex; gap: 14px; align-items: flex-start; padding: 0 0 20px; position: relative; }
+  .init-step::before { content: ''; position: absolute; left: 17px; top: 36px; bottom: 0; width: 1px; background: var(--border); }
+  .init-step:last-child::before { display: none; }
+  .init-step:last-child { padding-bottom: 0; }
+  .step-dot { width: 36px; height: 36px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--tuf); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; color: var(--accent); clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+  .step-content strong { display: block; font-family: 'Rajdhani', sans-serif; font-size: 15px; color: #fff; margin-bottom: 3px; padding-top: 7px; }
+  .step-content p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+  /* ── LAYER EXAMPLES ── */
+  .layer-examples { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; margin-top: 14px; }
+  .layer-ex { background: var(--card); border: 1px solid var(--border); padding: 14px 16px; }
+  .layer-ex-icon { font-size: 24px; margin-bottom: 6px; }
+  .layer-ex h4 { font-family: 'Rajdhani', sans-serif; font-size: 15px; color: #fff; margin-bottom: 3px; }
+  .layer-ex p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+  .layer-ex.ok  { border-color: var(--green); }
+  .layer-ex.bad { border-color: var(--red); }
+  .layer-ex.wrn { border-color: var(--accent); }
+
+  /* ── ODKAZ NA CHECKLIST ── */
+  .checklist-link { display: flex; align-items: center; gap: 14px; background: rgba(232,160,32,.05); border: 1px solid var(--tuf); padding: 16px 22px; margin: 28px 0; text-decoration: none; transition: background .2s; }
+  .checklist-link:hover { background: rgba(232,160,32,.1); }
+  .checklist-link-icon { font-size: 26px; flex-shrink: 0; }
+  .checklist-link-text strong { display: block; font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent); margin-bottom: 2px; }
+  .checklist-link-text span { font-size: 13px; color: var(--muted); font-family: var(--mono); }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 13px 17px; margin: 14px 0; font-size: 14px; line-height: 1.6; }
+  .alert-icon { font-size: 17px; line-height: 1.3; flex-shrink: 0; }
+  .alert-info  { border: 1px solid var(--blue);   background: rgba(74,158,255,.07); }
+  .alert-tip   { border: 1px solid var(--green);  background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);    background: rgba(232,80,80,.07); }
+  .alert-gold  { border: 1px solid var(--tuf);    background: rgba(200,134,10,.08); }
+  .alert-kobra { border: 1px solid var(--accent); background: rgba(232,160,32,.07); }
+
+  /* ── YT ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin-top: 8px; }
+  .yt-link:hover { opacity: .8; }
+
+  /* ── PAGE NAV ── */
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-product">
+      <span class="sidebar-tuf-badge">3D</span>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
+    </div>
+  </div>
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
+  <div class="nav-group-label">Základní sekce</div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
+  <ul class="nav-subs">
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
+  </ul>
+  <a href="06_3D_priprava_a_tisk.html" class="nav-item active"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
+  <div class="nav-group-label">Ostatní přílohy</div>
+  <a href="Manual Anycubic Kobra X.pdf" target="_blank" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">PDF</span><span class="nav-item-text">Originál manuál</span>
+  </a>
+  <div class="nav-group-label">Oblíbené odkazy</div>
+  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">WEB</span><span class="nav-item-text">Výběr odkazů</span>
+  </a>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main-content">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="logo-row">
+        <span class="tuf-badge">KAPITOLA 06</span>
+        <span class="ver-badge">PRAXE</span>
+      </div>
+      <h1>Příprava <span>&amp; tisk</span></h1>
+      <p>Jak správně připravit tiskárnu, podložku i model před každým tiskem — a co sledovat když tisk běží. Platí pro každý tisk, nejen ten první.</p>
+    </div>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- ═══════════════════════════════════════════════════
+         ČÁST A — PŘÍPRAVA TISKU
+    ════════════════════════════════════════════════════ -->
+    <div class="part-divider">
+      <span class="part-num">ČÁST A</span>
+      <span class="part-title">Příprava <span>tisku</span></span>
+      <div class="part-line"></div>
+    </div>
+
+    <p style="color:var(--muted); font-size:14px; margin-top: 8px;">Správná příprava rozhoduje o 80 % výsledku. Tato část pokrývá vše co udělat <em>před</em> stiskem tlačítka Print — od SW nastavení po fyzický stav tiskárny.</p>
+
+    <!-- ─── SW: MODEL A SLICER ─── -->
+    <div class="section">
+      <div class="section-header"><h2>SW příprava — model a slicer</h2></div>
+      <p>Než cokoliv pošlete na tiskárnu, projděte rychlý SW checklist. Jde o základy — detailní nastavení najdete v kapitolách <a href="05a_3D_slicer_tisk.html" style="color:var(--accent);">05a</a>, <a href="05b_3D_slicer_rychlost.html" style="color:var(--accent);">05b</a> a <a href="05c_3D_slicer_filament.html" style="color:var(--accent);">05c</a>.</p>
+
+      <div class="checklist">
+        <div class="check-item">
+          <span class="check-num">SW1</span>
+          <div class="check-body">
+            <strong>Správný profil tiskárny a materiálu</strong>
+            <p>V Anycubic Slicer Next zkontrolujte, že je vybrán profil Kobra X a správný materiál (PLA / PETG / ABS…). Profil nastavuje základní teploty, rychlosti a retrakcí. Špatný profil = garantovaný špatný výtisk.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">SW2</span>
+          <div class="check-body">
+            <strong>Teplota trysky a podložky</strong>
+            <p>Zkontrolujte teploty dle materiálu — viz <a href="08_3D_filamenty.html">kap. 08 Filamenty</a>. Kobra X: podložka max 100 °C, tryska max 260 °C. Pro PLA: tryska 200–220 °C / podložka 60 °C.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">SW3</span>
+          <div class="check-body">
+            <strong>Orientace modelu na podložce</strong>
+            <p>Model by měl mít největší plochu dole — minimalizuje podpory a maximalizuje přilnavost první vrstvy. Model nesmí "viset ve vzduchu" — musí ležet přesně na Z=0.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">SW4</span>
+          <div class="check-body">
+            <strong>Podpory a přilnavost (Brim / Raft)</strong>
+            <p>Zapněte podpory pokud má model převisy &gt;45°. Pro vysoké nebo tenké modely přidejte Brim (5–8 mm). Detaily: <a href="05a_3D_slicer_tisk.html">kap. 05a — Parametry tisku</a>.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">SW5</span>
+          <div class="check-body">
+            <strong>Náhled vrstev před exportem</strong>
+            <p>Přepněte do Preview a proklikejte vrstvy. Zkontrolujte první vrstvu, umístění podpor a celkový průběh tisku. Problémy odhalíte za 30 sekund — ne za 3 hodiny tisku.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">SW6</span>
+          <div class="check-body">
+            <strong>Odhadovaný čas a spotřeba filamentu</strong>
+            <p>Slicer zobrazí čas tisku a hmotnost filamentu. Ověřte, že máte dostatek materiálu na cívce. Kobra X: filament runout sensor tisk pozastaví, ale lepší je mít zásobu dopředu.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-info" style="margin-top:8px;">
+        <div class="alert-icon">💡</div>
+        <div>Detailní nastavení všech parametrů sliceru: <a href="05a_3D_slicer_tisk.html" style="color:var(--accent);">05a Parametry tisku</a> · <a href="05b_3D_slicer_rychlost.html" style="color:var(--accent);">05b Parametry rychlosti</a> · <a href="05c_3D_slicer_filament.html" style="color:var(--accent);">05c Parametry filamentu</a></div>
+      </div>
+    </div>
+
+    <!-- ─── HW: TISKOVÁ PODLOŽKA ─── -->
+    <div class="section">
+      <div class="section-header"><h2>HW příprava — tisková podložka</h2></div>
+      <p>Příprava tiskové podložky je <strong>nejčastěji podceňovaný krok</strong> a zároveň nejčastější příčina selhání tisku. Studená nebo mastná podložka zaručeně způsobí odlepení modelu.</p>
+
+      <h3>Správná podložka pro daný materiál</h3>
+      <p>Kobra X je vybavena <strong>magnetickým PEI textured plátem</strong> — ten je vhodný pro PLA, PLA+, PETG (opatrně!) a TPU. Pro náročnější materiály je třeba upravit přípravu povrchu:</p>
+
+      <table class="surf-table">
+        <thead>
+          <tr><th>Materiál</th><th>PEI Textured (Kobra X)</th><th>Příprava povrchu</th><th>Poznámka</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PLA</td><td class="ok">✓ Výborné</td><td>IPA + čistý plát</td><td>Nejjednodušší varianta</td></tr>
+          <tr><td>PLA+</td><td class="ok">✓ Výborné</td><td>IPA + čistý plát</td><td>—</td></tr>
+          <tr><td>PETG</td><td class="warn">⚠ Opatrně</td><td>IPA + tenká vrstva PVA lepidla nebo Magigoo</td><td>Bez separační vrstvy hrozí odloupnutí PEI!</td></tr>
+          <tr><td>TPU</td><td class="ok">✓ Dobré</td><td>IPA + čistý plát</td><td>Nižší teplota podložky (40–50 °C)</td></tr>
+          <tr><td>ABS / ASA</td><td class="warn">⚠ Nutné adhesivum</td><td>IPA + Kores tyčinka / Magigoo ABS</td><td>Enclosure nutné, jinak warping</td></tr>
+          <tr><td>Nylon (PA)</td><td class="warn">⚠ Problematické</td><td>IPA + Magigoo PA / PEI smooth plát</td><td>Vyžaduje speciální povrch</td></tr>
+          <tr><td>PC</td><td class="bad">✗ Nedoporučeno</td><td>—</td><td>Kobra X: nedostatečná teplota podložky</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-warn" style="margin-top:14px;">
+        <div class="alert-icon">⚠</div>
+        <div><strong>PETG a PEI — velké riziko:</strong> PETG se k čistému odmaštěnému PEI plátu přilepí natolik silně, že při vyjímání odloupne PEI povrch. Vždy používejte separační vrstvu — PVA lepidlová tyčinka (Kores), Magigoo nebo záblesk laku na vlasy. Tenká vrstva stačí.</div>
+      </div>
+
+      <h3>Čištění podložky před tiskem</h3>
+      <p>Toto je <strong>nejdůležitější rutina</strong> — provádějte před každým tiskem nebo alespoň každých 3–5 tisků. Otisky prstů a mastnota jsou největší příčina špatné přilnavosti.</p>
+
+      <div class="checklist" style="margin-top:12px;">
+        <div class="check-item">
+          <span class="check-num">P1</span>
+          <div class="check-body">
+            <strong>Nastříkejte IPA (90 %+) na studený plát</strong>
+            <p>Vždy čistěte na studeném plátu — na horkém povrchu IPA okamžitě vyprchá bez účinku. Postačí pár stříků z rozprašovače nebo navlhčený hadřík.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">P2</span>
+          <div class="check-body">
+            <strong>Otřete neparfémovanou papírovou utěrkou</strong>
+            <p>Papírová utěrka (ne tkanina!) — tkanina zanechává vlákna na povrchu. Otřete jedním tahem od středu k okraji, nevracejte se přes stejné místo mastnou stranou utěrky.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">P3</span>
+          <div class="check-body">
+            <strong>Nedotýkejte se čistého povrchu holou rukou</strong>
+            <p>Jeden otisk prstu = špatná přilnavost na tom místě. Po čištění uchopte plát pouze za okraje. Pokud se omylem dotknete středu — opakujte čištění.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">P4</span>
+          <div class="check-body">
+            <strong>Při silném znečištění — mýdlová voda</strong>
+            <p>Pokud IPA nestačí (zbytky lepidla, pigmentu), omyjte plát teplou vodou s kapkou mycího prostředku. Opláchněte, osušte a dočistěte IPA. Pak nechte zcela vyschnout.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">P5</span>
+          <div class="check-body">
+            <strong>Nikdy acetón na PEI plát</strong>
+            <p>Acetón trvale poškodí PEI povrch. Používejte pouze IPA nebo mýdlovou vodu. Acetón je povolený pouze pro ABS díly v kapitole post-processingu — ne pro čištění podložky.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Adhesiva — kdy a jak použít</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>PVA lepidlová tyčinka (Kores, Pritt)</h4>
+          <p>Nejdostupnější separační vrstva. Naneste tenkou vrstvu na studený plát a nechte zaschnout. Výborné pro PETG — zabrání přilepení a zároveň zajistí dobrou přilnavost. Po tisku snadno smyjete vodou.</p>
+        </div>
+        <div class="card">
+          <h4>Magigoo (specializované)</h4>
+          <p>Profesionální adhesivum dostupné ve variantách pro PLA, PETG, ABS, PA... Nanáší se na studenou podložku, schne za 1–2 min. Za tepla drží, za studena model samo pustí. Nejlepší výsledky pro náročné materiály.</p>
+        </div>
+        <div class="card">
+          <h4>Lak na vlasy (nouzové řešení)</h4>
+          <p>Záblesk laku na vlasy (bez kondicionérů) funguje jako nouzová separační vrstva. Nenechte zaschnout příliš silnou vrstvu — po tisku se obtížně čistí. Použijte jen pokud nemáte nic jiného.</p>
+        </div>
+        <div class="card">
+          <h4>Lepidlo na sklo (Ponal, Vitrea)</h4>
+          <p>Ředěné ve vodě (1:10) a nanesené štětcem vytváří spolehlivou separační vrstvu pro ABS. Klasická metoda která funguje spolehlivě i na Kobře X. Smývá se teplou vodou.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── HW: TISKÁRNA ─── -->
+    <div class="section">
+      <div class="section-header"><h2>HW příprava — tiskárna</h2></div>
+
+      <div class="checklist">
+        <div class="check-item">
+          <span class="check-num">HW1</span>
+          <div class="check-body">
+            <strong>Správná tryska — průměr a materiál</strong>
+            <p>Zkontrolujte, že průměr trysky v sliceru odpovídá skutečně osazené trysce (standard Kobra X = 0,4 mm mosaz). Pro CF a abrazivní filamenty: nerezová nebo hardened steel tryska. Více: <a href="02_3D_tiskarna.html">kap. 02 Tiskárna</a>.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">HW2</span>
+          <div class="check-body">
+            <strong>Tryska je čistá — bez zbytků předchozího materiálu</strong>
+            <p>Pokud jste měnili materiál (např. z ABS na PLA), spusťte čistění trysky (purge) dokud nevychází čistý plast správné barvy. Zbytky starého materiálu způsobují ucpání nebo slabé spoje vrstev.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">HW3</span>
+          <div class="check-body">
+            <strong>Filament správně zaveden — teflonové trubice 1–4</strong>
+            <p>Zkontrolujte, že filament je zasunut až do extruderu a správně prochází teflonovou trubicí. Kobra X: každá trubice musí být v správně číslovaném portu. Po zavedení tiskárna pípne a zobrazí typ materiálu.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">HW4</span>
+          <div class="check-body">
+            <strong>Suchý filament — ne vlhký</strong>
+            <p>Vlhký filament prská, tvoří bubliny a špatně přilne. Pokud cívka leží déle než týden na otevřeném vzduchu, před tiskem sušte. PLA 45–55 °C / 4–6 h, PETG 65 °C / 6–8 h, Nylon 80 °C / 12 h. Více: <a href="08_3D_filamenty.html">kap. 08 Filamenty</a>.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">HW5</span>
+          <div class="check-body">
+            <strong>Tiskárna je čistá — bez zbytků předchozích tisků</strong>
+            <p>Zkontrolujte podložku a okolí trysky. Zbytky plastu kolem trysky spadnou do tisku a způsobí defekty nebo odlepení. Purge Wiper (stěrka) na levé straně rámu musí být čistý.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">HW6</span>
+          <div class="check-body">
+            <strong>Osy jsou promazané a pohyb je plynulý</strong>
+            <p>Suchý kluz os způsobuje nerovnoměrný pohyb a ghosting. Pravidelně promazávejte lineární tyče strojním olejem, trapézový šroub Z tukem. Detailně v <a href="11_3D_udrzba.html">kap. 11 Údržba</a>.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">HW7</span>
+          <div class="check-body">
+            <strong>Řemeny jsou správně napnuté</strong>
+            <p>Povolený řemen způsobuje ghosting (vlnky na stěnách) a nepřesné rozměry. Test: přiložte prst k řemenu a pinknete — má znít jako nízká basová nota, ne prázdné plácaní. Kobra X: šrouby napínání na ose X a Y.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">HW8</span>
+          <div class="check-body">
+            <strong>Okolí tiskárny je volné</strong>
+            <p>Podložka se pohybuje až 26 cm dopředu. Odstraňte předměty z dosahu. Pro ABS/ASA: uzavřete enclosure (pokud máte) a zavřete okna — průvan způsobuje praskání vrstev.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ODKAZ NA CHECKLIST -->
+      <a href="Checklist.html" target="_blank" class="checklist-link" style="margin-top:24px;">
+        <div class="checklist-link-icon">📋</div>
+        <div class="checklist-link-text">
+          <strong>→ Stáhnout / vytisknout Checklist před tiskem</strong>
+          <span>Jednostránkový přehled všech kroků — připravte si ho vedle tiskárny · Checklist.html</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         ČÁST B — TISK SAMOTNÝ
+    ════════════════════════════════════════════════════ -->
+    <div class="part-divider" style="margin-top: 56px;">
+      <span class="part-num">ČÁST B</span>
+      <span class="part-title">Tisk <span>samotný</span></span>
+      <div class="part-line"></div>
+    </div>
+
+    <p style="color:var(--muted); font-size:14px; margin-top: 8px;">Příprava je hotová — spouštíme tisk. Tato část popisuje co sledovat, jak reagovat na problémy za chodu a jak správně vyjmout hotový model.</p>
+
+    <!-- ─── INICIALIZACE ─── -->
+    <div class="section">
+      <div class="section-header"><h2>Zapnutí a inicializace Kobry X</h2></div>
+      <p>Při prvním zapnutí tiskárna provede průvodce nastavením (jazyk, Wi-Fi, spárování s aplikací). Při každém dalším zapnutí proběhne pouze rychlá samokontrola a auto-leveling.</p>
+
+      <div class="init-steps">
+        <div class="init-step">
+          <div class="step-dot">1</div>
+          <div class="step-content"><strong>Reset na nulu (Homing)</strong><p>Tiskárna najede do výchozí pozice na všech osách. Trvá 30–60 sekund.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">2</div>
+          <div class="step-content"><strong>Automatické vyrovnání podložky (Auto-Level)</strong><p>Senzor změří vzdálenost trysky od podložky v síti bodů a uloží kompenzační mapu. Proběhne automaticky před každým tiskem — neřeší se ručně.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">3</div>
+          <div class="step-content"><strong>Zahřátí trysky a podložky</strong><p>Tiskárna zahřeje trysku a podložku na nastavené teploty. PLA: čekejte cca 2–3 minuty. ABS: 5–8 minut.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">4</div>
+          <div class="step-content"><strong>Purge (čistění trysky)</strong><p>Tiskárna najede k Purge Wiperu a vytlačí malé množství plastu pro pročistění trysky. Normální chování — nevyzvedávejte plast ihned.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">▶</div>
+          <div class="step-content"><strong>Tisk spuštěn — první vrstva</strong><p>Tiskárna přejede na podložku a začne tisknout. Zůstaňte u tiskárny po celou první vrstvu.</p></div>
+        </div>
+      </div>
+
+      <div class="alert alert-kobra" style="margin-top:14px;">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X — auto-leveling při každém tisku:</strong> Senzor před tiskem vždy automaticky zmapuje podložku. Nemusíte nic nastavovat ručně — systém kompenzuje prohnutí a teplotní roztažnost rámu. Pokud auto-leveling selže nebo oznámí chybu, zkontrolujte čistotu senzoru a podložky.</div>
+      </div>
+    </div>
+
+    <!-- ─── PRVNÍ VRSTVA ─── -->
+    <div class="section">
+      <div class="section-header"><h2>Sledování první vrstvy</h2></div>
+      <p>První vrstva je klíčová — zůstaňte u tiskárny celé 2–5 minut které trvá. Pokud první vrstva vypadá dobře, zbytek tisku obvykle proběhne v pořádku.</p>
+
+      <div class="alert alert-gold">
+        <div class="alert-icon">💡</div>
+        <div><strong>Pravidlo 80 %:</strong> Správná první vrstva = 80 % úspěchu celého tisku. Linky by měly být mírně zploštělé, rovnoměrné a pevně přilepené k podložce.</div>
+      </div>
+
+      <div class="layer-examples">
+        <div class="layer-ex ok">
+          <div class="layer-ex-icon">✅</div>
+          <h4>Ideální první vrstva</h4>
+          <p>Linky zploštělé, navzájem propojené. Povrch rovnoměrný, bez mezer ani přebytku materiálu.</p>
+        </div>
+        <div class="layer-ex bad">
+          <div class="layer-ex-icon">❌</div>
+          <h4>Tryska příliš nízko</h4>
+          <p>Plast se hromadí, tryska škrábe. Zvyšte Z-Offset (tryska výš) po kroku 0,05 mm.</p>
+        </div>
+        <div class="layer-ex bad">
+          <div class="layer-ex-icon">❌</div>
+          <h4>Tryska příliš vysoko</h4>
+          <p>Kulaté linky, nedrží. Model se odlepí. Snižte Z-Offset (tryska níž).</p>
+        </div>
+        <div class="layer-ex wrn">
+          <div class="layer-ex-icon">⚠️</div>
+          <h4>Nerovnoměrná vrstva</h4>
+          <p>OK na jedné straně, špatně na druhé. Znečistěná podložka nebo problém s auto-levelingem.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-tip" style="margin-top:12px;">
+        <div class="alert-icon">✓</div>
+        <div><strong>Z-Offset za chodu:</strong> Na displeji Kobry X lze Z-Offset upravit přímo během tisku první vrstvy — tisk zastavovat nemusíte. Upravujte po 0,05 mm a sledujte výsledek.</div>
+      </div>
+    </div>
+
+    <!-- ─── BĚHEM TISKU ─── -->
+    <div class="section">
+      <div class="section-header"><h2>Během tisku — co sledovat</h2></div>
+
+      <div class="checklist">
+        <div class="check-item">
+          <span class="check-num">→</span>
+          <div class="check-body">
+            <strong>Model drží na podložce — žádný warping</strong>
+            <p>Rohy se nezvedají. Pokud začnou odlepovat — zastavte tisk, přidejte Brim nebo adhesivum a zkuste znovu.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">→</span>
+          <div class="check-body">
+            <strong>Kontinuální průtok — žádné mezery ve stěnách</strong>
+            <p>Z trysky vytéká rovnoměrná linie plastu. Přerušení = ucpaná tryska nebo problém s podáváním filamentu.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">→</span>
+          <div class="check-body">
+            <strong>Žádné neobvyklé zvuky</strong>
+            <p>Normální: klikání, šumění, vrčení. Neobvyklé: hlasité praskání (vlhký filament), kovové skřípání os, opakované cvakání extruderu (grinding).</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">→</span>
+          <div class="check-body">
+            <strong>Vrstvy rostou rovnoměrně — žádný layer shift</strong>
+            <p>Model roste přímo nahoru. Posunuté vrstvy (layer shift) = přeskočený krok motoru → zastavte tisk a diagnostikujte.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Vzdálené monitorování přes Anycubic App</h3>
+      <p>Po spárování tiskárny s Anycubic účtem (viz <a href="02_3D_tiskarna.html" style="color:var(--accent);">kap. 02</a>) sledujte průběh tisku přes vestavěnou kameru odkudkoliv. V aplikaci vidíte živý obraz, procento dokončení a teploty. Tisk lze vzdáleně zastavit.</p>
+
+      <div class="chapter-grid" style="grid-template-columns:1fr 1fr; margin-top:14px;">
+        <div class="card">
+          <h4>Pozastavit (Pause)</h4>
+          <p>Na displeji klepněte Pause. Tiskárna přejede stranou a čeká. Pro kontrolu modelu nebo výměnu filamentu. Pokračujte tlačítkem Resume.</p>
+        </div>
+        <div class="card">
+          <h4>Zastavit (Cancel)</h4>
+          <p>Tisk nenávratně ukončen. Tryska se vrátí do home pozice. Nikdy nevypínejte hlavním vypínačem — tryska zůstane v modelu.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── PO TISKU ─── -->
+    <div class="section">
+      <div class="section-header"><h2>Po tisku — vyjmutí modelu</h2></div>
+
+      <div class="init-steps">
+        <div class="init-step">
+          <div class="step-dot">1</div>
+          <div class="step-content"><strong>Počkejte na vychladnutí podložky</strong><p>PEI plát pustí model sám při poklesu pod ~35 °C. Uslyšíte prasknutí — model se sám odlepí. Trvá 5–15 minut. Nespěchejte.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">2</div>
+          <div class="step-content"><strong>Vyjměte magnetický plát z podložky</strong><p>Sundejte plát za roh — pracuje se s ním pohodlněji mimo tiskárnu.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">3</div>
+          <div class="step-content"><strong>Ohněte plát do oblouku</strong><p>Obě ruce, jeden roh dopředu druhý dozadu. Plát se ohne a model bezpečně odpadne. Funguje pro 95 % modelů.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">4</div>
+          <div class="step-content"><strong>Špachtle pokud model stále drží</strong><p>Zasuňte tenkou plastovou špachtli pod okraj a jemně páčte podél hrany. Nikdy bodově — zlomíte model nebo poškrábete PEI.</p></div>
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin-top:12px;">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Nikdy nestrháváte model z horké podložky.</strong> Horká PEI je měkká — škrábance a odloupnutí povrchu jsou nevratné. Vždy počkejte na vychladnutí.</div>
+      </div>
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Model nejde odlepit ani po vychladnutí?</strong> Dejte plát na 10 minut do mrazáku. Prudká změna teploty způsobí, že se PEI a plast smrští různou rychlostí a model se uvolní sám.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+tisk+prvni+vrstva+z+offset+kalibrace+podlozka&hl=cs" target="_blank" class="yt-link">▶ YouTube: první vrstva, Z-Offset a příprava podložky</a>
+    </div>
+
+    <!-- ── PAGE NAV ── -->
+    <div class="pn">
+      <a href="05c_3D_slicer_filament.html">← 05c · Parametry filamentu</a>
+      <a href="07_3D_post_processing.html" class="nx">07 · Post-processing →</a>
+    </div>
+
+  </div>
+</main>
+
+<script>
+const searchInput = document.getElementById('sb-search-input');
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const q = e.target.value.trim();
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+  }
+});
+</script>
+</body>
+</html>

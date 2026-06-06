@@ -7,49 +7,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:       #0d0f14;
-    --surface:  #13161e;
-    --card:     #181c27;
-    --border:   #252b3b;
-    --accent:   #e8a020;
-    --accent2:  #f0c050;
-    --tuf:      #c8860a;
-    --green:    #3ecf76;
-    --red:      #e85050;
-    --blue:     #4a9eff;
-    --text:     #d8dce8;
-    --muted:    #6e7590;
-    --mono:     'IBM Plex Mono', monospace;
+    --bg:      #0d0f14;
+    --surface: #13161e;
+    --card:    #181c27;
+    --border:  #252b3b;
+    --accent:  #e8a020;
+    --accent2: #f0c050;
+    --tuf:     #c8860a;
+    --green:   #3ecf76;
+    --red:     #e85050;
+    --blue:    #4a9eff;
+    --text:    #d8dce8;
+    --muted:   #6e7590;
+    --mono:    'IBM Plex Mono', monospace;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
 
   /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--border); border-right-color: var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19,22,30,.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
   .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
   .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .sidebar-product { display: flex; align-items: center; gap: 10px; }
   .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
   .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
   .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-
   .sb-search { padding: 15px 20px 5px; }
   .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
   .sb-search input:focus { border-color: var(--accent); }
-
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
+  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all .2s; border-left: 2px solid transparent; line-height: 1.3; }
+  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232,160,32,.06); border-left-color: var(--accent); }
+  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
   .nav-item-text { flex: 1; min-width: 0; }
+  .nav-subs { margin: 0; padding: 0 0 10px; list-style: none; display: flex; flex-direction: column; }
+  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all .2s; }
+  .nav-sub-item:hover { color: #fff; background: rgba(255,255,255,.03); border-left-color: var(--accent); }
 
-  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
-  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
-
-  /* ── MAIN CONTENT AREA ── */
+  /* ── MAIN ── */
   .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
 
   /* ── HERO ── */
@@ -61,126 +56,138 @@
   .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
   .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
   .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 640px; }
 
   /* ── LAYOUT ── */
   .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
 
   /* ── SECTIONS ── */
-  .section { margin: 44px 0; }
+  .section { margin: 48px 0; }
   .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
   .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  .section h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 32px 0 14px; }
+  .section p { margin-bottom: 14px; }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ── SROVNÁVACÍ TABULKA ── */
+  .big-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
+  .big-table thead tr { background: var(--surface); }
+  .big-table th { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; padding: 10px 12px; text-align: left; border-bottom: 2px solid var(--border); white-space: nowrap; }
+  .big-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .big-table tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+  .big-table td:first-child { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent2); }
+  .ok   { color: var(--green); font-size: 15px; }
+  .warn { color: var(--accent); font-size: 15px; }
+  .bad  { color: var(--red);   font-size: 15px; }
+  .diff { display: inline-flex; gap: 1px; }
+  .diff span { color: var(--accent); }
+  .diff span.off { color: var(--border); }
+
+  /* ── MATERIÁLOVÁ KARTA ── */
+  .mat-card { background: var(--card); border: 1px solid var(--border); margin-bottom: 28px; }
+  .mat-header { display: flex; align-items: center; gap: 16px; padding: 18px 24px 14px; border-bottom: 1px solid var(--border); }
+  .mat-badge { font-family: var(--mono); font-size: 13px; font-weight: 600; color: #000; padding: 4px 12px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); flex-shrink: 0; }
+  .mat-title { font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; color: #fff; }
+  .mat-subtitle { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .mat-body { padding: 18px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .mat-desc { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .mat-props { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mat-prop { font-family: var(--mono); font-size: 11px; color: var(--text); background: var(--surface); border: 1px solid var(--border); padding: 4px 10px; }
+  .mat-prop span { color: var(--accent2); margin-right: 4px; }
+  .mat-footer { padding: 0 24px 18px; display: flex; flex-direction: column; gap: 8px; }
+
+  /* ── SPEC MINI TABLE ── */
+  .spec-mini { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .spec-mini td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+  .spec-mini td:first-child { color: var(--muted); font-family: var(--mono); font-size: 11px; width: 45%; }
+  .spec-mini td:last-child { color: var(--text); font-weight: 500; }
+
+  /* ── TISK TIPY ── */
+  .tip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 8px; }
+  .tip-item { background: var(--surface); border: 1px solid var(--border); padding: 10px 14px; font-size: 13px; }
+  .tip-item strong { display: block; font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+
+  /* ── BRAND CARDS ── */
+  .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }
+  .brand-card { background: var(--card); border: 1px solid var(--border); padding: 16px 20px; transition: border-color .2s; }
+  .brand-card:hover { border-color: var(--accent); }
+  .brand-card a { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: var(--accent); text-decoration: none; }
+  .brand-card a:hover { color: var(--accent2); }
+  .brand-card p { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+
+  /* ── SUŠENÍ TABULKA ── */
+  .dry-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 16px; }
+  .dry-table th { background: var(--surface); font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .dry-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  .dry-table tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+  .dry-table td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+  .alert-icon { font-size: 18px; line-height: 1.3; flex-shrink: 0; }
+  .alert-info  { border: 1px solid var(--blue);   background: rgba(74,158,255,.07); }
+  .alert-tip   { border: 1px solid var(--green);  background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);    background: rgba(232,80,80,.07); }
+  .alert-kobra { border: 1px solid var(--accent); background: rgba(232,160,32,.07); }
+
+  /* ── YT ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin-top: 6px; }
+  .yt-link:hover { opacity: .8; }
 
   /* ── PAGE NAV ── */
-  .pn { margin-top:60px; padding-top:26px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
-  .pn a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; transition:color .15s; }
-  .pn a:hover { color:var(--accent); } .pn .nx { margin-left:auto; }
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
+  @media (max-width: 700px) { .big-table { font-size: 11px; } .big-table th, .big-table td { padding: 7px 8px; } }
 </style>
 </head>
 <body>
 
 <!-- ── SIDEBAR ── -->
-<nav class="sidebar" id="sidebar">
-
+<nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-product">
       <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">
-        ANYCUBIC KOBRA X
-        <small>Průvodce 3D tiskem · CZ</small>
-      </div>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
     </div>
   </div>
-
-  <div class="sb-search">
-    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
-  </div>
-
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
   <div class="nav-group-label">Základní sekce</div>
-
-  <a href="00_3D_index.html" class="nav-item">
-    <span class="nav-num">00</span>
-    <span class="nav-item-text">Obsah & Hledání</span>
-  </a>
-  <a href="01_3D_uvod.html" class="nav-item ">
-    <span class="nav-num">01</span>
-    <span class="nav-item-text">Úvod do FDM tisku</span>
-  </a>
-  <a href="02_3D_tiskarna.html" class="nav-item ">
-    <span class="nav-num">02</span>
-    <span class="nav-item-text">Tiskárna Kobra X</span>
-  </a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item ">
-    <span class="nav-num">03</span>
-    <span class="nav-item-text">Slicer — základy</span>
-  </a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item ">
-    <span class="nav-num">04</span>
-    <span class="nav-item-text">Slicer — pokročilý</span>
-  </a>
-
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">05</span>
-    <span class="nav-item-text">Detailní parametry</span>
-  </div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
   <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item ">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item ">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item ">05c · Parametry filamentu</a></li>
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
   </ul>
-
-  <a href="06_3D_prvni_tisk.html" class="nav-item ">
-    <span class="nav-num">06</span>
-    <span class="nav-item-text">První tisk</span>
-  </a>
-  <a href="07_3D_post_processing.html" class="nav-item ">
-    <span class="nav-num">07</span>
-    <span class="nav-item-text">Post-processing</span>
-  </a>
-  <a href="08_3D_filamenty.html" class="nav-item active">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </a>
-  <a href="09_3D_modely_cad.html" class="nav-item ">
-    <span class="nav-num">09</span>
-    <span class="nav-item-text">3D Modely & CAD</span>
-  </a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item ">
-    <span class="nav-num">10</span>
-    <span class="nav-item-text">Prostředí & upgrady</span>
-  </a>
-  <a href="11_3D_udrzba.html" class="nav-item ">
-    <span class="nav-num">11</span>
-    <span class="nav-item-text">Údržba & spot. mat.</span>
-  </a>
-  <a href="12_3D_tipy.html" class="nav-item ">
-    <span class="nav-num">12</span>
-    <span class="nav-item-text">Tipy & triky</span>
-  </a>
-  <a href="13_3D_troubleshooting.html" class="nav-item ">
-    <span class="nav-num">13</span>
-    <span class="nav-item-text">Troubleshooting</span>
-  </a>
-
+  <a href="06_3D_prvni_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">První tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item active"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="Manual Anycubic Kobra X.pdf" target="_blank" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">PDF</span>
-    <span class="nav-item-text">Originál manuál</span>
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">PDF</span><span class="nav-item-text">Originál manuál</span>
   </a>
-  
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">WEB</span>
-    <span class="nav-item-text">Výběr odkazů</span>
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">WEB</span><span class="nav-item-text">Výběr odkazů</span>
   </a>
-
 </nav>
 
+<!-- ── MAIN ── -->
 <main class="main-content">
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
@@ -188,25 +195,627 @@
         <span class="ver-badge">MATERIÁLY</span>
       </div>
       <h1><span>Filamenty</span></h1>
-      <p>Tato kapitola čeká na zpracování. Zde se dozvíte vše potřebné k tématu "Filamenty".</p>
+      <p>Encyklopedie materiálů od PLA po Nylon. Vlastnosti, teploty, tipy pro tisk a přehled nejlepších značek.</p>
     </div>
   </div>
 
   <div class="wrapper">
+
+    <!-- ═══════════════════════════════════════
+         SROVNÁVACÍ TABULKA
+    ════════════════════════════════════════ -->
     <div class="section">
-      <div class="section-header">
-        <h2>Prázdná kapitola</h2>
+      <div class="section-header"><h2>Srovnání materiálů — přehled</h2></div>
+      <p>Rychlá reference pro výběr správného materiálu. Detailní popis každého materiálu najdete v sekcích níže.</p>
+      <div style="overflow-x:auto;">
+        <table class="big-table">
+          <thead>
+            <tr>
+              <th>Materiál</th>
+              <th>Obtížnost</th>
+              <th>Tryska</th>
+              <th>Podložka</th>
+              <th>Kryt</th>
+              <th>Pevnost</th>
+              <th>Flexibilita</th>
+              <th>Tep. odolnost</th>
+              <th>Cena</th>
+              <th>Kobra X</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PLA</td>
+              <td><div class="diff"><span>★</span><span class="off">★★★★</span></div></td>
+              <td>190–220 °C</td><td>55–65 °C</td><td>Ne</td>
+              <td>Střední</td><td>Nízká</td><td>~60 °C</td><td>Nízká</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
+              <td>PLA+</td>
+              <td><div class="diff"><span>★</span><span class="off">★★★★</span></div></td>
+              <td>200–230 °C</td><td>60–70 °C</td><td>Ne</td>
+              <td>Střední+</td><td>Nízká</td><td>~65 °C</td><td>Nízká</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
+              <td>PETG</td>
+              <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
+              <td>230–250 °C</td><td>70–85 °C</td><td>Ne</td>
+              <td>Vysoká</td><td>Mírná</td><td>~80 °C</td><td>Nízká</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
+              <td>ABS</td>
+              <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
+              <td>230–250 °C</td><td>100–110 °C</td><td>Nutný</td>
+              <td>Vysoká</td><td>Nízká</td><td>~105 °C</td><td>Nízká</td>
+              <td><span class="warn">⚠</span></td>
+            </tr>
+            <tr>
+              <td>ASA</td>
+              <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
+              <td>240–260 °C</td><td>100–110 °C</td><td>Nutný</td>
+              <td>Vysoká</td><td>Nízká</td><td>~100 °C</td><td>Nízká</td>
+              <td><span class="warn">⚠</span></td>
+            </tr>
+            <tr>
+              <td>TPU</td>
+              <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
+              <td>220–240 °C</td><td>30–60 °C</td><td>Ne</td>
+              <td>Nízká</td><td>Vysoká</td><td>~80 °C</td><td>Střední</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
+              <td>Nylon (PA)</td>
+              <td><div class="diff"><span>★★★★</span><span class="off">★</span></div></td>
+              <td>240–270 °C</td><td>70–90 °C</td><td>Doporučen</td>
+              <td>Velmi vysoká</td><td>Mírná</td><td>~120 °C</td><td>Střední</td>
+              <td><span class="warn">⚠</span></td>
+            </tr>
+            <tr>
+              <td>PC</td>
+              <td><div class="diff"><span>★★★★★</span></div></td>
+              <td>260–300 °C</td><td>110–120 °C</td><td>Nutný</td>
+              <td>Extrémní</td><td>Nízká</td><td>~135 °C</td><td>Vysoká</td>
+              <td><span class="bad">✗</span></td>
+            </tr>
+            <tr>
+              <td>HIPS</td>
+              <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
+              <td>230–240 °C</td><td>100 °C</td><td>Nutný</td>
+              <td>Střední</td><td>Nízká</td><td>~95 °C</td><td>Nízká</td>
+              <td><span class="warn">⚠</span></td>
+            </tr>
+            <tr>
+              <td>PVA</td>
+              <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
+              <td>185–200 °C</td><td>45–60 °C</td><td>Ne</td>
+              <td>Nízká</td><td>Nízká</td><td>~50 °C</td><td>Vysoká</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
+              <td>PLA-CF / PETG-CF</td>
+              <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
+              <td>210–250 °C</td><td>60–85 °C</td><td>Ne</td>
+              <td>Velmi vysoká</td><td>Nízká</td><td>~80 °C</td><td>Střední</td>
+              <td><span class="warn">⚠</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <p>Obsah bude brzy doplněn. Zvolte zatím jinou kapitolu z levého menu.</p>
+      <p style="margin-top:12px; font-size:13px; color:var(--muted);">✓ = plně vhodné · ⚠ = možné s omezeními · ✗ = nedoporučeno pro Kobru X</p>
     </div>
+
+    <!-- ═══════════════════════════════════════
+         PLA
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Materiály — detailní přehled</h2></div>
+
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#4caf50;">PLA</div>
+          <div>
+            <div class="mat-title">PLA — Polylactic Acid</div>
+            <div class="mat-subtitle">Začátečnický standard · Bio-degradovatelný · Nejsnazší tisk</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">PLA (kyselina polymléčná) je bio-degradovatelný termoformovatelný plast vyráběný z kukuřičného škrobu nebo cukrové třtiny. Je to nejpoužívanější materiál pro FDM tisk na světě — díky nízké teplotě tisku, minimálnímu zápachu a výborné rozměrové stabilitě.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>190–220 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>55–65 °C (nebo studená)</td></tr>
+            <tr><td>Rychlost tisku</td><td>40–100 mm/s</td></tr>
+            <tr><td>Chlazení</td><td>Plný větrák (100 %)</td></tr>
+            <tr><td>Retrakce (Direct Drive)</td><td>0,5–1,5 mm</td></tr>
+          </table>
+          <div class="mat-props">
+            <div class="mat-prop"><span>✓</span>Snadný tisk</div>
+            <div class="mat-prop"><span>✓</span>Nízká cena</div>
+            <div class="mat-prop"><span>✓</span>Výborné detaily</div>
+            <div class="mat-prop"><span>✓</span>Minimální warping</div>
+            <div class="mat-prop"><span>✗</span>Křehký při rázu</div>
+            <div class="mat-prop"><span>✗</span>Nízká tepelná odolnost (~60 °C)</div>
+          </div>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div><strong>Výhody:</strong> Tiskne se snadno i bez vyhřívané podložky. Minimální zápach. Výborná rozměrová přesnost. Dostupný ve stovkách barev. Ideální pro figurky, dekorace, prototypy, hračky.</div>
+          </div>
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div><strong>Nevýhody:</strong> Křehne při nárazu — ne pro mechanicky namáhané díly. Měkne při teplotách nad ~60 °C — nenechávejte v autě v létě. Pohlcuje vlhkost a UV záření časem degraduje.</div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X:</strong> Ideální volba. PLA funguje výborně s auto-levelingem a Input Shapingem. Začněte s PLA — je to nejodpouštivější materiál pro ladění tiskárny.</div>
+          </div>
+          <h3 style="margin-top:8px;">Tipy pro tisk</h3>
+          <div class="tip-grid">
+            <div class="tip-item"><strong>Teplota</strong>Začněte na 210 °C a Temperature Tower testujte od 190 do 225 °C</div>
+            <div class="tip-item"><strong>Podložka</strong>PEI 60 °C, čistá IPA — první vrstva se přilepí sama</div>
+            <div class="tip-item"><strong>Chlazení</strong>Větrák 100 % od 3. vrstvy — PLA potřebuje rychlé chlazení</div>
+            <div class="tip-item"><strong>Rychlost</strong>50–80 mm/s pro vnější stěny, infill 80–120 mm/s</div>
+          </div>
+          <a href="https://www.youtube.com/results?search_query=PLA+3D+print+settings+tips&hl=cs" target="_blank" class="yt-link">▶ YouTube: PLA tisk nastavení a tipy</a>
+        </div>
+      </div>
+
+      <!-- PLA+ -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#66bb6a;">PLA+</div>
+          <div>
+            <div class="mat-title">PLA+ — vylepšený PLA</div>
+            <div class="mat-subtitle">Pevnější · Méně křehký · Téměř stejně snadno tisknutelný</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">PLA+ je modifikovaný PLA s přidanými aditivy (nejčastěji polyuretan nebo akrylát) pro zlepšení houževnatosti a rázové odolnosti. Tiskne se velmi podobně jako standardní PLA, ale výsledný díl je méně křehký.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>200–230 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>60–70 °C</td></tr>
+            <tr><td>Rychlost tisku</td><td>40–80 mm/s</td></tr>
+            <tr><td>Chlazení</td><td>80–100 %</td></tr>
+            <tr><td>Retrakce (Direct Drive)</td><td>0,5–2 mm</td></tr>
+          </table>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div><strong>Kdy zvolit PLA+ místo PLA:</strong> Pokud díl bude mírně mechanicky namáhán — spony, klipy, držáky, kryty. Cena je srovnatelná, tisk téměř identický.</div>
+          </div>
+          <div class="alert alert-info">
+            <div class="alert-icon">💡</div>
+            <div><strong>Pozor:</strong> Každý výrobce mixuje PLA+ jinak — vlastnosti se liší značka od značky více než u standardního PLA. Vždy používejte profil dodaný výrobcem nebo Temperature Tower pro nalezení ideální teploty.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PETG -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#29b6f6;">PETG</div>
+          <div>
+            <div class="mat-title">PETG — Polyethylene Terephthalate Glycol</div>
+            <div class="mat-subtitle">Nejoblíbenější po PLA · Houževnatý · Chemicky odolný</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">PETG je modifikace PET plastu (ze kterého jsou plastové lahve) s přidaným glykolem pro lepší tisknutelnost. Kombinuje vysokou pevnost a houževnatost PLA se zlepšenou tepelnou odolností a chemickou rezistencí. Je to materiál pro funkční díly.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>230–250 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>70–85 °C</td></tr>
+            <tr><td>Rychlost tisku</td><td>30–60 mm/s</td></tr>
+            <tr><td>Chlazení</td><td>30–50 % (ne plný větrák!)</td></tr>
+            <tr><td>Retrakce (Direct Drive)</td><td>1–2 mm</td></tr>
+          </table>
+          <div class="mat-props">
+            <div class="mat-prop"><span>✓</span>Houževnatý, odolný rázům</div>
+            <div class="mat-prop"><span>✓</span>Tepelná odolnost ~80 °C</div>
+            <div class="mat-prop"><span>✓</span>Chemická odolnost</div>
+            <div class="mat-prop"><span>✓</span>Poloprůhledný / lesklý</div>
+            <div class="mat-prop"><span>✗</span>Stringing (pavučiny)</div>
+            <div class="mat-prop"><span>✗</span>Přilepuje se k podložce</div>
+          </div>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div><strong>Výhody:</strong> Výborný pro funkční díly — svorky, konzoly, kryty mechanismů, nádoby na kapaliny, venkovní díly (UV odolnější než PLA). Poloprůhledné varianty jsou esteticky velmi zajímavé.</div>
+          </div>
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div><strong>Nevýhody:</strong> Sklon ke stringing — nalaďte retrakci a teplotu. Příliš horká podložka způsobí, že se model přilepí tak silně, že se PEI poškodí — nekračujte přes 85 °C. Nebruste — PETG se maže místo brousení.</div>
+          </div>
+          <h3 style="margin-top:8px;">Tipy pro tisk</h3>
+          <div class="tip-grid">
+            <div class="tip-item"><strong>Chlazení</strong>Max 50 % větráku — příliš chlazení způsobuje špatnou přilnavost vrstev</div>
+            <div class="tip-item"><strong>Podložka</strong>PEI max 80 °C — vyšší teplota způsobuje přilepení modelu</div>
+            <div class="tip-item"><strong>Stringing</strong>Zvyšte retrakci na 1,5–2 mm, snižte teplotu o 5 °C</div>
+            <div class="tip-item"><strong>První vrstva</strong>Z-Offset trochu výš než u PLA — PETG přilne agresivně</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABS -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#ef5350;">ABS</div>
+          <div>
+            <div class="mat-title">ABS — Acrylonitrile Butadiene Styrene</div>
+            <div class="mat-subtitle">Pevný · Tepelně odolný · Náročný na podmínky tisku</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">ABS je jeden z nejstarších plastů pro FDM tisk — z tohoto materiálu jsou například kostky LEGO. Je pevný, tepelně odolný a lze ho chemicky zpracovávat acetónem. Nevýhodou je silný zápach, tendence k warpingu a nutnost krytu.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>230–250 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>100–110 °C (ideálně 110 °C)</td></tr>
+            <tr><td>Rychlost tisku</td><td>30–60 mm/s</td></tr>
+            <tr><td>Chlazení</td><td>0 % (větrák vypnutý!)</td></tr>
+            <tr><td>Retrakce (Direct Drive)</td><td>1–2 mm</td></tr>
+          </table>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div><strong>Nevýhody:</strong> Silný zápach (styrén) — tisknout jen ve větrané místnosti nebo s filtrací. Silný warping — nutný kryt a adhesivum (Kores tyčinka, hairspray). Praskání vrstev bez uzavřeného prostoru.</div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X — omezení:</strong> Max teplota podložky je <strong>100 °C</strong>, ABS potřebuje ideálně 110 °C. Tisk je možný, ale na hranici — vyšší riziko warpingu a delaminace. Důrazně doporučujeme uzavřenou skříň (enclosure) a adhesivum na podložku. Zvažte místo ABS použití ASA nebo PETG.</div>
+          </div>
+          <h3 style="margin-top:8px;">Tipy pro tisk</h3>
+          <div class="tip-grid">
+            <div class="tip-item"><strong>Větrák</strong>Větrák zcela vypnout — proudění vzduchu způsobuje praskání vrstev</div>
+            <div class="tip-item"><strong>Adhesivum</strong>Kores tyčinka nebo Magigoo na podložku — výrazně snižuje warping</div>
+            <div class="tip-item"><strong>Enclosure</strong>Uzavřená skříň udržuje stabilní teplotu okolí ~40–50 °C</div>
+            <div class="tip-item"><strong>Smoothing</strong>Acetón smoothing — viz kap. 07 pro dokonalý povrch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASA -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#ff7043;">ASA</div>
+          <div>
+            <div class="mat-title">ASA — Acrylonitrile Styrene Acrylate</div>
+            <div class="mat-subtitle">Jako ABS ale UV odolný · Venkovní použití · Stejná náročnost</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">ASA je funkčně velmi podobné ABS, ale s výrazně lepší odolností vůči UV záření a povětrnostním vlivům. Zatímco ABS venku za pár měsíců křehne a vybledne, ASA zůstane stabilní roky. Primárně určené pro venkovní aplikace.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>240–260 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>100–110 °C</td></tr>
+            <tr><td>Chlazení</td><td>0 % (větrák vypnutý)</td></tr>
+            <tr><td>Retrakce (Direct Drive)</td><td>1–2 mm</td></tr>
+          </table>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div><strong>Kdy použít ASA:</strong> Venkovní díly — držáky antén, krytky, zahradní komponenty, díly na auta (exteriér), signální tagy. Všude kde ABS po čase praskne a vybledne.</div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X:</strong> Stejná omezení jako ABS — max 100 °C podložka, nutný kryt. Tisk bez krytu téměř jistě skončí warpingem nebo delaminací vrstev.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TPU -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#ab47bc;">TPU</div>
+          <div>
+            <div class="mat-title">TPU — Thermoplastic Polyurethane</div>
+            <div class="mat-subtitle">Pružný · Gumový · Direct Drive výhoda</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">TPU je pružný termoplast s vlastnostmi podobnými gumy. Vytisknuté díly lze ohýbat, mačkat a natahovat — a vrátí se do původního tvaru. Shore tvrdost určuje tuhost: Shore 95A je téměř tuhé, Shore 83A je velmi měkké a pružné.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>220–240 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>30–60 °C</td></tr>
+            <tr><td>Rychlost tisku</td><td>15–35 mm/s (pomalé!)</td></tr>
+            <tr><td>Chlazení</td><td>30–50 %</td></tr>
+            <tr><td>Retrakce (Direct Drive)</td><td>0–1 mm (minimální)</td></tr>
+          </table>
+          <div class="mat-props">
+            <div class="mat-prop"><span>✓</span>Pružné a houževnaté</div>
+            <div class="mat-prop"><span>✓</span>Odolné oděru</div>
+            <div class="mat-prop"><span>✓</span>Chemicky odolné</div>
+            <div class="mat-prop"><span>✗</span>Pomalý tisk</div>
+            <div class="mat-prop"><span>✗</span>Stringing při vyšší rychlosti</div>
+          </div>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div><strong>Použití:</strong> Ochranné pouzdra na telefony, těsnění, protiskluzové podložky, kola robotů, flexibilní klouby, boty na figurky, hadičky, náramky.</div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X — výhoda Direct Drive:</strong> Bowden tiskárny mají s TPU velké problémy — pružná struna se v dlouhé hadičce mačká a zdeformuje. Direct Drive Kobry X podává TPU přímo a krátce — tisk je výrazně spolehlivější. Použijte Shore 95A pro začátek.</div>
+          </div>
+          <h3 style="margin-top:8px;">Tipy pro tisk</h3>
+          <div class="tip-grid">
+            <div class="tip-item"><strong>Rychlost</strong>Max 25–30 mm/s — rychlejší tisk způsobuje knedlíkování filamentu</div>
+            <div class="tip-item"><strong>Retrakce</strong>Minimální nebo žádná — retrakce u TPU způsobuje grinding</div>
+            <div class="tip-item"><strong>Direct feed</strong>Zkontrolujte, že trubice vede přímo bez ohybů</div>
+            <div class="tip-item"><strong>Infill</strong>Gyroid nebo honeycomb pro rovnoměrnou pružnost celého dílu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NYLON -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#78909c;">Nylon</div>
+          <div>
+            <div class="mat-title">Nylon (PA) — Polyamid</div>
+            <div class="mat-subtitle">Extrémně pevný · Houževnatý · Náročný na vlhkost</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">Nylon (PA6, PA12) je jeden z nejpevnějších a nejhouževnatějších materiálů dostupných pro FDM tisk. Odolává opakovanému ohybu bez praskání, má nízký koeficient tření a výbornou chemickou odolnost. Hlavní nevýhoda: silně absorbuje vlhkost z vzduchu — musí být sušen před tiskem.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>240–270 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>70–90 °C</td></tr>
+            <tr><td>Chlazení</td><td>20–40 %</td></tr>
+            <tr><td>Nutné sušení</td><td>80 °C / 6–12 hod před tiskem</td></tr>
+          </table>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div><strong>Vlhkost — největší nepřítel Nylonu:</strong> Nylon absorbuje vlhkost z vzduchu za pouhé hodiny. Vlhký Nylon prská, tvoří bubliny a špatně přilne. <strong>Vždy sušte 80 °C / 6–12 hodin</strong> před tiskem a tiskněte přímo ze sušičky (dry box).</div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X:</strong> Max teplota podložky 100 °C postačuje pro PA12 (nejlépe tisknutelný Nylon). Pro PA6 doporučujeme enclosure. Bez sušičky Nylon vůbec nezkoušejte.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PC -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#5c6bc0;">PC</div>
+          <div>
+            <div class="mat-title">PC — Polykarbonát</div>
+            <div class="mat-subtitle">Extrémní pevnost · Vysoká tepelná odolnost · Kobra X: problematické</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">Polykarbonát je jeden z nejpevnějších dostupných FDM materiálů s tepelnou odolností až 135 °C. Průhledné varianty jsou opticky čiré. Vyžaduje extrémně vysoké teploty tisku a podložky — hraničí s možnostmi většiny domácích tiskáren.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>260–300 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>110–120 °C</td></tr>
+            <tr><td>Nutné</td><td>Uzavřená skříň, všechna opatření</td></tr>
+          </table>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div><strong>KOBRA X — nedoporučeno:</strong> Kobra X má maximální teplotu podložky 100 °C. PC potřebuje 110–120 °C — na Kobře X bude masivní warping a delaminarce. Pokud nutně potřebujete PC vlastnosti, použijte PC/ABS blend (méně náročný) nebo zvažte jinou tiskárnu.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HIPS -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#8d6e63;">HIPS</div>
+          <div>
+            <div class="mat-title">HIPS — High Impact Polystyrene</div>
+            <div class="mat-subtitle">Podpěrový materiál pro ABS · Rozpustný v limonen</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">HIPS se tiskne při podobných teplotách jako ABS a je proto ideálním podpěrovým materiálem pro ABS tisky v dual-extrusion sestavách. Hlavní výhoda: HIPS je rozpustný v D-limonenu (citrusový rozpouštěč) — podpory jednoduše zmizí v lázni.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>230–240 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>100 °C</td></tr>
+            <tr><td>Rozpouštědlo</td><td>D-Limonen (citrus)</td></tr>
+          </table>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-info">
+            <div class="alert-icon">💡</div>
+            <div>HIPS lze tisknout i samostatně — je lehčí než ABS a snáze se brousí. Jako samostatný materiál: modely, makety, prototypy. Kobra X: stejná omezení jako ABS (max 100 °C bed).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PVA -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#26c6da;">PVA</div>
+          <div>
+            <div class="mat-title">PVA — Polyvinyl Alcohol</div>
+            <div class="mat-subtitle">Podpěrový materiál · Rozpustný ve vodě</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">PVA je vodou rozpustný polymer ideální jako podpěrový materiál pro PLA tisky. Podpory z PVA zmizí ponořením do vody — žádné mechanické odstraňování, žádné jizvy na modelu.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>185–200 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>45–60 °C</td></tr>
+            <tr><td>Rozpouštědlo</td><td>Voda (~25–40 °C, 4–12 hod)</td></tr>
+          </table>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div><strong>Skladování:</strong> PVA je extrémně citlivé na vlhkost — v otevřeném vzduchu se začne degradovat za hodiny. Vždy skladujte v uzavřeném sáčku s desikantem, ideálně v dry boxu. Vlhké PVA se nerozpustí správně a způsobí ucpání trysky.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CF kompozity -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#37474f;">CF</div>
+          <div>
+            <div class="mat-title">CF Kompozity — Carbon Fiber filled</div>
+            <div class="mat-subtitle">PLA-CF · PETG-CF · Pevné jako kov · Abraze trysky!</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">Carbon Fiber kompozity jsou standardní filamenty (PLA, PETG, Nylon) plněné krátkými vlákny uhlíkového vlákna. Výsledný díl je výrazně tužší a pevnější než čistý základní materiál. Uhlíková vlákna jsou však abrazivní — standardní mosazná tryska se rychle opotřebuje.</p>
+          <div class="mat-props">
+            <div class="mat-prop"><span>✓</span>Extrémní tuhost a pevnost</div>
+            <div class="mat-prop"><span>✓</span>Nízká hmotnost</div>
+            <div class="mat-prop"><span>✓</span>Profesionální vzhled</div>
+            <div class="mat-prop"><span>✗</span>Abrazivní — ničí mosazné trysky</div>
+            <div class="mat-prop"><span>✗</span>Nelze brousit ani lepit standardně</div>
+          </div>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div><strong>KOBRA X — nerezová tryska nutná:</strong> Před tiskem CF materiálů <strong>vyměňte mosaznou trysku za nerezovou nebo hardened steel</strong>. Mosaz se při tisku CF opotřebuje za desítky hodin na nepoužitelný stav. Nerezová tryska vydrží stovky hodin.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exotické -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#a1887f;">EX</div>
+          <div>
+            <div class="mat-title">Exotické filamenty</div>
+            <div class="mat-subtitle">Wood · Metal · Glow · Silk — dekorativní a speciální efekty</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">Exotické filamenty jsou většinou PLA nebo PETG plněné speciálními přísadami pro unikátní vizuální efekty. Tisknutí je podobné jako u základního materiálu, ale vyžadují pozornost k opotřebení trysky a speciálnímu zpracování povrchu.</p>
+        </div>
+        <div class="mat-footer">
+          <div class="tip-grid" style="margin-top: 0;">
+            <div class="tip-item"><strong>Wood Fill</strong>Dřevěná vlákna v PLA — matný povrch, lehce opracovatelný. Abrazivní — nerezová tryska. Lze brusit a mořit dřevokaznou barvou.</div>
+            <div class="tip-item"><strong>Metal Fill</strong>Kovové (měď, bronz, ocel) částice v PLA. Těžký díl s kovovým leskem. Leštění hrubým papírem odhalí kovový povrch.</div>
+            <div class="tip-item"><strong>Glow in the Dark</strong>Fosforeskující přísada — svítí po nabití světlem. Abrazivní (nerezová tryska). Tiskne se jako PLA.</div>
+            <div class="tip-item"><strong>Silk / Rainbow</strong>Hedvábně lesklý povrch nebo barevný přechod na jedné cívce. Tiskne se jako PLA — žádná speciální opatření. Čistě dekorativní.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SKLADOVÁNÍ A SUŠENÍ
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Skladování a sušení filamentu</h2></div>
+      <p>Filament je hygroskopický — absorbuje vlhkost z okolního vzduchu. Vlhký filament se při tisku chová hůře: tvoří bubliny, prská, špatně přilne a ztrácí na pevnosti. Pro PLA je to menší problém, pro Nylon nebo PVA může vlhkost zcela zničit cívku za jediný den.</p>
+
+      <h3>Příznaky vlhkého filamentu</h3>
+      <div class="tip-grid">
+        <div class="tip-item"><strong>Praskání a prskání</strong>Slyšitelné praskání při tisku — páry vody se mění v plyn uvnitř taveniny</div>
+        <div class="tip-item"><strong>Bubliny na povrchu</strong>Viditelné bublinky nebo póry ve stěnách vytisknutého modelu</div>
+        <div class="tip-item"><strong>Slabé spoje vrstev</strong>Vrstvy se snadněji odlupují, pevnost modelu je výrazně nižší</div>
+        <div class="tip-item"><strong>Stringing a nitky</strong>Více pavučinek a nití než obvykle, i při správném nastavení retrakce</div>
+        <div class="tip-item"><strong>Změna barvy</strong>Průhledné materiály (PETG, PC) jsou zakalené místo čiré</div>
+        <div class="tip-item"><strong>Cívka pokřivená</strong>PETG a Nylon se mohou slepit do sebe nebo zkřivit cívku</div>
+      </div>
+
+      <h3>Jak skladovat filament</h3>
+      <div class="tip-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+        <div class="tip-item"><strong>Zip sáčky s desikantem</strong>Základní řešení — zipový sáček + 1–2 sáčky silikagelu. Ekonomické, funkční pro PLA a PETG.</div>
+        <div class="tip-item"><strong>Vakuové sáčky</strong>Vakuovací sáčky + pumpa odstraní vzduch. Výborné pro Nylon a PVA které jsou extrémně citlivé.</div>
+        <div class="tip-item"><strong>Dry box</strong>Plastová nádoba (IKEA Samla, Vraket) s těsněním a desikantem. Pojme více cívek najednou. Cívky lze i přímo z dry boxu tisknout.</div>
+        <div class="tip-item"><strong>Sušička filamentu</strong>Aktivní řízené sušení — nejlepší řešení. SUNLU S1/S2, Polymaker PolyDryer. Lze tisknout přímo ze sušičky za chodu.</div>
+      </div>
+
+      <h3>Tabulka sušení filamentu</h3>
+      <table class="dry-table">
+        <thead>
+          <tr><th>Materiál</th><th>Teplota sušení</th><th>Doba</th><th>Priorita</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PLA</td><td>45–55 °C</td><td>4–6 hodin</td><td>Nízká (ale pomáhá)</td></tr>
+          <tr><td>PLA+</td><td>50–55 °C</td><td>4–6 hodin</td><td>Nízká</td></tr>
+          <tr><td>PETG</td><td>65 °C</td><td>6–8 hodin</td><td>Střední</td></tr>
+          <tr><td>ABS / ASA</td><td>65–70 °C</td><td>4–6 hodin</td><td>Střední</td></tr>
+          <tr><td>TPU</td><td>55–65 °C</td><td>4–8 hodin</td><td>Střední</td></tr>
+          <tr><td>Nylon (PA)</td><td>80 °C</td><td>8–12 hodin</td><td>Kritická — vždy sušit!</td></tr>
+          <tr><td>PC</td><td>80 °C</td><td>6–8 hodin</td><td>Vysoká</td></tr>
+          <tr><td>PVA</td><td>45 °C</td><td>6–10 hodin</td><td>Kritická — okamžitě zpět do sáčku!</td></tr>
+          <tr><td>CF kompozity</td><td>Dle základu</td><td>Dle základu</td><td>Střední</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-kobra" style="margin-top: 20px;">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X — nemá integrovaný dry box:</strong> Cívky jsou na otevřeném držáku — pro PLA a PETG to nevadí, ale pro Nylon nebo PVA je to problém. Doporučená řešení: <strong>SUNLU S1 Plus</strong> (lze z ní tisknout přímo), nebo improvizace se sušičkou potravin (EMOS/Romo, 50–60 °C) s přidaným teplotním čidlem.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         ZNAČKY A KDE KOUPIT
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Značky a kde koupit</h2></div>
+      <p>Kvalita filamentu výrazně ovlivňuje výsledek tisku. Levné no-name cívky mají nekonzistentní průměr, špatnou toleranci a někdy i špatně sušený plast. Zde jsou prověřené značky v různých cenových kategoriích.</p>
+
+      <div class="brand-grid">
+        <div class="brand-card">
+          <a href="https://www.almapol.cz" target="_blank">Devil Design</a>
+          <p>Polský výrobce s výborným poměrem cena/výkon. Nejdostupnější doporučovaný filament — PLA a PETG za velmi dobrou cenu. Prodej přes almapol.cz a JRC.cz v ČR.</p>
+        </div>
+        <div class="brand-card">
+          <a href="https://www.filament-pm.cz" target="_blank">Filament-PM (Plasty Mladeč)</a>
+          <p>Český výrobce z Moravy s dlouhou historií. Poctivá a konzistentní kvalita, výroba v ČR. Výborné PLA, PETG a speciální materiály. Dostupné v eshopech po celé ČR.</p>
+        </div>
+        <div class="brand-card">
+          <a href="https://www.esun3d.com" target="_blank">eSUN</a>
+          <p>Čínský výrobce s globální distribucí a skvělou reputací v komunitě. Obrovský výběr materiálů a barev, konzistentní kvalita, výborná cena. Dostupné na Aliexpress a v lokálních eshopech.</p>
+        </div>
+        <div class="brand-card">
+          <a href="https://www.prusament.com" target="_blank">Prusament</a>
+          <p>Prémiová česká značka od Prusa Research. Extrémně přísná kontrola průměru (±0,02 mm), každá cívka má certifikát kvality. Dražší, ale spolehlivost na nejvyšší úrovni.</p>
+        </div>
+        <div class="brand-card">
+          <a href="https://www.polymaker.com" target="_blank">Polymaker</a>
+          <p>Inovativní výrobce s unikátními produkty — PolyLite, PolyMax, PolySmooth (pro smoothing bez acetónu). Výborná kvalita, kreativní materiálové řešení. Dostupné přes 3DJake.cz.</p>
+        </div>
+        <div class="brand-card">
+          <a href="https://www.bambulab.com" target="_blank">Bambu Lab</a>
+          <p>Vlastní filamenty optimalizované pro tiskárny Bambu Lab, ale fungují skvěle i na jiných. RFID čip (na Kobře X nevyužit). Výborná kvalita, prémiová cena, dostupné v ČR přes autorizované prodejce.</p>
+        </div>
+        <div class="brand-card">
+          <a href="https://www.fillamentum.com" target="_blank">Fillamentum</a>
+          <p>Česko-slovenský výrobce specialit — technické materiály, unikátní barvy a kompozity. Extrafill PLA/PETG jsou bezkonkurenční v barevné hloubce. Pro náročné uživatele a umělce.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-tip" style="margin-top: 20px;">
+        <div class="alert-icon">✓</div>
+        <div><strong>Kde nakupovat v ČR:</strong> <a href="https://www.3djake.cz" target="_blank" style="color:var(--accent);">3DJake.cz</a>, <a href="https://www.alza.cz" target="_blank" style="color:var(--accent);">Alza.cz</a>, <a href="https://www.na3d.cz" target="_blank" style="color:var(--accent);">na3d.cz</a>, <a href="https://www.materialpro3d.cz" target="_blank" style="color:var(--accent);">materialpro3d.cz</a>, <a href="https://www.akros.cz" target="_blank" style="color:var(--accent);">akros.cz</a>. Pro levnější nákupy: Aliexpress (eSUN, eSUN, Polymaker) — zpravidla dodání 2–3 týdny.</div>
+      </div>
+    </div>
+
+    <!-- ── PAGE NAV ── -->
+    <div class="pn">
+      <a href="07_3D_post_processing.html">← 07 · Post-processing</a>
+      <a href="09_3D_modely_cad.html" class="nx">09 · 3D Modely & CAD →</a>
+    </div>
+
   </div>
 </main>
+
 <script>
 const searchInput = document.getElementById('sb-search-input');
 searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') {
+  if (e.key === 'Enter') {
     const q = e.target.value.trim();
-    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
   }
 });
 </script>
