@@ -207,6 +207,15 @@
     <div class="section">
       <div class="section-header"><h2>Srovnání materiálů — přehled</h2></div>
       <p>Rychlá reference pro výběr správného materiálu. Detailní popis každého materiálu najdete v sekcích níže.</p>
+
+      <div class="alert alert-info" style="margin-bottom:16px;">
+        <div class="alert-icon">📖</div>
+        <div>
+          <strong>Doporučený zdroj:</strong> Komplexní průvodce filamenty od Prusa Research — obsahuje detailní tabulku všech materiálů včetně požadavků na hardware, teploty a typy podložek.<br>
+          <a href="https://help.prusa3d.com/cs/filament-material-guide" target="_blank" style="color:var(--accent);">→ help.prusa3d.com — Průvodce filamenty (CZ)</a>
+        </div>
+      </div>
+
       <div style="overflow-x:auto;">
         <table class="big-table">
           <thead>
@@ -216,6 +225,7 @@
               <th>Tryska</th>
               <th>Podložka</th>
               <th>Kryt</th>
+              <th>Drybox</th>
               <th>Pevnost</th>
               <th>Flexibilita</th>
               <th>Tep. odolnost</th>
@@ -227,84 +237,112 @@
             <tr>
               <td>PLA</td>
               <td><div class="diff"><span>★</span><span class="off">★★★★</span></div></td>
-              <td>190–220 °C</td><td>55–65 °C</td><td>Ne</td>
+              <td>185–235 °C</td><td>50–60 °C</td><td>Ne</td><td>Ne</td>
               <td>Střední</td><td>Nízká</td><td>~60 °C</td><td>Nízká</td>
               <td><span class="ok">✓</span></td>
             </tr>
             <tr>
               <td>PLA+</td>
               <td><div class="diff"><span>★</span><span class="off">★★★★</span></div></td>
-              <td>200–230 °C</td><td>60–70 °C</td><td>Ne</td>
+              <td>200–230 °C</td><td>60–70 °C</td><td>Ne</td><td>Ne</td>
               <td>Střední+</td><td>Nízká</td><td>~65 °C</td><td>Nízká</td>
               <td><span class="ok">✓</span></td>
             </tr>
             <tr>
               <td>PETG</td>
               <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
-              <td>230–250 °C</td><td>70–85 °C</td><td>Ne</td>
+              <td>215–270 °C</td><td>70–90 °C</td><td>Ne</td><td>Ne</td>
               <td>Vysoká</td><td>Mírná</td><td>~80 °C</td><td>Nízká</td>
               <td><span class="ok">✓</span></td>
             </tr>
             <tr>
               <td>ABS</td>
               <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
-              <td>230–250 °C</td><td>100–110 °C</td><td>Nutný</td>
+              <td>230–255 °C</td><td>95–110 °C</td><td>Nutný</td><td>Ne</td>
               <td>Vysoká</td><td>Nízká</td><td>~105 °C</td><td>Nízká</td>
               <td><span class="warn">⚠</span></td>
             </tr>
             <tr>
               <td>ASA</td>
               <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
-              <td>240–260 °C</td><td>100–110 °C</td><td>Nutný</td>
+              <td>220–275 °C</td><td>90–110 °C</td><td>Nutný</td><td>Ne</td>
               <td>Vysoká</td><td>Nízká</td><td>~100 °C</td><td>Nízká</td>
               <td><span class="warn">⚠</span></td>
             </tr>
             <tr>
-              <td>TPU</td>
+              <td>TPU (Flex)</td>
               <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
-              <td>220–240 °C</td><td>30–60 °C</td><td>Ne</td>
+              <td>220–260 °C</td><td>40–85 °C</td><td>Ne</td><td>Ne</td>
               <td>Nízká</td><td>Vysoká</td><td>~80 °C</td><td>Střední</td>
               <td><span class="ok">✓</span></td>
             </tr>
             <tr>
               <td>Nylon (PA)</td>
               <td><div class="diff"><span>★★★★</span><span class="off">★</span></div></td>
-              <td>240–270 °C</td><td>70–90 °C</td><td>Doporučen</td>
+              <td>240–285 °C</td><td>70–115 °C</td><td>Doporučen</td><td>Nutný</td>
               <td>Velmi vysoká</td><td>Mírná</td><td>~120 °C</td><td>Střední</td>
               <td><span class="warn">⚠</span></td>
             </tr>
             <tr>
               <td>PC</td>
               <td><div class="diff"><span>★★★★★</span></div></td>
-              <td>260–300 °C</td><td>110–120 °C</td><td>Nutný</td>
+              <td>270–275 °C</td><td>100–115 °C</td><td>Nutný</td><td>Ne</td>
               <td>Extrémní</td><td>Nízká</td><td>~135 °C</td><td>Vysoká</td>
               <td><span class="bad">✗</span></td>
             </tr>
             <tr>
               <td>HIPS</td>
               <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
-              <td>230–240 °C</td><td>100 °C</td><td>Nutný</td>
+              <td>225–255 °C</td><td>100–110 °C</td><td>Nutný</td><td>Ne</td>
               <td>Střední</td><td>Nízká</td><td>~95 °C</td><td>Nízká</td>
+              <td><span class="warn">⚠</span></td>
+            </tr>
+            <tr>
+              <td>CPE</td>
+              <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
+              <td>275 °C</td><td>90–110 °C</td><td>Ne</td><td>Ano</td>
+              <td>Vysoká</td><td>Mírná</td><td>~110 °C</td><td>Střední</td>
+              <td><span class="warn">⚠</span></td>
+            </tr>
+            <tr>
+              <td>PP</td>
+              <td><div class="diff"><span>★★★★</span><span class="off">★</span></div></td>
+              <td>220–245 °C</td><td>70–100 °C</td><td>Ne</td><td>Ne</td>
+              <td>Střední</td><td>Mírná</td><td>~100 °C</td><td>Střední</td>
               <td><span class="warn">⚠</span></td>
             </tr>
             <tr>
               <td>PVA</td>
               <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
-              <td>185–200 °C</td><td>45–60 °C</td><td>Ne</td>
+              <td>195–215 °C</td><td>60 °C</td><td>Ne</td><td>Nutný</td>
               <td>Nízká</td><td>Nízká</td><td>~50 °C</td><td>Vysoká</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
+              <td>PVB</td>
+              <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
+              <td>215 °C</td><td>75 °C</td><td>Ne</td><td>Ne</td>
+              <td>Střední</td><td>Nízká</td><td>~60 °C</td><td>Nízká</td>
               <td><span class="ok">✓</span></td>
             </tr>
             <tr>
               <td>PLA-CF / PETG-CF</td>
               <td><div class="diff"><span>★★★</span><span class="off">★★</span></div></td>
-              <td>210–250 °C</td><td>60–85 °C</td><td>Ne</td>
+              <td>210–250 °C</td><td>60–85 °C</td><td>Ne</td><td>Ne</td>
               <td>Velmi vysoká</td><td>Nízká</td><td>~80 °C</td><td>Střední</td>
+              <td><span class="warn">⚠</span></td>
+            </tr>
+            <tr>
+              <td>Wood / Metal filled</td>
+              <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
+              <td>190–270 °C</td><td>60–100 °C</td><td>Ne</td><td>Ne</td>
+              <td>Střední</td><td>Nízká</td><td>~65 °C</td><td>Střední</td>
               <td><span class="warn">⚠</span></td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p style="margin-top:12px; font-size:13px; color:var(--muted);">✓ = plně vhodné · ⚠ = možné s omezeními · ✗ = nedoporučeno pro Kobru X</p>
+      <p style="margin-top:12px; font-size:13px; color:var(--muted);">✓ = plně vhodné · ⚠ = možné s omezeními · ✗ = nedoporučeno pro Kobru X · Zdroj teplot: <a href="https://help.prusa3d.com/cs/filament-material-guide" target="_blank" style="color:var(--muted);">Prusa Knowledge Base</a></p>
     </div>
 
     <!-- ═══════════════════════════════════════

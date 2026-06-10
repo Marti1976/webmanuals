@@ -320,7 +320,64 @@
       </div>
     </div>
 
-    <!-- ─── HW: TISKOVÁ PODLOŽKA ─── -->
+    <!-- ─── FILAMENT BACKUP ─── -->
+    <div class="section">
+      <div class="section-header"><h2>Záložní filament (Filament Backup)</h2></div>
+      <div class="alert alert-kobra">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X:</strong> Má vestavěnou funkci záložního filamentu — při dopnutí cívky tiskárna automaticky přepne na záložní slot bez přerušení tisku. Ideální pro velké a dlouhé tisky.</div>
+      </div>
+
+      <div class="alert alert-gold" style="margin-top:12px;">
+        <div class="alert-icon">💡</div>
+        <div><strong>Kompromis barev:</strong> Pro Filament Backup potřebujete 2 sloty se stejným materiálem a barvou — zbývají tedy jen 2 sloty pro barvy. Pokud tisknete jednou barvou nebo netisknete vícebarevně, žádný kompromis neexistuje.</div>
+      </div>
+
+      <div class="init-steps" style="margin-top:14px;">
+        <div class="init-step">
+          <div class="step-dot">1</div>
+          <div class="step-content"><strong>Zapnout na displeji</strong><p>Printing → Print Settings → <strong>Filament Backup → zapnout</strong></p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">2</div>
+          <div class="step-content"><strong>Vložit záložní cívku</strong><p>Stejný materiál + stejná barva do dvou různých držáků. Záměna materiálu nebo barvy = funkce se neaktivuje.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">3</div>
+          <div class="step-content"><strong>Nastavit filament ručně (bez čipu)</strong><p>Anycubic originální cívky s čipem — tiskárna rozpozná automaticky. Cívky třetích stran — ručně nastavte oba sloty na stejný materiál a barvu v menu filamentů.</p></div>
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin-top:12px;">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Upozornění:</strong> Opotřebované nebo zanesené PTFE trubice mohou způsobit selhání přepnutí. Před dlouhým tiskem zkontrolujte stav trubic. Cívky nesmí být zamotané ani pod nadměrným tahem. Zdroj: <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" style="color:var(--accent);">Anycubic Wiki — Filament Backup Guide</a></div>
+      </div>
+    </div>
+
+    <!-- ─── KAMERA A MONITORING ─── -->
+    <div class="section">
+      <div class="section-header"><h2>Monitoring tisku — kamera</h2></div>
+      <p>Kobra X je vybavena vestavěnou kamerou. Tisk můžete sledovat vzdáleně přes Anycubic App nebo přímo na displeji tiskárny.</p>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Sledování přes Anycubic App</h4>
+          <p>Po spárování tiskárny s aplikací (Settings → Account → QR kód) uvidíte živý obraz z kamery kdykoli na telefonu. Tisk lze vzdáleně pozastavit nebo zastavit. Ideální pro dlouhé tisky přes noc.</p>
+        </div>
+        <div class="card">
+          <h4>Detekce spaghetti (Spaghetti Detection)</h4>
+          <p>Firmware Kobry X sleduje průběh tisku a dokáže detekovat tzv. "spaghetti" — situaci kdy se model odlepí a tryska táhne vlákna vzduchem. Při detekci tiskárna tisk pozastaví a upozorní vás přes app. Zapnout v: Settings → Print Settings → Spaghetti Detection.</p>
+        </div>
+        <div class="card">
+          <h4>Timelapse</h4>
+          <p>Kobra X umí automaticky pořizovat timelapse video z průběhu tisku. Zapnout v sliceru nebo přímo na displeji před tiskem. Video se uloží na interní paměť a lze stáhnout přes app.</p>
+        </div>
+        <div class="card">
+          <h4>LAN monitoring (bez cloudu)</h4>
+          <p>Pokud nechcete sdílet data přes Anycubic cloud, lze tiskárnu ovládat čistě přes lokální síť (LAN mode). Nastavit v: Settings → Network → LAN Mode. Funguje i bez připojení k internetu.</p>
+        </div>
+      </div>
+    </div>
     <div class="section">
       <div class="section-header"><h2>HW příprava — tisková podložka</h2></div>
       <p>Příprava tiskové podložky je <strong>nejčastěji podceňovaný krok</strong> a zároveň nejčastější příčina selhání tisku. Studená nebo mastná podložka zaručeně způsobí odlepení modelu.</p>
@@ -450,8 +507,8 @@
         <div class="check-item">
           <span class="check-num">HW2</span>
           <div class="check-body">
-            <strong>Tryska je čistá — bez zbytků předchozího materiálu</strong>
-            <p>Pokud jste měnili materiál (např. z ABS na PLA), spusťte čistění trysky (purge) dokud nevychází čistý plast správné barvy. Zbytky starého materiálu způsobují ucpání nebo slabé spoje vrstev.</p>
+            <strong>Tryska čistá — purge a kontrola průtoku</strong>
+            <p>Po změně materiálu spusťte purge dokud nevychází čistý plast. <strong>Příznak ucpané trysky:</strong> filament se nepodává, tisk je slabý nebo přerušovaný, extruder kliká. Rychlé řešení — <strong>Cold Pull:</strong> zahřejte trysku na 200 °C, zaveďte filament, ochlaďte na 90 °C a filament prudce vytáhněte — vytáhne špunt znečistění s sebou. Opakujte 2–3×. Detailní postup: <a href="13_3D_troubleshooting.html" style="color:var(--accent);">kap. 13 Troubleshooting</a>.</p>
           </div>
         </div>
         <div class="check-item">
@@ -459,6 +516,13 @@
           <div class="check-body">
             <strong>Filament správně zaveden — teflonové trubice 1–4</strong>
             <p>Zkontrolujte, že filament je zasunut až do extruderu a správně prochází teflonovou trubicí. Kobra X: každá trubice musí být v správně číslovaném portu. Po zavedení tiskárna pípne a zobrazí typ materiálu.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <span class="check-num">HW3b</span>
+          <div class="check-body">
+            <strong>Kontrola dostatku filamentu na cívce</strong>
+            <p>Odhadněte spotřebu ze sliceru a zkontrolujte zbývající množství. Pokud filament nestačí, nachystejte záložní cívku stejného materiálu a barvy — Kobra X podporuje automatický Filament Backup (viz sekce výše).</p>
           </div>
         </div>
         <div class="check-item">

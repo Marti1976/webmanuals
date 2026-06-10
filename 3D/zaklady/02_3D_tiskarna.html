@@ -784,6 +784,88 @@
       </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════
+         SEKCE 11 — AKTUALIZACE FIRMWARU
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Aktualizace firmwaru (OTA Update)</h2></div>
+      <p>Firmware Kobry X se pravidelně aktualizuje — přináší opravy chyb, nové funkce a vylepšení kalibrace. Aktualizace probíhá bezdrátově přes Wi-Fi (OTA — Over The Air).</p>
+
+      <div class="init-steps" style="margin-top:14px;">
+        <div class="init-step">
+          <div class="step-dot">1</div>
+          <div class="step-content"><strong>Připojte tiskárnu k Wi-Fi</strong><p>Settings → Network → Wi-Fi. Tiskárna musí být připojena ke stejné síti jako váš telefon nebo počítač.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">2</div>
+          <div class="step-content"><strong>Zkontrolujte dostupnou verzi</strong><p>Settings → Printer Information → Firmware Version. Pokud je dostupná novější verze, zobrazí se tlačítko <strong>Update</strong>.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">3</div>
+          <div class="step-content"><strong>Spusťte aktualizaci</strong><p>Klepněte na Update a počkejte — trvá 5–15 minut. <strong>Nevypínejte tiskárnu</strong> během aktualizace, nezasahujte do napájení. Tiskárna se po dokončení automaticky restartuje.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">4</div>
+          <div class="step-content"><strong>Po aktualizaci — nová kalibrace</strong><p>Po každé aktualizaci firmwaru doporučujeme spustit znovu celou inicializační sekvenci (Auto-Level + Input Shaping) — nový firmware může změnit kalibrační parametry.</p></div>
+        </div>
+      </div>
+
+      <div class="alert alert-info" style="margin-top:14px;">
+        <div class="alert-icon">💡</div>
+        <div><strong>Kde sledovat novinky:</strong> Přehled změn každé verze najdete na <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x" target="_blank" style="color:var(--accent);">Anycubic Wiki — Kobra X</a>. Doporučujeme aktualizovat ihned po vydání nové verze.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 12 — SUŠENÍ FILAMENTU
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Sušení filamentu — vlhkost jako skrytý nepřítel</h2></div>
+      <p>Vlhkost je nejčastější příčina problémů s tiskem, kterou začátečníci podceňují. Filament absorbuje vlhkost ze vzduchu a ta pak při tisku způsobuje viditelné i skryté defekty.</p>
+
+      <div class="alert alert-warn" style="margin-top:12px;">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Příznaky vlhkého filamentu:</strong> praskání a prskání při extruzi, bubliny na povrchu tisku, slabé nebo křehké vrstvy, nadměrný stringing, matný nebo nerovnoměrný povrch. Pokud tiskárna funguje správně ale výtisk vypadá špatně — zkuste nejdřív vysušit filament.</div>
+      </div>
+
+      <h3>Doporučené teploty a časy sušení</h3>
+      <table class="spec-table" style="margin-top:10px;">
+        <thead>
+          <tr><th>Materiál</th><th>Teplota sušení</th><th>Čas</th><th>Náchylnost na vlhkost</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PLA</td><td>45–55 °C</td><td>4–6 h</td><td>Nízká — ale po týdnu na vzduchu znatelná</td></tr>
+          <tr><td>PLA+</td><td>45–55 °C</td><td>4–6 h</td><td>Nízká</td></tr>
+          <tr><td>PETG</td><td>65 °C</td><td>6–8 h</td><td>Střední — skladujte vždy v sáčku</td></tr>
+          <tr><td>TPU</td><td>50 °C</td><td>4–6 h</td><td>Střední</td></tr>
+          <tr><td>ABS / ASA</td><td>80 °C</td><td>4–6 h</td><td>Střední</td></tr>
+          <tr><td>Nylon (PA)</td><td>80–90 °C</td><td>12–24 h</td><td><strong>Extrémní</strong> — absorbuje vlhkost za hodiny</td></tr>
+          <tr><td>PC</td><td>80 °C</td><td>6–8 h</td><td>Vysoká</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Jak sušit — možnosti</h3>
+      <div class="chapter-grid" style="margin-top:12px;">
+        <div class="card">
+          <h4>Sušička filamentu (Drybox)</h4>
+          <p>Nejpohodlnější řešení. Anycubic, Sunlu, Polymaker a další vyrábí sušičky s přesným nastavením teploty. Některé modely umí sušit za chodu tisku. Cena od 600 Kč.</p>
+        </div>
+        <div class="card">
+          <h4>Trouba / sušička potravin</h4>
+          <p>Funkční náhrada. Nastavte nejnižší teplotu (45–50 °C) a cívku vložte na mřížku. <strong>Pozor:</strong> mnoho trub má min. teplotu 50 °C nebo více — PLA snadno deformujete. Vždy ověřte skutečnou teplotu teploměrem.</p>
+        </div>
+        <div class="card">
+          <h4>Skladování — prevence</h4>
+          <p>Nejlepší je vlhkosti předcházet. Cívky skladujte v zip-lock sáčcích nebo vzduchotěsných boxech se silikagelem. Hygrometr (vlhkoměr) v boxu ukáže aktuální vlhkost — cíl pod 15 % RH pro citlivé materiály.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-info" style="margin-top:14px;">
+        <div class="alert-icon">📖</div>
+        <div>Detailní přehled sušení pro každý materiál včetně skladovacích tipů: <a href="08_3D_filamenty.html" style="color:var(--accent);">kap. 08 Filamenty</a></div>
+      </div>
+    </div>
+
     <!-- ── PAGE NAV ── -->
     <div class="pn">
       <a href="01_3D_uvod.html">← 01 · Úvod do FDM tisku</a>

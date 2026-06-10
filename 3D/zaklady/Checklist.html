@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checklist před tiskem — Anycubic Kobra X (Černobílá verze v8)</title>
+<title>Checklist před tiskem — Anycubic Kobra X (v9)</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -24,38 +24,35 @@
   .header-right .date-line { font-size: 10px; color: #000; font-family: 'Courier New', monospace; white-space: nowrap; }
 
   /* ── DVOJSTOUPEC (Pevný poměr 50:50) ── */
-  .two-col { display: grid; grid-template-columns: 50% 50%; gap: 12px; }
+  .two-col { display: grid; grid-template-columns: 50% 50%; gap: 8px; }
 
-  /* ── SEKCE S LINKOU DO 2/3 ŠÍŘKY ── */
-  .cl-section { margin-bottom: 6px; position: relative; }
-  .cl-section-title { 
-    font-size: 9.5px; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    letter-spacing: 0.12em; 
-    color: #fff; 
-    background: #000; 
-    padding: 3px 8px; 
-    margin-bottom: 6px; 
-    display: flex; 
-    align-items: center; 
-    gap: 6px; 
+  /* ── SEKCE ── */
+  .cl-section { margin-bottom: 4px; position: relative; }
+  .cl-section-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #fff;
+    background: #000;
+    padding: 3px 8px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     border-left: 3px solid #000;
     position: relative;
   }
-  /* Podtržení začínající na úrovni boční čáry a běžící do 2/3 šířky */
   .cl-section-title::after {
     content: "";
     position: absolute;
     bottom: -3px;
-    left: -3px; 
-    width: 66.6%; 
+    left: -3px;
+    width: 66.6%;
     height: 1.5px;
     background: #000;
   }
-  
   .cl-section-title .stag { font-family: 'Courier New', monospace; font-size: 8.5px; color: #000; background: #fff; border: 1px solid #000; padding: 0px 4px; font-weight: bold; }
-
   .cl-section-title.sw  { background: #000; }
   .cl-section-title.hw  { background: #333; }
   .cl-section-title.bed { background: #222; }
@@ -64,70 +61,64 @@
   .cl-section-title.end { background: #444; }
 
   /* ── POLOŽKY ── */
-  .cl-item { display: flex; align-items: flex-start; gap: 6px; padding: 3px 5px; border-bottom: 1px solid #ddd; }
+  .cl-item { display: flex; align-items: flex-start; gap: 6px; padding: 2px 5px; border-bottom: 1px solid #ddd; }
   .cl-item:last-child { border-bottom: none; }
   .cl-box { width: 12px; height: 12px; border: 1.5px solid #000; flex-shrink: 0; margin-top: 1px; border-radius: 2px; background: #fff; }
   .cl-text { flex: 1; }
-  .cl-text strong { display: block; font-size: 10.2px; font-weight: 600; color: #000; line-height: 1.25; }
-  .cl-text span { font-size: 9.2px; color: #444; line-height: 1.25; display: block; }
-  
+  .cl-text strong { display: block; font-size: 10.2px; font-weight: 600; color: #000; line-height: 1.2; }
+  .cl-text span { font-size: 9.2px; color: #444; line-height: 1.15; display: block; }
+
   .cl-item.warn { margin-bottom: 4px; padding-bottom: 4px; }
   .cl-item.warn .cl-box { border: 2px dashed #000; }
   .cl-item.warn strong { font-weight: 800; text-decoration: underline; }
 
-  /* ── EKONOMICKÉ JEDNOTNÉ TABULKY (Bez kolizí linek při tisku) ── */
-  .custom-table { 
-    border: 1px solid #000 !important; 
-    border-collapse: collapse !important; 
-    width: 100%; 
-    margin-top: 5px; 
-    margin-bottom: 5px; /* Rezerva proti překrývání spodním popiskem */
+  /* ── TABULKY ── */
+  .custom-table {
+    border: 1px solid #000 !important;
+    border-collapse: collapse !important;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
-  .custom-table th { 
-    background: #fff !important; 
-    color: #000 !important; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    font-size: 8.5px; 
-    padding: 4px 5px; 
-    text-align: left; 
-    border: 1px solid #000 !important; 
+  .custom-table th {
+    background: #fff !important;
+    color: #000 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 8.5px;
+    padding: 3px 5px;
+    text-align: left;
+    border: 1px solid #000 !important;
   }
-  .custom-table td { 
-    padding: 4px 5px; 
-    border: 1px solid #000 !important; 
-    color: #000; 
-    font-size: 9px; 
-    line-height: 1.2; 
+  .custom-table td {
+    padding: 3px 5px;
+    border: 1px solid #000 !important;
+    color: #000;
+    font-size: 9px;
+    line-height: 1.2;
   }
-  .custom-table tr:nth-child(even) { 
-    background: #f9f9f9 !important; 
-  }
-  
+  .custom-table tr:nth-child(even) { background: #f9f9f9 !important; }
   .custom-table .ok  { color: #000; font-weight: 700; }
   .custom-table .wrn { color: #000; font-weight: 700; font-style: italic; }
 
-  /* ── BEZOKRAJOVÝ TEXT PRO POZNÁMKY ── */
-  .notes-text-only { margin-top: 10px; border-top: 1px solid #000; padding-top: 4px; font-size: 10.5px; font-weight: bold; color: #000; }
+  /* ── POZNÁMKY ── */
+  .notes-text-only { margin-top: 4px; border-top: 1px solid #000; padding-top: 2px; font-size: 10.5px; font-weight: bold; color: #000; }
 
   /* ── TISK ── */
   @media print {
     body { padding: 4mm 8mm; }
     @page { size: A4; margin: 0; }
     .no-print { display: none; }
-    
-    /* Agresivní vynucení černých vnitřních i vnějších linek pro tiskový subsystém */
-    table.custom-table, 
-    table.custom-table tr, 
-    table.custom-table th, 
-    table.custom-table td { 
-      border: 1px solid #000 !important; 
+    table.custom-table,
+    table.custom-table tr,
+    table.custom-table th,
+    table.custom-table td {
+      border: 1px solid #000 !important;
       border-top: 1px solid #000 !important;
       border-bottom: 1px solid #000 !important;
       border-left: 1px solid #000 !important;
       border-right: 1px solid #000 !important;
     }
-    
     .cl-section-title::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 
@@ -175,6 +166,13 @@
       <div class="cl-item">
         <div class="cl-box"></div>
         <div class="cl-text">
+          <strong>Výška vrstvy — rychlost vs. kvalita</strong>
+          <span>0,1 mm = detail · 0,2 mm = standard · 0,28–0,32 mm = rychlý tisk</span>
+        </div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-box"></div>
+        <div class="cl-text">
           <strong>Orientace modelu na Z=0</strong>
           <span>Největší plocha dolů, model leží přesně na podložce</span>
         </div>
@@ -203,27 +201,20 @@
       <div class="cl-item">
         <div class="cl-box"></div>
         <div class="cl-text">
-          <strong>Množství a odhad filamentu v % / gramech</strong>
+          <strong>Množství filamentu — odhad vs. cívka</strong>
           <span>Hmotnost ve sliceru ≤ zbývající kapacita na cívce</span>
         </div>
       </div>
       <div class="cl-item">
         <div class="cl-box"></div>
         <div class="cl-text">
-          <strong>Volba procent a vzoru výplně (Infill)</strong>
-          <span>Mechanické díly ≥20–30% (Gyroid/Grid) · Vizuální modely 10–15% (Lightning)</span>
-        </div>
-      </div>
-      <div class="cl-item">
-        <div class="cl-box"></div>
-        <div class="cl-text">
-          <strong>Dostatečný počet perimetrů</strong>
-          <span>Standard: 2–3 stěny · Namáhané funkční díly: 4 a více stěn pro pevnost</span>
+          <strong>Vícebarevný tisk — extrudery 1–4 přiřazeny</strong>
+          <span>Každá část modelu = správný extruder · Purge Tower viditelná v náhledu</span>
         </div>
       </div>
     </div>
 
-    <!-- TABULKA TEPLOT (Sjednocený čistý vzhled s přidanou rezervou) -->
+    <!-- REF TEPLOTY -->
     <div class="cl-section">
       <div class="cl-section-title ref"><span class="stag">REF</span> Teploty a příprava povrchu</div>
       <table class="custom-table">
@@ -231,17 +222,17 @@
           <tr><th>Materiál</th><th>Tryska</th><th>Podložka</th><th>PEI</th><th>Příprava povrchu</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>PLA / PLA+</strong></td><td>200–230 °C</td><td>60–65 °C</td><td class="ok">✓</td><td>Čistý povrch (Nic nenášet)</td></tr>
-          <tr><td><strong>PETG</strong></td><td>230–250 °C</td><td>75–80 °C</td><td class="wrn">⚠</td><td class="wrn">Nutná separační vrstva</td></tr>
-          <tr><td><strong>TPU</strong></td><td>220–235 °C</td><td>45 °C</td><td class="ok">✓</td><td>Čistý plát (příp. separační)</td></tr>
-          <tr><td><strong>ABS / ASA</strong></td><td>235–260 °C</td><td>100 °C max</td><td class="wrn">⚠</td><td class="wrn">Nutné lepidlo (Kores/Magigoo)</td></tr>
-          <tr><td><strong>Nylon (PA)</strong></td><td>250–260 °C</td><td>80–90 °C</td><td class="wrn">⚠</td><td class="wrn">Speciální adhezní lepidlo</td></tr>
+          <tr><td>PLA / PLA+</td><td>185–235 °C</td><td>50–70 °C</td><td class="ok">✓</td><td>Čistý povrch (Nic nenášet)</td></tr>
+          <tr><td>PETG</td><td>215–270 °C</td><td>70–90 °C</td><td class="wrn">⚠</td><td><strong>Nutná separační vrstva</strong></td></tr>
+          <tr><td>TPU</td><td>220–260 °C</td><td>40–85 °C</td><td class="ok">✓</td><td>Čistý plát (příp. separační)</td></tr>
+          <tr><td>ABS / ASA</td><td>230–275 °C</td><td>100 °C max</td><td class="wrn">⚠</td><td><strong>Nutné lepidlo (Kores/Magigoo)</strong></td></tr>
+          <tr><td>Nylon (PA)</td><td>240–285 °C</td><td>70–90 °C</td><td class="wrn">⚠</td><td><strong>Speciální adhezní lepidlo</strong></td></tr>
         </tbody>
       </table>
-      <p style="font-size:8px; color:#000; margin-top:5px; font-weight:bold; margin-bottom:5px;">Kobra X: max podložka 100 °C — ABS/ASA na hranici, enclosure (kryt) nutný</p>
+      <span style="font-size:8px; color:#000;">Kobra X: max podložka 100 °C — ABS/ASA na hranici, enclosure (kryt) nutný</span>
     </div>
 
-    <!-- TISKOVÁ PODLOŽKA -->
+    <!-- HW PODLOŽKA -->
     <div class="cl-section">
       <div class="cl-section-title bed"><span class="stag">HW</span> Tisková podložka</div>
       <div class="cl-item warn">
@@ -287,16 +278,6 @@
         </div>
       </div>
 
-      <!-- TABULKA PRO PODLOŽKY -->
-      <table class="custom-table">
-        <thead>
-          <tr><th>Typ podložky (Plátu)</th><th>Vhodné pro materiály</th><th>Vlastnosti a příprava</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>PEI Hladký (Smooth)</strong></td><td>PLA, PLA+, TPU, ABS</td><td>Perfektní lesklá první vrstva. Vysoká adheze.</td></tr>
-          <tr><td><strong>PEI Texturovaný (Satin/Zrn)</strong></td><td>PLA, PETG, TPU, ASA, Nylon</td><td>Strukturovaný povrch. Skvělý odseparovaný tisk.</td></tr>
-        </tbody>
-      </table>
     </div>
 
   </div>
@@ -311,7 +292,7 @@
         <div class="cl-box"></div>
         <div class="cl-text">
           <strong>Správná tryska — průměr a průtok</strong>
-          <span>Standard: 0,4 mm mosaz · CF (karbonová vlákna) filament: nerezová tryska!</span>
+          <span>Standard: 0,4 mm hardened steel · CF filament: hardened steel nebo nerezová!</span>
         </div>
       </div>
       <div class="cl-item">
@@ -326,6 +307,13 @@
         <div class="cl-text">
           <strong>Filament zaveden — stav Smart Sensoru</strong>
           <span>Po zavedení: pípnutí + detekce na displeji (nesmí svítit chyba senzoru)</span>
+        </div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-box"></div>
+        <div class="cl-text">
+          <strong>Kontrola dostatku filamentu — Kobra X: Filament Backup</strong>
+          <span>Nestačí-li, nachystat záložní cívku stejného materiálu a barvy pro aut. přepnutí</span>
         </div>
       </div>
       <div class="cl-item">
@@ -363,27 +351,6 @@
           <span>Průvan = warping (kroucení). Pro ABS/ASA bezpodmínečně zavřít enclosure (kryt)</span>
         </div>
       </div>
-      <div class="cl-item">
-        <div class="cl-box"></div>
-        <div class="cl-text">
-          <strong>Kontrola namazání a nečistot na Z tyčích</strong>
-          <span>Prach nebo zbytky filamentu v závitu osy Z způsobují Z-wobble/zaseknutí</span>
-        </div>
-      </div>
-      <div class="cl-item">
-        <div class="cl-box"></div>
-        <div class="cl-text">
-          <strong>Fyzická stabilita tiskové hlavy</strong>
-          <span>Zkontrolovat vůli hlavy na pojezdu (případně lehce dotáhnout excentry)</span>
-        </div>
-      </div>
-      <div class="cl-item">
-        <div class="cl-box"></div>
-        <div class="cl-text">
-          <strong>Volný průchod filamentu v reverse-Bowdenu</strong>
-          <span>Trhání/odpor cívky tlumí extruder · PTFE trubička nesmí být ostře zalomená</span>
-        </div>
-      </div>
     </div>
 
     <!-- BĚHEM TISKU -->
@@ -393,14 +360,14 @@
         <div class="cl-box"></div>
         <div class="cl-text">
           <strong>Linky zploštělé a spojené — ne kulaté</strong>
-          <span>Kulaté / mezery = tryska vysoko → snížit Z-Offset (výšková korekce) o 0,05 mm</span>
+          <span>Kulaté / mezery = tryska vysoko → snížit Z-Offset (Tune → Z-Offset) o 0,05 mm</span>
         </div>
       </div>
       <div class="cl-item">
         <div class="cl-box"></div>
         <div class="cl-text">
           <strong>Žádné hrnutí plastu nebo průhledný film</strong>
-          <span>Trhání/rytí = tryska nízko → zvýšit Z-Offset (výšková korekce) o 0,05 mm</span>
+          <span>Trhání/rytí = tryska nízko → zvýšit Z-Offset (Tune → Z-Offset) o 0,05 mm</span>
         </div>
       </div>
       <div class="cl-item">
@@ -422,13 +389,6 @@
         <div class="cl-text">
           <strong>Průtok a čistota při tisku lemu</strong>
           <span>Sledovat skirt/brim — ideální čas pro jemné doladění Z-offsetu za jízdy</span>
-        </div>
-      </div>
-      <div class="cl-item">
-        <div class="cl-box"></div>
-        <div class="cl-text">
-          <strong>Přilnavost tenkých struktur podpor</strong>
-          <span>Pokud se první vrstva supportů neudrží pevně plátu, tisk později selže</span>
         </div>
       </div>
       <div class="cl-item">
@@ -460,6 +420,13 @@
       <div class="cl-item">
         <div class="cl-box"></div>
         <div class="cl-text">
+          <strong>Tiskárna — cooldown před vypnutím</strong>
+          <span>Nechat vychladnout pod 50 °C · Pak teprve hlavní vypínač · Filament do sáčku</span>
+        </div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-box"></div>
+        <div class="cl-text">
           <strong>Odstranění vyteklého plastu (Ooze) z trysky</strong>
           <span>Dokud je tiskárna po tisku teplá, strhnout pinzetou visící zbytky u trysky</span>
         </div>
@@ -476,7 +443,54 @@
   </div>
 </div>
 
-<!-- BEZOKRAJOVÝ TEXT PRO POZNÁMKY -->
+<!-- TABULKA TYPŮ PODLOŽEK — PLNÁ ŠÍŘKA -->
+<div style="margin-top:4px;">
+  <div class="cl-section-title ref" style="margin-bottom:6px;"><span class="stag">REF</span> Typy tiskových podložek (plátů) — přehled</div>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th style="width:18%;">Typ podložky</th>
+        <th style="width:22%;">Vhodné materiály</th>
+        <th style="width:13%;">Teplota podložky</th>
+        <th style="width:13%;">Oddělení modelu</th>
+        <th style="width:34%;">Vlastnosti a příprava</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>PEI Hladký (Smooth)</strong></td>
+        <td>PLA, PLA+, TPU, ABS</td>
+        <td>50–110 °C</td>
+        <td>Po vychladnutí, ohnutím</td>
+        <td>Lesklá spodní vrstva výtisku. Vysoká adheze. Čistit IPA. Nedotýkat se holou rukou.</td>
+      </tr>
+      <tr>
+        <td><strong>PEI Texturovaný (Satin/Zrn)</strong></td>
+        <td>PLA, PETG, TPU, ASA, Nylon</td>
+        <td>50–110 °C</td>
+        <td>Po vychladnutí, sám odpadne</td>
+        <td>Strukturovaný spodní povrch. Snadné oddělení. Pro PETG nutná separační vrstva (PVA/Magigoo)!</td>
+      </tr>
+      <tr>
+        <td><strong>BuildTak / PEX fólie</strong></td>
+        <td>PLA, PETG, TPU, HIPS, Wood</td>
+        <td>50–100 °C</td>
+        <td>Po vychladnutí, lehce</td>
+        <td>Univerzální fólie. Lepí se na hliníkový plát. Dobrá adheze bez adhesiva. Pro PETG separace.</td>
+      </tr>
+      <tr>
+        <td><strong>Cool Plate (studený tisk)</strong></td>
+        <td>PLA, PLA+</td>
+        <td>15–35 °C (bez ohřevu)</td>
+        <td>Sám odpadne za studena</td>
+        <td>Speciální povrch pro studený tisk PLA. Nutný glue stick. Model odpadne sám bez ohýbání plátu.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span style="font-size:8px; color:#000;">Kobra X: magnetický plát 260×260 mm — alternativní pláty musí být stejných rozměrů. Cool Plate a BuildTak jako volitelná náhrada.</span>
+</div>
+
+<!-- POZNÁMKY -->
 <div class="notes-text-only">
   Poznámky k tisku, co se povedlo a nepovedlo:
 </div>
