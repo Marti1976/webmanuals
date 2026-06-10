@@ -7,206 +7,602 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:       #0d0f14;
-    --surface:  #13161e;
-    --card:     #181c27;
-    --border:   #252b3b;
-    --accent:   #e8a020;
-    --accent2:  #f0c050;
-    --tuf:      #c8860a;
-    --green:    #3ecf76;
-    --red:      #e85050;
-    --blue:     #4a9eff;
-    --text:     #d8dce8;
-    --muted:    #6e7590;
-    --mono:     'IBM Plex Mono', monospace;
+    --bg:#0d0f14; --surface:#13161e; --card:#181c27; --border:#252b3b;
+    --accent:#e8a020; --accent2:#f0c050; --tuf:#c8860a;
+    --green:#3ecf76; --red:#e85050; --blue:#4a9eff;
+    --text:#d8dce8; --muted:#6e7590; --mono:'IBM Plex Mono',monospace;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.65;overflow-x:hidden;}
 
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
+  /* SIDEBAR */
+  .sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:rgba(19,22,30,0.97);border-right:1px solid var(--tuf);display:flex;flex-direction:column;z-index:200;overflow-y:auto;overflow-x:hidden;}
+  .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);}
+  .sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
+  .sidebar-product{display:flex;align-items:center;gap:10px;}
+  .sidebar-tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:2px;padding:3px 7px;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);flex-shrink:0;}
+  .sidebar-model{font-family:var(--mono);font-size:11px;color:var(--text);font-weight:500;line-height:1.4;}
+  .sidebar-model small{display:block;color:var(--muted);font-size:10px;margin-top:2px;}
+  .sb-search{padding:15px 20px 5px;}
+  .sb-search input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 12px;border-radius:3px;outline:none;}
+  .sb-search input:focus{border-color:var(--accent);}
+  .nav-group-label{padding:16px 20px 6px;font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:8px 20px;color:#8aadcc;text-decoration:none;font-size:13px;font-family:'Inter',sans-serif;transition:all 0.2s;border-left:2px solid transparent;line-height:1.3;}
+  .nav-item:hover,.nav-item.active{color:#fff;background:rgba(232,160,32,0.06);border-left-color:var(--accent);}
+  .nav-num{font-family:var(--mono);font-size:10px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:1px 5px;flex-shrink:0;min-width:28px;text-align:center;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);}
+  .nav-item-text{flex:1;min-width:0;}
+  .nav-subs{margin:0;padding:0 0 10px 0;list-style:none;display:flex;flex-direction:column;}
+  .nav-sub-item{display:block;padding:6px 20px 6px 58px;color:#8aadcc;text-decoration:none;font-size:12.5px;font-family:'Inter',sans-serif;border-left:2px solid transparent;transition:all 0.2s;}
+  .nav-sub-item:hover,.nav-sub-item.active{color:#fff;background:rgba(255,255,255,0.03);border-left-color:var(--accent);}
 
-  /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--border); border-right-color: var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
-  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
-  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-  .sidebar-product { display: flex; align-items: center; gap: 10px; }
-  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
-  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
-  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+  /* MAIN */
+  .main-content{margin-left:260px;width:calc(100% - 260px);display:flex;flex-direction:column;}
 
-  .sb-search { padding: 15px 20px 5px; }
-  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .sb-search input:focus { border-color: var(--accent); }
+  /* HERO */
+  .hero{position:relative;background:linear-gradient(135deg,#0a0c10 0%,#141925 40%,#1a1208 100%);border-bottom:2px solid var(--tuf);padding:48px 32px 36px;overflow:hidden;width:100%;}
+  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px);}
+  .hero-inner{position:relative;max-width:960px;margin:0 auto;width:100%;}
+  .logo-row{display:flex;align-items:center;gap:16px;margin-bottom:12px;}
+  .tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:2px;padding:4px 10px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+  .ver-badge{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--border);padding:3px 8px;}
+  .hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.1;letter-spacing:1px;color:#fff;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{margin-top:10px;color:var(--muted);font-size:14.5px;max-width:600px;}
 
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
-  .nav-item-text { flex: 1; min-width: 0; }
+  /* LAYOUT */
+  .wrapper{max-width:960px;margin:0 auto;padding:0 32px 60px;width:100%;}
 
-  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
-  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
+  /* SECTIONS */
+  .section{margin:44px 0;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+  .section h2{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:.5px;}
+  h3.sub{font-family:'Rajdhani',sans-serif;color:var(--accent2);font-size:19px;font-weight:600;margin:36px 0 14px;}
 
-  /* ── MAIN CONTENT AREA ── */
-  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);padding:22px 26px;transition:border-color .2s,background .2s;}
+  .card:hover{border-color:var(--accent);background:rgba(232,160,32,.03);}
+  .card h3{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:600;color:var(--accent2);margin:0 0 8px;}
+  .card p{font-size:14px;color:var(--text);line-height:1.6;}
+  .card-num{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:2px 8px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);margin-bottom:10px;}
+  .chapter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin:20px 0;}
 
-  /* ── HERO ── */
-  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
-  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
-  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
-  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
-  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
-  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
-  .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
+  /* UPGRADE GRID */
+  .upgrade-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:20px 0;}
+  .upgrade-card{background:var(--card);border:1px solid var(--border);padding:18px 20px;transition:border-color .2s;}
+  .upgrade-card:hover{border-color:var(--accent);}
+  .upgrade-card .uc-icon{font-size:22px;margin-bottom:10px;}
+  .upgrade-card h4{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:600;color:var(--accent2);margin-bottom:6px;}
+  .upgrade-card p{font-size:13.5px;color:var(--muted);line-height:1.5;}
+  .uc-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:2px 7px;margin-top:8px;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);}
 
-  /* ── LAYOUT ── */
-  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
+  /* ALERTS */
+  .alert{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;margin:20px 0;font-size:14px;}
+  .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+  .alert-info{border:1px solid var(--blue);background:rgba(74,158,255,.07);}
+  .alert-tip{border:1px solid var(--green);background:rgba(62,207,118,.07);}
+  .alert-warn{border:1px solid var(--red);background:rgba(232,80,80,.07);}
 
-  /* ── SECTIONS ── */
-  .section { margin: 44px 0; }
-  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  /* NOISE BAR */
+  .noise-wrap{background:var(--surface);border:1px solid var(--border);padding:22px 26px;margin:20px 0;}
+  .noise-row{display:flex;align-items:center;gap:16px;margin:10px 0;}
+  .noise-label{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:180px;}
+  .noise-bar-bg{flex:1;height:10px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .noise-bar-fill{height:100%;border-radius:2px;}
+  .noise-val{font-family:var(--mono);font-size:12px;color:var(--accent);min-width:70px;text-align:right;}
 
-  /* ── PAGE NAV ── */
-  .pn { margin-top:60px; padding-top:26px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
-  .pn a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; transition:color .15s; }
-  .pn a:hover { color:var(--accent); } .pn .nx { margin-left:auto; }
+  /* TABLE */
+  .data-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;}
+  .data-table thead tr{background:var(--surface);}
+  .data-table th{padding:10px 14px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border);}
+  .data-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+  .data-table tr:nth-child(even) td{background:rgba(255,255,255,.015);}
+  .pill{display:inline-block;font-size:11px;font-family:var(--mono);padding:2px 8px;border-radius:2px;font-weight:600;}
+  .pill-green{background:rgba(62,207,118,.15);color:var(--green);}
+  .pill-yellow{background:rgba(232,160,32,.15);color:var(--accent);}
+  .pill-red{background:rgba(232,80,80,.15);color:var(--red);}
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
+  /* SPEC BOX */
+  .spec-box{background:var(--card);border:1px solid var(--border);padding:20px 24px;margin:20px 0;display:flex;flex-wrap:wrap;gap:32px;}
+  .spec-item{display:flex;flex-direction:column;gap:4px;}
+  .si-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+  .si-val{font-family:var(--mono);font-size:20px;color:var(--accent);font-weight:500;}
+
+  /* PAGE NAV */
+  .pn{margin-top:60px;padding-top:26px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:16px;}
+  .pn a{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;transition:color .15s;}
+  .pn a:hover{color:var(--accent);}
+  .pn .nx{margin-left:auto;}
+
+  /* YT */
+  .yt-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:13px;color:var(--red);text-decoration:none;margin:8px 0 4px;}
+  .yt-link:hover{opacity:.8;}
+
+  @media(max-width:900px){.sidebar{display:none;}.main-content{margin-left:0;width:100%;}}
 </style>
 </head>
 <body>
 
-<!-- ── SIDEBAR ── -->
+<!-- SIDEBAR -->
 <nav class="sidebar" id="sidebar">
-
   <div class="sidebar-brand">
     <div class="sidebar-product">
       <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">
-        ANYCUBIC KOBRA X
-        <small>Průvodce 3D tiskem · CZ</small>
-      </div>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
     </div>
   </div>
-
-  <div class="sb-search">
-    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
-  </div>
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
 
   <div class="nav-group-label">Základní sekce</div>
-
-  <a href="00_3D_index.html" class="nav-item">
-    <span class="nav-num">00</span>
-    <span class="nav-item-text">Obsah & Hledání</span>
-  </a>
-  <a href="01_3D_uvod.html" class="nav-item ">
-    <span class="nav-num">01</span>
-    <span class="nav-item-text">Úvod do FDM tisku</span>
-  </a>
-  <a href="02_3D_tiskarna.html" class="nav-item ">
-    <span class="nav-num">02</span>
-    <span class="nav-item-text">Tiskárna Kobra X</span>
-  </a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item ">
-    <span class="nav-num">03</span>
-    <span class="nav-item-text">Slicer — základy</span>
-  </a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item ">
-    <span class="nav-num">04</span>
-    <span class="nav-item-text">Slicer — pokročilý</span>
-  </a>
-
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">05</span>
-    <span class="nav-item-text">Detailní parametry</span>
-  </div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
   <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item ">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item ">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item ">05c · Parametry filamentu</a></li>
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
   </ul>
-
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item ">
-    <span class="nav-num">06</span>
-    <span class="nav-item-text">Příprava &amp; tisk</span>
-  </a>
-  <a href="07_3D_post_processing.html" class="nav-item ">
-    <span class="nav-num">07</span>
-    <span class="nav-item-text">Post-processing</span>
-  </a>
-  <a href="08_3D_filamenty.html" class="nav-item ">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </a>
-  <a href="09_3D_modely_cad.html" class="nav-item ">
-    <span class="nav-num">09</span>
-    <span class="nav-item-text">3D Modely & CAD</span>
-  </a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item active">
-    <span class="nav-num">10</span>
-    <span class="nav-item-text">Prostředí & upgrady</span>
-  </a>
-  <a href="11_3D_udrzba.html" class="nav-item ">
-    <span class="nav-num">11</span>
-    <span class="nav-item-text">Údržba & spot. mat.</span>
-  </a>
-  <a href="12_3D_tipy.html" class="nav-item ">
-    <span class="nav-num">12</span>
-    <span class="nav-item-text">Tipy & triky</span>
-  </a>
-  <a href="13_3D_troubleshooting.html" class="nav-item ">
-    <span class="nav-num">13</span>
-    <span class="nav-item-text">Troubleshooting</span>
-  </a>
+  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item active"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
 
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">Soubory</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
     <span class="nav-item-text">Výběr příloh</span>
   </a>
-  
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">WEB</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
     <span class="nav-item-text">Výběr odkazů</span>
   </a>
-
 </nav>
 
+<!-- MAIN -->
 <main class="main-content">
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 10</span>
         <span class="ver-badge">PROSTŘEDÍ</span>
       </div>
-      <h1>Prostředí <span>& upgrady</span></h1>
-      <p>Tato kapitola čeká na zpracování. Zde se dozvíte vše potřebné k tématu "Prostředí & upgrady".</p>
+      <h1>Prostředí & <span>upgrady</span></h1>
+      <p>Hluk, zápach a bezpečnost 3D tiskáren doma. Enclosures pro náročné materiály a chytré tipy na příslušenství.</p>
     </div>
   </div>
 
   <div class="wrapper">
+
+    <!-- ── SEKCE 1: HLUK ── -->
     <div class="section">
-      <div class="section-header">
-        <h2>Prázdná kapitola</h2>
+      <div class="section-header"><h2>1 — Hluk a vibrace</h2></div>
+
+      <p>Jednou z prvních věcí, které nového majitele 3D tiskárny překvapí, je hluk. FDM tiskárny vydávají kombinaci zvuků — kroky motorů, bzučení ventilátorů a vibrace přenášené do stolu. Dobrou zprávou je, že velkou část hluku lze snadno omezit bez jakýchkoliv výdajů.</p>
+
+      <h3 class="sub">Reálné hlukové hodnoty Kobry X</h3>
+      <div class="noise-wrap">
+        <div class="noise-row">
+          <span class="noise-label">Klidový stav (pouze ventilátor)</span>
+          <div class="noise-bar-bg"><div class="noise-bar-fill" style="width:28%;background:var(--green);"></div></div>
+          <span class="noise-val">~35 dB</span>
+        </div>
+        <div class="noise-row">
+          <span class="noise-label">Tisk PLA — normální rychlost</span>
+          <div class="noise-bar-bg"><div class="noise-bar-fill" style="width:50%;background:linear-gradient(90deg,var(--green),var(--accent));"></div></div>
+          <span class="noise-val">~45–50 dB</span>
+        </div>
+        <div class="noise-row">
+          <span class="noise-label">Tisk ABS — vyšší rychlost</span>
+          <div class="noise-bar-bg"><div class="noise-bar-fill" style="width:62%;background:var(--accent);"></div></div>
+          <span class="noise-val">~52–58 dB</span>
+        </div>
+        <div class="noise-row">
+          <span class="noise-label">Normální konverzace (referenční)</span>
+          <div class="noise-bar-bg"><div class="noise-bar-fill" style="width:68%;background:var(--muted);"></div></div>
+          <span class="noise-val">~60 dB</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:14px;">Měřeno 50 cm od tiskárny. Hodnoty se liší dle rychlosti tisku a podkladu, na kterém tiskárna stojí.</p>
       </div>
-      <p>Obsah bude brzy doplněn. Zvolte zatím jinou kapitolu z levého menu.</p>
+
+      <h3 class="sub">Jak efektivně snížit hluk</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">01</span>
+          <h3>Anti-vibrace podložky</h3>
+          <p>Nejjednodušší a nejúčinnější úprava. Silné gumové nožičky nebo speciální anti-vibrace dampers pod každou nohu tiskárny absorbují vibrace přenášené do stolu. Reálné snížení hluku o 3–6 dB.</p>
+          <p style="margin-top:8px;font-size:13px;color:var(--muted);">Lze vytisknout — hledejte „anti vibration feet Kobra" na Printables.com. Nebo koupit na Aliexpress za pár korun.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">02</span>
+          <h3>Pevný, těžký stůl</h3>
+          <p>Lehký IKEA stolek rezonuje a zesiluje vibrace. Masivní pracovní stůl nebo stůl z dřevotřísky je výrazně lepší podklad. Tiskárna na těžkém povrchu je znatelně tišší — žádné náklady.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">03</span>
+          <h3>Nižší rychlost tisku</h3>
+          <p>Rychlejší pohyby = více vibrací a hluku. Snížení rychlosti ze 100 mm/s na 60 mm/s viditelně zklidní provoz. Kobra X má Input Shaping kompenzující vibrace, přesto platí: pomalejší = tišší.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">04</span>
+          <h3>Enclosure (uzavřený kryt)</h3>
+          <p>Uzavřený kryt pohlcuje část hluku — zejména kryty s absorpčním materiálem uvnitř. Efekt je menší než u anti-vibrací, ale kombinace obou řešení přináší výrazný výsledek.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tip:</strong> Vytiskněte si anti-vibrace nožičky jako jeden z prvních projektů — jsou malé, rychle se tisknou a okamžitý efekt je znatelný. Hledejte „Anycubic Kobra anti-vibration feet" na Printables.com.</div>
+      </div>
     </div>
-  </div>
+
+    <!-- ── SEKCE 2: ZÁPACH ── -->
+    <div class="section">
+      <div class="section-header"><h2>2 — Zápach a výpary (VOC)</h2></div>
+
+      <p>3D tisk zahřívá plast na vysoké teploty, při nichž se uvolňují těkavé organické látky (VOC — Volatile Organic Compounds) a ultrajemné částice (UFP). Míra rizika silně závisí na použitém filamentu — PLA je relativně bezpečné, ABS nikoliv.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Filament</th>
+            <th>Zápach</th>
+            <th>VOC výpary</th>
+            <th>Doporučené opatření</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>PLA</strong></td>
+            <td>Mírný, sladký</td>
+            <td><span class="pill pill-green">Nízké</span></td>
+            <td>Větrání místnosti postačí</td>
+          </tr>
+          <tr>
+            <td><strong>PETG</strong></td>
+            <td>Mírný plastový</td>
+            <td><span class="pill pill-yellow">Střední</span></td>
+            <td>Větrání doporučeno</td>
+          </tr>
+          <tr>
+            <td><strong>ABS</strong></td>
+            <td>Silný, štiplavý</td>
+            <td><span class="pill pill-red">Vysoké</span></td>
+            <td>HEPA + aktivní uhlí filtr, větrání</td>
+          </tr>
+          <tr>
+            <td><strong>ASA</strong></td>
+            <td>Silný, štiplavý</td>
+            <td><span class="pill pill-red">Vysoké</span></td>
+            <td>HEPA + aktivní uhlí filtr, větrání</td>
+          </tr>
+          <tr>
+            <td><strong>TPU</strong></td>
+            <td>Mírný gumový</td>
+            <td><span class="pill pill-yellow">Střední</span></td>
+            <td>Větrání doporučeno</td>
+          </tr>
+          <tr>
+            <td><strong>Nylon (PA)</strong></td>
+            <td>Výrazný</td>
+            <td><span class="pill pill-red">Vysoké</span></td>
+            <td>HEPA + aktivní uhlí filtr, větrání</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Pozor — ABS a ASA:</strong> Tyto materiály produkují styrén a další škodlivé VOC. Tisknout je v uzavřené místnosti bez ventilace není vhodné — zejména při delším provozu. Vždy zajistěte přívod čerstvého vzduchu nebo filtraci s aktivním uhlím.</div>
+      </div>
+
+      <h3 class="sub">Jak řešit filtraci</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">A</span>
+          <h3>Větrání místnosti</h3>
+          <p>Nejjednodušší řešení — otevřené okno nebo větrací mřížka zajistí výměnu vzduchu. Plně postačuje pro PLA a PETG. Pro ABS/ASA je samotné větrání nedostatečné — výpary se šíří celou místností.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">B</span>
+          <h3>HEPA + aktivní uhlí filtr</h3>
+          <p>Kombinovaný filtr zachytí ultrajemné částice (HEPA vrstva) i VOC plyny (aktivní uhlí). Nejlépe umístit dovnitř enclosure. Oblíbený DIY projekt: <strong>Nevermore V5/V6</strong> — vytisknutelný filtr na Printables.com.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">C</span>
+          <h3>Dedikovaná místnost</h3>
+          <p>Oddělená místnost (garáž, dílna, sklep) s vlastním větráním je ideální. Tiskárna tam může běžet bez omezení a hluk ani výpary nevadí. Pokud tuto možnost máte — využijte ji naplno.</p>
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+tisk+filtrace+VOC+enclosure&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tisk filtrace VOC enclosure</a>
+    </div>
+
+    <!-- ── SEKCE 3: BEZPEČNOST ── -->
+    <div class="section">
+      <div class="section-header"><h2>3 — Požární bezpečnost</h2></div>
+
+      <p>3D tiskárny jsou elektrická zařízení pracující s vysokými teplotami (hotend 200–300 °C, heatbed 60–100 °C). Většina tiskáren je bezpečná při správném používání, ale požáry se výjimečně stávají — nejčastěji při tisku bez dozoru, vadném napájení nebo selhání termistoru.</p>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Základní pravidla bezpečnosti:</strong> Netiskněte bez dozoru, pokud to není nutné. Při tisku přes noc mějte detektor kouře v místnosti a využívejte kameru pro vzdálený monitoring. Tiskárna by nikdy neměla stát přímo na hořlavém povrchu.</div>
+      </div>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">01</span>
+          <h3>Detektor kouře</h3>
+          <p>Umístěte detektor kouře přímo v místnosti kde tiskárna pracuje — ne jen na chodbě. Při tisku přes noc je to základní pojistka. Chytré detektory s notifikací do telefonu jsou ideální.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">02</span>
+          <h3>Kamera pro monitoring</h3>
+          <p>Kobra X má vestavěnou kameru — přes aplikaci Anycubic lze sledovat tisk vzdáleně z telefonu. Využijte ji při tisku přes noc nebo mimo dohled. V případě problému tisk ihned zastavte.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">03</span>
+          <h3>Nehořlavá podložka</h3>
+          <p>Pod tiskárnu dejte keramickou dlaždici, kovový plát nebo nehořlavou podložku. Keramická dlaždice z hobby marketu za ~50 Kč je nejjednodušší a funkční řešení.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">04</span>
+          <h3>Hasicí kapsle</h3>
+          <p>Automatické hasicí kapsle (Elide Fire nebo podobné) lze umístit dovnitř enclosure. Při překročení kritické teploty se automaticky aktivují. Pro noční tisky jde o levnou pojistku navíc (~500–1000 Kč).</p>
+        </div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X — pojistka:</strong> Tiskárna je vybavena pojistkou <strong>250V / 10A</strong>. Nikdy ji nevyměňujte za pojistku jiných parametrů — jiná hodnota může způsobit selhání ochrany při přetížení obvodu.</div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Thermal Runaway Protection:</strong> Kobra X má zabudovanou ochranu proti tepelnému úniku. Pokud termistor nahlásí neobvyklou teplotu nebo selže, tiskárna se automaticky zastaví. Jde o jednu z nejdůležitějších bezpečnostních funkcí — nevypínejte ji v nastavení firmware.</div>
+      </div>
+    </div>
+
+    <!-- ── SEKCE 4: ENCLOSURE ── -->
+    <div class="section">
+      <div class="section-header"><h2>4 — Enclosure (kryt tiskárny)</h2></div>
+
+      <p>Enclosure je uzavřený kryt kolem tiskárny. Pro tisk PLA je zbytečný a dokonce kontraproduktivní — PLA tiskne nejlépe v otevřeném prostoru s aktivním chlazením. Pro ABS, ASA a Nylon je ale téměř nutností kvůli zamezení warpingu.</p>
+
+      <h3 class="sub">Proč enclosure pomáhá</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">✓</span>
+          <h3>Stabilní teplota prostředí</h3>
+          <p>ABS a ASA se při chladnutí smršťují a praská jim to od podložky (warping), pokud okolní vzduch je studený. Kryt udržuje teplý vzduch uvnitř a dramaticky snižuje warping — tisk ABS bez krytu je velmi obtížný.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">✓</span>
+          <h3>Efektivní filtrace výparů</h3>
+          <p>Filtr umístěný uvnitř uzavřeného krytu zachytí téměř veškeré VOC a částice ještě před tím, než se dostanou do místnosti. Mnohonásobně účinnější než filtr v otevřeném prostoru.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">✓</span>
+          <h3>Méně prachu a nečistot</h3>
+          <p>Uzavřený prostor chrání tiskárnu před prachem, chloupky domácích mazlíčků a jinými nečistotami. Méně čištění lineárních tyčí a vodicích lišt.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>PLA v uzavřeném krytu:</strong> Při tisku PLA v uzavřeném krytu se zahřívá vzduch uvnitř a způsobuje heat creep — ucpání v chladicí zóně hotendu. Pro PLA buď kryt nechte otevřený, nebo zajistěte aktivní ventilaci uvnitř krytu.</div>
+      </div>
+
+      <h3 class="sub">Rozměry Kobry X pro enclosure</h3>
+      <div class="spec-box">
+        <div class="spec-item">
+          <span class="si-label">Šířka tiskárny</span>
+          <span class="si-val">455 mm</span>
+        </div>
+        <div class="spec-item">
+          <span class="si-label">Hloubka tiskárny</span>
+          <span class="si-val">635 mm</span>
+        </div>
+        <div class="spec-item">
+          <span class="si-label">Výška s držákem cívky</span>
+          <span class="si-val">685 mm</span>
+        </div>
+        <div class="spec-item">
+          <span class="si-label">Doporučené min. rozměry krytu</span>
+          <span class="si-val">550 × 720 × 780 mm</span>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:-10px;">Přidejte alespoň 50–80 mm na každou stranu pro pohodlný přístup, proudění vzduchu a umístění filtrů.</p>
+
+      <h3 class="sub">Možnosti enclosure</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">DIY</span>
+          <h3>IKEA Lack stack</h3>
+          <p>Nejpopulárnější DIY řešení — dva stolky IKEA Lack naskládané na sebe, plexisklo po stranách, dvířka vpředu. Celková cena ~600–1500 Kč. Stovky hotových návodů a printovatelných dílů na Printables.com.</p>
+          <p style="margin-top:8px;font-size:13px;color:var(--muted);">IKEA Lack je 55×55 cm — pro Kobru X je potřeba větší varianta nebo přizpůsobení rámů.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">DIY</span>
+          <h3>Hliníkový rám 2020/2040</h3>
+          <p>Rám z hliníkových profilů s PETG tisklými spojkami a plexisklěnými panely. Nejflexibilnější řešení přesně na míru tiskárny. Vyžaduje víc času a základní kutilské dovednosti, výsledek je ale prémiový.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">Komerční</span>
+          <h3>Hotový kryt</h3>
+          <p>Značky: Creality Enclosure, SUNLU Enclosure, Sovol. Cena 1500–4000 Kč. Výhoda: ihned připraven, stabilní konstrukce. Vždy ověřte rozměry — ne každý kryt pasuje na Kobru X.</p>
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+printer+enclosure+DIY+IKEA+Lack+build&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D printer enclosure DIY IKEA Lack build</a>
+    </div>
+
+    <!-- ── SEKCE 5: SUŠIČKY ── -->
+    <div class="section">
+      <div class="section-header"><h2>5 — Sušičky filamentu</h2></div>
+
+      <p>Filament je hygroskopický — absorbuje vzdušnou vlhkost. Vlhký filament se projevuje praskáním při tisku, bublinami na povrchu výtisku, slabšími mezivrstevnými spoji a zvýšeným stringingem. Sušička je po tiskárně samotné asi nejužitečnější investice.</p>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Jak poznat vlhký filament:</strong> Při tisku slyšíte praskání nebo syčení z trysky. Výtisk má bublinky, matný nerovnoměrný povrch nebo zvýšený stringing. PETG a Nylon jsou nejcitlivější — absorpci vlhkosti poznáte za 24–48 hodin v nevhodném prostředí.</div>
+      </div>
+
+      <h3 class="sub">Možnosti sušení</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">★★</span>
+          <h3>SUNLU S1 / S2 Filadryer</h3>
+          <p>Nejpopulárnější dedikovaná sušička. S1 pro jednu cívku (~700 Kč), S2 pro dvě cívky (~1200 Kč). Teplota 35–70 °C, displej, časovač. Umožňuje tisk přímo ze sušičky přes boční otvor pro filament.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">★★</span>
+          <h3>Sušička potravin</h3>
+          <p>Klasická sušička potravin (Rohnson, Sencor) z Alzy za ~600–800 Kč. Nastavte 45–55 °C (dle filametu) a sušte 4–8 hodin. Výsledek prakticky totožný s dedikovanou sušičkou — jen méně komfortní.</p>
+          <p style="margin-top:8px;font-size:13px;color:var(--muted);">Ověřte, že mřížka uvnitř je dost velká pro cívku průměru 200 mm.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">DIY</span>
+          <h3>Dry Box (hermetická dóza)</h3>
+          <p>Vzduchotěsná plastová dóza s silikagelovým sušidlem. Nesusí již vlhký filament, ale chrání suchý filament před vlhkostí. Jako skladovací řešení ideální — Lock&amp;Lock dóza s průchodkou pro filament.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">Tip</span>
+          <h3>Tisk přímo ze sušičky</h3>
+          <p>Nejkomfortnější způsob — filament se suší průběžně i při tisku. SUNLU S1 má boční otvor pro vedení filamentu přímo do extrudéru tiskárny. Zejména pro PETG a Nylon je to ideální kombinace.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Teploty sušení dle filametu</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Filament</th><th>Teplota sušení</th><th>Doba sušení</th><th>Citlivost na vlhkost</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>PLA</strong></td><td>45–50 °C</td><td>4–6 hodin</td><td><span class="pill pill-yellow">Střední</span></td></tr>
+          <tr><td><strong>PETG</strong></td><td>55–65 °C</td><td>4–6 hodin</td><td><span class="pill pill-red">Vysoká</span></td></tr>
+          <tr><td><strong>ABS / ASA</strong></td><td>60–70 °C</td><td>4–8 hodin</td><td><span class="pill pill-yellow">Střední</span></td></tr>
+          <tr><td><strong>TPU</strong></td><td>50–55 °C</td><td>4–6 hodin</td><td><span class="pill pill-red">Vysoká</span></td></tr>
+          <tr><td><strong>Nylon (PA)</strong></td><td>70–80 °C</td><td>8–12 hodin</td><td><span class="pill pill-red">Velmi vysoká</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tip — správné skladování:</strong> Otevřenou cívku filametu nikdy nenechávejte volně ležet. Uložte ji do zip-lock sáčku nebo dry boxu se silikagelovým sušidlem. Přiložte mini hygrometr — vlhkost pod 15 % je ideální pro všechny druhy filamentů.</div>
+      </div>
+    </div>
+
+    <!-- ── SEKCE 6: UPGRADY ── -->
+    <div class="section">
+      <div class="section-header"><h2>6 — Chytré upgrady a příslušenství</h2></div>
+
+      <p>Nemusíte hned investovat tisíce do hardwarových upgradů. Následující doplňky a nástroje vám výrazně usnadní práci, zpřesní výtisky a prodlouží životnost tiskárny — mnohé za minimální cenu.</p>
+
+      <div class="upgrade-grid">
+        <div class="upgrade-card">
+          <div class="uc-icon">📏</div>
+          <h4>Digitální posuvné měřítko</h4>
+          <p>Nezbytné pro kalibraci — měření skutečných rozměrů výtisku (XYZ cube, kalibrace flow rate). Levné plastové (~150 Kč z Alzy) plně postačí.</p>
+          <span class="uc-tag">Nutné</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">🔧</div>
+          <h4>Feeler gauge (spárové měrky)</h4>
+          <p>Sada tenkých plíšků pro přesné nastavení Z-offsetu první vrstvy. Přesnější než papír — 0,1 mm plíšek je ideální vzdálenost trysky od podložky. Sada ~100 Kč.</p>
+          <span class="uc-tag">Doporučeno</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">🟡</div>
+          <h4>Kapton tape</h4>
+          <p>Žlutohnědá teplotně odolná polyimidová páska. Ochrana konektorů a kabeláže, fixace termistorů, alternativa bed adheze pro ABS. Každý 3D tiskař by ji měl mít v zásobě.</p>
+          <span class="uc-tag">Levné a užitečné</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">🔗</div>
+          <h4>Bowden fitting klíp</h4>
+          <p>Plastová pojistka zabraňující vysunutí PTFE trubice z PC4-M6 fittingu. Po každém odpojení trubice zkontrolujte, zda pojistka správně drží — bez ní hrozí vytékání filamentu mimo trysku.</p>
+          <span class="uc-tag">Bezpečnost</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">🧹</div>
+          <h4>Mosazný kartáček na trysku</h4>
+          <p>Pro mechanické čištění trysky od usazenin plastu. Pozor: pouze mosazný, ne ocelový — ocel trysku poškrábe. Kobra X dodává čistič trysky v balení, kartáček je doplněk.</p>
+          <span class="uc-tag">Údržba</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">💨</div>
+          <h4>Přídavné chlazení tisku</h4>
+          <p>Silnější part cooling větrák nebo duální chlazení zlepšuje přemostění a převisy. Pro Kobru X existují printovatelné kryty ventilátoru na Printables.com.</p>
+          <span class="uc-tag">Upgrade výkonu</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">⚡</div>
+          <h4>Klipper firmware</h4>
+          <p>Alternativní firmware nahrazující výchozí Anycubic firmware. Spouští se na Raspberry Pi, umožňuje Pressure Advance, přesnou Input Shaping kalibraci a výrazně rychlejší tisk. Pro pokročilé uživatele.</p>
+          <span class="uc-tag">Pro pokročilé</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">🎥</div>
+          <h4>Timelapse kamera</h4>
+          <p>OrcaSlicer + Raspberry Pi kamera = automatické timelapse video z každého tisku. Každý layer vidíte jak se tvoří — výsledky jsou fascinující. Vyžaduje základní nastavení.</p>
+          <span class="uc-tag">Pro fanoušky</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">🌡️</div>
+          <h4>Hygrometr do místnosti</h4>
+          <p>Malý digitální teploměr s měřičem vlhkosti. Sledujte vlhkost — při hodnotách nad 50 % zvažte sušení filamentu. Cena ~100 Kč, velký přínos pro diagnostiku problémů s tiskem.</p>
+          <span class="uc-tag">Diagnostika</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">🔩</div>
+          <h4>Zásobní trysky 0,4 mm</h4>
+          <p>Mějte vždy zásobu mosazných trysk 0,4 mm (E3D kompatibilní). Opotřebená tryska se okamžitě projeví na kvalitě — výměna trvá 5 minut, tryska stojí ~30–80 Kč.</p>
+          <span class="uc-tag">Spotřební</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">🧲</div>
+          <h4>Extra tisková podložka</h4>
+          <p>Druhá magnetická PEI podložka umožňuje ihned začít další tisk, zatímco první se chladí a model odstraňujete. Textured PEI (matný povrch) vs. Smooth PEI (lesklý). Cena ~200–600 Kč.</p>
+          <span class="uc-tag">Komfort</span>
+        </div>
+        <div class="upgrade-card">
+          <div class="uc-icon">📦</div>
+          <h4>Organizér pracovního místa</h4>
+          <p>Krabička nebo nástěnný panel pro špachtle, kleště, IPA lahvičku, kapton tape a náhradní trysky. Přehledné pracoviště = rychlejší reakce na problémy. Samozřejmě lze vytisknout.</p>
+          <span class="uc-tag">Organizace</span>
+        </div>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Pořadí priorit pro začátečníka:</strong> Začněte digitálním měřítkem a feeler gauge pro kalibraci. Pak přidejte sušičku filamentu, pokud tisknete PETG nebo plánujete ABS. Enclosure pořiďte až budete ABS/ASA tisknout pravidelně. Klipper nechte na dobu, kdy budete mít za sebou stovky hodin tisku a budete vědět co chcete vylepšit.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=Anycubic+Kobra+upgrades+accessories+2024&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Kobra upgrades accessories</a>
+    </div>
+
+    <!-- PAGE NAV -->
+    <div class="pn">
+      <a href="09_3D_modely_cad.html">← 09 · 3D Modely & CAD</a>
+      <a href="11_3D_udrzba.html" class="nx">11 · Údržba & spotřební mat. →</a>
+    </div>
+
+  </div><!-- /wrapper -->
 </main>
+
 <script>
 const searchInput = document.getElementById('sb-search-input');
 searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') {
+  if (e.key === 'Enter') {
     const q = e.target.value.trim();
-    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
   }
 });
 </script>

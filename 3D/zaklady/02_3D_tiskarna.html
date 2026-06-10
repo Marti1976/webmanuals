@@ -263,15 +263,15 @@
         <tbody>
           <tr><td>Technologie tisku</td><td>FDM (Fused Deposition Modeling)</td></tr>
           <tr><td>Tiskový objem</td><td>260 × 260 × 260 mm</td></tr>
-          <tr><td>Tloušťka vrstvy</td><td>0,08 – 0,28 mm</td></tr>
-          <tr><td>Průměr trysky (standard)</td><td>0,4 mm</td></tr>
+          <tr><td>Tloušťka vrstvy</td><td>0,05 – 0,32 mm (závislé na průměru trysky; max. = 80 % průměru trysky)</td></tr>
+          <tr><td>Průměr trysky (standard)</td><td>0,4 mm hardened steel — dostupné: 0,25 / 0,4 / 0,6 / 0,8 mm</td></tr>
           <tr><td>Max. teplota trysky</td><td>260 °C</td></tr>
           <tr><td>Max. teplota podložky</td><td>100 °C</td></tr>
-          <tr><td>Počet trysek</td><td>1 tryska (multi-filament přes selektor)</td></tr>
-          <tr><td>Podporované materiály</td><td>PLA, PLA+, PETG, TPU, ABS (omezeno teplotou beddu)</td></tr>
+          <tr><td>Počet trysek</td><td>1 tryska (multi-filament přes selektor ACE Hub, 4 cívky)</td></tr>
+          <tr><td>Podporované materiály</td><td>PLA, PLA+, PETG, TPU, ABS, ASA, Nylon (omezení viz teplota podložky)</td></tr>
           <tr><td>Wi-Fi</td><td>2,4 GHz + 5 GHz (STA / AP+STA)</td></tr>
           <tr><td>Konektivita</td><td>Anycubic App, Anycubic Slicer (cloud + LAN)</td></tr>
-          <tr><td>Vstupní napětí</td><td>110 V~, 60 Hz</td></tr>
+          <tr><td>Vstupní napětí</td><td>100–240 V~, 50/60 Hz (spínaný zdroj — funguje v ČR na 230 V / 50 Hz)</td></tr>
           <tr><td>Jmenovitý výkon</td><td>1 450 W</td></tr>
           <tr><td>Pojistka</td><td>250 V / 10 A</td></tr>
           <tr><td>Rozměry (bez příslušenství)</td><td>455 × 445 × 461 mm</td></tr>
@@ -360,22 +360,26 @@
       </div>
 
       <h3>Průměry trysek — k čemu která?</h3>
+      <div class="alert alert-info" style="margin-bottom:14px;">
+        <div class="alert-icon">📐</div>
+        <div><strong>Pravidlo výšky vrstvy:</strong> Výška vrstvy by měla být <strong>nejvýše 80 % průměru trysky</strong>. Pro standardní 0,4mm trysku to znamená max. ~0,32 mm. Nižší výška vrstvy = lepší detail, delší tisk. Zdroj: <a href="https://help.prusa3d.com/cs/article/vrstvy-a-perimetry_1748" target="_blank" style="color:var(--accent);">Prusa Knowledge Base — Vrstvy a perimetry</a></div>
+      </div>
       <div class="chapter-grid">
         <div class="card">
-          <h4>0,2 mm — Detaily</h4>
-          <p>Velmi jemné linky, nádherné detaily (figurky, text, šperky). Tisk trvá 3–4× déle, tryska se snadno ucpává. Pro pokročilé.</p>
+          <h4>0,25 mm — Detaily</h4>
+          <p>Velmi jemné linky, nádherné detaily (figurky, text, šperky). Max. výška vrstvy ~0,20 mm. Tisk trvá 3–4× déle, tryska se snadno ucpává. Pro pokročilé.</p>
         </div>
         <div class="card">
           <h4>0,4 mm — Standard ★</h4>
-          <p>Ideální kompromis. Rychlost tisku vs. kvalita povrchu. Výška vrstvy 0,12–0,28 mm. Doporučená tryska pro všechny začátečníky.</p>
+          <p>Ideální kompromis rychlosti a kvality. Výška vrstvy 0,10–0,32 mm. Doporučená tryska pro všechny začátečníky — Kobra X ji má z výroby.</p>
         </div>
         <div class="card">
           <h4>0,6 mm — Rychlost</h4>
-          <p>Hrubší linky, výrazně rychlejší tisk. Vhodné pro velké funkční díly kde nezáleží na vzhledu. Výška vrstvy až 0,4 mm.</p>
+          <p>Hrubší linky, výrazně rychlejší tisk. Max. výška vrstvy ~0,48 mm. Vhodné pro velké funkční díly kde nezáleží na vzhledu povrchu.</p>
         </div>
         <div class="card">
           <h4>0,8 mm — Prototypy</h4>
-          <p>Nejhrubší linie, nejrychlejší tisk. Viditelné vrstvy, ale model je hotový mnohonásobně rychleji. Výborné pro testovací díly.</p>
+          <p>Nejhrubší linie, nejrychlejší tisk. Max. výška vrstvy ~0,64 mm. Viditelné vrstvy, ale model je hotový mnohonásobně rychleji. Výborné pro testovací díly.</p>
         </div>
       </div>
 
@@ -449,19 +453,39 @@
         </div>
       </div>
 
+      <h3>Alternativní tiskové povrchy</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Smooth PEI (volná koupě)</h4>
+          <p>Hladký PEI plát stejných rozměrů (260×260 mm) lze dokoupit samostatně. Lesklý spodní povrch modelů. Ideální pro ozdobné objekty. Vyžaduje dokonale čistou podložku — mast z prstů = model nedrží.</p>
+        </div>
+        <div class="card">
+          <h4>G10 / Garolite</h4>
+          <p>Skelno-epoxidová deska. Specialita pro <strong>Nylon</strong> — přilne bez adhesiva. Alternativa pokud Magigoo PA nestačí. Méně rozšířené, ale velmi spolehlivé pro PA materiály.</p>
+        </div>
+        <div class="card">
+          <h4>Skleněná deska</h4>
+          <p>Klasický povrch starší generace. Perfektně rovný povrch, ale vyžaduje adhesivum (lak, lepidlo na sklo) pro každý materiál. Těžší, pomalejší ohřev. Na Kobře X funkční, ale PEI plát je pohodlnější.</p>
+        </div>
+      </div>
+
       <h3>Jak správně čistit podložku</h3>
+      <div class="alert alert-warn" style="margin-bottom: 14px;">
+        <div class="alert-icon">🖐</div>
+        <div><strong>Nikdy se nedotýkejte tiskového povrchu holýma rukama.</strong> Kožní masti a oleje z prstů vytvářejí na PEI neviditelnou vrstvu, která drasticky sníží přilnavost. Plát vždy uchopte za okraj nebo použijte rukavice.</div>
+      </div>
       <div class="chapter-grid">
         <div class="card">
           <h4>✓ IPA (izopropylalkohol)</h4>
-          <p>Hlavní čistící prostředek. Otřete podložku před každými 5–10 tisky hadříkem bez vláken namočeným v IPA 90%+. Odstraní mastnotu z prstů, která způsobuje špatnou přilnavost.</p>
+          <p>Hlavní čistící prostředek. U <strong>smooth PEI</strong> otřete před každým tiskem. U <strong>textured PEI</strong> každých 5–10 tisků nebo kdykoli přilnavost klesne. Použijte hadřík bez vláken a IPA 90%+.</p>
         </div>
         <div class="card">
           <h4>✓ Mýdlová voda</h4>
-          <p>Hluboké čištění při silném znečištění nebo pokud IPA nestačí. Podložku omyjte, opláchněte čistou vodou a nechte zcela uschnout.</p>
+          <p>Hluboké čištění při silném znečištění nebo pokud IPA nestačí. Podložku omyjte teplou vodou s kapkou jaru, opláchněte čistou vodou a nechte <strong>zcela uschnout</strong> před dalším tiskem.</p>
         </div>
         <div class="card">
           <h4>✗ Acetón — NIKDY</h4>
-          <p>Acetón rozpouští PEI povrch a trvale zničí podložku. I malé množství způsobí nevratné poškození. Používejte pouze IPA.</p>
+          <p>Acetón rozpouští PEI povrch a trvale zničí podložku. I malé množství způsobí nevratné poškození. Používejte <strong>výhradně IPA</strong>.</p>
         </div>
       </div>
     </div>
@@ -520,7 +544,12 @@
 
       <div class="alert alert-tip" style="margin-top: 20px;">
         <div class="alert-icon">✓</div>
-        <div><strong>Tip:</strong> Díky Direct Drive systému Kobry X používejte pro retrakci hodnoty <strong>0,5–2 mm</strong>, ne 5–7 mm jak uvádějí obecné tutoriály psané pro Bowden tiskárny. Příliš agresivní retrakce u Direct Drive způsobuje grinding (omlení) struny.</div>
+        <div><strong>Tip — retrakce u Direct Drive:</strong> Díky Direct Drive systému Kobry X používejte pro retrakci hodnoty <strong>0,5–2 mm</strong>, ne 5–7 mm jak uvádějí obecné tutoriály psané pro Bowden tiskárny. Příliš agresivní retrakce u Direct Drive způsobuje grinding (omlení) struny.</div>
+      </div>
+
+      <div class="alert alert-info" style="margin-top: 14px;">
+        <div class="alert-icon">💡</div>
+        <div><strong>Pevnost modelu = perimetry, ne výplň.</strong> Dle Prusa Knowledge Base platí: pevnost modelu je nejvíce určena <strong>počtem perimetrů (stěn)</strong>, nikoliv hustotou výplně. Chcete pevnější díl? Zvyšte počet perimetrů v sliceru (např. ze 2 na 3–4), ne procenta infill. Zdroj: <a href="https://help.prusa3d.com/cs/article/vrstvy-a-perimetry_1748" target="_blank" style="color:var(--accent);">Prusa KB — Vrstvy a perimetry</a></div>
       </div>
 
       <h3>Multi-filament systém (4 cívky)</h3>
@@ -589,7 +618,13 @@
           <strong>Co je Heat Creep?</strong> Pokud větrák hotendu nefouká nebo je slabý, teplo začne "plazit" nahoru do chladné zóny. Filament se roztaví příliš brzy, zasekne se a vytvoří ucpávku uvnitř heat breaku. Příznak: tiskárna přestane podávat materiál po 15–30 minutách tisku i když tryska je v pořádku.
         </div>
       </div>
-    </div>
+
+      <div class="alert alert-kobra" style="margin-top: 14px;">
+        <div class="alert-icon">🐍</div>
+        <div>
+          <strong>KOBRA X — heat creep u multi-filamentového systému:</strong> Při pomalých tiscích nebo čekání na změnu barvy stojí filament v hotENDu bez pohybu. Teplo se pak snáze šíří nahoru do teflonové trubice. Zvýšené riziko zejména při tisku z vlhkého filamentu. Preventivně: <strong>sušte filamenty</strong> (hlavně Nylon, PETG), udržujte větrák hotendu čistý a nastavte v sliceru nenulovou rychlost pohybu při čekání (purge).
+        </div>
+      </div>
 
     <!-- ═══════════════════════════════════════════
          SEKCE 7 — VYHŘÍVANÁ PODLOŽKA (HEATBED)
@@ -603,18 +638,19 @@
       <h3>Doporučené teploty podložky dle materiálu</h3>
       <table class="spec-table">
         <thead>
-          <tr><th>Materiál</th><th>Teplota podložky</th></tr>
+          <tr><th>Materiál</th><th>Teplota podložky</th><th>Poznámka</th></tr>
         </thead>
         <tbody>
-          <tr><td>PLA</td><td>55–65 °C</td></tr>
-          <tr><td>PLA+</td><td>60–70 °C</td></tr>
-          <tr><td>PETG</td><td>70–85 °C</td></tr>
-          <tr><td>TPU</td><td>30–60 °C</td></tr>
-          <tr><td>ABS</td><td>100–110 °C (ideálně 110 °C)</td></tr>
-          <tr><td>ASA</td><td>100–110 °C (ideálně 110 °C)</td></tr>
-          <tr><td>Nylon (PA)</td><td>70–90 °C</td></tr>
+          <tr><td>PLA</td><td>50–60 °C</td><td>Lze tisknout i bez ohřevu, s ohřevem lepší přilnavost</td></tr>
+          <tr><td>PLA+</td><td>60–70 °C</td><td>—</td></tr>
+          <tr><td>PETG</td><td>70–90 °C</td><td>Nutná separační vrstva (PVA / Magigoo) na PEI!</td></tr>
+          <tr><td>TPU (Flex)</td><td>40–85 °C</td><td>Nižší teplota = model se snadněji oddělí</td></tr>
+          <tr><td>ABS</td><td>95–110 °C</td><td>Kobra X max. 100 °C — viz upozornění níže</td></tr>
+          <tr><td>ASA</td><td>90–110 °C</td><td>Kobra X max. 100 °C — viz upozornění níže</td></tr>
+          <tr><td>Nylon (PA)</td><td>70–115 °C</td><td>Vyžaduje Magigoo PA, ideálně enclosure</td></tr>
         </tbody>
       </table>
+      <p style="font-size:13px; color:var(--muted); margin-top:8px;">Zdroj teplot: <a href="https://help.prusa3d.com/cs/filament-material-guide" target="_blank" style="color:var(--muted);">Prusa Knowledge Base — Průvodce filamenty</a></p>
 
       <div class="alert alert-warn" style="margin-top: 20px;">
         <div class="alert-icon">🐍</div>
@@ -655,7 +691,7 @@
       <div class="alert alert-tip" style="margin-top: 20px;">
         <div class="alert-icon">✓</div>
         <div>
-          <strong>Input Shaping (Rezonanční kompenzace):</strong> Kobra X má v přednastaveném firmwaru aktivní rezonanční kompenzaci. Tato funkce při inicializaci tiskárny změří vibrace rámu a automaticky upraví pohybové parametry, aby potlačila ghosting. Díky tomu můžete tisknout rychleji než na starých tiskárnách bez obav z vlnění na stěnách modelu.
+          <strong>Input Shaping (Rezonanční kompenzace) a Ghosting:</strong> <strong>Ghosting</strong> (také ringing) jsou vlnité opakující se artefakty na stěnách modelu — vypadají jako "echo" ostrých hran nebo rohů. Způsobují je vibrace rámu po rychlém pohybu hlavy. Kobra X má v firmwaru aktivní <strong>rezonanční kompenzaci (Input Shaping)</strong> — při inicializaci tiskárna změří vlastní vibrace a automaticky upraví pohybové parametry tak, aby ghosting potlačila. Díky tomu můžete tisknout rychleji než na starých tiskárnách bez obav z vlnění na stěnách.
         </div>
       </div>
     </div>
@@ -675,7 +711,7 @@
         </div>
         <div class="card">
           <h4>Filament Runout Sensor</h4>
-          <p>Hallův senzor u každého extruderu, který detekuje průchod filamentu. Když struna dojde nebo se přetrhne, tiskárna automaticky pozastaví tisk, přejede do parkovací pozice a čeká na výměnu cívky.</p>
+          <p>Hallův senzor u každého extruderu, který detekuje průchod filamentu. Když struna dojde nebo se přetrhne, tiskárna automaticky pozastaví tisk, přejede do parkovací pozice a čeká na výměnu cívky. Pokud senzor nereaguje správně (falešné poplachy nebo nereaguje vůbec), lze jej dočasně deaktivovat v menu tiskárny: <strong>Settings → Printer → Filament Sensor → Off</strong>.</p>
         </div>
         <div class="card">
           <h4>Auto-leveling senzor</h4>
@@ -702,6 +738,50 @@
       </div>
 
       <a href="https://www.youtube.com/results?search_query=Anycubic+Kobra+X+setup+wifi+app&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Kobra X setup a aplikace</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 10 — CO ZKONTROLOVAT PŘI PRVNÍM ZAPNUTÍ
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Co zkontrolovat před prvním tiskem</h2>
+      </div>
+      <p>Než spustíte první tisk, projděte tento rychlý checklist. Většina problémů začátečníků pramení z přeskočení těchto základních kroků.</p>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>✓ Odemknutá osa Z</h4>
+          <p>Před zapnutím tiskárny musí být uvolněny všechny šrouby zajišťující osu Z (6 šroubů, 3 na každé straně, klíč H2.0). Nezapnutá osa = poškození mechaniky při inicializaci.</p>
+        </div>
+        <div class="card">
+          <h4>✓ Teflonové trubice 1–4</h4>
+          <p>Zkontrolujte, že každá teflonová trubice je zasunuta do správně očíslovaného portu na tiskové hlavě i na selektoru. Záměna způsobí podávání špatného materiálu.</p>
+        </div>
+        <div class="card">
+          <h4>✓ Firmware update</h4>
+          <p>Po prvním zapnutí a připojení k Wi-Fi zkontrolujte aktualizaci firmwaru: <strong>Settings → Printer Information → Firmware Version</strong>. Nový firmware opravuje chyby a přidává funkce.</p>
+        </div>
+        <div class="card">
+          <h4>✓ Kalibrace při prvním spuštění</h4>
+          <p>Tiskárna provede automaticky při prvním zapnutí: samokontrolu, rezonanční kompenzaci (Input Shaping), automatické vyrovnání podložky a potlačení hluku. Nevypínejte ji během tohoto procesu.</p>
+        </div>
+        <div class="card">
+          <h4>✓ Utažené šrouby rámu</h4>
+          <p>Po přepravě zkontrolujte utažení všech 8 šroubů M5×30 spojujících rám se základnou (klíč H4.0). Povolené šrouby způsobují nestabilitu a zhoršují kvalitu tisku.</p>
+        </div>
+        <div class="card">
+          <h4>✓ Čistý PEI plát</h4>
+          <p>Před prvním tiskem otřete PEI plát IPA 90%+ a hadříkem bez vláken. Z výroby bývá pokryt ochrannou vrstvou nebo otisky prstů z balení.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-info" style="margin-top: 20px;">
+        <div class="alert-icon">📋</div>
+        <div>
+          <strong>Kompletní checklist před každým tiskem</strong> najdete v příloze průvodce — obsahuje i kontroly pro pokročilé tisky a vícebarevné projekty. <a href="00_3D_index.html#ostatni_prilohy" style="color:var(--accent);">→ Ostatní přílohy</a>
+        </div>
+      </div>
     </div>
 
     <!-- ── PAGE NAV ── -->

@@ -7,206 +7,597 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:       #0d0f14;
-    --surface:  #13161e;
-    --card:     #181c27;
-    --border:   #252b3b;
-    --accent:   #e8a020;
-    --accent2:  #f0c050;
-    --tuf:      #c8860a;
-    --green:    #3ecf76;
-    --red:      #e85050;
-    --blue:     #4a9eff;
-    --text:     #d8dce8;
-    --muted:    #6e7590;
-    --mono:     'IBM Plex Mono', monospace;
+    --bg:#0d0f14; --surface:#13161e; --card:#181c27; --border:#252b3b;
+    --accent:#e8a020; --accent2:#f0c050; --tuf:#c8860a;
+    --green:#3ecf76; --red:#e85050; --blue:#4a9eff;
+    --text:#d8dce8; --muted:#6e7590; --mono:'IBM Plex Mono',monospace;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.65;overflow-x:hidden;}
 
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
+  /* SIDEBAR */
+  .sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:rgba(19,22,30,0.97);border-right:1px solid var(--tuf);display:flex;flex-direction:column;z-index:200;overflow-y:auto;overflow-x:hidden;}
+  .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);}
+  .sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
+  .sidebar-product{display:flex;align-items:center;gap:10px;}
+  .sidebar-tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:2px;padding:3px 7px;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);flex-shrink:0;}
+  .sidebar-model{font-family:var(--mono);font-size:11px;color:var(--text);font-weight:500;line-height:1.4;}
+  .sidebar-model small{display:block;color:var(--muted);font-size:10px;margin-top:2px;}
+  .sb-search{padding:15px 20px 5px;}
+  .sb-search input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 12px;border-radius:3px;outline:none;}
+  .sb-search input:focus{border-color:var(--accent);}
+  .nav-group-label{padding:16px 20px 6px;font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:8px 20px;color:#8aadcc;text-decoration:none;font-size:13px;font-family:'Inter',sans-serif;transition:all 0.2s;border-left:2px solid transparent;line-height:1.3;}
+  .nav-item:hover,.nav-item.active{color:#fff;background:rgba(232,160,32,0.06);border-left-color:var(--accent);}
+  .nav-num{font-family:var(--mono);font-size:10px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:1px 5px;flex-shrink:0;min-width:28px;text-align:center;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);}
+  .nav-item-text{flex:1;min-width:0;}
+  .nav-subs{margin:0;padding:0 0 10px 0;list-style:none;display:flex;flex-direction:column;}
+  .nav-sub-item{display:block;padding:6px 20px 6px 58px;color:#8aadcc;text-decoration:none;font-size:12.5px;font-family:'Inter',sans-serif;border-left:2px solid transparent;transition:all 0.2s;}
+  .nav-sub-item:hover,.nav-sub-item.active{color:#fff;background:rgba(255,255,255,0.03);border-left-color:var(--accent);}
 
-  /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--border); border-right-color: var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
-  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
-  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-  .sidebar-product { display: flex; align-items: center; gap: 10px; }
-  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
-  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
-  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+  /* MAIN */
+  .main-content{margin-left:260px;width:calc(100% - 260px);display:flex;flex-direction:column;}
 
-  .sb-search { padding: 15px 20px 5px; }
-  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .sb-search input:focus { border-color: var(--accent); }
+  /* HERO */
+  .hero{position:relative;background:linear-gradient(135deg,#0a0c10 0%,#141925 40%,#1a1208 100%);border-bottom:2px solid var(--tuf);padding:48px 32px 36px;overflow:hidden;width:100%;}
+  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px);}
+  .hero-inner{position:relative;max-width:960px;margin:0 auto;width:100%;}
+  .logo-row{display:flex;align-items:center;gap:16px;margin-bottom:12px;}
+  .tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:2px;padding:4px 10px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+  .ver-badge{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--border);padding:3px 8px;}
+  .hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.1;letter-spacing:1px;color:#fff;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{margin-top:10px;color:var(--muted);font-size:14.5px;max-width:600px;}
 
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
-  .nav-item-text { flex: 1; min-width: 0; }
+  /* LAYOUT */
+  .wrapper{max-width:960px;margin:0 auto;padding:0 32px 60px;width:100%;}
 
-  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
-  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
+  /* SECTIONS */
+  .section{margin:44px 0;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+  .section h2{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:.5px;}
+  h3.sub{font-family:'Rajdhani',sans-serif;color:var(--accent2);font-size:19px;font-weight:600;margin:36px 0 14px;}
 
-  /* ── MAIN CONTENT AREA ── */
-  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);padding:22px 26px;transition:border-color .2s,background .2s;}
+  .card:hover{border-color:var(--accent);background:rgba(232,160,32,.03);}
+  .card h3{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:600;color:var(--accent2);margin:0 0 8px;}
+  .card p{font-size:14px;color:var(--text);line-height:1.6;}
+  .card-num{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:2px 8px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);margin-bottom:10px;}
+  .chapter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin:20px 0;}
+  .two-col{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin:20px 0;}
 
-  /* ── HERO ── */
-  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
-  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
-  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
-  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
-  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
-  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
-  .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
+  /* CALIBRATION CARDS */
+  .calib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin:20px 0;}
+  .calib-card{background:var(--card);border:1px solid var(--border);padding:20px 22px;transition:border-color .2s;}
+  .calib-card:hover{border-color:var(--accent);}
+  .calib-card .cc-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .calib-card .cc-icon{font-size:24px;flex-shrink:0;}
+  .calib-card h3{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:#fff;margin:0;}
+  .calib-card .cc-tests{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:10px;letter-spacing:.05em;}
+  .calib-card p{font-size:13.5px;color:var(--text);line-height:1.55;margin-bottom:10px;}
+  .calib-card .cc-look{background:var(--surface);border-left:2px solid var(--green);padding:8px 12px;font-size:13px;color:var(--muted);}
+  .calib-card .cc-look strong{color:var(--green);}
+  .calib-link{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--blue);text-decoration:none;margin-top:8px;}
+  .calib-link:hover{opacity:.8;}
 
-  /* ── LAYOUT ── */
-  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
+  /* TIP CARDS */
+  .tip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:20px 0;}
+  .tip-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);padding:16px 20px;transition:border-color .2s;}
+  .tip-card:hover{border-color:var(--accent);background:rgba(232,160,32,.03);}
+  .tip-card .tc-num{font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:6px;}
+  .tip-card h4{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;color:#fff;margin-bottom:6px;}
+  .tip-card p{font-size:13.5px;color:var(--muted);line-height:1.55;}
+  .tip-card .tc-value{font-family:var(--mono);font-size:12px;color:var(--accent2);margin-top:6px;}
 
-  /* ── SECTIONS ── */
-  .section { margin: 44px 0; }
-  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  /* COMMUNITY CARDS */
+  .comm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0;}
+  .comm-card{background:var(--card);border:1px solid var(--border);padding:18px 22px;transition:border-color .2s;text-decoration:none;display:flex;flex-direction:column;gap:8px;}
+  .comm-card:hover{border-color:var(--accent);background:rgba(232,160,32,.03);}
+  .comm-card .cm-platform{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:2px 8px;display:inline-block;width:fit-content;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);}
+  .cm-reddit{background:rgba(255,100,50,.15);color:#ff6432;}
+  .cm-facebook{background:rgba(74,144,226,.15);color:#4a90e2;}
+  .cm-discord{background:rgba(114,137,218,.15);color:#7289da;}
+  .cm-forum{background:rgba(62,207,118,.15);color:var(--green);}
+  .comm-card h3{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:600;color:#fff;margin:0;}
+  .comm-card p{font-size:13.5px;color:var(--muted);line-height:1.5;margin:0;}
+  .comm-card .cm-lang{font-family:var(--mono);font-size:11px;color:var(--muted);}
 
-  /* ── PAGE NAV ── */
-  .pn { margin-top:60px; padding-top:26px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
-  .pn a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; transition:color .15s; }
-  .pn a:hover { color:var(--accent); } .pn .nx { margin-left:auto; }
+  /* YT CARDS */
+  .yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0;}
+  .yt-card{background:var(--card);border:1px solid var(--border);padding:18px 22px;transition:border-color .2s;text-decoration:none;display:flex;flex-direction:column;gap:8px;}
+  .yt-card:hover{border-color:var(--red);background:rgba(232,80,80,.03);}
+  .yt-card .yc-icon{font-size:28px;}
+  .yt-card h3{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:600;color:#fff;margin:0;}
+  .yt-card p{font-size:13.5px;color:var(--muted);line-height:1.5;margin:0;}
+  .yt-card .yc-lang{font-family:var(--mono);font-size:11px;color:var(--red);}
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
+  /* TOOL CARDS */
+  .tool-card{background:var(--card);border:1px solid var(--border);padding:20px 24px;margin:12px 0;display:flex;gap:20px;align-items:flex-start;transition:border-color .2s;text-decoration:none;}
+  .tool-card:hover{border-color:var(--blue);}
+  .tool-card .tc-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
+  .tool-card h3{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:600;color:#fff;margin:0 0 6px;}
+  .tool-card p{font-size:14px;color:var(--muted);line-height:1.55;margin:0;}
+  .tool-card .tc-url{font-family:var(--mono);font-size:11px;color:var(--blue);margin-top:6px;}
+
+  /* ALERTS */
+  .alert{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;margin:20px 0;font-size:14px;}
+  .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+  .alert-info{border:1px solid var(--blue);background:rgba(74,158,255,.07);}
+  .alert-tip{border:1px solid var(--green);background:rgba(62,207,118,.07);}
+  .alert-warn{border:1px solid var(--red);background:rgba(232,80,80,.07);}
+
+  /* PAGE NAV */
+  .pn{margin-top:60px;padding-top:26px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:16px;}
+  .pn a{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;transition:color .15s;}
+  .pn a:hover{color:var(--accent);}
+  .pn .nx{margin-left:auto;}
+
+  @media(max-width:900px){.sidebar{display:none;}.main-content{margin-left:0;width:100%;}}
 </style>
 </head>
 <body>
 
-<!-- ── SIDEBAR ── -->
+<!-- SIDEBAR -->
 <nav class="sidebar" id="sidebar">
-
   <div class="sidebar-brand">
     <div class="sidebar-product">
       <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">
-        ANYCUBIC KOBRA X
-        <small>Průvodce 3D tiskem · CZ</small>
-      </div>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
     </div>
   </div>
-
-  <div class="sb-search">
-    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
-  </div>
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
 
   <div class="nav-group-label">Základní sekce</div>
-
-  <a href="00_3D_index.html" class="nav-item">
-    <span class="nav-num">00</span>
-    <span class="nav-item-text">Obsah & Hledání</span>
-  </a>
-  <a href="01_3D_uvod.html" class="nav-item ">
-    <span class="nav-num">01</span>
-    <span class="nav-item-text">Úvod do FDM tisku</span>
-  </a>
-  <a href="02_3D_tiskarna.html" class="nav-item ">
-    <span class="nav-num">02</span>
-    <span class="nav-item-text">Tiskárna Kobra X</span>
-  </a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item ">
-    <span class="nav-num">03</span>
-    <span class="nav-item-text">Slicer — základy</span>
-  </a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item ">
-    <span class="nav-num">04</span>
-    <span class="nav-item-text">Slicer — pokročilý</span>
-  </a>
-
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">05</span>
-    <span class="nav-item-text">Detailní parametry</span>
-  </div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
   <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item ">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item ">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item ">05c · Parametry filamentu</a></li>
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
   </ul>
-
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item ">
-    <span class="nav-num">06</span>
-    <span class="nav-item-text">Příprava &amp; tisk</span>
-  </a>
-  <a href="07_3D_post_processing.html" class="nav-item ">
-    <span class="nav-num">07</span>
-    <span class="nav-item-text">Post-processing</span>
-  </a>
-  <a href="08_3D_filamenty.html" class="nav-item ">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </a>
-  <a href="09_3D_modely_cad.html" class="nav-item ">
-    <span class="nav-num">09</span>
-    <span class="nav-item-text">3D Modely & CAD</span>
-  </a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item ">
-    <span class="nav-num">10</span>
-    <span class="nav-item-text">Prostředí & upgrady</span>
-  </a>
-  <a href="11_3D_udrzba.html" class="nav-item ">
-    <span class="nav-num">11</span>
-    <span class="nav-item-text">Údržba & spot. mat.</span>
-  </a>
-  <a href="12_3D_tipy.html" class="nav-item active">
-    <span class="nav-num">12</span>
-    <span class="nav-item-text">Tipy & triky</span>
-  </a>
-  <a href="13_3D_troubleshooting.html" class="nav-item ">
-    <span class="nav-num">13</span>
-    <span class="nav-item-text">Troubleshooting</span>
-  </a>
+  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item active"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
 
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">Soubory</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
     <span class="nav-item-text">Výběr příloh</span>
   </a>
-  
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">WEB</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
     <span class="nav-item-text">Výběr odkazů</span>
   </a>
-
 </nav>
 
+<!-- MAIN -->
 <main class="main-content">
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 12</span>
-        <span class="ver-badge">TIPY</span>
+        <span class="ver-badge">POKROČILÉ</span>
       </div>
-      <h1>Tipy <span>& triky</span></h1>
-      <p>Tato kapitola čeká na zpracování. Zde se dozvíte vše potřebné k tématu "Tipy & triky".</p>
+      <h1>Tipy & <span>triky</span></h1>
+      <p>Kalibrační výtisky, užitečné zdroje, komunity a triky které vám ušetří hodiny ladění.</p>
     </div>
   </div>
 
   <div class="wrapper">
+
+    <!-- ══════════════════════════════════════
+         SEKCE 1 — KALIBRAČNÍ VÝTISKY
+    ══════════════════════════════════════ -->
     <div class="section">
-      <div class="section-header">
-        <h2>Prázdná kapitola</h2>
+      <div class="section-header"><h2>1 — Kalibrační výtisky</h2></div>
+
+      <p>Kalibrační výtisky jsou standardní testovací modely, které vám odhalí co je špatně nastaveno dříve, než zkazíte hodiny tisku na reálném projektu. Tiskněte je vždy po změně filametu, trysky nebo nastavení teploty.</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tip — pořadí kalibrace:</strong> Začněte vždy Bed Level Testem (první vrstva musí sedět). Pak XYZ Cube (rozměry). Pak Temperature Tower a Retraction Tower. Speed Tower nechte na závěr — má smysl až když jsou ostatní parametry správně.</div>
       </div>
-      <p>Obsah bude brzy doplněn. Zvolte zatím jinou kapitolu z levého menu.</p>
+
+      <div class="calib-grid">
+
+        <div class="calib-card">
+          <div class="cc-header">
+            <span class="cc-icon">🧊</span>
+            <h3>XYZ Cube</h3>
+          </div>
+          <div class="cc-tests">TESTUJE → Rozměrová přesnost os X, Y, Z</div>
+          <p>Jednoduchá 20×20×20 mm kostka s písmeny X, Y, Z na každé straně. Tiskne se rychle (~20 min) a okamžitě ukáže, zda jsou vaše nastavení na správné cestě.</p>
+          <div class="cc-look"><strong>Co hledat:</strong> Rozměry musí být ±0,2 mm od 20 mm. Šikmé stěny = problém s napnutím řemene. Zaoblené rohy = příliš vysoká rychlost nebo špatný Input Shaping.</div>
+          <a href="https://www.printables.com/search/models?q=XYZ+calibration+cube" target="_blank" class="calib-link">↗ Hledat na Printables: XYZ Calibration Cube</a>
+        </div>
+
+        <div class="calib-card">
+          <div class="cc-header">
+            <span class="cc-icon">🌡️</span>
+            <h3>Temperature Tower</h3>
+          </div>
+          <div class="cc-tests">TESTUJE → Ideální teplota trysky pro daný filament</div>
+          <p>Věž s různými teplotními zónami (typicky 190–230 °C pro PLA, každá zóna o 5 °C méně). V jednom tisku otestuje celé teplotní spektrum a ukáže kde je povrch nejhezčí.</p>
+          <div class="cc-look"><strong>Co hledat:</strong> Nejhladší povrch bez stringing a s dobrou mezivrstvou adhezí. Příliš horko = stringing a přepálený povrch. Příliš málo = matný povrch a slabé vrstvy.</div>
+          <a href="https://www.printables.com/search/models?q=temperature+tower+PLA" target="_blank" class="calib-link">↗ Hledat na Printables: Temperature Tower</a>
+        </div>
+
+        <div class="calib-card">
+          <div class="cc-header">
+            <span class="cc-icon">🔁</span>
+            <h3>Retraction Tower</h3>
+          </div>
+          <div class="cc-tests">TESTUJE → Optimální vzdálenost a rychlost retrakce</div>
+          <p>Podobně jako Temperature Tower — věž testuje různé hodnoty retrakce v jednom tisku. Ideální pro nalezení sweet spotu bez ucpání extrudéru ani nadměrného stringuingu.</p>
+          <div class="cc-look"><strong>Co hledat:</strong> Nejméně vláken (stringing) mezi věžemi. Pro Kobru X Bowden systém: obvyklá retrakce 4–7 mm. Příliš mnoho retrakce = grinding filametu nebo ucpání.</div>
+          <a href="https://www.printables.com/search/models?q=retraction+tower+calibration" target="_blank" class="calib-link">↗ Hledat na Printables: Retraction Tower</a>
+        </div>
+
+        <div class="calib-card">
+          <div class="cc-header">
+            <span class="cc-icon">📋</span>
+            <h3>Bed Level Test</h3>
+          </div>
+          <div class="cc-tests">TESTUJE → Rovnoměrnost první vrstvy po celé podložce</div>
+          <p>Sada tenkých plošek (nebo čar) rozmístěných po celé ploše podložky. Umožňuje vizuálně zkontrolovat, zda je mesh leveling správně nastaven v každém rohu i středu.</p>
+          <div class="cc-look"><strong>Co hledat:</strong> Všechny plošky stejně splačené a lesklé. Příliš tenká = tryska příliš nízko. Vzduchové mezery = tryska příliš vysoko. Nerovnoměrnost = mesh leveling potřebuje rekalibraci.</div>
+          <a href="https://www.printables.com/search/models?q=bed+level+test+first+layer" target="_blank" class="calib-link">↗ Hledat na Printables: Bed Level Test</a>
+        </div>
+
+        <div class="calib-card">
+          <div class="cc-header">
+            <span class="cc-icon">📐</span>
+            <h3>Overhang Test</h3>
+          </div>
+          <div class="cc-tests">TESTUJE → Schopnost tisku převisů bez podpor</div>
+          <p>Model s postupně se zvyšujícím úhlem převisu — obvykle 10° až 80° ve stupních po 10°. Ukáže přesně od jakého úhlu vaše tiskárna (a nastavení chlazení) potřebuje podpory.</p>
+          <div class="cc-look"><strong>Co hledat:</strong> Kobra X s dobře nastaveným chlazením zvládne 45–55° bez podpor. Nad tím záleží na rychlosti tisku, teplotě a chlazení. Výsledky si zaznamenejte pro budoucí projekty.</div>
+          <a href="https://www.printables.com/search/models?q=overhang+test+calibration" target="_blank" class="calib-link">↗ Hledat na Printables: Overhang Test</a>
+        </div>
+
+        <div class="calib-card">
+          <div class="cc-header">
+            <span class="cc-icon">🕸️</span>
+            <h3>Stringing Test</h3>
+          </div>
+          <div class="cc-tests">TESTUJE → Kombinace retrakce, teploty a rychlosti cestování</div>
+          <p>Klasický model dvou věžiček mezi kterými tiskárna cestuje — veškeré stringing vlákna jsou ihned viditelné. Ideální pro finální doladění po Temperature a Retraction Tower.</p>
+          <div class="cc-look"><strong>Co hledat:</strong> Žádná vlákna mezi věžemi = ideální. Lehký stringing = snižte teplotu o 5 °C nebo zvyšte retrakci o 0,5 mm. Silný stringing = oboje zároveň, nebo snižte rychlost cestování.</div>
+          <a href="https://www.printables.com/search/models?q=stringing+test" target="_blank" class="calib-link">↗ Hledat na Printables: Stringing Test</a>
+        </div>
+
+        <div class="calib-card">
+          <div class="cc-header">
+            <span class="cc-icon">📦</span>
+            <h3>Flow Calibration Cube</h3>
+          </div>
+          <div class="cc-tests">TESTUJE → Správnost flow rate (průtok filametu)</div>
+          <p>Dutý čtverec s tloušťkou stěny přesně 1 nebo 2 trysky. Změřte posuvným měřítkem skutečnou tloušťku stěny a podle odchylky upravte Flow Rate % v sliceru. Základní kalibrace pro každý nový filament.</p>
+          <div class="cc-look"><strong>Co hledat:</strong> Tloušťka stěny musí odpovídat průměru trysky (0,4 mm = jedna stěna = 0,4 mm). Odchylka více než ±0,05 mm = upravte Flow Rate. Každý filament a barva mohou mít jiný průtok.</div>
+          <a href="https://www.printables.com/search/models?q=flow+rate+calibration+cube" target="_blank" class="calib-link">↗ Hledat na Printables: Flow Calibration Cube</a>
+        </div>
+
+        <div class="calib-card">
+          <div class="cc-header">
+            <span class="cc-icon">⚡</span>
+            <h3>Speed Tower</h3>
+          </div>
+          <div class="cc-tests">TESTUJE → Maximální rychlost pro daný filament a nastavení</div>
+          <p>Věž testující různé rychlosti tisku — od pomalé po rychlou. Ukáže kde se začínají objevovat artefakty (ghosting, nedotisk rohů, stringing) a kde je vaše reálné maximum kvality.</p>
+          <div class="cc-look"><strong>Co hledat:</strong> Bod kde výtisk přestane být hladký nebo se začnou zaoblovat ostré hrany. To je vaše praktické maximum. Pro Kobru X se zákazníkům osvědčilo 80–120 mm/s pro PLA. Tiskněte Speed Tower jako poslední — až máte ostatní parametry v pořádku.</div>
+          <a href="https://www.printables.com/search/models?q=speed+tower+calibration" target="_blank" class="calib-link">↗ Hledat na Printables: Speed Tower</a>
+        </div>
+
+      </div>
     </div>
-  </div>
+
+    <!-- ══════════════════════════════════════
+         SEKCE 2 — TRIKY PRO LEPŠÍ VÝTISKY
+    ══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>2 — Triky pro lepší výtisky</h2></div>
+
+      <p>Drobné změny v nastavení nebo workflow, které mají velký vliv na výsledek. Každý z těchto tipů vychází z praxe a běžných chyb začátečníků.</p>
+
+      <div class="tip-grid">
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 01</div>
+          <h4>První vrstva pomaleji</h4>
+          <p>Nastavte rychlost první vrstvy na 30–40 % normální rychlosti. Pomalejší první vrstva lépe přilne k podložce a kompenzuje drobné nepřesnosti nivelace.</p>
+          <div class="tc-value">OrcaSlicer: First Layer Speed → 30 mm/s</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 02</div>
+          <h4>Vyšší teplota první vrstvy</h4>
+          <p>Zvyšte teplotu trysky o +5 °C pro první vrstvu oproti zbytku tisku. Roztavenější plast lépe zatéká do textury podložky a přilnutí je výrazně lepší.</p>
+          <div class="tc-value">Příklad PLA: první vrstva 215 °C, zbytek 210 °C</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 03</div>
+          <h4>IPA před každým tiskem</h4>
+          <p>Odmastěte tiskovou podložku izopropylalkoholem před každým tiskem — i pokud vypadá čistě. Mastné otisky prstů jsou nejčastější příčina špatné přilnavosti první vrstvy.</p>
+          <div class="tc-value">IPA 70–90 %, papírový ubrousek, před tiskem</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 04</div>
+          <h4>Brim pro vysoké tenké modely</h4>
+          <p>Zapněte Brim (okraj) pro modely s malou kontaktní plochou — vysoké figurky, tenké stojany, objekty s ostrými dolními hranami. Brim 5–8 mm výrazně zabrání warpingu.</p>
+          <div class="tc-value">OrcaSlicer: Skirt/Brim → Brim width: 5 mm</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 05</div>
+          <h4>Tree supports vždy lepší</h4>
+          <p>Organické stromečkové podpory (Tree Supports) jsou téměř vždy lepší než normální mřížkové. Jsou snazší na odstranění, zanechávají menší jizvy a používají méně filamentu.</p>
+          <div class="tc-value">OrcaSlicer: Support → Tree (Organic)</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 06</div>
+          <h4>Seam „Rear" pro estetiku</h4>
+          <p>Nastavte umístění seam (spoj vrstev) na „Rear" (zadní strana). Švový artefakt se skryje na nejméně viditelné straně modelu — zejména u figurek a dekorativních předmětů.</p>
+          <div class="tc-value">OrcaSlicer: Seam position → Rear</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 07</div>
+          <h4>Vypnout větrák pro první vrstvy</h4>
+          <p>Nastavte part cooling ventilátor na 0 % pro první 2–3 vrstvy. Pomalejší chladnutí první vrstvy zlepší přilnavost k podložce — zejména pro ABS, ASA a Nylon.</p>
+          <div class="tc-value">OrcaSlicer: Fan speed → Disable for first X layers: 3</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 08</div>
+          <h4>Více malých objektů najednou</h4>
+          <p>Tiskněte několik malých objektů současně. Každý objekt má více času vychladnout před dalším layerem — výsledek je čistší než při tisku jednoho kusu (zejména pro malé detailní modely).</p>
+          <div class="tc-value">OrcaSlicer: Minimum Layer Time → 10–15 s</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 09</div>
+          <h4>Ironing pro hladký vršek</h4>
+          <p>Ironing (žehlení) přejede hotend po poslední vrstvě bez extruze a uhladí ji. Výsledek je lesklý, téměř hladký povrch na vrchní straně modelu bez dalšího post-processingu.</p>
+          <div class="tc-value">OrcaSlicer: Ironing → Enabled (pomalejší tisk)</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 10</div>
+          <h4>Gyroid infill pro pevnost</h4>
+          <p>Gyroid infill je trojrozměrná struktura která poskytuje stejnoměrnou pevnost ve všech směrech a rychle se tiskne. Lepší volba než cubic nebo honeycomb pro díly pod mechanickým namáháním.</p>
+          <div class="tc-value">OrcaSlicer: Infill pattern → Gyroid, 20–30 %</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 11</div>
+          <h4>Horizontální rozšíření otvorů</h4>
+          <p>FDM tisk mírně zmenšuje otvory a díry. Nastavte Hole Horizontal Expansion (rozšíření otvorů) na +0,1 až +0,2 mm pro díly kde potřebujete přesné šroubové otvory nebo lícování.</p>
+          <div class="tc-value">OrcaSlicer: Advanced → Hole Horizontal Expansion</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 12</div>
+          <h4>Pause pro vložení magnetu/matky</h4>
+          <p>Přidejte do G-kódu „Pause at Height" v místě kde chcete vložit magnet nebo matku. Tiskárna se zastaví, vy vložíte komponent, a tisk pokračuje — perfektně zakomponovaný hardware.</p>
+          <div class="tc-value">OrcaSlicer: Insert custom G-code at layer height</div>
+        </div>
+
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Tip — dokumentujte si nastavení:</strong> Vedete si poznámky nebo spreadsheet s nastavením pro každý filament (teplota, rychlost, retrakce, flow). Každý nový materiál a každá nová cívka mohou vyžadovat jiné hodnoty — záznamy vám ušetří hodiny opakovaného ladění.</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SEKCE 3 — KOMUNITY
+    ══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>3 — Komunity a kde hledat pomoc</h2></div>
+
+      <p>3D tisk má jednu z nejpřátelštějších a nejochotnějších online komunit. Ať se stane cokoliv — ktokoliv tuhle chybu udělal před vámi a řešení existuje. Stačí se zeptat.</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Při psaní dotazu vždy uveďte:</strong> Model tiskárny (Anycubic Kobra X), použitý filament (výrobce, typ, barva), tiskové parametry (teplota, rychlost), fotku problematického výtisku a co jste již zkoušeli. Čím více info, tím rychlejší a přesnější odpověď dostanete.</div>
+      </div>
+
+      <div class="comm-grid">
+
+        <a href="https://www.reddit.com/r/3Dprinting/" target="_blank" class="comm-card">
+          <span class="cm-platform cm-reddit">Reddit</span>
+          <h3>r/3Dprinting</h3>
+          <p>Největší anglická komunita 3D tisku. Přes 3 miliony členů, denně stovky dotazů a odpovědí. Ideální pro obecné problémy, inspiraci a showcase výtisků.</p>
+          <span class="cm-lang">🌍 Anglicky · r/3Dprinting</span>
+        </a>
+
+        <a href="https://www.reddit.com/r/AnycubicKobra/" target="_blank" class="comm-card">
+          <span class="cm-platform cm-reddit">Reddit</span>
+          <h3>r/AnycubicKobra</h3>
+          <p>Subreddit specificky pro Anycubic Kobra tiskárny. Problémy specifické pro Kobru X, zkušenosti uživatelů, firmware updaty a hardware tipy přímo pro vaší tiskárnu.</p>
+          <span class="cm-lang">🌍 Anglicky · r/AnycubicKobra</span>
+        </a>
+
+        <a href="https://www.facebook.com/groups/3dtiskcz" target="_blank" class="comm-card">
+          <span class="cm-platform cm-facebook">Facebook</span>
+          <h3>3D tisk CZ/SK</h3>
+          <p>Česká a slovenská Facebook komunita 3D tiskařů. Přátelská atmosféra, rychlé odpovědi v češtině. Vhodné pro začátečníky kteří preferují komunikaci v rodném jazyce.</p>
+          <span class="cm-lang">🇨🇿 Česky / Slovensky · Facebook Group</span>
+        </a>
+
+        <a href="https://discord.gg/printables" target="_blank" class="comm-card">
+          <span class="cm-platform cm-discord">Discord</span>
+          <h3>Printables Discord</h3>
+          <p>Oficiální Discord server Printables (Prusa). Živý chat, speciální kanály pro různé tiskárny a materiály, help kanál pro rychlé dotazy. Aktivní komunita 24/7.</p>
+          <span class="cm-lang">🌍 Anglicky · Discord server</span>
+        </a>
+
+        <a href="https://forum.printables.com" target="_blank" class="comm-card">
+          <span class="cm-platform cm-forum">Forum</span>
+          <h3>Printables Forum</h3>
+          <p>Strukturované fórum s CZ/SK sekcí. Hledání archivovaných odpovědí je zde jednodušší než na Redditu — mnoho problémů bylo dávno vyřešeno, stačí vyhledat.</p>
+          <span class="cm-lang">🇨🇿 CZ sekce dostupná · forum.printables.com</span>
+        </a>
+
+        <a href="https://support.anycubic.com" target="_blank" class="comm-card">
+          <span class="cm-platform cm-forum">Podpora</span>
+          <h3>Anycubic Support</h3>
+          <p>Oficiální podpora výrobce. Dokumentace, FAQ, firmware ke stažení a ticketový systém pro reklamace a záruční opravy. První zastávka při hardwarovém problému s tiskárnou.</p>
+          <span class="cm-lang">🌍 Anglicky · support.anycubic.com</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SEKCE 4 — YOUTUBE KANÁLY
+    ══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>4 — Doporučené YouTube kanály</h2></div>
+
+      <p>Video vysvětlení jsou pro 3D tisk výrazně lepší než text — vidíte přesně jak nastavení vypadá v praxi. Tyto kanály patří k nejkvalitnějším zdrojům ve světě 3D tisku.</p>
+
+      <div class="yt-grid">
+
+        <a href="https://www.youtube.com/results?search_query=Teaching+Tech+3D+printing+calibration" target="_blank" class="yt-card">
+          <div class="yc-icon">▶</div>
+          <h3>Teaching Tech</h3>
+          <p>Nejlepší anglický vzdělávací kanál pro 3D tisk. Systematická kalibrace krok za krokem, vědecké testy a srozumitelné vysvětlení každého parametru. Začněte jeho kalibrační sérii.</p>
+          <span class="yc-lang">🌍 Anglicky — doporučujeme jako #1</span>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=CNC+Kitchen+3D+printing" target="_blank" class="yt-card">
+          <div class="yc-icon">▶</div>
+          <h3>CNC Kitchen</h3>
+          <p>Vědecké testy pevnosti různých nastavení, filamentů a infill vzorů. Stefan doslova testuje výtisky na trhacích strojích. Ideální pokud tisknete funkční díly a chcete vědět proč.</p>
+          <span class="yc-lang">🌍 Anglicky — vědecký přístup</span>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=Anycubic+official+tutorial+Kobra" target="_blank" class="yt-card">
+          <div class="yc-icon">▶</div>
+          <h3>Anycubic Official</h3>
+          <p>Oficiální kanál výrobce. Návody na sestavení, kalibraci a základní obsluhu Kobra tiskáren. Výchozí bod pro nové majitele Kobry X — první kroky a setup.</p>
+          <span class="yc-lang">🌍 Anglicky — výrobce</span>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=3D+tisk+n%C3%A1vod+CZ+kalibrace" target="_blank" class="yt-card">
+          <div class="yc-icon">▶</div>
+          <h3>3D tisk návod CZ</h3>
+          <p>Česky mluvící kanály pro 3D tisk. Hledejte „3D tisk návod CZ" nebo „3D tiskárna CZ" — komunita roste a česky vysvětlený obsah šetří čas při pochopení složitějších konceptů.</p>
+          <span class="yc-lang">🇨🇿 Česky — hledejte na YouTube</span>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=Maker%27s+Muse+3D+printing+tips" target="_blank" class="yt-card">
+          <div class="yc-icon">▶</div>
+          <h3>Maker's Muse</h3>
+          <p>Design pro 3D tisk, post-processing, materiály a kreativní projekty. Angus se zaměřuje na to jak navrhovat modely s ohledem na tiskové omezení. Skvělý pro přechod od tisku k tvorbě.</p>
+          <span class="yc-lang">🌍 Anglicky — design & materiály</span>
+        </a>
+
+        <a href="https://www.youtube.com/results?search_query=Prusa3D+tips+slicer+tutorial" target="_blank" class="yt-card">
+          <div class="yc-icon">▶</div>
+          <h3>Prusa3D</h3>
+          <p>Přestože jde o kanál výrobce Prusa, valná část obsahu je obecně platná pro všechny FDM tiskárny. Výborné návody na OrcaSlicer/PrusaSlicer funkce a materiálové tipy.</p>
+          <span class="yc-lang">🌍 Anglicky — slicer a materiály</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SEKCE 5 — UŽITEČNÉ ONLINE NÁSTROJE
+    ══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>5 — Užitečné online nástroje</h2></div>
+
+      <p>Weby a nástroje které vám ušetří čas při diagnostice problémů, výběru materiálů nebo ladění nastavení.</p>
+
+      <a href="https://teachingtechyt.github.io/calibration.html" target="_blank" class="tool-card">
+        <div class="tc-icon">🎯</div>
+        <div>
+          <h3>Teaching Tech Calibration Site</h3>
+          <p>Interaktivní kalibrační průvodce přímo v prohlížeči — generuje G-kódy pro Temperature Tower, Retraction Tower a další kalibrační výtisky přesně pro vaše parametry tiskárny. Nejlepší nástroj pro systematickou kalibraci.</p>
+          <div class="tc-url">teachingtechyt.github.io/calibration.html</div>
+        </div>
+      </a>
+
+      <a href="https://www.cnckitchen.com" target="_blank" class="tool-card">
+        <div class="tc-icon">🔬</div>
+        <div>
+          <h3>CNC Kitchen — materiálové testy</h3>
+          <p>Databáze vědeckých testů pevnosti filamentů, infill vzorů a nastavení tisku. Pokud se rozhodujete mezi materiály pro funkční díl, zde najdete reálná data z trhacích zkoušek.</p>
+          <div class="tc-url">cnckitchen.com</div>
+        </div>
+      </a>
+
+      <a href="https://www.simplify3d.com/resources/print-quality-troubleshooting/" target="_blank" class="tool-card">
+        <div class="tc-icon">📊</div>
+        <div>
+          <h3>3D Print Troubleshooting Chart</h3>
+          <p>Vizuální průvodce problematikou 3D tisku — fotky běžných problémů s popisem příčin a řešení. Rychlá diagnostika: uvidíte problém na výtisku, najdete stejnou fotku a hned víte co nastavit.</p>
+          <div class="tc-url">simplify3d.com — Print Quality Troubleshooting</div>
+        </div>
+      </a>
+
+      <a href="https://www.printables.com" target="_blank" class="tool-card">
+        <div class="tc-icon">🗂️</div>
+        <div>
+          <h3>Printables.com — repozitář modelů</h3>
+          <p>Největší repozitář 3D modelů od Prusa Research. Všechny modely zdarma, kategorizované, s hodnoceními a tipy od komunity. Nejen modely — najdete zde i remixovatelné kalibrační výtisky a náhradní díly pro Kobru.</p>
+          <div class="tc-url">printables.com</div>
+        </div>
+      </a>
+
+      <a href="https://filaments.ca/pages/3d-printing-glossary" target="_blank" class="tool-card">
+        <div class="tc-icon">📖</div>
+        <div>
+          <h3>3D Printing Glossary</h3>
+          <p>Slovník termínů 3D tisku v angličtině. Když narazíte na neznámý výraz v anglickém návodu nebo komunitě — zde najdete definici. Rychlá záchrana při čtení anglické dokumentace.</p>
+          <div class="tc-url">filaments.ca — 3D Printing Glossary</div>
+        </div>
+      </a>
+
+      <a href="https://orcaslicer.readthedocs.io" target="_blank" class="tool-card">
+        <div class="tc-icon">⚙️</div>
+        <div>
+          <h3>OrcaSlicer Dokumentace</h3>
+          <p>Oficiální dokumentace OrcaSliceru. Popis každého parametru, kalibrační funkce (PA, Flow, Max volumetric speed) a návody na nastavení specifická pro různé tiskárny. Neocenitelné pro pokročilé nastavení.</p>
+          <div class="tc-url">orcaslicer.readthedocs.io</div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- PAGE NAV -->
+    <div class="pn">
+      <a href="11_3D_udrzba.html">← 11 · Údržba & spotřební mat.</a>
+      <a href="13_3D_troubleshooting.html" class="nx">13 · Troubleshooting →</a>
+    </div>
+
+  </div><!-- /wrapper -->
 </main>
+
 <script>
 const searchInput = document.getElementById('sb-search-input');
 searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') {
+  if (e.key === 'Enter') {
     const q = e.target.value.trim();
-    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
   }
 });
 </script>
