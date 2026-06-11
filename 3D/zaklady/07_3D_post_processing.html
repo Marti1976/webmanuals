@@ -209,9 +209,9 @@
   </a>
 
   <div class="nav-group-label">Ostatní přílohy</div>
-  <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">Soubory</span>
-    <span class="nav-item-text">Výběr příloh</span>
+  <a href="Manual Anycubic Kobra X.pdf" target="_blank" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">PDF</span>
+    <span class="nav-item-text">Originál manuál</span>
   </a>
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
@@ -665,6 +665,117 @@
       </div>
 
       <a href="https://www.youtube.com/results?search_query=acetone+smoothing+ABS+3D+print+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: acetone smoothing ABS 3D print</a>
+    </div>
+
+    <!-- ─── OPÁLENÍ ─── -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Opálení — odstranění stringing pavučin</h2>
+      </div>
+      <p>Rychlé přejití plamenem nad povrchem modelu spálí tenká vlákna (stringing) zanechaná při přesunech trysky. Výsledek je čistý povrch bez zásahu do geometrie modelu — trvá jen pár sekund.</p>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Kdy použít</h4>
+          <p>Výhradně pro odstranění tenkých stringing pavučin po tisku. Nefunguje jako náhrada broušení nebo vyhlazování vrstev — plamen povrch nevyrovná, jen spálí tenká vlákna.</p>
+        </div>
+        <div class="card">
+          <h4>Nástroje</h4>
+          <p>Malý butanový nebo propanový hořák (zlatnický, kuchyňský). Zapalovač pro jemné detaily a malé modely. Horkovzdušná pistole na nejnižší výkon jako alternativa.</p>
+        </div>
+        <div class="card">
+          <h4>Funguje u</h4>
+          <p>PLA, PLA+, PETG, ABS, ASA — prakticky všechny běžné materiály. Stringing mizí okamžitě při prvním průchodu plamene.</p>
+        </div>
+        <div class="card">
+          <h4>Nefunguje u</h4>
+          <p>TPU a jiné flexibilní materiály — vzplanou nebo se deformují teplem. Nedoporučeno pro tenké stěny a detailní modely kde hrozí poškození geometrie.</p>
+        </div>
+      </div>
+
+      <h3>Technika</h3>
+      <div class="init-steps">
+        <div class="init-step">
+          <div class="step-dot">1</div>
+          <div class="step-content"><strong>Připravte model</strong><p>Model musí být kompletně vychladlý a suchý. Pracujte nad nehořlavou podložkou — stůl, keramická dlaždice nebo kov.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">2</div>
+          <div class="step-content"><strong>Rychlý pohyb — nikdy nezastavovat</strong><p>Plamen pohybujte rychle (cca 10–15 cm/s) ve vzdálenosti 3–5 cm od povrchu. <strong>Nikdy nezastavujte</strong> na jednom místě — plastik se okamžitě roztaví nebo připálí. Jeden průchod stačí.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">3</div>
+          <div class="step-content"><strong>Zkontrolujte výsledek</strong><p>Pavučiny zmizí. Pokud zůstaly silnější nitě, udělejte druhý průchod — stále rychlý. Pro recalcitrantní vlákna je lepší odříznutí nůžkami nebo skalpelem.</p></div>
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin-top:14px;">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Bezpečnost:</strong> Pracujte v dobře větrané místnosti nebo venku. Mějte po ruce sklenici s vodou. Nikdy neohýbejte hlavu nad model při opálení — uvolňují se plastické výpary.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+print+stringing+remove+flame+torch&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print stringing remove flame</a>
+    </div>
+
+    <!-- ─── ANNEALING ─── -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Annealing — tepelná úprava pro vyšší odolnost</h2>
+      </div>
+      <p>Annealing (vyžíhání) je tepelná úprava výtisku v troubě, která výrazně zvýší jeho tepelnou odolnost a mechanické vlastnosti. Klíčová technika zejména pro <strong>PLA HT</strong> — po annealingu odolá model teplotám až 150 °C místo standardních ~60 °C.</p>
+
+      <div class="alert alert-gold" style="margin-top:12px;">
+        <div class="alert-icon">🌡</div>
+        <div>
+          <strong>Praktické využití — co vytvořit z PLA HT po annealingu:</strong>
+          <ul style="margin-top:8px; padding-left:18px; line-height:1.8;">
+            <li><strong>Kelímky a tácky pro regeneraci silicagelu</strong> — sušení v troubě při 120 °C</li>
+            <li><strong>Díly sušičky potravin</strong> — mřížky, záchyty, separátory vystavené teplému vzduchu</li>
+            <li><strong>Kryty osvětlení</strong> — blízko žárovek nebo výkonných LED</li>
+            <li><strong>Kuchyňské pomůcky</strong> — stojánky, formy (s food safe certifikátem)</li>
+            <li><strong>Díly tiskáren</strong> — kryty, držáky v blízkosti hotendu</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Postup annealingu</h3>
+      <div class="init-steps" style="margin-top:14px;">
+        <div class="init-step">
+          <div class="step-dot">1</div>
+          <div class="step-content"><strong>Připravte model i troubu</strong><p>Vložte model na kovový tácek nebo plech s papírem na pečení. Model musí ležet rovně — pro zachování geometrie položte na rovnou podložku nebo do sádrové formy pokud je tvar složitý.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">2</div>
+          <div class="step-content"><strong>Studená trouba — zahřívejte pomalu</strong><p>Vkládejte model do <strong>studené</strong> trouby. Zapněte troubu a nastavte cílovou teplotu. Pomalý ohřev s modelem minimalizuje tepelné napětí a deformace.</p></div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">3</div>
+          <div class="step-content"><strong>Teplota a čas dle materiálu</strong>
+            <table class="spec-table" style="margin-top:8px;">
+              <thead><tr><th>Materiál</th><th>Teplota</th><th>Čas</th><th>Výsledná odolnost</th></tr></thead>
+              <tbody>
+                <tr><td>PLA HT (Polymaker)</td><td>90–110 °C</td><td>30–60 min</td><td>až 150 °C</td></tr>
+                <tr><td>PLA+ (některé značky)</td><td>70–80 °C</td><td>30 min</td><td>~80–90 °C</td></tr>
+                <tr><td>PETG</td><td>70–80 °C</td><td>60 min</td><td>~90 °C</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="init-step">
+          <div class="step-dot">4</div>
+          <div class="step-content"><strong>Vychladnutí v troubě — nevytahovat hned</strong><p>Po uplynutí času vypněte troubu a nechte model vychladnout <strong>uvnitř se zavřenými dvířky</strong>. Pomalé vychladnutí zabrání praskání a deformacím. Trvá 30–60 minut.</p></div>
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin-top:14px;">
+        <div class="alert-icon">⚠</div>
+        <div>
+          <strong>Smrštění ~0,5 % — počítejte s tolerancí:</strong> Při annealingu dochází k mírnému smrštění modelu přibližně o 0,5 %. Pro díly kde záleží na přesných rozměrech navrhněte model s tolerancí +0,5 %. Pro ozdobné předměty nebo funkční díly bez přesných tolerancí to nevadí.<br><br>
+          <strong>Standardní PLA NEPOUZE:</strong> Běžné PLA při annealingu deformuje — nekrystalizuje správně a změkne dříve než zpevní. Annealing funguje spolehlivě pouze s PLA HT (Polymaker PolyMide nebo PolyTerra HT) nebo speciálními krystalizujícími variantami PLA.
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=PLA+HT+annealing+3D+print+oven+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: PLA HT annealing oven tutorial</a>
     </div>
 
     <!-- ── PAGE NAV ── -->

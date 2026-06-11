@@ -249,10 +249,31 @@
               <td><span class="ok">✓</span></td>
             </tr>
             <tr>
+              <td><strong>PLA HT</strong></td>
+              <td><div class="diff"><span>★</span><span class="off">★★★★</span></div></td>
+              <td>210–230 °C</td><td>50–60 °C</td><td>Ne</td><td>Ne</td>
+              <td>Střední</td><td>Nízká</td><td>~150 °C*</td><td>Střední</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
               <td>PETG</td>
               <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
               <td>215–270 °C</td><td>70–90 °C</td><td>Ne</td><td>Ne</td>
               <td>Vysoká</td><td>Mírná</td><td>~80 °C</td><td>Nízká</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>PCTG</strong></td>
+              <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
+              <td>250–270 °C</td><td>70–80 °C</td><td>Ne</td><td>Ne</td>
+              <td>Velmi vysoká</td><td>Mírná</td><td>~85 °C</td><td>Střední</td>
+              <td><span class="ok">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>PETG PTFE</strong></td>
+              <td><div class="diff"><span>★★</span><span class="off">★★★</span></div></td>
+              <td>230–250 °C</td><td>70–80 °C</td><td>Ne</td><td>Ne</td>
+              <td>Vysoká</td><td>Mírná</td><td>~80 °C</td><td>Střední</td>
               <td><span class="ok">✓</span></td>
             </tr>
             <tr>
@@ -339,10 +360,17 @@
               <td>Střední</td><td>Nízká</td><td>~65 °C</td><td>Střední</td>
               <td><span class="warn">⚠</span></td>
             </tr>
+            <tr>
+              <td>PPS / PPA CF</td>
+              <td><div class="diff"><span>★★★★★</span></div></td>
+              <td>290–310 °C</td><td>100 °C</td><td>Nutný</td><td>Nutný</td>
+              <td>Extrémní</td><td>Nízká</td><td>~240 °C</td><td>Velmi vysoká</td>
+              <td><span class="bad">✗</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
-      <p style="margin-top:12px; font-size:13px; color:var(--muted);">✓ = plně vhodné · ⚠ = možné s omezeními · ✗ = nedoporučeno pro Kobru X · Zdroj teplot: <a href="https://help.prusa3d.com/cs/filament-material-guide" target="_blank" style="color:var(--muted);">Prusa Knowledge Base</a></p>
+      <p style="margin-top:12px; font-size:13px; color:var(--muted);">✓ = plně vhodné · ⚠ = možné s omezeními · ✗ = nedoporučeno pro Kobru X · * PLA HT: tepelná odolnost 150 °C pouze po annealingu (vyžíhání v troubě) · Zdroj teplot: <a href="https://help.prusa3d.com/cs/filament-material-guide" target="_blank" style="color:var(--muted);">Prusa Knowledge Base</a></p>
     </div>
 
     <!-- ═══════════════════════════════════════
@@ -719,6 +747,207 @@
           <div class="alert alert-warn">
             <div class="alert-icon">⚠</div>
             <div><strong>KOBRA X — nerezová tryska nutná:</strong> Před tiskem CF materiálů <strong>vyměňte mosaznou trysku za nerezovou nebo hardened steel</strong>. Mosaz se při tisku CF opotřebuje za desítky hodin na nepoužitelný stav. Nerezová tryska vydrží stovky hodin.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PCTG -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#0288d1;">PCTG</div>
+          <div>
+            <div class="mat-title">PCTG — vylepšené PETG</div>
+            <div class="mat-subtitle">Houževnatější · UV odolnější · Stejně snadný tisk jako PETG</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">PCTG je kopolyester — vylepšená verze PETG s výrazně vyšší houževnatostí, lepší optickou čirostí a nižší absorpcí vlhkosti. Tiskne se na otevřené tiskárně stejně snadno jako PETG, ale výsledný díl je pevnější a odolnější. Pokud tisknete funkční díly z PETG, PCTG je přímý upgrade.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>250–270 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>70–80 °C</td></tr>
+            <tr><td>Rychlost tisku</td><td>30–60 mm/s</td></tr>
+            <tr><td>Chlazení</td><td>30–50 %</td></tr>
+            <tr><td>Retrakce (Direct Drive)</td><td>1–2 mm</td></tr>
+          </table>
+          <div class="mat-props">
+            <div class="mat-prop"><span>✓</span>Výrazně houževnatější než PETG</div>
+            <div class="mat-prop"><span>✓</span>Lepší UV odolnost</div>
+            <div class="mat-prop"><span>✓</span>Nižší absorpce vlhkosti</div>
+            <div class="mat-prop"><span>✓</span>Optická čirost</div>
+            <div class="mat-prop"><span>✓</span>Snadný tisk bez enclosure</div>
+            <div class="mat-prop"><span>✗</span>Dražší než PETG</div>
+          </div>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div><strong>Kdy zvolit PCTG místo PETG:</strong> Mechanicky namáhané díly, konzoly, kryty, součásti vystavené UV. Stejná příprava podložky jako PETG — nutná separační vrstva (PVA / Magigoo) na PEI.</div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X:</strong> Plně kompatibilní. Tisk bez krytu, stejné nastavení jako PETG. Doporučená alternativa k PETG pro funkční díly.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLA HT -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#f57c00;">PLA HT</div>
+          <div>
+            <div class="mat-title">PLA HT — vysokoteplotní PLA</div>
+            <div class="mat-subtitle">Tiskne se jako PLA · Po vyžíhání odolá 150 °C · Náhrada inženýrských plastů</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">PLA HT (High Temperature) od Polymakeru se tiskne jako běžné PLA — bez zápachu, bez krytu, bez problémů s warpingem. Klíčová vlastnost: po volitelném vyžíhání (annealingu) v troubě při 90–110 °C po dobu 30–60 minut výtisk dosáhne tepelné odolnosti až 150 °C. To překonává i mnohem náročnější inženýrské plasty.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>210–230 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>50–60 °C</td></tr>
+            <tr><td>Rychlost tisku</td><td>40–80 mm/s</td></tr>
+            <tr><td>Chlazení</td><td>80–100 %</td></tr>
+            <tr><td>Annealing</td><td>90–110 °C / 30–60 min v troubě</td></tr>
+          </table>
+          <div class="mat-props">
+            <div class="mat-prop"><span>✓</span>Tisk snadný jako PLA</div>
+            <div class="mat-prop"><span>✓</span>Po annealing: odolnost do 150 °C</div>
+            <div class="mat-prop"><span>✓</span>Bez zápachu, bez krytu</div>
+            <div class="mat-prop"><span>✓</span>Náhrada ABS/ASA pro tepelné aplikace</div>
+            <div class="mat-prop"><span>✗</span>Annealing nutný pro tepelnou odolnost</div>
+            <div class="mat-prop"><span>✗</span>Při annealingu dochází k mírnému smrštění (~0,5 %)</div>
+          </div>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-gold">
+            <div class="alert-icon">🌡</div>
+            <div>
+              <strong>Praktické použití — tepelně odolné domácí díly:</strong>
+              <ul style="margin-top:6px; padding-left:16px; line-height:1.7;">
+                <li><strong>Regenerace silicagelu</strong> — kelímky a tácky pro sušení v troubě při 120 °C</li>
+                <li><strong>Díly sušičky potravin</strong> — záchyty, mřížky, separátory vystavené teplému vzduchu</li>
+                <li><strong>Kryty osvětlení, svítidla</strong> — blízko žárovek nebo LED s vyšším výkonem</li>
+                <li><strong>Díly do motorového prostoru</strong> — držáky, kryty kabelů (omezené)</li>
+                <li><strong>Kuchyňské díly</strong> — stojánky, formy (po annealingu, kontakt s jídlem viz níže)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div><strong>Postup annealingu:</strong> 1) Vytiskněte díl. 2) Vložte do studené trouby na kovový tácek (ne přímo na rošt). 3) Zahřejte na 90–100 °C. 4) Nechte 30–60 minut. 5) Nechte volně vychladnout v troubě — nevytahujte hned. Díl se mírně smrští — navrhněte s tolerancí +0,5 % pokud záleží na přesných rozměrech.</div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X:</strong> Plně kompatibilní. Tisk jako standardní PLA. Existuje také <strong>PLA HT GF</strong> (se skelnými vlákny) pro maximální tuhost — vyžaduje tvrzenou trysku Kobry X.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PETG PTFE -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#00897b;">PETG-PTFE</div>
+          <div>
+            <div class="mat-title">PETG PTFE — samomazný PETG</div>
+            <div class="mat-subtitle">Extrémně kluzký povrch · Nízké tření · Mechanické díly</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">PETG PTFE (od Fiberlogy) je PETG obohacené o 10 % teflonu (PTFE). Výsledný povrch je extrémně kluzký a samo-lubrikační — výtisky mají výrazně nižší koeficient tření než standardní PETG nebo PLA. Ideální pro pohyblivé mechanické díly kde nechcete mazat. Tiskne se stejně snadno jako PETG.</p>
+          <table class="spec-mini">
+            <tr><td>Teplota trysky</td><td>230–250 °C</td></tr>
+            <tr><td>Teplota podložky</td><td>70–80 °C</td></tr>
+            <tr><td>Retrakce (Direct Drive)</td><td>1–2 mm</td></tr>
+          </table>
+          <div class="mat-props">
+            <div class="mat-prop"><span>✓</span>Minimální tření povrchu</div>
+            <div class="mat-prop"><span>✓</span>Samo-lubrikační — bez mazání</div>
+            <div class="mat-prop"><span>✓</span>Snadný tisk jako PETG</div>
+            <div class="mat-prop"><span>✓</span>Výborné pro vodítka filamentu</div>
+            <div class="mat-prop"><span>✗</span>Dražší než standardní PETG</div>
+          </div>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div>
+              <strong>Ideální pro:</strong> Kluzná ložiska, ozubená kola, vodítka filamentu a komponentů AMS systémů, posuvné zámky, kolejničky, šuplíky. Všude kde chcete klouzavý pohyb bez nutnosti mazání.<br><br>
+              <strong>🎯 Špalky pro filamenty:</strong> PETG PTFE je výborná volba pro tisk vlastních cívek a špalků na filament — kluzký povrch zajistí plynulé odvíjení struny bez tření o vodítka.
+            </div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X:</strong> Plně kompatibilní. Stejný postup jako PETG — separační vrstva na PEI nutná.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOD SAFE -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#43a047;">FOOD</div>
+          <div>
+            <div class="mat-title">Potravinářsky bezpečné filamenty</div>
+            <div class="mat-subtitle">Food Safe · Kontakt s jídlem · Co je bezpečné a jak to poznat</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">Téma "food safe" 3D tisku je složitější než se zdá. Samotný filament může být potravinářsky bezpečný, ale 3D tisk jako technologie má svá omezení — vrstvená struktura tvoří mikropraskliny kde se hromadí bakterie. Pro kontakt s jídlem platí přísná pravidla.</p>
+        </div>
+        <div class="mat-footer">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠</div>
+            <div>
+              <strong>Tři podmínky bezpečného kontaktu s jídlem — musí platit VŠECHNY:</strong>
+              <ul style="margin-top:6px; padding-left:16px; line-height:1.8;">
+                <li><strong>Filament s certifikací food safe</strong> — hledejte označení FDA, EU 10/2011 nebo EN 71-3. Nestačí jen "bez BPA".</li>
+                <li><strong>Čistá nerezová nebo hardened steel tryska</strong> — standardní mosazné trysky mohou obsahovat olovo nebo zinek. Kobra X má hardened steel ✓</li>
+                <li><strong>Povrch bez kontaktu přímého</strong> — nebo opatřit food-safe lakem/epoxidem (např. Ecopoxy) který vyplní mezivrstevní štěrbiny</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert alert-tip">
+            <div class="alert-icon">✓</div>
+            <div>
+              <strong>Vhodné food safe filamenty:</strong>
+              <ul style="margin-top:6px; padding-left:16px; line-height:1.8;">
+                <li><strong>PLA food safe</strong> (např. Prusament, colorFabb) — pro jednorázové nebo suché aplikace. Nízkoteplotní odolnost — nemyje se v myčce.</li>
+                <li><strong>PETG food safe</strong> — odolnější než PLA, vhodný pro opakované použití. Hledejte EU 10/2011 certifikát.</li>
+                <li><strong>HIPS food safe</strong> — varianty certifikované pro kontakt s potravinami, tepelná odolnost do 95 °C — zvládne horkou vodu.</li>
+                <li><strong>PP (Polypropylen)</strong> — přirozeně potravinářsky bezpečný (z PP jsou jogurtové kelímky), chemicky odolný. Tisk je náročnější — warping.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert alert-info">
+            <div class="alert-icon">💡</div>
+            <div><strong>Jak certifikát poznám?</strong> Na balení filamentu hledejte symboly: 🍴 (vidlička a sklenička = vhodné pro kontakt s jídlem), text "FDA compliant", "EU 10/2011" nebo "food safe". Výrobci jako Prusament, colorFabb, Fiberlogy nebo Polymaker uvádějí certifikáty na svých stránkách u každého produktu.</div>
+          </div>
+          <div class="alert alert-kobra">
+            <div class="alert-icon">🐍</div>
+            <div><strong>KOBRA X výhoda:</strong> Tvrzená hardened steel tryska z výroby je jednou ze tří podmínek food safe tisku — oproti tiskárnám s mosaznou tryskou máte tento bod splněn automaticky.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POKROČILÉ SPECIALIZOVANÉ -->
+      <div class="mat-card">
+        <div class="mat-header">
+          <div class="mat-badge" style="background:#546e7a;">ADV</div>
+          <div>
+            <div class="mat-title">Pokročilé a specializované materiály</div>
+            <div class="mat-subtitle">PEBA · TPU Air · ASA CF · PLA HT GF · PPS — přehled pro pokročilé</div>
+          </div>
+        </div>
+        <div class="mat-body">
+          <p class="mat-desc">Přehled zajímavých materiálů pro specifické aplikace — od pěnových flexibilních materiálů po extrémně tepelně odolné polymery. U každého je uveden vztah ke Kobře X.</p>
+        </div>
+        <div class="mat-footer">
+          <div class="tip-grid" style="margin-top:0;">
+            <div class="tip-item"><strong>PEBA / TPU Air</strong>Pěnové flexibilní materiály s měnitelnou tvrdostí (70A–90A) dle teploty tisku. Extrémně lehké, ideální pro tlumicí aplikace. Kobra X: Direct Drive zvládne, ale nelze přes ACE selektor — tisknout přímo.</div>
+            <div class="tip-item"><strong>ASA CF / ASA GF</strong>ASA vyztužená uhlíkovými (CF) nebo skelnými (GF) vlákny. UV odolnost + tuhost + tepelná odolnost 103 °C. Tvrzená tryska Kobry X je nutností. Omezení: nutný enclosure kvůli warpingu ASA základu.</div>
+            <div class="tip-item"><strong>PLA HT GF</strong>PLA HT se sklenými vlákny — maximální tuhost a rozměrová stálost. Po annealingu odolá 150 °C. Tisk bez krytu. Vyžaduje tvrzenou trysku. Kobra X: plně kompatibilní.</div>
+            <div class="tip-item"><strong>PETG s magnetitem</strong>PETG plněné 40 % magnetitem od Prusa Research — extrémně těžký materiál reagující na magnety. Pro senzory, spínače nebo závaží modelů. Abrazivní — tvrzená tryska nutná. Kobra X: plně kompatibilní.</div>
+            <div class="tip-item"><strong>PCTG / CPE</strong>Kopolyestery — odolnější alternativy PETG s lepší chemickou a tepelnou odolností. Antibakteriální CPE (s nanočásticemi stříbra) pro kuchyňské nebo zdravotnické aplikace. Kobra X: plně kompatibilní.</div>
+            <div class="tip-item"><strong>PPS / PPA CF — mimo rozsah Kobry X</strong>Extrémní inženýrské plasty (PPS, PPS CF, PPA CF) vyžadují teploty trysky 290–310 °C a aktivně vyhřívanou komoru. Kobra X hardwarově nestačí. Pro tyto materiály je nutná průmyslová tiskárna.</div>
           </div>
         </div>
       </div>
