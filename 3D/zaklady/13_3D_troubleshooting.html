@@ -213,6 +213,7 @@
         <a href="#g8" class="qnav-item">8 · Filament</a>
         <a href="#g9" class="qnav-item">9 · Teplotní chyby</a>
         <a href="#g10" class="qnav-item">10 · Hardware</a>
+        <a href="#g11" class="qnav-item">11 · Záložní filament</a>
       </div>
     </div>
 
@@ -828,36 +829,58 @@
       <div class="issue-header" onclick="toggleIssue(this)">
         <div class="issue-icon">🔒</div>
         <div class="issue-title-wrap">
-          <div class="issue-title">Clogging / Jam (ucpání trysky)</div>
-          <div class="issue-subtitle">Filament přestal vytékat, tiskárna „tiskne vzduch" — tryska je ucpaná</div>
+          <div class="issue-title">Clogging / Jam — ucpání trysky</div>
+          <div class="issue-subtitle">Filament přestal vytékat nebo tiskárna „tiskne vzduch" — tryska je ucpaná</div>
         </div>
         <div class="issue-arrow">›</div>
       </div>
       <div class="issue-body">
+        <img class="issue-img" src="pic/clogging.jpg" alt="Ucpaná tryska - cold pull výsledek" onerror="this.style.display='none';">
+        <div class="img-placeholder" style="display:none;">
+          <span>📷</span>
+          <p>Uložte vlastní foto jako <code>pic/clogging.jpg</code></p>
+          <a href="https://www.google.com/search?q=3d+print+cold+pull+result+clogged+nozzle&tbm=isch" target="_blank">Ukázky na Google Images →</a>
+        </div>
+        <div class="img-caption">Cold pull výsledek — odlitek tvaru trysky s tmavými usazeninami zachycenými uvnitř (vlevo znečištěný, vpravo čistý)</div>
         <div class="issue-inner">
           <div class="issue-col">
-            <h4>Příčiny</h4>
+            <h4>Příznaky ucpání</h4>
             <ul>
-              <li>Spálený nebo degradovaný plast uvnitř trysky</li>
-              <li>Přechod mezi nekompatibilními filamenty (ABS zbytek + PLA)</li>
-              <li>Příliš nízká teplota → plast neproteče</li>
-              <li>Cizí těleso nebo nečistota v filametu</li>
+              <li>Filament se nepodává nebo podává nepravidelně</li>
+              <li>Extrudér vydává klikání nebo praskání (grinding)</li>
+              <li>Tisk je slabý, průhledný nebo přerušovaný</li>
+              <li>Tryska nevytlačí nic ani při správné teplotě</li>
+              <li>Pod tryskou visí tenká vlákna místo plného proudu plastu</li>
+            </ul>
+            <h4 style="margin-top:14px;">Příčiny</h4>
+            <ul>
+              <li>Vlhký filament — bubliny páry karbonizují plast uvnitř trysky</li>
+              <li>Příliš nízká teplota — plast se neroztaví celý</li>
+              <li>Záměna materiálů bez purge (PLA přes Nylon)</li>
               <li>Heat creep — plast změknul příliš vysoko nad tryskou</li>
-              <li>PTFE trubice není dosazena až k trysce — mezera = ucpání</li>
+              <li>PTFE trubice bez dosednutí — mezera = hromadění plastu</li>
+              <li>Prach a nečistoty na filametu</li>
             </ul>
           </div>
           <div class="issue-col">
-            <h4>Řešení</h4>
+            <h4>Rychlé řešení — Cold Pull</h4>
             <ol class="solution-steps">
-              <li>Zahřejte trysku na 220–240 °C a zkuste ručně protlačit filament</li>
-              <li>Proveďte Cold Pull 3–5× (viz Kapitola 11)</li>
-              <li>Pokud Cold Pull nefunguje — vyměňte trysku (5 minut, za tepla)</li>
-              <li>Po výměně zkontrolujte PTFE trubici — musí dosáhnout až k trysce bez mezery</li>
-              <li>Pro přechod materiálů: protlačte čistící filament nebo PLA při 230 °C pro vytlačení zbytků ABS</li>
+              <li><strong>Zahřejte</strong> na 200–220 °C (PLA) nebo 230–250 °C (PETG/ABS) a extrudujte 20–30 mm</li>
+              <li><strong>Zchlaďte</strong> na 85–95 °C (PLA) nebo 100–110 °C (PETG) — nechte aktivně chladit ventilátorem</li>
+              <li><strong>Pevně uchopte</strong> filament a prudce ho vytáhněte jedním tahem přímo nahoru</li>
+              <li><strong>Zkontrolujte odlitek</strong> — tmavé záteky = ucpání stále přetrvává, světlý = čistý</li>
+              <li><strong>Opakujte 2–5×</strong> dokud vychází čistý odlitek bez tmavých usazenin</li>
+              <li><strong>Ověřte průtok</strong> — extrudujte 20 mm a zkontrolujte rovnoměrný výtok</li>
+            </ol>
+            <h4 style="margin-top:14px;">Pokud Cold Pull nestačí</h4>
+            <ol class="solution-steps">
+              <li>Jehlou (∅ 0,3 mm) prostrčte otvor trysky za tepla (220–240 °C)</li>
+              <li>Extrudujte 50 cm čistícího filametu (cleaning filament)</li>
+              <li>Vyměňte trysku — 5 minut, za tepla, klíč 7 mm</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — výměna trysky za tepla:</strong> Zahřejte hotend na 180–200 °C. Klíč 7 mm na trysku, druhý klíč nebo kleště přidržte heat block. Nikdy netáhněte studenou trysku — závit se zlomí.</div>
+        <div class="kobra-note">🐍 <strong>KOBRA X — výměna trysky za tepla:</strong> Zahřejte hotend na 180–200 °C. Klíč 7 mm na trysku, druhý klíč přidržte heat block. <strong>Nikdy studenou trysku</strong> — závit se zlomí. Podrobný postup cold pull viz <a href="11_3D_udrzba.html#i-sekce2" style="color:var(--blue);">Kapitola 11 · Sekce 2</a>.</div>
       </div>
     </div>
 
@@ -1631,6 +1654,140 @@
     </div>
 
     <a href="https://www.youtube.com/results?search_query=Anycubic+Kobra+X+problem+fix+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Kobra X problem fix tutorial</a>
+
+    <!-- ══════════════════════════════════════
+         SKUPINA 11 — ZÁLOŽNÍ FILAMENT
+    ══════════════════════════════════════ -->
+    <div class="group-header" id="g11">
+      <span class="group-num">11</span>
+      <h2>Záložní filament — tisk bez přerušení</h2>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-icon">💡</div>
+      <div><strong>Co je Filament Backup na Kobře X:</strong> Kobra X umožňuje nastavit záložní kanál filametu. Když primární cívka dojde, tiskárna automaticky přepne na záložní kanál a pokračuje v tisku bez přerušení. Tisk se nezastaví, nemusíte být přítomni. Cena: přijdete o jeden ze 4 kanálů (de facto tisknete ze 2 cívek místo ze 4), ale za kompenzaci máte jistotu nepřerušeného tisku.</div>
+    </div>
+
+    <!-- 11.1 -->
+    <div class="issue" id="i11-1">
+      <div class="issue-header" onclick="toggleIssue(this)">
+        <div class="issue-icon">🔄</div>
+        <div class="issue-title-wrap">
+          <div class="issue-title">Nastavení záložního filametu (Filament Backup)</div>
+          <div class="issue-subtitle">Kobra X přepne automaticky na záložní cívku když primární dojde — tisk se nepřeruší</div>
+        </div>
+        <div class="issue-arrow">›</div>
+      </div>
+      <div class="issue-body">
+        <div class="issue-inner">
+          <div class="issue-col">
+            <h4>Proč to nastavit</h4>
+            <ul>
+              <li>Tisk se nepřeruší při dojití filamentu — tiskárna sama přepne kanál</li>
+              <li>Ideální pro dlouhé tisky (8+ hodin) přes noc nebo bez dozoru</li>
+              <li>Po nedokončeném tisku při dojití filametu je navázání velmi obtížné nebo nemožné — lepší tomu předejít</li>
+              <li>Kobra X má 4 kanály — při nastavení backup použijete 2 kanály pro jeden materiál, zbývají 2 pro další</li>
+              <li>Pro jednobarevný tisk (PLA jedna barva) je to ideální řešení bez kompromisů</li>
+            </ul>
+            <h4 style="margin-top:14px;">Omezení</h4>
+            <ul>
+              <li>Záložní cívka musí být <strong>stejný materiál a stejná barva</strong> — přechod bude viditelný pokud se liší</li>
+              <li>Při aktivním backup režimu máte efektivně 2 aktivní kanály místo 4</li>
+              <li>Záložní cívka musí být zavedena do extrudéru ještě před startem tisku</li>
+            </ul>
+          </div>
+          <div class="issue-col">
+            <h4>Postup nastavení — krok za krokem</h4>
+            <ol class="solution-steps">
+              <li>Připravte dvě cívky <strong>stejného filametu a barvy</strong> — primární a záložní</li>
+              <li>Zaveďte primární filament do kanálu 1 (nebo jiného zvoleného kanálu)</li>
+              <li>Zaveďte záložní filament do kanálu 2 (nebo jiného záložního kanálu)</li>
+              <li>Na displeji tiskárny otevřete menu <strong>Nastavení → Filament → Backup Filament</strong></li>
+              <li>Vyberte primární kanál a přiřaďte mu záložní kanál (např. Kanál 1 → záloha Kanál 2)</li>
+              <li>Uložte nastavení — tiskárna je nyní připravena pro automatické přepnutí</li>
+              <li>Spusťte tisk — při dojití kanálu 1 se automaticky aktivuje kanál 2</li>
+            </ol>
+            <div style="margin-top:12px;">
+              <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" style="font-family:var(--mono);font-size:12px;color:var(--blue);text-decoration:none;">↗ Oficální Anycubic Wiki: Filament Backup Guide</a>
+            </div>
+          </div>
+        </div>
+        <div class="kobra-note">🐍 <strong>KOBRA X — doporučení:</strong> Pokud tiskárnu plánujete nechat tisknout bez dozoru (přes noc, v práci), záložní filament je nejjednodušší pojistka. Kombinujte s detektorem kouře v místnosti a kamerou pro vzdálený monitoring (viz Kapitola 10 · Sekce 3).</div>
+      </div>
+    </div>
+
+    <!-- 11.2 -->
+    <div class="issue" id="i11-2">
+      <div class="issue-header" onclick="toggleIssue(this)">
+        <div class="issue-icon">⚠️</div>
+        <div class="issue-title-wrap">
+          <div class="issue-title">Záložní filament se neaktivoval — tisk se přerušil</div>
+          <div class="issue-subtitle">Senzor filametu zahlásil dojití, ale přepnutí na záložní kanál neproběhlo</div>
+        </div>
+        <div class="issue-arrow">›</div>
+      </div>
+      <div class="issue-body">
+        <div class="issue-inner">
+          <div class="issue-col">
+            <h4>Příčiny</h4>
+            <ul>
+              <li>Záložní filament nebyl správně zasunut do extrudéru záložního kanálu</li>
+              <li>Backup nastavení nebylo uloženo před spuštěním tisku</li>
+              <li>Záložní kanál má jiný typ filametu — tiskárna detekuje nekompatibilitu</li>
+              <li>Firmware verze nepodporuje Filament Backup — nutná aktualizace</li>
+              <li>Senzor záložního kanálu nedetekuje filament (nečistota v senzoru)</li>
+            </ul>
+          </div>
+          <div class="issue-col">
+            <h4>Řešení</h4>
+            <ol class="solution-steps">
+              <li>Zkontrolujte, že záložní filament je fyzicky zasunutý celou cestou do extrudéru záložního kanálu</li>
+              <li>Ověřte Backup nastavení v menu ještě před spuštěním tisku — ne po</li>
+              <li>Aktualizujte firmware tiskárny — Nastavení → Firmware Update</li>
+              <li>Vyčistěte senzor záložního kanálu jemným štětcem nebo stlačeným vzduchem</li>
+              <li>Otestujte manuálním přepnutím kanálů v menu ještě před ostrým tiskem</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11.3 -->
+    <div class="issue" id="i11-3">
+      <div class="issue-header" onclick="toggleIssue(this)">
+        <div class="issue-icon">🎨</div>
+        <div class="issue-title-wrap">
+          <div class="issue-title">Viditelný přechod po přepnutí záložního filametu</div>
+          <div class="issue-subtitle">Na výtisku je patrná horizontální linie nebo změna barvy v místě přepnutí kanálu</div>
+        </div>
+        <div class="issue-arrow">›</div>
+      </div>
+      <div class="issue-body">
+        <div class="issue-inner">
+          <div class="issue-col">
+            <h4>Příčiny</h4>
+            <ul>
+              <li>Primární a záložní filament jsou různých barev nebo odstínů</li>
+              <li>Různý výrobce nebo šarže filametu — mírně odlišný odstín</li>
+              <li>Různý průměr filametu nebo flow rate — viditelná změna tloušťky vrstev</li>
+              <li>Teplota přechodu se liší od optimální pro záložní materiál</li>
+            </ul>
+          </div>
+          <div class="issue-col">
+            <h4>Jak minimalizovat viditelný přechod</h4>
+            <ol class="solution-steps">
+              <li>Použijte <strong>stejnou barvu, výrobce i šarži</strong> filametu pro primární i záložní cívku</li>
+              <li>Změřte průměr obou filamentů posuvným měřítkem — musí být shodný (ideálně ±0,02 mm)</li>
+              <li>Pro funkční díly (ne dekorativní) přechod většinou nevadí — pevnost spoje je stejná</li>
+              <li>Pokud je přechod neúnosný — zvažte tisk v noci s plnou zásobou filametu aby přepnutí nenastalo</li>
+            </ol>
+          </div>
+        </div>
+        <div class="kobra-note">🐍 <strong>Praktická rada:</strong> Pro jednobarevné funkční výtisky (držáky, kryty, náhradní díly) je přechod zcela zanedbatelný. Pro dekorativní nebo prezentační výtisky kupte dostatečně velkou cívku aby pokryla celý tisk bez zálohy.</div>
+      </div>
+    </div>
+
+    <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" class="yt-link" style="color:var(--blue);">↗ Anycubic Wiki: Kobra X — Filament Backup Guide (oficiální dokumentace)</a>
 
     <!-- SUPPORT BOX -->
     <div class="support-box">

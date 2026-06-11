@@ -318,68 +318,150 @@
 
       <p>Tryska je jedno z nejdůležitějších a zároveň nejlépe dostupných míst na tiskárně. Zanešená tryska způsobuje under-extrusion, stringing a nestabilní průtok. Čištění trvá minuty, výměna trysky 5–10 minut.</p>
 
-      <h3 class="sub">Cold Pull (studená metoda) — krok za krokem</h3>
-      <p style="margin-bottom:16px;">Cold pull (také <em>atomic pull</em>) je nejšetrnější metoda čištění — táhne nečistoty z trysky ven bez chemikálií.</p>
+      <h3 class="sub">Jak poznat ucpanou trysku</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">Příznak 01</span>
+          <h3>Nepravidelný průtok</h3>
+          <p>Filament se nepodává nebo podává přerušovaně. Výtisk má mezery ve stěnách nebo průhledné vrstvy — přestože teplota a nastavení jsou správné.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">Příznak 02</span>
+          <h3>Klikání extrudéru</h3>
+          <p>Extrudér vydává opakované klikání nebo praskání — motor přeskakuje, protože tryska klade odpor a filament se nedostane ven. Typický zvuk ucpání.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">Příznak 03</span>
+          <h3>Tisk vzduch</h3>
+          <p>Tryska se pohybuje správně, tiskárna tiskne, ale z trysky nevychází žádný nebo minimální plast — tiskárna doslova tiskne vzduch. Úplné ucpání.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">Příznak 04</span>
+          <h3>Nic nevychází ani ručně</h3>
+          <p>Při zahřáté trysce se pokusíte ručně protlačit filament a nic nevychází ani s výraznou silou. Ucpání je kompletní — nutné čištění nebo výměna.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Příčiny ucpání</h3>
+      <div class="two-col">
+        <div class="card">
+          <span class="card-num">Materiálové příčiny</span>
+          <h3>Filament a teploty</h3>
+          <p><strong>Vlhký filament</strong> — absorbovaná voda vytváří při tisku bubliny páry, které karbonizují plast uvnitř trysky. PETG a Nylon jsou nejcitlivější.<br><br>
+          <strong>Příliš nízká teplota</strong> — plast se neroztaví celý a zanechává tuhé kousky uvnitř trysky.<br><br>
+          <strong>Záměna materiálů bez purge</strong> — např. zbytek Nylonu + PLA při nízké teplotě = ucpání.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">Mechanické příčiny</span>
+          <h3>Hardware a prostředí</h3>
+          <p><strong>Heat creep</strong> — plast změknul příliš vysoko nad tryskou (v chladné zóně) a zablokoval průchod. Způsobuje zastaven hotend ventilátor nebo mezera v PTFE.<br><br>
+          <strong>Příliš rychlá první vrstva</strong> — plast nestíhá protékat, extrudér přetlačí a způsobí grinding + ucpání.<br><br>
+          <strong>Prach na filametu</strong> — drobné nečistoty se hromadí v trysce.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Cold Pull (Studený tah) — krok za krokem</h3>
+      <p style="margin-bottom:16px;">Cold pull (také <em>atomic pull</em>) je nejšetrnější a nejúčinnější metoda čištění — fyzicky vytáhne nečistoty z trysky bez chemikálií. Zvládne 95 % ucpání.</p>
 
       <div class="steps">
         <div class="step">
           <span class="step-num">01</span>
           <div class="step-body">
             <h4>Zahřejte trysku na tiskovou teplotu</h4>
-            <p>Ohřejte hotend na teplotu filametu, který jste naposledy tiskli (např. PLA → 200–210 °C). Dojíst filament manuálním extrudováním ~50 mm plastu dokud vytéká čistě.</p>
+            <p>PLA → 200–220 °C. PETG/ABS → 230–250 °C. Zasuňte filament a extrudujte ručně nebo z menu ~30–50 mm plastu dokud vytéká. Tím vyprázdníte trysku od zbytků předchozího tisku.</p>
           </div>
         </div>
         <div class="step">
           <span class="step-num">02</span>
           <div class="step-body">
-            <h4>Zchlaďte na 90 °C</h4>
-            <p>Snižte teplotu na 90 °C (pro PLA) nebo 120 °C (pro PETG/ABS). Nechte trysku pomalu vychladit — filament uvnitř tuhne a přilne k nečistotám.</p>
+            <h4>Ochlaďte na cílovou teplotu</h4>
+            <p>Snižte teplotu na <strong>85–95 °C</strong> (PLA) nebo <strong>100–110 °C</strong> (PETG/ABS). Nevypínejte tiskárnu — teplota musí být přesně řízená. Aktivně chlaďte part cooling ventilátorem. Filament uvnitř tuhne a přilne ke znečistění.</p>
           </div>
         </div>
         <div class="step">
           <span class="step-num">03</span>
           <div class="step-body">
-            <h4>Táhněte filament ven</h4>
-            <p>Při dosažení cílové teploty rychle, ale plynule vytáhněte filament z trysky směrem nahoru. Měl by vyjít ve tvaru špičky s tmavými nečistotami zachycenými uvnitř. Opakujte 3–5× dokud nevychází čistý.</p>
+            <h4>Prudce vytáhněte filament jedním tahem</h4>
+            <p>Pevně uchopte filament těsně nad extrudérem. Jedním rychlým a silným tahem vytáhněte filament přímo nahoru. Pohyb musí být plynulý a rychlý — neváhejte, netáhněte pomalu.</p>
           </div>
         </div>
         <div class="step">
           <span class="step-num">04</span>
           <div class="step-body">
-            <h4>Zkontrolujte výsledek</h4>
-            <p>Špička vytaženého filametu by měla být světlá, bez tmavých nebo spálených částic. Pokud je stále znečištěná, postup opakujte nebo přejděte na horkou metodu čištění.</p>
+            <h4>Zkontrolujte odlitek</h4>
+            <p>Na konci vytaženého filametu uvidíte odlitek tvaru vnitřku trysky. <strong>Čistý odlitek</strong> = světlá špička, průhledná nebo barvy filametu. <strong>Znečištěný odlitek</strong> = tmavé nebo hnědé záteky, spálené kousky. Ucpání stále přetrvává.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">05</span>
+          <div class="step-body">
+            <h4>Opakujte 2–5×</h4>
+            <p>Zahřejte znovu na tiskovou teplotu, extrudujte pár mm, ochlaďte a opakujte. Pokračujte dokud nevychází čistý odlitek bez tmavých usazenin. Obvykle stačí 3–4 opakování.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">06</span>
+          <div class="step-body">
+            <h4>Ověřte průtok</h4>
+            <p>Zahřejte na standardní tiskovou teplotu a extrudujte 20–30 mm filametu. Plast by měl vycházet rovnoměrně, plynule a bez přerušení. Pokud ano — tryska je čistá. Zkuste krátký testovací tisk.</p>
           </div>
         </div>
       </div>
 
-      <h3 class="sub">Horká metoda — ruční čištění</h3>
-      <div class="two-col">
-        <div class="card">
-          <span class="card-num">Postup</span>
-          <h3>Čištění při teplotě</h3>
-          <p>Zahřejte trysku na 20–30 °C více než je standardní teplota filametu (PLA → 230 °C). Mosazným kartáčkem (nikdy ocelovým) jemně odstraňte usazeniny z vnějšku trysky. Pro průchodku uvnitř použijte jehlu nebo tenký drátek průměru 0,3 mm.</p>
-        </div>
-        <div class="card">
-          <span class="card-num">Čistící filament</span>
-          <h3>Speciální čistící struna</h3>
-          <p>Čistící filament (cleaning filament) — speciální abrazivní nebo rozpustný materiál. Extrudujte 20–30 cm čistícího filametu, pak přejděte zpět na tiskový. Vhodné zejména při přechodu mezi různými materiály (ABS → PLA).</p>
-        </div>
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Pro nejlepší výsledky Cold Pull:</strong> Použijte nylonovou strunkou (Atomic Pull) — Nylon při správné teplotě (100–120 °C) lépe přilne ke znečistění a vytáhne více nečistot než PLA. Pokud Nylon nemáte, PLA funguje pro běžné ucpání.</div>
       </div>
 
-      <h3 class="sub">Kdy trysku vyměnit</h3>
-      <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div>
-          <strong>Příznaky opotřebené trysky:</strong> Zhoršená kvalita povrchu výtisku bez jiné zjevné příčiny. Otvor trysky je viditelně zvětšený nebo zdeformovaný (zkontrolujte lupou). Trvale špatná adheze vrstev přes všechna nastavení. Mosazná tryska 0,4 mm vydrží <strong>300–500 hodin</strong> tisku PLA — při abrazivních filamentech (Carbon, Glow, Silk) výrazně méně.
+      <h3 class="sub">Pokud Cold Pull nestačí</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">Metoda B</span>
+          <h3>Horká jehla / drátek</h3>
+          <p>Zahřejte trysku na 220–240 °C. Jehlou nebo tenkým drátkem průměru 0,3 mm prostrčte otvor trysky zevnitř/zvenčí. Uvolní tuhé ucpání které cold pull nedostane. Pak proveďte cold pull pro vyčištění zbytků.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">Metoda C</span>
+          <h3>Čistící filament (Purge)</h3>
+          <p>Speciální čistící filament (cleaning filament) — extrudujte 30–50 cm při 220 °C. Abrazivní složení mechanicky vyčistí stěny trysky. Ideální pro přechod mezi materiály (ABS → PLA) jako preventivní purge.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">Metoda D</span>
+          <h3>Výměna trysky</h3>
+          <p>Pokud ani opakovaný cold pull ani jehla nezabere — vyměňte trysku. Za tepla (180–200 °C), klíč 7 mm, 5 minut práce. Nová mosazná tryska 0,4 mm stojí 30–80 Kč. Vždy mějte zásobu v šuplíku.</p>
         </div>
       </div>
 
       <div class="alert alert-warn">
         <div class="alert-icon">🐍</div>
-        <div><strong>KOBRA X — výměna trysky:</strong> Kobra X dodává čistič trysky v balení. Při výměně trysky vždy zahřejte hotend na teplotu (180–200 °C) — nikdy netáhněte studenou trysku, závit se zlomí. Použijte klíč 7 mm na trysku a druhý klíč přidržte heat block.</div>
+        <div><strong>KOBRA X — výměna trysky:</strong> Zahřejte hotend na 180–200 °C. Klíč 7 mm na trysku, druhý klíč přidržte heat block. <strong>Nikdy netáhněte studenou trysku</strong> — závit se zlomí a oprava je nákladná. Kobra X dodává čistič trysky v balení.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=3D+tisk+cold+pull+cisteni+trysky&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tisk cold pull čištění trysky</a>
+      <h3 class="sub">Preventivní péče o trysku</h3>
+      <div class="chapter-grid">
+        <div class="card">
+          <span class="card-num">✓</span>
+          <h3>Purge při každém spuštění</h3>
+          <p>Před tiskem vždy extrudujte 20–30 mm filametu (startup purge). Vyčistí zbytky z předchozího tisku a ověří průtok ještě před startem. OrcaSlicer to dělá automaticky přes Skirt nebo Purge Line.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">✓</span>
+          <h3>Mosazný kartáček za tepla</h3>
+          <p>Při zahřáté trysce (200 °C) jemně otřete vnějšek trysky mosazným kartáčkem. Odstraní usazeniny plastu na vnějšku trysky. Nikdy ocelový kartáček — poškrábe povrch. Interval: dle potřeby / každých 20 tisků.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">✓</span>
+          <h3>PTFE trubice — kontrola</h3>
+          <p>Každých 50–100 hodin tisku zkontrolujte dosednutí PTFE trubice. Uvolněná trubice vytvoří mezeru mezi trubicí a tryskou kde se hromadí plast a způsobuje ucpání nebo heat creep.</p>
+        </div>
+        <div class="card">
+          <span class="card-num">✓</span>
+          <h3>Suché skladování filametu</h3>
+          <p>Vlhký filament je nejčastější příčina karbonizace uvnitř trysky. Filament skladujte v dry boxu se silikagelovým sušidlem. Vlhkost pod 15 % — sledujte hygrometrem. Viz Kapitola 10.</p>
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+tisk+cold+pull+atomic+pull+cisteni+trysky&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tisk cold pull atomic pull čištění trysky</a>
     </div>
 
     <!-- SEKCE 3: PTFE TRUBICE -->
