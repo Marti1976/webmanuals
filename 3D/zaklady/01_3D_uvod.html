@@ -227,23 +227,19 @@
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Nozzle (Tryska)</h4>
-          <p style="font-size: 13.5px;">Zlatá mosazná špička, ze které teče plast. Nejčastěji má průměr dírky 0.4 mm.</p>
+          <p style="font-size: 13.5px;">Kovová špička, ze které teče plast. Kobra X má z výroby trysku z tvrzené oceli (hardened steel) 0,4 mm — odolnější než mosaz, zvládne i abrazivní materiály.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
-          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Heatbed (Tisková podložka)</h4>
-          <p style="font-size: 13.5px;">Plocha, na kterou se tiskne. Je vyhřívaná, aby vytisknutý plast rychle nevychladl a neodlepil se z ní.</p>
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Heat Break (Tepelná bariéra)</h4>
+          <p style="font-size: 13.5px;">Tenká kovová trubička mezi horkým blokem a chladičem. Zabraňuje teplu prostupovat nahoru a tát filament příliš brzy (heat creep).</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
-          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Direct Drive</h4>
-          <p style="font-size: 13.5px;">Konstrukce, kde je motor extruderu namontován přímo nad tryskou. Vaše Kobra X používá přesně tento systém.</p>
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Heat Creep</h4>
+          <p style="font-size: 13.5px;">Nežádoucí šíření tepla nahoru do chladné zóny hotendu. Filament se roztaví příliš brzy a zasekne. Příznak: tiskárna přestane podávat materiál po 15–30 minutách.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
-          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Bowden</h4>
-          <p style="font-size: 13.5px;">Konstrukce, kde je motor umístěn na rámu tiskárny a struna putuje do trysky dlouhou teflonovou hadičkou.</p>
-        </div>
-        <div class="card" style="padding: 15px 20px;">
-          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">PTFE Tube (Teflonová trubička)</h4>
-          <p style="font-size: 13.5px;">Hladká trubička, kterou klouže struna. Může vést filament od cívky až k extruderu nebo jen oddělovat teplo uvnitř hotendu.</p>
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Hardened Steel (Tvrzená ocel)</h4>
+          <p style="font-size: 13.5px;">Materiál trysky odolný vůči abrazivním filamentům (CF, plněné kompozity). Kobra X ji má standardně — výhoda oproti tiskárnám s mosaznou tryskou.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Stepper Motor (Krokový motor)</h4>
@@ -273,13 +269,21 @@
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Firmware</h4>
           <p style="font-size: 13.5px;">Operační systém nahraný přímo na základní desce tiskárny. Řídí displej a samotný chod stroje.</p>
         </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">OTA Update</h4>
+          <p style="font-size: 13.5px;">Over The Air — aktualizace firmwaru bezdrátově přes Wi-Fi. Kobra X se takto aktualizuje bez kabelu přes menu Settings → Printer Information.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Input Shaping</h4>
+          <p style="font-size: 13.5px;">Algoritmus ve firmwaru, který měří vibrace rámu a kompenzuje je pohybem — eliminuje ghosting bez zpomalení tisku. Kobra X to dělá automaticky při inicializaci.</p>
+        </div>
       </div>
 
       <h3 style="color: var(--accent2); margin: 40px 0 15px; font-family: 'Rajdhani', sans-serif;">3. Nastavení ve Sliceru</h3>
       <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Layer Height (Výška vrstvy)</h4>
-          <p style="font-size: 13.5px;">Určuje kvalitu tisku. Čím je vrstva tenčí (např. 0.12 mm), tím je model hezčí a detailnější, ale tiskne se déle. Standard je 0.20 mm.</p>
+          <p style="font-size: 13.5px;">Určuje kvalitu tisku. Čím je vrstva tenčí (např. 0.12 mm), tím je model hezčí a detailnější, ale tiskne se déle. Standard je 0.20 mm. Max. = 80 % průměru trysky.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Infill (Výplň)</h4>
@@ -287,7 +291,7 @@
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Perimeter / Shell</h4>
-          <p style="font-size: 13.5px;">Vnější stěna modelu. Standardně se tisknou 2 až 3 obrysy vedle sebe, aby byla stěna dostatečně pevná a nebyla skrz ni vidět výplň.</p>
+          <p style="font-size: 13.5px;">Vnější stěna modelu. Standardně 2–3 obrysy. Více perimetrů = pevnější díl — účinnější než zvyšování výplně.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Support (Podpěry)</h4>
@@ -295,7 +299,7 @@
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Brim</h4>
-          <p style="font-size: 13.5px;">Tenký "límec", který se vytiskne kolem první vrstvy modelu připojený přímo k němu. Rozšíří styčnou plochu a zabraňuje odlepení z podložky.</p>
+          <p style="font-size: 13.5px;">Tenký "límec" kolem první vrstvy modelu. Rozšíří styčnou plochu a zabraňuje odlepení z podložky. Po tisku odstraníte nožem nebo kleštěmi.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Skirt</h4>
@@ -303,7 +307,7 @@
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Retraction (Retrakce)</h4>
-          <p style="font-size: 13.5px;">Rychlé zatažení struny kousek zpět nahoru do trysky ve chvíli, kdy se hlava jen přesouvá. Zabraňuje tomu, aby z ní kapal plast na špatná místa.</p>
+          <p style="font-size: 13.5px;">Rychlé zatažení struny zpět při přesunu hlavy. Zabraňuje kapání plastu. U Direct Drive (Kobra X) stačí 0,5–2 mm — ne 5–7 mm jako u Bowdenu.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Seam (Šev)</h4>
@@ -319,7 +323,15 @@
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Z-Offset</h4>
-          <p style="font-size: 13.5px;">Jemné manuální doladění výšky trysky nad podložkou (v desetinách milimetru), aby se první vrstva plastu do podložky správně "mázla".</p>
+          <p style="font-size: 13.5px;">Jemné manuální doladění výšky trysky nad podložkou. Záporná hodnota = tryska blíž (linky zploštělejší). Kladná = tryska dál. Nastavit: Tune → Z-Offset.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Purge Tower</h4>
+          <p style="font-size: 13.5px;">Sloupek plastu tisknutý vedle modelu při vícebarevném tisku. Slouží k pročištění trysky při změně barvy. Automaticky generuje slicer.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Annealing (Vyžíhání)</h4>
+          <p style="font-size: 13.5px;">Tepelná úprava výtisku v troubě. U PLA HT zvýší tepelnou odolnost z 60 °C na 150 °C. Postup: 90–110 °C / 30–60 min, volně vychladnout v troubě.</p>
         </div>
       </div>
 
@@ -331,27 +343,67 @@
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Bridging (Přemosťování)</h4>
-          <p style="font-size: 13.5px;">Schopnost tiskárny natáhnout rovnou linku plastu vzduchem mezi dvěma pilíři (bez podpěr). Vypadá to, jako by stavěla most volně v prostoru.</p>
+          <p style="font-size: 13.5px;">Schopnost tiskárny natáhnout rovnou linku plastu vzduchem mezi dvěma pilíři bez podpěr. Vypadá to, jako by stavěla most volně v prostoru.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Overhang (Převis)</h4>
-          <p style="font-size: 13.5px;">Místo na modelu, které se rozšiřuje do strany tak silně, že se pod něj musí generovat podpěry, jinak by vytlačovaný plast neměl na čem držet a spadl by dolů.</p>
+          <p style="font-size: 13.5px;">Místo na modelu, které se rozšiřuje do strany více než 45°. Vyžaduje podpěry, jinak vytlačovaný plast nemá na čem držet a spadne dolů.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Warping (Kroucení)</h4>
-          <p style="font-size: 13.5px;">Odlepování a zvedání rohů modelu z podložky v průběhu tisku, způsobené příliš rychlým chladnutím a následným smršťováním plastu.</p>
+          <p style="font-size: 13.5px;">Odlepování a zvedání rohů modelu z podložky v průběhu tisku, způsobené příliš rychlým chladnutím a smršťováním plastu.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Ghosting / Ringing</h4>
-          <p style="font-size: 13.5px;">Vizuální vada, při které se obrysy děr nebo rohů na modelu opakují a blednou na rovných stěnách jako "ozvěna". Vzniká vibracemi celého rámu tiskárny.</p>
+          <p style="font-size: 13.5px;">Vizuální vada — obrysy hran se opakují na rovných stěnách jako "ozvěna". Vzniká vibracemi rámu. Kobra X to řeší automaticky přes Input Shaping.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
           <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Elephant foot (Sloní patka)</h4>
-          <p style="font-size: 13.5px;">Rozšíření první vrstvy těsně u podložky – model má pak tlustou nehezkou základnu. Vzniká, pokud je tryska sražena příliš blízko podložce a plast je rozmáčknut do stran.</p>
+          <p style="font-size: 13.5px;">Rozšíření první vrstvy u podložky. Vzniká, pokud je tryska příliš blízko podložce a plast je rozmáčknut do stran. Oprava: zvýšit Z-Offset.</p>
         </div>
         <div class="card" style="padding: 15px 20px;">
-          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Clogging / Jam</h4>
-          <p style="font-size: 13.5px;">Ucpaná tryska nebo zaseklý extruder. Filament uvnitř v dráze zatuhnul, motor nepříjemně přeskakuje (klape) a z tiskárny neleze ven vůbec žádný plast.</p>
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Clogging / Jam (Ucpání)</h4>
+          <p style="font-size: 13.5px;">Ucpaná tryska — filament zatuhnul, motor kliká a nic nevychází. Řešení: Cold Pull nebo výměna trysky. Detailní postup: kap. 13 Troubleshooting.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Layer Shift (Posunutí vrstev)</h4>
+          <p style="font-size: 13.5px;">Vrstvy modelu jsou posunuté do strany — model vypadá jako roztřesená věž. Příčina: povolený řemen, přeskočený motor nebo příliš rychlý tisk.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Cold Pull (Studený tah)</h4>
+          <p style="font-size: 13.5px;">Technika čištění ucpané trysky: zahřát na 200 °C, zavést filament, ochladit na 90 °C a prudce vytáhnout. Filament vytáhne nečistoty s sebou.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Grinding (Omlení struny)</h4>
+          <p style="font-size: 13.5px;">Ozubené kolečko extruderu omelí filament místo jeho pohybu. Vzniká při ucpání nebo příliš velké retrakcí. Příznak: plastový prach u extruderu.</p>
+        </div>
+      </div>
+
+      <h3 style="color: var(--accent2); margin: 40px 0 15px; font-family: 'Rajdhani', sans-serif;">5. Kobra X — specifické pojmy</h3>
+      <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">ACE Hub (Selektor)</h4>
+          <p style="font-size: 13.5px;">Automatický Color Engine — selektor Kobry X, který přepíná mezi 4 cívkami filamentu. Každá cívka má svůj extruder a teflonovou trubici číslovanou 1–4.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Filament Backup</h4>
+          <p style="font-size: 13.5px;">Funkce Kobry X — při dopnutí jedné cívky automaticky přepne na záložní cívku se stejným materiálem a barvou. Aktivovat v: Printing → Print Settings → Filament Backup.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Purge Wiper (Čistící stěrka)</h4>
+          <p style="font-size: 13.5px;">Silikonová stěrka vlevo na rámu. Tiskárna o ni automaticky otírá trysku před tiskem i při změně barvy. Udržujte čistou — zbytky plastu způsobují defekty tisku.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Quick-Release Hotend</h4>
+          <p style="font-size: 13.5px;">Rychloupínací systém pro výměnu trysky bez nástrojů. Stačí odjistit mechanismus a vyměnit celý hotend nebo jen trysku. Výměna trvá minuty místo hodin.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Spaghetti Detection</h4>
+          <p style="font-size: 13.5px;">Kamera Kobry X sleduje průběh tisku. Pokud se model odlepí a tryska táhne vlákna vzduchem, firmware automaticky pozastaví tisk a upozorní vás přes aplikaci.</p>
+        </div>
+        <div class="card" style="padding: 15px 20px;">
+          <h4 style="color: #fff; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; font-size: 17px;">Smart Sensor (Hall Sensor)</h4>
+          <p style="font-size: 13.5px;">Hallův senzor u každého extruderu detekuje průchod filamentu. Při dopnutí cívky automaticky pozastaví tisk. Lze deaktivovat v: Settings → Printer → Filament Sensor.</p>
         </div>
       </div>
 
