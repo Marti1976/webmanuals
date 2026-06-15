@@ -534,6 +534,172 @@
       <a href="https://www.youtube.com/results?search_query=3D+model+repair+meshmixer+STL+fix&hl=cs" target="_blank" class="yt-link">▶ YouTube: oprava STL modelu Meshmixer</a>
     </div>
 
+    <!-- ═══════════════════════════════════════
+         SEKCE 7 — DESIGN PRO FDM TISK
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Design pro FDM tisk — pravidla modelování</h2></div>
+      <p>Vlastní model který vypadá skvěle v CADu může na tiskárně selhat, pokud nerespektuje fyziku FDM tisku. Tato pravidla vám ušetří hodiny přetiskování.</p>
+
+      <h3>Minimální tloušťky stěn</h3>
+      <div class="format-grid">
+        <div class="format-card">
+          <span class="format-ext">0,4 mm</span>
+          <h4>1× tryska</h4>
+          <p>Absolutní minimum — tenčí stěna se nevytiskne. Slicer ji ignoruje nebo vytiskne nestabilně. Vhodné jen pro dekorativní plochy bez zatížení.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">0,8 mm</span>
+          <h4>2× tryska</h4>
+          <p>Doporučené minimum pro funkční díly. Dvě linie vedle sebe dají stabilní stěnu. Pro většinu krytek a držáků plně postačuje.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">1,2 mm</span>
+          <h4>3× tryska</h4>
+          <p>Robustní stěna pro díly pod mechanickým zatížením. Šrouby, závěsy, svorky — vždy alespoň 1,2 mm kolem otvorů pro šrouby.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">≥ 2 mm</span>
+          <h4>Strukturální díly</h4>
+          <p>Pro díly které budou neseny, ohýbány nebo šroubovány. Bracket, konzole, pojezdy — nikdy méně než 2 mm v zatížených místech.</p>
+        </div>
+      </div>
+
+      <h3>Tolerance pro otvory a lícování</h3>
+      <p style="margin-bottom:14px;">FDM tisk mírně zmenšuje otvory — plast se při tuhnutí smršťuje a linie perimetru zabírají část průměru. Navrhujte otvory vždy větší než cílová hodnota:</p>
+      <div class="format-grid">
+        <div class="format-card">
+          <span class="format-ext">+0,2 mm</span>
+          <h4>Volné lícování</h4>
+          <p>Díl se volně zasune bez tlaku. Vhodné pro pohyblivé části, šoupátka, výměnné komponenty. Otvor pro čep průměru 5 mm → modelujte 5,2 mm.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">+0,1 mm</span>
+          <h4>Přesné lícování</h4>
+          <p>Díl se zasune s mírným odporem. Pevné ale odnímatelné spojení. Vhodné pro krabičky, víčka a snap-fit díly.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">+0,0 mm</span>
+          <h4>Tisknutý závit (M3–M8)</h4>
+          <p>Pro tisknuté závity navrhujte na jmenovitý rozměr — slicer a tisk přidají potřebnou vůli. Lépe ale použijte metrické závitové vložky (heat inserts).</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">−0,1 mm</span>
+          <h4>Pevný press-fit</h4>
+          <p>Díl se zasune s výrazným tlakem a drží bez lepidla. Pro matky M3/M4 zalisované do hexagonálních kapes — kapsa menší než matka o 0,1 mm.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-tip" style="margin-top:4px;">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tip — vždy tiskněte testovací toleranční kostku</strong> před finálním projektem. Jednoduchá kostka s otvory průměrů 4,0 / 4,2 / 4,4 / 4,6 mm vám řekne přesně jaká tolerance funguje na vaší tiskárně s vaším filamentem. Každý stroj a každý filament je trochu jiný.</div>
+      </div>
+
+      <h3>Převisy a mosty — pravidla návrhu</h3>
+      <div class="mini-grid">
+        <div class="mini-card">
+          <h4>Pravidlo 45°</h4>
+          <p>FDM tisk zvládne převisy do ~45° bez podpor. Při návrhu zkosujte hrany a fazetujte přechody tak, aby žádná plocha nepřesáhla 45° od vertikály. Tím ušetříte materiál na podpory a čas na jejich odstranění.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Mosty do 50 mm</h4>
+          <p>Horizontální přemostění (bridge) zvládne Kobra X do ~50 mm bez podpor při dobrém chlazení. Pro delší mosty buď přidejte podporu, nebo rozdělte model na části.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Teardrop otvory</h4>
+          <p>Kruhový otvor tisknutý horizontálně má nahoře převis. Řešení: navrhněte otvor ve tvaru „kapky" (teardrop) — horní část je špičatá místo kulatá. Špička se tiskne sama bez podpor.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Orientace v sliceru</h4>
+          <p>Nejdůležitější rozhodnutí před tiskem. Otočte model tak, aby nejslabší místo bylo na podložce, nejdelší rozměr ležel na ose XY a minimalizovaly se převisy. Správná orientace = lepší pevnost + méně podpor.</p>
+        </div>
+      </div>
+
+      <h3>Snap-fit a živé panty</h3>
+      <div class="mini-grid">
+        <div class="mini-card">
+          <h4>Snap-fit spoje</h4>
+          <p>Pružné plastové háčky tisknutelné bez podpor. Pro PLA navrhujte výchylku háčku max. 1–2 mm a tloušťku ramene 0,8–1,2 mm. PETG je pružnější — snap-fit lépe snese opakované otevírání. PLA po čase praská.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Živé panty (living hinge)</h4>
+          <p>Tenká ohebná sekce spojující dvě tuhé části. Funguje skvěle z PETG nebo TPU. Pro PLA: tloušťka pantu 0,4–0,6 mm, tiskněte kolmo na osu ohybu. Příklady: krabičky, přezky, sponky.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Heat inserts (závitové vložky)</h4>
+          <p>Mosazné závitové vložky zalisované do plastu páječkou (M2–M5). Výrazně pevnější než tisknuté závity a vydrží opakované šroubování. Kapsu navrhujte o 0,2–0,4 mm menší než vnější průměr vložky.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Generativní infill ven</h4>
+          <p>Pro díly kde záleží na pevnosti v konkrétním směru: orientujte model tak, aby vrstvy byly kolmé na sílu. Vrstvy FDM jsou nejslabší v ose Z (mezi vrstvami) — nejsilnější v ose XY.</p>
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=design+for+FDM+3D+printing+tips+tolerances&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Design for FDM 3D printing tips tolerances</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SEKCE 8 — SMRŠTĚNÍ A ŠKÁLOVÁNÍ
+    ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>Smrštění, škálování a rozměrová přesnost</h2></div>
+      <p>FDM tisk není absolutně přesný — materiál se při chladnutí smršťuje a každá tiskárna má drobné mechanické nepřesnosti. Pochopení těchto odchylek je klíčové pro funkční díly.</p>
+
+      <h3>Typické smrštění dle materiálu</h3>
+      <div class="format-grid">
+        <div class="format-card">
+          <span class="format-ext">PLA</span>
+          <h4>0,2–0,4 %</h4>
+          <p>Nejstabilnější materiál. Výtisk 100 mm bude typicky 99,6–99,8 mm. Pro většinu dílů zanedbatelné — při přesných tolerancích kompenzujte v CADu nebo sliceru.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">PETG</span>
+          <h4>0,2–0,5 %</h4>
+          <p>Podobné PLA. Smrštění je rovnoměrné a předvídatelné. Dobrá rozměrová stabilita po vychladnutí.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">ABS</span>
+          <h4>0,5–0,8 %</h4>
+          <p>Výrazné smrštění — hlavní příčina warpingu. Výtisk 100 mm může být 99,2–99,5 mm. Nutné kompenzovat škálováním v sliceru pro přesné díly.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-ext">Nylon</span>
+          <h4>1,0–2,0 %</h4>
+          <p>Nejvyšší smrštění. Nylon absorbuje i vzdušnou vlhkost po tisku — rozměry se mírně mění i dny po dokončení tisku.</p>
+        </div>
+      </div>
+
+      <h3>Jak kompenzovat smrštění</h3>
+      <div class="mini-grid">
+        <div class="mini-card">
+          <h4>Škálování v sliceru</h4>
+          <p>OrcaSlicer: Prepare → vyberte objekt → Scale. Zvětšete model o hodnotu smrštění (např. ABS 0,7 % → škálujte na 100,7 %). Funguje pro celý model rovnoměrně.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Kompenzace v CADu</h4>
+          <p>Přesnější metoda — upravte konkrétní rozměry přímo v modelu. Otvor pro šroub M4 (4,0 mm) → modelujte 4,15 mm při PLA. Funguje pro kritické tolerance.</p>
+        </div>
+        <div class="mini-card">
+          <h4>XY Contour Compensation</h4>
+          <p>OrcaSlicer má nastavení „XY Contour Compensation" — posune vnější obrys o zadanou hodnotu. Pozitivní hodnota zvětší díl, negativní zmenší. Hodnota −0,1 mm kompenzuje typické FDM přelivy.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Kalibrační kostka</h4>
+          <p>Vytiskněte XYZ Cube (20×20×20 mm) a změřte posuvným měřítkem. Odchylka 0,3 mm na 20 mm = 1,5 % — zadejte tuto hodnotu jako kompenzaci škálování pro daný filament.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Rozměrová přesnost Kobry X:</strong> Při správné kalibraci dosahuje Kobra X přesnosti ±0,2 mm na 100 mm délky pro PLA. To odpovídá třídě přesnosti IT12–IT13 — dostatečné pro drtivou většinu hobby a funkčních dílů. Pro vyšší přesnost kalibrujte E-steps, Flow Rate a Input Shaping.</div>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Zlaté pravidlo:</strong> Vždy vytiskněte testovací díl před finálním tiskem. Miniaturní verze (25 % velikosti) ověří toleranci a smrštění za 10 minut a pár gramů filametu — místo 3 hodin a 50 gramů pro plný díl který nesedí.</div>
+      </div>
+    </div>
+
     <!-- ── PAGE NAV ── -->
     <div class="pn">
       <a href="08_3D_filamenty.html">← 08 · Filamenty</a>

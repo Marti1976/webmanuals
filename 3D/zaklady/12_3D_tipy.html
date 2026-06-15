@@ -396,6 +396,20 @@
           <div class="tc-value">OrcaSlicer: Insert custom G-code at layer height</div>
         </div>
 
+        <div class="tip-card">
+          <div class="tc-num">TIP 13</div>
+          <h4>Live Adjust Z za tisku</h4>
+          <p>Kobra X umožňuje upravit Z-offset přímo za tisku první vrstvy. Spusťte tisk, sledujte první vrstvu a točte kolečkem nebo klepejte na displeji +/− dokud první vrstva nevypadá správně. Změna se uloží automaticky.</p>
+          <div class="tc-value">Kobra X displej: během tisku → Z-offset → +/−0,05 mm</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">TIP 14</div>
+          <h4>Tisk z telefonu přes Anycubic app</h4>
+          <p>Kobra X se připojí na Wi-Fi a přes aplikaci Anycubic (iOS/Android) lze spouštět tisky, sledovat kameru, upravovat Z-offset a zastavit tisk — vše vzdáleně z telefonu. Nastavte v menu: Nastavení → Wi-Fi.</p>
+          <div class="tc-value">App: Anycubic · iOS App Store / Google Play</div>
+        </div>
+
       </div>
 
       <div class="alert alert-info">
@@ -581,6 +595,78 @@
         </div>
       </a>
 
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SEKCE 6 — PROFIL KOBRY X V ORCASLICERU
+    ══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header"><h2>6 — Profil Kobry X v OrcaSliceru</h2></div>
+
+      <p>OrcaSlicer má vestavěnou databázi tiskáren — Kobra X tam je, ale komunitní profily jsou často přesnější a lépe naladěné. Zde je přehled jak profil získat, ověřit a co zkontrolovat.</p>
+
+      <a href="https://github.com/SoftFever/OrcaSlicer/releases" target="_blank" class="tool-card">
+        <div class="tc-icon">⬇️</div>
+        <div>
+          <h3>OrcaSlicer — stažení</h3>
+          <p>Stáhněte nejnovější verzi OrcaSliceru z oficiálního GitHub repozitáře. Windows / macOS / Linux. Při prvním spuštění vyberte tiskárnu z databáze — Anycubic → Kobra X.</p>
+          <div class="tc-url">github.com/SoftFever/OrcaSlicer/releases</div>
+        </div>
+      </a>
+
+      <h3 class="sub" style="margin-top:28px;">Klíčová nastavení profilu pro Kobru X</h3>
+      <div class="tip-grid" style="margin-top:14px;">
+
+        <div class="tip-card">
+          <div class="tc-num">Tiskárna</div>
+          <h4>Rozměry tiskové plochy</h4>
+          <p>Ověřte správné rozměry: X=400, Y=400, Z=450 mm. Střed podložky musí odpovídat — nesprávné hodnoty způsobí tisk mimo plochu nebo G-kód mimo rozsah.</p>
+          <div class="tc-value">Printer Settings → Bed size: 400×400×450 mm</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">Start G-kód</div>
+          <h4>Purge line a homing</h4>
+          <p>Zkontrolujte Start G-kód — musí obsahovat G28 (homing), G29 (auto-leveling) a purge line na okraji podložky. Bez G29 se mesh leveling neprovede a první vrstva nebude rovná.</p>
+          <div class="tc-value">Printer Settings → Machine start G-code</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">Extrudér</div>
+          <h4>Bowden retrakce</h4>
+          <p>Kobra X je Bowden — retrakce musí být 4–7 mm (ne 0,5–2 mm jako Direct Drive). Výchozí profil v OrcaSliceru může mít nesprávnou hodnotu — vždy ověřte před tiskem.</p>
+          <div class="tc-value">Filament Settings → Retraction: 5 mm / 45 mm/s</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">Max. teploty</div>
+          <h4>Limity Kobry X</h4>
+          <p>Nastavte správné limity: Hotend max. 260 °C, Heatbed max. 100 °C. OrcaSlicer vás varuje pokud profil přesáhne limity — zabrání poškození hardwaru nesprávným G-kódem.</p>
+          <div class="tc-value">Printer Settings → Max temp: hotend 260°C / bed 100°C</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">Input Shaping</div>
+          <h4>Resonance Compensation</h4>
+          <p>Kobra X má vestavěný Input Shaping v firmware. V OrcaSliceru nenastavujte vlastní hodnoty akcelerace — tiskárna ji řídí sama. Nechte Acceleration na hodnotách z výchozího profilu.</p>
+          <div class="tc-value">Printer Settings → Input Shaping: dle profilu</div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tc-num">Komunitní profily</div>
+          <h4>GitHub a Printables</h4>
+          <p>Komunitní profily jsou często lépe naladěné než výchozí. Hledejte „Anycubic Kobra X OrcaSlicer profile" na GitHubu nebo Printables — stáhněte .json a importujte přes File → Import Config.</p>
+          <div class="tc-value">File → Import Config Bundle (.json)</div>
+        </div>
+
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Doporučený postup:</strong> Stáhněte OrcaSlicer, vyberte Kobru X z databáze, vytiskněte XYZ Cube a Flow Calibration Cube. Pokud rozměry sedí do ±0,3 mm — profil je v pořádku. Pokud ne — zkontrolujte E-steps a Flow Rate dle Sekce 1 (Kalibrační výtisky).</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=OrcaSlicer+Anycubic+Kobra+setup+profile&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: OrcaSlicer Anycubic Kobra setup profile</a>
     </div>
 
     <!-- PAGE NAV -->

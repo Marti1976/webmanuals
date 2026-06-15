@@ -214,6 +214,7 @@
         <a href="#g9" class="qnav-item">9 · Teplotní chyby</a>
         <a href="#g10" class="qnav-item">10 · Hardware</a>
         <a href="#g11" class="qnav-item">11 · Záložní filament</a>
+        <a href="#g12" class="qnav-item">12 · Povrch & vzhled</a>
       </div>
     </div>
 
@@ -1788,6 +1789,226 @@
     </div>
 
     <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" class="yt-link" style="color:var(--blue);">↗ Anycubic Wiki: Kobra X — Filament Backup Guide (oficiální dokumentace)</a>
+
+    <!-- ══════════════════════════════════════
+         SKUPINA 12 — POVRCH, VZHLED, PŘERUŠENÍ
+    ══════════════════════════════════════ -->
+    <div class="group-header" id="g12">
+      <span class="group-num">12</span>
+      <h2>Povrch, vzhled a přerušení tisku</h2>
+    </div>
+
+    <!-- 12.1 -->
+    <div class="issue" id="i12-1">
+      <div class="issue-header" onclick="toggleIssue(this)">
+        <div class="issue-icon">🍝</div>
+        <div class="issue-title-wrap">
+          <div class="issue-title">Spaghetti print (špagetový tisk)</div>
+          <div class="issue-subtitle">Model se změnil v hromadu plastových vláken ve vzduchu — tisk zcela selhal</div>
+        </div>
+        <div class="issue-arrow">›</div>
+      </div>
+      <div class="issue-body">
+        <img class="issue-img" src="pic/spaghetti.jpg" alt="Spaghetti print - hromada plastových vláken" onerror="this.style.display='none';">
+        <div class="img-placeholder" style="display:none;">
+          <span>📷</span>
+          <p>Uložte vlastní foto jako <code>pic/spaghetti.jpg</code></p>
+          <a href="https://www.google.com/search?q=3d+print+spaghetti+failure&tbm=isch" target="_blank">Ukázky na Google Images →</a>
+        </div>
+        <div class="img-caption">Spaghetti print — model se odlepil od podložky a tisková hlava tiskla do vzduchu, výsledkem je hromada plastových vláken</div>
+        <div class="issue-inner">
+          <div class="issue-col">
+            <h4>Příčiny</h4>
+            <ul>
+              <li>Model se odlepil od podložky a tisková hlava ho strhla/srazila</li>
+              <li>Kolize tiskové hlavy s modelem (výtisk příliš vysoko při warpingu)</li>
+              <li>Silný warping — roh modelu se zvedl a zachytil hlavu</li>
+              <li>Pod-extrúze v prvních vrstvách — model nestojí pevně</li>
+              <li>Vibrace nebo fyzický náraz do tiskárny během tisku</li>
+              <li>Výpadek spojení s tiskárnou bez Thermal Runaway ochrany</li>
+            </ul>
+          </div>
+          <div class="issue-col">
+            <h4>Řešení a prevence</h4>
+            <ol class="solution-steps">
+              <li>Zastavte tisk okamžitě — odstraňte všechna vlákna z tiskové plochy i z hotendu</li>
+              <li>Zkontrolujte trysku — vlákna mohou být navinuta kolem hotendu</li>
+              <li>Příčinou je téměř vždy špatná adheze první vrstvy — viz Skupina 1</li>
+              <li>Přidejte Brim, zvyšte teplotu podložky, odmastěte IPA</li>
+              <li>Při tisku bez dozoru: zapněte Obico (AI detekce selhání tisku) nebo sledujte kameru</li>
+              <li>Kobra X: využijte vestavěnou kameru + aplikaci Anycubic pro vzdálený monitoring</li>
+            </ol>
+          </div>
+        </div>
+        <div class="kobra-note">🐍 <strong>KOBRA X — AI detekce:</strong> Anycubic Slicer Next a aplikace podporují základní detekci selhání tisku přes kameru. Pro pokročilou AI detekci spaghetti (okamžité zastavení tisku) lze použít open-source platformu <a href="https://obico.io" target="_blank" style="color:var(--blue);">Obico.io</a> — funguje s většinou tiskáren přes OctoPrint nebo Moonraker/Klipper.</div>
+      </div>
+    </div>
+
+    <!-- 12.2 -->
+    <div class="issue" id="i12-2">
+      <div class="issue-header" onclick="toggleIssue(this)">
+        <div class="issue-icon">🛏️</div>
+        <div class="issue-title-wrap">
+          <div class="issue-title">Pillowing (polštáře na vrchním povrchu)</div>
+          <div class="issue-subtitle">Horní plocha výtisku má bublinový nebo nerovný „polštářový" povrch s dírami</div>
+        </div>
+        <div class="issue-arrow">›</div>
+      </div>
+      <div class="issue-body">
+        <img class="issue-img" src="pic/pillowing.jpg" alt="Pillowing - polštáře na vrchním povrchu" onerror="this.style.display='none';">
+        <div class="img-placeholder" style="display:none;">
+          <span>📷</span>
+          <p>Uložte vlastní foto jako <code>pic/pillowing.jpg</code></p>
+          <a href="https://www.google.com/search?q=3d+print+pillowing+top+surface&tbm=isch" target="_blank">Ukázky na Google Images →</a>
+        </div>
+        <div class="img-caption">Pillowing — vrchní vrstvy výtisku jsou nerovné, bublinkové nebo děravé. Infill prosvítá skrz horní povrch.</div>
+        <div class="issue-inner">
+          <div class="issue-col">
+            <h4>Příčiny</h4>
+            <ul>
+              <li>Příliš málo top vrstev — infill prosvítá přes horní povrch</li>
+              <li>Příliš nízká hustota infill — horní vrstvy nemají dostatečnou oporu</li>
+              <li>Nedostatečné chlazení horních vrstev — plast se propadá před ztuhnutím</li>
+              <li>Příliš vysoká teplota trysky pro dané chlazení</li>
+              <li>Příliš vysoký Flow Rate — přebytek plastu tvoří bubliny</li>
+            </ul>
+          </div>
+          <div class="issue-col">
+            <h4>Řešení</h4>
+            <ol class="solution-steps">
+              <li>Zvyšte počet Top Layers na 5–6 (OrcaSlicer: Top shell layers)</li>
+              <li>Zvyšte hustotu infill na alespoň 15–20 % — horní vrstva potřebuje oporu</li>
+              <li>Zvyšte part cooling ventilátor na 100 % pro horní vrstvy</li>
+              <li>Snižte teplotu trysky o 5 °C</li>
+              <li>Povolte „Ironing" pro vyhlazení vrchního povrchu — eliminuje zbývající nerovnosti</li>
+              <li>Pro velké ploché výtisky: použijte Concentric nebo Hilbert Curve top infill pattern</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12.3 -->
+    <div class="issue" id="i12-3">
+      <div class="issue-header" onclick="toggleIssue(this)">
+        <div class="issue-icon">💔</div>
+        <div class="issue-title-wrap">
+          <div class="issue-title">Delaminace vrstev (odlupování)</div>
+          <div class="issue-subtitle">Vrstvy se od sebe odlupují nebo jsou viditelné slabé spoje — díl se loupí</div>
+        </div>
+        <div class="issue-arrow">›</div>
+      </div>
+      <div class="issue-body">
+        <div class="issue-inner">
+          <div class="issue-col">
+            <h4>Příčiny</h4>
+            <ul>
+              <li>Příliš nízká teplota trysky — vrstvy se nesvaří dostatečně</li>
+              <li>Příliš velká výška vrstvy — plast nesedí na předchozí vrstvě</li>
+              <li>Příliš vysoká rychlost — vrstvy nemají čas se propojit</li>
+              <li>Vlhký filament — pára vytváří bubliny v mezivrstevných spojích</li>
+              <li>ABS/ASA bez enclosure — rychlé chladnutí ničí mezivrstevné spoje</li>
+              <li>Příliš agresivní chlazení (100% ventilátor u ABS)</li>
+            </ul>
+          </div>
+          <div class="issue-col">
+            <h4>Řešení</h4>
+            <ol class="solution-steps">
+              <li>Zvyšte teplotu trysky o 5–10 °C (testujte Temperature Tower)</li>
+              <li>Snižte výšku vrstvy — max. 75 % průměru trysky (0,4 mm tryska → max. 0,3 mm vrstva)</li>
+              <li>Snižte rychlost tisku o 20 %</li>
+              <li>Pro ABS/ASA: snižte chlazení na 20–30 % nebo zcela vypněte</li>
+              <li>Vysušte filament — vlhkost je velmi častou příčinou delaminace</li>
+              <li>Pro ABS: použijte enclosure pro udržení tepla a minimalizaci teplotního šoku</li>
+            </ol>
+          </div>
+        </div>
+        <div class="kobra-note">🐍 <strong>KOBRA X + ABS:</strong> Maximální teplota podložky je 100 °C. Pro ABS je to na hranici — kombinujte s enclosure a vypnutým nebo velmi slabým chlazením (max 20 %). Delaminace ABS bez krytu je téměř jistá při větších modelech.</div>
+      </div>
+    </div>
+
+    <!-- 12.4 -->
+    <div class="issue" id="i12-4">
+      <div class="issue-header" onclick="toggleIssue(this)">
+        <div class="issue-icon">🔪</div>
+        <div class="issue-title-wrap">
+          <div class="issue-title">Viditelný seam (šev vrstev)</div>
+          <div class="issue-subtitle">Na povrchu modelu je viditelná svislá linie nebo jizvička tam kde začíná každá vrstva</div>
+        </div>
+        <div class="issue-arrow">›</div>
+      </div>
+      <div class="issue-body">
+        <div class="issue-inner">
+          <div class="issue-col">
+            <h4>Příčiny</h4>
+            <ul>
+              <li>Normální vlastnost FDM tisku — každá vrstva musí někde začít a skončit</li>
+              <li>Seam je nastaven na „Random" — švy jsou náhodně roztroušeny po celém modelu</li>
+              <li>Příliš mnoho plastu při startu vrstvy (Extra Restart Distance)</li>
+              <li>Příliš malá retrakce — ooze na začátku vrstvy</li>
+              <li>Seam na přední nebo nejvíce viditelné straně modelu</li>
+            </ul>
+          </div>
+          <div class="issue-col">
+            <h4>Řešení</h4>
+            <ol class="solution-steps">
+              <li>Nastavte Seam Position na <strong>„Rear"</strong> (zadní strana) — seam se skryje na nejméně viditelném místě</li>
+              <li>Pro figurky a organické modely: „Nearest" nebo „Aligned" — seam podél hrany modelu kde méně vadí</li>
+              <li>Snižte Extra Restart Distance na −0,1 až −0,2 mm — méně plastu na startu</li>
+              <li>Zapněte „Wipe before outer wall" pro čistší start vrstvy</li>
+              <li>Mírně zvyšte retrakci o 0,5 mm pro méně ooze na švu</li>
+              <li>Post-processing: šev lze vybrousit jemným brusným papírem 400–600</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12.5 -->
+    <div class="issue" id="i12-5">
+      <div class="issue-header" onclick="toggleIssue(this)">
+        <div class="issue-icon">⏸️</div>
+        <div class="issue-title-wrap">
+          <div class="issue-title">Tisk se zastavil uprostřed bez důvodu</div>
+          <div class="issue-subtitle">Tiskárna se uprostřed tisku zastavila — bez chybové hlášky, nebo s chybou firmware/komunikace</div>
+        </div>
+        <div class="issue-arrow">›</div>
+      </div>
+      <div class="issue-body">
+        <div class="issue-inner">
+          <div class="issue-col">
+            <h4>Příčiny</h4>
+            <ul>
+              <li>Výpadek proudu nebo nestabilní napájení</li>
+              <li>Přehřátá řídicí deska nebo steppr drivery — tepelná ochrana</li>
+              <li>Firmware crash nebo přetečení paměti při složitém G-kódu</li>
+              <li>Poškozené nebo neúplné G-kód soubory na USB/SD kartě</li>
+              <li>Chyba senzoru filametu — falešné dojití filametu</li>
+              <li>Wi-Fi výpadek při tisku přes síť (pokud tisk závisí na spojení)</li>
+              <li>Uvolněný kabel steppr motoru — motor přestal reagovat</li>
+            </ul>
+          </div>
+          <div class="issue-col">
+            <h4>Řešení</h4>
+            <ol class="solution-steps">
+              <li>Zkontrolujte napájení — stabilní zásuvka, bez sdílení s výkonnými spotřebiči</li>
+              <li>Zkontrolujte teplotu tiskárny — přehřátá elektronika zastaví tisk ochranou. Zlepšete ventilaci okolí.</li>
+              <li>Přegenerujte G-kód v sliceru a znovu uložte na USB/SD kartu (kartou mohou být problémy se čtením)</li>
+              <li>Zkontrolujte senzor filametu — v menu deaktivujte pokud způsobuje falešné alarmy</li>
+              <li>Pro tisk přes síť: přejděte na tisk z USB/SD karty — přímý přístup je spolehlivější</li>
+              <li>Zkontrolujte kabely k motorům — musí být pevně zapojeny a nesmí být přiskřípnuty</li>
+              <li>Aktualizujte firmware — starší verze mají známé chyby stability</li>
+            </ol>
+          </div>
+        </div>
+        <div class="kobra-note">🐍 <strong>KOBRA X — Power Loss Recovery:</strong> Kobra X podporuje obnovení tisku po výpadku proudu (Power Loss Recovery). Po restartu tiskárna nabídne pokračování přerušeného tisku. Funkci aktivujte v Nastavení → Power Loss Recovery → Zapnuto. Spoj vrstev po obnovení bude mírně viditelný, ale díl bude funkční.</div>
+      </div>
+    </div>
+
+    <!-- BACK TO TOP -->
+    <div style="text-align:center;margin:32px 0 8px;">
+      <a href="#" style="font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:8px 20px;display:inline-block;transition:color .15s,border-color .15s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)';" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)';">↑ Zpět na navigaci</a>
+    </div>
 
     <!-- SUPPORT BOX -->
     <div class="support-box">
