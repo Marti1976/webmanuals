@@ -22,34 +22,29 @@
     --mono:     'IBM Plex Mono', monospace;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
 
   /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--border); border-right-color: var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
   .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
   .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .sidebar-product { display: flex; align-items: center; gap: 10px; }
   .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
   .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
   .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-
   .sb-search { padding: 15px 20px 5px; }
   .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
   .sb-search input:focus { border-color: var(--accent); }
-
   .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  
   .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
   .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
   .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
   .nav-item-text { flex: 1; min-width: 0; }
-
   .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
   .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
   .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
 
-  /* ── MAIN CONTENT AREA ── */
+  /* ── MAIN ── */
   .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
 
   /* ── HERO ── */
@@ -70,11 +65,53 @@
   .section { margin: 44px 0; }
   .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
   .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
+
+  /* ── PARAM BLOK ── */
+  .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
+  .param:hover { border-color: var(--accent); }
+  .param-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
+  .param-title { font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent2); font-weight: 600; }
+  .param-title small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  .param-val { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
+  .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .param p + p { margin-top: 6px; }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
+  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  thead tr { background: var(--surface); }
+  th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
+  td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
+
+  /* ── CARDS GRID ── */
+  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+  .card { background: var(--card); border: 1px solid var(--border); padding: 18px 20px; transition: border-color .2s; }
+  .card:hover { border-color: var(--accent); background: rgba(232,160,32,.03); }
+  .card h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; color: var(--accent2); margin-bottom: 6px; }
+  .card p { font-size: 13.5px; color: var(--muted); }
+
+  /* ── YT LINK ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
+  .yt-link:hover { opacity: .8; }
+
+  /* ── REF LINK ── */
+  .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
+  .ref-link:hover { background: rgba(74,158,255,.14); }
 
   /* ── PAGE NAV ── */
-  .pn { margin-top:60px; padding-top:26px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
-  .pn a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; transition:color .15s; }
-  .pn a:hover { color:var(--accent); } .pn .nx { margin-left:auto; }
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
@@ -83,130 +120,569 @@
 <body>
 
 <!-- ── SIDEBAR ── -->
-<nav class="sidebar" id="sidebar">
-
+<nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-product">
       <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">
-        ANYCUBIC KOBRA X
-        <small>Průvodce 3D tiskem · CZ</small>
-      </div>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
     </div>
   </div>
-
-  <div class="sb-search">
-    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
-  </div>
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
 
   <div class="nav-group-label">Základní sekce</div>
-
-  <a href="00_3D_index.html" class="nav-item">
-    <span class="nav-num">00</span>
-    <span class="nav-item-text">Obsah & Hledání</span>
-  </a>
-  <a href="01_3D_uvod.html" class="nav-item ">
-    <span class="nav-num">01</span>
-    <span class="nav-item-text">Úvod do FDM tisku</span>
-  </a>
-  <a href="02_3D_tiskarna.html" class="nav-item ">
-    <span class="nav-num">02</span>
-    <span class="nav-item-text">Tiskárna Kobra X</span>
-  </a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item ">
-    <span class="nav-num">03</span>
-    <span class="nav-item-text">Slicer — základy</span>
-  </a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item ">
-    <span class="nav-num">04</span>
-    <span class="nav-item-text">Slicer — pokročilý</span>
-  </a>
-
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">05</span>
-    <span class="nav-item-text">Detailní parametry</span>
-  </div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
   <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item ">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item ">05b · Parametry rychlosti</a></li>
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
     <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item active">05c · Parametry filamentu</a></li>
   </ul>
-
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item ">
-    <span class="nav-num">06</span>
-    <span class="nav-item-text">Příprava & tisk</span>
-  </a>
-  <a href="07_3D_post_processing.html" class="nav-item ">
-    <span class="nav-num">07</span>
-    <span class="nav-item-text">Post-processing</span>
-  </a>
-  <a href="08_3D_filamenty.html" class="nav-item ">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </a>
-  <a href="09_3D_modely_cad.html" class="nav-item ">
-    <span class="nav-num">09</span>
-    <span class="nav-item-text">3D Modely & CAD</span>
-  </a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item ">
-    <span class="nav-num">10</span>
-    <span class="nav-item-text">Prostředí & upgrady</span>
-  </a>
-  <a href="11_3D_udrzba.html" class="nav-item ">
-    <span class="nav-num">11</span>
-    <span class="nav-item-text">Údržba & spot. mat.</span>
-  </a>
-  <a href="12_3D_tipy.html" class="nav-item ">
-    <span class="nav-num">12</span>
-    <span class="nav-item-text">Tipy & triky</span>
-  </a>
-  <a href="13_3D_troubleshooting.html" class="nav-item ">
-    <span class="nav-num">13</span>
-    <span class="nav-item-text">Troubleshooting</span>
-  </a>
+  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
 
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">Soubory</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
     <span class="nav-item-text">Výběr příloh</span>
   </a>
-  
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">WEB</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
     <span class="nav-item-text">Výběr odkazů</span>
   </a>
-
 </nav>
 
+<!-- ── MAIN ── -->
 <main class="main-content">
-  <!-- HERO -->
+
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 05c</span>
-        <span class="ver-badge">SOFTWARE</span>
+        <span class="ver-badge">DETAILNÍ PARAMETRY</span>
       </div>
       <h1>Parametry <span>filamentu</span></h1>
-      <p>Tato kapitola čeká na zpracování. Zde se dozvíte vše potřebné k tématu "Parametry filamentu".</p>
+      <p>Teploty trysky a podložky, nastavení větráků a retrakce. Správné hodnoty pro každý materiál jsou klíčem k čistému tisku bez pavučin, warpingu a nedostatečné extrúze.</p>
     </div>
   </div>
 
   <div class="wrapper">
+
+    <div class="alert alert-info">
+      <div class="alert-icon">💡</div>
+      <div><strong>Jak číst tuto kapitolu:</strong> Každý parametr je uveden s <strong>anglickým názvem</strong> (tak jak ho najdete v programu) a <strong>českým překladem</strong>. Doporučené hodnoty platí pro PLA na Kobře X s tryskou 0,4 mm. Anycubic Slicer Next i OrcaSlicer sdílejí stejnou databázi parametrů — názvy jsou identické nebo velmi podobné. Odchylky jsou vždy poznamenány.</div>
+    </div>
+
+    <div class="alert alert-tip">
+      <div class="alert-icon">✓</div>
+      <div><strong>Kde parametry filamentu najdete:</strong> V Anycubic Slicer Next klikněte na záložku <strong>Filament</strong> v pravém panelu nebo přejděte do <em>Edit → Filament Settings</em>. V OrcaSlicer jde o sekci <strong>Material</strong> v Process Settings. Tyto parametry jsou vázány na konkrétní profil filamentu — každý materiál (PLA, PETG, ABS…) má svůj vlastní profil.</div>
+    </div>
+
+    <p style="margin-bottom: 8px;">Propojení s ostatními kapitolami:
+      <a href="03_3D_slicer_zaklad.html#profily" class="ref-link">→ 03 Materiálové profily</a>
+      <a href="05a_3D_slicer_tisk.html" class="ref-link">→ 05a Parametry tisku</a>
+      <a href="05b_3D_slicer_rychlost.html" class="ref-link">→ 05b Parametry rychlosti</a>
+      <a href="08_3D_filamenty.html" class="ref-link">→ 08 Filamenty (přehled materiálů)</a>
+    </p>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 1 — TEPLOTY
+    ════════════════════════════════════════════ -->
     <div class="section">
       <div class="section-header">
-        <h2>Prázdná kapitola</h2>
+        <h2>1 — Teploty (Temperatures)</h2>
       </div>
-      <p>Obsah bude brzy doplněn. Zvolte zatím jinou kapitolu z levého menu.</p>
+
+      <p>Teplota je nejdůležitější parametr celého filamentového profilu. Příliš nízká teplota = špatná přilnavost vrstev, ucpání trysky, under-extrusion. Příliš vysoká = stringing, degradace materiálu, přepálení. Každý filament i každá barva se chová trochu jinak — výrobci udávají rozsah, ve kterém je třeba kalibrovat.</p>
+
+      <h3>Nozzle Temperature / Teplota trysky</h3>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Nozzle Temperature<small>Teplota trysky (první vrstva)</small></div>
+          <span class="param-val">215 °C (PLA)</span>
+        </div>
+        <p>Teplota trysky při tisku první vrstvy. První vrstva se tiskne o 5–10 °C teplejší než zbytek modelu — roztavený plast lépe vtéká do textury podložky a zajišťuje lepší přilnavost.</p>
+        <p><strong>Typické hodnoty:</strong> PLA 200–220 °C · PETG 230–250 °C · ABS 230–250 °C · TPU 220–240 °C</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Nozzle Temperature (Other Layers)<small>Teplota trysky (ostatní vrstvy)</small></div>
+          <span class="param-val">210 °C (PLA)</span>
+        </div>
+        <p>Pracovní teplota pro všechny vrstvy po první. Nižší teplota snižuje stringing a zlepšuje přesnost detailů, protože plast rychleji tuhne po opuštění trysky. Příliš nízká teplota naopak způsobuje špatnou přilnavost vrstev (layer delamination) a under-extrusion.</p>
+        <p><strong>Tip:</strong> Pokud tiskárna strunuje (stringing), zkuste snížit o 5 °C. Pokud jsou vrstvy špatně spojené, zvyšte o 5 °C.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Max Volumetric Speed<small>Maximální objemová rychlost extruze</small></div>
+          <span class="param-val">15 mm³/s (PLA)</span>
+        </div>
+        <p>Maximální objem taveniny, který tryska dokáže zpracovat za sekundu. Pokud slicer vypočítá, že by při dané rychlosti a šířce extruze překročil tuto hodnotu, automaticky sníží tiskovou rychlost. Tím se předchází under-extrusion při vysokých rychlostech. PLA: 15–20 mm³/s · PETG: 10–14 mm³/s · ABS: 12–15 mm³/s.</p>
+      </div>
+
+      <h3>Bed Temperature / Teplota podložky</h3>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Bed Temperature (First Layer)<small>Teplota podložky (první vrstva)</small></div>
+          <span class="param-val">65 °C (PLA)</span>
+        </div>
+        <p>Vyšší teplota podložky při první vrstvě zlepšuje přilnavost — plast se lépe "přivaří" k PEI povrchu. Po dokončení první vrstvy slicer přejde na pracovní teplotu.</p>
+        <p><strong>Typické hodnoty první vrstvy:</strong> PLA 65 °C · PETG 80 °C · ABS 100 °C · TPU 40 °C</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Bed Temperature (Other Layers)<small>Teplota podložky (ostatní vrstvy)</small></div>
+          <span class="param-val">60 °C (PLA)</span>
+        </div>
+        <p>Pracovní teplota podložky po první vrstvě. Podložka zůstává teplá, aby se spodní části modelu neodlepily (warping). Po dokončení tisku nechte podložku vychladnout — model se pak snadno odlepí sám.</p>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X:</strong> Maximální teplota vyhřívané podložky je <strong>100 °C</strong>. ABS a ASA ideálně vyžadují 110 °C — Kobra X je na hranici. Pro tyto materiály používejte uzavřený kryt (krabice, deka) a nastavte podložku na 100 °C. Bez krytu bude warping u ABS/ASA pravděpodobný.</div>
+      </div>
+
+      <h3>Temperature Calibration / Kalibrace teploty</h3>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Temperature Tower<small>Kalibrační věž teploty</small></div>
+          <span class="param-val">viz popis</span>
+        </div>
+        <p>Temperature Tower je kalibrační výtisk — věž, která se tiskne při postupně se měnící teplotě (např. 220 → 215 → 210 → 205 → 200 °C, každých 5 mm jiná teplota). Vyhodnocením výtisku zjistíte ideální teplotu pro konkrétní kombinaci filamentu a tiskárny. Výtisk najdete na Printables nebo MakerWorld.</p>
+        <p>V Anycubic Slicer Next i OrcaSlicer je Temperature Tower dostupný přímo v menu <strong>Calibration → Temperature</strong>.</p>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=temperature+tower+3D+print+calibration&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Temperature Tower kalibrace 3D tisk</a>
+
+      <h3>Přehled teplot pro běžné materiály (Kobra X)</h3>
+      <table>
+        <thead><tr><th>Materiál</th><th>Tryska</th><th>Podložka</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr><td>PLA</td><td>200–220 °C</td><td>55–65 °C</td><td>Nejjednodušší materiál, velký rozsah teplot</td></tr>
+          <tr><td>PETG</td><td>230–250 °C</td><td>70–85 °C</td><td>Lepivý při stringu, nutná suchá role</td></tr>
+          <tr><td>ABS</td><td>235–250 °C</td><td>100 °C (max)</td><td>Kobra X na hranici, nutný kryt</td></tr>
+          <tr><td>ASA</td><td>240–260 °C</td><td>100 °C (max)</td><td>Stejné jako ABS, UV odolný</td></tr>
+          <tr><td>TPU</td><td>220–240 °C</td><td>30–50 °C</td><td>Flexibilní, tiskněte pomalu</td></tr>
+          <tr><td>PLA+</td><td>215–230 °C</td><td>60–70 °C</td><td>Jako PLA, trochu vyšší teplota</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 2 — CHLAZENÍ
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>2 — Chlazení (Cooling)</h2>
+      </div>
+
+      <p>Chlazení (větrák chladící výtisk) určuje jak rychle tuhne extrudovaný plast. Příliš málo chlazení = stringing, visící mosty. Příliš mnoho chlazení u citlivých materiálů (ABS, ASA) = praskání vrstev, warping. PLA potřebuje maximum chlazení, ABS/ASA skoro žádné.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Fan Speed<small>Rychlost větráku (obecně)</small></div>
+          <span class="param-val">100 % (PLA)</span>
+        </div>
+        <p>Výchozí rychlost part cooling ventilátoru (větrák chladící výtisk — ne větrák chladící hotend). 100 % = plný výkon. Pro PLA ideální — rychlé chlazení zajišťuje čisté přemostění, ostré hrany a minimální stringing.</p>
+        <p><strong>Doporučení dle materiálu:</strong> PLA 80–100 % · PETG 20–50 % · ABS 0 % · ASA 0 % · TPU 30–60 %</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Fan Speed (First Layer)<small>Rychlost větráku první vrstva</small></div>
+          <span class="param-val">0 % (všechny materiály)</span>
+        </div>
+        <p>Větrák by měl být při první vrstvě <strong>vypnutý</strong> bez ohledu na materiál. Chlazení by podložku ochlazovalo a rušilo přilnavost. Slicer automaticky nastaví 0 % pro první vrstvu — ujistěte se, že toto nastavení není přepsáno.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Min Fan Speed / Max Fan Speed<small>Minimální / maximální rychlost větráku</small></div>
+          <span class="param-val">40 % / 100 % (PLA)</span>
+        </div>
+        <p>Slicer může automaticky zvyšovat větrák podle situace (přemostění, krátké vrstvy). Min Fan Speed je spodní hranice automatické regulace, Max Fan Speed je strop. Pro PLA: min 40 %, max 100 %. Pro PETG: min 20 %, max 50 %.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Keep Fan Always On<small>Větrák vždy zapnutý</small></div>
+          <span class="param-val">zapnuto (PLA)</span>
+        </div>
+        <p>Větrák nikdy neklesne na 0 % (kromě nastavení pro první vrstvu). Pro PLA a PETG doporučeno zapnout — větrák se nikdy nemusí roztáčet od nuly, což prodlužuje jeho životnost a zlepšuje konzistenci chlazení.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Forced Cooling for Overhangs<small>Nucené chlazení pro převisy</small></div>
+          <span class="param-val">zapnuto (PLA)</span>
+        </div>
+        <p>Při tisku převisů (overhang) automaticky zvýší větrák na maximum, i když je obecná rychlost větráku nastavena níže. Zlepšuje kvalitu převisů, protože plast rychleji tuhne a méně se "propadá" dolů.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Slow Down for Cooling<small>Zpomalení pro chlazení (minimální čas vrstvy)</small></div>
+          <span class="param-val">5–15 s</span>
+        </div>
+        <p>Pokud vrstva zabere méně než nastavený počet sekund, slicer automaticky zpomalí tisk, aby plast stihl ztuhnou před nanesením další vrstvy. Klíčové pro malé objekty — bez toho se vrstvy deformují, protože tiskárna nanáší plast na ještě roztavený předchozí plast. Viz kapitola <a href="05b_3D_slicer_rychlost.html" style="color:var(--blue);">05b — Minimum Layer Time</a>.</p>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>ABS a ASA bez krytu + větrák = praskliny!</strong> Proud studeného vzduchu způsobuje teplotní šok, který odděluje vrstvy (layer delamination). Pro ABS/ASA nastavte větrák na 0 % a tiskněte v uzavřeném prostoru. Kobra X nemá uzavřenou komoru — použijte improvizovaný kryt (kartonová krabice, fólie).</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+print+cooling+settings+PLA+PETG+ABS&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print cooling settings nastavení chlazení</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 3 — RETRAKCE
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>3 — Retrakce (Retraction)</h2>
+      </div>
+
+      <p>Retrakce je zpětné stáhnutí filamentu do trysky při přesunech bez tisku (travel moves). Tím se zabraňuje vytékání taveniny (oozing) a vzniku pavučin (stringing). Správné nastavení retrakce je jedna z nejdůležitějších kalibrací — příliš agresivní retrakce zničí filament (grinding) nebo způsobí under-extrusion, příliš malá nechá pavučiny.</p>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X — direct drive:</strong> Kobra X má <strong>direct drive</strong> extruder — filament jde přímo do hotendu, bez dlouhé Bowden trubice. Proto je retrakční vzdálenost výrazně <strong>kratší</strong> než pro Bowden tiskárny. Ignorujte tutoriály, které říkají 4–7 mm — pro Kobru X je správný rozsah <strong>0,5–2 mm</strong>. Delší retrakce způsobí ucpání hotendu nebo grinding filamentu.</div>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Retraction Distance<small>Vzdálenost retrakce / Délka zpětného tahu</small></div>
+          <span class="param-val">0,8–1,5 mm (PLA, direct drive)</span>
+        </div>
+        <p>Kolik milimetrů filamentu se stáhne zpět při přesunu. Pro direct drive (Kobra X): 0,5–2 mm. Začněte s 0,8 mm a testujte. Pokud strunuje, zvyšte o 0,2 mm. Pokud jsou na začátku linií mezery (under-extrusion po retrakci), snižte nebo zvyšte restart distance.</p>
+        <p><strong>Bowden (srovnání — NE pro Kobru X):</strong> 4–7 mm. Tato hodnota v direct drive trysku ucpe!</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Retraction Speed<small>Rychlost retrakce</small></div>
+          <span class="param-val">40–60 mm/s</span>
+        </div>
+        <p>Jak rychle se filament stahuje zpět. Příliš pomalá = tavenina vytéká i při stažení. Příliš rychlá = grinding (ozubené kolo extruderu brousí do filamentu). Pro PLA na Kobře X: 40–60 mm/s. Pro TPU: max 25 mm/s (flexibilní materiál se při rychlé retrakci trhá).</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Extra Restart Distance<small>Extra vzdálenost při obnovení extruze / Kompenzace po retrakci</small></div>
+          <span class="param-val">0 – 0,2 mm</span>
+        </div>
+        <p>Po retrakci a přesunu je třeba filament dopravit zpět a ještě trochu "dopustit" pro kompenzaci stlačení taveniny. Kladná hodnota = filament se po přesunu tlačí trochu víc než byl stažen (pomáhá s under-extrusion po retrakci). Záporná hodnota = méně než bylo staženo (pomáhá se stringing na začátku linie). Začněte na 0, dolaďte jen pokud vidíte problém.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Retract on Layer Change<small>Retrakce při změně vrstvy</small></div>
+          <span class="param-val">zapnuto</span>
+        </div>
+        <p>Provede retrakci vždy, když tiskárna přechází na novou vrstvu (Z-hop). Zabraňuje kapce plastu na přechodu vrstev. Obecně doporučeno zapnout.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Retract Before Wipe<small>Retrakce před stíráním trysky</small></div>
+          <span class="param-val">70 %</span>
+        </div>
+        <p>Procentuální část retrakce provedená ještě před pohybem stírání (wipe). Pomáhá minimalizovat oozing. Hodnota 70 % znamená, že 70 % celkové retrakce proběhne před wipe pohybem, zbývajících 30 % po něm.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Wipe While Retracting<small>Stírání trysky během retrakce</small></div>
+          <span class="param-val">zapnuto</span>
+        </div>
+        <p>Tryska se pohybuje podél posledního úseku tisku zároveň s retrakcí. Setře kapku taveniny na povrchu modelu místo vzduchu. Výsledkem jsou čistší přechody a méně viditelný šev. Doporučeno zapnout pro PLA a PETG.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Wipe Distance<small>Vzdálenost stírání</small></div>
+          <span class="param-val">1,5–2 mm</span>
+        </div>
+        <p>Délka dráhy, po které se tryska pohybuje při stírání. Kratší = méně efektivní stírání. Delší = zbytečné zdržení. Pro většinu materiálů postačuje 1,5–2 mm.</p>
+      </div>
+
+      <h3>Kalibrace retrakce — postup</h3>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div>
+          <strong>Krok za krokem:</strong>
+          <ol style="margin-top:8px; padding-left:20px; font-size:14px; line-height:1.8;">
+            <li>Stáhněte Retraction Test / Stringing Test z Printables nebo MakerWorld</li>
+            <li>Začněte s retraction distance = 0,8 mm a speed = 40 mm/s</li>
+            <li>Pokud jsou pavučiny: zvyšte distance o 0,2 mm, opakujte</li>
+            <li>Pokud jsou mezery na začátku linie: snižte distance nebo zvyšte Extra Restart Distance</li>
+            <li>Jakmile nulové pavučiny a žádné mezery — máte ideální hodnoty pro tento filament</li>
+          </ol>
+          <p style="margin-top:8px;">V OrcaSlicer a Anycubic Slicer Next je Retraction Test dostupný v <strong>Calibration → Retraction</strong>.</p>
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=retraction+calibration+direct+drive+3D+print&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Retraction calibration direct drive 3D tisk</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 4 — PRŮTOK (FLOW)
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>4 — Průtok filamentu (Flow / Extrusion)</h2>
+      </div>
+
+      <p>Flow (průtok) určuje kolik plastu tiskárna extruduje. Slicer vypočítá teoretické množství na základě rozměrů, ale skutečný výsledek závisí na konkrétním extruderu a filamentu. Špatně nakalibrovaný flow = over-extrusion (tučné stěny, zalepené díry) nebo under-extrusion (mezery, slabé spoje).</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Flow Rate / Extrusion Multiplier<small>Průtok / Multiplikátor extruze</small></div>
+          <span class="param-val">0.95–1.00 (100 %)</span>
+        </div>
+        <p>Globální korekce množství extrudovaného materiálu. Hodnota 1.0 (100 %) = teoretická hodnota dle průměru filamentu. V praxi bývá PLA na 0.95–1.0. Kalibrujte pomocí měření tloušťky stěny (single-wall cube): vytiskněte krychli s 1 perimetrem a změřte šířku stěny posuvným měřítkem. Pokud je stěna 0,42 mm místo 0,40 mm, snižte flow o 5 %.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Flow Ratio Calibration<small>Kalibrace průtoku</small></div>
+          <span class="param-val">viz popis</span>
+        </div>
+        <p>OrcaSlicer a Anycubic Slicer Next nabízejí vestavěnou kalibraci průtoku v menu <strong>Calibration → Flow Rate</strong>. Slicer vytiskne sadu čtverců s různým flow a vy vyberete ten nejlepší (bez mezery ani přetečení). Tuto kalibraci proveďte pro každý nový typ nebo značku filamentu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Volumetric Speed / Max Volumetric Speed<small>Maximální objemová rychlost</small></div>
+          <span class="param-val">15 mm³/s (PLA)</span>
+        </div>
+        <p>Fyzikální limit extruderu — kolik taveniny dokáže hotend zpracovat za sekundu. Pokud slicer zjistí, že by rychlost tisku vyžadovala více, automaticky zpomalí. Překročení způsobuje under-extrusion. Pro Kobru X s 0,4 mm tryskou: PLA 15 mm³/s, PETG 12 mm³/s, ABS 14 mm³/s. Kalibrujte přes <strong>Calibration → Volumetric Speed</strong>.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Filament Diameter<small>Průměr filamentu</small></div>
+          <span class="param-val">1.75 mm</span>
+        </div>
+        <p>Průměr struny filamentu. Kobra X používá standard <strong>1.75 mm</strong>. Tuto hodnotu NEMĚŇTE, pokud nepoužíváte nestandardní filament. Slicer ji používá pro výpočet množství extrudovaného materiálu. Moderní filamenty jsou velmi přesné (±0,02 mm), kalibraci průměru prakticky nepotřebujete.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Filament Density<small>Hustota filamentu</small></div>
+          <span class="param-val">1.24 g/cm³ (PLA)</span>
+        </div>
+        <p>Hustota materiálu — slouží pro výpočet hmotnosti výtisku a spotřeby materiálu. Nemá vliv na kvalitu tisku. Standardní hodnoty: PLA 1.24 g/cm³ · PETG 1.27 g/cm³ · ABS 1.05 g/cm³ · TPU 1.20 g/cm³.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Filament Cost<small>Cena filamentu</small></div>
+          <span class="param-val">volitelné</span>
+        </div>
+        <p>Cena za kilogram filamentu. Slicer pak zobrazuje odhadovanou cenu výtisku v náhledu. Čistě informační hodnota, nemá vliv na slicování.</p>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+print+flow+rate+calibration+extrusion+multiplier&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Flow rate calibration 3D print extrusion multiplier</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 5 — KOMPENZACE SMRŠŤOVÁNÍ
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>5 — Kompenzace smršťování (Shrinkage & Dimensional Accuracy)</h2>
+      </div>
+
+      <p>Plast při chladnutí smršťuje. Výsledkem jsou otvory a díry o trochu menší, než jsou v 3D modelu. Tento efekt lze kompenzovat nastavením sliceru. Pro funkční díly (šroubové díry, ložiskové sedla) je toto nastavení velmi důležité.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Hole Horizontal Expansion<small>Horizontální kompenzace otvorů / Rozšíření díry</small></div>
+          <span class="param-val">0 – 0,1 mm (PLA)</span>
+        </div>
+        <p>Zvětší vnitřní rozměry válcových otvorů (holes) v ose XY. Zadáváte hodnotu v mm, o kolik se průměr díry zvětší. Hodnota 0,1 mm typicky kompenzuje smrštění PLA. Testujte na kalibrační krychli s dírou — změřte výsledný průměr a odečtěte od cílového průměru, polovina rozdílu je vaše kompenzace.</p>
+        <p><strong>Příklad:</strong> Chcete díru 10 mm, vytisknete 9,8 mm → nastavte kompenzaci +0,1 mm (na každou stranu).</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">XY Contour Compensation<small>XY kompenzace obrysu / Kompenzace rozměrů v rovině</small></div>
+          <span class="param-val">0 mm (začátek)</span>
+        </div>
+        <p>Globální korekce vnějších rozměrů v ose XY. Kladná hodnota = vnější stěny se posunou ven (model bude větší). Záporná hodnota = vnější stěny se posunou dovnitř (model bude menší). Slouží pro přesné strojní díly. Pro dekorativní tisky není potřeba. Kalibrujte pomocí přesně změřené kalibrační krychle.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Elephant Foot Compensation<small>Kompenzace sloní nožičky</small></div>
+          <span class="param-val">0,1 mm (PLA)</span>
+        </div>
+        <p>První vrstva bývá trochu širší než ostatní (plast se rozlije vlivem tlaku podložky) — efekt nazývaný "elephant foot" (sloní nožka). Tato kompenzace mírně zúží první vrstvu a předejde deformaci spodní části modelu. Hodnota 0,1 mm typicky stačí pro PLA. Viz kapitola <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Precision</a>.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Shrinkage Compensation<small>Kompenzace smršťování materiálu</small></div>
+          <span class="param-val">PLA: 100 %, ABS: 101–102 %</span>
+        </div>
+        <p>Procentuální zvětšení modelu pro kompenzaci smršťování materiálu po ochlazení. PLA se smršťuje minimálně (0–0,3 %), ABS výrazně (0,5–1,5 %). Pro PLA nechte 100 %. Pro ABS/ASA zkuste 101 % a kalibrujte. V Anycubic Slicer Next: <em>Filament → Shrinkage</em>. V OrcaSlicer: <em>Material → Shrinkage</em>.</p>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Tip pro přesné funkční díly:</strong> Vytiskněte kalibrační krychli 20×20×20 mm a změřte posuvným měřítkem. Odchylku přepočítejte na korekci a nastavte Shrinkage Compensation nebo XY Contour Compensation. Postup pro každou kombinaci tiskárna + filament + teplota se mírně liší — vždy kalibrujte zvlášť.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 6 — MULTI-FILAMENT
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>6 — Multi-filament (Kobra X specifická sekce)</h2>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X — 4 cívky:</strong> Kobra X podporuje tisk ze <strong>4 cívek filamentu</strong> najednou prostřednictvím multi-filamentového selektoru. Teflonové trubice vedoucí z cívek do tiskové hlavy jsou číslované <strong>1 až 4</strong> — neplést! Špatné pořadí = slicer pošle špatnou barvu nebo materiál do trysky.</div>
+      </div>
+
+      <h3>Nastavení barev a materiálů v projektu</h3>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Filament Slots (Color assignment)<small>Přiřazení barev k portům / Sloty filamentu</small></div>
+          <span class="param-val">1–4 porty</span>
+        </div>
+        <p>V Anycubic Slicer Next a OrcaSlicer přiřadíte každému slotu (portu, trubici) konkrétní filament a barvu. Slicer pak zobrazí model obarvený dle přiřazení. Přiřazení provedete v sekci <strong>Filament</strong> v pravém panelu — klikněte na čtverec barvy a vyberte slot 1–4.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Color Change (Manual)<small>Ruční změna barvy</small></div>
+          <span class="param-val">viz popis</span>
+        </div>
+        <p>Pokud chcete změnit barvu v konkrétní výšce tisku (nikoli podle modelu), přidejte Color Change příkaz: v Anycubic Slicer Next klikněte pravým tlačítkem na lištu vrstev v Preview a vyberte <em>Add Color Change</em>. Tiskárna se zastaví, vyzve k výměně filamentu a po potvrzení pokračuje. Tato funkce funguje i bez multi-filamentového systému.</p>
+      </div>
+
+      <h3>Purge Tower / Purge Wiper — čistění při výměně</h3>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Prime Tower / Purge Tower<small>Čistící věžička / Purge věž</small></div>
+          <span class="param-val">zapnuto při multi-filament tisku</span>
+        </div>
+        <p>Při každé výměně filamentu zůstane v trysce část předchozího materiálu. Prime Tower je pomocná věžička vedle modelu, do které tiskárna vytlačí starý materiál před přechodem na nový. Zajišťuje čistý výsledek bez barevných skvrn. Zapněte vždy při multi-filament tisku. V Anycubic Slicer Next: <em>Others → Prime Tower</em>.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Prime Tower Width<small>Šířka purge věžičky</small></div>
+          <span class="param-val">60–80 mm</span>
+        </div>
+        <p>Šířka čistící věžičky. Větší = více místa na podložce, ale větší spotřeba materiálu. Menší = méně jisté vyčistění. Pro většinu kombinací PLA barev postačuje 60 mm.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Purge Amount / Flush Amount<small>Množství materiálu pro proplach / Objem čistění</small></div>
+          <span class="param-val">40–120 mm³</span>
+        </div>
+        <p>Kolik materiálu se vytlačí pro vyčistění trysky při každé výměně filamentu. Více = čistší přechod, ale větší odpad. Méně = méně odpadu, ale možné barevné "krvácení" (colour bleeding). Čím větší barevný kontrast (světlá → tmavá = malý purge, tmavá → světlá = velký purge). V Anycubic Slicer Next i OrcaSlicer lze nastavit asymetricky pro každý přechod.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Purge into Infill<small>Čistění do výplně modelu</small></div>
+          <span class="param-val">zapnuto — šetří materiál</span>
+        </div>
+        <p>Místo do samostatné věžičky může slicer vytlačit čistící materiál přímo do výplně (infill) modelu. Tím se ušetří materiál a čas. Zapněte, pokud barva výplně nevadí (pro funkční díly ideální). Vypněte, pokud by barevná výplň byla vidět přes stěny nebo vadila esteticky.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Purge Wiper<small>Stírač trysky / Purge wiper</small></div>
+          <span class="param-val">hardwarová funkce Kobry X</span>
+        </div>
+        <p>Kobra X má hardwarový Purge Wiper — gumový/silikonový stírač vedle tiskové podložky, na který tiskárna najede a otře trysku po výměně filamentu. Kombinace wiper + prime tower zajišťuje čistý přechod barev. V sliceru aktivujte podporu wiperu v nastavení tiskárny.</p>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Tip pro efektivní multi-filament tisk:</strong> Při tisku více barev seřaďte vrstvy tak, aby k výměnám docházelo co nejméně. Slicer to dělá automaticky — zkuste funkci <em>Optimize Wipe Tower</em>, která minimalizuje počet výměn přeuspořádáním pořadí barev na vrstvách. Ušetří čas i materiál.</div>
+      </div>
+
+      <h3>Ooze Prevention a kompatibilita materiálů</h3>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Ooze Prevention<small>Prevence vytékání při neaktivní trysce</small></div>
+          <span class="param-val">zapnuto při multi-material</span>
+        </div>
+        <p>Při multi-filament tisku je vždy jedna tryska "nečinná" — nevytlačuje, ale zůstává teplá a může vytékat. Ooze Prevention sníží teplotu nečinné trysky o nastavenou hodnotu (typicky 15–25 °C), čímž se omezí oozing. Před opětovným tiskem se tryska znovu zahřeje. Zapněte vždy při vícebarevném tisku.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Temperature Offset for Standby<small>Teplotní offset při čekání</small></div>
+          <span class="param-val">−15 až −25 °C</span>
+        </div>
+        <p>O kolik stupňů se sníží teplota nečinné trysky (Ooze Prevention). Příliš malý offset = tryska stále vytéká. Příliš velký offset = tryska se nestihne zahřát před tiskem a způsobí under-extrusion na prvních liniích po výměně. Pro PLA: offset −20 °C (nečinná tryska bude na 190 °C místo 210 °C).</p>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=multi+color+3D+print+purge+tower+Anycubic&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Multi color 3D print purge tower Anycubic Kobra</a>
+
+      <h3>Kompatibilita materiálů při multi-filament tisku</h3>
+
+      <table>
+        <thead><tr><th>Kombinace</th><th>Kompatibilita</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr><td>PLA + PLA</td><td style="color:var(--green);">✓ Ideální</td><td>Různé barvy, stejné teploty — bezproblémové</td></tr>
+          <tr><td>PLA + PLA+</td><td style="color:var(--green);">✓ OK</td><td>Mírně různé teploty, jinak bez problémů</td></tr>
+          <tr><td>PLA + PETG</td><td style="color:var(--accent);">⚠ Problematické</td><td>Různé teploty, PETG se lepí k PLA — nutný větší purge</td></tr>
+          <tr><td>PLA + PVA</td><td style="color:var(--green);">✓ Vhodné</td><td>PVA jako rozpustný support materiál — klasická kombinace</td></tr>
+          <tr><td>ABS + ASA</td><td style="color:var(--green);">✓ OK</td><td>Podobné teploty a chování</td></tr>
+          <tr><td>PLA + ABS</td><td style="color:var(--red);">✗ Nedoporučeno</td><td>Velmi rozdílné teploty a chování chlazení</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE NAV
+    ════════════════════════════════════════════ -->
+    <div class="pn">
+      <a href="05b_3D_slicer_rychlost.html">← 05b · Parametry rychlosti</a>
+      <a href="06_3D_priprava_a_tisk.html" class="nx">06 · Příprava & tisk →</a>
+    </div>
+
+  </div><!-- /wrapper -->
 </main>
+
 <script>
 const searchInput = document.getElementById('sb-search-input');
 searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') {
+  if (e.key === 'Enter') {
     const q = e.target.value.trim();
-    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
   }
 });
 </script>

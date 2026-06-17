@@ -22,34 +22,29 @@
     --mono:     'IBM Plex Mono', monospace;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
 
   /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--border); border-right-color: var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
   .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
   .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .sidebar-product { display: flex; align-items: center; gap: 10px; }
   .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
   .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
   .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-
   .sb-search { padding: 15px 20px 5px; }
   .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
   .sb-search input:focus { border-color: var(--accent); }
-
   .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  
   .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
   .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
   .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
   .nav-item-text { flex: 1; min-width: 0; }
-
   .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
   .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
   .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
 
-  /* ── MAIN CONTENT AREA ── */
+  /* ── MAIN ── */
   .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
 
   /* ── HERO ── */
@@ -70,11 +65,46 @@
   .section { margin: 44px 0; }
   .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
   .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
+
+  /* ── PARAM BLOK ── */
+  .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
+  .param:hover { border-color: var(--accent); }
+  .param-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
+  .param-title { font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent2); font-weight: 600; }
+  .param-title small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  .param-val { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
+  .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .param p + p { margin-top: 6px; }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
+  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  thead tr { background: var(--surface); }
+  th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
+  td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
+
+  /* ── YT LINK ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
+  .yt-link:hover { opacity: .8; }
+
+  /* ── REF LINK ── */
+  .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
+  .ref-link:hover { background: rgba(74,158,255,.14); }
 
   /* ── PAGE NAV ── */
-  .pn { margin-top:60px; padding-top:26px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
-  .pn a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; transition:color .15s; }
-  .pn a:hover { color:var(--accent); } .pn .nx { margin-left:auto; }
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
@@ -83,130 +113,584 @@
 <body>
 
 <!-- ── SIDEBAR ── -->
-<nav class="sidebar" id="sidebar">
-
+<nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-product">
       <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">
-        ANYCUBIC KOBRA X
-        <small>Průvodce 3D tiskem · CZ</small>
-      </div>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
     </div>
   </div>
-
-  <div class="sb-search">
-    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
-  </div>
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
 
   <div class="nav-group-label">Základní sekce</div>
-
-  <a href="00_3D_index.html" class="nav-item">
-    <span class="nav-num">00</span>
-    <span class="nav-item-text">Obsah & Hledání</span>
-  </a>
-  <a href="01_3D_uvod.html" class="nav-item ">
-    <span class="nav-num">01</span>
-    <span class="nav-item-text">Úvod do FDM tisku</span>
-  </a>
-  <a href="02_3D_tiskarna.html" class="nav-item ">
-    <span class="nav-num">02</span>
-    <span class="nav-item-text">Tiskárna Kobra X</span>
-  </a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item ">
-    <span class="nav-num">03</span>
-    <span class="nav-item-text">Slicer — základy</span>
-  </a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item ">
-    <span class="nav-num">04</span>
-    <span class="nav-item-text">Slicer — pokročilý</span>
-  </a>
-
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">05</span>
-    <span class="nav-item-text">Detailní parametry</span>
-  </div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
   <ul class="nav-subs">
     <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item active">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item ">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item ">05c · Parametry filamentu</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
   </ul>
-
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item ">
-    <span class="nav-num">06</span>
-    <span class="nav-item-text">Příprava & tisk</span>
-  </a>
-  <a href="07_3D_post_processing.html" class="nav-item ">
-    <span class="nav-num">07</span>
-    <span class="nav-item-text">Post-processing</span>
-  </a>
-  <a href="08_3D_filamenty.html" class="nav-item ">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </a>
-  <a href="09_3D_modely_cad.html" class="nav-item ">
-    <span class="nav-num">09</span>
-    <span class="nav-item-text">3D Modely & CAD</span>
-  </a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item ">
-    <span class="nav-num">10</span>
-    <span class="nav-item-text">Prostředí & upgrady</span>
-  </a>
-  <a href="11_3D_udrzba.html" class="nav-item ">
-    <span class="nav-num">11</span>
-    <span class="nav-item-text">Údržba & spot. mat.</span>
-  </a>
-  <a href="12_3D_tipy.html" class="nav-item ">
-    <span class="nav-num">12</span>
-    <span class="nav-item-text">Tipy & triky</span>
-  </a>
-  <a href="13_3D_troubleshooting.html" class="nav-item ">
-    <span class="nav-num">13</span>
-    <span class="nav-item-text">Troubleshooting</span>
-  </a>
+  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
 
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">Soubory</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
     <span class="nav-item-text">Výběr příloh</span>
   </a>
-  
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">WEB</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
     <span class="nav-item-text">Výběr odkazů</span>
   </a>
-
 </nav>
 
+<!-- ── MAIN ── -->
 <main class="main-content">
-  <!-- HERO -->
+
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 05a</span>
-        <span class="ver-badge">SOFTWARE</span>
+        <span class="ver-badge">DETAILNÍ PARAMETRY</span>
       </div>
       <h1>Parametry <span>tisku</span></h1>
-      <p>Tato kapitola čeká na zpracování. Zde se dozvíte vše potřebné k tématu "Parametry tisku".</p>
+      <p>Výška vrstev, perimetry, výplně a podpěry — vše co ovlivňuje, jak model vypadá, jak je pevný a jak dlouho se tiskne.</p>
     </div>
   </div>
 
   <div class="wrapper">
+
+    <div class="alert alert-info">
+      <div class="alert-icon">💡</div>
+      <div><strong>Jak číst tuto kapitolu:</strong> Každý parametr je uveden s <strong>anglickým názvem</strong> (tak jak ho najdete v programu) a <strong>českým překladem</strong>. Doporučené hodnoty platí pro PLA na Kobře X s tryskou 0,4 mm. Parametry najdete v Anycubic Slicer Next i OrcaSlicer pod záložkami <strong>Quality</strong>, <strong>Walls</strong>, <strong>Top/Bottom</strong>, <strong>Infill</strong> a <strong>Support</strong> v Process Settings.</div>
+    </div>
+
+    <p style="margin-bottom: 8px;">Propojení s ostatními kapitolami:
+      <a href="05b_3D_slicer_rychlost.html" class="ref-link">→ 05b Parametry rychlosti</a>
+      <a href="05c_3D_slicer_filament.html" class="ref-link">→ 05c Parametry filamentu</a>
+      <a href="03_3D_slicer_zaklad.html" class="ref-link">→ 03 Slicer — základy</a>
+    </p>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 1 — VRSTVY
+    ════════════════════════════════════════════ -->
     <div class="section">
       <div class="section-header">
-        <h2>Prázdná kapitola</h2>
+        <h2>1 — Vrstvy (Layers)</h2>
       </div>
-      <p>Obsah bude brzy doplněn. Zvolte zatím jinou kapitolu z levého menu.</p>
+
+      <p>Výška vrstvy je základní parametr, který ovlivňuje téměř vše — vizuální kvalitu, dobu tisku, pevnost a schopnost zachytit detaily. Je to vždy první rozhodnutí při slicování modelu.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Layer Height<small>Výška vrstvy</small></div>
+          <span class="param-val">0,2 mm (standard)</span>
+        </div>
+        <p>Tloušťka jedné vytištěné vrstvy v ose Z. Nižší hodnota = lepší detail a hladší povrch, ale delší čas tisku. Vyšší hodnota = rychlejší tisk, ale viditelnější "schody" na šikmých plochách.</p>
+        <p><strong>Zlaté pravidlo:</strong> Layer Height by neměl přesáhnout <strong>75 % průměru trysky</strong>. Pro Kobru X s 0,4 mm tryskou: maximum 0,3 mm, ideální rozsah <strong>0,1–0,32 mm</strong>. Standardní volba je 0,2 mm (dobrý kompromis rychlost/kvalita).</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">First Layer Height<small>Výška první vrstvy</small></div>
+          <span class="param-val">0,24–0,28 mm</span>
+        </div>
+        <p>První vrstva se obvykle tiskne <strong>vyšší</strong> než ostatní — tlustší vrstva je tolerantnější k drobným nerovnostem podložky a snáz se kalibruje Z-offset. Typicky 1,2–1,4× normální Layer Height.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Variable Layer Height / Adaptive Layers<small>Proměnná výška vrstvy / Adaptivní vrstvy</small></div>
+          <span class="param-val">volitelné, vhodné pro detailní modely</span>
+        </div>
+        <p>Slicer automaticky použije nižší Layer Height na strmých/detailních místech modelu (kde je rozdíl viditelný) a vyšší na rovných svislých plochách (kde to nevadí). Výsledkem je kompromis mezi rychlostí tisku a kvalitou detailů bez nutnosti manuálně volit jednu hodnotu pro celý model. V Anycubic Slicer Next: <em>Quality → Adaptive Layer Height</em>.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Line Width<small>Šířka tiskové linie / Šířka extruze</small></div>
+          <span class="param-val">0,4–0,45 mm (tryska 0,4 mm)</span>
+        </div>
+        <p>Šířka jednotlivé vytištěné linie. Obvykle nastavena na 100–110 % průměru trysky. Širší linie = pevnější model a rychlejší tisk (méně linií potřeba pro vyplnění stejné plochy), ale méně detailu na malých prvcích. Lze nastavit zvlášť pro perimetry, výplň a horní/spodní vrstvy.</p>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tip pro Kobru X (0,4 mm tryska):</strong> Pro běžné modely použijte 0,2 mm Layer Height. Pro detailní figurky a miniatury zkuste 0,12–0,16 mm. Pro rychlé prototypy bez nároku na detail můžete jít až na 0,28–0,3 mm.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=layer+height+3D+printing+guide&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Layer height 3D printing guide výška vrstvy</a>
     </div>
-  </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 2 — STĚNY A PERIMETRY
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>2 — Stěny a perimetry (Walls / Shells)</h2>
+      </div>
+
+      <p>Stěny (perimetry) jsou obvodové linie, které tvoří vnější a vnitřní "skořápku" modelu. Určují pevnost, vodotěsnost a do velké míry i estetiku povrchu.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Wall Count / Perimeter Count<small>Počet stěn / Počet perimetrů</small></div>
+          <span class="param-val">2–3 (standard), 4+ (pevné díly)</span>
+        </div>
+        <p>Kolik obvodových linií tiskárna vytiskne kolem modelu před tím, než začne vyplňovat výplní. 2 stěny = minimum pro vizuálně přijatelný a vodotěsný výsledek. 3–4 stěny = výrazně pevnější model, vhodné pro funkční díly a díly se šroubovými spoji. Více stěn také znamená méně závislost na výplni pro celkovou pevnost.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Wall Order<small>Pořadí tisku stěn</small></div>
+          <span class="param-val">Inner/Outer (vnitřní → vnější)</span>
+        </div>
+        <p>Určuje, zda se nejprve tiskne vnější nebo vnitřní perimetr. <strong>Outer-first</strong> (vnější první) dává nejpřesnější vnější rozměry, ale švy mohou být viditelnější. <strong>Inner-first</strong> (vnitřní první) — moderní výchozí volba — zlepšuje povrchovou kvalitu vnější stěny, protože ta se tiskne jako poslední na již stabilní podkladu, ale o zlomek mm méně přesné rozměry.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Thin Wall Detection / Detect Thin Walls<small>Detekce tenkých stěn</small></div>
+          <span class="param-val">zapnuto</span>
+        </div>
+        <p>Pokud je část modelu tak tenká, že se do ní nevejde plný počet perimetrů (např. tenké žebro tloušťky 0,5 mm při Line Width 0,4 mm), slicer tuto funkci použije k automatickému přizpůsobení šířky extruze tak, aby se tenká stěna vůbec vytiskla, místo aby ji úplně vynechal.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Spiral Vase Mode<small>Režim spirálové vázy</small></div>
+          <span class="param-val">speciální režim — jen pro duté tvary</span>
+        </div>
+        <p>Speciální tiskový režim, kde se osa Z plynule zvyšuje po celou dobu tisku jedné nepřerušené spirálové stěny — bez vrstvových švů, bez výplně, bez horní plochy. Vhodné pouze pro dekorativní duté objekty jako vázy nebo kelímky. Model musí mít jednoduchý uzavřený obvod bez děr nebo ostrých změn — slicer automaticky vypne výplň a horní vrstvy.</p>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Spiral Vase Mode nelze kombinovat s výplní ani více objekty na podložce zároveň.</strong> Pokud potřebujete pevný funkční díl, tento režim nepoužívejte — výsledný model má jen jednu vrstvu stěny a žádnou strukturální výplň.</div>
+      </div>
+
+      <h3>Doporučený počet stěn dle účelu</h3>
+      <table>
+        <thead><tr><th>Účel modelu</th><th>Wall Count</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr><td>Dekorativní/vizuální model</td><td>2</td><td>Dostatečná pevnost, rychlý tisk</td></tr>
+          <tr><td>Běžný funkční díl</td><td>3</td><td>Dobrý kompromis</td></tr>
+          <tr><td>Namáhaný/silový díl</td><td>4–6</td><td>Maximální pevnost stěn</td></tr>
+          <tr><td>Vodotěsná nádoba</td><td>3+</td><td>Spolu s vyšším Top/Bottom Layers</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 3 — TOP/BOTTOM
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>3 — Horní a spodní vrstvy (Top / Bottom)</h2>
+      </div>
+
+      <p>Horní a spodní plné vrstvy "uzavírají" model shora a zdola nad/pod výplní. Bez dostatečného počtu těchto vrstev výplň "prosvítá" přes povrch — vznikají díry nebo nedokonale uzavřený povrch.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Top Layers<small>Počet horních vrstev</small></div>
+          <span class="param-val">4–5 vrstev (při 0,2 mm Layer Height)</span>
+        </div>
+        <p>Kolik plných vrstev se vytiskne na vrcholu modelu před tím, než je dokončen. Příliš málo vrstev = výplň prosvítá nebo vznikají malé díry na horní ploše. Pro 0,2 mm Layer Height je 4–5 vrstev standardní (celková tloušťka stropu cca 0,8–1 mm).</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Bottom Layers<small>Počet spodních vrstev</small></div>
+          <span class="param-val">3–4 vrstvy</span>
+        </div>
+        <p>Stejný princip jako Top Layers, ale pro spodní stranu modelu. Spodní strana má obvykle o jednu vrstvu méně, protože je v přímém styku s podložkou a má tendenci k lepšímu spojení hned od první vrstvy.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Top/Bottom Pattern<small>Vzor horní/spodní plochy</small></div>
+          <span class="param-val">Monotonic (nejlepší vzhled)</span>
+        </div>
+        <p>Vzor, jakým se vyplňuje plná horní/spodní plocha. <strong>Solid/Rectilinear</strong> (rovné linie tam a zpět) je nejrychlejší, ale může zanechat viditelné spáry. <strong>Monotonic</strong> tiskne všechny linie ve stejném směru (vždy zleva doprava), což dává jednotnější a hladší vzhled bez vlnitého efektu. <strong>Hilbert Curve</strong> používá fraktálový vzor pro maximálně rovnoměrné rozložení napětí, ale je pomalejší.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Ironing<small>Žehlení povrchu</small></div>
+          <span class="param-val">vypnuto / zapnuto jen pro Top Surface</span>
+        </div>
+        <p>Po vytištění horní plochy přejede tryska znovu po povrchu bez extruze nového materiálu (nebo s minimálním množstvím) a "vyžehlí" drobné nerovnosti a mezery mezi linkami. Výsledkem je velmi hladký, skoro lesklý horní povrch. Zpomaluje tisk této vrstvy, ale výrazně zlepšuje vzhled plochých horních ploch.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Ironing Speed<small>Rychlost žehlení</small></div>
+          <span class="param-val">15–20 mm/s</span>
+        </div>
+        <p>Rychlost pohybu trysky při procesu žehlení. Pomalá rychlost zajišťuje rovnoměrnější rozetření taveniny po povrchu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Ironing Flow<small>Průtok při žehlení</small></div>
+          <span class="param-val">10–15 %</span>
+        </div>
+        <p>Malé množství extruze navíc během žehlení, které vyplní drobné mezery mezi sousedními liniemi povrchu. Příliš vysoká hodnota způsobí přebytečný plast a hrubší výsledek, naopak.</p>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=ironing+3D+print+top+surface+smooth&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Ironing 3D print top surface smooth žehlení povrchu</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 4 — VÝPLŇ
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>4 — Výplň (Infill)</h2>
+      </div>
+
+      <p>Výplň je vnitřní struktura modelu mezi stěnami. Ovlivňuje pevnost, hmotnost, spotřebu materiálu a dobu tisku. U běžných modelů tvoří výplň největší podíl objemu, takže její nastavení má velký dopad na celkový výsledek.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Infill Density<small>Hustota výplně</small></div>
+          <span class="param-val">15 % (standard)</span>
+        </div>
+        <p>Procentuální podíl vnitřního objemu vyplněného materiálem. 0 % = dutý model (pouze stěny). 15 % = standardní volba pro běžné dekorativní modely — dostatečná pevnost s minimální spotřebou materiálu. 40 % = pevnější díly, mírně zatěžované. 100 % = plný model, maximální pevnost, ale extrémní spotřeba materiálu a čas tisku.</p>
+      </div>
+
+      <table>
+        <thead><tr><th>Infill Density</th><th>Použití</th><th>Vlastnosti</th></tr></thead>
+        <tbody>
+          <tr><td>0 %</td><td>Duté dekorace, kontejnery na lehký obsah</td><td>Minimální hmotnost a spotřeba</td></tr>
+          <tr><td>10–15 %</td><td>Standardní dekorativní modely</td><td>Dobrý poměr pevnost/rychlost</td></tr>
+          <tr><td>25–40 %</td><td>Mírně zatěžované funkční díly</td><td>Výrazně pevnější, delší tisk</td></tr>
+          <tr><td>60–80 %</td><td>Namáhané mechanické díly</td><td>Vysoká pevnost, velká spotřeba</td></tr>
+          <tr><td>100 %</td><td>Maximálně zatěžované díly, vodotěsnost</td><td>Nejpevnější, nejdelší tisk</td></tr>
+        </tbody>
+      </table>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Infill Pattern<small>Vzor výplně</small></div>
+          <span class="param-val">Grid / Gyroid (nejčastější volby)</span>
+        </div>
+        <p>Geometrický vzor, jakým je výplň strukturována. Různé vzory mají odlišnou pevnost, rychlost tisku a izotropii (stejnoměrnost pevnosti ve všech směrech).</p>
+      </div>
+
+      <table>
+        <thead><tr><th>Pattern</th><th>Pevnost</th><th>Rychlost</th><th>Vhodné pro</th></tr></thead>
+        <tbody>
+          <tr><td>Grid</td><td>Střední</td><td>Rychlé</td><td>Univerzální výchozí volba</td></tr>
+          <tr><td>Gyroid</td><td>Vysoká, izotropní</td><td>Střední</td><td>Funkční díly, ohebné namáhání ve všech směrech</td></tr>
+          <tr><td>Honeycomb</td><td>Vysoká</td><td>Pomalejší</td><td>Pevnost při nízké spotřebě materiálu</td></tr>
+          <tr><td>Lightning</td><td>Nízká (jen podpora horní plochy)</td><td>Nejrychlejší</td><td>Čistě dekorativní modely, minimální spotřeba</td></tr>
+          <tr><td>Rectilinear</td><td>Nízká, směrová</td><td>Velmi rychlé</td><td>Rychlé prototypy</td></tr>
+          <tr><td>Cubic</td><td>Vysoká</td><td>Střední</td><td>Rovnoměrná pevnost ve 3 osách</td></tr>
+          <tr><td>Triangle</td><td>Vysoká ve smyku</td><td>Střední</td><td>Díly namáhané ve smyku</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Gyroid jako univerzální doporučení:</strong> Pokud si nejste jistí, jaký vzor zvolit, Gyroid je bezpečná volba — má vyrovnanou pevnost ve všech směrech (izotropní), tiskne se rychle a nevytváří dlouhé přímé linie, které by mohly rezonovat při vysoké rychlosti.</div>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Infill Overlap / Infill-Wall Overlap<small>Překrytí výplně se stěnou</small></div>
+          <span class="param-val">15–25 %</span>
+        </div>
+        <p>O kolik procent výplň "zasahuje" do oblasti stěny, aby vznikl pevný spoj mezi výplní a perimetrem. Příliš malé překrytí = výplň a stěna nejsou dostatečně spojené, model může mít slabší pevnost nebo viditelné mezery. Příliš velké překrytí = přebytečný materiál a možné vyboulení stěny.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Infill Direction / Infill Angle<small>Směr / Úhel výplně</small></div>
+          <span class="param-val">45° (standard)</span>
+        </div>
+        <p>Úhel, ve kterém jsou orientovány linie výplně (relevantní pro směrové vzory jako Rectilinear, Grid). Výchozí 45° dává rozumnou pevnost ve více směrech. Pro vícevrstvé modely se úhel typicky střídá mezi vrstvami (např. 45°/135°) pro lepší izotropii.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Infill Combine / Combine Infill Every X Layers<small>Slučování výplně přes více vrstev</small></div>
+          <span class="param-val">volitelné, urychluje tisk</span>
+        </div>
+        <p>Sloučí výplň několika sousedních vrstev do jedné silnější vrstvy extruze (tiskne se méně často, ale silnější linií). Výrazně zrychluje tisk u modelů s nízkou hustotou výplně, ale snižuje přesnost detailů ve vnitřní struktuře. Vhodné pouze pro vrstvy, které jsou čistě výplňové (ne pro horní/spodní vrstvy).</p>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=infill+pattern+comparison+3D+printing+strength&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Infill pattern comparison 3D printing strength srovnání výplně</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 5 — PODPĚRY
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>5 — Podpěry (Supports)</h2>
+      </div>
+
+      <p>Podpěry jsou pomocné struktury, které tiskárna vytiskne pod převislými částmi modelu, aby je podržely během tisku. Bez podpěr by se nedokončený plast propadl do prázdna, protože tiskne "do vzduchu".</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Support Enable / Generate Support<small>Povolit podpěry</small></div>
+          <span class="param-val">automaticky dle Overhang Angle</span>
+        </div>
+        <p>Hlavní vypínač generování podpěr. Po zapnutí slicer automaticky analyzuje model a vygeneruje podpěry všude, kde úhel převisu překračuje nastavený práh (Support Overhang Angle).</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Support Type<small>Typ podpěr</small></div>
+          <span class="param-val">Normal (jednoduché modely) / Tree (organické tvary)</span>
+        </div>
+        <p><strong>Normal</strong> (klasické/mřížkové) podpěry tvoří svislé sloupky nebo mřížku přímo pod převisy — efektivní, ale na složitých modelech mohou vyžadovat hodně materiálu. <strong>Tree</strong> (stromové) podpěry rostou jako větve stromu, spojují se a větví se, aby podepřely více míst z méně kořenů na podložce — méně materiálu, snadnější odstranění, ale o trochu pomalejší výpočet při slicování.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Support Overhang Angle / Support Threshold Angle<small>Práhový úhel převisu pro podpěry</small></div>
+          <span class="param-val">45°</span>
+        </div>
+        <p>Úhel měřený od svislé osy, od kterého slicer považuje plochu za "převis" vyžadující podpěru. Při standardním pravidle <strong>45°</strong> znamená, že plochy sklopené více než 45° od vodorovné roviny (tedy "více ležící") podpěry nepotřebují, zatímco plošší převisy ano. Nižší hodnota = více agresivní generování podpěr (i mírné převisy je podepřou), vyšší hodnota = méně podpěr, ale riziko propadlých převisů.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Support Z Distance / Top Z Distance<small>Vertikální vzdálenost podpěry od modelu</small></div>
+          <span class="param-val">0,15–0,2 mm</span>
+        </div>
+        <p>Mezera v ose Z mezi vrcholem podpěry a spodní plochou modelu, kterou podpírá. Tato mezera umožní snadné odlomení podpěry po tisku, aniž by zanechala hlubokou jizvu. Příliš malá mezera = podpěra se "přivaří" k modelu a špatně se odstraňuje. Příliš velká = převis se propadne do mezery a má špatný povrch.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Support X/Y Distance<small>Horizontální vzdálenost podpěry od modelu</small></div>
+          <span class="param-val">0,5–0,8 mm</span>
+        </div>
+        <p>Mezera v rovině XY mezi podpěrou a svislými stěnami modelu. Zabraňuje, aby se podpěra "slila" se svislou stěnou modelu — bez této mezery by bylo odstranění podpěry obtížné a mohlo by poškodit povrch.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Interface Layers<small>Kontaktní (rozhraní) vrstvy</small></div>
+          <span class="param-val">2–3 vrstvy, hustší vzor</span>
+        </div>
+        <p>Speciální hustší vrstvy podpěry přímo v kontaktu s modelem (nahoře, případně i dole). Hustší výplň interface vrstev zlepšuje povrchovou kvalitu spodní strany modelu na místě podpěr (méně viditelné stopy po podpěře), zatímco zbytek podpěrné struktury může zůstat řídký pro rychlejší tisk a snazší odstranění.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Support Density<small>Hustota výplně podpěr</small></div>
+          <span class="param-val">10–20 %</span>
+        </div>
+        <p>Hustota výplně samotné podpěrné struktury (mimo interface vrstvy). Nízká hustota stačí — podpěra jen drží váhu během tisku, nemusí být pevná jako finální model. Nižší hustota = méně materiálu, snazší odstranění.</p>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Tree supports pro organické tvary:</strong> Pro figurky, postavy a organické modely s mnoha malými převisy v různých úhlech jsou stromové podpěry téměř vždy lepší volbou — efektivně podepřou složitý tvar s menším množstvím materiálu a snáze se odstraňují bez poškození detailů.</div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Nastavení vzdálenosti od modelu přímo ovlivňuje, jak snadno podpěry půjdou odstranit.</strong> Příliš těsné nastavení (malá Z/XY Distance) zajistí čistší povrch, ale podpěry budou obtížně odstranitelné a mohou poškodit model. Příliš volné nastavení zhorší kvalitu podepřeného povrchu. Začněte s doporučenými hodnotami výše a upravujte podle konkrétního materiálu.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=tree+supports+vs+normal+supports+3D+printing&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Tree supports vs normal supports 3D printing podpěry</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 6 — MOSTY A PŘEVISY
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>6 — Mosty a převisy (Bridging & Overhang)</h2>
+      </div>
+
+      <p>Most (bridge) je úsek, kde tiskárna tiskne plast "do vzduchu" mezi dvěma pevnými body bez podpěry pod ním — typicky přes otvory nebo mezi dvěma stěnami. Správné parametry mostů umožňují přemostit i poměrně velké vzdálenosti bez prověšení.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Bridge Flow Rate<small>Průtok při tisku mostů</small></div>
+          <span class="param-val">85–95 %</span>
+        </div>
+        <p>Snížené množství extrudovaného materiálu při tisku přes most. Méně plastu = tenčí, lehčí linie, která se méně prověšuje vlastní vahou, protože nemá nic, co by ji podpíralo zespodu. Standardně se nastavuje o 5–15 % nižší než běžný Flow Rate.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Bridge Speed<small>Rychlost tisku mostů</small></div>
+          <span class="param-val">20–30 mm/s</span>
+        </div>
+        <p>Pomalejší rychlost specificky pro mostní úseky. Pomalý tisk dává plastu více času ztuhnout ihned po extruzi, než se stihne prověsit. Kombinováno s maximálním chlazením (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Forced Cooling for Overhangs</a>) pro nejlepší výsledek.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Bridge Fan Speed<small>Rychlost větráku při mostech</small></div>
+          <span class="param-val">100 % (i pro materiály s nižším běžným chlazením)</span>
+        </div>
+        <p>I u materiálů, kde je běžné chlazení nízké (PETG, ABS), se při tisku mostů dočasně zvýší větrák na maximum. Rychlé ztuhnutí je v tomto specifickém úseku důležitější než riziko delaminace, protože jde o krátký úsek tisku.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Overhang Threshold / Overhang Speed Slowdown<small>Práh zpomalení pro převisy</small></div>
+          <span class="param-val">úhel 40–50°</span>
+        </div>
+        <p>Některé slicery umožňují postupné zpomalení rychlosti tisku úměrně tomu, jak "převislá" je daná plocha (na rozdíl od jednoduchého vypnutí/zapnutí podpěr při jednom prahu). Čím větší převis, tím pomalejší tisk a vyšší chlazení — to umožňuje tisknout krátké převisy i bez podpěr.</p>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Jak orientovat model, aby se minimalizovaly podpěry:</strong> Před tiskem zkuste model otočit (rotovat) tak, aby co nejvíce ploch bylo orientováno svisle nebo s minimálním převisem. I malá rotace o 10–20° může výrazně snížit potřebu podpěr a zlepšit povrchovou kvalitu. Auto-orientace ve sliceru (viz <a href="03_3D_slicer_zaklad.html" style="color:var(--blue);">03 — Import a příprava modelu</a>) to často udělá automaticky, ale manuální kontrola se vyplatí.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=bridging+settings+3D+printing+overhang+test&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Bridging settings 3D printing overhang test mosty</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 7 — PŘILNAVOST K PODLOŽCE
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>7 — Přilnavost k podložce (Bed Adhesion)</h2>
+      </div>
+
+      <p>Pokud model nemá dostatečně velkou kontaktní plochu s podložkou (malý, tenký nebo vysoký model), riskuje odlepení během tisku. Tyto tři techniky zvyšují přilnavost přidáním pomocné struktury kolem nebo pod model.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Skirt<small>Sukně (obvodová linie kolem modelu)</small></div>
+          <span class="param-val">2–3 smyčky, 3–5 mm od modelu</span>
+        </div>
+        <p>Několik obvodových linií vytištěných okolo modelu (nikoli pod ním), které nejsou s modelem spojené. Hlavní účel: ustálit tok plastu z trysky před začátkem skutečného tisku a vizuálně zkontrolovat, že je podložka správně vyrovnaná po celé ploše, kde bude model.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Skirt Loops / Skirt Count<small>Počet smyček sukně</small></div>
+          <span class="param-val">2–3</span>
+        </div>
+        <p>Kolik soustředných obvodů Skirt vytiskne. Více smyček = lepší ustálení toku plastu, ale zbytečné navíc pro jednoduché tisky. 2–3 smyčky jsou standardní.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Skirt Distance<small>Vzdálenost sukně od modelu</small></div>
+          <span class="param-val">3–5 mm</span>
+        </div>
+        <p>Mezera mezi Skirt a samotným modelem. Příliš malá vzdálenost riskuje spojení se Skirtem (nechtěné přilepení). Příliš velká zabírá zbytečně místo na podložce.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Brim<small>Okraj (přilepený k modelu)</small></div>
+          <span class="param-val">5–8 mm šířka (problematické materiály)</span>
+        </div>
+        <p>Na rozdíl od Skirtu je Brim přímo <strong>spojený</strong> s první vrstvou modelu — vytváří širší kontaktní plochu s podložkou jako "křídla" kolem základny modelu. Ideální pro vysoké, úzké nebo málo stabilní modely, které mají tendenci se odlepit nebo zvedat rohy (warping). Po tisku se Brim odlomí/odřízne.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Brim Width<small>Šířka okraje</small></div>
+          <span class="param-val">5–8 mm</span>
+        </div>
+        <p>Jak daleko od modelu Brim sahá. Širší Brim = více přídavné přilnavé plochy, ale více materiálu a více práce při odstraňování. Pro ABS/ASA (náchylné na warping) zkuste 8–10 mm, pro PLA obvykle stačí 5 mm.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Raft<small>Vor / Podkladová mřížka</small></div>
+          <span class="param-val">kdy dává smysl: nerovná podložka, problematická přilnavost</span>
+        </div>
+        <p>Celá vrstvená podkladová struktura vytištěná pod modelem, na kterou se model tiskne až poté. Raft poskytuje maximální přilnavost a navíc kompenzuje drobné nerovnosti podložky, protože vyrovnávací vrstvy Raftu absorbují nedokonalosti. Nevýhody: výrazně více materiálu, delší čas tisku, a spodní povrch modelu (kde byl Raft) bude mít horší kvalitu — musí se po odstranění Raftu obrousit.</p>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">🐍</div>
+        <div><strong>KOBRA X — auto-leveling zlepšuje první vrstvu:</strong> Kobra X provádí automatické mesh bed leveling před každým tiskem, což výrazně zlepšuje rovnoměrnost první vrstvy po celé podložce ve srovnání se staršími tiskárnami bez auto-levelingu. Díky tomu je potřeba Brimu menší — pro běžné modely často postačí jen Skirt nebo žádná z těchto technik. Brim doporučujeme jen pro skutečně problematické modely (vysoké, úzké, ABS/ASA).</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=skirt+vs+brim+vs+raft+3D+printing&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Skirt vs brim vs raft 3D printing přilnavost</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 8 — ŠEV
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>8 — Šev (Seam)</h2>
+      </div>
+
+      <p>Šev je místo, kde tryska začíná a končí každý uzavřený obvod (perimetr). Vzhledem k tomu, že přechod mezi koncem a začátkem linie nikdy není absolutně dokonalý, vzniká na tomto místě drobná viditelná čára nebo bod — pozice švu určuje, kde se tento artefakt objeví.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Seam Position<small>Pozice švu</small></div>
+          <span class="param-val">Nearest / Rear / Aligned (dle případu)</span>
+        </div>
+        <p><strong>Aligned</strong> — slicer se snaží zarovnat švy nad sebou napříč vrstvami do jedné svislé linie, čímž je výsledný artefakt soustředěn na jedno místo (snadnější dodatečné zahlazení, ale ta linie je viditelná). <strong>Nearest</strong> — šev vždy nejblíže poslednímu bodu tisku, minimalizuje travel pohyb. <strong>Random</strong> — pozice švu je pro každou vrstvu náhodná, takže žádná viditelná svislá linie nevznikne (artefakty jsou rozptýleny). <strong>Rear</strong> — šev je vždy na zadní straně modelu vzhledem k orientaci na podložce, ideální když víte, která strana modelu nebude vidět.</p>
+      </div>
+
+      <table>
+        <thead><tr><th>Seam Position</th><th>Výhoda</th><th>Nevýhoda</th></tr></thead>
+        <tbody>
+          <tr><td>Aligned</td><td>Soustředěný, předvídatelný artefakt</td><td>Viditelná svislá linie</td></tr>
+          <tr><td>Nearest</td><td>Nejrychlejší tisk</td><td>Nepředvídatelná pozice</td></tr>
+          <tr><td>Random</td><td>Žádná viditelná svislá linie</td><td>Artefakty rozptýlené po celém povrchu</td></tr>
+          <tr><td>Rear</td><td>Skrytí švu na neviditelné straně</td><td>Vyžaduje vědět, jak bude model orientovaný</td></tr>
+        </tbody>
+      </table>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Seam Gap<small>Mezera švu</small></div>
+          <span class="param-val">malá, automaticky</span>
+        </div>
+        <p>Malá mezera ponechaná na konci perimetru před návratem na startovní bod, aby se zabránilo přebytečnému nahromadění plastu (blob) v místě, kde se linie setkávají. Většina sliceru toto řeší automaticky bez nutnosti manuálního zásahu.</p>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>„Rear" ukryje šev dozadu, „Random" je méně viditelný na rovných plochách.</strong> Pro modely s jasně definovanou "přední" a "zadní" stranou (figurky, vázy s předním motivem) použijte Rear. Pro jednoduché geometrické tvary (krychle, válce), kde nechcete jednu nápadnou svislou linii, je lepší Random.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=seam+position+3D+printing+settings+hide&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Seam position 3D printing settings hide šev</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE NAV
+    ════════════════════════════════════════════ -->
+    <div class="pn">
+      <a href="04_3D_slicer_pokrocily.html">← 04 · Slicer — pokročilý</a>
+      <a href="05b_3D_slicer_rychlost.html" class="nx">05b · Parametry rychlosti →</a>
+    </div>
+
+  </div><!-- /wrapper -->
 </main>
+
 <script>
 const searchInput = document.getElementById('sb-search-input');
 searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') {
+  if (e.key === 'Enter') {
     const q = e.target.value.trim();
-    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
   }
 });
 </script>

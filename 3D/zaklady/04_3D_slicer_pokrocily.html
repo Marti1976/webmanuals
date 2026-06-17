@@ -22,34 +22,29 @@
     --mono:     'IBM Plex Mono', monospace;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
 
   /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--border); border-right-color: var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; }
   .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
   .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .sidebar-product { display: flex; align-items: center; gap: 10px; }
   .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
   .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
   .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-
   .sb-search { padding: 15px 20px 5px; }
   .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
   .sb-search input:focus { border-color: var(--accent); }
-
   .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  
   .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
   .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
   .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
   .nav-item-text { flex: 1; min-width: 0; }
-
   .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
   .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
   .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
 
-  /* ── MAIN CONTENT AREA ── */
+  /* ── MAIN ── */
   .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
 
   /* ── HERO ── */
@@ -70,11 +65,46 @@
   .section { margin: 44px 0; }
   .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
   .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
+
+  /* ── CARD ── */
+  .card { background: var(--card); border: 1px solid var(--border); padding: 22px 26px; transition: all .2s; }
+  .card:hover { border-color: var(--accent); background: rgba(232,160,32,.03); }
+  .card h3 { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 19px; color: var(--accent2); margin: 0 0 8px; }
+  .card h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; color: var(--accent2); margin-bottom: 6px; }
+  .card p { font-size: 14px; color: var(--text); }
+  .card-num { font-family: var(--mono); font-size: 12px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%); display: inline-block; margin-bottom: 10px; }
+
+  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
+  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  thead tr { background: var(--surface); }
+  th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
+  td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
+
+  /* ── YT LINK ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
+  .yt-link:hover { opacity: .8; }
+
+  /* ── REF LINK ── */
+  .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
+  .ref-link:hover { background: rgba(74,158,255,.14); }
 
   /* ── PAGE NAV ── */
-  .pn { margin-top:60px; padding-top:26px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
-  .pn a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; transition:color .15s; }
-  .pn a:hover { color:var(--accent); } .pn .nx { margin-left:auto; }
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
@@ -83,130 +113,313 @@
 <body>
 
 <!-- ── SIDEBAR ── -->
-<nav class="sidebar" id="sidebar">
-
+<nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-product">
       <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">
-        ANYCUBIC KOBRA X
-        <small>Průvodce 3D tiskem · CZ</small>
-      </div>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
     </div>
   </div>
-
-  <div class="sb-search">
-    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
-  </div>
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
 
   <div class="nav-group-label">Základní sekce</div>
-
-  <a href="00_3D_index.html" class="nav-item">
-    <span class="nav-num">00</span>
-    <span class="nav-item-text">Obsah & Hledání</span>
-  </a>
-  <a href="01_3D_uvod.html" class="nav-item ">
-    <span class="nav-num">01</span>
-    <span class="nav-item-text">Úvod do FDM tisku</span>
-  </a>
-  <a href="02_3D_tiskarna.html" class="nav-item ">
-    <span class="nav-num">02</span>
-    <span class="nav-item-text">Tiskárna Kobra X</span>
-  </a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item ">
-    <span class="nav-num">03</span>
-    <span class="nav-item-text">Slicer — základy</span>
-  </a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item active">
-    <span class="nav-num">04</span>
-    <span class="nav-item-text">Slicer — pokročilý</span>
-  </a>
-
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">05</span>
-    <span class="nav-item-text">Detailní parametry</span>
-  </div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item active"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
   <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item ">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item ">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item ">05c · Parametry filamentu</a></li>
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
   </ul>
-
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item ">
-    <span class="nav-num">06</span>
-    <span class="nav-item-text">Příprava & tisk</span>
-  </a>
-  <a href="07_3D_post_processing.html" class="nav-item ">
-    <span class="nav-num">07</span>
-    <span class="nav-item-text">Post-processing</span>
-  </a>
-  <a href="08_3D_filamenty.html" class="nav-item ">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </a>
-  <a href="09_3D_modely_cad.html" class="nav-item ">
-    <span class="nav-num">09</span>
-    <span class="nav-item-text">3D Modely & CAD</span>
-  </a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item ">
-    <span class="nav-num">10</span>
-    <span class="nav-item-text">Prostředí & upgrady</span>
-  </a>
-  <a href="11_3D_udrzba.html" class="nav-item ">
-    <span class="nav-num">11</span>
-    <span class="nav-item-text">Údržba & spot. mat.</span>
-  </a>
-  <a href="12_3D_tipy.html" class="nav-item ">
-    <span class="nav-num">12</span>
-    <span class="nav-item-text">Tipy & triky</span>
-  </a>
-  <a href="13_3D_troubleshooting.html" class="nav-item ">
-    <span class="nav-num">13</span>
-    <span class="nav-item-text">Troubleshooting</span>
-  </a>
+  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
 
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">Soubory</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
     <span class="nav-item-text">Výběr příloh</span>
   </a>
-  
   <div class="nav-group-label">Oblíbené odkazy</div>
   <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">WEB</span>
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
     <span class="nav-item-text">Výběr odkazů</span>
   </a>
-
 </nav>
 
+<!-- ── MAIN ── -->
 <main class="main-content">
-  <!-- HERO -->
+
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 04</span>
-        <span class="ver-badge">SOFTWARE</span>
+        <span class="ver-badge">POKROČILÉ</span>
       </div>
       <h1>Slicer — <span>pokročilý</span></h1>
-      <p>Tato kapitola čeká na zpracování. Zde se dozvíte vše potřebné k tématu "Slicer — pokročilý".</p>
+      <p>Jak upravovat modely přímo ve sliceru, malovat podpěry, přidávat text, používat modifikátory a dělit velké objekty. Profily filamentu a tiskárny — kde je najít, vytvořit a jak dostat do tiskárny.</p>
     </div>
   </div>
 
   <div class="wrapper">
+
+    <div class="alert alert-info">
+      <div class="alert-icon">💡</div>
+      <div><strong>O čem je tato kapitola:</strong> Tady se nevěnujeme jednotlivým slicovacím parametrům (ty najdete detailně rozebrané v kapitolách <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a</a>, <a href="05b_3D_slicer_rychlost.html" style="color:var(--blue);">05b</a> a <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>), ale <strong>nástrojům uživatelského rozhraní</strong> — tomu, co se dá s modelem dělat přímo ve sliceru bez nutnosti CAD softwaru, jak pracovat s profily a jak nastavit propojení se sítí.</div>
+    </div>
+
+    <p style="margin-bottom: 8px;">Propojení s ostatními kapitolami:
+      <a href="03_3D_slicer_zaklad.html" class="ref-link">→ 03 Slicer — základy</a>
+      <a href="05a_3D_slicer_tisk.html" class="ref-link">→ 05a Parametry tisku</a>
+      <a href="05c_3D_slicer_filament.html" class="ref-link">→ 05c Parametry filamentu</a>
+      <a href="09_3D_modely_cad.html" class="ref-link">→ 09 3D Modely & CAD</a>
+    </p>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 1 — ÚPRAVY MODELU
+    ════════════════════════════════════════════ -->
     <div class="section">
       <div class="section-header">
-        <h2>Prázdná kapitola</h2>
+        <h2>1 — Úpravy modelu ve sliceru</h2>
       </div>
-      <p>Obsah bude brzy doplněn. Zvolte zatím jinou kapitolu z levého menu.</p>
+
+      <p>Anycubic Slicer Next (i OrcaSlicer) nabízí sadu základních nástrojů pro úpravu importovaného modelu — ne plnohodnotný CAD, ale dost na to, abyste zvládli běžné praktické problémy bez nutnosti otevírat jiný program.</p>
+
+      <h3>Cut Tool (Nástroj rozdělení)</h3>
+      <p>Rozřízne model rovinou na dvě nebo více částí. Užitečné, pokud je model vyšší než tiskový prostor Kobry X (260 mm), nebo pokud chcete rozdělit objekt na části, které se snáz tisknou nebo lépe sednou na podložku bez podpěr. Po rozdělení lze každou polovinu samostatně přesunout, otočit nebo přidat spojovací kolíky (dowels) pro přesné slepení po tisku.</p>
+
+      <h3>Mirror (Zrcadlení)</h3>
+      <p>Zrcadlově otočí model podél vybrané osy (X, Y nebo Z). Užitečné pro pravolevé párové díly (např. levá/pravá strana držáku) bez nutnosti importovat dva samostatné soubory.</p>
+
+      <h3>Mesh Repair (Oprava sítě / Vyplnění děr)</h3>
+      <p>Některé stažené nebo naskenované modely mají chyby v 3D síti — díry, nekonzistentní normály, nebo nemanifoldní geometrii (manifold = "vodotěsná" 3D geometrie, kterou lze správně slicovat). Funkce Mesh Repair automaticky detekuje a opraví tyto chyby, aby se model dal vůbec slicovat. V Anycubic Slicer Next: pravým tlačítkem na model → <em>Fix Model</em>.</p>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Slicer není CAD.</strong> Pro zásadní úpravy modelu — přidání nových geometrických prvků, zásadní změny tvaru, parametrické modelování — použijte specializovaný CAD nástroj jako Fusion 360 nebo Tinkercad. Slicer zvládne jen rozdělení, zrcadlení, opravu sítě a drobné kosmetické úpravy. Více v kapitole <a href="09_3D_modely_cad.html" style="color:#fff;">09 — 3D Modely & CAD</a>.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=cut+tool+mesh+repair+slicer+3D+model&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Cut tool mesh repair slicer 3D model úprava</a>
     </div>
-  </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 2 — TEXT NA MODELU
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>2 — Text na modelu (Text / Embossing)</h2>
+      </div>
+
+      <p>Slicer umožňuje přidat text přímo na povrch modelu — vyražený (engraved, do hloubky) nebo vystouplý (embossed, navenek). Užitečné pro jména, popisky, čísla dílů nebo dekorativní nápisy bez nutnosti modelovat text v CAD programu.</p>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Font (Písmo)</h4>
+          <p>Slicer obsahuje systémová písma vašeho počítače. Pro 3D tisk volte jednoduchá, čitelná písma bez tenkých detailů (např. Arial Bold, Roboto) — ozdobná písma s tenkými tahy se hůře tisknou na malé velikosti.</p>
+        </div>
+        <div class="card">
+          <h4>Height (Výška reliéfu)</h4>
+          <p>Jak vysoko text vystupuje (embossed) nebo jak hluboko je vyrytý (engraved) od povrchu modelu. Minimální praktická výška je 0,4–0,6 mm (alespoň 2 vrstvy při 0,2 mm Layer Height), jinak text nebude viditelný.</p>
+        </div>
+        <div class="card">
+          <h4>Size / Odsazení (Offset)</h4>
+          <p>Velikost písma a jeho pozice na povrchu modelu (posun v ose X/Y/Z a rotace, aby text "seděl" na zakřiveném nebo šikmém povrchu).</p>
+        </div>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Text musí být dostatečně velký — minimálně 3–4 mm výška znaků</strong>, aby se dobře vytiskl s tryskou 0,4 mm. Menší text ztrácí čitelnost, protože jednotlivé tahy písmen splynou do jedné tlusté linie.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 3 — MALOVÁNÍ PODPOR
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>3 — Malování podpěr (Paint-on Supports)</h2>
+      </div>
+
+      <p>Automatický generátor podpěr (viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Sekce 5</a>) analyzuje celý model podle úhlu převisu a všude, kde je třeba, podpěru přidá. Problém je, že tento automat často generuje podpěry i tam, kde to není nezbytné, nebo naopak vynechá místa, která by potřebovala posílit. Paint-on Supports (malování podpěr) řeší tento problém manuálním zásahem.</p>
+
+      <h3>Proč ruční malování podpor?</h3>
+      <p>Automatické podpěry jsou navrženy pro nejhorší případ a bývají zbytečně husté — generují podpěru i pod malými, samonosnými detaily, kde plast i bez podpory "vydrží" díky rychlému tuhnutí. Ruční malování umožňuje přesně kontrolovat, kde podpěra skutečně musí být, a ušetřit materiál i čas tisku i práci s odstraňováním po tisku.</p>
+
+      <h3>Jak používat štětec (Brush)</h3>
+      <p>V náhledu modelu (Prepare view) přepnete na nástroj <strong>Paint-on Supports</strong> a pomocí virtuálního štětce "malujete" přímo na 3D povrch modelu:</p>
+
+      <table>
+        <thead><tr><th>Nástroj</th><th>Funkce</th></tr></thead>
+        <tbody>
+          <tr><td>Enforcer (Vynutit)</td><td>Přidá podpěru i tam, kde by ji automat nevygeneroval</td></tr>
+          <tr><td>Blocker (Blokovat)</td><td>Zakáže podpěru v daném místě, i kdyby ji automat chtěl přidat</td></tr>
+          <tr><td>Brush Size (Velikost štětce)</td><td>Upravuje plochu, kterou jeden "tah" štětcem ovlivní</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Praktický příklad — figurka s visící rukou:</strong> Automat by mohl vygenerovat hustou podpěru pod celou paží figurky. Pomocí Blocker nástroje zakážete podpěru pod částmi paže, které jsou krátké a samonosné, a pomocí Enforcer přidáte podpěru jen přesně pod prsty nebo loket, kde je převis skutečně kritický. Výsledek: méně materiálu, méně práce s odstraňováním, čistší povrch ruky.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=paint+on+supports+3D+printing+slicer+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Paint on supports 3D printing slicer tutorial malování podpěr</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 4 — MODIFIKÁTORY
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>4 — Modifikátory a různé výplně (Modifiers)</h2>
+      </div>
+
+      <p>Modifikátory umožňují aplikovat <strong>odlišné parametry</strong> jen na konkrétní část modelu, místo aby platilo jedno nastavení pro celý objekt. Tím lze lokálně zpevnit kritická místa, aniž by se zvýšila spotřeba materiálu a čas tisku v celém modelu.</p>
+
+      <h3>Support Modifier (Modifikátor podpěr)</h3>
+      <p>Přidá nebo upraví parametry podpěr jen v ohraničeném objemu — např. jiný Support Overhang Angle nebo jiný Support Type jen pro konkrétní problematickou oblast modelu, zatímco zbytek modelu používá globální nastavení.</p>
+
+      <h3>Infill Modifier (Modifikátor výplně)</h3>
+      <p>Definujete dodatečný 3D objem (box, válec apod.) přímo uvnitř modelu, kde se zvýší (nebo sníží) Infill Density. Typický případ: model má globálně 15% výplň, ale v místě, kde bude šroubový spoj nebo závitová vložka (heat-set insert, viz <a href="07_3D_post_processing.html" style="color:var(--blue);">07 — Post-processing</a>), potřebujete lokálně 80–100% výplň pro pevné uchycení. Modifikátor umožní zhuštění jen v tomto bodě bez zvyšování výplně globálně v celém modelu.</p>
+
+      <h3>Height Range Modifier (Modifikátor výškového rozsahu)</h3>
+      <p>Aplikuje jiné parametry na vrstvy mezi dvěma zadanými výškami Z. Užitečné, pokud chcete například jinou rychlost nebo Layer Height pro spodní polovinu modelu (méně detailní, lze tisknout rychleji) než pro horní polovinu (detailní část, pomalejší a přesnější tisk).</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Jak vytvořit modifikátor:</strong> Pravým tlačítkem na model ve stromu objektů (Object List) → <em>Add Modifier</em> → vyberte tvar (kostka, válec, koule) → přesuňte a zmenšete na požadované místo → v parametrech modifikátoru přepište jen ty hodnoty, které se mají lišit od globálního nastavení.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=infill+modifier+height+range+slicer+settings&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Infill modifier height range slicer settings modifikátory</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 5 — FUZZY SKIN
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>5 — Fuzzy Skin a dekorativní efekty</h2>
+      </div>
+
+      <h3>Fuzzy Skin (Texturovaný/rozostřený povrch)</h3>
+      <p>Fuzzy Skin záměrně "rozhází" trajektorii trysky na vnější stěně malými, nepravidelnými odchylkami, čímž vznikne matný, texturovaný povrch připomínající brusný papír nebo textil — místo hladkých, jasně viditelných layer lines. Skvěle skrývá viditelnost vrstev a šev (Seam, viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Sekce 8</a>), protože nepravidelný povrch rozbíjí pravidelnost, na kterou je lidské oko citlivé.</p>
+
+      <div class="chapter-grid">
+        <div class="card">
+          <h4>Fuzzy Skin Thickness</h4>
+          <p>Maximální odchylka trysky od ideální trajektorie — určuje "hloubku" textury. Typicky 0,2–0,4 mm.</p>
+        </div>
+        <div class="card">
+          <h4>Fuzzy Skin Point Density</h4>
+          <p>Kolik nepravidelných bodů na milimetr se generuje. Vyšší hustota = jemnější, méně hustota = hrubší textura.</p>
+        </div>
+        <div class="card">
+          <h4>Fuzzy Skin (oblast)</h4>
+          <p>Lze aplikovat na celý model, jen na vnější perimetr, nebo i na vnitřní stěny — nejčastěji se používá jen na viditelný vnější povrch.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Kdy Fuzzy Skin nepoužívat:</strong> Efekt zvyšuje povrchové tření (nehodí se pro pohyblivé/kluzné díly) a mírně snižuje vodotěsnost vnější stěny. Skvěle se hodí na dekorativní modely, organické tvary, terén pro diorámy, ale ne na funkční mechanické díly.</div>
+      </div>
+
+      <h3>Ironing (Žehlení) — odkaz</h3>
+      <p>Žehlení horní plochy je popsáno detailně v kapitole <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Top/Bottom — Ironing</a>. Stejně jako Fuzzy Skin jde o povrchový efekt, ale s opačným cílem — Ironing povrch <strong>vyhlazuje</strong> do lesklého vzhledu, Fuzzy Skin ho naopak <strong>texturuje</strong> do matného vzhledu.</p>
+
+      <h3>Nozzle Wipe a Seam Positioning</h3>
+      <p>Nozzle wipe (stírání trysky, detailně v <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Retrakce</a>) a Seam Positioning (pozice švu, <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Sekce 8</a>) jsou dva další nástroje, které spolu s Fuzzy Skin tvoří sadu technik pro maskování viditelných artefaktů na povrchu modelu. Kombinace Random Seam Position + Fuzzy Skin dává nejméně viditelné stopy po sváru na jednoduchých geometrických tvarech.</p>
+
+      <a href="https://www.youtube.com/results?search_query=fuzzy+skin+3D+printing+texture+effect&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Fuzzy skin 3D printing texture effect texturovaný povrch</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 6 — PLATE MANAGEMENT
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>6 — Více modelů najednou (Plate Management)</h2>
+      </div>
+
+      <p>Tiskárna umožňuje vytisknout více modelů (stejných nebo různých) v jedné tiskové dávce. Efektivní organizace podložky šetří čas a materiál, ale přináší i specifická rizika.</p>
+
+      <h3>Uspořádání modelů na podložce</h3>
+      <p>Modely lze manuálně přesouvat, otáčet a škálovat na ploše podložky (Build Plate). Slicer kontroluje kolize — pokud se dva modely (včetně jejich podpěr) překrývají, zvýrazní problém červeně.</p>
+
+      <h3>Auto-arrange (Automatické uspořádání)</h3>
+      <p>Funkce, která automaticky rozmístí všechny modely na podložce s optimálním využitím plochy a minimálními rozestupy. V Anycubic Slicer Next i OrcaSlicer dostupné jako tlačítko v toolbaru (ikona připomínající mřížku/uspořádání). Doporučeno použít po každém vložení nového modelu na plochu.</p>
+
+      <h3>Tisk více různých modelů v jedné dávce</h3>
+      <p>Lze kombinovat různé STL soubory na jedné podložce — užitečné pro tisk sady součástek najednou (např. všechny díly jednoho projektu). Každý model může mít individuálně přiřazené parametry pomocí Object-specific Settings (kliknutím pravým tlačítkem na model ve stromu objektů).</p>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Riziko hromadného tisku:</strong> Při tisku více kusů najednou se zvyšuje riziko, že se některý z modelů odlepí nebo selže (např. zachycení trysky o zvednutý rohu jednoho z modelů). Pokud k tomu dojde, <strong>tisk celé dávky se obvykle zastaví nebo zhorší kvalitu zbylých modelů</strong> — tiskárna pokračuje, ale tryska může strhávat zbytky odlepeného modelu přes ostatní. Pro důležité nebo dlouhé tisky zvažte menší dávky nebo pečlivější kontrolu přilnavosti každého modelu.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=auto+arrange+multiple+models+3D+printing+plate&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Auto arrange multiple models 3D printing plate uspořádání podložky</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 7 — VZDÁLENÝ TISK A WORKBENCH
+    ════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <h2>7 — Vzdálený tisk a Workbench</h2>
+      </div>
+
+      <p>Anycubic Slicer Next obsahuje funkci Workbench — propojení sliceru přímo s tiskárnou, díky kterému nemusíte ručně přenášet G-code přes SD kartu nebo USB.</p>
+
+      <h3>Propojení sliceru s tiskárnou</h3>
+      <p>Tiskárna musí být připojena k Wi-Fi a zaregistrovaná ve stejném Anycubic účtu, jaký používáte v mobilní aplikaci a ve sliceru. Po přihlášení do sliceru se Kobra X (pokud je online) automaticky zobrazí v záložce <strong>Workbench</strong> jako dostupné zařízení — ať už jste v lokální síti (LAN) nebo mimo ni (cloud spojení přes internet).</p>
+
+      <table>
+        <thead><tr><th>Způsob spojení</th><th>Jak funguje</th><th>Vhodné pro</th></tr></thead>
+        <tbody>
+          <tr><td>LAN (lokální síť)</td><td>Slicer a tiskárna ve stejné Wi-Fi síti, přímé spojení</td><td>Rychlejší přenos, není potřeba internet</td></tr>
+          <tr><td>Cloud (přes účet)</td><td>Spojení přes Anycubic servery, funguje odkudkoliv</td><td>Spuštění tisku, i když nejste doma</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Posílání tisku přímo ze sliceru</h3>
+      <p>Po doslicování modelu místo exportu na SD kartu kliknete na tlačítko <strong>Send to Printer</strong> (nebo podobně nazvané) v záložce Workbench. G-code se odešle přímo do tiskárny a tisk lze spustit na dálku, bez nutnosti fyzicky přenášet soubor.</p>
+
+      <h3>Monitorování přes kameru</h3>
+      <p>Pokud má tiskárna zabudovanou kameru (Kobra X ano — viz <a href="02_3D_tiskarna.html" style="color:var(--blue);">02 — Elektronika a konektivita</a>), lze průběh tisku sledovat živě přímo v mobilní aplikaci Anycubic App nebo někdy i přímo v okně Workbench sliceru, pokud je podporováno.</p>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Stejný účet jako v mobilní aplikaci:</strong> Pro funkčnost Workbench musíte být ve sliceru přihlášeni stejným Anycubic účtem, který je spárovaný s tiskárnou v mobilní aplikaci. Pokud tiskárnu zatím nemáte zaregistrovanou, nejprve ji přidejte přes Anycubic App (QR kód párování na displeji tiskárny), a teprve potom se objeví i ve sliceru.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=Anycubic+Slicer+Next+workbench+remote+print&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Slicer Next workbench remote print vzdálený tisk</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE NAV
+    ════════════════════════════════════════════ -->
+    <div class="pn">
+      <a href="03_3D_slicer_zaklad.html">← 03 · Slicer — základy</a>
+      <a href="05a_3D_slicer_tisk.html" class="nx">05a · Detailní parametry →</a>
+    </div>
+
+  </div><!-- /wrapper -->
 </main>
+
 <script>
 const searchInput = document.getElementById('sb-search-input');
 searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') {
+  if (e.key === 'Enter') {
     const q = e.target.value.trim();
-    if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
   }
 });
 </script>

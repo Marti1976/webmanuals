@@ -289,9 +289,135 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+
+        /* ── 18+ MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 32px;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+        .modal-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-btn-yes {
+            background: var(--accent-primary);
+            color: #000;
+        }
+        .modal-btn-yes:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .modal-btn-no {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+        .modal-btn-no:hover {
+            color: var(--text-main);
+            border-color: var(--text-muted);
+        }
+
+        /* ── FIRECRACKER ICON ── */
+        .firecracker-btn {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .firecracker-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 217, 255, 0.2);
+        }
     </style>
 </head>
 <body>
+
+<!-- 18+ MODAL -->
+<div class="modal-overlay" id="ageModal">
+    <div class="modal-box">
+        <div class="modal-icon">🧨</div>
+        <h2 class="modal-title">Obsah určen 18+</h2>
+        <p class="modal-text">
+            Následující sekce obsahuje informace o zbraních a střelivu.
+            Potvrzuješ, že je ti nejméně 18 let?
+        </p>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-yes" onclick="confirmAge()">ANO</button>
+            <button class="modal-btn modal-btn-no" onclick="closeModal()">NE</button>
+        </div>
+    </div>
+</div>
+
+<!-- FIRECRACKER BUTTON -->
+<button class="firecracker-btn" onclick="openAgeModal()" title="Sekce 18+">🧨</button>
 
     <div class="container">
         <header>
@@ -306,55 +432,33 @@
             ══════════════════════════════════════ -->
             <div class="grid-container">
 
-                <!-- KARTA MANUÁLU 1: Antigravity -->
-                <a href="Antigrav/01_ANT_MANUAL.html" class="card">
-                    <div class="card-header">
-                        <span class="card-icon">🚀</span>
-                        <span class="card-badge">Aktivní</span>
-                    </div>
-                    <h2 class="card-title">Google Antigravity 2.0</h2>
-                    <p class="card-desc">Průvodce agentním prostředím Google Antigravity 2.0.</p>
-                    <span class="card-link">Otevřít manuál <span>→</span></span>
-                </a>
-
-                <!-- KARTA MANUÁLU 2: Antigravity IDE -->
-                <a href="AntigravIDE/00_IDE_INDEX.html" class="card">
-                    <div class="card-header">
-                        <span class="card-icon">🚀</span>
-                        <span class="card-badge">Aktivní</span>
-                    </div>
-                    <h2 class="card-title">Google Antigravity IDE</h2>
-                    <p class="card-desc">Průvodce agentním prostředím od Google. Instalace, bezpečnost a řízení autonomních agentů atd.</p>
-                    <span class="card-link">Otevřít manuál <span>→</span></span>
-                </a>
-				
-                <!-- KARTA MANUÁLU 3: Antigravity CLI -->
-                <a href="AntigravCLI/00_CLI_INDEX.html" class="card">
+                <!-- KARTA MANUÁLU 1: Gemini CLI -->
+                <a href="GeminiCLI/00_CLI_INDEX.html" class="card">
                     <div class="card-header">
                         <span class="card-icon">⚡</span>
                         <span class="card-badge">Aktivní</span>
                     </div>
-                    <h2 class="card-title">Google Antigravity CLI</h2>
-                    <p class="card-desc">Kompletní průvodce pro instalaci, nastavení a používání Google Antigravity CLI z příkazové řádky.</p>
+                    <h2 class="card-title">Gemini CLI</h2>
+                    <p class="card-desc">Kompletní průvodce pro instalaci, nastavení a používání Google Gemini z příkazové řádky.</p>
+                    <span class="card-link">Otevřít manuál <span>→</span></span>
+                </a>
+
+                <!-- KARTA MANUÁLU 2: Antigravity -->
+                <a href="Antigrav/00_ANT_INDEX.html" class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🚀</span>
+                        <span class="card-badge">Aktivní</span>
+                    </div>
+                    <h2 class="card-title">Google Antigravity</h2>
+                    <p class="card-desc">Průvodce agentním prostředím od Google. Instalace, bezpečnost a řízení autonomních agentů.</p>
                     <span class="card-link">Otevřít manuál <span>→</span></span>
                 </a>
 
                 <!-- KARTA MANUÁLU 3: Raspberry Pi -->
-                <a href="CloudeCode\00_CLDE_index.html" class="card">
-                    <div class="card-header">
-                        <span class="card-icon">📲</span>
-                        <span class="card-badge">Aktivní</span>
-                    </div>
-                    <h2 class="card-title">Claude CODE</h2>
-                    <p class="card-desc">Manuál pro Cloude Code, od Claude 😁.</p>
-                    <span class="card-link">Otevřít manuál <span>→</span></span>
-                </a>
-				
-				<!-- KARTA MANUÁLU 3: Raspberry Pi -->
                 <a href="Raspberry/00_raspberry_index.html" class="card">
                     <div class="card-header">
                         <span class="card-icon">🍓</span>
-                        <span class="card-badge">Aktivní</span>
+                        <span class="card-badge" style="color: #ff3377; background: rgba(227, 11, 92, 0.1); border-color: rgba(227, 11, 92, 0.2);">Aktivní</span>
                     </div>
                     <h2 class="card-title">Raspberry & HA</h2>
                     <p class="card-desc">Manuál pro stavbu chytré domácnosti s Raspberry Pi 3 B+, Home Assistant a Zigbee2MQTT.</p>
@@ -375,37 +479,7 @@
                 -->
 
             </div>
-			
-            <!-- ══════════════════════════════════════
-                 ODDĚLOVAČ — OSTATNÍ NÁVODY
-            ══════════════════════════════════════ -->
-            <div class="section-divider">
-                <div class="section-divider-line"></div>
-                <div class="section-divider-label">
-                    <span class="div-icon">🎲</span>
-                    <span>3D tisk</span>
-                </div>
-                <div class="section-divider-line"></div>
-            </div>
 
-            <p class="section-desc">
-                Průvodce 3D světem, návody a postupy... <code style="font-family:monospace; font-size:0.82rem; color:#a855f7; background:rgba(168,85,247,0.08); padding:2px 7px; border-radius:4px;">3D/</code> — přidejte novou kartu zkopírováním šablony níže.
-            </p>
-			
-			<div class="grid-container">
-
-                <!-- KARTA: Základ Python projektů -->
-                <a href="3D/zaklady/00_3D_index.html" class="card">
-                    <div class="card-header">
-                        <span class="card-icon">🏗️</span>
-                        <span class="card-badge badge-ostatni">3D návod</span>
-                    </div>
-                    <h2 class="card-title">Základ 3D tisku</h2>
-                    <p class="card-desc">Základy pro 3D tisk, hezky krok za krokem. Důraz je kladen na co nejvíc vysvětlení.</p>
-                    <span class="card-link">Otevřít návod <span>→</span></span>
-                </a>	
-				
-	        </div>
 
             <!-- ══════════════════════════════════════
                  ODDĚLOVAČ — OSTATNÍ NÁVODY
@@ -420,8 +494,8 @@
             </div>
 
             <p class="section-desc">
-                Samostatné průvodce a kratší návody. Soubory jsou uloženy ve složce <code style="font-family:monospace; font-size:0.82rem; color:#a855f7; background:rgba(168,85,247,0.08); padding:2px 7px; border-radius:4px;">Ostatni/</code> — přidejte novou kartu zkopírováním šablony níže.			
-			</p>
+                Samostatné průvodce a kratší návody. Soubory jsou uloženy ve složce <code style="font-family:monospace; font-size:0.82rem; color:#a855f7; background:rgba(168,85,247,0.08); padding:2px 7px; border-radius:4px;">Ostatni/</code> — přidejte novou kartu zkopírováním šablony níže.
+            </p>
 
             <div class="grid-container">
 
@@ -434,7 +508,9 @@
                     <h2 class="card-title">Základ Python projektů</h2>
                     <p class="card-desc">Instalace Pythonu, nastavení PATH a instalace všech potřebných knihoven přes pip. Krok za krokem.</p>
                     <span class="card-link">Otevřít návod <span>→</span></span>
-                </a>				
+                </a>
+				
+
                 <a href="Ostatni/asus-tuf-b550-plus-bios-cz.html" class="card">
                     <div class="card-header">
                         <span class="card-icon">🖥</span>
@@ -443,14 +519,9 @@
                     <h2 class="card-title">Asus TUF B550plus Nastavení BIOSU</h2>
                     <p class="card-desc">Stručný popis a překlad nastavení BIOSu na nové základní desce.</p>
                     <span class="card-link">Otevřít návod <span>→</span></span>
-                </a>				
- 
-
-
-
-
-
- <!-- ════════════════════════════════════════════════════════
+                </a>
+				
+                <!-- ════════════════════════════════════════════════════════
                      ŠABLONA PRO NOVÝ NÁVOD V SEKCI "OSTATNÍ"
                      Zkopírujte tento blok, odkomentujte a upravte hodnoty.
                      Soubor umístěte do složky: Ostatni/
@@ -484,6 +555,34 @@
     <footer>
         <p>&copy; 2026 Projekt Webový Manuál &middot; Systém dokumentace pro bezpečný a řízený vývoj</p>
     </footer>
+
+<script>
+function openAgeModal() {
+    document.getElementById('ageModal').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('ageModal').classList.remove('active');
+}
+
+function confirmAge() {
+    window.location.href = 'zbrane/zbrane_index.html';
+}
+
+// Zavři modal pokud klikneš mimo box
+document.getElementById('ageModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// ESC zavře modal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
 
 </body>
 </html>
