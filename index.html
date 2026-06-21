@@ -289,11 +289,135 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+
+        /* ── 18+ MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 32px;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+        .modal-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-btn-yes {
+            background: var(--accent-primary);
+            color: #000;
+        }
+        .modal-btn-yes:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .modal-btn-no {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+        .modal-btn-no:hover {
+            color: var(--text-main);
+            border-color: var(--text-muted);
+        }
+
+        /* ── FIRECRACKER ICON ── */
+        .firecracker-btn {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .firecracker-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 217, 255, 0.2);
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
+<!-- 18+ MODAL -->
+<div class="modal-overlay" id="ageModal">
+    <div class="modal-box">
+        <div class="modal-icon">🧨</div>
+        <h2 class="modal-title">Obsah určen 18+</h2>
+        <p class="modal-text">
+            Následující sekce obsahuje informace o zbraních a střelivu.
+            Potvrzuješ, že je ti nejméně 18 let?
+        </p>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-yes" onclick="confirmAge()">ANO</button>
+            <button class="modal-btn modal-btn-no" onclick="closeModal()">NE</button>
+        </div>
+    </div>
+</div>
+
+<!-- FIRECRACKER BUTTON -->
+<button class="firecracker-btn" onclick="openAgeModal()" title="Sekce 18+">🧨</button>
         <header>
             <h1>Webový Manuál</h1>
             <p class="subtitle">Centrální rozcestník pro vaši dokumentaci, pravidla a průvodce. Vyberte požadovaný manuál pro pokračování.</p>
@@ -340,7 +464,7 @@
                 </a>
 
                 <!-- KARTA MANUÁLU 3: Raspberry Pi -->
-                <a href="CloudeCode\00_CLDE_index.html" class="card">
+                <a href="CloudeCode/00_CLDE_index.html" class="card">
                     <div class="card-header">
                         <span class="card-icon">📲</span>
                         <span class="card-badge">Aktivní</span>
@@ -484,6 +608,34 @@
     <footer>
         <p>&copy; 2026 Projekt Webový Manuál &middot; Systém dokumentace pro bezpečný a řízený vývoj</p>
     </footer>
+
+<script>
+function openAgeModal() {
+    document.getElementById('ageModal').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('ageModal').classList.remove('active');
+}
+
+function confirmAge() {
+    window.location.href = 'zbrane/zbrane_index.html';
+}
+
+// Zavři modal pokud klikneš mimo box
+document.getElementById('ageModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// ESC zavře modal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
 
 </body>
 </html>

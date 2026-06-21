@@ -41,6 +41,7 @@
     border-right-color: var(--tuf);
     display: flex; flex-direction: column;
     z-index: 200; overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
   .sidebar::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -242,6 +243,7 @@
     <span class="nav-item-text">Výběr odkazů</span>
   </a>
 
+  <div style="height:32px;flex-shrink:0;"></div>
 </nav>
 
 <main class="main-content">
