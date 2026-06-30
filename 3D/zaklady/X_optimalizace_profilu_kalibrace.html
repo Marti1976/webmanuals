@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimalizace a kalibrace profilů — 3D Tisk průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0d0f14;
+    --surface:  #13161e;
+    --card:     #181c27;
+    --border:   #252b3b;
+    --accent:   #e8a020;
+    --accent2:  #f0c050;
+    --tuf:      #c8860a;
+    --green:    #3ecf76;
+    --red:      #e85050;
+    --blue:     #4a9eff;
+    --text:     #d8dce8;
+    --muted:    #6e7590;
+    --mono:     'IBM Plex Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
+
+  /* ── SIDEBAR (žádná položka aktivní — je to mimo hlavní navigaci) ── */
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
+  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .sidebar-product { display: flex; align-items: center; gap: 10px; }
+  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
+  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
+  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+  .sb-back { padding: 15px 20px 5px; }
+  .sb-back a { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--accent2); font-family: var(--mono); font-size: 12px; padding: 9px 12px; text-decoration: none; transition: all .2s; }
+  .sb-back a:hover { border-color: var(--accent); background: rgba(232,160,32,.06); }
+  .sb-search { padding: 15px 20px 5px; }
+  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
+  .sb-search input:focus { border-color: var(--accent); }
+  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
+  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
+  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
+  .nav-item-text { flex: 1; min-width: 0; }
+  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
+  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
+  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
+
+  /* ── MAIN ── */
+  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
+
+  /* ── HERO ── */
+  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
+  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
+  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
+  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
+  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 680px; }
+
+  /* ── LAYOUT ── */
+  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
+
+  /* ── SECTIONS ── */
+  .section { margin: 44px 0; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
+
+  /* ── PARAM BLOK ── */
+  .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
+  .param:hover { border-color: var(--accent); }
+  .param-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
+  .param-title { font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent2); font-weight: 600; }
+  .param-title small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  .param-val { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
+  .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .param p + p { margin-top: 6px; }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
+  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  thead tr { background: var(--surface); }
+  th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
+  td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
+
+  /* ── STEP LIST ── */
+  .steps { list-style: none; counter-reset: step; margin: 16px 0; }
+  .steps li { position: relative; padding: 10px 0 10px 42px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 8px; width: 26px; height: 26px; background: rgba(232,160,32,.12); border: 1px solid var(--accent); color: var(--accent2); font-family: var(--mono); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .steps li strong { color: var(--accent2); }
+
+  /* ── SEQUENCE FLOW (kalibrační pořadí) ── */
+  .seq-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 24px 0; }
+  .seq-step { background: var(--card); border: 1px solid var(--accent); padding: 12px 18px; font-family: var(--mono); font-size: 12.5px; color: var(--accent2); text-align: center; min-width: 110px; }
+  .seq-step .num { display: block; font-size: 10px; color: var(--accent); margin-bottom: 4px; }
+  .seq-arrow { color: var(--accent); font-size: 18px; padding: 0 10px; flex-shrink: 0; }
+
+  /* ── TOWER DIAGRAM (kalibrační věž vizualizace) ── */
+  .tower-diagram { background: var(--surface); border: 1px solid var(--border); padding: 20px; margin: 20px 0; font-family: var(--mono); font-size: 12.5px; }
+  .tower-seg { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--border); }
+  .tower-seg:last-child { border-bottom: none; }
+  .tower-seg .seg-bar { flex: 1; background: rgba(232,160,32,.15); border: 1px solid rgba(232,160,32,.4); padding: 6px 10px; color: var(--text); }
+  .tower-seg.optimal .seg-bar { background: rgba(62,207,118,.18); border-color: var(--green); color: #c8f5d8; font-weight: 600; }
+  .tower-seg .seg-val { width: 70px; flex-shrink: 0; color: var(--accent2); text-align: right; }
+
+  /* ── FORMULA BOX ── */
+  .formula { background: var(--surface); border-left: 3px solid var(--blue); padding: 14px 18px; margin: 16px 0; font-family: var(--mono); font-size: 14px; color: #cfe4ff; }
+
+  /* ── YT LINK ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
+  .yt-link:hover { opacity: .8; }
+
+  /* ── REF LINK ── */
+  .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
+  .ref-link:hover { background: rgba(74,158,255,.14); }
+
+  /* ── PAGE NAV ── */
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } .seq-flow { flex-direction: column; align-items: stretch; } .seq-arrow { transform: rotate(90deg); padding: 4px 0; text-align: center; } }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR (mimo hlavní navigaci — žádná položka aktivní, jen tlačítko Zpět) ── -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-product">
+      <span class="sidebar-tuf-badge">3D</span>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
+    </div>
+  </div>
+
+  <div class="sb-back">
+    <a href="00_3D_index.html">← Zpět na hlavní stránku</a>
+  </div>
+
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
+
+  <div class="nav-group-label">Základní sekce</div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
+  <ul class="nav-subs">
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
+  </ul>
+  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
+
+  <div class="nav-group-label">Ostatní přílohy</div>
+  <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
+    <span class="nav-item-text">Výběr příloh</span>
+  </a>
+  <div class="nav-group-label">Oblíbené odkazy</div>
+  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
+    <span class="nav-item-text">Výběr odkazů</span>
+  </a>
+  <div style="height:32px;flex-shrink:0;"></div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main-content">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="logo-row">
+        <span class="tuf-badge">PŘÍLOHA</span>
+        <span class="ver-badge">POKROČILÁ KALIBRACE</span>
+      </div>
+      <h1>Optimalizace a kalibrace <span>tiskových profilů</span></h1>
+      <p>Kompletní sekvenční postup kalibrace nového filamentu na Anycubic Kobra X v Anycubic Slicer Next — od teploty přes průtok a předstih tlaku až po retrakci a kontrolu kvality povrchu. Technický pohled na interakci Direct Drive extruderu a ACE Gen 2 systému s kalibrační logikou sliceru.</p>
+    </div>
+  </div>
+
+  <div class="wrapper">
+
+    <div class="alert alert-info">
+      <div class="alert-icon">📍</div>
+      <div><strong>Tato stránka je samostatná příloha</strong> mimo hlavní číslovanou posloupnost kapitol — najdete na ni odkaz z kapitoly <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Parametry filamentu</a> a z hlavního <a href="00_3D_index.html#ostatni_prilohy" style="color:#fff;">Obsahu</a>. Navazuje na základní popis kalibračních testů v <a href="03_3D_slicer_zaklad.html" style="color:#fff;">03 — Slicer základy</a>, ale jde mnohem víc do hloubky — konkrétní hodnoty, vzorce přepočtu a sekvenční logika, proč musí testy proběhnout v přesně daném pořadí.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 1 — TECHNICKÝ ZÁKLAD: DDE A ACE GEN 2
+    ════════════════════════════════════════════ -->
+    <div class="section" id="technicky-zaklad">
+      <div class="section-header">
+        <h2>1 — Proč je Kobra X jiná: Direct Drive a ACE Gen 2</h2>
+      </div>
+
+      <p>Úspěšná kalibrace nového filamentu vyžaduje pochopení interakce mezi mechanickým hardwarem Kobry X a softwarem Anycubic Slicer Next. Kobra X využívá kinematiku typu <strong>Cartesian (bedslinger)</strong> s duální synchronizovanou osou Z a automatickou kalibrací podložky <strong>LeviQ 3.0</strong>. Klíčová je přítomnost integrovaného <strong>Direct Drive Extruderu (DDE)</strong> a pokročilého systému <strong>ACE Gen 2</strong> přímo v tiskové hlavě.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Direct Drive Extruder (DDE)<small>Extruder s přímým pohonem</small></div>
+        </div>
+        <p>Podávací ozubená kola jsou umístěna přímo nad hotendem — vzdálenost mezi nimi a tavnou zónou je minimalizována. To drasticky snižuje potřebnou retrakční vzdálenost na hodnoty hluboko pod 2 mm (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Retrakce</a>), na rozdíl od Bowden systémů, kde je nutná retrakce 4–7 mm.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">ACE Gen 2<small>Automatický systém výměny cívek, generace 2</small></div>
+        </div>
+        <p>Integrovaný přímo v tiskové hlavě. Zkrácení dráhy taveniny při přechodu barev vede k výraznému snížení odpadu materiálu oproti starším systémům (např. Kobra 3 s externím ACE Pro, kde je nutná retrakce až několik mm pro bezpečné vytažení filamentu z horké zóny). Kratší dráha taveniny zároveň poskytuje ostřejší reakci na změny tlaku v trysce při běžném jednobarevném tisku — to je důvod, proč jsou hodnoty Pressure Advance pro Kobru X nižší než u jiných tiskáren.</p>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Anycubic Slicer Next je optimalizovaný fork OrcaSlicer</strong> — přebírá pokročilé matematické algoritmy pro řízení toku a tlaku materiálu i vestavěnou sadu osmi kalibračních testů. Výsledné korekční hodnoty z kalibrace se ukládají přímo do profilu filamentu, kde při slicování přepisují výchozí nastavení firmwaru — kalibrace provedená v Anycubic Slicer Next je tedy plně kompatibilní s firmwarem Kobry X.</div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Síťový tisk může být občas nestabilní.</strong> Provozní zkušenosti komunity poukazují na občasnou nestabilitu cloudového odesílání tisku přes Anycubic účet (viz <a href="03_3D_slicer_zaklad.html" style="color:#fff;">03 — Sekce 8</a>). Pokud narazíte na problémy, zvažte lokální odeslání G-kódu přes USB flash disk jako spolehlivější alternativu.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 2 — POŘADÍ KALIBRACE
+    ════════════════════════════════════════════ -->
+    <div class="section" id="poradi-kalibrace">
+      <div class="section-header">
+        <h2>2 — Proč na pořadí záleží</h2>
+      </div>
+
+      <p>Pro nalezení ideálního nastavení nového filamentu je nezbytné provést kalibrační testy v přesně definovaném sekvenčním pořadí. Důvod je fyzikální: nastavení teploty přímo ovlivňuje viskozitu a průtok taveniny, což následně mění chování předstihu tlaku a retrakcí. Pokud byste kalibrovali v opačném pořadí, výsledky vyšších testů by byly zkreslené špatně nastavenou teplotou pod nimi.</p>
+
+      <div class="seq-flow">
+        <div class="seq-step"><span class="num">KROK 1</span>Teplota</div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-step"><span class="num">KROK 2</span>Průtok</div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-step"><span class="num">KROK 3</span>Předstih tlaku</div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-step"><span class="num">KROK 4</span>Retrakce</div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-step"><span class="num">KROK 5</span>Max. průtok</div>
+        <div class="seq-arrow">→</div>
+        <div class="seq-step"><span class="num">KROK 6</span>VFA</div>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div>Kalibrační testy jsou přístupné přes horní lištu programu <strong>Kalibrace</strong> (viz <a href="03_3D_slicer_zaklad.html" style="color:#fff;">03 — Sekce 6</a>). Každá podkapitola níže odpovídá jedné položce v tomto menu a jde do detailu, který v základní kapitole 03 není.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 3 — KALIBRACE TEPLOTY
+    ════════════════════════════════════════════ -->
+    <div class="section" id="kalibrace-teploty">
+      <div class="section-header">
+        <h2>3 — Kalibrace teploty (Temperature Tower)</h2>
+      </div>
+
+      <p>Tento test generuje vertikální věž rozdělenou do několika teplotních segmentů — teplota trysky automaticky klesá s rostoucí výškou tisku. Pro testovaný filament (např. ELEGOO PLA+) se doporučuje nastavit rozsah testu od 230 °C (základna) do 190 °C (vrchol) s krokem 10 °C.</p>
+
+      <div class="tower-diagram">
+        <div class="tower-seg"><div class="seg-bar">Bridge Test</div><div class="seg-val">190 °C</div></div>
+        <div class="tower-seg"><div class="seg-bar">Overhang 60°</div><div class="seg-val">200 °C</div></div>
+        <div class="tower-seg optimal"><div class="seg-bar">Overhang 45° ← Optimální bod (příklad)</div><div class="seg-val">210 °C</div></div>
+        <div class="tower-seg"><div class="seg-bar">Overhang 30°</div><div class="seg-val">220 °C</div></div>
+        <div class="tower-seg"><div class="seg-bar">Základna</div><div class="seg-val">230 °C</div></div>
+      </div>
+
+      <h3>Co se hodnotí po vytištění</h3>
+
+      <table>
+        <thead><tr><th>Fyzikální projev</th><th>Co sledovat</th></tr></thead>
+        <tbody>
+          <tr><td>Kvalita přemostění (Bridges)</td><td>Průhyb spodních vláken v horizontálních přemostěních — ideální teplota minimalizuje prověšení</td></tr>
+          <tr><td>Kvalita převisů (Overhangs)</td><td>Geometrická přesnost struktur pod úhly 30°, 45° a 60°. Při příliš vysoké teplotě dochází k deformaci hran vlivem gravitace před ztuhnutím taveniny</td></tr>
+          <tr><td>Soudržnost vrstev (Layer Adhesion)</td><td>Empirickým tlakem na jednotlivé segmenty se ověří mechanická pevnost spojení vrstev; příliš nízká teplota vede k delaminaci</td></tr>
+          <tr><td>Tvorba vlasových nití (Stringing)</td><td>Identifikuje se teplotní úroveň s nejnižším výskytem nití při přejezdech tiskové hlavy</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Pokud více segmentů vykazuje srovnatelné výsledky, volte nižší teplotu</strong> z tohoto rozsahu — snižuje tepelné pnutí ve výtisku a omezuje stringing. Naměřenou optimální hodnotu zapište do pole <strong>Tryska — Ostatní vrstvy</strong> ve <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">filament profilu (05c)</a>.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=temperature+tower+calibration+3D+printing+PLA&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Temperature tower calibration 3D printing PLA</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 4 — KALIBRACE PRŮTOKU
+    ════════════════════════════════════════════ -->
+    <div class="section" id="kalibrace-prutoku">
+      <div class="section-header">
+        <h2>4 — Kalibrace průtoku (Průtok / Flow Rate)</h2>
+      </div>
+
+      <p>Kalibrace průtokového poměru zajišťuje rozměrovou přesnost a hladký povrch výtisku eliminací přeextruze (drsný povrch, otřepy) nebo podextruze (mezery mezi liniemi, křehkost). V menu <strong>Kalibrace → Průtok</strong> jsou k dispozici čtyři metody.</p>
+
+      <h3>YOLO (doporučeno)</h3>
+
+      <p>Moderní metoda využívající vzor Archimedovy spirály — rychlý tisk 11 vzorků s odstupňovaným modifikátorem průtoku od −0,05 do +0,05 s krokem 0,01 vůči aktuálně nastavenému poměru průtoku v profilu.</p>
+
+      <div class="tower-diagram">
+        <div class="tower-seg"><div class="seg-bar">−0,05 · −0,04 · −0,03 · −0,02 · −0,01 · 0,00 · +0,01 · +0,02 · +0,03 · +0,04 · +0,05</div></div>
+      </div>
+
+      <p>Při analýze vzorků hledejte destičku s nejhladším vrchním povrchem, bez viditelných mezer mezi liniemi spirály a bez hromadění přebytečného materiálu na rozhraních. Doporučená vyhodnocovací metoda je <strong>hmatová analýza</strong>: vyberte vzorek s nejnižším číslem, kde hmatem detekujete první známky přeextruze (jemný vystouplý okraj na přechodových čarách), a pro výsledné nastavení zvolte hodnotu o jeden krok vyšší (směrem k nižšímu toku).</p>
+
+      <div class="formula">Nový poměr průtoku = Výchozí poměr průtoku + Hodnota vybraného vzorku</div>
+
+      <p style="color:var(--muted); font-size:13.5px;">Příklad: Pokud byl výchozí Poměr průtoku 0,98 a nejlepší povrch vykázal vzorek s hodnotou +0,02, nová hodnota bude 0,98 + 0,02 = <strong style="color:var(--accent2);">1,00</strong>.</p>
+
+      <h3>YOLO (perfekcionistická verze)</h3>
+
+      <p>Funguje na identickém principu jako doporučená verze YOLO, ale nabízí jemnější rozlišení modifikátorů (typicky s menším krokem). Používá se pro finální doladění kritických materiálů po předchozím hrubém vymezení standardním testem YOLO.</p>
+
+      <h3>Postup 1 (Pass 1)</h3>
+
+      <p>Tradiční dvoukroková metoda generující 9 obdélníkových bloků s odstupňovanými modifikátory. Výpočet pro aktualizaci profilu po vytištění a výběru vizuálně nejlepšího vzorku využívá <strong>multiplikativní</strong> vzorec:</p>
+
+      <div class="formula">Nový poměr průtoku = Výchozí poměr průtoku × Modifikátor vybraného vzorku</div>
+
+      <h3>Postup 2 (Pass 2)</h3>
+
+      <p>Jemný dokončovací test navazující na Postup 1. Generuje 10 bloků s užším rozsahem modifikátorů. Výsledná hodnota se přepočítá stejným multiplikativním vzorcem jako u Postupu 1, čímž se dosáhne maximální hladkosti vrchních vrstev.</p>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Kdy použít kterou metodu:</strong> Pro běžné používání postačuje samotný <strong>YOLO (doporučeno)</strong> test — je rychlý a dostatečně přesný. Pro kritické aplikace (přesné funkční díly, viditelné povrchy u prodejních modelů) navažte YOLO perfekcionistickou verzí pro finální doladění. Postup 1/2 je starší tradiční metoda, použijte ji pouze pokud preferujete obdélníkové vzorky před spirálou nebo pokud YOLO nedává konzistentní výsledky pro váš konkrétní materiál.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=YOLO+flow+rate+calibration+OrcaSlicer+Archimedean+spiral&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: YOLO flow rate calibration OrcaSlicer Archimedean spiral</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 5 — PŘEDSTIH TLAKU
+    ════════════════════════════════════════════ -->
+    <div class="section" id="kalibrace-predstihu-tlaku">
+      <div class="section-header">
+        <h2>5 — Kompenzace tlaku (Předstih tlaku / Pressure Advance)</h2>
+      </div>
+
+      <p>Předstih tlaku (PA) predikuje nárůst tlaku v trysce při zrychlení a pokles tlaku při zpomalení. Správné nastavení odstraňuje vyboulené rohy na koncích tiskových drah a zajišťuje ostrost stěn. V menu sliceru jsou k dispozici tři kalibrační metody přizpůsobené pro Direct Drive tiskárny.</p>
+
+      <h3>Metoda čar (PA Line)</h3>
+
+      <p>Tiskárna vytiskne sérii čar s různými hodnotami PA. Vybírá se čára s nejkonzistentnější tloušťkou v celé délce, zejména v přechodových zónách zrychlení a zpomalení.</p>
+
+      <div class="tower-diagram">
+        <div class="tower-seg"><div class="seg-bar">PA = 0,00 — Vyboulené konce</div></div>
+        <div class="tower-seg"><div class="seg-bar">PA = 0,02 — Mírné zlepšení</div></div>
+        <div class="tower-seg optimal"><div class="seg-bar">PA = 0,05 — Ideální stav (konzistentní šířka)</div></div>
+        <div class="tower-seg"><div class="seg-bar">PA = 0,08 — Přerušovaná dráha / podextruze</div></div>
+      </div>
+
+      <h3>Metoda vzorů (Pattern Method)</h3>
+
+      <p>Vytiskne geometrický obrazec, kde se hodnotí ostrost rohů a plynulost napojení linií výplně na obvodové stěny.</p>
+
+      <h3>Metoda věže (Tower Method)</h3>
+
+      <p>Generuje dutou věž, která se tiskne do výšky s plynule se zvyšující hodnotou PA. Pro Kobru X se hodnota zvyšuje o pevný krok na každý milimetr výšky. Po vytištění se změří výška h v milimetrech od základny k nejostřejšímu rohu bez deformací.</p>
+
+      <div class="formula">Finální hodnota PA = (Výška h / Celková výška věže) × Maximální testovaná hodnota PA</div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div>Výsledná hodnota PA se zapíše do pole <strong>Předstih tlaku</strong> v záložce Filament (viz <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c</a>) a aktivuje se zaškrtnutím pole <strong>Povolit předstih tlaku</strong>. Typická hodnota pro Direct Drive tiskárnu jako Kobra X bývá v rozmezí 0,02–0,06 — pokud máte v profilu hodnotu výrazně mimo tento rozsah, doporučujeme ji tímto testem ověřit.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=pressure+advance+tower+calibration+direct+drive&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Pressure advance tower calibration direct drive</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 6 — TEST RETRAKCE
+    ════════════════════════════════════════════ -->
+    <div class="section" id="kalibrace-retrakce">
+      <div class="section-header">
+        <h2>6 — Test retrakce (Retraction Test)</h2>
+      </div>
+
+      <p>Retrakční test generuje vertikální sloupkový model s plynule se měnící délkou retrakce. Pro Kobru X s Direct Drive extruderem se doporučuje nastavit rozsah délky retrakce od 0,0 do 2,0 mm s krokem 0,2 nebo 0,4 mm a rychlostí retrakce kolem 30 mm/s.</p>
+
+      <div class="tower-diagram">
+        <div class="tower-seg"><div class="seg-bar">2,0 mm — Možná podextruze / ucpávání</div></div>
+        <div class="tower-seg"><div class="seg-bar">1,5 mm</div></div>
+        <div class="tower-seg optimal"><div class="seg-bar">0,8 mm — Optimální bod (čisté přechody bez nití)</div></div>
+        <div class="tower-seg"><div class="seg-bar">0,4 mm — Mírný stringing</div></div>
+        <div class="tower-seg"><div class="seg-bar">0,0 mm — Extrémní stringing / vlasové nitě</div></div>
+      </div>
+
+      <p>Po vytištění vizuálně identifikujte nejnižší bod věže, ve kterém zcela mizí jemné vlasové nitě (stringing). Výšku tohoto bodu změřte a porovnejte s náhledem ve sliceru pro zjištění přesné hodnoty délky retrakce.</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div>Naměřenou hodnotu zapište do karty <strong>Přepsání nastavení → Retrakce → Vzdálenost</strong> ve filament profilu (viz <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Sekce 4</a>). Pro PLA se optimální hodnota na Kobře X obvykle pohybuje v rozmezí 0,6–1,2 mm.</div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Pokud stringing přetrvává i při vyšších hodnotách retrakce, problém není v nastavení.</strong> Vlhký filament nelze retrakcí úspěšně kompenzovat — pokud zvyšování retrakce nepomáhá, je nutné filament vysušit (viz <a href="11_3D_udrzba.html" style="color:#fff;">11 — Údržba</a>) než pokračovat v ladění retrakce.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=retraction+test+tower+stringing+direct+drive&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Retraction test tower stringing direct drive</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 7 — TOLERANCE TEST
+    ════════════════════════════════════════════ -->
+    <div class="section" id="tolerance-test">
+      <div class="section-header">
+        <h2>7 — Tolerance Test</h2>
+      </div>
+
+      <p>Tento test ověřuje mechanické tolerance a lícování vytištěných součástí. Generuje model obsahující šestici kruhových nebo šestiúhelníkových kolíků s různou definovanou vůlí (např. od 0,1 do 0,6 mm) vůči protikusu.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Vyhodnocení</div>
+        </div>
+        <p>Po vytištění mechanicky zkuste, které kolíky lze volně vyjmout nebo jimi otočit. Pokud lze uvolnit pouze kolíky s vůlí 0,3 mm a vyšší, tiskárna vykazuje mechanické odchylky nebo mírnou přeextruzi.</p>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Co dělat při špatném výsledku:</strong> Vyžaduje to korekci parametrů smrštění (Shrinkage) v kartě Filament (viz <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Sekce 2</a>) nebo doladění rozměrové kompenzace (XY Kompenzace otvoru) v procesním profilu (viz <a href="05a_3D_slicer_tisk.html" style="color:#fff;">05a — Sekce 3</a>).</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+print+tolerance+test+calibration+pins&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print tolerance test calibration pins</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 8 — MAXIMÁLNÍ OBJEMOVÝ PRŮTOK
+    ════════════════════════════════════════════ -->
+    <div class="section" id="max-objemovy-prutok">
+      <div class="section-header">
+        <h2>8 — Maximální objemový průtok (Více... → Max. průtok)</h2>
+      </div>
+
+      <p>Tento pokročilý test určuje maximální rychlost tavení polymeru, kterou je hotend schopen kontinuálně poskytovat bez poklesu teploty taveniny a bez prokluzu podávacího mechanismu extruderu. Test generuje spirálovitý nebo lineární model s postupně se zvyšující rychlostí tisku, což lineárně zvyšuje objemový průtok materiálu tryskou.</p>
+
+      <div class="tower-diagram">
+        <div class="tower-seg"><div class="seg-bar">Vyšší výška → ztráta lesku, drsný povrch, vynechávání kroků motoru (limit roztavení)</div></div>
+        <div class="tower-seg optimal"><div class="seg-bar">Výška h_fail → dokonale hladký lesklý povrch (bezpečné průtokové pásmo)</div></div>
+      </div>
+
+      <p>Sledujte výšku modelu h_fail, ve které začíná povrch výtisku vykazovat drsnost, ztrátu lesku, ztenčení stěny nebo kdy se ozve přeskakování krokového motoru extruderu.</p>
+
+      <div class="formula">Bezpečný limit objemové rychlosti = Objemová rychlost při h_fail × Bezpečnostní koeficient (typicky 0,9)</div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div>Výsledná hodnota se zapíše do pole <strong>Maximální objemová rychlost</strong> na kartě Filament (viz <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Sekce 2</a>). Pro PLA na vysokorychlostních tiskárnách jako Kobra X je běžný limit v rozmezí 15–20 mm³/s. Pro méně viskózní materiály (např. PETG) je nutné tuto hodnotu snížit na cca 10–14 mm³/s, aby se předešlo strukturálnímu oslabení výtisků.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=max+volumetric+flow+rate+test+3D+printing&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Max volumetric flow rate test 3D printing</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 9 — VFA
+    ════════════════════════════════════════════ -->
+    <div class="section" id="vfa-test">
+      <div class="section-header">
+        <h2>9 — VFA (Více... → VFA / Vertical Fine Artifacts)</h2>
+      </div>
+
+      <p>Test VFA analyzuje jemné vertikální vlny a rezonanční artefakty na stěnách výtisku, způsobené rezonancemi krokových motorů a ozubených řemenů při specifických rychlostech pohybu. Test vytiskne stěnu s proměnnou rychlostí tisku, obvykle v širokém rozsahu s pevným krokem.</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Vyhodnocení</div>
+        </div>
+        <p>Při vizuálním hodnocení pod šikmým světlem hledejte rychlostní pásmo, ve kterém jsou vertikální vlnky na povrchu nejméně patrné.</p>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div>Pokud zjistíte, že při určité rychlosti (např. kolem 60 mm/s) vykazuje povrch stěny absolutní hladkost, nastavte rychlost tisku vnějších stěn (<strong>Vnější stěna</strong> v <a href="05b_3D_slicer_rychlost.html" style="color:#fff;">05b — Sekce 1</a>) právě na tuto hodnotu — maximalizuje to estetickou kvalitu viditelných povrchů. Rychlosti pro vnitřní stěny a výplně, kde estetika nehraje roli, lze nastavit na vyšší hodnoty až k hranici limitu objemového průtoku (Sekce 8 výše).</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=VFA+vertical+fine+artifacts+ringing+test+3D+print&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: VFA vertical fine artifacts ringing test 3D print</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 10 — DOPORUČENÍ A ÚDRŽBA
+    ════════════════════════════════════════════ -->
+    <div class="section" id="doporuceni-systemove">
+      <div class="section-header">
+        <h2>10 — Doporučení pro systémové nastavení a odstraňování problémů</h2>
+      </div>
+
+      <p>Pro zajištění konzistentních výsledků a dlouhodobé stability tiskového procesu doporučujeme implementovat následující postupy.</p>
+
+      <h3>Závislost kalibrace na barvě a šarži</h3>
+
+      <p>Fyzikální vlastnosti se neliší pouze mezi různými typy polymerů, ale i mezi jednotlivými barevnými odstíny stejného výrobce. <strong>Tmavé pigmenty</strong> (např. černá nebo uhlíková šeď) často obsahují abrazivní plniva zvyšující viskozitu, zatímco <strong>bílé pigmenty</strong> (oxid titaničitý) vyžadují vyšší teplotu pro optimální tokovost.</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div>Kalibraci teploty a průtoku doporučujeme provést <strong>pro každou novou cívku</strong> — i v rámci stejné značky a typu materiálu, pokud jde o jinou barvu nebo šarži.</div>
+      </div>
+
+      <h3>Ukončení kalibračního režimu</h3>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Po úspěšném dokončení jakéhokoliv testu a zapsání zkalibrovaných hodnot do profilu je nezbytné vytvořit nový projekt</strong> (<em>Soubor → Nový Projekt</em>, viz <a href="03_3D_slicer_zaklad.html" style="color:#fff;">03 — Sekce 5</a>). Pokud byste pokračovali v přípravě běžného tisku v původním kalibračním projektu, slicer by nadále aplikoval skryté modifikátory G-kódu určené pro testy, což by vedlo ke znehodnocení výsledného výtisku.</div>
+      </div>
+
+      <h3>Mechanická údržba tiskového systému</h3>
+
+      <p>Před spuštěním citlivých testů (zejména Předstihu tlaku a Tolerance Testu) je nutné zajistit dokonalý mechanický stav tiskárny:</p>
+
+      <table>
+        <thead><tr><th>Kontrola</th><th>Proč na tom záleží</th></tr></thead>
+        <tbody>
+          <tr><td>Napnutí ozubených řemenů os X a Y</td><td>Příliš volné řemeny způsobují zdvojené hrany a nepřesné tolerance</td></tr>
+          <tr><td>Opotřebení trysky</td><td>Opotřebená tryska zvětšuje efektivní průměr a deformuje geometrii stěn</td></tr>
+          <tr><td>Čistota podávacího mechanismu extruderu</td><td>Prach z filamentu v podávacím mechanismu způsobuje nekonzistentní extruzi a zkresluje výsledky kalibrace</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div>Detailní postup mechanické údržby (napínání řemenů, výměna trysky, čištění extruderu) najdete v kapitole <a href="11_3D_udrzba.html" style="color:#fff;">11 — Údržba & spotřební materiál</a>.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE NAV
+    ════════════════════════════════════════════ -->
+    <div class="pn">
+      <a href="05c_3D_slicer_filament.html">← 05c · Parametry filamentu</a>
+      <a href="00_3D_index.html" class="nx">Zpět na hlavní obsah →</a>
+    </div>
+
+  </div><!-- /wrapper -->
+</main>
+
+<script>
+const searchInput = document.getElementById('sb-search-input');
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const q = e.target.value.trim();
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+  }
+});
+</script>
+</body>
+</html>

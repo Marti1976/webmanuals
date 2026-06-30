@@ -67,6 +67,11 @@
   .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
   h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
 
+  /* ── TAB INDICATOR ── */
+  .tab-bar { display: flex; gap: 2px; margin: 0 0 24px; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
+  .tab-bar span { font-family: var(--mono); font-size: 12px; padding: 8px 16px; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+  .tab-bar span.active { color: var(--accent2); border-bottom-color: var(--accent); font-weight: 600; }
+
   /* ── PARAM BLOK ── */
   .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
   .param:hover { border-color: var(--accent); }
@@ -76,6 +81,8 @@
   .param-val { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
   .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
   .param p + p { margin-top: 6px; }
+  .param-risk { margin-top: 10px; padding: 8px 12px; background: rgba(232,80,80,.08); border-left: 3px solid var(--red); font-size: 13px; }
+  .param-risk strong { color: #ff9a9a; }
 
   /* ── ALERTS ── */
   .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
@@ -166,7 +173,7 @@
         <span class="ver-badge">DETAILNÍ PARAMETRY</span>
       </div>
       <h1>Parametry <span>rychlosti</span></h1>
-      <p>Rychlost tisku, akcelerace a pokročilé kompenzace jako Pressure Advance. Jak tisknout rychle, aniž by trpěla kvalita povrchu a přesnost detailů.</p>
+      <p>Kompletní rozpis záložky „Rychlost" v okně Proces — rychlosti podle typu úseku, zpomalení u převisů, zrychlení a Jerk. Plus přehled rizik: co se stane, když rychlost nastavíte špatně.</p>
     </div>
   </div>
 
@@ -174,379 +181,436 @@
 
     <div class="alert alert-info">
       <div class="alert-icon">💡</div>
-      <div><strong>Jak číst tuto kapitolu:</strong> Každý parametr je uveden s <strong>anglickým názvem</strong> (tak jak ho najdete v programu) a <strong>českým překladem</strong>. Doporučené hodnoty platí pro PLA na Kobře X s tryskou 0,4 mm. Rychlostní parametry najdete v Anycubic Slicer Next i OrcaSlicer pod záložkou <strong>Speed</strong> v Process Settings.</div>
+      <div><strong>Jak je tahle kapitola udělaná:</strong> Stejně jako <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a</a> a <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a> jdeme pole po poli přesně podle záložky <strong>„Rychlost"</strong> v okně Proces v Anycubic Slicer Next. Hlavní název je vždy <strong>český</strong>, anglický v malé poznámce. Na konci kapitoly je samostatná sekce shrnující rizika — co se stane, když rychlost/zrychlení nastavíte špatně.</div>
     </div>
 
     <p style="margin-bottom: 8px;">Propojení s ostatními kapitolami:
       <a href="05a_3D_slicer_tisk.html" class="ref-link">→ 05a Parametry tisku</a>
-      <a href="05c_3D_slicer_filament.html" class="ref-link">→ 05c Parametry filamentu (teploty, retrakce)</a>
-      <a href="02_3D_tiskarna.html#pohybovy_system" class="ref-link">→ 02 Pohybový systém Kobry X</a>
+      <a href="05c_3D_slicer_filament.html" class="ref-link">→ 05c Parametry filamentu</a>
+      <a href="02_3D_tiskarna.html" class="ref-link">→ 02 Tiskárna Kobra X</a>
     </p>
 
     <!-- ═══════════════════════════════════════════
-         SEKCE 1 — ZÁKLADNÍ RYCHLOSTI
+         SEKCE 1 — RYCHLOST OSTATNÍCH VRSTEV
     ════════════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="rychlost-ostatnich-vrstev">
       <div class="section-header">
-        <h2>1 — Základní rychlosti (Speed Settings)</h2>
+        <h2>1 — Rychlost ostatních vrstev</h2>
       </div>
 
-      <p>Slicer rozlišuje rychlost pro různé typy úseků tisku — vnější stěna potřebuje jinou rychlost než výplň, první vrstva jinou než zbytek modelu. Obecné pravidlo: <strong>viditelné povrchy tiskněte pomaleji</strong>, skryté úseky (infill, podpěry) rychleji.</p>
+      <div class="tab-bar">
+        <span>Kvalita</span><span>Pevnost</span><span class="active">Rychlost</span><span>Podpěry</span><span>Multimateriál</span><span>Ostatní</span>
+      </div>
+
+      <p>Tato skupina určuje rychlost tisku jednotlivých typů úseků pro všechny vrstvy <strong>kromě</strong> první (ta má vlastní samostatné rychlosti řešené jinde v profilu). Obecné pravidlo: viditelné povrchy (vnější stěna, horní plocha) tiskněte pomaleji, skryté úseky (vnitřní výplň, vnitřní stěna) rychleji.</p>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Print Speed (Default)<small>Výchozí tisková rychlost</small></div>
-          <span class="param-val">50–60 mm/s (PLA)</span>
+          <div class="param-title">Vnější stěna<small>Outer wall speed</small></div>
+          <span class="param-val">60 mm/s</span>
         </div>
-        <p>Obecná rychlost, kterou slicer použije, pokud pro konkrétní typ úseku nemáte definovanou jinou hodnotu. Slouží jako základ, ze kterého se odvíjí ostatní rychlosti (často v procentech). Kobra X díky Input Shaping zvládá i 100+ mm/s, ale pro začátečníky doporučujeme 50–60 mm/s pro lepší kvalitu.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Outer Wall Speed / Perimeter Speed<small>Rychlost vnější stěny</small></div>
-          <span class="param-val">30–40 mm/s</span>
-        </div>
-        <p>Rychlost tisku vnějšího obvodu modelu — to, co vidíte jako výsledný povrch. <strong>Vždy nejpomalejší úsek tisku.</strong> Pomalejší tisk = méně vibrací, hladší povrch, méně viditelný šev. Toto je nejdůležitější rychlostní parametr pro vizuální kvalitu.</p>
+        <p>Rychlost tisku vnějšího obvodu modelu — to, co vidíte jako výsledný povrch. Vždy nejpomalejší (nebo druhý nejpomalejší po první vrstvě) úsek tisku. Pomalejší tisk = méně vibrací, hladší povrch, méně viditelný šev.</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Inner Wall Speed<small>Rychlost vnitřní stěny</small></div>
-          <span class="param-val">50–60 mm/s</span>
+          <div class="param-title">Vnitřní stěna<small>Inner wall speed</small></div>
+          <span class="param-val">150 mm/s</span>
         </div>
-        <p>Rychlost vnitřních perimetrů (pokud Wall Count &gt; 1). Nejsou vidět zvenčí, takže mohou být rychlejší než vnější stěna. Typicky 1,3–1,5× rychlejší než Outer Wall Speed.</p>
+        <p>Rychlost vnitřních perimetrů (pokud Počet perimetrů &gt; 1, viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a</a>). Nejsou vidět zvenčí, takže mohou být výrazně rychlejší — zde 2,5× rychlejší než vnější stěna.</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Infill Speed<small>Rychlost výplně</small></div>
-          <span class="param-val">80–120 mm/s</span>
+          <div class="param-title">Malé perimetry<small>Small perimeters speed</small></div>
+          <span class="param-val">50 % mm/s or %</span>
         </div>
-        <p>Výplň není vidět a netvoří nosnou strukturu povrchu, takže se tiskne nejrychleji. Vysoká rychlost zde výrazně zkracuje celkový čas tisku bez dopadu na vzhled. Limitem je Max Volumetric Speed materiálu (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>).</p>
+        <p>Samostatná (typicky pomalejší) rychlost pro velmi malé/krátké perimetry — u krátkých úseků hrozí, že by tryska při normální rychlosti nestihla správně zrychlit a zase zpomalit, takže se výchozí přístup je zpomalit už od začátku.</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Top/Bottom Surface Speed<small>Rychlost horní/spodní plochy</small></div>
-          <span class="param-val">25–35 mm/s</span>
+          <div class="param-title">Hranice malého perimetru<small>Small perimeter threshold</small></div>
+          <span class="param-val">0 mm (= použít vestavěnou výchozí hranici)</span>
         </div>
-        <p>Horní a spodní plné vrstvy jsou viditelné, proto se tisknou pomalu — podobně jako vnější stěna. Příliš rychlý tisk zde způsobuje díry, vlnky a nedokonalé krytí výplně.</p>
+        <p>Délka/průměr, pod kterým se perimetr považuje za "malý" a aplikuje se na něj rychlost z řádku výše. Hodnota 0 typicky znamená, že program používá svou vlastní vestavěnou výchozí hranici.</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">First Layer Speed<small>Rychlost první vrstvy</small></div>
-          <span class="param-val">20–30 mm/s</span>
+          <div class="param-title">Vnitřní výplň<small>Sparse infill speed</small></div>
+          <span class="param-val">200 mm/s</span>
         </div>
-        <p>První vrstva je nejdůležitější pro úspěch celého tisku — viz <a href="06_3D_priprava_a_tisk.html" style="color:var(--blue);">06 — Sledování první vrstvy</a>. Pomalý tisk dává plastu čas se správně přichytit k podložce. Téměř vždy nejpomalejší rychlost v celém tisku.</p>
+        <p>Výplň není vidět a netvoří nosnou strukturu povrchu, takže se tiskne nejrychleji ze všech úseků. Vysoká rychlost výrazně zkracuje celkový čas tisku bez dopadu na vzhled. Limitem je Max Volumetric Speed materiálu (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>) — pokud je tato rychlost v kombinaci s šířkou linie a výškou vrstvy nad fyzickým limitem hotendu, program automaticky zpomalí.</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Travel Speed<small>Rychlost přesunu (bez tisku)</small></div>
-          <span class="param-val">150–250 mm/s</span>
+          <div class="param-title">Vnitřní plná výplň<small>Internal solid infill speed</small></div>
+          <span class="param-val">200 mm/s</span>
         </div>
-        <p>Rychlost pohybu tiskové hlavy při přesunech, kdy se nic netiskne (tryska je zavřená/retrahovaná). Nemá vliv na kvalitu povrchu, ovlivňuje pouze celkový čas tisku. Může být výrazně vyšší než tiskové rychlosti — Kobra X díky Input Shaping zvládá vysoké travel rychlosti bez nárazů do rámu.</p>
+        <p>Rychlost pro plnou (100%) výplň v místech, kde ji program automaticky generuje (kolem otvorů, kontaktních bodů). Stejně rychlá jako běžná výplň, protože ani tato plocha není přímo vidět.</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Support Speed<small>Rychlost podpěr</small></div>
-          <span class="param-val">60–80 mm/s</span>
+          <div class="param-title">Horní plocha<small>Top surface speed</small></div>
+          <span class="param-val">150 mm/s</span>
         </div>
-        <p>Podpěry se odstraňují po tisku, takže estetika nehraje roli — tisknou se rychle. Výjimkou jsou Interface Layers (kontaktní vrstvy se samotným modelem), které by měly být pomalejší pro hladší povrch po odstranění podpěr.</p>
+        <p>Horní plné vrstvy jsou viditelné, ale tato hodnota (150 mm/s) je v profilu Kobry X poměrně vysoká — vyšší než klasické doporučení 25–35 mm/s z obecné teorie. To je možné díky Input Shaping kompenzaci vibrací (viz Sekce 4 této kapitoly), která umožňuje vyšší rychlosti bez ztráty kvality povrchu.</p>
       </div>
 
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div><strong>Zlaté pravidlo rychlostí:</strong> Vnější stěna by měla být <strong>vždy pomalejší</strong> než výplň. Pokud nastavíte vše na stejnou rychlost, povrch modelu bude méně kvalitní, protože vnější stěna trpí na vibrace stejně jako rychlá výplň, ale je vidět.</div>
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Výplň mezery<small>Gap fill speed</small></div>
+          <span class="param-val">50 mm/s</span>
+        </div>
+        <p>Rychlost pro speciální tenké výplňové linie, kterými program vyplňuje drobné mezery mezi perimetry a hlavní výplní (viz Použít vyplnění mezer v <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a</a>) — pomalejší rychlost pro tyto křehké/krátké úseky zlepšuje konzistenci extruze.</p>
       </div>
 
-      <h3>Přehled doporučených rychlostí dle typu úseku (PLA, Kobra X)</h3>
-      <table>
-        <thead><tr><th>Úsek tisku</th><th>Rychlost</th><th>Proč</th></tr></thead>
-        <tbody>
-          <tr><td>První vrstva</td><td>20–30 mm/s</td><td>Přilnavost k podložce</td></tr>
-          <tr><td>Vnější stěna</td><td>30–40 mm/s</td><td>Vizuální kvalita povrchu</td></tr>
-          <tr><td>Vnitřní stěna</td><td>50–60 mm/s</td><td>Není vidět, lze zrychlit</td></tr>
-          <tr><td>Horní/spodní plocha</td><td>25–35 mm/s</td><td>Viditelný povrch</td></tr>
-          <tr><td>Výplň</td><td>80–120 mm/s</td><td>Není vidět, rychlost = úspora času</td></tr>
-          <tr><td>Podpěry</td><td>60–80 mm/s</td><td>Odstraní se, estetika nevadí</td></tr>
-          <tr><td>Travel</td><td>150–250 mm/s</td><td>Bez tisku, jen čas přesunu</td></tr>
-        </tbody>
-      </table>
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Podpěry<small>Support speed</small></div>
+          <span class="param-val">150 mm/s</span>
+        </div>
+        <p>Podpěry se po tisku odstraňují, estetika nehraje roli, takže se tisknou rychle — srovnatelně s vnitřní stěnou/výplní.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Kontaktní vrstva podpěr<small>Support interface speed</small></div>
+          <span class="param-val">80 mm/s</span>
+        </div>
+        <p>Pomalejší než zbytek podpěrné struktury — kontaktní (interface) vrstvy se dotýkají samotného modelu, takže kvalita tady ovlivňuje výsledný povrch modelu po odstranění podpěry.</p>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=outer+wall+speed+infill+speed+settings+3D+printing&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Outer wall speed infill speed settings 3D printing rychlosti</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
-         SEKCE 2 — AKCELERACE A JERK
+         SEKCE 2 — RYCHLOST PŘEVISŮ
     ════════════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="rychlost-previsu">
       <div class="section-header">
-        <h2>2 — Akcelerace a Jerk (Acceleration & Jerk)</h2>
+        <h2>2 — Rychlost převisů</h2>
       </div>
 
-      <p>Rychlost (Speed) udává, jak rychle se hlava pohybuje v ustáleném stavu. Akcelerace a jerk určují, jak rychle se hlava <strong>zrychluje a zpomaluje</strong> mezi pohyby. Tyto parametry mají zásadní vliv na vibrace, a tedy na vzhled povrchu — zejména na efekt zvaný ghosting/ringing.</p>
+      <p>Tato skupina postupně zpomaluje tisk podle toho, jak málo je daný úsek stěny podepřen materiálem pod ním (tedy jak "převislý" je) — bez podpěr i tak umožňuje tisknout krátké/mírné převisy díky pomalejšímu tisku a silnějšímu chlazení.</p>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Print Acceleration<small>Akcelerace při tisku</small></div>
-          <span class="param-val">2000–4000 mm/s²</span>
+          <div class="param-title">Zpomalení pro zakroucené obvody<small>Slow down for curled perimeters</small></div>
+          <span class="param-val">vypnuto</span>
         </div>
-        <p>Jak rychle tiskárna zrychluje/zpomaluje hlavu při tisku. Vyšší akcelerace = kratší čas tisku, ale více vibrací přenesených do modelu (ringing na hranách, kde se mění směr pohybu). Kobra X s Input Shaping zvládá vyšší akcelerace než tiskárny bez této kompenzace.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Travel Acceleration<small>Akcelerace při přesunu</small></div>
-          <span class="param-val">3000–6000 mm/s²</span>
-        </div>
-        <p>Akcelerace pro pohyby bez tisku. Může být vyšší než Print Acceleration, protože vibrace při travel pohybu nezasahují do povrchu modelu (tryska je zavřená).</p>
+        <p>Pokud zapnuto, program detekuje obvody, které mají tendenci se "kroutit" nahoru (typicky u tenkostěnných nebo silně zakřivených modelů) a automaticky je zpomalí pro lepší kontrolu.</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Outer Wall Acceleration<small>Akcelerace vnější stěny</small></div>
-          <span class="param-val">1000–2000 mm/s²</span>
+          <div class="param-title">Zpomalení u převisů<small>Slow down for overhangs</small></div>
+          <span class="param-val">zapnuto</span>
         </div>
-        <p>Nižší akcelerace specificky pro vnější stěnu — nejdůležitější viditelný povrch. I když je obecná Print Acceleration vyšší, mnoho profilů nastavuje vnější stěnu samostatně na nižší hodnotu pro maximální kvalitu povrchu.</p>
+        <p>Hlavní vypínač celé funkce postupného zpomalování podle míry převisu. Pod tímto přepínačem následuje tabulka pěti prahů — od mírného (~10%) po extrémní (100%~) převis.</p>
+      </div>
+
+      <h3>Tabulka rychlostí dle míry převisu</h3>
+
+      <table>
+        <thead><tr><th>Míra převisu</th><th>Rychlost</th><th>Co to znamená</th></tr></thead>
+        <tbody>
+          <tr><td>~10 %</td><td>60 mm/s or %</td><td>Téměř svislá stěna, jen lehký náklon — minimální zpomalení</td></tr>
+          <tr><td>25 %</td><td>30 mm/s or %</td><td>Mírný převis — citelné zpomalení</td></tr>
+          <tr><td>50 %</td><td>10 mm/s or %</td><td>Polovina plochy bez podpory pod sebou — výrazné zpomalení</td></tr>
+          <tr><td>75 %</td><td>10 mm/s or %</td><td>Silný převis, blízko k mostu</td></tr>
+          <tr><td>100 %~</td><td>10 mm/s or %</td><td>Extrémní převis / téměř horizontální — nejpomalejší, nejbezpečnější rychlost</td></tr>
+        </tbody>
+      </table>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Most — Vnější<small>Bridge speed — external</small></div>
+          <span class="param-val">30 mm/s</span>
+        </div>
+        <p>Fixní (ne procentuální) rychlost pro vnější (viditelné) mosty — pomalý tisk dává plastu čas ztuhnout ihned po extruzi, než se stihne prověsit. Kombinováno s maximálním chlazením (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Vynutit chlazení pro převisy a mosty</a>).</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Jerk / Junction Deviation<small>Ráz / Odchylka spoje</small></div>
-          <span class="param-val">8–12 mm/s (jerk) nebo 0,04–0,08 (junction deviation)</span>
+          <div class="param-title">Most — Vnitřní<small>Bridge speed — internal</small></div>
+          <span class="param-val">150 % mm/s or %</span>
         </div>
-        <p>Jerk je maximální okamžitá změna rychlosti, kterou tiskárna povolí bez postupné akcelerace — v praxi "jak ostře" se může hlava otočit v rohu, aniž by zpomalovala. Modernější firmware (včetně Klipper, na kterém běží i odvozené systémy) používá místo Jerk koncept <strong>Junction Deviation</strong>, který řeší totéž matematicky elegantněji. Vyšší jerk = rychlejší rohy, ale více vibrací a ringing.</p>
+        <p>Rychlost pro vnitřní mosty (nejsou vidět) — výrazně rychlejší než vnější mosty (procentuální hodnota vztažená k jiné základní rychlosti), protože estetika zde nehraje roli.</p>
       </div>
 
       <div class="alert alert-warn">
         <div class="alert-icon">⚠</div>
-        <div><strong>Příliš vysoká akcelerace = ghosting/ringing.</strong> Pokud vidíte na modelu vlnky kolem hran (efekt podobný ozvěně), je to způsobeno příliš vysokou akcelerací nebo jerkem — hlava se třese po rychlé změně směru a tato vibrace se "vytiskne" do povrchu. Řešením je snížit akceleraci nebo provést Input Shaping kalibraci.</div>
+        <div><strong>Riziko příliš agresivního nastavení tabulky převisů:</strong> Pokud nastavíte i mírné převisy (~10–25%) na velmi nízkou rychlost, celkový čas tisku členitých modelů (figurky, organické tvary) se může výrazně prodloužit, protože velká část povrchu bude klasifikována jako "převis" už od malého úhlu. Naopak pokud rychlosti pro 50–100% nastavíte příliš vysoko, riskujete propadlé/zborcené převisy bez podpěr.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=overhang+speed+slowdown+table+OrcaSlicer+bridging&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Overhang speed slowdown table OrcaSlicer bridging</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SEKCE 3 — CESTOVNÍ RYCHLOST A ZRYCHLENÍ
+    ════════════════════════════════════════════ -->
+    <div class="section" id="cestovni-rychlost-zrychleni">
+      <div class="section-header">
+        <h2>3 — Cestovní rychlost a Zrychlení</h2>
+      </div>
+
+      <h3>Cestovní rychlost</h3>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Rychloposun<small>Travel speed</small></div>
+          <span class="param-val">300 mm/s</span>
+        </div>
+        <p>Rychlost pohybu tiskové hlavy při přesunech, kdy se nic netiskne (tryska je zavřená/retrahovaná). Nemá vliv na kvalitu povrchu, ovlivňuje jen celkový čas tisku. Hodnota 300 mm/s je vysoká — umožněna díky Input Shaping kompenzaci Kobry X (viz Sekce 4).</p>
+      </div>
+
+      <h3>Zrychlení</h3>
+
+      <p>Rychlost (Speed) udává, jak rychle se hlava pohybuje v ustáleném stavu. Zrychlení určuje, jak rychle se hlava <strong>zrychluje a zpomaluje</strong> mezi pohyby — má zásadní vliv na vibrace, a tedy na vzhled povrchu (efekt zvaný ghosting/ringing).</p>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Normální tisk<small>Default/normal print acceleration</small></div>
+          <span class="param-val">4000 mm/s²</span>
+        </div>
+        <p>Základní zrychlení použité tam, kde nemáte specifikovanou hodnotu pro konkrétní typ úseku.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Vnější stěna<small>Outer wall acceleration</small></div>
+          <span class="param-val">2000 mm/s²</span>
+        </div>
+        <p>Nižší zrychlení specificky pro vnější stěnu — nejdůležitější viditelný povrch. Polovina normálního zrychlení zde znamená méně vibrací a tedy hladší, přesnější vnější povrch.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Vnitřní stěna<small>Inner wall acceleration</small></div>
+          <span class="param-val">4000 mm/s²</span>
+        </div>
+        <p>Stejné jako Normální tisk — vnitřní stěny nejsou vidět, takže není důvod je zpomalovat zrychlením.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Most<small>Bridge acceleration</small></div>
+          <span class="param-val">5000 mm/s² or %</span>
+        </div>
+        <p>Zrychlení pro mostní úseky — vyšší než normální tisk, protože mosty se obecně tisknou s nižší absolutní rychlostí (viz Sekce 2), takže i vyšší zrychlení nezpůsobí nadměrné vibrace v tomto kontextu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Vnitřní výplň<small>Sparse infill acceleration</small></div>
+          <span class="param-val">5000 mm/s² or %</span>
+        </div>
+        <p>Vysoké zrychlení pro výplň — výplň se tiskne nejrychleji ze všech úseků (viz Sekce 1), takže potřebuje i vysoké zrychlení, aby dosáhla cílové rychlosti rychle a nebrzdila celkový čas tisku.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Vnitřní plná výplň<small>Internal solid infill acceleration</small></div>
+          <span class="param-val">0 mm/s² or % (= použít výchozí/nepřepisovat)</span>
+        </div>
+        <p>Hodnota 0 zde typicky znamená "nepřepisovat", tedy použít zrychlení odvozené od jiné nastavené hodnoty (např. Normální tisk nebo Vnitřní výplň).</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">První vrstva<small>First layer acceleration</small></div>
+          <span class="param-val">500 mm/s²</span>
+        </div>
+        <p>Výrazně nižší zrychlení pro první vrstvu — nejdůležitější vrstva pro úspěšný tisk (viz <a href="06_3D_priprava_a_tisk.html" style="color:var(--blue);">06</a>). Nízké zrychlení dává plastu čas se správně přichytit k podložce bez rizika posunu/vibrací, které by mohly narušit čerstvě nanesenou vrstvu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Horní plocha<small>Top surface acceleration</small></div>
+          <span class="param-val">2000 mm/s²</span>
+        </div>
+        <p>Stejné jako Vnější stěna — horní plocha je viditelná, takže nižší zrychlení zlepšuje kvalitu povrchu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Rychloposun<small>Travel acceleration</small></div>
+          <span class="param-val">10000 mm/s²</span>
+        </div>
+        <p>Velmi vysoké zrychlení pro travel pohyby (bez tisku) — vibrace při travel pohybu nezasahují do povrchu modelu (tryska je zavřená), takže zde se program nemusí omezovat ohledem na kvalitu povrchu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Povolit accel_to_decel<small>Enable accel_to_decel</small></div>
+          <span class="param-val">zapnuto</span>
+        </div>
+        <p>Pokročilá funkce firmwaru, která řídí plynulý přechod mezi zrychlováním a zpomalováním (na rozdíl od náhlého přepnutí) — zlepšuje plynulost pohybu zejména na složitých trajektoriích s mnoha změnami směru.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">accel_to_decel<small>accel_to_decel ratio</small></div>
+          <span class="param-val">50 %</span>
+        </div>
+        <p>Konkrétní poměr/hodnota pro funkci accel_to_decel z řádku výše — určuje, jak plynulý je přechod mezi fází zrychlování a zpomalování pohybu.</p>
       </div>
 
       <div class="alert alert-warn">
-        <div class="alert-icon">🐍</div>
-        <div><strong>KOBRA X — Input Shaping:</strong> Kobra X má aktivní <strong>rezonanční kompenzaci (Input Shaping)</strong> přímo z výroby. Tato funkce měří vlastní rezonanční frekvenci rámu tiskárny a automaticky filtruje pohybové příkazy tak, aby nevyvolávaly vibrace. Díky tomu může Kobra X tisknout při vyšších rychlostech a akceleracích, než starší tiskárny bez této kompenzace, a přesto mít čistý povrch bez ringing efektu.</div>
+        <div class="alert-icon">⚠</div>
+        <div><strong>Riziko příliš vysokého zrychlení:</strong> Pokud zvýšíte Normální tisk nebo Vnější stěna zrychlení výrazně nad výchozí hodnoty z profilu Kobry X, riskujete ringing/ghosting (vlnky kolem hran způsobené vibrací rámu po rychlé změně směru) a v extrémním případě i <strong>ztracené kroky motoru</strong> (lost steps) — pokud motor nezvládne fyzicky tak rychlé zrychlení, přeskočí kroky a celá geometrie modelu se posune/zdeformuje od daného místa dál.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=input+shaping+resonance+compensation+3D+printer&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Input shaping resonance compensation 3D tiskárna</a>
+      <a href="https://www.youtube.com/results?search_query=print+acceleration+settings+ringing+ghosting+3D+printer&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Print acceleration settings ringing ghosting 3D printer zrychlení</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
-         SEKCE 3 — PRESSURE ADVANCE
+         SEKCE 4 — JERK-RYV (XY) A POKROČILÉ
     ════════════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="jerk-pokrocile">
       <div class="section-header">
-        <h2>3 — Pressure Advance / Linear Advance</h2>
+        <h2>4 — Jerk-Ryv (XY) a Pokročilé</h2>
       </div>
 
-      <p>Tavenina v hotendu se chová jako tekutina pod tlakem — když tryska zrychlí nebo zpomalí, tlak v komoře hotendu se nepřizpůsobí okamžitě. Výsledkem jsou nepřesnosti na rozích a spojích (přebytek nebo nedostatek plastu). <strong>Pressure Advance</strong> (u Marlin firmware nazývané <strong>Linear Advance</strong>) tento jev kompenzuje predikcí a úpravou extruze v reálném čase.</p>
+      <p>Jerk (česky přeloženo jako "Ryv") je maximální okamžitá změna rychlosti, kterou tiskárna povolí bez postupné akcelerace — v praxi "jak ostře" se může hlava otočit v rohu, aniž by musela nejdřív plynule zpomalit. Spolu se Zrychlením (Sekce 3) tvoří hlavní dvojici parametrů řídících vibrace a kvalitu povrchu.</p>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Pressure Advance (PA)<small>Pokročilá kompenzace tlaku taveniny</small></div>
-          <span class="param-val">0,02–0,06 (direct drive PLA)</span>
+          <div class="param-title">Výchozí<small>Default jerk</small></div>
+          <span class="param-val">9 mm/s</span>
         </div>
-        <p>Hodnota určující, jak agresivně firmware předvídá změny tlaku a upravuje rychlost extruze před a po změnách rychlosti pohybu. Vyšší PA = výraznější kompenzace. Pro direct drive extrudery (jako Kobra X) jsou hodnoty obvykle nižší než pro Bowden systémy, protože kratší cesta filamentu znamená menší stlačitelnost taveniny.</p>
-        <p><strong>Typický rozsah:</strong> Direct drive PLA: 0,02–0,06 · Bowden PLA: 0,4–0,8 · PETG (direct drive): 0,03–0,08</p>
+        <p>Základní jerk hodnota použitá tam, kde nemáte specifikovanou hodnotu pro konkrétní typ úseku.</p>
       </div>
 
       <div class="param">
         <div class="param-head">
-          <div class="param-title">Linear Advance K-factor<small>Lineární kompenzace (Marlin)</small></div>
-          <span class="param-val">ekvivalent PA pro Marlin firmware</span>
+          <div class="param-title">Vnější stěna / Vnitřní stěna<small>Outer/inner wall jerk</small></div>
+          <span class="param-val">9 mm/s / 9 mm/s</span>
         </div>
-        <p>Marlin firmware používá termín Linear Advance s K-factor hodnotou. Funkčně je to totéž jako Pressure Advance — jen jiný název a mírně odlišný matematický model. Pokud váš slicer/firmware nabízí oba termíny, použijte ten, který odpovídá firmwaru vaší tiskárny.</p>
+        <p>Jerk pro perimetry — na rozdíl od Zrychlení (kde se vnější a vnitřní stěna výrazně liší, 2000 vs 4000 mm/s²), zde má profil Kobry X obě stejné. Pokud chcete extra kvalitu vnějšího povrchu, můžete snížit jerk specificky pro vnější stěnu pod tuto hodnotu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Výplň<small>Infill jerk</small></div>
+          <span class="param-val">9 mm/s</span>
+        </div>
+        <p>Jerk pro výplň — stejná hodnota jako výchozí, protože výplň nepotřebuje speciální omezení vibrací.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Horní plocha<small>Top surface jerk</small></div>
+          <span class="param-val">9 mm/s</span>
+        </div>
+        <p>Jerk pro horní viditelnou plochu — stejná hodnota jako výchozí v tomto profilu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">První vrstva<small>First layer jerk</small></div>
+          <span class="param-val">9 mm/s</span>
+        </div>
+        <p>Jerk pro první vrstvu — na rozdíl od Zrychlení (kde je první vrstva výrazně snížena na 500 mm/s², viz Sekce 3) zůstává jerk na stejné hodnotě jako zbytek profilu.</p>
+      </div>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Rychloposun<small>Travel jerk</small></div>
+          <span class="param-val">9 mm/s</span>
+        </div>
+        <p>Jerk pro travel pohyby — stejná hodnota jako ostatní, na rozdíl od Zrychlení, kde Travel má výrazně vyšší hodnotu (10000 mm/s² oproti 4000 mm/s² normálnímu tisku).</p>
+      </div>
+
+      <h3>Pokročilé</h3>
+
+      <div class="param">
+        <div class="param-head">
+          <div class="param-title">Vyhlazení rychlosti extruze<small>Extrusion rate smoothing</small></div>
+          <span class="param-val">0 mm³/s² (vypnuto)</span>
+        </div>
+        <p>Pokročilá funkce, která vyhlazuje náhlé změny v objemovém průtoku materiálu (ne jen rychlost pohybu hlavy) — pomáhá s konzistencí extruze při rychlých změnách směru nebo rychlosti, podobně jako Pressure Advance (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>), ale na jiné úrovni řízení.</p>
       </div>
 
       <div class="alert alert-info">
         <div class="alert-icon">💡</div>
-        <div><strong>Co PA řeší v praxi:</strong> Bez správné kalibrace Pressure Advance vidíte na rozích modelu buď <em>vystupující kapky</em> (přebytek tlaku se neuvolnil včas) nebo <em>vpadlé rohy</em> (tlak nestihl narůst). Po kalibraci jsou rohy ostré a rovnoměrné bez ohledu na rychlost a směr pohybu.</div>
+        <div><strong>Jerk vs Junction Deviation:</strong> Pojem "Jerk" pochází z firmware Marlin. Modernější firmware (včetně systémů odvozených z Klipperu) může místo Jerk používat koncept <strong>Junction Deviation</strong>, který řeší totéž matematicky elegantněji (jedna hodnota určující maximální odchylku v rohu, místo separátní rychlostní hranice). Pokud program nebo firmware Kobry X zobrazuje "Jerk-Ryv" v jednotkách mm/s, pracuje s klasickým Jerk modelem.</div>
       </div>
 
-      <h3>Kalibrační postup Pressure Advance</h3>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div>
-          <strong>Krok za krokem:</strong>
-          <ol style="margin-top:8px; padding-left:20px; font-size:14px; line-height:1.8;">
-            <li>V Anycubic Slicer Next nebo OrcaSlicer otevřete <strong>Calibration → Pressure Advance</strong></li>
-            <li>Slicer vygeneruje kalibrační vzorek — sadu čar nebo rohů s postupně narůstajícím PA</li>
-            <li>Vytiskněte a vizuálně vyhodnoťte, který úsek má nejrovnoměrnější a nejostřejší rohy</li>
-            <li>Zadejte vybranou hodnotu PA do filament profilu</li>
-            <li>Opakujte kalibraci při změně typu filamentu nebo výrazné změně rychlosti tisku</li>
-          </ol>
-        </div>
-      </div>
-
-      <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div><strong>KOBRA X firmware podporuje Pressure Advance</strong> nativně — není nutná žádná úprava firmwaru ani instalace Klipperu. Hodnotu PA zadáváte přímo v profilu filamentu ve sliceru a ten ji odešle jako součást G-code instrukcí.</div>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=pressure+advance+calibration+3D+printer+direct+drive&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Pressure advance calibration 3D printer direct drive</a>
+      <a href="https://www.youtube.com/results?search_query=jerk+junction+deviation+3D+printer+settings+explained&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Jerk junction deviation 3D printer settings explained</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
-         SEKCE 4 — TRAVEL POHYBY
+         SEKCE 5 — RIZIKA: CO SE STANE KDYŽ...
     ════════════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="rizika-rychlosti">
       <div class="section-header">
-        <h2>4 — Průjezdové pohyby (Travel Moves)</h2>
+        <h2>5 — Rizika: co se stane, když rychlost/zrychlení nastavíte špatně</h2>
       </div>
 
-      <p>Travel moves jsou pohyby tiskové hlavy bez aktivní extruze — přesun mezi jednotlivými tiskovými úseky. Jejich nastavení ovlivňuje rychlost tisku, riziko zachycení o již vytištěný model a viditelnost stringing artefaktů.</p>
+      <p>Rychlostní parametry jsou jedny z nejčastěji "ohýbaných" nastavení — lákavé je zrychlit tisk co nejvíc, ale každá hodnota má svůj fyzický strop. Tady je přehled konkrétních příznaků a příčin, abyste poznali problém dřív, než zničíte celý tisk.</p>
 
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Travel Speed<small>Rychlost přesunu</small></div>
-          <span class="param-val">150–250 mm/s</span>
-        </div>
-        <p>Viz Sekce 1 výše. Rychlost, kterou se hlava pohybuje mezi tiskovými úseky. Limitována mechanickými možnostmi tiskárny — Kobra X díky Input Shaping zvládá vysoké travel rychlosti bez vibrací přenesených do dalšího tiskového úseku.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Avoid Crossing Walls / Combing Mode<small>Vyhýbání se křížení stěn / Combing režim</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
-        <p>Když je tato funkce zapnuta, tryska se při přesunu snaží zůstat <strong>uvnitř</strong> již vytištěných stěn modelu (jako hřeben — combing), místo aby letěla přímo vzduchem přes okraj. Důvod: pokud tryska oozuje (vytéká i přes retrakci), kapka skončí uvnitř modelu, kde není vidět, místo na viditelném povrchu.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Avoid Crossing Perimeters<small>Vyhýbání se křížení perimetrů</small></div>
-          <span class="param-val">zapnuto pro detailní modely</span>
-        </div>
-        <p>Podobné jako Combing, ale konkrétně zabraňuje, aby travel pohyb křížil již vytištěné perimetry vnějších stěn. Prodlužuje čas slicování (složitější výpočet trasy), ale zlepšuje povrchovou kvalitu u modelů s viditelnými stringy.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Z-Hop / Z Lift<small>Zvednutí v ose Z při přesunu</small></div>
-          <span class="param-val">0,2–0,4 mm (jen když potřeba)</span>
-        </div>
-        <p>Při travel pohybu tryska nadzvedne o nastavenou výšku v ose Z, aby se nezachytila o hrany již vytištěného modelu. Užitečné pro modely se členitým povrchem nebo vysokými tenkými prvky. Nevýhoda: zpomaluje tisk (extra pohyb nahoru a dolů) a může zanechat drobné stopy na povrchu. Pro jednoduché modely lze vypnout.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Z-Hop Trigger<small>Spouštěč Z-Hop</small></div>
-          <span class="param-val">"Only when crossing perimeters" (jen při křížení perimetrů)</span>
-        </div>
-        <p>Pokročilejší nastavení, kdy se Z-Hop aktivuje jen tehdy, je-li to nutné (travel trasa kříží stěnu modelu), místo při každém přesunu. Šetří čas tisku oproti "always" (vždy) variantě.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Retract on Layer Change<small>Retrakce při změně vrstvy</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
-        <p>Provede retrakci filamentu při každém přechodu mezi vrstvami (Z pohyb nahoru na další vrstvu). Zabraňuje vzniku malé kapky plastu na hraně vrstvy. Související s retrakčními parametry v <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">kapitole 05c</a>.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Minimum Travel for Retraction<small>Minimální vzdálenost přesunu pro retrakci</small></div>
-          <span class="param-val">1–2 mm</span>
-        </div>
-        <p>Pokud je travel pohyb kratší než tato hodnota, retrakce se nevykoná (zbytečně by zpomalovala tisk a opotřebovávala extruder). Pro velmi krátké přesuny (méně než 1–2 mm) riziko oozingu je minimální, takže retrakce nemá smysl.</p>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=combing+mode+z+hop+3D+printing+settings&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Combing mode Z hop 3D printing settings</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 5 — SLOW DOWN PRO CHLAZENÍ
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>5 — Zpomalení pro chlazení (Slow Down for Cooling)</h2>
-      </div>
-
-      <p>Malé objekty nebo úzké úseky modelu se tisknou velmi rychle — vrstva je hotová za pár sekund. Problém je, že plast nemá čas ztuhnout, než na něj tiskárna nanese další vrstvu. Slicer proto dokáže automaticky zpomalit tisk, pokud by vrstva trvala kratší dobu, než je bezpečné.</p>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Minimum Layer Time<small>Minimální čas vrstvy</small></div>
-          <span class="param-val">5–10 s</span>
-        </div>
-        <p>Nejkratší přípustná doba tisku jedné vrstvy. Pokud by vrstva při nastavené rychlosti trvala méně, slicer ji automaticky zpomalí (a/nebo zvýší chlazení), aby se dosáhlo minimálního času. Klíčové pro malé detaily — bez tohoto nastavení se tenké věžičky a špičky modelu zdeformují, protože se tisknou na nedostatečně vychladlou předchozí vrstvu.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Minimum Print Speed<small>Minimální tisková rychlost</small></div>
-          <span class="param-val">10–15 mm/s</span>
-        </div>
-        <p>Spodní limit, na který může slicer zpomalit při snaze dosáhnout Minimum Layer Time. Bez tohoto limitu by mohl slicer zpomalit tisk extrémně (např. na 1 mm/s), což by způsobilo přehřátí plastu na jednom místě (tryska tam "postojí" déle a přehřeje okolní plast). Tento limit zabraňuje příliš drastickému zpomalení.</p>
-      </div>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div><strong>Tip pro malé modely:</strong> Pro modely menší než přibližně 5 cm² půdorysu tiskněte více kusů najednou na jedné podložce. Tiskárna pak stráví více času na "kolečku" mezi jednotlivými kopiemi, čímž se efektivně prodlouží čas chladnutí každé vrstvy, aniž by bylo nutné drasticky zpomalovat rychlost tisku.</div>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Slow Down Layers<small>Počet zpomalených vrstev (na začátku)</small></div>
-          <span class="param-val">2–3 vrstvy</span>
-        </div>
-        <p>Některé sliceru nabízejí možnost automaticky zpomalit prvních N vrstev tisku bez ohledu na velikost — užitečné pro lepší přilnavost a stabilizaci tisku na začátku, než se ustálí tepelná rovnováha hotendu a podložky.</p>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 6 — KALIBRACE RYCHLOSTI
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>6 — Kalibrace rychlosti (praktický postup)</h2>
-      </div>
-
-      <p>Teoretické hodnoty z tabulek jsou dobrým startem, ale skutečné limity vaší konkrétní tiskárny a filamentu zjistíte jen testem. Speed Tower je standardní kalibrační nástroj pro nalezení maximální použitelné rychlosti bez ztráty kvality.</p>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Speed Tower<small>Kalibrační věž rychlosti</small></div>
-          <span class="param-val">viz popis</span>
-        </div>
-        <p>Podobně jako Temperature Tower (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>), Speed Tower je věž, kde se rychlost tisku postupně zvyšuje s každým segmentem výšky. Vyhodnocením povrchu zjistíte, při jaké rychlosti se začíná zhoršovat kvalita (ghosting, nedostatečná extruze, ztráta detailů).</p>
-      </div>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div>
-          <strong>Postup kalibrace rychlosti:</strong>
-          <ol style="margin-top:8px; padding-left:20px; font-size:14px; line-height:1.8;">
-            <li>Stáhněte Speed Tower model z Printables nebo MakerWorld</li>
-            <li>Vytiskněte s nastaveným rozsahem rychlostí (např. 40–150 mm/s po segmentech)</li>
-            <li>Prohlédněte si povrch každého segmentu — hledejte ringing, nedostatečnou extruzi, ztrátu ostrosti rohů</li>
-            <li>Vyberte nejvyšší rychlost, při které je kvalita ještě přijatelná</li>
-            <li>Tuto rychlost použijte jako Outer Wall Speed pro daný materiál</li>
-          </ol>
-        </div>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=3D+print+speed+calibration+tower&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print speed calibration tower</a>
-
-      <h3>Doporučené rychlosti dle materiálu (Kobra X, 0,4 mm tryska)</h3>
       <table>
-        <thead><tr><th>Materiál</th><th>Vnější stěna</th><th>Výplň</th><th>Travel</th><th>Poznámka</th></tr></thead>
+        <thead><tr><th>Příznak na výtisku</th><th>Pravděpodobná příčina</th><th>Co zkontrolovat</th></tr></thead>
         <tbody>
-          <tr><td>PLA</td><td>30–45 mm/s</td><td>80–120 mm/s</td><td>200–250 mm/s</td><td>Nejtolerantnější k rychlosti</td></tr>
-          <tr><td>PETG</td><td>25–35 mm/s</td><td>60–90 mm/s</td><td>150–200 mm/s</td><td>Citlivější na stringing při vysoké rychlosti</td></tr>
-          <tr><td>ABS</td><td>30–40 mm/s</td><td>70–100 mm/s</td><td>150–200 mm/s</td><td>Pomalejší chlazení vyžaduje opatrnost</td></tr>
-          <tr><td>ASA</td><td>30–40 mm/s</td><td>70–100 mm/s</td><td>150–200 mm/s</td><td>Podobné ABS</td></tr>
-          <tr><td>TPU</td><td>15–25 mm/s</td><td>20–30 mm/s</td><td>100–150 mm/s</td><td>Flexibilní materiál — pomalu všude</td></tr>
+          <tr>
+            <td>Vlnky/ozvěna kolem hran a rohů (ringing/ghosting)</td>
+            <td>Příliš vysoké Zrychlení nebo Jerk na vnější stěně</td>
+            <td>Snižte Vnější stěna zrychlení (Sekce 3) a/nebo jerk (Sekce 4); zvažte kalibraci Input Shaping</td>
+          </tr>
+          <tr>
+            <td>Mezery/slabá místa, model je "průsvitný" i přes dostatečnou výplň</td>
+            <td>Rychlost výplně/vnitřní stěny vyšší, než hotend zvládne při dané teplotě (under-extrusion)</td>
+            <td>Zkontrolujte Max Volumetric Speed v <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>, případně snižte rychlost Vnitřní výplně (Sekce 1)</td>
+          </tr>
+          <tr>
+            <td>Geometrie modelu se náhle "posune" nebo zdeformuje od určitého místa dál</td>
+            <td>Ztracené kroky motoru (lost steps) — zrychlení/rychlost překročila fyzickou schopnost motoru</td>
+            <td>Snižte Zrychlení (zejména Normální tisk a Rychloposun, Sekce 3) na hodnoty blíž výchozímu profilu Kobry X</td>
+          </tr>
+          <tr>
+            <td>Propadlé/zborcené převisy a mosty bez podpěr</td>
+            <td>Rychlost převisů (Sekce 2) nebo Most příliš vysoká pro danou míru sklonu</td>
+            <td>Snižte hodnoty v tabulce Rychlost převisů, zejména pro 50–100% rozsah</td>
+          </tr>
+          <tr>
+            <td>Tisk trvá extrémně dlouho i na jednoduchých modelech</td>
+            <td>Příliš agresivní (nízká) rychlost převisů aplikovaná i na mírné svahy (~10–25%)</td>
+            <td>Zvyšte rychlost pro nízké hodnoty procenta převisu v tabulce (Sekce 2)</td>
+          </tr>
+          <tr>
+            <td>První vrstva se neúplně přichytí nebo se posune při tisku</td>
+            <td>První vrstva zrychlení/rychlost příliš vysoká</td>
+            <td>Snižte zrychlení první vrstvy (Sekce 3) zpět na nízké hodnoty (např. 500 mm/s² jako ve výchozím profilu)</td>
+          </tr>
         </tbody>
       </table>
 
-      <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div><strong>Vztah rychlosti a kvality:</strong> Vyšší rychlost vždy znamená kompromis. Pro první testovací tisky a důležité finální modely zvolte konzervativní rychlosti z tabulky výše. Jakmile zvládnete základní kalibraci (retrakce, flow, teplota — viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>), můžete postupně zkoušet vyšší rychlosti pomocí Speed Tower testu.</div>
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Obecné pravidlo pro bezpečné experimentování:</strong> Měňte rychlostní parametry <strong>postupně, po malých krocích</strong> (např. +10–20 % najednou), a po každé změně vytiskněte malý testovací model (kalibrační krychli nebo Speed Tower test), než aplikujete novou hodnotu na velký/důležitý tisk. Kobra X díky Input Shaping zvládá vyšší rychlosti než tiskárny bez této kompenzace, ale stále má fyzické limity — výchozí hodnoty z profilu Anycubic jsou už dobře vyladěné pro tento konkrétní hardware.</div>
       </div>
+
+      <h3>Kalibrace rychlosti — Speed Tower</h3>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div>
+          <strong>Postup kalibrace:</strong>
+          <ol style="margin-top:8px; padding-left:20px; font-size:14px; line-height:1.8;">
+            <li>Stáhněte Speed Tower model z Printables nebo MakerWorld</li>
+            <li>Vytiskněte s rozsahem rychlostí (např. 40–150 mm/s po segmentech výšky)</li>
+            <li>Prohlédněte si povrch každého segmentu — hledejte ringing, nedostatečnou extruzi, ztrátu ostrosti rohů</li>
+            <li>Vyberte nejvyšší rychlost, při které je kvalita ještě přijatelná, a tu použijte jako novou hodnotu Vnější stěna</li>
+          </ol>
+        </div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=3D+print+speed+test+tower+calibration+lost+steps&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print speed test tower calibration lost steps</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
