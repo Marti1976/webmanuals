@@ -24,7 +24,6 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
 
-  /* ── SIDEBAR ── */
   .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
   .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
   .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
@@ -44,10 +43,8 @@
   .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
   .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
 
-  /* ── MAIN ── */
   .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
 
-  /* ── HERO ── */
   .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
   .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
   .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
@@ -56,25 +53,15 @@
   .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
   .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
   .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 640px; }
 
-  /* ── LAYOUT ── */
   .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
 
-  /* ── SECTIONS ── */
   .section { margin: 44px 0; }
   .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
   .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
   h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
 
-  /* ── CARD ── */
-  .card { background: var(--card); border: 1px solid var(--border); padding: 22px 26px; transition: all .2s; }
-  .card:hover { border-color: var(--accent); background: rgba(232,160,32,.03); }
-  .card h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; color: var(--accent2); margin-bottom: 6px; }
-  .card p { font-size: 14px; color: var(--text); }
-  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
-
-  /* ── PARAM BLOK (light use here) ── */
   .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
   .param:hover { border-color: var(--accent); }
   .param-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
@@ -84,21 +71,17 @@
   .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
   .param p + p { margin-top: 6px; }
 
-  /* ── STEP LIST ── */
-  .steps { list-style: none; counter-reset: step; margin: 16px 0; }
-  .steps li { position: relative; padding: 10px 0 10px 42px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
-  .steps li:last-child { border-bottom: none; }
-  .steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 8px; width: 26px; height: 26px; background: rgba(232,160,32,.12); border: 1px solid var(--accent); color: var(--accent2); font-family: var(--mono); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
-  .steps li strong { color: var(--accent2); }
+  .tab-bar { display: flex; gap: 2px; margin: 0 0 20px; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
+  .tab-bar span { font-family: var(--mono); font-size: 12px; padding: 8px 16px; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+  .tab-bar span.active { color: var(--accent2); border-bottom-color: var(--accent); font-weight: 600; }
+  .tab-bar span.hidden { color: #3a4055; font-style: italic; }
 
-  /* ── ALERTS ── */
   .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
   .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
   .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
   .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
   .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
 
-  /* ── TABLE ── */
   table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
   thead tr { background: var(--surface); }
   th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
@@ -106,27 +89,37 @@
   tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
   td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
 
-  /* ── YT LINK ── */
+  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+  .card { background: var(--card); border: 1px solid var(--border); padding: 18px 20px; transition: border-color .2s; }
+  .card:hover { border-color: var(--accent); background: rgba(232,160,32,.03); }
+  .card h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; color: var(--accent2); margin-bottom: 6px; }
+  .card p { font-size: 13.5px; color: var(--muted); }
+
+  .steps { list-style: none; counter-reset: step; margin: 16px 0; }
+  .steps li { position: relative; padding: 10px 0 10px 42px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 8px; width: 26px; height: 26px; background: rgba(232,160,32,.12); border: 1px solid var(--accent); color: var(--accent2); font-family: var(--mono); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .steps li strong { color: var(--accent2); }
+
+  .menu-item { font-family: var(--mono); font-size: 13px; background: var(--surface); border: 1px solid var(--border); padding: 5px 12px; margin: 4px 0; display: block; color: var(--text); }
+  .menu-item .shortcut { float: right; color: var(--muted); font-size: 11px; }
+  .menu-group { margin: 10px 0 18px; }
+
   .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
   .yt-link:hover { opacity: .8; }
-
-  /* ── REF LINK ── */
   .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
   .ref-link:hover { background: rgba(74,158,255,.14); }
 
-  /* ── PAGE NAV ── */
   .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
   .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
   .pn a:hover { color: var(--accent); }
   .pn .nx { margin-left: auto; }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } }
 </style>
 </head>
 <body>
 
-<!-- ── SIDEBAR ── -->
 <nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-product">
@@ -135,7 +128,6 @@
     </div>
   </div>
   <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
-
   <div class="nav-group-label">Základní sekce</div>
   <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
   <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
@@ -156,7 +148,6 @@
   <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
   <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
   <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
-
   <div class="nav-group-label">Ostatní přílohy</div>
   <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
     <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
@@ -170,17 +161,15 @@
   <div style="height:32px;flex-shrink:0;"></div>
 </nav>
 
-<!-- ── MAIN ── -->
 <main class="main-content">
-
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 03</span>
-        <span class="ver-badge">SOFTWARE</span>
+        <span class="ver-badge">SOFTWARE · ZÁKLADY</span>
       </div>
       <h1>Slicer — <span>základy</span></h1>
-      <p>Co je slicer, jak ho nastavit pro Kobru X, jak importovat model, vybrat profil filamentu a vytvořit první G-code. Základ, na kterém stojí všechny pokročilejší kapitoly.</p>
+      <p>Co je slicer, jak vypadá Anycubic Slicer Next, jak nastavit tiskárnu, vybrat filament, zkalibrovat profil a dostat G-code do tiskárny. Vše bez přepínání do režimu Pokročilé.</p>
     </div>
   </div>
 
@@ -188,351 +177,505 @@
 
     <div class="alert alert-info">
       <div class="alert-icon">💡</div>
-      <div><strong>Anycubic Slicer Next (s OrcaSlicer v závorce):</strong> Tato kapitola popisuje postupy prioritně v <strong>Anycubic Slicer Next</strong> — což je upravená verze OrcaSlicer od Anycubic. Kde se postup liší, je uveden i ekvivalent pro <strong>(OrcaSlicer)</strong>. Naprostá většina parametrů a logiky je mezi oběma programy identická, protože sdílejí stejný základ kódu (open-source fork PrusaSlicer → Bambu Studio → OrcaSlicer).</div>
+      <div><strong>Tato kapitola popisuje Anycubic Slicer Next ve výchozím zobrazení</strong> — bez zapnutého přepínače „Pokročilé". Pokud chcete vidět <strong>všechna</strong> dostupná pole (včetně pokročilých), přepněte přepínač v horní liště okna Proces nebo Filament do polohy Pokročilé a přejděte do kapitol <a href="05a_3D_slicer_tisk.html" style="color:#fff;">05a</a>, <a href="05b_3D_slicer_rychlost.html" style="color:#fff;">05b</a> a <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c</a>.</div>
     </div>
 
-    <p style="margin-bottom: 8px;">Hlubší detaily k jednotlivým parametrům najdete v navazujících kapitolách:
-      <a href="05a_3D_slicer_tisk.html" class="ref-link">→ 05a Parametry tisku</a>
-      <a href="05b_3D_slicer_rychlost.html" class="ref-link">→ 05b Parametry rychlosti</a>
-      <a href="05c_3D_slicer_filament.html" class="ref-link">→ 05c Parametry filamentu</a>
-      <a href="04_3D_slicer_pokrocily.html" class="ref-link">→ 04 Slicer — pokročilý</a>
-    </p>
+    <!-- SEKCE 1 — CO JE SLICER -->
+    <div class="section" id="co-je-slicer">
+      <div class="section-header"><h2>1 — Co je slicer a proč ho potřebujete</h2></div>
 
-    <!-- ═══════════════════════════════════════════
-         SEKCE 1 — CO JE SLICER
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>1 — Co je slicer (Slicer Software)</h2>
-      </div>
-
-      <p>Slicer je program, který převede 3D model (soubor STL, OBJ nebo 3MF) na sled instrukcí pro tiskárnu — tzv. <strong>G-code</strong>. Tiskárna sama o sobě neumí "číst" 3D modely; potřebuje přesný seznam příkazů typu "posuň se na souřadnice X/Y/Z, zahřej trysku na teplotu T, extrudruj E milimetrů filamentu". Tento proces se nazývá <strong>slicování</strong> (slicing) — model se rozřeže na tenké horizontální vrstvy (slices) a pro každou vrstvu se vypočítá optimální dráha trysky.</p>
+      <p>Tiskárna sama o sobě neumí číst 3D modely (soubory .STL, .OBJ nebo .3MF). Potřebuje přesný seznam instrukcí — tzv. <strong>G-code</strong> — který říká: posuň se na souřadnice X/Y/Z, zahřej trysku na teplotu T, extruduj E milimetrů filamentu. Slicer je software, který tento převod provádí: rozřeže 3D model na tenké horizontální vrstvy (odtud název slicer — "kráječ") a pro každou vrstvu vypočítá optimální trajektorii trysky.</p>
 
       <div class="chapter-grid">
-        <div class="card">
-          <h4>Vstup (Input)</h4>
-          <p>3D model ve formátu STL, OBJ nebo 3MF — geometrie povrchu bez informací o tisku.</p>
-        </div>
-        <div class="card">
-          <h4>Slicer (zpracování)</h4>
-          <p>Rozřeže model na vrstvy, vypočítá trajektorie trysky, aplikuje parametry tisku, rychlosti, teploty.</p>
-        </div>
-        <div class="card">
-          <h4>Výstup (Output)</h4>
-          <p>G-code soubor — přesný textový seznam instrukcí, který tiskárna provede řádek po řádku.</p>
-        </div>
+        <div class="card"><h4>Vstup</h4><p>3D model (.STL, .OBJ, .3MF) — jen geometrie povrchu bez informací o tisku</p></div>
+        <div class="card"><h4>Slicer</h4><p>Rozřeže model na vrstvy, vypočítá trajektorie, aplikuje parametry teploty, rychlosti, výplně...</p></div>
+        <div class="card"><h4>Výstup</h4><p>G-code soubor — textový seznam instrukcí, který tiskárna provede řádek po řádku</p></div>
       </div>
 
-      <h3>Anycubic Slicer Next vs OrcaSlicer — co je rozdíl?</h3>
-      <p><strong>OrcaSlicer</strong> je open-source slicer vyvíjený komunitou, odvozený původně z Bambu Studio (které samo vychází z PrusaSlicer). Je univerzální — podporuje desítky tiskáren různých výrobců. <strong>Anycubic Slicer Next</strong> je oficiální fork (odvozená verze) OrcaSlicer, který Anycubic upravil a předkonfiguroval specificky pro své tiskárny, včetně Kobry X. Výhoda Anycubic verze: profil tiskárny, automatická detekce přes síť (Workbench, viz <a href="04_3D_slicer_pokrocily.html" style="color:var(--blue);">04 — Sekce 7</a>) a přímá integrace s Anycubic účtem jsou předem nastavené a bezproblémové. Výhoda OrcaSlicer: širší komunitní podpora, častější aktualizace, podpora více tiskáren v jednom programu (užitečné, pokud máte víc tiskáren různých značek).</p>
+      <h3>Anycubic Slicer Next vs OrcaSlicer</h3>
+      <p><strong>Anycubic Slicer Next</strong> je oficiální slicer od Anycubic postavený na open-source projektu OrcaSlicer. Má předpřipravené profily pro Kobru X, přímou integraci s Anycubic účtem (Workbench, vzdálené odesílání tisku, synchronizace s ACE Pro) a menu v češtině. <strong>OrcaSlicer</strong> je původní komunitní verze — o něco frecuentovanější aktualizace, ale bez přednastaveného profilu Kobry X. Pro výhradní práci s Kobrou X doporučujeme Anycubic Slicer Next.</p>
+    </div>
+
+    <!-- SEKCE 2 — INSTALACE A NASTAVENÍ -->
+    <div class="section" id="instalace">
+      <div class="section-header"><h2>2 — Instalace a nastavení programu</h2></div>
+
+      <ol class="steps">
+        <li><strong>Stáhněte</strong> instalátor z webu Anycubic (sekce Software / Support) — Windows a macOS</li>
+        <li><strong>Spusťte</strong> instalátor a projděte průvodcem (Next → Next → Install)</li>
+        <li><strong>Při prvním spuštění</strong> vás program přivítá úvodní obrazovkou — klikněte na tiskárnu nebo přejděte přímo do hlavního okna</li>
+        <li><strong>Přidejte tiskárnu</strong> v panelu Tiskárna vpravo (viz Sekce 4) — Kobra X je v předpřipravených profilech</li>
+        <li><strong>Přihlaste se</strong> Anycubic účtem pro funkci Workbench a vzdálené odesílání tisku (nepovinné, ale doporučeno)</li>
+      </ol>
+
+      <h3>Nastavení programu (dialog)</h3>
+      <p>Otevřete přes hamburger menu → <strong>Nastavení</strong> (nebo <kbd>Ctrl+P</kbd>). Klíčové volby:</p>
+
+      <div class="param">
+        <div class="param-head"><div class="param-title">Jazyk<small>Language</small></div><span class="param-val">Czech</span></div>
+        <p>Nastaví celé uživatelské rozhraní do češtiny — přesně ta CZ terminologie, která je použita v celém tomto průvodci.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Region<small>Region</small></div><span class="param-val">Globální</span></div>
+        <p>Oblast pro stahování filament profilů a online obsahu — Globální zahrnuje veškerý dostupný obsah.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Jednotky<small>Units</small></div><span class="param-val">Metrický (mm, g)</span></div>
+        <p>Pro Českou republiku vždy metrické jednotky — milimetry a gramy. Změna na palce/unce by způsobila zmatek ve všech rozměrových polích.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Default page<small>Výchozí stránka</small></div><span class="param-val">Domů</span></div>
+        <p>Co se zobrazí při spuštění programu — Domů ukáže úvodní obrazovku s posledními projekty, alternativa je přímé otevření pracovní plochy.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Zobrazovat úvodní obrazovku<small>Show startup screen</small></div></div>
+        <p>Pokud chcete program co nejrychleji dostat do pracovní plochy, odškrtněte tuto volbu — program vás bude vítát přímo s prázdnou deskou.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Flushing volumes — automatický výpočet<small>Flushing volumes auto-calculate</small></div></div>
+        <p>Tři zaškrtávací políčka řídí, kdy program automaticky přepočítá objemy proplachu při vícebarevném tisku (při každé změně filamentu, barvy). Pro jednobarevný tisk (jedna cívka) tyto volby nijak nezasahují do práce — jsou relevantní jen pokud máte ACE Pro systém a tisknete více barev. Detailně viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Sekce 1</a>.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Associate files<small>Přiřazení souborů</small></div></div>
+        <p>Tři volby přiřadí soubory .3MF, .STL a .STEP/STP přímo k Anycubic Slicer Next — dvojklik na takový soubor ve Průzkumníku Windows ho automaticky otevře v programu. Doporučujeme mít zaškrtnuto.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Automatické zálohování<small>Auto-backup</small></div><span class="param-val">každých 60 s</span></div>
+        <p>Program automaticky ukládá zálohu projektu — interval 60 sekund je rozumný kompromis. Zálohu najdete ve složce specifikované v poli Stahování.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Stahování<small>Download path</small></div></div>
+        <p>Složka, kam program ukládá stažené profily a zálohy. Tlačítkem Procházet ji změňte na místo, kde máte své 3D projekty.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Tmavý režim<small>Dark mode</small></div></div>
+        <p>Zapnutím aktivujete tmavé rozhraní — výchozí a doporučené pro práci u monitoru v horších světelných podmínkách.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Sync User Preset to Cloud<small>Synchronizace uživatelských profilů do cloudu</small></div></div>
+        <p>Pokud jste přihlášeni Anycubic účtem, vaše vlastní profily (uložené přes "Uložit stávající Filament" nebo podobné tlačítko) se synchronizují do cloudu. Výhodou je dostupnost profilů na jiném PC bez ruční exportu.</p>
+      </div>
+
+      <h3>Výběr režimu</h3>
+      <p>Hamburger menu → Výběr režimu nabízí <strong>Osobní režim</strong> (výchozí — pro domácí a hobby tisk, plná sada nástrojů) a <strong>Režim farmy</strong> (pro provozovatele tiskových farem — přidané nástroje pro hromadný management, fronty úkolů a vzdálené monitorování více tiskáren najednou).</p>
+    </div>
+
+    <!-- SEKCE 3 — ROZHRANÍ A MENU -->
+    <div class="section" id="rozhrani">
+      <div class="section-header"><h2>3 — Rozhraní programu a horní lišta</h2></div>
+
+      <p>Hlavní okno se skládá ze tří oblastí: <strong>horní lišta</strong> s menu a tlačítky, <strong>3D viewport</strong> uprostřed (kde vidíte model na virtuální podložce) a <strong>pravý panel</strong> s Tiskárna/Filament/Proces.</p>
+
+      <h3>Menu Soubor</h3>
+      <div class="menu-group">
+        <div class="menu-item">Nový Projekt <span class="shortcut">Ctrl+N</span></div>
+        <div class="menu-item">Otevřít projekt... <span class="shortcut">Ctrl+O</span></div>
+        <div class="menu-item">Nedávné projekty</div>
+        <div class="menu-item">Uložit projekt <span class="shortcut">Ctrl+S</span></div>
+        <div class="menu-item">Uložit projekt jako... <span class="shortcut">Ctrl+Shift+S</span></div>
+        <div class="menu-item">Importovat → (STL, OBJ, 3MF, STEP...)</div>
+        <div class="menu-item">Exportovat → (G-code, 3MF, STL...)</div>
+        <div class="menu-item">Ukončit</div>
+      </div>
 
       <div class="alert alert-tip">
         <div class="alert-icon">✓</div>
-        <div><strong>Doporučení:</strong> Pro výhradní používání s Kobrou X je <strong>Anycubic Slicer Next jednodušší na nastavení</strong> (profil tiskárny je předpřipravený). Pokud plánujete více tiskáren různých značek nebo chcete být na špici nejnovějších komunitních funkcí, zvolte <strong>OrcaSlicer</strong> a tiskárnu nastavte manuálně (postup v Sekci 6 této kapitoly).</div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 2 — INSTALACE
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>2 — Instalace a první spuštění</h2>
+        <div><strong>Formáty souborů:</strong> <strong>STL</strong> je nejběžnější (jen geometrie, žádné barvy). <strong>3MF</strong> je modernější — ukládá i barvy, více objektů, slicovací nastavení v jednom souboru. <strong>STEP/STP</strong> jsou přesné strojní formáty z CAD programů — Anycubic Slicer Next je umí přímo importovat.</div>
       </div>
 
-      <h3>Anycubic Slicer Next</h3>
-      <ol class="steps">
-        <li>Stáhněte instalátor z oficiálních stránek Anycubic (sekce Download / Support) — dostupné pro Windows, macOS</li>
-        <li>Spusťte instalátor a postupujte podle průvodce (Next → Next → Install)</li>
-        <li>Po prvním spuštění se zobrazí průvodce výběrem tiskárny — vyberte <strong>Anycubic Kobra X</strong> ze seznamu</li>
-        <li>Slicer automaticky stáhne a nastaví výchozí profily tiskárny a běžných filamentů</li>
-        <li>Doporučeno (nepovinné): přihlásit se Anycubic účtem pro funkci Workbench a cloud spojení</li>
-      </ol>
-
-      <h3>OrcaSlicer</h3>
-      <ol class="steps">
-        <li>Stáhněte instalátor z <a href="https://orca-slicer.com/" target="_blank" style="color:var(--blue);">orca-slicer.com</a> nebo GitHub repozitáře projektu</li>
-        <li>Nainstalujte (Windows/macOS/Linux jsou všechny podporované)</li>
-        <li>Při prvním spuštění se zobrazí Setup Wizard — Kobra X <strong>nemusí</strong> být v základním seznamu výrobců, proto pokračujte k manuálnímu přidání tiskárny (Sekce 6 této kapitoly)</li>
-        <li>Vyberte výchozí jazyk a jednotky (metrické pro ČR)</li>
-      </ol>
-
-      <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
-        <div><strong>OrcaSlicer nemá Kobru X přednastavenou stejně dobře jako Anycubic Slicer Next.</strong> Profil tiskárny je nutné buď stáhnout z komunitního repozitáře, nebo vytvořit manuálně zadáním rozměrů tiskového prostoru a dalších parametrů (viz Sekce 6).</div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 3 — UI POPIS
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>3 — Rozhraní programu (User Interface)</h2>
+      <h3>Menu Upravit (hamburger → Upravit)</h3>
+      <div class="menu-group">
+        <div class="menu-item">Zpět <span class="shortcut">Ctrl+Z</span></div>
+        <div class="menu-item">Vpřed <span class="shortcut">Ctrl+Y</span></div>
+        <div class="menu-item">Řezat / Kopírovat / Vložit <span class="shortcut">Ctrl+X / C / V</span></div>
+        <div class="menu-item">Smazat vybrané / Smazat vše <span class="shortcut">Del / Ctrl+D</span></div>
+        <div class="menu-item">Duplikovat aktuální desku</div>
+        <div class="menu-item">Vybrat vše / Odznačit vše <span class="shortcut">Ctrl+A / Esc</span></div>
       </div>
 
-      <p>Rozhraní Anycubic Slicer Next a OrcaSlicer je téměř identické — sdílejí stejný vizuální základ. Hlavní obrazovka se skládá ze čtyř klíčových oblastí:</p>
-
-      <div class="chapter-grid">
-        <div class="card">
-          <h4>3D Viewport (střed)</h4>
-          <p>Hlavní pracovní plocha — zde vidíte 3D model na virtuální podložce, otáčíte pohledem (myš + tažení), přibližujete (kolečko myši).</p>
-        </div>
-        <div class="card">
-          <h4>Pravý panel — Parametry</h4>
-          <p>Záložky Print / Filament / Printer — zde se nastavují všechny slicovací parametry popsané v kapitolách 05a/05b/05c.</p>
-        </div>
-        <div class="card">
-          <h4>Horní toolbar</h4>
-          <p>Nástroje pro manipulaci s modelem — Move, Rotate, Scale, Cut, Mirror (detailněji <a href="04_3D_slicer_pokrocily.html" style="color:var(--blue);">v kapitole 04</a>).</p>
-        </div>
-        <div class="card">
-          <h4>Spodní lišta — Slice / Preview</h4>
-          <p>Tlačítko <strong>Slice</strong> spustí výpočet G-code. Po dokončení přepne na záložku <strong>Preview</strong> s náhledem vrstev (Sekce 7 této kapitoly).</p>
-        </div>
+      <h3>Menu Zobrazení (hamburger → Zobrazení)</h3>
+      <div class="menu-group">
+        <div class="menu-item">Výchozí zobrazení <span class="shortcut">Ctrl+0</span></div>
+        <div class="menu-item">Horní / Spodní / Zepředu / Zezadu / Zleva / Zprava <span class="shortcut">Ctrl+1–6</span></div>
+        <div class="menu-item">Použít perspektivní pohled (výchozí)</div>
+        <div class="menu-item">Použít ortogonální zobrazení</div>
+        <div class="menu-item">Automatická perspektiva</div>
+        <div class="menu-item">Show G-code Window <span class="shortcut">C</span></div>
+        <div class="menu-item">Zobrazit 3D navigátor</div>
+        <div class="menu-item">Obnovit rozložení oken</div>
+        <div class="menu-item">Zobrazit Popisky <span class="shortcut">Ctrl+E</span></div>
+        <div class="menu-item">Zobrazit Převis</div>
+        <div class="menu-item">Zobrazit vybraný obrys (beta)</div>
       </div>
-
-      <h3>Process / Filament / Printer — tři úrovně profilů</h3>
-      <p>Klíčové pro pochopení sliceru je vědět, že nastavení je rozděleno do <strong>tří nezávislých profilů</strong>, které se kombinují:</p>
-
-      <table>
-        <thead><tr><th>Profil</th><th>Co obsahuje</th><th>Příklad</th></tr></thead>
-        <tbody>
-          <tr><td>Process (Tisk)</td><td>Vrstvy, stěny, výplň, rychlost, podpěry — vše nezávislé na materiálu</td><td>"0.20mm Standard", "0.12mm Fine Detail"</td></tr>
-          <tr><td>Filament (Materiál)</td><td>Teploty, chlazení, retrakce, flow — vlastnosti konkrétního filamentu</td><td>"Generic PLA", "Anycubic PETG"</td></tr>
-          <tr><td>Printer (Tiskárna)</td><td>Rozměry tiskového prostoru, typ extruderu, G-code skripty start/end</td><td>"Anycubic Kobra X 0.4 nozzle"</td></tr>
-        </tbody>
-      </table>
-
-      <p>Tato třístupňová struktura umožňuje libovolně kombinovat — stejný "Process" profil (0.20mm Standard) lze použít s různými filamenty, a stejný filament profil lze použít s různými process profily. Nemusíte vytvářet desítky kombinovaných profilů pro každou možnou kombinaci.</p>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 4 — IMPORT MODELU
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>4 — Import a příprava modelu</h2>
-      </div>
-
-      <ol class="steps">
-        <li><strong>Import:</strong> Klikněte na <em>Add (Import)</em> nebo přetáhněte STL/OBJ/3MF soubor přímo do 3D Viewportu</li>
-        <li><strong>Pozice na podložce:</strong> Slicer obvykle umístí model automaticky na střed podložky — u více modelů použijte Auto-Arrange (viz <a href="04_3D_slicer_pokrocily.html" style="color:var(--blue);">04 — Sekce 6</a>)</li>
-        <li><strong>Orientace (Rotate):</strong> Zvažte, jak model otočit, aby minimalizoval potřebu podpěr a maximalizoval kontaktní plochu s podložkou</li>
-        <li><strong>Velikost (Scale):</strong> Ověřte rozměry modelu — výchozí jednotky STL souboru nemusí odpovídat vašemu očekávání (mm vs palce je častá chyba)</li>
-        <li><strong>Kontrola kolize s tiskovým prostorem:</strong> Pokud je model příliš velký nebo vysoký pro Kobru X (max. 250×220×260 mm), slicer zobrazí varování</li>
-      </ol>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div><strong>Formáty souborů:</strong> <strong>STL</strong> je nejběžnější, ale obsahuje jen geometrii (žádné barvy/materiály). <strong>3MF</strong> je modernější formát, který umí uložit i barvy, více objektů a dokonce slicovací nastavení v jednom souboru — doporučeno pro projekty s více objekty nebo multi-material tisky. <strong>OBJ</strong> se používá méně často, hlavně pro modely s texturami.</div>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=import+STL+model+slicer+orientation+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Import STL model slicer orientation tutorial</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 5 — ZÁKLADNÍ PARAMETRY (PŘEHLED)
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>5 — Základní parametry tisku (přehled)</h2>
-      </div>
-
-      <p>Než se ponoříte do detailních kapitol 05a/05b/05c, je dobré chápat čtyři úplně základní parametry, které ovlivní 90 % výsledku. Pro úplný detail každého z nich klikněte na odkaz u daného parametru.</p>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Layer Height<small>Výška vrstvy</small></div>
-          <span class="param-val">0,2 mm</span>
-        </div>
-        <p>Tloušťka jedné vrstvy — základní volba mezi rychlostí a detailem. Plný popis: <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Sekce 1: Vrstvy</a>.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Infill Density<small>Hustota výplně</small></div>
-          <span class="param-val">15 %</span>
-        </div>
-        <p>Kolik vnitřního objemu je vyplněno materiálem — ovlivňuje pevnost a spotřebu. Plný popis: <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Sekce 4: Výplň</a>.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Print Speed<small>Tisková rychlost</small></div>
-          <span class="param-val">50–60 mm/s</span>
-        </div>
-        <p>Jak rychle se tiskne — ovlivňuje čas tisku i kvalitu povrchu. Plný popis: <a href="05b_3D_slicer_rychlost.html" style="color:var(--blue);">05b — Sekce 1: Základní rychlosti</a>.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Nozzle/Bed Temperature<small>Teplota trysky/podložky</small></div>
-          <span class="param-val">210/60 °C (PLA)</span>
-        </div>
-        <p>Teploty určené profilem filamentu — klíčové pro úspěšnou extruzi a přilnavost. Plný popis: <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Sekce 1: Teploty</a>.</p>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 6 — MATERIÁLOVÉ PROFILY
-    ════════════════════════════════════════════ -->
-    <div class="section" id="profily">
-      <div class="section-header">
-        <h2>6 — Materiálové profily a profily tiskárny</h2>
-      </div>
-
-      <h3>Co je profil filamentu</h3>
-      <p>Profil filamentu (Filament Profile) je uložená sada parametrů specifických pro konkrétní materiál — teploty, chlazení, retrakce, flow (detailně rozebráno v <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>). Místo ručního zadávání desítek hodnot pro každý tisk jednoduše vyberete profil odpovídající vašemu filamentu (např. "Generic PLA", "Anycubic PETG", "eSun ABS+") a slicer automaticky použije jeho nastavení.</p>
-
-      <h3>Vestavěné profily vs vlastní profily</h3>
-      <p>Anycubic Slicer Next i OrcaSlicer obsahují knihovnu předpřipravených profilů pro běžné značky a typy filamentu. Pokud používáte přesně tento materiál, stačí profil vybrat. Pokud máte neznámou nebo specifickou značku, vytvoříte vlastní profil — buď od nuly, nebo (lépe) zkopírováním nejbližšího existujícího profilu a úpravou jen odlišných hodnot (typicky teplota).</p>
-
-      <h3>Co je profil tiskárny</h3>
-      <p>Profil tiskárny (Printer Profile) obsahuje fyzické vlastnosti tiskárny — rozměry tiskového prostoru, typ extruderu (direct drive vs Bowden), průměr trysky, a tzv. <strong>Start/End G-code</strong> — speciální sekvence příkazů, které se vykonají na začátku a konci každého tisku (např. zahřátí, kalibrace podložky, parkování hlavy po dotisknutí).</p>
 
       <div class="alert alert-info">
         <div class="alert-icon">💡</div>
-        <div><strong>Kdy upravovat Start G-code:</strong> Pokročilí uživatelé sem vkládají vlastní kalibrační rutiny (např. automatický Z-offset wizard nebo čistící sekvenci trysky před začátkem tisku). Pro běžné používání s Kobrou X je výchozí Start/End G-code z předpřipraveného profilu zcela dostatečný a neměli byste jej upravovat, pokud přesně nevíte, co děláte.</div>
+        <div><strong>Zobrazit Převis</strong> je velmi užitečná funkce při přípravě modelu — barevně zvýrazní všechna místa, kde hrozí problémy s tiskem bez podpěr (převisy nad prahovým úhlem). Zapněte před slicováním, pokud si nejste jistí, zda model potřebuje podpěry.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=filament+profile+printer+profile+slicer+explained&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Filament profile printer profile slicer explained profily</a>
+      <h3>Tlačítko Náhled / Pracovní stůl</h3>
+      <p>V horní liště jsou dvě základní obrazovky programu. <strong>Pracovní stůl</strong> je přípravný pohled, kde importujete modely, upravujete jejich polohu a nastavujete parametry. <strong>Náhled</strong> (Preview) se aktivuje automaticky po dokončení slicování a zobrazuje výsledný G-code vrstvu po vrstvě — viz Sekce 8.</p>
+
+      <h3>Tlačítko Kalibrace</h3>
+      <p>Přímý přístup ke všem kalibračním testům — viz Sekce 6 této kapitoly.</p>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         SEKCE 6b — PŘIDÁNÍ TISKÁRNY
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>6a — Přidání tiskárny do sliceru</h2>
+    <!-- SEKCE 4 — TŘI PANELY VPRAVO -->
+    <div class="section" id="tri-panely">
+      <div class="section-header"><h2>4 — Tři panely vpravo: Tiskárna, Filament, Proces</h2></div>
+
+      <p>Celé nastavení tisku je organizováno do tří nezávislých profilů v pravém panelu. Každý lze nastavit a uložit zvlášť — jejich kombinace pak definuje, jak bude výsledný G-code vypadat.</p>
+
+      <table>
+        <thead><tr><th>Panel</th><th>Co obsahuje</th><th>Příklad profilu</th></tr></thead>
+        <tbody>
+          <tr><td>Tiskárna</td><td>Rozměry podložky, typ extruderu, průměr trysky, G-code start/end skripty</td><td>Anycubic Kobra X 0.4 nozzle</td></tr>
+          <tr><td>Filament</td><td>Teploty, chlazení, retrakce, průtok — vlastnosti konkrétního materiálu</td><td>Anycubic PLA+</td></tr>
+          <tr><td>Proces</td><td>Vrstvy, stěny, výplň, podpěry, rychlost — geometrie tisku</td><td>0.20mm High Quality @AC KX</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Panel Tiskárna — výběr a přidání</h3>
+
+      <p>Kliknutím na rozbalovací seznam v panelu Tiskárna zobrazíte dostupné profily. Sekce obsahuje <strong>Systémová přednastavení</strong> (dodaná Anycubic — Kobra X je tu přednastavenou), dále možnost <strong>Select/Remove printers (system presets)</strong> pro správu zobrazených tiskáren a <strong>Vytvořit tiskárnu</strong> pro přidání vlastní/neoficiální tiskárny ručně.</p>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Kobra X je v seznamu jako "Anycubic Kobra X 0.4 nozzle"</strong> — vyberte tento profil. Vedle rozbalovacího seznamu je ikona tužky/editace pro otevření detailního nastavení tiskárny (G-code skripty, rozměry) — pro běžné použití není nutné upravovat.</div>
       </div>
 
-      <h3>Anycubic Slicer Next — přidání Kobry X</h3>
-      <p>V Anycubic Slicer Next je Kobra X součástí výchozí knihovny tiskáren. Při prvním spuštění (nebo přes <em>Printer Settings → Add Printer</em>) vyberete výrobce <strong>Anycubic</strong> a model <strong>Kobra X</strong> ze seznamu. Profil se stáhne automaticky se všemi výchozími rozměry a G-code skripty správně předvyplněnými. Žádné manuální zadávání není potřeba.</p>
+      <h3>Panel Filament — výběr profilu materiálu</h3>
 
-      <h3>OrcaSlicer — přidání Kobry X (manuálně přes IP)</h3>
-      <p>OrcaSlicer nemusí mít Kobru X v přednastaveném seznamu výrobců se stejnou úplností jako Anycubic Slicer Next. Pokud tiskárna chybí nebo chcete připojení nastavit manuálně, postupujte takto:</p>
+      <p>Rozbalovací seznam filamentu zobrazuje dvě skupiny:</p>
+      <table>
+        <thead><tr><th>Skupina</th><th>Co obsahuje</th></tr></thead>
+        <tbody>
+          <tr><td>Uživatelská přednastavení</td><td>Vaše vlastní uložené nebo upravené profily (např. "Elagoo PLA PRO @Anycubic Kobra X 0.4 nozzle")</td></tr>
+          <tr><td>Systémová přednastavení</td><td>Dodané Anycubic: PLA, PLA+, PLA Glow, PLA High Speed, PLA Matte, PLA Silk, PLA Translucent, ABS, ASA, PETG, PVA, TPU 95A, TPU for ACE</td></tr>
+        </tbody>
+      </table>
 
+      <p>Tlačítko <strong>Čisticí objem</strong> a ikona Synchronize from ACE Pro jsou relevantní jen pro multi-material tisk s ACE Pro systémem — pro jednobarevný tisk je ignorujte. Detailní popis panelu Filament (jak vytvořit vlastní profil pro C-Tech PLA+) je v kapitole <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Parametry filamentu</a>.</p>
+
+      <h3>Panel Proces — výběr profilu tisku</h3>
+
+      <p>Rozbalovací seznam nabízí profily pojmenované podle výšky vrstvy a kvality. Systémová přednastavení pro Kobru X (0.4 mm tryska):</p>
+
+      <table>
+        <thead><tr><th>Profil</th><th>Výška vrstvy</th><th>Typické použití</th></tr></thead>
+        <tbody>
+          <tr><td>0.08mm Standard @AC KX</td><td>0,08 mm</td><td>Extrémní detail, velmi dlouhý tisk</td></tr>
+          <tr><td>0.12mm High Quality @AC KX</td><td>0,12 mm</td><td>Vysoká kvalita — figurky, detailní modely</td></tr>
+          <tr><td>0.12mm Standard @AC KX</td><td>0,12 mm</td><td>Střední kvalita se sníženou vrstvou</td></tr>
+          <tr><td>0.16mm High Quality @AC KX</td><td>0,16 mm</td><td>Dobrá kvalita, přijatelný čas</td></tr>
+          <tr><td>0.20mm High Quality @AC KX</td><td>0,20 mm</td><td>Zlatý standard — dobrý kompromis kvality a rychlosti</td></tr>
+          <tr><td>0.20mm Standard @AC KX</td><td>0,20 mm</td><td>Rychlejší varianta standardní vrstvy</td></tr>
+          <tr><td>0.24mm Standard @AC KX</td><td>0,24 mm</td><td>Rychlejší tisk, méně detailu</td></tr>
+          <tr><td>0.28mm Standard @AC KX</td><td>0,28 mm</td><td>Hrubý rychlý tisk, prototypy</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Pro začátek používejte "0.20mm High Quality @AC KX"</strong> — je to výchozí profil vyladěný Anycubic přímo pro Kobru X a poskytuje dobrý základ pro drtivou většinu tisků.</div>
+      </div>
+    </div>
+
+    <!-- SEKCE 5 — ZÁKLADNÍ VIEW PROCESU (BEZ POKROČILÉ) -->
+    <div class="section" id="zakladni-view-procesu">
+      <div class="section-header"><h2>5 — Okno Proces bez přepínače „Pokročilé"</h2></div>
+
+      <p>Když je přepínač <strong>Pokročilé</strong> v okně Proces vypnutý, vidíte zkrácenou sadu záložek a polí — jen to nejdůležitější. Záložka <strong>Rychlost</strong> je v základním view skrytá úplně. Je to záměr: začátečník rychlosti nepotřebuje ladit, výchozí hodnoty z profilu jsou vhodné pro většinu tisků.</p>
+
+      <div class="tab-bar">
+        <span class="active">Kvalita</span>
+        <span>Pevnost</span>
+        <span class="hidden">Rychlost (skryto)</span>
+        <span>Podpěry</span>
+        <span>Multimateriál</span>
+        <span>Ostatní</span>
+      </div>
+
+      <h3>Záložka Kvalita (základní view)</h3>
+
+      <div class="param">
+        <div class="param-head"><div class="param-title">Výška vrstvy<small>Layer height</small></div><span class="param-val">0,2 mm</span></div>
+        <p>Tloušťka jedné vrstvy — základní volba kvality vs. rychlost. Nižší = více detailu, delší tisk. Pro trysku 0,4 mm platí maximum cca 0,3 mm. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Vrstvy</a>.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Výška první vrstvy<small>First layer height</small></div><span class="param-val">0,2 mm</span></div>
+        <p>Výška úplně první vrstvy — lze nastavit vyšší než zbytek tisku pro lepší přilnavost k podložce.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Pozice švu<small>Seam position</small></div><span class="param-val">Zarovnaný</span></div>
+        <p>Kde bude viditelný šev (místo, kde tryska začíná/končí každý perimetr). Zarovnaný = švy v jedné svislé linii. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Šev</a>.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Přesná stěna<small>Precise wall</small></div></div>
+        <p>Upřesní výslednou tloušťku stěny na přesnou zadanou hodnotu. Pro funkční mechanické díly zapněte, pro dekorativní modely nechte vypnuto.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Pouze jedna stěna na horních plochách<small>Only one wall on top surfaces</small></div></div>
+        <p>Na horních plochách použije jen jeden perimetr místo plného počtu — zrychluje tisk bez ztráty vizuální kvality horní plochy.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Pouze jedna stěna v první vrstvě<small>Only one wall on first layer</small></div></div>
+        <p>Stejný princip pro první vrstvu — obvykle nechte vypnuto.</p>
+      </div>
+
+      <h3>Záložka Pevnost (základní view)</h3>
+
+      <div class="param">
+        <div class="param-head"><div class="param-title">Počet perimetrů/stěn<small>Wall count</small></div><span class="param-val">2</span></div>
+        <p>Kolik obvodových linií tvoří stěny modelu. 2 = minimum pro dekorativní modely, 3–4 pro funkční/namáhané díly. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Stěny</a>.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Vrchní vrstvy skořepiny<small>Top shell layers</small></div><span class="param-val">5</span></div>
+        <p>Kolik plných vrstev uzavírá model nahoře. Pro 0,2 mm Layer Height je 5 vrstev (1 mm celkem) standardní hodnota.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Tloušťka horní skořepiny<small>Top shell thickness</small></div><span class="param-val">1 mm</span></div>
+        <p>Alternativní zadání tloušťky horní skořepiny v milimetrech místo počtu vrstev.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Vzor horního povrchu<small>Top surface pattern</small></div><span class="param-val">Monotónní</span></div>
+        <p>Vzor linií na viditelné horní ploše. Monotónní (všechny linie stejným směrem) dává nejrovnoměrnější vzhled.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Spodní vrstvy skořepiny<small>Bottom shell layers</small></div><span class="param-val">3</span></div>
+        <p>Počet plných vrstev uzavírajících model zdola.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Hustota vnitřní výplně<small>Infill density</small></div><span class="param-val">15 %</span></div>
+        <p>Procento vnitřního objemu vyplněného materiálem. 15 % je standardní pro dekorativní modely, 25–40 % pro funkční díly. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Výplň</a>.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Vzor vnitřní výplně<small>Infill pattern</small></div><span class="param-val">Gyroid</span></div>
+        <p>Geometrický vzor výplně. Gyroid je dobrá univerzální volba — rovnoměrná pevnost ve všech směrech.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Vzor vnitřní plné výplně<small>Solid infill pattern</small></div><span class="param-val">Přímočarý</span></div>
+        <p>Vzor pro 100% plnou výplň v místech, kde ji program generuje automaticky (okolí otvorů, podpěrné body).</p>
+      </div>
+
+      <h3>Záložka Podpěry (základní view)</h3>
+
+      <div class="param">
+        <div class="param-head"><div class="param-title">Povolit podpěry<small>Enable support</small></div></div>
+        <p>Zapne/vypne generování podpěrných struktur. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Podpěry</a>.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Typ<small>Support type</small></div><span class="param-val">Strom (auto)</span></div>
+        <p>Stromové podpěry jsou výchozí — méně materiálu, snazší odstranění, vhodné pro většinu modelů.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Hraniční úhel<small>Threshold angle</small></div><span class="param-val">30°</span></div>
+        <p>Od jakého úhlu převisu program generuje podpěru. Nižší = agresivnější generování.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Pouze na podložce<small>Support on build plate only</small></div></div>
+        <p>Podpěry jen tam, kde mohou stát na tiskové podložce. Zjednodušuje strukturu a snadnost odstranění.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Filament na podpěry<small>Support filament</small></div><span class="param-val">Výchozí</span></div>
+        <p>Při multi-material tisku lze zvolit jiný materiál (např. PVA) pro podpěry — pro jednobarevný tisk nechte Výchozí.</p>
+      </div>
+
+      <h3>Záložka Multimateriál (základní view)</h3>
+
+      <div class="param">
+        <div class="param-head"><div class="param-title">Čistící věž — Zapnout<small>Prime tower enable</small></div></div>
+        <p>Věžička pro proplach trysky při výměně barvy — relevantní jen pro vícebarevný tisk s ACE Pro.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Šířka věže / Základní objem<small>Tower width / Base volume</small></div><span class="param-val">30 mm / 30 mm³</span></div>
+        <p>Rozměry čistící věže. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Multimateriál</a>.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Čištění do podpěr objektů<small>Flush into supports</small></div></div>
+        <p>Čisticí materiál se vytlačí do podpěr místo samostatné věže — šetří materiál.</p>
+      </div>
+
+      <h3>Záložka Ostatní (základní view)</h3>
+
+      <div class="param">
+        <div class="param-head"><div class="param-title">Obrysové smyčky<small>Skirt loops</small></div><span class="param-val">0 (vypnuto)</span></div>
+        <p>Obrys (Skirt) — obvodové linie kolem modelu pro ustálení toku plastu. 0 = bez obrysu.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Výška obrysu<small>Skirt height</small></div><span class="param-val">1 vrstva</span></div>
+        <p>Na kolik vrstev se obrys tiskne.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Typ límce<small>Brim type</small></div><span class="param-val">Automaticky</span></div>
+        <p>Límec (Brim) — přídavné "křídla" kolem základny modelu pro lepší přilnavost. Automaticky = program rozhodne sám.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Šířka límce<small>Brim width</small></div><span class="param-val">5 mm</span></div>
+        <p>Jak daleko límec sahá od modelu. Zvyšte na 8–10 mm pro materiály náchylné na warping (ABS, ASA).</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Tisková sekvence<small>Print sequence</small></div><span class="param-val">Podle vrstvy</span></div>
+        <p>Pořadí tisku objektů na podložce — Podle vrstvy (všechny najednou, střídají se) vs. Podle objektu (jeden objekt celý, pak druhý).</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Spirálová váza<small>Spiral vase</small></div></div>
+        <p>Speciální jednostěnný spirálový tisk bez výplně — jen pro duté dekorativní předměty.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Časosběr<small>Timelapse</small></div><span class="param-val">Tradiční</span></div>
+        <p>Nastavení pro kamerový timelapse tisku — Tradiční = snímek po každé vrstvě.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Členitý povrch<small>Fuzzy skin</small></div><span class="param-val">Žádné</span></div>
+        <p>Texturovaný matný povrch záměrnými odchylkami trysky. Skrývá viditelnost vrstev a švu. Detailně viz <a href="04_3D_slicer_pokrocily.html" style="color:var(--blue);">04 — Fuzzy Skin</a>.</p>
+      </div>
+
+      <h3>Nastavení Podložky (Proces → Objekty, kliknutím na název podložky)</h3>
+
+      <div class="param">
+        <div class="param-head"><div class="param-title">Typ podložky<small>Plate type</small></div><span class="param-val">Smooth Plate</span></div>
+        <p>Jaký typ tiskové desky máte nasazený — program podle toho použije správné teploty podložky z filament profilu. Kobra X standardně dodává Textured PEI podložku.</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Tisková sekvence<small>Print sequence (plate)</small></div><span class="param-val">Podle vrstvy</span></div>
+        <p>Stejné nastavení jako v záložce Ostatní, ale na úrovni konkrétní podložky (pokud máte víc podložek/dávek v projektu).</p>
+      </div>
+      <div class="param">
+        <div class="param-head"><div class="param-title">Sekvence filamentu první vrstvy / ostatních vrstev<small>First layer / other layers filament sequence</small></div><span class="param-val">Automaticky</span></div>
+        <p>Pořadí, ve kterém se přistupuje k jednotlivým filamentovým slotům při multi-material tisku. Pro jednobarevný tisk nechte Automaticky.</p>
+      </div>
+
+      <div class="alert alert-tip">
+        <div class="alert-icon">✓</div>
+        <div><strong>Nezapomeňte na přepínač Pokročilé</strong> — základní view schválně skrývá Šířku extruze, Přesnost, Žehlení, Mostování, Převisy, záložku Rychlost a mnoho dalších polí. Jakmile budete chtít ladit tisk do detailu, přepněte Pokročilé a přejděte do kapitol 05a/05b/05c kde jsou všechna pole popsána pole po poli.</div>
+      </div>
+    </div>
+
+    <!-- SEKCE 6 — KALIBRACE -->
+    <div class="section" id="kalibrace">
+      <div class="section-header"><h2>6 — Kalibrace (menu Kalibrace v horní liště)</h2></div>
+
+      <p>Po přidání nového filamentu (a vždy při přechodu na jiný materiál nebo značku) je doporučeno provést kalibraci. Program nabízí přímou sadu testů přístupných přes tlačítko <strong>Kalibrace</strong> v horní liště. Výsledky kalibrace se zapíší do profilu filamentu — po kalibraci musíte vždy profil uložit.</p>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠</div>
+        <div><strong>Po dokončení kalibrace a uložení hodnot vždy otevřete nový projekt</strong> (Soubor → Nový Projekt). Pokud byste pokračovali ve stejném projektu, slicer by stále aplikoval kalibrační modifikátory G-kódu, které jsou určeny jen pro testovací tisky — výsledný model by byl znehodnocen.</div>
+      </div>
+
+      <table>
+        <thead><tr><th>Test v menu Kalibrace</th><th>Co testuje</th><th>Výsledek zapíšete do...</th></tr></thead>
+        <tbody>
+          <tr><td>Teplota</td><td>Optimální teplota trysky pro daný filament (Tower s 5 segmenty od 230 do 190 °C)</td><td>Tryska — Ostatní vrstvy (záložka Filament v 05c)</td></tr>
+          <tr><td>Průtok → YOLO (doporučeno)</td><td>Korekce množství extrudovaného materiálu — Archimedova spirála s 11 vzorky</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
+          <tr><td>Průtok → YOLO (perfekcionistická)</td><td>Jemnější doladění průtoku po standardní YOLO kalibraci</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
+          <tr><td>Průtok → Postup 1</td><td>Tradiční metoda s 9 obdélníkovými bloky</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
+          <tr><td>Průtok → Postup 2</td><td>Jemné doladění po Postupu 1</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
+          <tr><td>Předstih tlaku</td><td>Kompenzace tlaku taveniny při zrychlení/zpomalení — ostrost rohů</td><td>Předstih tlaku (záložka Filament v 05c)</td></tr>
+          <tr><td>Test Retrakce</td><td>Délka zpětného tahu pro minimalizaci pavučin (stringing)</td><td>Přepsání nastavení → Vzdálenost retrakce (05c)</td></tr>
+          <tr><td>Tolerance Test</td><td>Rozměrová přesnost — lícování díry a kolíku</td><td>XY Kompenzace otvoru (05a) nebo Srážení (05c)</td></tr>
+          <tr><td>Více... → Max. průtok</td><td>Maximální objemová rychlost, kterou hotend zvládne</td><td>Maximální objemová rychlost (záložka Filament v 05c)</td></tr>
+          <tr><td>Více... → VFA</td><td>Rezonanční artefakty — ideální rychlost vnější stěny</td><td>Rychlost vnější stěny (05b)</td></tr>
+          <tr><td>Výukový program</td><td>Interaktivní průvodce přímo v programu (CZ)</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div><strong>Doporučené pořadí kalibrace:</strong> Teplota → Průtok → Předstih tlaku → Retrakce → Max. průtok → VFA. Teplota musí být první, protože ovlivňuje výsledky všech ostatních testů. Kompletní technický popis každého testu s konkrétními vzorci a vizualizacemi najdete v příloze: <a href="X_optimalizace_profilu_kalibrace.html" style="color:var(--accent2); font-weight:600;">→ Optimalizace a kalibrace profilů (kompletní postup)</a>.</div>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=Anycubic+Slicer+Next+calibration+tutorial+YOLO+flow&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Slicer Next calibration tutorial YOLO flow</a>
+    </div>
+
+    <!-- SEKCE 7 — VÝMĚNA FILAMENTU -->
+    <div class="section" id="vymena-filamentu">
+      <div class="section-header"><h2>7 — Výměna filamentu a přepnutí profilu</h2></div>
+
+      <p>Při výměně fyzické cívky filamentu (nová barva, nový materiál) je potřeba v programu také přepnout filament profil, aby teploty, chlazení a retrakce odpovídaly novému materiálu.</p>
+
+      <h3>Výměna profilu filamentu v programu</h3>
       <ol class="steps">
-        <li>Otevřete <em>Printer Settings → Add Printer</em> a vyberte obecný (Generic) profil tiskárny s direct drive extruderem a tryskou 0,4 mm</li>
-        <li>Zadejte rozměry tiskového prostoru Kobry X manuálně: <strong>250 × 220 × 260 mm</strong> (X × Y × Z)</li>
-        <li>Nastavte typ extruderu na <strong>Direct Drive</strong> (ne Bowden) — důležité pro správné retrakční hodnoty (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Retrakce</a>)</li>
-        <li>V sekci <em>Connection</em> zadejte <strong>IP adresu tiskárny</strong> v lokální síti (najdete ji na displeji Kobry X v menu Network/Wi-Fi, nebo v routeru)</li>
-        <li>Zvolte typ spojení — pro Kobra X obvykle protokol kompatibilní s Moonraker/Klipper rozhraním, pokud je tiskárna takto vystavena v síti; jinak G-code exportujte na SD kartu manuálně</li>
-        <li>Uložte profil pod vlastním názvem, např. "Anycubic Kobra X — manual"</li>
+        <li><strong>Klikněte</strong> na rozbalovací seznam v panelu Filament (vpravo) — zobrazí se seznam dostupných profilů</li>
+        <li><strong>Vyberte</strong> odpovídající profil (např. Anycubic PLA+ pro cívku PLA+) — program automaticky načte teploty, chlazení a retrakci z tohoto profilu</li>
+        <li><strong>Pokud profil pro váš filament neexistuje:</strong> vyberte nejbližší (např. Generic PLA pro neznačkový PLA), zkopírujte ho a upravte teplotu dle údaje na cívce — postup viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Sekce 1 (Workflow profilů)</a></li>
+      </ol>
+
+      <h3>Fyzická výměna filamentu na tiskárně</h3>
+      <ol class="steps">
+        <li><strong>Zahřejte trysku</strong> na pracovní teplotu stávajícího materiálu (přes displej tiskárny nebo Workbench panel)</li>
+        <li><strong>Vytáhněte</strong> stávající filament z extruderu (tlačítko Vytáhnout na displeji, nebo manuálně, až tryska dosáhne teploty)</li>
+        <li><strong>Vložte</strong> nový filament do otvoru extruderu a zatlačte, až se z trysky začne vytlačovat nová barva — počkejte, až vytékající plast bude mít čistou, neznečištěnou barvu nového filamentu</li>
+        <li><strong>Nastavte</strong> správnou teplotu pro nový materiál (pokud se liší od předchozího)</li>
+        <li><strong>V programu</strong> přepněte profil filamentu dle kroku výše, reslicujte model a odešlete tisk</li>
       </ol>
 
       <div class="alert alert-warn">
         <div class="alert-icon">⚠</div>
-        <div><strong>Přihlášení účtem v OrcaSlicer obvykle nefunguje pro Anycubic tiskárny.</strong> OrcaSlicer je univerzální nástroj a nemá přístup k Anycubic cloud účtu stejným způsobem jako Anycubic Slicer Next. Pokud tiskárna není fyzicky připojená k vaší síti (nebo nemáte její IP adresu), nelze v OrcaSlicer nastavit přímé síťové odeslání tisku — v takovém případě exportujte G-code a přeneste jej na SD kartu nebo USB.</div>
+        <div><strong>Při přechodu z vyšší teploty na nižší</strong> (např. z ABS 250 °C na PLA 210 °C) vždy nechte trysku vychladnout na teplotu nového materiálu a teprve pak vytahujte/vkládejte filament. Vkládání PLA do trysky zahřáté na 250 °C může způsobit přepálení a ucpání.</div>
       </div>
 
-      <h3>Jak zjistit IP adresu Kobry X</h3>
-      <p>Na displeji tiskárny přejděte do menu <em>Settings → Network → Wi-Fi</em> (přesné umístění se může lišit dle verze firmwaru) — IP adresa je zobrazena po úspěšném připojení k Wi-Fi síti. Alternativně se přihlaste do správcovského rozhraní vašeho routeru a vyhledejte zařízení podle názvu "Kobra X" nebo MAC adresy v seznamu připojených zařízení.</p>
-
-      <a href="https://www.youtube.com/results?search_query=OrcaSlicer+add+custom+printer+manual+setup&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: OrcaSlicer add custom printer manual setup nastavení tiskárny</a>
+      <a href="https://www.youtube.com/results?search_query=Anycubic+Kobra+X+filament+change+swap&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Kobra X filament change swap výměna filamentu</a>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         SEKCE 6c — NAČTENÍ FILAMENTŮ Z TISKÁRNY
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>6b — Načtení filamentů uložených v tiskárně</h2>
-      </div>
+    <!-- SEKCE 8 — NÁHLED A EXPORT -->
+    <div class="section" id="nahled-export">
+      <div class="section-header"><h2>8 — Náhled vrstev (Preview) a export G-code</h2></div>
 
-      <p>Kobra X umožňuje uložit informace o vložených filamentech (typ, barva, případně i zbývající množství) přímo v paměti tiskárny nebo v Anycubic účtu. Tato sekce vysvětluje, jak tyto informace dostat zpět do sliceru, abyste je nemuseli zadávat ručně.</p>
+      <h3>Jak slicovat</h3>
+      <p>Po nastavení všech parametrů (Tiskárna, Filament, Proces) klikněte na tlačítko <strong>Slicovat</strong> (nebo klávesová zkratka). Program vypočítá G-code — u jednoduchých modelů to trvá sekundy, u komplexních modelů se stromovými podpěrami může výpočet trvat i minuty. Po dokončení se automaticky otevře záložka <strong>Náhled</strong>.</p>
 
-      <h3>Anycubic Slicer Next — synchronizace přes účet/Workbench</h3>
-      <ol class="steps">
-        <li>Přihlaste se ve sliceru stejným Anycubic účtem, jaký používáte v mobilní aplikaci spárované s tiskárnou</li>
-        <li>Otevřete záložku <strong>Workbench</strong> — pokud je tiskárna online (Wi-Fi připojená), zobrazí se v seznamu dostupných zařízení</li>
-        <li>Klikněte na tiskárnu — slicer by měl zobrazit aktuálně nahlášený stav filamentových slotů (pokud Kobra X a její firmware tuto telemetrii podporují)</li>
-        <li>Přiřazené filamenty se promítnou do sekce Filament Slots (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Sekce 6: Multi-filament</a>) — slicer pak automaticky ví, jaký materiál je v jakém portu</li>
-      </ol>
-
-      <h3>OrcaSlicer — manuální zadání</h3>
-      <p>OrcaSlicer nemá přímý přístup k Anycubic cloud telemetrii tiskárny. Informace o vloženém filamentu musíte zadat manuálně — zkontrolujte fyzicky, jaký materiál a barva je v jednotlivých portech (popisky na cívkách nebo vizuální kontrola), a v sekci Filament profil přiřadíte odpovídající profil ručně ke každému slotu/portu před slicováním.</p>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div><strong>Praktický tip:</strong> Pokud pravidelně měníte filamenty, vyplatí se vést si jednoduchou evidenci (např. nálepka na cívce s typem a teplotou, nebo tabulka v poznámkovém bloku) — usnadní to manuální přiřazení zejména v OrcaSlicer, kde žádná automatická synchronizace není k dispozici.</div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 7 — LAYER PREVIEW
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>7 — Náhled vrstev (Layer Preview)</h2>
-      </div>
-
-      <p>Po kliknutí na tlačítko <strong>Slice</strong> slicer vypočítá G-code a automaticky přepne do záložky <strong>Preview</strong>, kde si lze celý tisk "přehrát" vrstvu po vrstvě ještě před skutečným odeslání do tiskárny. Tento krok je klíčový pro odhalení problémů (chybějící podpěry, podivné trajektorie) ještě před tím, než spustíte fyzický tisk.</p>
+      <h3>Co vidíte v náhledu</h3>
 
       <div class="chapter-grid">
         <div class="card">
-          <h4>Layer Slider (Posuvník vrstev)</h4>
-          <p>Postupně "odkrýváte" model vrstvu po vrstvě a kontrolujete, jak bude tisk postupovat — odhalíte případné nedostatky v podpěrách nebo neočekávané mezery.</p>
+          <h4>Posuvník vrstev</h4>
+          <p>Posuvník na pravé straně umožňuje procházet model vrstvu po vrstvě — zkontrolujete, jak bude tisk postupovat, kde jsou podpěry, kde začíná výplň.</p>
         </div>
         <div class="card">
-          <h4>Color by Feature</h4>
-          <p>Barevně odliší různé typy úseků trysky (perimetr, výplň, podpěra, travel) — užitečné pro rychlou vizuální kontrolu struktury tisku.</p>
+          <h4>Barevné zobrazení</h4>
+          <p>Různé typy úseků jsou barevně odlišeny — vnější stěna, vnitřní stěna, výplň, podpěry, travel pohyby. Snadno odhalíte problém v struktuře ještě před tiskem.</p>
         </div>
         <div class="card">
-          <h4>Color by Speed</h4>
-          <p>Zobrazí trajektorii barevně podle rychlosti tisku v daném úseku — pomáhá pochopit, kde program zpomaluje a proč (např. kvůli Minimum Layer Time).</p>
+          <h4>Zobrazení dle rychlosti</h4>
+          <p>Alternativní barevné zobrazení podle rychlosti tisku v každém úseku — vidíte, kde program zpomaluje (převisy, malé detaily).</p>
         </div>
         <div class="card">
-          <h4>Time Estimate (Odhad času)</h4>
-          <p>Slicer zobrazí odhadovaný celkový čas tisku a spotřebu materiálu (hmotnost, délka filamentu) na základě vypočítaného G-code.</p>
+          <h4>Odhad času a materiálu</h4>
+          <p>Program zobrazí odhadovaný čas tisku, délku filamentu a hmotnost spotřebovaného materiálu pro celou tiskovou dávku.</p>
         </div>
       </div>
 
       <div class="alert alert-tip">
         <div class="alert-icon">✓</div>
-        <div><strong>Vždy zkontrolujte Preview před tiskem.</strong> Zvlášť u nových nebo složitých modelů je pár minut strávených prohlížením náhledu vrstev mnohem levnější než zjištění problému uprostřed několikahodinového tisku. Zaměřte se zejména na první vrstvu a na místa s podpěrami.</div>
+        <div><strong>Vždy zkontrolujte náhled před tiskem.</strong> Zaměřte se na: správnou polohu podpěr (jsou tam, kde je potřeba?), první vrstvu (je celý model v kontaktu s podložkou?), viditelné anomálie v trajektorii. Pár minut kontroly ušetří hodiny zničeného tisku.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=slicer+layer+preview+G-code+visualization+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Slicer layer preview G-code visualization tutorial náhled vrstev</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 8 — EXPORT
-    ════════════════════════════════════════════ -->
-    <div class="section">
-      <div class="section-header">
-        <h2>8 — Export G-code a odeslání do tiskárny</h2>
-      </div>
-
-      <p>Po kontrole náhledu vrstev je čas dostat hotový G-code do tiskárny. Existují tři běžné způsoby — liší se podle toho, jaký slicer používáte a jak je tiskárna propojena se sítí.</p>
+      <h3>Export a odeslání do tiskárny</h3>
 
       <table>
         <thead><tr><th>Způsob</th><th>Postup</th><th>Kdy použít</th></tr></thead>
         <tbody>
-          <tr><td>Export na SD kartu / USB</td><td>Export File → uložit .gcode na SD kartu/USB → vložit do tiskárny → vybrat soubor na displeji</td><td>Univerzální, funguje vždy, bez ohledu na slicer nebo síť</td></tr>
-          <tr><td>Send to Printer (Workbench)</td><td>V Anycubic Slicer Next kliknout na Send to Printer v záložce Workbench</td><td>Nejrychlejší, žádné fyzické přenášení, vyžaduje Wi-Fi a účet</td></tr>
-          <tr><td>Manuální síťový přenos (OrcaSlicer)</td><td>Pokud je nastavena IP adresa a podporovaný protokol, lze odeslat přímo ze sliceru</td><td>OrcaSlicer s manuálně nastavenou IP (viz Sekce 6a)</td></tr>
+          <tr><td>SD karta / USB</td><td>Exportovat → G-code → uložit na kartu → vložit do tiskárny → vybrat na displeji</td><td>Univerzální, funguje vždy bez sítě</td></tr>
+          <tr><td>Workbench (Wi-Fi)</td><td>Tlačítko Send to Printer v záložce Workbench — vyžaduje přihlášení a Wi-Fi připojení tiskárny</td><td>Nejrychlejší, bez fyzického přenosu souboru</td></tr>
         </tbody>
       </table>
 
       <div class="alert alert-info">
         <div class="alert-icon">💡</div>
-        <div><strong>Doporučený přístup pro začátek:</strong> I když máte Wi-Fi propojení nastavené, pro první tisky doporučujeme export na SD kartu — máte jistotu, že soubor existuje a je kompletní, a navíc budete u tiskárny fyzicky přítomni pro kontrolu první vrstvy (viz <a href="06_3D_priprava_a_tisk.html" style="color:var(--blue);">06 — Příprava & tisk</a>).</div>
+        <div><strong>Pro první tisky doporučujeme SD kartu</strong> — budete fyzicky u tiskárny a můžete sledovat první vrstvu. Workbench je pohodlný pro rutinní tisky, ale při prvním tisku nového modelu je lepší být přítomen a moci okamžitě zasáhnout, pokud se první vrstva nevydaří.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=export+gcode+SD+card+3D+printer+slicer&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Export gcode SD card 3D printer slicer odeslání tisku</a>
+      <a href="https://www.youtube.com/results?search_query=Anycubic+Slicer+Next+slice+export+gcode+preview&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Slicer Next slice export gcode preview</a>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         PAGE NAV
-    ════════════════════════════════════════════ -->
+    <!-- PAGE NAV -->
     <div class="pn">
       <a href="02_3D_tiskarna.html">← 02 · Tiskárna Kobra X</a>
       <a href="04_3D_slicer_pokrocily.html" class="nx">04 · Slicer — pokročilý →</a>
     </div>
 
-  </div><!-- /wrapper -->
+  </div>
 </main>
 
 <script>
