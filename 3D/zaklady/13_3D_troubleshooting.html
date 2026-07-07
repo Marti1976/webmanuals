@@ -173,7 +173,7 @@
   <a href="13_3D_troubleshooting.html" class="nav-item active"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
 
   <div class="nav-group-label">Ostatní přílohy</div>
-  <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
+<a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
     <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
     <span class="nav-item-text">Výběr příloh</span>
   </a>
@@ -203,7 +203,7 @@
     <!-- INTRO -->
     <div class="alert alert-info" style="margin-top:32px;">
       <div class="alert-icon">💡</div>
-      <div><strong>Jak tuto kapitolu používat:</strong> Klikněte na název problému který vidíte — rozbalí se příčiny a řešení. Problémy jsou seřazeny do skupin dle kategorie. Pokud tiskárna vůbec nereaguje nebo problém přetrvává po všech krocích — kontaktujte <a href="https://support.anycubic.com" target="_blank" style="color:var(--blue);">support.anycubic.com</a> s číslem SN tiskárny (Nastavení → Informace o zařízení).</div>
+      <div><strong>Jak tuto kapitolu používat:</strong> Klikněte na název problému který vidíte — rozbalí se příčiny a řešení. Problémy jsou seřazeny do skupin dle kategorie. Pokud tiskárna vůbec nereaguje nebo problém přetrvává po všech krocích — kontaktujte podporu Anycubic: <a href="https://support.anycubic.com" target="_blank" style="color:var(--blue);">support.anycubic.com</a> nebo <a href="https://anycubicsupport.zendesk.com/hc/en-001" target="_blank" style="color:var(--blue);">Zendesk Support</a>. Připravte SN číslo tiskárny (Nastavení → Informace o zařízení).</div>
     </div>
 
     <!-- RYCHLÁ NAVIGACE -->
@@ -2552,9 +2552,56 @@
     <!-- SUPPORT BOX -->
     <div class="support-box">
       <h3>Problém přetrvává?</h3>
-      <p>Pokud žádné z výše uvedených řešení nepomohlo, nebo máte podezření na hardwarovou závadu — kontaktujte oficiální podporu Anycubic. Připravte SN číslo tiskárny (Nastavení → Informace o zařízení) a popis problému s fotkami.</p>
-      <a href="https://support.anycubic.com" target="_blank">→ support.anycubic.com</a>
-      <div class="sn-note">SN číslo: Nastavení → Informace o zařízení → Serial Number</div>
+      <p>Pokud žádné z výše uvedených řešení nepomohlo — nejdříve projděte Anycubic Wiki (dokumentace, chybové kódy, firmware). Pokud ani to nepomůže, kontaktujte podporu s SN číslem tiskárny a fotkami.</p>
+
+      <!-- WIKI ODKAZ GRID -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0;text-align:left;">
+
+        <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
+          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Kobra X — Návody</span>
+          <span style="font-size:12px;color:var(--muted);">Oficiální dokumentace a postupy přímo pro Kobru X</span>
+        </a>
+
+        <a href="https://wiki.anycubic.com/en/error-codes" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
+          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Chybové kódy</span>
+          <span style="font-size:12px;color:var(--muted);">Přehled všech chybových hlášek a jejich řešení</span>
+        </a>
+
+        <a href="https://wiki.anycubic.com/en/filament-and-resin" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
+          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Filamenty & Resin</span>
+          <span style="font-size:12px;color:var(--muted);">Doporučené materiály, nastavení a tipy</span>
+        </a>
+
+        <a href="https://wiki.anycubic.com/en/home/knowledge-sharing" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
+          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Knowledge Sharing</span>
+          <span style="font-size:12px;color:var(--muted);">Sdílení znalostí a tipů od komunity Anycubic</span>
+        </a>
+
+        <a href="https://wiki.anycubic.com/en/software-and-app" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
+          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Software & App</span>
+          <span style="font-size:12px;color:var(--muted);">Slicery, firmware, mobilní aplikace Anycubic</span>
+        </a>
+
+        <a href="https://wiki.anycubic.com/en/home/update-log" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
+          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Wiki Update Log</span>
+          <span style="font-size:12px;color:var(--muted);">Novinky a změny v dokumentaci Anycubic Wiki</span>
+        </a>
+
+      </div>
+
+      <!-- SUPPORT KONTAKTY -->
+      <div style="border-top:1px solid rgba(232,160,32,0.2);padding-top:18px;margin-top:8px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="https://support.anycubic.com" target="_blank" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:#000;background:var(--accent);padding:9px 22px;text-decoration:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">→ support.anycubic.com</a>
+        <a href="https://anycubicsupport.zendesk.com/hc/en-001" target="_blank" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--accent);background:transparent;border:1px solid var(--accent);padding:9px 22px;text-decoration:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:opacity .2s;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">→ Zendesk Support</a>
+      </div>
+
+      <div class="sn-note" style="margin-top:14px;">Připravte SN číslo: Nastavení → Informace o zařízení → Serial Number · Přiložte popis problému a fotky výtisku</div>
     </div>
 
     <!-- PAGE NAV -->

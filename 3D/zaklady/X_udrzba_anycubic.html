@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doporučená údržba Kobra X — Anycubic Wiki CZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d0f14; --surface:#13161e; --card:#181c27; --border:#252b3b;
+    --accent:#e8a020; --accent2:#f0c050; --tuf:#c8860a;
+    --green:#3ecf76; --red:#e85050; --blue:#4a9eff;
+    --text:#d8dce8; --muted:#6e7590; --mono:'IBM Plex Mono',monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.65;overflow-x:hidden;}
+
+  /* HEADER */
+  .page-header{background:linear-gradient(135deg,#0a0c10 0%,#141925 40%,#1a1208 100%);border-bottom:2px solid var(--tuf);padding:48px 32px 36px;position:relative;overflow:hidden;}
+  .page-header::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px);}
+  .header-inner{position:relative;max-width:960px;margin:0 auto;}
+  .logo-row{display:flex;align-items:center;gap:16px;margin-bottom:12px;}
+  .tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:2px;padding:4px 10px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+  .ver-badge{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--border);padding:3px 8px;}
+  .page-header h1{font-family:'Rajdhani',sans-serif;font-size:clamp(24px,4vw,48px);font-weight:700;color:#fff;line-height:1.1;}
+  .page-header h1 span{color:var(--accent);}
+  .page-header p{margin-top:10px;color:var(--muted);font-size:14px;max-width:640px;}
+  .source-note{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .source-note a{color:var(--blue);text-decoration:none;}
+  .source-note a:hover{text-decoration:underline;}
+
+  /* BACK LINK */
+  .back-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 32px;}
+  .back-bar a{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;transition:color .15s;}
+  .back-bar a:hover{color:var(--accent);}
+
+  /* LAYOUT */
+  .wrapper{max-width:960px;margin:0 auto;padding:32px 32px 60px;}
+
+  /* QUICK NAV */
+  .qnav{background:var(--surface);border:1px solid var(--border);padding:18px 24px;margin:0 0 36px;}
+  .qnav h3{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+  .qnav-grid{display:flex;flex-wrap:wrap;gap:8px;}
+  .qnav-item{font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.2);padding:4px 10px;text-decoration:none;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:background .15s;}
+  .qnav-item:hover{background:rgba(232,160,32,0.18);}
+
+  /* SECTION */
+  .section{margin:48px 0;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--tuf);}
+  .section-num{background:var(--accent);color:#000;font-family:var(--mono);font-size:12px;font-weight:700;padding:3px 10px;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);}
+  .section h2{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:#fff;}
+  h3.sub{font-family:'Rajdhani',sans-serif;color:var(--accent2);font-size:18px;font-weight:600;margin:28px 0 12px;}
+
+  /* TOOL TABLE */
+  .tool-table{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin:16px 0;}
+  .tool-item{background:var(--card);border:1px solid var(--border);padding:0;overflow:hidden;transition:border-color .2s;}
+  .tool-item:hover{border-color:var(--accent);}
+  .tool-img{width:100%;height:140px;object-fit:contain;background:#0a0c10;display:block;}
+  .tool-label{padding:10px 14px;}
+  .tool-num{font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:4px;}
+  .tool-name{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;}
+  .tool-note{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4;}
+
+  /* MAINTENANCE BLOCK */
+  .maint-block{background:var(--card);border:1px solid var(--border);margin:16px 0;overflow:hidden;}
+  .maint-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;padding:3px 10px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);margin-bottom:12px;}
+  .badge-monthly{background:rgba(62,207,118,.15);color:var(--green);}
+  .badge-quarterly{background:rgba(74,158,255,.15);color:var(--blue);}
+  .badge-asneeded{background:rgba(232,160,32,.15);color:var(--accent);}
+  .badge-regular{background:rgba(232,80,80,.15);color:var(--red);}
+
+  /* STEP BLOCK */
+  .steps-block{padding:20px 24px;}
+  .step-row{display:flex;gap:16px;margin:12px 0;align-items:flex-start;}
+  .step-num{font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);padding:3px 8px;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);flex-shrink:0;margin-top:2px;}
+  .step-text{font-size:14px;color:var(--text);line-height:1.65;}
+  .step-text strong{color:var(--accent2);}
+
+  /* PHOTO BLOCK */
+  .photo-block{display:grid;gap:2px;margin:16px 0;}
+  .photo-block.single{grid-template-columns:1fr;}
+  .photo-block.double{grid-template-columns:1fr 1fr;}
+  .photo-block.triple{grid-template-columns:1fr 1fr 1fr;}
+  .photo-wrap{background:#0a0c10;overflow:hidden;}
+  .photo-wrap img{width:100%;height:260px;object-fit:contain;display:block;}
+  .photo-caption{font-family:var(--mono);font-size:11px;color:var(--muted);padding:6px 12px;background:var(--surface);font-style:italic;border-top:1px solid var(--border);}
+
+  /* ALERT */
+  .alert{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;margin:16px 0;font-size:14px;}
+  .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+  .alert-warn{border:1px solid var(--red);background:rgba(232,80,80,.07);}
+  .alert-tip{border:1px solid var(--green);background:rgba(62,207,118,.07);}
+  .alert-info{border:1px solid var(--blue);background:rgba(74,158,255,.07);}
+
+  /* SCHEDULE TABLE */
+  .sched-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+  .sched-table thead tr{background:var(--surface);}
+  .sched-table th{padding:10px 14px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border);}
+  .sched-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+  .sched-table tr:nth-child(even) td{background:rgba(255,255,255,.015);}
+  .pill{display:inline-block;font-size:11px;font-family:var(--mono);padding:2px 8px;border-radius:2px;font-weight:600;}
+  .pill-green{background:rgba(62,207,118,.15);color:var(--green);}
+  .pill-blue{background:rgba(74,158,255,.15);color:var(--blue);}
+  .pill-yellow{background:rgba(232,160,32,.15);color:var(--accent);}
+  .pill-red{background:rgba(232,80,80,.15);color:var(--red);}
+
+  /* FOOTER */
+  .page-footer{margin-top:60px;padding:24px 32px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;max-width:960px;margin-left:auto;margin-right:auto;}
+  .page-footer a{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;transition:color .15s;}
+  .page-footer a:hover{color:var(--accent);}
+
+  @media(max-width:700px){
+    .photo-block.double,.photo-block.triple{grid-template-columns:1fr;}
+    .tool-table{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="logo-row">
+      <span class="tuf-badge">PŘÍLOHA</span>
+      <span class="ver-badge">ÚDRŽBA</span>
+    </div>
+    <h1>Doporučená údržba <span>Kobra X</span></h1>
+    <p>Kompletní přeložený průvodce pravidelnou údržbou tiskárny Anycubic Kobra X. Pohyblivé části, spotřební díly, nástroje a intervaly čištění.</p>
+    <div class="source-note">Přeloženo z originálního zdroje: <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/maintenance-recommendations" target="_blank">wiki.anycubic.com — Kobra X Maintenance Recommendations</a> · Překlad a úprava: CZ průvodce 3D tisku</div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="11_3D_udrzba.html">← Zpět na kapitolu 11 · Údržba & spotřební materiál</a>
+  &nbsp;·&nbsp;
+  <a href="00_3D_index.html">← Obsah průvodce</a>
+</div>
+
+<div class="wrapper">
+
+  <!-- QUICK NAV -->
+  <div class="qnav">
+    <h3>Přejít na sekci</h3>
+    <div class="qnav-grid">
+      <a href="#nastroje" class="qnav-item">Nástroje</a>
+      <a href="#harmonogram" class="qnav-item">Harmonogram</a>
+      <a href="#x-lista" class="qnav-item">Osa X — lišta</a>
+      <a href="#y-lista" class="qnav-item">Osa Y — lišta</a>
+      <a href="#z-sroub" class="qnav-item">Osa Z — šroub</a>
+      <a href="#purge-wiper" class="qnav-item">Purge wiper</a>
+      <a href="#ventilatory" class="qnav-item">Ventilátory</a>
+      <a href="#silikonova-hubicka" class="qnav-item">Silikonová hubička</a>
+      <a href="#tryska-blok" class="qnav-item">Tryska & blok</a>
+      <a href="#nuzky" class="qnav-item">Nůžky (cutter)</a>
+      <a href="#silikonova-tryska" class="qnav-item">Sil. tryska</a>
+      <a href="#ptfe" class="qnav-item">PTFE trubice</a>
+      <a href="#podlozka" class="qnav-item">Tisková podložka</a>
+      <a href="#kamera" class="qnav-item">Kamera</a>
+    </div>
+  </div>
+
+  <!-- ÚVOD -->
+  <div class="alert alert-info">
+    <div class="alert-icon">💡</div>
+    <div>Díky složité mechanické konstrukci a mnoha pohyblivým částem vyžadují 3D tiskárny pravidelnou údržbu pro zajištění stabilního provozu a vysoké kvality tisku. Tato stránka obsahuje všechna doporučení výrobce pro Kobru X — přeložená do češtiny s originálními fotografiemi.</div>
+  </div>
+
+  <!-- NÁSTROJE -->
+  <div class="section" id="nastroje">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Nástroje pro údržbu</h2>
+    </div>
+
+    <p style="margin-bottom:16px;">Pravidelně mazejte trapézový šroub, optické osy, vodicí lišty, pojezdová kola a válečky extrudéru — předejdete korozi a mechanickému opotřebení. Na lišty a optické osy používejte olej, na trapézový šroub tuk (mazivo).</p>
+
+    <div class="tool-table">
+      <div class="tool-item">
+        <img class="tool-img" src="pic/udrzba_hadrik_cisteni.png" alt="Bezprašný hadřík" onerror="this.src='pic/udrzba_hadrik_cisteni.png'">
+        <div class="tool-label">
+          <div class="tool-num">01</div>
+          <div class="tool-name">Bezprašný hadřík</div>
+          <div class="tool-note">Pro čištění lišt a povrchů bez zanechání vláken</div>
+        </div>
+      </div>
+      <div class="tool-item">
+        <img class="tool-img" src="pic/udrzba_mazivo_sacek.png" alt="Mazivo / olej" onerror="this.src='pic/udrzba_mazivo_sacek.png'">
+        <div class="tool-label">
+          <div class="tool-num">02</div>
+          <div class="tool-name">Mazací olej</div>
+          <div class="tool-note">Jakýkoliv strojní olej na mazání mechanických dílů</div>
+        </div>
+      </div>
+      <div class="tool-item">
+        <img class="tool-img" src="pic/udrzba_mazivo_sacek.png" alt="Tuk (mazivo)" onerror="this.src='pic/udrzba_mazivo_sacek.png'">
+        <div class="tool-label">
+          <div class="tool-num">03</div>
+          <div class="tool-name">Tuk (mazivo)</div>
+          <div class="tool-note">Lithiový tuk pro trapézový šroub — dodáváno v balení Kobry X</div>
+        </div>
+      </div>
+      <div class="tool-item">
+        <img class="tool-img" src="pic/udrzba_jehlove_pinzety.png" alt="Pinzeta / jehly" onerror="this.src='pic/udrzba_jehlove_pinzety.png'">
+        <div class="tool-label">
+          <div class="tool-num">04</div>
+          <div class="tool-name">Pinzeta / jehlová pinzeta</div>
+          <div class="tool-note">Pro odstranění zbytků plastu z purge wiperu</div>
+        </div>
+      </div>
+      <div class="tool-item">
+        <img class="tool-img" src="pic/udrzba_imbusove_klice.png" alt="Imbusové klíče" onerror="this.src='pic/udrzba_imbusove_klice.png'">
+        <div class="tool-label">
+          <div class="tool-num">05</div>
+          <div class="tool-name">Imbusové klíče (Allen)</div>
+          <div class="tool-note">Sada imbusů — dodáváno v balení tiskárny</div>
+        </div>
+      </div>
+      <div class="tool-item">
+        <img class="tool-img" src="pic/udrzba_nafukovaci_balicek.png" alt="Stlačený vzduch / pumpička" onerror="this.src='pic/udrzba_nafukovaci_balicek.png'">
+        <div class="tool-label">
+          <div class="tool-num">06</div>
+          <div class="tool-name">Gumová pumpička (air blower)</div>
+          <div class="tool-note">Pro vyfukování prachu z ventilátorů a purge wiperu</div>
+        </div>
+      </div>
+      <div class="tool-item">
+        <img class="tool-img" src="pic/udrzba_kartacek_tryska.png" alt="Kartáček na čištění trysky" onerror="this.src='pic/udrzba_kartacek_tryska.png'">
+        <div class="tool-label">
+          <div class="tool-num">07</div>
+          <div class="tool-name">Kartáček pro osu Y</div>
+          <div class="tool-note">Speciální kartáček pro mazání optické osy Y — v balení tiskárny</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HARMONOGRAM -->
+  <div class="section" id="harmonogram">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Harmonogram údržby — přehled</h2>
+    </div>
+
+    <table class="sched-table">
+      <thead>
+        <tr>
+          <th>Součást</th>
+          <th>Interval</th>
+          <th>Úkon</th>
+          <th>Nástroje</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Osa X — vodicí lišta</strong></td>
+          <td><span class="pill pill-green">Měsíčně</span></td>
+          <td>Kontrola čistoty, mazání olejem</td>
+          <td>Bezprašný hadřík, olej</td>
+        </tr>
+        <tr>
+          <td><strong>Osa Y — vodicí lišta</strong></td>
+          <td><span class="pill pill-green">Měsíčně</span> / <span class="pill pill-blue">Čtvrtletně</span></td>
+          <td>Kontrola, krátkodobé mazání (2–3 měs.), dlouhodobé (6–12 měs.)</td>
+          <td>Hadřík, olej, imbusový klíč</td>
+        </tr>
+        <tr>
+          <td><strong>Osa Z — trapézový šroub</strong></td>
+          <td><span class="pill pill-blue">Čtvrtletně</span></td>
+          <td>Namazání tukem po celé délce</td>
+          <td>Tuk (mazivo)</td>
+        </tr>
+        <tr>
+          <td><strong>Purge wiper (čistič trysky)</strong></td>
+          <td><span class="pill pill-yellow">Dle potřeby</span></td>
+          <td>Odstranění zbytků, mazání ozubení</td>
+          <td>Pinzeta, pumpička, tuk, imbusový klíč</td>
+        </tr>
+        <tr>
+          <td><strong>Ventilátory</strong></td>
+          <td><span class="pill pill-yellow">Dle potřeby</span></td>
+          <td>Vyčištění prachu</td>
+          <td>Pumpička / vatové tyčinky</td>
+        </tr>
+        <tr>
+          <td><strong>Silikonová hubička (sleeve)</strong></td>
+          <td><span class="pill pill-red">Při poškození</span></td>
+          <td>Výměna při poškození nebo uvolnění</td>
+          <td>Vizuální kontrola</td>
+        </tr>
+        <tr>
+          <td><strong>Tryska a ohřívací blok</strong></td>
+          <td><span class="pill pill-yellow">Dle potřeby</span></td>
+          <td>Čištění povrchu od usazenin plastu</td>
+          <td>Teplovzdorné rukavice, pinzeta, bezprašný hadřík</td>
+        </tr>
+        <tr>
+          <td><strong>Nůžky (cutter)</strong></td>
+          <td><span class="pill pill-yellow">Dle potřeby</span></td>
+          <td>Kontrola pružnosti, čistota</td>
+          <td>Vizuální kontrola</td>
+        </tr>
+        <tr>
+          <td><strong>Silikonová tryska (purge)</strong></td>
+          <td><span class="pill pill-red">Při poškození</span></td>
+          <td>Výměna při deformaci nebo poškození</td>
+          <td>Vizuální kontrola</td>
+        </tr>
+        <tr>
+          <td><strong>PTFE trubice</strong></td>
+          <td><span class="pill pill-yellow">Pravidelně</span></td>
+          <td>Kontrola opotřebení konců trubic</td>
+          <td>Vizuální kontrola</td>
+        </tr>
+        <tr>
+          <td><strong>Tisková podložka (PEI)</strong></td>
+          <td><span class="pill pill-yellow">Pravidelně</span></td>
+          <td>Čištění alkoholem nebo mýdlem</td>
+          <td>Bezprašný hadřík, alkohol, mycí prostředek</td>
+        </tr>
+        <tr>
+          <td><strong>Kamera</strong></td>
+          <td><span class="pill pill-yellow">Dle potřeby</span></td>
+          <td>Otření objektivu od prachu</td>
+          <td>Bezprašný hadřík / vatová tyčinka</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- OSA X — VODICÍ LIŠTA -->
+  <div class="section" id="x-lista">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Osa X — vodicí lišta</h2>
+    </div>
+
+    <span class="maint-badge badge-monthly">⏱ Interval: Měsíčně</span>
+
+    <h3 class="sub">Jak poznat kdy je údržba potřeba</h3>
+    <p>Doporučujeme kontrolovat vodicí lištu osy X měsíčně — ověřte, že je čistá a bez cizích těles. Pomáhá to udržovat správnou funkci lišty a zajišťuje stabilitu a přesnost tiskárny.</p>
+
+    <h3 class="sub">Postup údržby</h3>
+
+    <div class="photo-block double">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_x_lista_detail.png" alt="X osa vodicí lišta" onerror="this.src='pic/udrzba_x_lista_detail.png'">
+        <div class="photo-caption">Vodicí lišta osy X — oblast pro kontrolu a mazání</div>
+      </div>
+      <div class="photo-wrap">
+        <img src="pic/udrzba_x_lista_mazani.png" alt="X osa mazání" onerror="this.src='pic/udrzba_x_lista_mazani.png'">
+        <div class="photo-caption">Mazání lišty — pohyb tiskové hlavy pro rovnoměrné rozetření</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Krok 1</span>
+        <div class="step-text"><strong>Vyčistěte lištu:</strong> Vypněte tiskárnu a odpojte napájení. Pokud najdete na vodicí liště prach nebo nečistoty, jemně je odstraňte bezprašným hadříkem. Zkontrolujte, zda pohyb lišty probíhá hladce bez zasekávání nebo odporu. Ručně posuňte osu X a sledujte pohyb — musí být plynulý.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 2</span>
+        <div class="step-text"><strong>Namažte lištu:</strong> Naneste malé množství mazacího oleje nebo tuku podél vodicí lišty osy X. Poté jemně posuňte modul tiskové hlavy tam a zpět, aby se mazivo rovnoměrně rozetřelo po celé liště.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-tip">
+      <div class="alert-icon">✓</div>
+      <div><strong>Tip:</strong> Kobra X má vestavěný Input Shaping — pokud se po mazání objeví zlepšení kvality tisku (méně ghostingu), byl pohyb lišty předtím ovlivněn třením. Pravidelné mazání prodlužuje životnost lišt a zachovává kalibraci.</div>
+    </div>
+  </div>
+
+  <!-- OSA Y — VODICÍ LIŠTA -->
+  <div class="section" id="y-lista">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Osa Y — vodicí lišta</h2>
+    </div>
+
+    <span class="maint-badge badge-monthly">⏱ Krátkodobá: 2–3 měsíce</span>
+    &nbsp;
+    <span class="maint-badge badge-quarterly">⏱ Dlouhodobá: 6–12 měsíců</span>
+
+    <h3 class="sub">Jak poznat kdy je údržba potřeba</h3>
+    <p>Doporučujeme kontrolovat vodicí lištu osy Y měsíčně — ověřte čistotu a nepřítomnost cizích těles. Pomáhá to zajistit stabilitu a přesnost pohybu.</p>
+
+    <h3 class="sub">Krátkodobá údržba (každé 2–3 měsíce)</h3>
+
+    <div class="photo-block double">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_y_osa_srouby.png" alt="Y osa šrouby krytu" onerror="this.src='pic/udrzba_y_osa_srouby.png'">
+        <div class="photo-caption">Krok 2a: Šrouby krytu lišty Y osy — červené šipky ukazují na šrouby k povolení</div>
+      </div>
+      <div class="photo-wrap">
+        <img src="pic/udrzba_y_osa_kryt.png" alt="Y osa kryt lišty" onerror="this.src='pic/udrzba_y_osa_kryt.png'">
+        <div class="photo-caption">Krok 2b: Kryt lišty Y osy po sundání — přístup k liště pro čištění a mazání</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Krok 1</span>
+        <div class="step-text"><strong>Vyčistěte lištu:</strong> Vypněte tiskárnu a odpojte napájení. Bezprašným hadříkem jemně odstraňte prach a nečistoty. Ručně posuňte osu Y a zkontrolujte plynulost pohybu.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 2</span>
+        <div class="step-text"><strong>Namažte lištu:</strong> ① Posuňte vyhřívané lůžko (heatbed) dopředu. ② Zatlačte kryt dovnitř a sundejte kryty rámu na obou stranách. ③ Naneste olej na lištu pomocí mazacího kartáčku dodávaného s tiskárnou. ④ Poté nasaďte kryty zpět a opatrně je zatlačte na místo.</div>
+      </div>
+    </div>
+
+    <div class="photo-block double">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_y_kryt_sundavani.png" alt="Y osa kryt sundávání" onerror="this.src='pic/udrzba_y_kryt_sundavani.png'">
+        <div class="photo-caption">Sundávání krytu Y lišty — modrá šipka ukazuje směr posunutí krytu</div>
+      </div>
+      <div class="photo-wrap">
+        <img src="pic/udrzba_y_lista_detail.png" alt="Y osa lišta detail" onerror="this.src='pic/udrzba_y_lista_detail.png'">
+        <div class="photo-caption">Detail vodicí lišty Y osy po sundání krytu</div>
+      </div>
+    </div>
+
+    <h3 class="sub">Dlouhodobá údržba (každých 6–12 měsíců)</h3>
+
+    <div class="photo-block double">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_zakladna_srouby.png" alt="Základna šrouby" onerror="this.src='pic/udrzba_zakladna_srouby.png'">
+        <div class="photo-caption">Šrouby základny tiskárny — červené tečky označují polohu šroubů k povolení</div>
+      </div>
+      <div class="photo-wrap">
+        <img src="pic/udrzba_hotend_kabelaz.png" alt="Hotend kabeláž" onerror="this.src='pic/udrzba_hotend_kabelaz.png'">
+        <div class="photo-caption">Kabeláž — při demontáži krytu zkontrolujte stav konektorů</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Krok 1</span>
+        <div class="step-text"><strong>Vyčistěte lištu</strong> stejným způsobem jako při krátkodobé údržbě.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 2</span>
+        <div class="step-text"><strong>Demontáž pro hluboké mazání:</strong> Imbusovým klíčem (H2.0) povolte šrouby ve spodní části tiskárny (označeny na fotografii). Sundejte kryt základny. Odpojte potřebné konektory pro snadnější přístup.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 3</span>
+        <div class="step-text"><strong>Namažte osu Y:</strong> Naneste mazací olej nebo tuk na optickou osu Y. Poté ručně posuňte heatbed po celém rozsahu Y osy pro rovnoměrné rozetření maziva.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 4</span>
+        <div class="step-text"><strong>Sestavení:</strong> Nainstalujte kryt zpět, přišroubujte šrouby základny. Připojte všechny odpojené konektory. Spusťte tiskárnu a proveďte testovací pohyb.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠</div>
+      <div><strong>Pozor:</strong> Při demontáži krytu základny pečlivě zaznamenejte kde jsou zapojeny všechny konektory — pořiďte si fotografii před odpojením. Záměna konektorů může způsobit poruchu tiskárny.</div>
+    </div>
+  </div>
+
+  <!-- OSA Z — TRAPÉZOVÝ ŠROUB -->
+  <div class="section" id="z-sroub">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Osa Z — trapézový šroub</h2>
+    </div>
+
+    <span class="maint-badge badge-quarterly">⏱ Interval: Čtvrtletně (3 měsíce)</span>
+
+    <div class="photo-block single">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_trapezovy_sroub.png" alt="Trapézový šroub Z osy" onerror="this.src='pic/udrzba_trapezovy_sroub.png'">
+        <div class="photo-caption">Trapézový šroub osy Z — červený rámeček označuje oblast pro namazání tukem</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Nástroj</span>
+        <div class="step-text"><strong>Tuk (mazivo)</strong> — dodáváno v balení Kobry X jako sáček s nápisem „Lubricant Not Edible". Po spotřebění použijte lithiový tuk nebo bílou vazelínu.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Postup</span>
+        <div class="step-text">Naneste tuk rovnoměrně na celý trapézový šroub osy Z. Poté ručně přitáhněte řemen Z osy nahoru a dolů, aby se tuk rovnoměrně přichytil na povrch šroubu po celé jeho délce.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠</div>
+      <div><strong>Nikdy nepoužívejte WD-40</strong> na trapézový šroub — WD-40 je čistič, ne mazivo. Závit rychle vysuší a způsobí zvýšené opotřebení. Vždy používejte tuk nebo lithiové mazivo.</div>
+    </div>
+  </div>
+
+  <!-- PURGE WIPER -->
+  <div class="section" id="purge-wiper">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Purge wiper (čistič trysky)</h2>
+    </div>
+
+    <span class="maint-badge badge-asneeded">⏱ Interval: Dle potřeby — pravidelná kontrola</span>
+
+    <div class="photo-block double">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_purge_wiper.png" alt="Purge wiper" onerror="this.src='pic/udrzba_purge_wiper.png'">
+        <div class="photo-caption">Purge wiper — silikonová hubička čisticí trysky s mechanismem pojezdu</div>
+      </div>
+      <div class="photo-wrap">
+        <img src="pic/udrzba_purge_wiper_vnitrni.png" alt="Purge wiper vnitřní ozubení" onerror="this.src='pic/udrzba_purge_wiper_vnitrni.png'">
+        <div class="photo-caption">Vnitřní ozubení purge wiperu — červená šipka ukazuje ozubené kolo pro namazání</div>
+      </div>
+    </div>
+
+    <p style="margin-bottom:16px;">Pokud je pohyb purge wiperu blokován cizím tělesem nebo je mechanismus deformován a způsobuje zasekávání, může dojít k jamingu. V takovém případě:</p>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Krok 1</span>
+        <div class="step-text">Pinzetou odstraňte přebytečné zbytky plastu z wiperu a okolí.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 2</span>
+        <div class="step-text">Gumovou pumpičkou vyfukujte zbytky a prach z mechanismu.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 3</span>
+        <div class="step-text">Naneste tuk na ozubená kola a mechanismus pojezdu wiperu.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 4</span>
+        <div class="step-text">Imbusovým klíčem (H2.0) dotáhněte případné uvolněné šrouby mechanismu.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VENTILÁTORY -->
+  <div class="section" id="ventilatory">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Ventilátory</h2>
+    </div>
+
+    <span class="maint-badge badge-asneeded">⏱ Interval: Pravidelná kontrola</span>
+
+    <div class="photo-block single">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_ventilatory.png" alt="Ventilátory tiskárny" onerror="this.src='pic/udrzba_ventilatory.png'">
+        <div class="photo-caption">Axonální ventilátor (vlevo) a radiální ventilátor (vpravo) — červený rámeček označuje oblast čištění</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Nástroj</span>
+        <div class="step-text"><strong>Gumová pumpička</strong> nebo vatové tyčinky. Lze také použít stlačený vzduch ze spreje.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Postup</span>
+        <div class="step-text">Pumpičkou vyfukujte prach z ventilátoru. Případně jemně nastříkejte alkohol na vatovou tyčinku a otřete lopatky ventilátoru. Kobra X má celkem 3 ventilátory: hotend ventilátor, part cooling ventilátor a ventilátor elektroniky (PSU/deska).</div>
+      </div>
+    </div>
+
+    <div class="alert alert-tip">
+      <div class="alert-icon">✓</div>
+      <div><strong>Tip:</strong> Zaprášený hotend ventilátor způsobuje heat creep. Zaprášený ventilátor elektroniky způsobuje přehřívání řídicí desky a může vést k neočekávanému zastavení tisku. Čistěte alespoň každé 3 měsíce nebo při viditelné vrstvě prachu.</div>
+    </div>
+  </div>
+
+  <!-- SILIKONOVÁ HUBIČKA -->
+  <div class="section" id="silikonova-hubicka">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Silikonová hubička (silicone sleeve)</h2>
+    </div>
+
+    <span class="maint-badge badge-regular">⏱ Interval: Při poškození nebo uvolnění</span>
+
+    <div class="photo-block single">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_silikonova_vycistka.png" alt="Silikonová hubička" onerror="this.src='pic/udrzba_silikonova_vycistka.png'">
+        <div class="photo-caption">Silikonová hubička (sleeve) na heat blocku — chrání blok a izoluje teplo</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Kontrola</span>
+        <div class="step-text">Vizuálně zkontrolujte silikonovou hubičku. Musí pevně sedět na heat blocku bez povolení nebo deformace. Pokud je hubička poškozená nebo se neudrží pevně na hotendu, je nutné ji ihned vyměnit.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠</div>
+      <div><strong>Pozor:</strong> Poškozená nebo uvolněná silikonová hubička způsobuje nestabilní teplotu hotendu, což přímo ovlivňuje kvalitu tisku. Způsobuje výkyvy teploty, under-extrusion a v extrémních případech Thermal Runaway Error.</div>
+    </div>
+  </div>
+
+  <!-- TRYSKA A OHŘÍVACÍ BLOK -->
+  <div class="section" id="tryska-blok">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Tryska a ohřívací blok (nozzle & heating block)</h2>
+    </div>
+
+    <span class="maint-badge badge-asneeded">⏱ Interval: Pravidelná kontrola</span>
+
+    <div class="photo-block single">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_tryska_znecistena.png" alt="Znečištěná tryska a heating block" onerror="this.src='pic/udrzba_tryska_znecistena.png'">
+        <div class="photo-caption">Znečištěná tryska a ohřívací blok — červený rámeček ukazuje oblast pro čištění od usazenin</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Nástroje</span>
+        <div class="step-text"><strong>Teplovzdorné rukavice, pinzeta, bezprašný hadřík</strong></div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 1</span>
+        <div class="step-text">Zahřejte trysku na tiskovou teplotu. Sundejte silikonovou hubičku (sleeve). Bezprašným hadříkem jemně otřete povrch trysky od usazenin plastu.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 2</span>
+        <div class="step-text">Omotejte bezprašný hadřík kolem pinzety, naneste malé množství bezvodého alkoholu a jemně otřete povrch ohřívacího bloku (heating block) pro kompletní vyčištění.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠</div>
+      <div><strong>Bezpečnost:</strong> Vždy používejte teplovzdorné rukavice při práci s zahřátým hotendem. Teplota trysky 200–260 °C způsobí vážné popáleniny při kontaktu s kůží.</div>
+    </div>
+  </div>
+
+  <!-- NŮŽKY (CUTTER) -->
+  <div class="section" id="nuzky">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Nůžky — cutter</h2>
+    </div>
+
+    <span class="maint-badge badge-asneeded">⏱ Interval: Pravidelná kontrola</span>
+
+    <div class="photo-block single">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_silikonova_hubicka.png" alt="Silikonová tryska cutter mechanismus" onerror="this.src='pic/udrzba_silikonova_hubicka.png'">
+        <div class="photo-caption">Mechanismus nůžek (cutter) — střihač filametu při přepínání kanálů</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Kontrola</span>
+        <div class="step-text">Zkontrolujte pružnost nůžek — po stisknutí se musí pružně vrátit do výchozí polohy. Zkontrolujte čistotu ostří. Pokud nůžky nefungují správně nebo se nevracejí do výchozí polohy, kontaktujte zákaznický servis Anycubic.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SILIKONOVÁ TRYSKA -->
+  <div class="section" id="silikonova-tryska">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Silikonová tryska (silicone nozzle)</h2>
+    </div>
+
+    <span class="maint-badge badge-regular">⏱ Interval: Při poškození nebo deformaci</span>
+
+    <div class="photo-block single">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_silikonova_vycistka.png" alt="Silikonová tryska purge" onerror="this.src='pic/udrzba_silikonova_vycistka.png'">
+        <div class="photo-caption">Silikonová tryska — umístění na čisticí stanici (purge station)</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Kontrola</span>
+        <div class="step-text">Pokud je silikonová tryska poškozená nebo deformovaná, pro zajištění účinného čištění tiskové hlavy je nutná výměna. Kontaktujte zákaznický servis prodejce nebo Anycubic support pro pomoc s výměnou.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PTFE TRUBICE -->
+  <div class="section" id="ptfe">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <h2>Teflonové (PTFE) trubice</h2>
+    </div>
+
+    <span class="maint-badge badge-asneeded">⏱ Interval: Pravidelná kontrola</span>
+
+    <div class="photo-block double">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_ptfe_konektory.png" alt="PTFE konektory 4 kanály" onerror="this.src='pic/udrzba_ptfe_konektory.png'">
+        <div class="photo-caption">4 PTFE trubice v konektorech — Kobra X má 4 kanály filametu</div>
+      </div>
+      <div class="photo-wrap">
+        <img src="pic/udrzba_ptfe_trubice_detail.png" alt="PTFE trubice detail konektoru" onerror="this.src='pic/udrzba_ptfe_trubice_detail.png'">
+        <div class="photo-caption">Detail konce PTFE trubice v quick-release konektoru — červené šipky ukazují místo kontroly</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Krok 1</span>
+        <div class="step-text">Jednou rukou přidržte quick-release konektor na stojanu cívky nebo na čtyřkanálovém spojení. Druhou rukou vytáhněte teflonovou trubici ven.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Krok 2</span>
+        <div class="step-text">Zkontrolujte konec trubice na opotřebení nebo deformaci. Pokud je konec zdeformovaný, rozšířený nebo zploštělý — trubici je nutno vyměnit.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Výměna</span>
+        <div class="step-text">Při výměně označte trubici číslem kanálu (1–4) před odpojením. Nová trubice musí dosáhnout až k trysce bez mezery. Detailní postup viz <a href="11_3D_udrzba.html#sekce-3" style="color:var(--blue);">Kapitola 11 · Sekce 3</a>.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-icon">🐍</div>
+      <div><strong>KOBRA X — 4 kanály:</strong> Kobra X má 4 PTFE trubice — jednu pro každý kanál filametu. Při výměně vždy označte trubici číslem kanálu před odpojením. Záměna kanálů způsobí problémy s podáváním filametu.</div>
+    </div>
+  </div>
+
+  <!-- TISKOVÁ PODLOŽKA -->
+  <div class="section" id="podlozka">
+    <div class="section-header">
+      <span class="section-num">13</span>
+      <h2>Tisková podložka (PEI panel)</h2>
+    </div>
+
+    <span class="maint-badge badge-asneeded">⏱ Interval: Pravidelně</span>
+
+    <div class="photo-block single">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_pei_podlozka_stopy.png" alt="PEI podložka stopy" onerror="this.src='pic/udrzba_pei_podlozka_stopy.png'">
+        <div class="photo-caption">PEI tisková podložka se stopami od tisku — červené šipky ukazují znečištěné oblasti pro čištění</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Běžné čištění</span>
+        <div class="step-text">Nastříkejte alkohol (IPA 70–90 %) na znečištěné místo tiskové podložky a otřete bezprašným hadříkem. Alternativně použijte hotovou desinfekci na bázi alkoholu.</div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">Hluboké čištění</span>
+        <div class="step-text">Pro odolné skvrny naneste mycí prostředek rovnoměrně na textured PEI desku a vydrhněte houbičkou — efektivně vyčistí i zapečené zbytky. Po čištění se nedotýkejte čisté podložky rukou — nechte ji oschnout nebo osušte bezprašným hadříkem.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠</div>
+      <div><strong>Pozor — ACETON na PEI:</strong> Nikdy nepoužívejte aceton na magnetickou PEI podložku Kobry X. Aceton PEI povrch nevratně poničí. Aceton je vhodný pouze pro skleněné podložky s ABS juicem.</div>
+    </div>
+
+    <div class="alert alert-tip">
+      <div class="alert-icon">✓</div>
+      <div><strong>Tip:</strong> Po každém tisku odmastěte podložku IPA před spuštěním dalšího tisku — mastné otisky prstů jsou nejčastější příčina špatné přilnavosti první vrstvy. Viz také <a href="11_3D_udrzba.html#sekce-4" style="color:var(--blue);">Kapitola 11 · Sekce 4 — Péče o tiskovou podložku</a>.</div>
+    </div>
+  </div>
+
+  <!-- KAMERA -->
+  <div class="section" id="kamera">
+    <div class="section-header">
+      <span class="section-num">14</span>
+      <h2>Kamera</h2>
+    </div>
+
+    <span class="maint-badge badge-asneeded">⏱ Interval: Při znečistění objektivu nebo rozmazaném obrazu</span>
+
+    <div class="photo-block single">
+      <div class="photo-wrap">
+        <img src="pic/udrzba_kamera_objektiv.png" alt="Kamera objektiv" onerror="this.src='pic/udrzba_kamera_objektiv.png'">
+        <div class="photo-caption">Kamera Kobry X — červená šipka ukazuje na objektiv pro čištění</div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="step-row">
+        <span class="step-num">Postup</span>
+        <div class="step-text">Jemně otřete prach z objektivu kamery bezprašným hadříkem nebo vatovou tyčinkou. Netlačte silou — objektiv je malý a citlivý na poškrábání. Čistěte pouze pokud je obraz rozmazaný nebo kamery je viditelný prach.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER NAV -->
+  <div class="page-footer">
+    <a href="11_3D_udrzba.html">← Kapitola 11 · Údržba & spotřební mat.</a>
+    <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/maintenance-recommendations" target="_blank" style="color:var(--blue);">↗ Originál (Anycubic Wiki EN)</a>
+    <a href="00_3D_index.html">Obsah průvodce →</a>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+// Smooth scroll pro quick nav
+document.querySelectorAll('.qnav-item').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
