@@ -229,7 +229,7 @@
         <p>Po přepnutí na tento režim se zobrazí <strong>strom všech podložek a objektů</strong> v projektu — vidíte název modelu (např. „End+Bracket.stl"), kolikrát se daný objekt vyskytuje (sloupec „Fila."), a po kliknutí na konkrétní objekt se otevře <strong>zkrácená sada záložek</strong>: <em>Časté, Kvalita, Pevnost, Rychlost, Podpěry, Multimateriál, Ostatní</em>. Cokoliv zde nastavíte, přepíše globální hodnotu <strong>jen pro tento jeden objekt</strong>.</p>
       </div>
 
-      <h3>Strom objektů — co znamenají barvy a ikony</h3>
+      <h3 id="strom-objektu-co-znamenaji-barvy-a-ikony">Strom objektů — co znamenají barvy a ikony</h3>
 
       <table>
         <thead><tr><th>Prvek</th><th>Význam</th></tr></thead>
@@ -241,7 +241,7 @@
         </tbody>
       </table>
 
-      <h3>Záložka „Časté" — rychlý přehled jen v režimu Objekty</h3>
+      <h3 id="zalozka-caste-rychly-prehled-jen-v-rezimu-objekty">Záložka „Časté" — rychlý přehled jen v režimu Objekty</h3>
 
       <p>Tato záložka se zobrazuje <strong>pouze</strong> v režimu Objekty (v Globálním pohledu chybí) a obsahuje jen čtyři nejčastěji upravovaná pole, aby se k nim nemuselo proklikávat přes celé Kvalita/Pevnost/Podpěry:</p>
 
@@ -279,7 +279,7 @@
 
       <p>Záložka Kvalita je největší a obsahuje nejvíc skupin polí: Výška vrstvy, Šířka extruze, Šev, Přesnost, Žehlení, Generátor stěny, Stěny a povrchy, Mostování a Převisy. Začínáme od úplného základu — co určuje samotnou geometrii vrstvy.</p>
 
-      <h3>Výška vrstvy</h3>
+      <h3 id="vyska-vrstvy">Výška vrstvy</h3>
 
       <div class="param">
         <div class="param-head">
@@ -297,7 +297,7 @@
         <p>Výška úplně první vrstvy, nezávislá na zbytku tisku. Vyšší první vrstva je tolerantnější k drobným nerovnostem podložky a usnadňuje kalibraci Z-offsetu — pokud máte problémy s přilnavostí, zkuste zvýšit na 0,24–0,28 mm i při Layer Height 0,2 mm pro zbytek modelu.</p>
       </div>
 
-      <h3>Šířka extruze</h3>
+      <h3 id="sirka-extruze">Šířka extruze</h3>
 
       <p>Tato skupina určuje, jak <strong>širokou</strong> linii tryska vytlačuje v různých částech modelu — odděleně pro každý typ úseku, protože širší/užší linie má různé výhody podle toho, kde se používá.</p>
 
@@ -381,7 +381,7 @@
         <h2>3 — Záložka „Kvalita" — Šev a Přesnost</h2>
       </div>
 
-      <h3>Šev</h3>
+      <h3 id="sev">Šev</h3>
 
       <p>Šev je místo, kde tryska začíná a končí každý uzavřený obvod (perimetr). Vzhledem k tomu, že přechod mezi koncem a začátkem linie nikdy není dokonalý, vzniká na tomto místě drobný viditelný artefakt — tato skupina polí řídí, kde se tento artefakt objeví a jak je maskovaný.</p>
 
@@ -441,7 +441,7 @@
         <p>Provede čisticí pohyb ještě před tiskem vnějšího obvodu (ne až po něm) — pomáhá zajistit, že tryska je čistá ještě dřív, než začne tisknout viditelnou vnější plochu.</p>
       </div>
 
-      <h3>Přesnost</h3>
+      <h3 id="presnost">Přesnost</h3>
 
       <div class="param">
         <div class="param-head">
@@ -535,7 +535,7 @@
         <h2>4 — Záložka „Kvalita" — Žehlení, Generátor stěny, Stěny a povrchy</h2>
       </div>
 
-      <h3>Žehlení</h3>
+      <h3 id="zehleni">Žehlení</h3>
 
       <div class="param">
         <div class="param-head">
@@ -545,7 +545,7 @@
         <p>Žehlení znovu přejede tryskou po horní ploše bez (nebo s minimální) extruze a vyhladí drobné nerovnosti mezi liniemi do skoro lesklého povrchu. Možnosti obvykle zahrnují: Nežehlit, Jen na horní ploše, Na celém povrchu. Zapínejte jen pro modely, kde záleží na vzhledu horní plochy — zpomaluje tisk této vrstvy.</p>
       </div>
 
-      <h3>Generátor stěny</h3>
+      <h3 id="generator-steny">Generátor stěny</h3>
 
       <div class="param">
         <div class="param-head">
@@ -555,7 +555,7 @@
         <p>Algoritmus, kterým program generuje obvodové linie (perimetry). <strong>Klasický</strong> — tradiční přístup s pevným počtem stejně širokých perimetrů, předvídatelné a rychlé na zpracování. <strong>Arachne</strong> (druhá možnost, pokud je nabízena) — modernější algoritmus, který dynamicky upravuje šířku a počet linií podle lokální tloušťky stěny modelu, takže tenké i silné části stěny jsou vyplněné lépe bez mezer nebo přebytečného materiálu. Arachne je obvykle lepší pro organické/variabilní tvary, Klasický je rychlejší a předvídatelnější pro jednoduché geometrické modely.</p>
       </div>
 
-      <h3>Stěny a povrchy</h3>
+      <h3 id="steny-a-povrchy">Stěny a povrchy</h3>
 
       <div class="param">
         <div class="param-head">
@@ -648,7 +648,7 @@
         <h2>5 — Záložka „Kvalita" — Mostování a Převisy</h2>
       </div>
 
-      <h3>Mostování</h3>
+      <h3 id="mostovani">Mostování</h3>
 
       <p>Most (bridge) je úsek, kde tiskárna tiskne plast "do vzduchu" mezi dvěma pevnými body bez podpěry pod ním.</p>
 
@@ -716,7 +716,7 @@
         <p>Řeší speciální případ malých otvorů, které se nachází přímo pod mostní oblastí — jak se má program k nim chovat (přemostit je, nebo respektovat jako samostatné otvory).</p>
       </div>
 
-      <h3>Převisy</h3>
+      <h3 id="previsy">Převisy</h3>
 
       <div class="param">
         <div class="param-head">
@@ -788,7 +788,7 @@
 
       <p>Záložka Pevnost obsahuje vše, co ovlivňuje strukturální vlastnosti výsledného modelu — počet stěn, tloušťku horních/spodních ploch a samotnou výplň. Tady se rozhoduje, jak pevný, lehký a rychlý na tisk bude výsledný díl.</p>
 
-      <h3>Stěny</h3>
+      <h3 id="steny">Stěny</h3>
 
       <div class="param">
         <div class="param-head">
@@ -814,7 +814,7 @@
         <p>Pokud je část modelu tak tenká, že se do ní nevejde plný počet perimetrů (např. tenké žebro), tato funkce automaticky upraví šířku extruze, aby se tenká stěna vůbec vytiskla, místo aby ji program úplně vynechal.</p>
       </div>
 
-      <h3>Horní/spodní skořepiny</h3>
+      <h3 id="horni-spodni-skorepiny">Horní/spodní skořepiny</h3>
 
       <div class="param">
         <div class="param-head">
@@ -883,7 +883,7 @@
         <h2>7 — Záložka „Pevnost" — Výplň a Pokročilé</h2>
       </div>
 
-      <h3>Výplň</h3>
+      <h3 id="vypln">Výplň</h3>
 
       <div class="param">
         <div class="param-head">
@@ -949,7 +949,7 @@
         <p>O kolik procent řídká výplň zasahuje do oblasti stěny (analogicky k Překrytí plné výplně/stěny nahoře/dole, ale pro běžnou řídkou výplň v "těle" modelu). Zajišťuje pevný spoj mezi výplní a perimetrem.</p>
       </div>
 
-      <h3>Pokročilé (výplň)</h3>
+      <h3 id="pokrocile-vypln">Pokročilé (výplň)</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1113,7 +1113,7 @@
         <p>Vynutí podpěru pro prvních N vrstev bez ohledu na to, zda by jí normální logika (úhel převisu) vyžadovala — užitečné pro zajištění extra stability na úplném začátku tisku komplexních modelů.</p>
       </div>
 
-      <h3>Raft</h3>
+      <h3 id="raft">Raft</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1123,7 +1123,7 @@
         <p>Počet vrstev podkladové struktury (raft) vytištěné pod celým modelem před začátkem tisku samotného modelu. Hodnota 0 = bez raftu. Zvyšte na problematických modelech s malou kontaktní plochou nebo nerovnou podložkou — raft kompenzuje nerovnosti a zlepšuje přilnavost, ale za cenu horší kvality spodního povrchu modelu (musí se po odstranění raftu obrousit).</p>
       </div>
 
-      <h3>Filament na podpěry</h3>
+      <h3 id="filament-na-podpery">Filament na podpěry</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1152,7 +1152,7 @@
         <h2>9 — Záložka „Podpěry" — Pokročilé a Stromové podpěry</h2>
       </div>
 
-      <h3>Pokročilé</h3>
+      <h3 id="pokrocile">Pokročilé</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1250,7 +1250,7 @@
         <p>Pokud zapnuto, program nevygeneruje podpěry pod plochami, které jsou klasifikované jako mosty (bridge) — protože mosty by se podle teorie měly tisknout bez podpěry díky vlastní mostní logice (zvýšené chlazení, zpomalení). Zapínejte jen pokud máte dobře nakalibrované mostní parametry.</p>
       </div>
 
-      <h3>Stromové podpěry</h3>
+      <h3 id="stromove-podpery">Stromové podpěry</h3>
 
       <p>Tato skupina je relevantní jen pokud je Typ podpěr nastaven na Strom (auto) nebo Strom (manuální). Stromové podpěry mají vlastní geometrickou logiku odlišnou od klasické mřížky.</p>
 
@@ -1335,7 +1335,7 @@
         <div>Tato záložka je relevantní jen pro tisk s víc cívkami/barvami najednou (ACE Pro). Pokud tisknete z jedné cívky, můžete tuto sekci přeskočit. Čisticí objem (matice proplachovacích hodnot mezi sloty) je popsaný v kapitole <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Sekce 1</a> — zde se věnujeme zbylým polím záložky Multimateriál v okně Proces, která se týkají geometrie a chování čisticí věže.</div>
       </div>
 
-      <h3>Čistící věž</h3>
+      <h3 id="cistici-vez">Čistící věž</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1417,7 +1417,7 @@
         <p>Zaoblí hrany čisticí věže místo ostrých rohů — zlepšuje mechanickou stabilitu věže a může mírně omezit vibrace při vysokorychlostním tisku věže.</p>
       </div>
 
-      <h3>Možnosti čištění</h3>
+      <h3 id="moznosti-cisteni">Možnosti čištění</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1443,7 +1443,7 @@
         <p>Vytlačí čisticí materiál do podpěrné struktury místo do samostatné věže — podpěry se po tisku stejně odstraňují, takže barevná nečistota uvnitř nevadí. Doporučený výchozí kompromis mezi úsporou materiálu a čistotou modelu.</p>
       </div>
 
-      <h3>Pokročilé</h3>
+      <h3 id="pokrocile-2">Pokročilé</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1484,7 +1484,7 @@
         <span>Kvalita</span><span>Pevnost</span><span>Rychlost</span><span>Podpěry</span><span>Multimateriál</span><span class="active">Ostatní</span>
       </div>
 
-      <h3>Obrys</h3>
+      <h3 id="obrys">Obrys</h3>
 
       <p>Obrys (Skirt) je několik obvodových linií vytištěných okolo modelu (nikoli pod ním, na rozdíl od Límce/Brim níže) — neslouží k přilnavosti modelu, ale k ustálení toku plastu z trysky před začátkem skutečného tisku.</p>
 
@@ -1552,7 +1552,7 @@
         <p>Pokud aktivováno, obrys může sloužit i jako částečná bariéra proti průvanu kolem modelu — okrajová funkce, relevantní hlavně pro materiály citlivé na proudění vzduchu.</p>
       </div>
 
-      <h3>Límec (Brim)</h3>
+      <h3 id="limec-brim">Límec (Brim)</h3>
 
       <p>Límec je na rozdíl od Obrysu <strong>přímo spojený</strong> s první vrstvou modelu — vytváří širší kontaktní plochu s podložkou jako "křídla" kolem základny. Ideální pro vysoké, úzké nebo nestabilní modely náchylné na odlepení nebo warping.</p>
 
@@ -1580,7 +1580,7 @@
         <p>Malá mezera mezi límcem a modelem usnadňuje jejich pozdější oddělení — bez mezery by límec mohl srůst příliš pevně s modelem a ztížit jeho odstranění.</p>
       </div>
 
-      <h3>Speciální režim</h3>
+      <h3 id="specialni-rezim">Speciální režim</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1630,7 +1630,7 @@
         <p>Fuzzy Skin záměrně "rozhází" trajektorii trysky na vnější stěně malými nepravidelnými odchylkami, čímž vznikne matný texturovaný povrch (jako brusný papír), který skrývá viditelnost vrstev a švu. Možnosti obvykle: Žádné, Vnější stěna, Všechny stěny.</p>
       </div>
 
-      <h3>Výstup G-kódu</h3>
+      <h3 id="vystup-g-kodu">Výstup G-kódu</h3>
 
       <div class="param">
         <div class="param-head">
@@ -1672,7 +1672,7 @@
         <p>Šablona, podle které program automaticky generuje název výsledného G-code souboru — obsahuje proměnné jako čas vytvoření, výšku vrstvy, typ filamentu a odhadovaný čas tisku. Pro běžné používání nemusíte upravovat.</p>
       </div>
 
-      <h3>Post-processing skripty a Poznámky</h3>
+      <h3 id="post-processing-skripty-a-poznamky">Post-processing skripty a Poznámky</h3>
 
       <div class="param">
         <div class="param-head">

@@ -394,17 +394,15 @@
             <h3>Originál manuál (Anycubic Kobra X)</h3>
             <p>Oficiální příručka od výrobce. Zde naleznete detailní obrázkový návod, jak tiskárnu správně fyzicky sestavit krok za krokem. Pro sestavení doporučujeme nahlédnout sem.</p>
           </a>
-		  
           <a href="X_optimalizace_profilu_kalibrace.html" class="card" style="border-color: var(--accent);">
-            <span class="card-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">HTML</span>
+            <span class="card-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">EXTRA</span>
             <h3>Optimalizace a kalibrace profilů</h3>
             <p>Hloubkový technický návod na kalibraci nového filamentu — Teplota, Průtok (YOLO), Předstih tlaku, Retrakce, Tolerance Test, Max. průtok, VFA. Pro Anycubic Slicer Next a Kobra X.</p>
           </a>
-		  
-		   <a href="X_udrzba_anycubic.html" class="card" style="border-color: var(--accent);">
-            <span class="card-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">HTML</span>
-            <h3>Údržba Kobra X tiskárny CZ</h3>
-            <p>Překlad strany z Anycubix WIKI o "Kobra X Maintenance Recommendations" do CZ, a vzhledu 3D návodů. Slouží k samotné údržbě tiskárny, krok za krokem.</p>
+          <a href="X_udrzba_anycubic.html" class="card" style="border-color: var(--accent);">
+            <span class="card-num" style="background: rgba(232,160,32,0.2); border-color: rgba(232,160,32,0.5);">EXTRA</span>
+            <h3>Údržba Kobry X — doporučení výrobce</h3>
+            <p>Přeložený oficiální návod na údržbu od Anycubic — mazání os, čištění, výměna dílů. Zdroj: Anycubic Wiki.</p>
           </a>
         </div>
       </div>
@@ -708,6 +706,7 @@ searchInput.addEventListener('input', (e) => {
 });
 
 function performSearch(query) {
+  query = query.toLowerCase();
   if (query.length < 2) {
     searchContainer.classList.remove('active');
     indexContainer.style.display = 'block';
