@@ -227,54 +227,54 @@
     <p style="color:var(--muted); font-size:14px; margin-top: 8px;">Správná příprava rozhoduje o 80 % výsledku. Tato část pokrývá vše co udělat <em>před</em> stiskem tlačítka Print — od SW nastavení po fyzický stav tiskárny.</p>
 
     <!-- ─── SW: MODEL A SLICER ─── -->
-    <div class="section">
+    <div class="section" id="sw-priprava-model-a-slicer">
       <div class="section-header"><h2>SW příprava — model a slicer</h2></div>
       <p>Než cokoliv pošlete na tiskárnu, projděte rychlý SW checklist. Jde o základy — detailní nastavení najdete v kapitolách <a href="05a_3D_slicer_tisk.html" style="color:var(--accent);">05a</a>, <a href="05b_3D_slicer_rychlost.html" style="color:var(--accent);">05b</a> a <a href="05c_3D_slicer_filament.html" style="color:var(--accent);">05c</a>.</p>
 
       <div class="checklist">
-        <div class="check-item">
+        <div class="check-item" id="spravny-profil-tiskarny-a-materialu">
           <span class="check-num">SW1</span>
           <div class="check-body">
             <strong>Správný profil tiskárny a materiálu</strong>
             <p>V Anycubic Slicer Next zkontrolujte, že je vybrán profil Kobra X a správný materiál (PLA / PETG / ABS…). Profil nastavuje základní teploty, rychlosti a retrakcí. Špatný profil = garantovaný špatný výtisk.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="teplota-trysky-a-podlozky">
           <span class="check-num">SW2</span>
           <div class="check-body">
             <strong>Teplota trysky a podložky</strong>
             <p>Zkontrolujte teploty dle materiálu — viz <a href="08_3D_filamenty.html">kap. 08 Filamenty</a>. Kobra X: podložka max 100 °C, tryska max 260 °C. Pro PLA: tryska 185–235 °C (typicky 210 °C) / podložka 50–60 °C. Různé značky PLA se mohou lišit — vždy respektujte doporučení výrobce filamentu.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="vyska-vrstvy-rychlost-vs-kvalita">
           <span class="check-num">SW3</span>
           <div class="check-body">
             <strong>Výška vrstvy — rychlost vs. kvalita</strong>
             <p>Výška vrstvy je nejdůležitější parametr pro poměr kvalita/čas. Pro trysku 0,4 mm platí: <strong>0,1 mm</strong> = jemné detaily (pomalé), <strong>0,2 mm</strong> = standard (doporučeno pro začátek), <strong>0,28–0,32 mm</strong> = rychlý tisk (hrubší povrch). Max. výška = 80 % průměru trysky.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="orientace-modelu-na-podlozce">
           <span class="check-num">SW4</span>
           <div class="check-body">
             <strong>Orientace modelu na podložce</strong>
             <p>Model by měl mít největší plochu dole — minimalizuje podpory a maximalizuje přilnavost první vrstvy. Model nesmí "viset ve vzduchu" — musí ležet přesně na Z=0.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="podpory-a-prilnavost-brim-raft">
           <span class="check-num">SW5</span>
           <div class="check-body">
             <strong>Podpory a přilnavost (Brim / Raft)</strong>
             <p>Zapněte podpory pokud má model převisy &gt;45°. Pro vysoké nebo tenké modely přidejte Brim (5–8 mm). Detaily: <a href="05a_3D_slicer_tisk.html">kap. 05a — Parametry tisku</a>.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="nahled-vrstev-pred-exportem">
           <span class="check-num">SW6</span>
           <div class="check-body">
             <strong>Náhled vrstev před exportem</strong>
             <p>Přepněte do Preview a proklikejte vrstvy. Zkontrolujte první vrstvu, umístění podpor a celkový průběh tisku. Problémy odhalíte za 30 sekund — ne za 3 hodiny tisku.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="odhadovany-cas-a-spotreba-filamentu">
           <span class="check-num">SW7</span>
           <div class="check-body">
             <strong>Odhadovaný čas a spotřeba filamentu</strong>
@@ -288,30 +288,30 @@
         <div>Detailní nastavení všech parametrů sliceru: <a href="05a_3D_slicer_tisk.html" style="color:var(--accent);">05a Parametry tisku</a> · <a href="05b_3D_slicer_rychlost.html" style="color:var(--accent);">05b Parametry rychlosti</a> · <a href="05c_3D_slicer_filament.html" style="color:var(--accent);">05c Parametry filamentu</a></div>
       </div>
 
-      <h3>Speciálně pro vícebarevný tisk (Kobra X — 4 cívky)</h3>
+      <h3 id="specialne-pro-vicebarevny-tisk-kobra-x-4-civky">Speciálně pro vícebarevný tisk (Kobra X — 4 cívky)</h3>
       <div class="checklist">
-        <div class="check-item">
+        <div class="check-item" id="prirazeni-barev-v-sliceru">
           <span class="check-num">MC1</span>
           <div class="check-body">
             <strong>Přiřazení barev v sliceru</strong>
             <p>V Anycubic Slicer Next přiřaďte každé části modelu správnou extruder pozici (1–4). Zkontrolujte náhled barev před exportem — záměna extruderů = špatné barvy v tisku.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="purge-tower-cistici-vezicka">
           <span class="check-num">MC2</span>
           <div class="check-body">
             <strong>Purge Tower (čistící věžička)</strong>
             <p>Při změně barvy tiskárna potřebuje vytlačit zbytek předchozího materiálu — vytváří se Purge Tower (sloupek plastu mimo model). Je to normální a nutné. Zkontrolujte v náhledu, že věžička leží na tiskové ploše a nepřekáží modelu.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="kompatibilita-materialu">
           <span class="check-num">MC3</span>
           <div class="check-body">
             <strong>Kompatibilita materiálů</strong>
             <p>Všechny 4 filamenty musí mít <strong>podobné tiskové teploty</strong> (max. ±20 °C rozdíl). Kombinace PLA + PLA (různé barvy) = ideální. Kombinace PLA + PETG = problematické — rozdílné teploty způsobují špatné spoje. Více: <a href="08_3D_filamenty.html" style="color:var(--accent);">kap. 08 Filamenty</a>.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="cislovani-teflonovych-trubic">
           <span class="check-num">MC4</span>
           <div class="check-body">
             <strong>Číslování teflonových trubic</strong>
@@ -322,7 +322,7 @@
     </div>
 
     <!-- ─── FILAMENT BACKUP ─── -->
-    <div class="section">
+    <div class="section" id="zalozni-filament-filament-backup">
       <div class="section-header"><h2>Záložní filament (Filament Backup)</h2></div>
       <div class="alert alert-kobra">
         <div class="alert-icon">🐍</div>
@@ -356,34 +356,34 @@
     </div>
 
     <!-- ─── KAMERA A MONITORING ─── -->
-    <div class="section">
+    <div class="section" id="monitoring-tisku-kamera">
       <div class="section-header"><h2>Monitoring tisku — kamera</h2></div>
       <p>Kobra X je vybavena vestavěnou kamerou. Tisk můžete sledovat vzdáleně přes Anycubic App nebo přímo na displeji tiskárny.</p>
 
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="sledovani-pres-anycubic-app">
           <h4>Sledování přes Anycubic App</h4>
           <p>Po spárování tiskárny s aplikací (Settings → Account → QR kód) uvidíte živý obraz z kamery kdykoli na telefonu. Tisk lze vzdáleně pozastavit nebo zastavit. Ideální pro dlouhé tisky přes noc.</p>
         </div>
-        <div class="card">
+        <div class="card" id="detekce-spaghetti-spaghetti-detection">
           <h4>Detekce spaghetti (Spaghetti Detection)</h4>
           <p>Firmware Kobry X sleduje průběh tisku a dokáže detekovat tzv. "spaghetti" — situaci kdy se model odlepí a tryska táhne vlákna vzduchem. Při detekci tiskárna tisk pozastaví a upozorní vás přes app. Zapnout v: Settings → Print Settings → Spaghetti Detection.</p>
         </div>
-        <div class="card">
+        <div class="card" id="timelapse">
           <h4>Timelapse</h4>
           <p>Kobra X umí automaticky pořizovat timelapse video z průběhu tisku. Zapnout v sliceru nebo přímo na displeji před tiskem. Video se uloží na interní paměť a lze stáhnout přes app.</p>
         </div>
-        <div class="card">
+        <div class="card" id="lan-monitoring-bez-cloudu">
           <h4>LAN monitoring (bez cloudu)</h4>
           <p>Pokud nechcete sdílet data přes Anycubic cloud, lze tiskárnu ovládat čistě přes lokální síť (LAN mode). Nastavit v: Settings → Network → LAN Mode. Funguje i bez připojení k internetu.</p>
         </div>
       </div>
     </div>
-    <div class="section">
+    <div class="section" id="hw-priprava-tiskova-podlozka">
       <div class="section-header"><h2>HW příprava — tisková podložka</h2></div>
       <p>Příprava tiskové podložky je <strong>nejčastěji podceňovaný krok</strong> a zároveň nejčastější příčina selhání tisku. Studená nebo mastná podložka zaručeně způsobí odlepení modelu.</p>
 
-      <h3>Správná podložka pro daný materiál</h3>
+      <h3 id="spravna-podlozka-pro-dany-material">Správná podložka pro daný materiál</h3>
       <p>Kobra X je vybavena <strong>magnetickým PEI textured plátem</strong> — ten je vhodný pro PLA, PLA+, PETG (opatrně!) a TPU. Pro náročnější materiály je třeba upravit přípravu povrchu:</p>
 
       <table class="surf-table">
@@ -406,39 +406,39 @@
         <div><strong>PETG a PEI — velké riziko:</strong> PETG se k čistému odmaštěnému PEI plátu přilepí natolik silně, že při vyjímání odloupne PEI povrch. Vždy používejte separační vrstvu — PVA lepidlová tyčinka (Kores), Magigoo nebo záblesk laku na vlasy. Tenká vrstva stačí.</div>
       </div>
 
-      <h3>Čištění podložky před tiskem</h3>
+      <h3 id="cisteni-podlozky-pred-tiskem">Čištění podložky před tiskem</h3>
       <p>Toto je <strong>nejdůležitější rutina</strong> — provádějte před každým tiskem nebo alespoň každých 3–5 tisků. Otisky prstů a mastnota jsou největší příčina špatné přilnavosti.</p>
 
       <div class="checklist" style="margin-top:12px;">
-        <div class="check-item">
+        <div class="check-item" id="nastrikejte-ipa-90-na-studeny-plat">
           <span class="check-num">P1</span>
           <div class="check-body">
             <strong>Nastříkejte IPA (90 %+) na studený plát</strong>
             <p>Vždy čistěte na studeném plátu — na horkém povrchu IPA okamžitě vyprchá bez účinku. Postačí pár stříků z rozprašovače nebo navlhčený hadřík.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="otrete-neparfemovanou-papirovou-uterkou">
           <span class="check-num">P2</span>
           <div class="check-body">
             <strong>Otřete neparfémovanou papírovou utěrkou</strong>
             <p>Papírová utěrka (ne tkanina!) — tkanina zanechává vlákna na povrchu. Otřete jedním tahem od středu k okraji, nevracejte se přes stejné místo mastnou stranou utěrky.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="nedotykejte-se-cisteho-povrchu-holou-rukou">
           <span class="check-num">P3</span>
           <div class="check-body">
             <strong>Nedotýkejte se čistého povrchu holou rukou</strong>
             <p>Jeden otisk prstu = špatná přilnavost na tom místě. Po čištění uchopte plát pouze za okraje. Pokud se omylem dotknete středu — opakujte čištění.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="pri-silnem-znecisteni-mydlova-voda">
           <span class="check-num">P4</span>
           <div class="check-body">
             <strong>Při silném znečištění — mýdlová voda</strong>
             <p>Pokud IPA nestačí (zbytky lepidla, pigmentu), omyjte plát teplou vodou s kapkou mycího prostředku. Opláchněte, osušte a dočistěte IPA. Pak nechte zcela vyschnout.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="nikdy-aceton-na-pei-plat">
           <span class="check-num">P5</span>
           <div class="check-body">
             <strong>Nikdy acetón na PEI plát</strong>
@@ -447,7 +447,7 @@
         </div>
       </div>
 
-      <h3>Adhesiva — kdy a jak použít</h3>
+      <h3 id="adhesiva-kdy-a-jak-pouzit">Adhesiva — kdy a jak použít</h3>
 
       <div class="alert alert-gold" style="margin-top:0; margin-bottom:16px;">
         <div class="alert-icon">💡</div>
@@ -463,23 +463,23 @@
       </div>
 
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="pva-lepidlova-tycinka-kores-pritt">
           <h4>PVA lepidlová tyčinka (Kores, Pritt)</h4>
           <p>Nejdostupnější volba. Naneste <strong>tenkou</strong> vrstvu na studený plát a nechte zaschnout. Pro PETG a TPU funguje jako <strong>separační bariéra</strong> — zabrání trvalému přilepení k PEI. Pro ABS/ASA zlepšuje přilnavost. Po tisku snadno smyjete teplou vodou.</p>
         </div>
-        <div class="card">
+        <div class="card" id="magigoo-original-petg-a-tpu">
           <h4>Magigoo Original — PETG &amp; TPU</h4>
           <p>Specializovaná tekutá separační bariéra s aplikátorem. Nanáší se na studenou podložku, schne za 1–2 min. Za tepla zajistí, že model neodpadne — za studena model samo pustí. Ideální pro PETG a flexibilní TPU kde hrozí odloupnutí PEI. Smývá se vodou.</p>
         </div>
-        <div class="card">
+        <div class="card" id="magigoo-pa-vyhradne-pro-nylon">
           <h4>Magigoo PA — výhradně pro Nylon</h4>
           <p>Vysoce specializované adhesivum navržené <strong>výhradně pro Nylon (Polyamid = PA)</strong>. Nylon je extrémně náchylný k warpingu — na běžném PEI ani s Kores tyčinkou nespolehlivě drží. Verze PA obsahuje chemické složení které molekuly nylonu pevně spojí a udrží model rovný po celou dobu tisku.</p>
         </div>
-        <div class="card">
+        <div class="card" id="lak-na-vlasy-nouzove-reseni">
           <h4>Lak na vlasy (nouzové řešení)</h4>
           <p>Záblesk laku na vlasy (bez kondicionérů) funguje jako nouzová separační vrstva pro PETG. Nenechte zaschnout silnou vrstvu — po tisku se obtížně čistí. Použijte jen pokud nemáte PVA tyčinku nebo Magigoo po ruce.</p>
         </div>
-        <div class="card">
+        <div class="card" id="lepidlo-na-sklo-ponal-vitrea">
           <h4>Lepidlo na sklo (Ponal, Vitrea)</h4>
           <p>Ředěné ve vodě (1:10) a nanesené štětcem vytváří spolehlivou adhezní vrstvu pro ABS a ASA. Klasická metoda která funguje spolehlivě i na Kobře X. Smývá se teplou vodou.</p>
         </div>
@@ -494,67 +494,67 @@
     </div>
 
     <!-- ─── HW: TISKÁRNA ─── -->
-    <div class="section">
+    <div class="section" id="hw-priprava-tiskarna">
       <div class="section-header"><h2>HW příprava — tiskárna</h2></div>
 
       <div class="checklist">
-        <div class="check-item">
+        <div class="check-item" id="spravna-tryska-prumer-a-material">
           <span class="check-num">HW1</span>
           <div class="check-body">
             <strong>Správná tryska — průměr a materiál</strong>
             <p>Zkontrolujte, že průměr trysky v sliceru odpovídá skutečně osazené trysce (standard Kobra X = <strong>0,4 mm hardened steel</strong> — tvrzená ocel z výroby). Výměna trysky je rychlá díky Quick-Release systému. Více: <a href="02_3D_tiskarna.html">kap. 02 Tiskárna</a>.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="tryska-cista-purge-a-kontrola-prutoku">
           <span class="check-num">HW2</span>
           <div class="check-body">
             <strong>Tryska čistá — purge a kontrola průtoku</strong>
             <p>Po změně materiálu spusťte purge dokud nevychází čistý plast. <strong>Příznak ucpané trysky:</strong> filament se nepodává, tisk je slabý nebo přerušovaný, extruder kliká. Rychlé řešení — <strong>Cold Pull:</strong> zahřejte trysku na 200 °C, zaveďte filament, ochlaďte na 90 °C a filament prudce vytáhněte — vytáhne špunt znečistění s sebou. Opakujte 2–3×. Detailní postup: <a href="13_3D_troubleshooting.html" style="color:var(--accent);">kap. 13 Troubleshooting</a>.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="filament-spravne-zaveden-teflonove-trubice-14">
           <span class="check-num">HW3</span>
           <div class="check-body">
             <strong>Filament správně zaveden — teflonové trubice 1–4</strong>
             <p>Zkontrolujte, že filament je zasunut až do extruderu a správně prochází teflonovou trubicí. Kobra X: každá trubice musí být v správně číslovaném portu. Po zavedení tiskárna pípne a zobrazí typ materiálu.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="kontrola-dostatku-filamentu-na-civce">
           <span class="check-num">HW4</span>
           <div class="check-body">
             <strong>Kontrola dostatku filamentu na cívce</strong>
             <p>Odhadněte spotřebu ze sliceru a zkontrolujte zbývající množství. Pokud filament nestačí, nachystejte záložní cívku stejného materiálu a barvy — Kobra X podporuje automatický Filament Backup (viz sekce výše).</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="suchy-filament-ne-vlhky">
           <span class="check-num">HW5</span>
           <div class="check-body">
             <strong>Suchý filament — ne vlhký</strong>
             <p>Vlhký filament prská, tvoří bubliny a špatně přilne. Pokud cívka leží déle než týden na otevřeném vzduchu, před tiskem sušte. PLA 45–55 °C / 4–6 h, PETG 65 °C / 6–8 h, Nylon 80 °C / 12 h. Více: <a href="08_3D_filamenty.html">kap. 08 Filamenty</a>.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="tiskarna-je-cista-purge-wiper-bez-zbytku">
           <span class="check-num">HW6</span>
           <div class="check-body">
             <strong>Tiskárna je čistá — Purge Wiper bez zbytků</strong>
             <p>Zkontrolujte podložku a okolí trysky. Zbytky plastu kolem trysky spadnou do tisku a způsobí defekty. <strong>Purge Wiper</strong> (silikonová stěrka vlevo na rámu) — otřete jej vlhkým hadříkem nebo párátkem pokud je pokrytý ztuhlým plastem. Opotřebovaný nebo zdeformovaný Wiper vyměňte (náhradní díl).</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="osy-jsou-promazane-a-pohyb-je-plynuly">
           <span class="check-num">HW7</span>
           <div class="check-body">
             <strong>Osy jsou promazané a pohyb je plynulý</strong>
             <p>Suchý kluz os způsobuje nerovnoměrný pohyb a ghosting. Pravidelně promazávejte lineární tyče strojním olejem, trapézový šroub Z tukem. Detailně v <a href="11_3D_udrzba.html">kap. 11 Údržba</a>.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="remeny-jsou-spravne-napnute">
           <span class="check-num">HW8</span>
           <div class="check-body">
             <strong>Řemeny jsou správně napnuté</strong>
             <p>Povolený řemen způsobuje ghosting (vlnky na stěnách) a nepřesné rozměry. Test: přiložte prst k řemenu a pinknete — má znít jako nízká basová nota, ne prázdné plácaní. Kobra X: šrouby napínání na ose X a Y.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="okoli-tiskarny-je-volne">
           <span class="check-num">HW9</span>
           <div class="check-body">
             <strong>Okolí tiskárny je volné</strong>
@@ -585,7 +585,7 @@
     <p style="color:var(--muted); font-size:14px; margin-top: 8px;">Příprava je hotová — spouštíme tisk. Tato část popisuje co sledovat, jak reagovat na problémy za chodu a jak správně vyjmout hotový model.</p>
 
     <!-- ─── INICIALIZACE ─── -->
-    <div class="section">
+    <div class="section" id="zapnuti-a-inicializace-kobry-x">
       <div class="section-header"><h2>Zapnutí a inicializace Kobry X</h2></div>
       <p>Při prvním zapnutí tiskárna provede průvodce nastavením (jazyk, Wi-Fi, spárování s aplikací). Při každém dalším zapnutí proběhne pouze rychlá samokontrola a auto-leveling.</p>
 
@@ -619,7 +619,7 @@
     </div>
 
     <!-- ─── PRVNÍ VRSTVA ─── -->
-    <div class="section">
+    <div class="section" id="sledovani-prvni-vrstvy">
       <div class="section-header"><h2>Sledování první vrstvy</h2></div>
       <p>První vrstva je klíčová — zůstaňte u tiskárny celé 2–5 minut které trvá. Pokud první vrstva vypadá dobře, zbytek tisku obvykle proběhne v pořádku.</p>
 
@@ -629,22 +629,22 @@
       </div>
 
       <div class="layer-examples">
-        <div class="layer-ex ok">
+        <div class="layer-ex ok" id="idealni-prvni-vrstva">
           <div class="layer-ex-icon">✅</div>
           <h4>Ideální první vrstva</h4>
           <p>Linky zploštělé, navzájem propojené. Povrch rovnoměrný, bez mezer ani přebytku materiálu.</p>
         </div>
-        <div class="layer-ex bad">
+        <div class="layer-ex bad" id="tryska-prilis-nizko">
           <div class="layer-ex-icon">❌</div>
           <h4>Tryska příliš nízko</h4>
           <p>Plast se hromadí, tryska škrábe. Zvyšte Z-Offset (tryska výš) po kroku 0,05 mm.</p>
         </div>
-        <div class="layer-ex bad">
+        <div class="layer-ex bad" id="tryska-prilis-vysoko">
           <div class="layer-ex-icon">❌</div>
           <h4>Tryska příliš vysoko</h4>
           <p>Kulaté linky, nedrží. Model se odlepí. Snižte Z-Offset (tryska níž).</p>
         </div>
-        <div class="layer-ex wrn">
+        <div class="layer-ex wrn" id="nerovnomerna-vrstva">
           <div class="layer-ex-icon">⚠️</div>
           <h4>Nerovnoměrná vrstva</h4>
           <p>OK na jedné straně, špatně na druhé. Znečistěná podložka nebo problém s auto-levelingem.</p>
@@ -660,32 +660,32 @@
     </div>
 
     <!-- ─── BĚHEM TISKU ─── -->
-    <div class="section">
+    <div class="section" id="behem-tisku-co-sledovat">
       <div class="section-header"><h2>Během tisku — co sledovat</h2></div>
 
       <div class="checklist">
-        <div class="check-item">
+        <div class="check-item" id="model-drzi-na-podlozce-zadny-warping">
           <span class="check-num">→</span>
           <div class="check-body">
             <strong>Model drží na podložce — žádný warping</strong>
             <p>Rohy se nezvedají. Pokud začnou odlepovat — zastavte tisk, přidejte Brim nebo adhesivum a zkuste znovu.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="kontinualni-prutok-zadne-mezery-ve-stenach">
           <span class="check-num">→</span>
           <div class="check-body">
             <strong>Kontinuální průtok — žádné mezery ve stěnách</strong>
             <p>Z trysky vytéká rovnoměrná linie plastu. Přerušení = ucpaná tryska nebo problém s podáváním filamentu.</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="zadne-neobvykle-zvuky">
           <span class="check-num">→</span>
           <div class="check-body">
             <strong>Žádné neobvyklé zvuky</strong>
             <p>Normální: klikání, šumění, vrčení. Neobvyklé: hlasité praskání (vlhký filament), kovové skřípání os, opakované cvakání extruderu (grinding).</p>
           </div>
         </div>
-        <div class="check-item">
+        <div class="check-item" id="vrstvy-rostou-rovnomerne-zadny-layer-shift">
           <span class="check-num">→</span>
           <div class="check-body">
             <strong>Vrstvy rostou rovnoměrně — žádný layer shift</strong>
@@ -694,15 +694,15 @@
         </div>
       </div>
 
-      <h3>Vzdálené monitorování přes Anycubic App</h3>
+      <h3 id="vzdalene-monitorovani-pres-anycubic-app">Vzdálené monitorování přes Anycubic App</h3>
       <p>Po spárování tiskárny s Anycubic účtem (viz <a href="02_3D_tiskarna.html" style="color:var(--accent);">kap. 02</a>) sledujte průběh tisku přes vestavěnou kameru odkudkoliv. V aplikaci vidíte živý obraz, procento dokončení a teploty. Tisk lze vzdáleně zastavit.</p>
 
       <div class="chapter-grid" style="grid-template-columns:1fr 1fr; margin-top:14px;">
-        <div class="card">
+        <div class="card" id="pozastavit-pause">
           <h4>Pozastavit (Pause)</h4>
           <p>Na displeji klepněte Pause. Tiskárna přejede stranou a čeká. Pro kontrolu modelu nebo výměnu filamentu. Pokračujte tlačítkem Resume.</p>
         </div>
-        <div class="card">
+        <div class="card" id="zastavit-cancel">
           <h4>Zastavit (Cancel)</h4>
           <p>Tisk nenávratně ukončen. Tryska se vrátí do home pozice. Nikdy nevypínejte hlavním vypínačem — tryska zůstane v modelu.</p>
         </div>
@@ -710,7 +710,7 @@
     </div>
 
     <!-- ─── PO TISKU ─── -->
-    <div class="section">
+    <div class="section" id="po-tisku-vyjmuti-modelu">
       <div class="section-header"><h2>Po tisku — vyjmutí modelu</h2></div>
 
       <div class="init-steps">
@@ -741,7 +741,7 @@
         <div><strong>Model nejde odlepit ani po vychladnutí?</strong> Dejte plát na 10 minut do mrazáku. Prudká změna teploty způsobí, že se PEI a plast smrští různou rychlostí a model se uvolní sám.</div>
       </div>
 
-      <h3>Bezpečné vypnutí tiskárny</h3>
+      <h3 id="bezpecne-vypnuti-tiskarny">Bezpečné vypnutí tiskárny</h3>
       <div class="init-steps">
         <div class="init-step">
           <div class="step-dot">✓</div>
@@ -761,20 +761,20 @@
     </div>
 
     <!-- ─── ÚPRAVY VÝTISKŮ ─── -->
-    <div class="section">
+    <div class="section" id="upravy-a-dokoncovani-vytisku">
       <div class="section-header"><h2>Úpravy a dokončování výtisků</h2></div>
       <p>Tisk je konec technické části — ale začátek té řemeslné. Každý materiál umožňuje jiné úpravy: od rychlého odhranění po profesionální chemický smoothing. Přehled co jde udělat a s čím.</p>
 
       <div class="chapter-grid">
 
-        <div class="card">
+        <div class="card" id="odhraneni-a-zakladni-cisteni">
           <h4>✂️ Odhranění a základní čištění</h4>
           <p>Nejčastější operace — odstranění prvníliné "slon" spodní vrstvy (Elephant's Foot), otřepů na hranách a zbytků supportů.<br><br>
           <strong>Nástroje:</strong> Zahnutý odhranovací nůž (deburring knife) — jediný správný nástroj pro čisté hrany. Skalpel nebo žiletka pro jemné detaily. Pinzeta a boční kleště pro supporty.<br><br>
           <strong>Funguje u:</strong> PLA, PLA+, PETG, ABS, ASA, HIPS, TPU — prakticky vše. U flexibilních materiálů (TPU) spíše kleště, nůž klouže.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="brouseni-kdy-a-jak">
           <h4>🪄 Broušení — kdy a jak</h4>
           <p>Broušení funguje skvěle pro přípravu povrchu před lakováním nebo pro odstraňování viditelných vrstev.<br><br>
           <strong>Postup:</strong> Začněte hrubým papírem (120–180), přejděte na jemnější (320–600), finální lesk 1000–2000 se sekaným brousícím papírem nebo houbičkou.<br><br>
@@ -782,7 +782,7 @@
           <strong>Nefunguje u:</strong> PETG — maže se místo broušení, tvoří plastické vlákno. TPU a flexi materiály — deformují se pod tlakem.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="aceton-smoothing-abs-a-asa">
           <h4>🧪 Acetón smoothing — ABS a ASA</h4>
           <p>Acetón rozpouští ABS a ASA povrch na molekulární úrovni — vrstvy se "slijí" dohromady a vznikne hladký lesklý povrch bez viditelných vrstev.<br><br>
           <strong>Metoda 1 — tampon:</strong> Vatový tampon namočený v acetónu, opatrně přejíždět po povrchu. Rychlé, ale nerovnoměrné.<br><br>
@@ -791,7 +791,7 @@
           <strong>Nefunguje u:</strong> PLA, PETG, TPU, Nylon — acetón tyto materiály nerozpouští.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="opaleni-odstraneni-pavucin">
           <h4>🔥 Opálení — odstranění pavučin</h4>
           <p>Rychlý průchod plamenem nad povrchem spálí tenké stringing pavučiny bez poškození modelu.<br><br>
           <strong>Nástroj:</strong> Malý kuchyňský nebo zlatnický hořák (butanový nebo propanový). Zapalovač pro jemné detaily.<br><br>
@@ -800,7 +800,7 @@
           <strong>Nefunguje u:</strong> TPU, flexi materiály — vzplanou nebo deformují.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="annealing-tepelna-uprava-pla-ht">
           <h4>🌡 Annealing — tepelná úprava PLA HT</h4>
           <p>Vyžíhání v troubě zvýší tepelnou odolnost PLA HT z ~60 °C na až 150 °C. Zároveň zlepší mechanické vlastnosti — díl se "zkrystalizuje" a zpevní.<br><br>
           <strong>Postup:</strong> Vložte model na kovový tácek do studené trouby. Zahřejte na 90–110 °C. Nechte 30–60 minut. Nechte volně vychladnout v troubě — nevytahujte hned.<br><br>
@@ -808,7 +808,7 @@
           <strong>Funguje u:</strong> PLA HT (Polymaker), některé verze PLA+. Standardní PLA annealing nepomůže — deformuje se.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="lakovani-a-povrchova-uprava">
           <h4>🎨 Lakování a povrchová úprava</h4>
           <p>Lakování skryje vrstvy, chrání povrch a dodá profesionální vzhled.<br><br>
           <strong>Příprava:</strong> Obruste povrch (PLA/ABS), nebo naneste tmelicí primer (filler primer ve spreji) který vyplní mezery mezi vrstvami. Před lakováním vždy vybruste základní vrstvu primeru.<br><br>
@@ -816,7 +816,7 @@
           <strong>Tip:</strong> Pro figurky — akrylové modelářské barvy štětcem (Citadel, Vallejo). Pro funkční díly — dvousložkový lak pro ochranu před vlhkostí a otěrem.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="lepeni-a-spojovani-dilu">
           <h4>🔩 Lepení a spojování dílů</h4>
           <p>Velké modely se tisknou po částech a lepí — nebo se opravují praskliny.<br><br>
           <strong>CA lepidlo (vteřinové):</strong> Funguje na PLA, ABS, PETG. Rychlé, pevné. Doplnit aktivátorem (primer) pro ještě pevnější spoj.<br><br>
@@ -825,7 +825,7 @@
           <strong>Tavná pistole:</strong> Jen pro nenamáhané spoje a dočasné fixace — nízká pevnost.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="vkladani-zavitovych-vlozek">
           <h4>🏗 Vkládání závitových vložek</h4>
           <p>Kovové závitové vložky (heat-set inserts) se tavnou pájkou nebo speciálním hrotem zapraví do předem vytisknutého otvoru. Vznikne pevný kovový závit ve plastovém díle — mnohem odolnější než plastový závit.<br><br>
           <strong>Postup:</strong> Otvor v modelu vytiskněte o 0,3–0,5 mm menší než vnější průměr vložky. Zahřejte hrot pájky. Přiložte vložku na otvor a rovnoměrným tlakem zatlačte do plastiku.<br><br>
@@ -841,37 +841,37 @@
     </div>
 
     <!-- ─── SELHÁNÍ TISKU ─── -->
-    <div class="section">
+    <div class="section" id="nejcastejsi-problemy-a-rychla-reseni">
       <div class="section-header"><h2>Nejčastější problémy a rychlá řešení</h2></div>
       <p>Tisk selhal nebo nevypadá dobře? Zde jsou nejčastější příčiny a okamžitá řešení. Detailní troubleshooting najdete v <a href="13_3D_troubleshooting.html" style="color:var(--accent);">kap. 13</a>.</p>
 
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="model-se-odlepuje-warping">
           <h4>❌ Model se odlepuje — warping</h4>
           <p><strong>Příčina:</strong> Studená nebo mastná podložka, chybí adhesivum, průvan.<br>
           <strong>Řešení:</strong> Otřete IPA, přidejte Brim v sliceru, naneste PVA tyčinku, zavřete okna. Pro ABS/ASA nutný enclosure.</p>
         </div>
-        <div class="card">
+        <div class="card" id="spatna-prvni-vrstva-nedrzi">
           <h4>❌ Špatná první vrstva — nedrží</h4>
           <p><strong>Příčina:</strong> Špatný Z-Offset — tryska příliš vysoko.<br>
           <strong>Řešení:</strong> Za chodu upravte Z-Offset na displeji → Tune → Z-Offset, snižujte po 0,05 mm dokud linky nejsou zploštělé.</p>
         </div>
-        <div class="card">
+        <div class="card" id="pavuciny-mezi-dily-stringing">
           <h4>❌ Pavučiny mezi díly — stringing</h4>
           <p><strong>Příčina:</strong> Příliš vysoká teplota trysky nebo malá retrakce.<br>
           <strong>Řešení:</strong> Snižte teplotu o 5 °C, zvyšte retrakci na 1–2 mm (Direct Drive). Zkontrolujte vlhkost filamentu.</p>
         </div>
-        <div class="card">
+        <div class="card" id="posunute-vrstvy-layer-shift">
           <h4>❌ Posunuté vrstvy — layer shift</h4>
           <p><strong>Příčina:</strong> Přeskočený krok motoru — povolený řemen, příliš rychlý tisk, mechanická překážka.<br>
           <strong>Řešení:</strong> Zastavte tisk. Zkontrolujte napnutí řemenů, snižte rychlost tisku o 20 %.</p>
         </div>
-        <div class="card">
+        <div class="card" id="tiskarna-prestane-podavat-material">
           <h4>❌ Tiskárna přestane podávat materiál</h4>
           <p><strong>Příčina:</strong> Ucpaná tryska, vlhký filament, heat creep, grinding struny.<br>
           <strong>Řešení:</strong> Zkontrolujte, zda struna není omletá u extruderu. Spusťte Cold Pull (studený tah) pro vyčištění trysky. Více: <a href="13_3D_troubleshooting.html" style="color:var(--accent);">kap. 13</a>.</p>
         </div>
-        <div class="card">
+        <div class="card" id="praskly-nebo-krehky-tisk">
           <h4>❌ Prasklý nebo křehký tisk</h4>
           <p><strong>Příčina:</strong> Příliš nízká teplota trysky, vlhký filament, příliš rychlý tisk.<br>
           <strong>Řešení:</strong> Zvyšte teplotu o 5–10 °C, zkontrolujte vlhkost filamentu (praskání při tisku = vlhkost), snižte rychlost.</p>
