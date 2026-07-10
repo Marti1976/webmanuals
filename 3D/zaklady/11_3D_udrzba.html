@@ -188,7 +188,7 @@
     </div>
 
     <!-- PŘEHLEDNÁ TABULKA INTERVALŮ -->
-    <div class="section">
+    <div class="section" id="prehled-co-a-kdy-delat">
       <div class="section-header"><h2>Přehled — co a kdy dělat</h2></div>
       <p>Rychlý přehled pravidelné údržby. Podrobný postup každého bodu najdete v sekcích níže.</p>
 
@@ -289,26 +289,26 @@
         <div><strong>KOBRA X:</strong> Anycubic dodává mazivo v balení přímo s tiskárnou. Použijte ho přesně dle návodu v této sekci. Po spotřebení doporučujeme PTFE sprej nebo lithiové mazivo — dostupné na hornbach.cz nebo Aliexpress.</div>
       </div>
 
-      <h3 class="sub">Co mazat a čím</h3>
+      <h3 class="sub" id="co-mazat-a-cim">Co mazat a čím</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="strojni-olej-nebo-lithiove-mazivo">
           <span class="card-num">Lineární tyče</span>
           <h3>Strojní olej nebo lithiové mazivo</h3>
           <p>Hladké ocelové tyče os X a Y. Naneste tenkou vrstvu oleje (strojní olej, Singer olej na šicí stroje) nebo lithiového maziva na tyč a ručně projeďte osu celým rozsahem pohybu. Přebytečný olej otřete hadříkem.</p>
           <p style="margin-top:8px;font-size:13px;color:var(--muted);">Frekvence: každých 200 provozních hodin nebo při slyšitelném skřípání.</p>
         </div>
-        <div class="card">
+        <div class="card" id="lithiove-mazivo-nebo-ptfe-sprej">
           <span class="card-num">Vodicí lišty</span>
           <h3>Lithiové mazivo nebo PTFE sprej</h3>
           <p>Lineární vodicí lišty (pokud je tiskárna má) vyžadují lithiové mazivo — olej se z nich rychle slije. Naneste mazivo na pojezdový blok a projeďte osu. Kobra X používá kombinaci tyčí a lišt.</p>
         </div>
-        <div class="card">
+        <div class="card" id="tuk-vazelina-hustsi-konzistence">
           <span class="card-num">Trapézový šroub Z</span>
           <h3>Tuk / vazelína (hustší konzistence)</h3>
           <p>Závitový šroub osy Z potřebuje hustší mazivo než tyče. Použijte lithiovou vazelínu nebo bílý tuk. Naneste tenkou vrstvu po celé délce závitu a nechte tiskárnu projet celý rozsah osy Z.</p>
           <p style="margin-top:8px;font-size:13px;color:var(--muted);">Nikdy nepoužívejte WD-40 — je to čistič, ne mazivo, a závit rychle vysuší.</p>
         </div>
-        <div class="card">
+        <div class="card" id="nemazat-suche">
           <span class="card-num">Napínací kladky</span>
           <h3>Nemazat — suché!</h3>
           <p>Kladky (idler pulleys) a ozubená kola řemenů se nemažou. Mazivo by přilákalo prach a nečistoty, které by se zaryly do zubů a způsobily klouzání. Pokud kladka skřípe, vyměňte ložisko.</p>
@@ -329,40 +329,40 @@
 
       <p>Tryska je jedno z nejdůležitějších a zároveň nejlépe dostupných míst na tiskárně. Zanešená tryska způsobuje under-extrusion, stringing a nestabilní průtok. Čištění trvá minuty, výměna trysky 5–10 minut.</p>
 
-      <h3 class="sub">Jak poznat ucpanou trysku</h3>
+      <h3 class="sub" id="jak-poznat-ucpanou-trysku">Jak poznat ucpanou trysku</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="nepravidelny-prutok">
           <span class="card-num">Příznak 01</span>
           <h3>Nepravidelný průtok</h3>
           <p>Filament se nepodává nebo podává přerušovaně. Výtisk má mezery ve stěnách nebo průhledné vrstvy — přestože teplota a nastavení jsou správné.</p>
         </div>
-        <div class="card">
+        <div class="card" id="klikani-extruderu">
           <span class="card-num">Příznak 02</span>
           <h3>Klikání extrudéru</h3>
           <p>Extrudér vydává opakované klikání nebo praskání — motor přeskakuje, protože tryska klade odpor a filament se nedostane ven. Typický zvuk ucpání.</p>
         </div>
-        <div class="card">
+        <div class="card" id="tisk-vzduch">
           <span class="card-num">Příznak 03</span>
           <h3>Tisk vzduch</h3>
           <p>Tryska se pohybuje správně, tiskárna tiskne, ale z trysky nevychází žádný nebo minimální plast — tiskárna doslova tiskne vzduch. Úplné ucpání.</p>
         </div>
-        <div class="card">
+        <div class="card" id="nic-nevychazi-ani-rucne">
           <span class="card-num">Příznak 04</span>
           <h3>Nic nevychází ani ručně</h3>
           <p>Při zahřáté trysce se pokusíte ručně protlačit filament a nic nevychází ani s výraznou silou. Ucpání je kompletní — nutné čištění nebo výměna.</p>
         </div>
       </div>
 
-      <h3 class="sub">Příčiny ucpání</h3>
+      <h3 class="sub" id="priciny-ucpani">Příčiny ucpání</h3>
       <div class="two-col">
-        <div class="card">
+        <div class="card" id="filament-a-teploty">
           <span class="card-num">Materiálové příčiny</span>
           <h3>Filament a teploty</h3>
           <p><strong>Vlhký filament</strong> — absorbovaná voda vytváří při tisku bubliny páry, které karbonizují plast uvnitř trysky. PETG a Nylon jsou nejcitlivější.<br><br>
           <strong>Příliš nízká teplota</strong> — plast se neroztaví celý a zanechává tuhé kousky uvnitř trysky.<br><br>
           <strong>Záměna materiálů bez purge</strong> — např. zbytek Nylonu + PLA při nízké teplotě = ucpání.</p>
         </div>
-        <div class="card">
+        <div class="card" id="hardware-a-prostredi">
           <span class="card-num">Mechanické příčiny</span>
           <h3>Hardware a prostředí</h3>
           <p><strong>Heat creep</strong> — plast změknul příliš vysoko nad tryskou (v chladné zóně) a zablokoval průchod. Způsobuje zastaven hotend ventilátor nebo mezera v PTFE.<br><br>
@@ -371,46 +371,46 @@
         </div>
       </div>
 
-      <h3 class="sub">Cold Pull (Studený tah) — krok za krokem</h3>
+      <h3 class="sub" id="cold-pull-studeny-tah-krok-za-krokem">Cold Pull (Studený tah) — krok za krokem</h3>
       <p style="margin-bottom:16px;">Cold pull (také <em>atomic pull</em>) je nejšetrnější a nejúčinnější metoda čištění — fyzicky vytáhne nečistoty z trysky bez chemikálií. Zvládne 95 % ucpání.</p>
 
       <div class="steps">
-        <div class="step">
+        <div class="step" id="zahrejte-trysku-na-tiskovou-teplotu">
           <span class="step-num">01</span>
           <div class="step-body">
             <h4>Zahřejte trysku na tiskovou teplotu</h4>
             <p>PLA → 200–220 °C. PETG/ABS → 230–250 °C. Zasuňte filament a extrudujte ručně nebo z menu ~30–50 mm plastu dokud vytéká. Tím vyprázdníte trysku od zbytků předchozího tisku.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="ochladte-na-cilovou-teplotu">
           <span class="step-num">02</span>
           <div class="step-body">
             <h4>Ochlaďte na cílovou teplotu</h4>
             <p>Snižte teplotu na <strong>85–95 °C</strong> (PLA) nebo <strong>100–110 °C</strong> (PETG/ABS). Nevypínejte tiskárnu — teplota musí být přesně řízená. Aktivně chlaďte part cooling ventilátorem. Filament uvnitř tuhne a přilne ke znečistění.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="prudce-vytahnete-filament-jednim-tahem">
           <span class="step-num">03</span>
           <div class="step-body">
             <h4>Prudce vytáhněte filament jedním tahem</h4>
             <p>Pevně uchopte filament těsně nad extrudérem. Jedním rychlým a silným tahem vytáhněte filament přímo nahoru. Pohyb musí být plynulý a rychlý — neváhejte, netáhněte pomalu.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="zkontrolujte-odlitek">
           <span class="step-num">04</span>
           <div class="step-body">
             <h4>Zkontrolujte odlitek</h4>
             <p>Na konci vytaženého filametu uvidíte odlitek tvaru vnitřku trysky. <strong>Čistý odlitek</strong> = světlá špička, průhledná nebo barvy filametu. <strong>Znečištěný odlitek</strong> = tmavé nebo hnědé záteky, spálené kousky. Ucpání stále přetrvává.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="opakujte-25">
           <span class="step-num">05</span>
           <div class="step-body">
             <h4>Opakujte 2–5×</h4>
             <p>Zahřejte znovu na tiskovou teplotu, extrudujte pár mm, ochlaďte a opakujte. Pokračujte dokud nevychází čistý odlitek bez tmavých usazenin. Obvykle stačí 3–4 opakování.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="overte-prutok">
           <span class="step-num">06</span>
           <div class="step-body">
             <h4>Ověřte průtok</h4>
@@ -424,19 +424,19 @@
         <div><strong>Pro nejlepší výsledky Cold Pull:</strong> Použijte nylonovou strunkou (Atomic Pull) — Nylon při správné teplotě (100–120 °C) lépe přilne ke znečistění a vytáhne více nečistot než PLA. Pokud Nylon nemáte, PLA funguje pro běžné ucpání.</div>
       </div>
 
-      <h3 class="sub">Pokud Cold Pull nestačí</h3>
+      <h3 class="sub" id="pokud-cold-pull-nestaci">Pokud Cold Pull nestačí</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="horka-jehla-dratek">
           <span class="card-num">Metoda B</span>
           <h3>Horká jehla / drátek</h3>
           <p>Zahřejte trysku na 220–240 °C. Jehlou nebo tenkým drátkem průměru 0,3 mm prostrčte otvor trysky zevnitř/zvenčí. Uvolní tuhé ucpání které cold pull nedostane. Pak proveďte cold pull pro vyčištění zbytků.</p>
         </div>
-        <div class="card">
+        <div class="card" id="cistici-filament-purge">
           <span class="card-num">Metoda C</span>
           <h3>Čistící filament (Purge)</h3>
           <p>Speciální čistící filament (cleaning filament) — extrudujte 30–50 cm při 220 °C. Abrazivní složení mechanicky vyčistí stěny trysky. Ideální pro přechod mezi materiály (ABS → PLA) jako preventivní purge.</p>
         </div>
-        <div class="card">
+        <div class="card" id="vymena-trysky">
           <span class="card-num">Metoda D</span>
           <h3>Výměna trysky</h3>
           <p>Pokud ani opakovaný cold pull ani jehla nezabere — vyměňte trysku. Za tepla (180–200 °C), klíč 7 mm, 5 minut práce. Nová mosazná tryska 0,4 mm stojí 30–80 Kč. Vždy mějte zásobu v šuplíku.</p>
@@ -448,24 +448,24 @@
         <div><strong>KOBRA X — výměna trysky:</strong> Zahřejte hotend na 180–200 °C. Klíč 7 mm na trysku, druhý klíč přidržte heat block. <strong>Nikdy netáhněte studenou trysku</strong> — závit se zlomí a oprava je nákladná. Kobra X dodává čistič trysky v balení.</div>
       </div>
 
-      <h3 class="sub">Preventivní péče o trysku</h3>
+      <h3 class="sub" id="preventivni-pece-o-trysku">Preventivní péče o trysku</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="purge-pri-kazdem-spusteni">
           <span class="card-num">✓</span>
           <h3>Purge při každém spuštění</h3>
           <p>Před tiskem vždy extrudujte 20–30 mm filametu (startup purge). Vyčistí zbytky z předchozího tisku a ověří průtok ještě před startem. OrcaSlicer to dělá automaticky přes Skirt nebo Purge Line.</p>
         </div>
-        <div class="card">
+        <div class="card" id="mosazny-kartacek-za-tepla">
           <span class="card-num">✓</span>
           <h3>Mosazný kartáček za tepla</h3>
           <p>Při zahřáté trysce (200 °C) jemně otřete vnějšek trysky mosazným kartáčkem. Odstraní usazeniny plastu na vnějšku trysky. Nikdy ocelový kartáček — poškrábe povrch. Interval: dle potřeby / každých 20 tisků.</p>
         </div>
-        <div class="card">
+        <div class="card" id="ptfe-trubice-kontrola">
           <span class="card-num">✓</span>
           <h3>PTFE trubice — kontrola</h3>
           <p>Každých 50–100 hodin tisku zkontrolujte dosednutí PTFE trubice. Uvolněná trubice vytvoří mezeru mezi trubicí a tryskou kde se hromadí plast a způsobuje ucpání nebo heat creep.</p>
         </div>
-        <div class="card">
+        <div class="card" id="suche-skladovani-filametu">
           <span class="card-num">✓</span>
           <h3>Suché skladování filametu</h3>
           <p>Vlhký filament je nejčastější příčina karbonizace uvnitř trysky. Filament skladujte v dry boxu se silikagelovým sušidlem. Vlhkost pod 15 % — sledujte hygrometrem. Viz Kapitola 10.</p>
@@ -486,63 +486,63 @@
         <div><strong>KOBRA X — multi-filamentový systém:</strong> Kobra X má <strong>4 teflonové trubice</strong> (jedna pro každou cívku filametu). Trubice jsou číslované 1–4 a musí zůstat na svých místech — záměna způsobí problémy s podáváním filametu. Při výměně označte každou trubici před odpojením.</div>
       </div>
 
-      <h3 class="sub">Jak poznat opotřebení</h3>
+      <h3 class="sub" id="jak-poznat-opotrebeni">Jak poznat opotřebení</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="zloutnuti-a-hnednuti">
           <span class="card-num">Vizuální znaky</span>
           <h3>Žloutnutí a hnědnutí</h3>
           <p>Nová PTFE trubice je průhledná nebo mírně bílá. Opotřebená trubice žloutne, hnědne nebo je viditelně zanesená usazeninami plastu. Žloutnutí samo o sobě není kritické — hnědnutí blízko hotendu ano.</p>
         </div>
-        <div class="card">
+        <div class="card" id="zkrouceni-a-deformace">
           <span class="card-num">Vnitřní stav</span>
           <h3>Zkroucení a deformace</h3>
           <p>Podívejte se dovnitř trubice proti světlu. Rovný průchod? Nebo je vidět zkroucení či zúžení? Jestliže se filament při ručním podávání zasekává i mimo hotend, je trubice opotřebená.</p>
         </div>
-        <div class="card">
+        <div class="card" id="zvysena-sila-podavani">
           <span class="card-num">Funkční test</span>
           <h3>Zvýšená síla podávání</h3>
           <p>Pokud extrudér vydává klikání nebo přeskakování i přes čistou trysku a správnou teplotu, příčinou může být opotřebená PTFE trubice se zvýšeným třením. Vyzkoušejte výměnu trubice jako diagnostický krok.</p>
         </div>
       </div>
 
-      <h3 class="sub">Postup výměny — krok za krokem</h3>
+      <h3 class="sub" id="postup-vymeny-krok-za-krokem">Postup výměny — krok za krokem</h3>
       <div class="steps">
-        <div class="step">
+        <div class="step" id="oznacte-trubici-cislem">
           <span class="step-num">01</span>
           <div class="step-body">
             <h4>Označte trubici číslem</h4>
             <p>Před odpojením čímkoliv (izolepa, fix) označte trubici jejím číslem 1–4. Kobra X má trubice barevně nebo číselně označeny přímo na tiskárně — zkopírujte označení na novou trubici.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="odpojte-fitting-push-fit-konektor">
           <span class="step-num">02</span>
           <div class="step-body">
             <h4>Odpojte fitting (push-fit konektor)</h4>
             <p>Push-fit konektory (PC4-M6 nebo PC4-M10) se odemknou stlačením modrého (nebo černého) kroužku dolů a zároveň taháte za trubici. Nepotřebujete nástroj — jen stlačit a vytáhnout.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="odmerte-a-odriznete-novou-trubici">
           <span class="step-num">03</span>
           <div class="step-body">
             <h4>Odměřte a odřízněte novou trubici</h4>
             <p>Přiložte starou trubici jako šablonu a odřízněte novou na stejnou délku. Řez musí být přesně kolmý — šikmý řez způsobí mezeru uvnitř hotendu a ucpání. Použijte ostrý nůž nebo speciální řezačku PTFE.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="zasunte-novou-trubici">
           <span class="step-num">04</span>
           <div class="step-body">
             <h4>Zasuňte novou trubici</h4>
             <p>Zasuňte trubici do fittingu až na doraz — musí dosáhnout až k trysce uvnitř hotendu bez mezery. Pokud trubice nedosedne celou délkou, vznikne prostor kde se hromadí plast a způsobuje ucpání (heat creep).</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="zajistete-pojistnym-klipem">
           <span class="step-num">05</span>
           <div class="step-body">
             <h4>Zajistěte pojistným klipem</h4>
             <p>Nasaďte Bowden fitting klíp (pojistnou svorku) na fitting. Tento plastový klip zabraňuje samovolnému vysunutí trubice při retrakcích. Bez klípu se trubice postupně uvolní.</p>
           </div>
         </div>
-        <div class="step">
+        <div class="step" id="testovaci-tisk">
           <span class="step-num">06</span>
           <div class="step-body">
             <h4>Testovací tisk</h4>
@@ -565,41 +565,41 @@
 
       <p>Tisková podložka je první kontaktní plocha výtisku a zároveň jedno z nejčastějších míst problémů. Správná údržba podložky předchází 80 % problémů s přilnavostí první vrstvy.</p>
 
-      <h3 class="sub">Rutinní čištění</h3>
+      <h3 class="sub" id="rutinni-cisteni">Rutinní čištění</h3>
       <div class="two-col">
-        <div class="card">
+        <div class="card" id="odmasteni-ipa-izopropyl-alkohol">
           <span class="card-num">Po každých 5–10 tiscích</span>
           <h3>Odmastění IPA (izopropyl alkohol)</h3>
           <p>Naneste IPA 70–90 % na papírový ubrousek a otřete celý povrch podložky. Odmaštění odstraňuje mastnotu z prstů a zbytky plastových nečistot, které snižují přilnavost. Počkejte, až IPA zcela vyschne (cca 30 sekund).</p>
           <p style="margin-top:8px;font-size:13px;color:var(--muted);">Důležité: čistěte studenou podložku. Na zahřáté podložce IPA příliš rychle vyprchá.</p>
         </div>
-        <div class="card">
+        <div class="card" id="hluboke-cisteni-mydlovou-vodou">
           <span class="card-num">Po každých 30–50 tiscích</span>
           <h3>Hluboké čištění mýdlovou vodou</h3>
           <p>Sundejte magnetickou PEI podložku a omyjte ji pod tekoucí vodou s kapkou tuhého mýdla (ne mycí prostředek s kondicionérem). Jemně potřete houbičkou, opláchněte, osušte papírovým ubrouskem. Pak odmastěte IPA.</p>
         </div>
       </div>
 
-      <h3 class="sub">Co nedělat — časté chyby</h3>
+      <h3 class="sub" id="co-nedelat-caste-chyby">Co nedělat — časté chyby</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="aceton-na-pei-podlozku">
           <span class="card-num">✗</span>
           <h3>Aceton na PEI podložku</h3>
           <p>Aceton povrch PEI podložky nevratně poškodí — povrch se zakalí a ztratí přilnavost. Aceton používejte pouze pro speciální aplikace (adhesive pro ABS na skleněnou podložku), nikoliv na magnetické PEI Kobry X.</p>
         </div>
-        <div class="card">
+        <div class="card" id="ostre-nastroje-na-povrchu">
           <span class="card-num">✗</span>
           <h3>Ostré nástroje na povrchu</h3>
           <p>Kovové špachtle s ostrým koncem, nože nebo sekáče poškrábou PEI povrch. Pro odstraňování modelů používejte pouze pružnou plastovou špachtle nebo počkejte na vychladnutí — modely pak odpadnou samy.</p>
         </div>
-        <div class="card">
+        <div class="card" id="dotykat-se-podlozky-rukou">
           <span class="card-num">✗</span>
           <h3>Dotýkat se podložky rukou</h3>
           <p>Mastné otisky prstů jsou nejčastější příčinou špatné přilnavosti první vrstvy. Po každém čištění se podložky dotýkejte pouze za okraje. Před tiskem vždy odmastěte IPA — i pokud vypadá čistě.</p>
         </div>
       </div>
 
-      <h3 class="sub">Lepidla a separační vrstvy</h3>
+      <h3 class="sub" id="lepidla-a-separacni-vrstvy">Lepidla a separační vrstvy</h3>
       <p style="margin-bottom:16px;">Různé kombinace filament + povrch podložky mohou vyžadovat pomocné vrstvy pro lepší adhezi nebo naopak snazší odlepení výtisku.</p>
 
       <table class="data-table">
@@ -662,7 +662,7 @@
         <div><strong>Jak nanášet lepidlo (tuhá tyčinka):</strong> Naneste tenkou vrstvu na zahřátou podložku (~60 °C). Na studené podložce se lepidlo nanáší hůře a nerovnoměrně. Po dokončení tisku a vychladnutí podložky lepidlo zůstane na výtisku — opláchněte vodou. Podložku pak znovu odmastěte IPA.</div>
       </div>
 
-      <h3 class="sub">Kdy podložku vyměnit</h3>
+      <h3 class="sub" id="kdy-podlozku-vymenit">Kdy podložku vyměnit</h3>
       <div class="alert alert-warn">
         <div class="alert-icon">⚠</div>
         <div><strong>Signály pro výměnu:</strong> Hluboká poškrábání nebo prohlubně v místě kde tiskárna začíná první vrstvu. Podložka ztratila přilnavost v celé ploše i po důkladném čištění. Povrch je viditelně nerovnoměrný (prohlídněte šikmým světlem). Nová magnetická PEI podložka pro Kobru X: ~200–500 Kč na Aliexpress nebo na3d.cz.</div>
@@ -675,59 +675,59 @@
 
       <p>Kromě mazání a čištění je důležité pravidelně kontrolovat mechanické součásti tiskárny. Uvolněný šroub nebo povolený řemen dokáže znehodnotit hodiny tisku.</p>
 
-      <h3 class="sub">Utahování šroubů rámu</h3>
+      <h3 class="sub" id="utahovani-sroubu-ramu">Utahování šroubů rámu</h3>
       <p style="margin-bottom:16px;">Vibrace při tisku postupně uvolňují šrouby. Projděte celý rám tiskárny a mírně utáhněte všechny šrouby — zejména spoje rámu, upevnění motorů a uchycení os. Interval: každých 50 provozních hodin.</p>
       <div class="alert alert-tip">
         <div class="alert-icon">✓</div>
         <div><strong>Tip:</strong> Neutahujte šrouby silou — plastové díly se mohou prasknout. Lehký dotah (šroub se přestane točit) je správný. Pokud šroub znovu povolí, použijte kapku Loctite 243 (střední fixace).</div>
       </div>
 
-      <h3 class="sub">Kontrola napětí řemenů</h3>
+      <h3 class="sub" id="kontrola-napeti-remenu">Kontrola napětí řemenů</h3>
       <div class="two-col">
-        <div class="card">
+        <div class="card" id="pinknout-prstem">
           <span class="card-num">Jak testovat</span>
           <h3>„Pinknout prstem"</h3>
           <p>Přiložte prst ke středu řemenu a lehce ho cvrnkněte. Správně napnutý řemen vydá čistý tón jako kytarová struna — přibližně 40–60 Hz (nízká nota). Příliš volný řemen bude „plácavý", příliš napnutý „vysoký".</p>
         </div>
-        <div class="card">
+        <div class="card" id="volny-nebo-pretazeny-remen">
           <span class="card-num">Příznaky problémů</span>
           <h3>Volný nebo přetažený řemen</h3>
           <p>Volný řemen: layer shifting (posunuté vrstvy), neostré hrany, ghosting artefakty. Přetažený řemen: zvýšený hluk motorů, předčasné opotřebení ložisek a zubů kladek, nepřesné pohyby. Oba extrémy ničí výtisky i hardware.</p>
         </div>
       </div>
 
-      <h3 class="sub">Kontrola ventilátorů</h3>
+      <h3 class="sub" id="kontrola-ventilatoru">Kontrola ventilátorů</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="chlazeni-hotendu">
           <span class="card-num">Hotend ventilátor</span>
           <h3>Chlazení hotendu</h3>
           <p>Tento ventilátor chladí heat sink a brání heat creep. Musí běžet vždy když je hotend zahřátý. Pokud se zastaví nebo zpomalí, hrozí heat creep a ucpání. Kontrolujte při každém spuštění — měl by okamžitě naběhnout.</p>
         </div>
-        <div class="card">
+        <div class="card" id="chlazeni-vytisku">
           <span class="card-num">Part cooling ventilátor</span>
           <h3>Chlazení výtisku</h3>
           <p>Fouká na model při tisku. Pokud neběží správně, výtisky mají špatné převisy a mosty. Zkontrolujte, zda ventilátor volně rotuje (bez odporu od prachu nebo vláken filametu).</p>
         </div>
-        <div class="card">
+        <div class="card" id="chlazeni-ridici-desky">
           <span class="card-num">Ventilátor elektroniky</span>
           <h3>Chlazení řídicí desky</h3>
           <p>Chlazení spodní části tiskárny (řídicí deska a PSU). Kontrolujte jednou za 3–6 měsíců — sfoukněte prach stlačeným vzduchem nebo jemným štětcem. Zaprášený ventilátor = přehřívání elektroniky.</p>
         </div>
       </div>
 
-      <h3 class="sub">Drobné kontroly</h3>
+      <h3 class="sub" id="drobne-kontroly">Drobné kontroly</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="cocka-kamery">
           <span class="card-num">Kamera</span>
           <h3>Čočka kamery</h3>
           <p>Čočku vestavěné kamery otřete jemným hadříkem nebo optickým čistícím papírkem lehce navlhčeným IPA. Prach na čočce degraduje obraz při vzdáleném monitoringu. Interval: dle potřeby.</p>
         </div>
-        <div class="card">
+        <div class="card" id="halluv-senzor-pruchodu">
           <span class="card-num">Senzor filametu</span>
           <h3>Hallův senzor průchodu</h3>
           <p>Senzor detekuje přítomnost filametu a zastaví tisk při dojití cívky. Prach a vlákna filametu mohou způsobit falešné poplachy. Vyčistěte otvorem senzoru jemným štětcem nebo stlačeným vzduchem.</p>
         </div>
-        <div class="card">
+        <div class="card" id="vizualni-kontrola-vodicu">
           <span class="card-num">Kabeláž</span>
           <h3>Vizuální kontrola vodičů</h3>
           <p>Prohlédněte pohyblivou kabeláž (kabely k tiskové hlavě) na praskliny izolace nebo obroušení. Kabel potrhaný pohybem je bezpečnostní riziko. Zabraňte nadměrnému ohybání kabelů — použijte kabelový řetěz pokud chybí.</p>
@@ -744,61 +744,61 @@
       <p>Mít zásobu základního spotřebního materiálu šetří čas a zabraňuje nuceným pauzám uprostřed projektu. Níže je doporučený seznam pro Kobru X.</p>
 
       <div class="shop-grid">
-        <div class="shop-item">
+        <div class="shop-item" id="ptfe-trubice-4-ks">
           <span class="si-name">PTFE trubice (4 ks)</span>
           <span class="si-qty">Zásobu 4 ks</span>
           <p class="si-note">ID 2 mm / OD 4 mm — Capricorn nebo Creality kompatibilní. Kobra X má 4 kanály — potřebujete sadu 4 trubic najednou.</p>
           <span class="si-price">~30–60 Kč / kus</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="trysky-0-4-mm-mosaz-5-ks">
           <span class="si-name">Trysky 0,4 mm mosaz (5 ks)</span>
           <span class="si-qty">Zásobu 5 ks</span>
           <p class="si-note">MK8 nebo Volcano kompatibilní (ověřte typ pro Kobru X). Mosaz vydrží 300–500 hod. PLA, méně u abrazivních filamentů.</p>
           <span class="si-price">~30–80 Kč / kus</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="tryska-nerez-0-4-mm-1-ks">
           <span class="si-name">Tryska nerez 0,4 mm (1 ks)</span>
           <span class="si-qty">1 ks záloha</span>
           <p class="si-note">Pro abrazivní filamenty (Carbon, Glow in the Dark, dřevo). Hardened steel vydrží 10× déle než mosaz při těchto materiálech.</p>
           <span class="si-price">~100–200 Kč / kus</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="ipa-7090-500-ml">
           <span class="si-name">IPA 70–90 % (500 ml)</span>
           <span class="si-qty">500 ml</span>
           <p class="si-note">Izopropylalkohol pro odmastění tiskové podložky. Drogerie (Isopropylalkohol) nebo lékárna. Neplést s ethanolem — ten nechává film.</p>
           <span class="si-price">~80–150 Kč</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="lithiove-mazivo-tuk">
           <span class="si-name">Lithiové mazivo (tuk)</span>
           <span class="si-qty">1 tuba</span>
           <p class="si-note">Pro trapézový šroub osy Z a vodicí lišty. Super Lube nebo bílý lithiový tuk (Hornbach, Auto Kelly). Balení vydrží roky.</p>
           <span class="si-price">~100–200 Kč</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="strojni-olej-nebo-singer">
           <span class="si-name">Strojní olej (nebo Singer)</span>
           <span class="si-qty">1 lahvička</span>
           <p class="si-note">Pro lineární tyče os X a Y. Strojní olej ISO 32 nebo olej na šicí stroje. Lehká konzistence, nevytváří nánosy.</p>
           <span class="si-price">~60–120 Kč</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="kapton-tape-10-mm-30-m">
           <span class="si-name">Kapton tape (10 mm × 30 m)</span>
           <span class="si-qty">1 role</span>
           <p class="si-note">Polyimidová páska odolná teplotě. Ochrana konektorů, fixace termistorů, záložní bed adheze. Aliexpress nebo na3d.cz.</p>
           <span class="si-price">~50–100 Kč</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="bowden-fitting-klipy-10-ks">
           <span class="si-name">Bowden fitting klípy (10 ks)</span>
           <span class="si-qty">10 ks</span>
           <p class="si-note">Pojistky pro PC4-M6 fittingy — zabraňují vysunutí PTFE trubice. Velmi levné, ztratí se nebo zlomí — mít zásobu.</p>
           <span class="si-price">~20–50 Kč za sadu</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="lepici-tycinka-pritt-kores">
           <span class="si-name">Lepicí tyčinka (Pritt/Kores)</span>
           <span class="si-qty">2–3 ks</span>
           <p class="si-note">Separační vrstva pro PETG na PEI a adhezní vrstva pro ABS/Nylon. Klasická kancelářská lepicí tyčinka — nic speciálního.</p>
           <span class="si-price">~30–60 Kč / ks</span>
         </div>
-        <div class="shop-item">
+        <div class="shop-item" id="silikonovy-gel-pro-srouby">
           <span class="si-name">Silikonový gel pro šrouby</span>
           <span class="si-qty">1 tuba</span>
           <p class="si-note">Loctite 243 (střední fixace) — pro šrouby, které se opakovaně uvolňují. Pouze kapka na závit. Zajistí šroub, ale jde stále odšroubovat nářadím.</p>
@@ -806,24 +806,24 @@
         </div>
       </div>
 
-      <h3 class="sub">Kde nakoupit v ČR</h3>
+      <h3 class="sub" id="kde-nakoupit-v-cr">Kde nakoupit v ČR</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="na3d-cz">
           <span class="card-num">CZ</span>
           <h3>na3d.cz</h3>
           <p>Specializovaný obchod pro 3D tisk. Trysky, PTFE trubice, náhradní díly, filamenty. Rychlé dodání, česká podpora. Přímo pro Anycubic tiskárny.</p>
         </div>
-        <div class="card">
+        <div class="card" id="materialpro3d-cz">
           <span class="card-num">CZ</span>
           <h3>materialpro3d.cz</h3>
           <p>Filamenty a spotřební materiál pro 3D tisk. Dobrý výběr trysk a příslušenství. Rychlé dodání z ČR.</p>
         </div>
-        <div class="card">
+        <div class="card" id="akros-cz">
           <span class="card-num">CZ</span>
           <h3>akros.cz</h3>
           <p>Elektro a hobby součástky, náhradní díly. Dobrá volba pro elektronické komponenty (ventilátory, konektory, kabeláž) a maziva.</p>
         </div>
-        <div class="card">
+        <div class="card" id="aliexpress-amazon">
           <span class="card-num">EU</span>
           <h3>Aliexpress / Amazon</h3>
           <p>Trysky, PTFE trubice a drobné příslušenství výrazně levněji. Počítejte s dodáním 2–4 týdny (Aliexpress) nebo 3–5 dní (Amazon EU). Vhodné pro zásoby, ne pro urgentní potřebu.</p>

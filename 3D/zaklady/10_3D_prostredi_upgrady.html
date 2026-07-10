@@ -182,12 +182,12 @@
   <div class="wrapper">
 
     <!-- ── SEKCE 1: HLUK ── -->
-    <div class="section">
+    <div class="section" id="1-hluk-a-vibrace">
       <div class="section-header"><h2>1 — Hluk a vibrace</h2></div>
 
       <p>Jednou z prvních věcí, které nového majitele 3D tiskárny překvapí, je hluk. FDM tiskárny vydávají kombinaci zvuků — kroky motorů, bzučení ventilátorů a vibrace přenášené do stolu. Dobrou zprávou je, že velkou část hluku lze snadno omezit bez jakýchkoliv výdajů.</p>
 
-      <h3 class="sub">Reálné hlukové hodnoty Kobry X</h3>
+      <h3 class="sub" id="realne-hlukove-hodnoty-kobry-x">Reálné hlukové hodnoty Kobry X</h3>
       <div class="noise-wrap">
         <div class="noise-row">
           <span class="noise-label">Klidový stav (pouze ventilátor)</span>
@@ -212,25 +212,25 @@
         <p style="font-size:13px;color:var(--muted);margin-top:14px;">Měřeno 50 cm od tiskárny. Hodnoty se liší dle rychlosti tisku a podkladu, na kterém tiskárna stojí.</p>
       </div>
 
-      <h3 class="sub">Jak efektivně snížit hluk</h3>
+      <h3 class="sub" id="jak-efektivne-snizit-hluk">Jak efektivně snížit hluk</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="anti-vibrace-podlozky">
           <span class="card-num">01</span>
           <h3>Anti-vibrace podložky</h3>
           <p>Nejjednodušší a nejúčinnější úprava. Silné gumové nožičky nebo speciální anti-vibrace dampers pod každou nohu tiskárny absorbují vibrace přenášené do stolu. Reálné snížení hluku o 3–6 dB.</p>
           <p style="margin-top:8px;font-size:13px;color:var(--muted);">Lze vytisknout — hledejte „anti vibration feet Kobra" na Printables.com. Nebo koupit na Aliexpress za pár korun.</p>
         </div>
-        <div class="card">
+        <div class="card" id="pevny-tezky-stul">
           <span class="card-num">02</span>
           <h3>Pevný, těžký stůl</h3>
           <p>Lehký IKEA stolek rezonuje a zesiluje vibrace. Masivní pracovní stůl nebo stůl z dřevotřísky je výrazně lepší podklad. Tiskárna na těžkém povrchu je znatelně tišší — žádné náklady.</p>
         </div>
-        <div class="card">
+        <div class="card" id="nizsi-rychlost-tisku">
           <span class="card-num">03</span>
           <h3>Nižší rychlost tisku</h3>
           <p>Rychlejší pohyby = více vibrací a hluku. Snížení rychlosti ze 100 mm/s na 60 mm/s viditelně zklidní provoz. Kobra X má Input Shaping kompenzující vibrace, přesto platí: pomalejší = tišší.</p>
         </div>
-        <div class="card">
+        <div class="card" id="enclosure-uzavreny-kryt">
           <span class="card-num">04</span>
           <h3>Enclosure (uzavřený kryt)</h3>
           <p>Uzavřený kryt pohlcuje část hluku — zejména kryty s absorpčním materiálem uvnitř. Efekt je menší než u anti-vibrací, ale kombinace obou řešení přináší výrazný výsledek.</p>
@@ -244,7 +244,7 @@
     </div>
 
     <!-- ── SEKCE 2: ZÁPACH ── -->
-    <div class="section">
+    <div class="section" id="2-zapach-a-vypary-voc">
       <div class="section-header"><h2>2 — Zápach a výpary (VOC)</h2></div>
 
       <p>3D tisk zahřívá plast na vysoké teploty, při nichž se uvolňují těkavé organické látky (VOC — Volatile Organic Compounds) a ultrajemné částice (UFP). Míra rizika silně závisí na použitém filamentu — PLA je relativně bezpečné, ABS nikoliv.</p>
@@ -303,19 +303,19 @@
         <div><strong>Pozor — ABS a ASA:</strong> Tyto materiály produkují styrén a další škodlivé VOC. Tisknout je v uzavřené místnosti bez ventilace není vhodné — zejména při delším provozu. Vždy zajistěte přívod čerstvého vzduchu nebo filtraci s aktivním uhlím.</div>
       </div>
 
-      <h3 class="sub">Jak řešit filtraci</h3>
+      <h3 class="sub" id="jak-resit-filtraci">Jak řešit filtraci</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="vetrani-mistnosti">
           <span class="card-num">A</span>
           <h3>Větrání místnosti</h3>
           <p>Nejjednodušší řešení — otevřené okno nebo větrací mřížka zajistí výměnu vzduchu. Plně postačuje pro PLA a PETG. Pro ABS/ASA je samotné větrání nedostatečné — výpary se šíří celou místností.</p>
         </div>
-        <div class="card">
+        <div class="card" id="hepa-aktivni-uhli-filtr">
           <span class="card-num">B</span>
           <h3>HEPA + aktivní uhlí filtr</h3>
           <p>Kombinovaný filtr zachytí ultrajemné částice (HEPA vrstva) i VOC plyny (aktivní uhlí). Nejlépe umístit dovnitř enclosure. Oblíbený DIY projekt: <strong>Nevermore V5/V6</strong> — vytisknutelný filtr na Printables.com.</p>
         </div>
-        <div class="card">
+        <div class="card" id="dedikovana-mistnost">
           <span class="card-num">C</span>
           <h3>Dedikovaná místnost</h3>
           <p>Oddělená místnost (garáž, dílna, sklep) s vlastním větráním je ideální. Tiskárna tam může běžet bez omezení a hluk ani výpary nevadí. Pokud tuto možnost máte — využijte ji naplno.</p>
@@ -326,7 +326,7 @@
     </div>
 
     <!-- ── SEKCE 3: BEZPEČNOST ── -->
-    <div class="section">
+    <div class="section" id="3-pozarni-bezpecnost">
       <div class="section-header"><h2>3 — Požární bezpečnost</h2></div>
 
       <p>3D tiskárny jsou elektrická zařízení pracující s vysokými teplotami (hotend 200–300 °C, heatbed 60–100 °C). Většina tiskáren je bezpečná při správném používání, ale požáry se výjimečně stávají — nejčastěji při tisku bez dozoru, vadném napájení nebo selhání termistoru.</p>
@@ -337,22 +337,22 @@
       </div>
 
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="detektor-koure">
           <span class="card-num">01</span>
           <h3>Detektor kouře</h3>
           <p>Umístěte detektor kouře přímo v místnosti kde tiskárna pracuje — ne jen na chodbě. Při tisku přes noc je to základní pojistka. Chytré detektory s notifikací do telefonu jsou ideální.</p>
         </div>
-        <div class="card">
+        <div class="card" id="kamera-pro-monitoring">
           <span class="card-num">02</span>
           <h3>Kamera pro monitoring</h3>
           <p>Kobra X má vestavěnou kameru — přes aplikaci Anycubic lze sledovat tisk vzdáleně z telefonu. Využijte ji při tisku přes noc nebo mimo dohled. V případě problému tisk ihned zastavte.</p>
         </div>
-        <div class="card">
+        <div class="card" id="nehorlava-podlozka">
           <span class="card-num">03</span>
           <h3>Nehořlavá podložka</h3>
           <p>Pod tiskárnu dejte keramickou dlaždici, kovový plát nebo nehořlavou podložku. Keramická dlaždice z hobby marketu za ~50 Kč je nejjednodušší a funkční řešení.</p>
         </div>
-        <div class="card">
+        <div class="card" id="hasici-kapsle">
           <span class="card-num">04</span>
           <h3>Hasicí kapsle</h3>
           <p>Automatické hasicí kapsle (Elide Fire nebo podobné) lze umístit dovnitř enclosure. Při překročení kritické teploty se automaticky aktivují. Pro noční tisky jde o levnou pojistku navíc (~500–1000 Kč).</p>
@@ -371,24 +371,24 @@
     </div>
 
     <!-- ── SEKCE 4: ENCLOSURE ── -->
-    <div class="section">
+    <div class="section" id="4-enclosure-kryt-tiskarny">
       <div class="section-header"><h2>4 — Enclosure (kryt tiskárny)</h2></div>
 
       <p>Enclosure je uzavřený kryt kolem tiskárny. Pro tisk PLA je zbytečný a dokonce kontraproduktivní — PLA tiskne nejlépe v otevřeném prostoru s aktivním chlazením. Pro ABS, ASA a Nylon je ale téměř nutností kvůli zamezení warpingu.</p>
 
-      <h3 class="sub">Proč enclosure pomáhá</h3>
+      <h3 class="sub" id="proc-enclosure-pomaha">Proč enclosure pomáhá</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="stabilni-teplota-prostredi">
           <span class="card-num">✓</span>
           <h3>Stabilní teplota prostředí</h3>
           <p>ABS a ASA se při chladnutí smršťují a praská jim to od podložky (warping), pokud okolní vzduch je studený. Kryt udržuje teplý vzduch uvnitř a dramaticky snižuje warping — tisk ABS bez krytu je velmi obtížný.</p>
         </div>
-        <div class="card">
+        <div class="card" id="efektivni-filtrace-vyparu">
           <span class="card-num">✓</span>
           <h3>Efektivní filtrace výparů</h3>
           <p>Filtr umístěný uvnitř uzavřeného krytu zachytí téměř veškeré VOC a částice ještě před tím, než se dostanou do místnosti. Mnohonásobně účinnější než filtr v otevřeném prostoru.</p>
         </div>
-        <div class="card">
+        <div class="card" id="mene-prachu-a-necistot">
           <span class="card-num">✓</span>
           <h3>Méně prachu a nečistot</h3>
           <p>Uzavřený prostor chrání tiskárnu před prachem, chloupky domácích mazlíčků a jinými nečistotami. Méně čištění lineárních tyčí a vodicích lišt.</p>
@@ -400,7 +400,7 @@
         <div><strong>PLA v uzavřeném krytu:</strong> Při tisku PLA v uzavřeném krytu se zahřívá vzduch uvnitř a způsobuje heat creep — ucpání v chladicí zóně hotendu. Pro PLA buď kryt nechte otevřený, nebo zajistěte aktivní ventilaci uvnitř krytu.</div>
       </div>
 
-      <h3 class="sub">Rozměry Kobry X pro enclosure</h3>
+      <h3 class="sub" id="rozmery-kobry-x-pro-enclosure">Rozměry Kobry X pro enclosure</h3>
       <div class="spec-box">
         <div class="spec-item">
           <span class="si-label">Šířka tiskárny</span>
@@ -421,20 +421,20 @@
       </div>
       <p style="font-size:13px;color:var(--muted);margin-top:-10px;">Přidejte alespoň 50–80 mm na každou stranu pro pohodlný přístup, proudění vzduchu a umístění filtrů.</p>
 
-      <h3 class="sub">Možnosti enclosure</h3>
+      <h3 class="sub" id="moznosti-enclosure">Možnosti enclosure</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="ikea-lack-stack">
           <span class="card-num">DIY</span>
           <h3>IKEA Lack stack</h3>
           <p>Nejpopulárnější DIY řešení — dva stolky IKEA Lack naskládané na sebe, plexisklo po stranách, dvířka vpředu. Celková cena ~600–1500 Kč. Stovky hotových návodů a printovatelných dílů na Printables.com.</p>
           <p style="margin-top:8px;font-size:13px;color:var(--muted);">IKEA Lack je 55×55 cm — pro Kobru X je potřeba větší varianta nebo přizpůsobení rámů.</p>
         </div>
-        <div class="card">
+        <div class="card" id="hlinikovy-ram-2020-2040">
           <span class="card-num">DIY</span>
           <h3>Hliníkový rám 2020/2040</h3>
           <p>Rám z hliníkových profilů s PETG tisklými spojkami a plexisklěnými panely. Nejflexibilnější řešení přesně na míru tiskárny. Vyžaduje víc času a základní kutilské dovednosti, výsledek je ale prémiový.</p>
         </div>
-        <div class="card">
+        <div class="card" id="hotovy-kryt">
           <span class="card-num">Komerční</span>
           <h3>Hotový kryt</h3>
           <p>Značky: Creality Enclosure, SUNLU Enclosure, Sovol. Cena 1500–4000 Kč. Výhoda: ihned připraven, stabilní konstrukce. Vždy ověřte rozměry — ne každý kryt pasuje na Kobru X.</p>
@@ -445,7 +445,7 @@
     </div>
 
     <!-- ── SEKCE 5: SUŠIČKY ── -->
-    <div class="section">
+    <div class="section" id="5-susicky-filamentu">
       <div class="section-header"><h2>5 — Sušičky filamentu</h2></div>
 
       <p>Filament je hygroskopický — absorbuje vzdušnou vlhkost. Vlhký filament se projevuje praskáním při tisku, bublinami na povrchu výtisku, slabšími mezivrstevnými spoji a zvýšeným stringingem. Sušička je po tiskárně samotné asi nejužitečnější investice.</p>
@@ -455,32 +455,32 @@
         <div><strong>Jak poznat vlhký filament:</strong> Při tisku slyšíte praskání nebo syčení z trysky. Výtisk má bublinky, matný nerovnoměrný povrch nebo zvýšený stringing. PETG a Nylon jsou nejcitlivější — absorpci vlhkosti poznáte za 24–48 hodin v nevhodném prostředí.</div>
       </div>
 
-      <h3 class="sub">Možnosti sušení</h3>
+      <h3 class="sub" id="moznosti-suseni">Možnosti sušení</h3>
       <div class="chapter-grid">
-        <div class="card">
+        <div class="card" id="sunlu-s1-s2-filadryer">
           <span class="card-num">★★</span>
           <h3>SUNLU S1 / S2 Filadryer</h3>
           <p>Nejpopulárnější dedikovaná sušička. S1 pro jednu cívku (~700 Kč), S2 pro dvě cívky (~1200 Kč). Teplota 35–70 °C, displej, časovač. Umožňuje tisk přímo ze sušičky přes boční otvor pro filament.</p>
         </div>
-        <div class="card">
+        <div class="card" id="susicka-potravin">
           <span class="card-num">★★</span>
           <h3>Sušička potravin</h3>
           <p>Klasická sušička potravin (Rohnson, Sencor) z Alzy za ~600–800 Kč. Nastavte 45–55 °C (dle filametu) a sušte 4–8 hodin. Výsledek prakticky totožný s dedikovanou sušičkou — jen méně komfortní.</p>
           <p style="margin-top:8px;font-size:13px;color:var(--muted);">Ověřte, že mřížka uvnitř je dost velká pro cívku průměru 200 mm.</p>
         </div>
-        <div class="card">
+        <div class="card" id="dry-box-hermeticka-doza">
           <span class="card-num">DIY</span>
           <h3>Dry Box (hermetická dóza)</h3>
           <p>Vzduchotěsná plastová dóza s silikagelovým sušidlem. Nesusí již vlhký filament, ale chrání suchý filament před vlhkostí. Jako skladovací řešení ideální — Lock&amp;Lock dóza s průchodkou pro filament.</p>
         </div>
-        <div class="card">
+        <div class="card" id="tisk-primo-ze-susicky">
           <span class="card-num">Tip</span>
           <h3>Tisk přímo ze sušičky</h3>
           <p>Nejkomfortnější způsob — filament se suší průběžně i při tisku. SUNLU S1 má boční otvor pro vedení filamentu přímo do extrudéru tiskárny. Zejména pro PETG a Nylon je to ideální kombinace.</p>
         </div>
       </div>
 
-      <h3 class="sub">Teploty sušení dle filametu</h3>
+      <h3 class="sub" id="teploty-suseni-dle-filametu">Teploty sušení dle filametu</h3>
       <table class="data-table">
         <thead>
           <tr><th>Filament</th><th>Teplota sušení</th><th>Doba sušení</th><th>Citlivost na vlhkost</th></tr>
@@ -501,79 +501,79 @@
     </div>
 
     <!-- ── SEKCE 6: UPGRADY ── -->
-    <div class="section">
+    <div class="section" id="6-chytre-upgrady-a-prislusenstvi">
       <div class="section-header"><h2>6 — Chytré upgrady a příslušenství</h2></div>
 
       <p>Nemusíte hned investovat tisíce do hardwarových upgradů. Následující doplňky a nástroje vám výrazně usnadní práci, zpřesní výtisky a prodlouží životnost tiskárny — mnohé za minimální cenu.</p>
 
       <div class="upgrade-grid">
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="digitalni-posuvne-meritko">
           <div class="uc-icon">📏</div>
           <h4>Digitální posuvné měřítko</h4>
           <p>Nezbytné pro kalibraci — měření skutečných rozměrů výtisku (XYZ cube, kalibrace flow rate). Levné plastové (~150 Kč z Alzy) plně postačí.</p>
           <span class="uc-tag">Nutné</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="feeler-gauge-sparove-merky">
           <div class="uc-icon">🔧</div>
           <h4>Feeler gauge (spárové měrky)</h4>
           <p>Sada tenkých plíšků pro přesné nastavení Z-offsetu první vrstvy. Přesnější než papír — 0,1 mm plíšek je ideální vzdálenost trysky od podložky. Sada ~100 Kč.</p>
           <span class="uc-tag">Doporučeno</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="kapton-tape">
           <div class="uc-icon">🟡</div>
           <h4>Kapton tape</h4>
           <p>Žlutohnědá teplotně odolná polyimidová páska. Ochrana konektorů a kabeláže, fixace termistorů, alternativa bed adheze pro ABS. Každý 3D tiskař by ji měl mít v zásobě.</p>
           <span class="uc-tag">Levné a užitečné</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="bowden-fitting-klip">
           <div class="uc-icon">🔗</div>
           <h4>Bowden fitting klíp</h4>
           <p>Plastová pojistka zabraňující vysunutí PTFE trubice z PC4-M6 fittingu. Po každém odpojení trubice zkontrolujte, zda pojistka správně drží — bez ní hrozí vytékání filamentu mimo trysku.</p>
           <span class="uc-tag">Bezpečnost</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="mosazny-kartacek-na-trysku">
           <div class="uc-icon">🧹</div>
           <h4>Mosazný kartáček na trysku</h4>
           <p>Pro mechanické čištění trysky od usazenin plastu. Pozor: pouze mosazný, ne ocelový — ocel trysku poškrábe. Kobra X dodává čistič trysky v balení, kartáček je doplněk.</p>
           <span class="uc-tag">Údržba</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="pridavne-chlazeni-tisku">
           <div class="uc-icon">💨</div>
           <h4>Přídavné chlazení tisku</h4>
           <p>Silnější part cooling větrák nebo duální chlazení zlepšuje přemostění a převisy. Pro Kobru X existují printovatelné kryty ventilátoru na Printables.com.</p>
           <span class="uc-tag">Upgrade výkonu</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="klipper-firmware">
           <div class="uc-icon">⚡</div>
           <h4>Klipper firmware</h4>
           <p>Alternativní firmware nahrazující výchozí Anycubic firmware. Spouští se na Raspberry Pi, umožňuje Pressure Advance, přesnou Input Shaping kalibraci a výrazně rychlejší tisk. Pro pokročilé uživatele.</p>
           <span class="uc-tag">Pro pokročilé</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="timelapse-kamera">
           <div class="uc-icon">🎥</div>
           <h4>Timelapse kamera</h4>
           <p>OrcaSlicer + Raspberry Pi kamera = automatické timelapse video z každého tisku. Každý layer vidíte jak se tvoří — výsledky jsou fascinující. Vyžaduje základní nastavení.</p>
           <span class="uc-tag">Pro fanoušky</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="hygrometr-do-mistnosti">
           <div class="uc-icon">🌡️</div>
           <h4>Hygrometr do místnosti</h4>
           <p>Malý digitální teploměr s měřičem vlhkosti. Sledujte vlhkost — při hodnotách nad 50 % zvažte sušení filamentu. Cena ~100 Kč, velký přínos pro diagnostiku problémů s tiskem.</p>
           <span class="uc-tag">Diagnostika</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="zasobni-trysky-0-4-mm">
           <div class="uc-icon">🔩</div>
           <h4>Zásobní trysky 0,4 mm</h4>
           <p>Mějte vždy zásobu mosazných trysk 0,4 mm (E3D kompatibilní). Opotřebená tryska se okamžitě projeví na kvalitě — výměna trvá 5 minut, tryska stojí ~30–80 Kč.</p>
           <span class="uc-tag">Spotřební</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="extra-tiskova-podlozka">
           <div class="uc-icon">🧲</div>
           <h4>Extra tisková podložka</h4>
           <p>Druhá magnetická PEI podložka umožňuje ihned začít další tisk, zatímco první se chladí a model odstraňujete. Textured PEI (matný povrch) vs. Smooth PEI (lesklý). Cena ~200–600 Kč.</p>
           <span class="uc-tag">Komfort</span>
         </div>
-        <div class="upgrade-card">
+        <div class="upgrade-card" id="organizer-pracovniho-mista">
           <div class="uc-icon">📦</div>
           <h4>Organizér pracovního místa</h4>
           <p>Krabička nebo nástěnný panel pro špachtle, kleště, IPA lahvičku, kapton tape a náhradní trysky. Přehledné pracoviště = rychlejší reakce na problémy. Samozřejmě lze vytisknout.</p>
