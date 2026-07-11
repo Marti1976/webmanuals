@@ -200,7 +200,7 @@
     <!-- ══════════════════════════════════════
          SEKCE 1 — KALIBRAČNÍ VÝTISKY
     ══════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="1-kalibracni-vytisky">
       <div class="section-header"><h2>1 — Kalibrační výtisky</h2></div>
 
       <p>Kalibrační výtisky jsou standardní testovací modely, které vám odhalí co je špatně nastaveno dříve, než zkazíte hodiny tisku na reálném projektu. Tiskněte je vždy po změně filametu, trysky nebo nastavení teploty.</p>
@@ -212,7 +212,7 @@
 
       <div class="calib-grid">
 
-        <div class="calib-card">
+        <div class="calib-card" id="xyz-cube">
           <div class="cc-header">
             <span class="cc-icon">🧊</span>
             <h3>XYZ Cube</h3>
@@ -223,7 +223,7 @@
           <a href="https://www.printables.com/search/models?q=XYZ+calibration+cube" target="_blank" class="calib-link">↗ Hledat na Printables: XYZ Calibration Cube</a>
         </div>
 
-        <div class="calib-card">
+        <div class="calib-card" id="temperature-tower">
           <div class="cc-header">
             <span class="cc-icon">🌡️</span>
             <h3>Temperature Tower</h3>
@@ -234,7 +234,7 @@
           <a href="https://www.printables.com/search/models?q=temperature+tower+PLA" target="_blank" class="calib-link">↗ Hledat na Printables: Temperature Tower</a>
         </div>
 
-        <div class="calib-card">
+        <div class="calib-card" id="retraction-tower">
           <div class="cc-header">
             <span class="cc-icon">🔁</span>
             <h3>Retraction Tower</h3>
@@ -245,7 +245,7 @@
           <a href="https://www.printables.com/search/models?q=retraction+tower+calibration" target="_blank" class="calib-link">↗ Hledat na Printables: Retraction Tower</a>
         </div>
 
-        <div class="calib-card">
+        <div class="calib-card" id="bed-level-test">
           <div class="cc-header">
             <span class="cc-icon">📋</span>
             <h3>Bed Level Test</h3>
@@ -256,7 +256,7 @@
           <a href="https://www.printables.com/search/models?q=bed+level+test+first+layer" target="_blank" class="calib-link">↗ Hledat na Printables: Bed Level Test</a>
         </div>
 
-        <div class="calib-card">
+        <div class="calib-card" id="overhang-test">
           <div class="cc-header">
             <span class="cc-icon">📐</span>
             <h3>Overhang Test</h3>
@@ -267,7 +267,7 @@
           <a href="https://www.printables.com/search/models?q=overhang+test+calibration" target="_blank" class="calib-link">↗ Hledat na Printables: Overhang Test</a>
         </div>
 
-        <div class="calib-card">
+        <div class="calib-card" id="stringing-test">
           <div class="cc-header">
             <span class="cc-icon">🕸️</span>
             <h3>Stringing Test</h3>
@@ -278,7 +278,7 @@
           <a href="https://www.printables.com/search/models?q=stringing+test" target="_blank" class="calib-link">↗ Hledat na Printables: Stringing Test</a>
         </div>
 
-        <div class="calib-card">
+        <div class="calib-card" id="flow-calibration-cube">
           <div class="cc-header">
             <span class="cc-icon">📦</span>
             <h3>Flow Calibration Cube</h3>
@@ -289,7 +289,7 @@
           <a href="https://www.printables.com/search/models?q=flow+rate+calibration+cube" target="_blank" class="calib-link">↗ Hledat na Printables: Flow Calibration Cube</a>
         </div>
 
-        <div class="calib-card">
+        <div class="calib-card" id="speed-tower">
           <div class="cc-header">
             <span class="cc-icon">⚡</span>
             <h3>Speed Tower</h3>
@@ -306,105 +306,105 @@
     <!-- ══════════════════════════════════════
          SEKCE 2 — TRIKY PRO LEPŠÍ VÝTISKY
     ══════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="2-triky-pro-lepsi-vytisky">
       <div class="section-header"><h2>2 — Triky pro lepší výtisky</h2></div>
 
       <p>Drobné změny v nastavení nebo workflow, které mají velký vliv na výsledek. Každý z těchto tipů vychází z praxe a běžných chyb začátečníků.</p>
 
       <div class="tip-grid">
 
-        <div class="tip-card">
+        <div class="tip-card" id="prvni-vrstva-pomaleji">
           <div class="tc-num">TIP 01</div>
           <h4>První vrstva pomaleji</h4>
           <p>Nastavte rychlost první vrstvy na 30–40 % normální rychlosti. Pomalejší první vrstva lépe přilne k podložce a kompenzuje drobné nepřesnosti nivelace.</p>
           <div class="tc-value">OrcaSlicer: First Layer Speed → 30 mm/s</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="vyssi-teplota-prvni-vrstvy">
           <div class="tc-num">TIP 02</div>
           <h4>Vyšší teplota první vrstvy</h4>
           <p>Zvyšte teplotu trysky o +5 °C pro první vrstvu oproti zbytku tisku. Roztavenější plast lépe zatéká do textury podložky a přilnutí je výrazně lepší.</p>
           <div class="tc-value">Příklad PLA: první vrstva 215 °C, zbytek 210 °C</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="ipa-pred-kazdym-tiskem">
           <div class="tc-num">TIP 03</div>
           <h4>IPA před každým tiskem</h4>
           <p>Odmastěte tiskovou podložku izopropylalkoholem před každým tiskem — i pokud vypadá čistě. Mastné otisky prstů jsou nejčastější příčina špatné přilnavosti první vrstvy.</p>
           <div class="tc-value">IPA 70–90 %, papírový ubrousek, před tiskem</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="brim-pro-vysoke-tenke-modely">
           <div class="tc-num">TIP 04</div>
           <h4>Brim pro vysoké tenké modely</h4>
           <p>Zapněte Brim (okraj) pro modely s malou kontaktní plochou — vysoké figurky, tenké stojany, objekty s ostrými dolními hranami. Brim 5–8 mm výrazně zabrání warpingu.</p>
           <div class="tc-value">OrcaSlicer: Skirt/Brim → Brim width: 5 mm</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="tree-supports-vzdy-lepsi">
           <div class="tc-num">TIP 05</div>
           <h4>Tree supports vždy lepší</h4>
           <p>Organické stromečkové podpory (Tree Supports) jsou téměř vždy lepší než normální mřížkové. Jsou snazší na odstranění, zanechávají menší jizvy a používají méně filamentu.</p>
           <div class="tc-value">OrcaSlicer: Support → Tree (Organic)</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="seam-rear-pro-estetiku">
           <div class="tc-num">TIP 06</div>
           <h4>Seam „Rear" pro estetiku</h4>
           <p>Nastavte umístění seam (spoj vrstev) na „Rear" (zadní strana). Švový artefakt se skryje na nejméně viditelné straně modelu — zejména u figurek a dekorativních předmětů.</p>
           <div class="tc-value">OrcaSlicer: Seam position → Rear</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="vypnout-vetrak-pro-prvni-vrstvy">
           <div class="tc-num">TIP 07</div>
           <h4>Vypnout větrák pro první vrstvy</h4>
           <p>Nastavte part cooling ventilátor na 0 % pro první 2–3 vrstvy. Pomalejší chladnutí první vrstvy zlepší přilnavost k podložce — zejména pro ABS, ASA a Nylon.</p>
           <div class="tc-value">OrcaSlicer: Fan speed → Disable for first X layers: 3</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="vice-malych-objektu-najednou">
           <div class="tc-num">TIP 08</div>
           <h4>Více malých objektů najednou</h4>
           <p>Tiskněte několik malých objektů současně. Každý objekt má více času vychladnout před dalším layerem — výsledek je čistší než při tisku jednoho kusu (zejména pro malé detailní modely).</p>
           <div class="tc-value">OrcaSlicer: Minimum Layer Time → 10–15 s</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="ironing-pro-hladky-vrsek">
           <div class="tc-num">TIP 09</div>
           <h4>Ironing pro hladký vršek</h4>
           <p>Ironing (žehlení) přejede hotend po poslední vrstvě bez extruze a uhladí ji. Výsledek je lesklý, téměř hladký povrch na vrchní straně modelu bez dalšího post-processingu.</p>
           <div class="tc-value">OrcaSlicer: Ironing → Enabled (pomalejší tisk)</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="gyroid-infill-pro-pevnost">
           <div class="tc-num">TIP 10</div>
           <h4>Gyroid infill pro pevnost</h4>
           <p>Gyroid infill je trojrozměrná struktura která poskytuje stejnoměrnou pevnost ve všech směrech a rychle se tiskne. Lepší volba než cubic nebo honeycomb pro díly pod mechanickým namáháním.</p>
           <div class="tc-value">OrcaSlicer: Infill pattern → Gyroid, 20–30 %</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="horizontalni-rozsireni-otvoru">
           <div class="tc-num">TIP 11</div>
           <h4>Horizontální rozšíření otvorů</h4>
           <p>FDM tisk mírně zmenšuje otvory a díry. Nastavte Hole Horizontal Expansion (rozšíření otvorů) na +0,1 až +0,2 mm pro díly kde potřebujete přesné šroubové otvory nebo lícování.</p>
           <div class="tc-value">OrcaSlicer: Advanced → Hole Horizontal Expansion</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="pause-pro-vlozeni-magnetu-matky">
           <div class="tc-num">TIP 12</div>
           <h4>Pause pro vložení magnetu/matky</h4>
           <p>Přidejte do G-kódu „Pause at Height" v místě kde chcete vložit magnet nebo matku. Tiskárna se zastaví, vy vložíte komponent, a tisk pokračuje — perfektně zakomponovaný hardware.</p>
           <div class="tc-value">OrcaSlicer: Insert custom G-code at layer height</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="live-adjust-z-za-tisku">
           <div class="tc-num">TIP 13</div>
           <h4>Live Adjust Z za tisku</h4>
           <p>Kobra X umožňuje upravit Z-offset přímo za tisku první vrstvy. Spusťte tisk, sledujte první vrstvu a točte kolečkem nebo klepejte na displeji +/− dokud první vrstva nevypadá správně. Změna se uloží automaticky.</p>
           <div class="tc-value">Kobra X displej: během tisku → Z-offset → +/−0,05 mm</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="tisk-z-telefonu-pres-anycubic-app">
           <div class="tc-num">TIP 14</div>
           <h4>Tisk z telefonu přes Anycubic app</h4>
           <p>Kobra X se připojí na Wi-Fi a přes aplikaci Anycubic (iOS/Android) lze spouštět tisky, sledovat kameru, upravovat Z-offset a zastavit tisk — vše vzdáleně z telefonu. Nastavte v menu: Nastavení → Wi-Fi.</p>
@@ -422,7 +422,7 @@
     <!-- ══════════════════════════════════════
          SEKCE 3 — KOMUNITY
     ══════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="3-komunity-a-kde-hledat-pomoc">
       <div class="section-header"><h2>3 — Komunity a kde hledat pomoc</h2></div>
 
       <p>3D tisk má jednu z nejpřátelštějších a nejochotnějších online komunit. Ať se stane cokoliv — ktokoliv tuhle chybu udělal před vámi a řešení existuje. Stačí se zeptat.</p>
@@ -434,42 +434,42 @@
 
       <div class="comm-grid">
 
-        <a href="https://www.reddit.com/r/3Dprinting/" target="_blank" class="comm-card">
+        <a href="https://www.reddit.com/r/3Dprinting/" target="_blank" class="comm-card" id="r-3dprinting">
           <span class="cm-platform cm-reddit">Reddit</span>
           <h3>r/3Dprinting</h3>
           <p>Největší anglická komunita 3D tisku. Přes 3 miliony členů, denně stovky dotazů a odpovědí. Ideální pro obecné problémy, inspiraci a showcase výtisků.</p>
           <span class="cm-lang">🌍 Anglicky · r/3Dprinting</span>
         </a>
 
-        <a href="https://www.reddit.com/r/AnycubicKobra/" target="_blank" class="comm-card">
+        <a href="https://www.reddit.com/r/AnycubicKobra/" target="_blank" class="comm-card" id="r-anycubickobra">
           <span class="cm-platform cm-reddit">Reddit</span>
           <h3>r/AnycubicKobra</h3>
           <p>Subreddit specificky pro Anycubic Kobra tiskárny. Problémy specifické pro Kobru X, zkušenosti uživatelů, firmware updaty a hardware tipy přímo pro vaší tiskárnu.</p>
           <span class="cm-lang">🌍 Anglicky · r/AnycubicKobra</span>
         </a>
 
-        <a href="https://www.facebook.com/groups/3dtiskcz" target="_blank" class="comm-card">
+        <a href="https://www.facebook.com/groups/3dtiskcz" target="_blank" class="comm-card" id="3d-tisk-cz-sk">
           <span class="cm-platform cm-facebook">Facebook</span>
           <h3>3D tisk CZ/SK</h3>
           <p>Česká a slovenská Facebook komunita 3D tiskařů. Přátelská atmosféra, rychlé odpovědi v češtině. Vhodné pro začátečníky kteří preferují komunikaci v rodném jazyce.</p>
           <span class="cm-lang">🇨🇿 Česky / Slovensky · Facebook Group</span>
         </a>
 
-        <a href="https://discord.gg/printables" target="_blank" class="comm-card">
+        <a href="https://discord.gg/printables" target="_blank" class="comm-card" id="printables-discord">
           <span class="cm-platform cm-discord">Discord</span>
           <h3>Printables Discord</h3>
           <p>Oficiální Discord server Printables (Prusa). Živý chat, speciální kanály pro různé tiskárny a materiály, help kanál pro rychlé dotazy. Aktivní komunita 24/7.</p>
           <span class="cm-lang">🌍 Anglicky · Discord server</span>
         </a>
 
-        <a href="https://forum.printables.com" target="_blank" class="comm-card">
+        <a href="https://forum.printables.com" target="_blank" class="comm-card" id="printables-forum">
           <span class="cm-platform cm-forum">Forum</span>
           <h3>Printables Forum</h3>
           <p>Strukturované fórum s CZ/SK sekcí. Hledání archivovaných odpovědí je zde jednodušší než na Redditu — mnoho problémů bylo dávno vyřešeno, stačí vyhledat.</p>
           <span class="cm-lang">🇨🇿 CZ sekce dostupná · forum.printables.com</span>
         </a>
 
-        <a href="https://support.anycubic.com" target="_blank" class="comm-card">
+        <a href="https://support.anycubic.com" target="_blank" class="comm-card" id="anycubic-support">
           <span class="cm-platform cm-forum">Podpora</span>
           <h3>Anycubic Support</h3>
           <p>Oficiální podpora výrobce. Dokumentace, FAQ, firmware ke stažení a ticketový systém pro reklamace a záruční opravy. První zastávka při hardwarovém problému s tiskárnou.</p>
@@ -482,49 +482,49 @@
     <!-- ══════════════════════════════════════
          SEKCE 4 — YOUTUBE KANÁLY
     ══════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="4-doporucene-youtube-kanaly">
       <div class="section-header"><h2>4 — Doporučené YouTube kanály</h2></div>
 
       <p>Video vysvětlení jsou pro 3D tisk výrazně lepší než text — vidíte přesně jak nastavení vypadá v praxi. Tyto kanály patří k nejkvalitnějším zdrojům ve světě 3D tisku.</p>
 
       <div class="yt-grid">
 
-        <a href="https://www.youtube.com/results?search_query=Teaching+Tech+3D+printing+calibration" target="_blank" class="yt-card">
+        <a href="https://www.youtube.com/results?search_query=Teaching+Tech+3D+printing+calibration" target="_blank" class="yt-card" id="teaching-tech">
           <div class="yc-icon">▶</div>
           <h3>Teaching Tech</h3>
           <p>Nejlepší anglický vzdělávací kanál pro 3D tisk. Systematická kalibrace krok za krokem, vědecké testy a srozumitelné vysvětlení každého parametru. Začněte jeho kalibrační sérii.</p>
           <span class="yc-lang">🌍 Anglicky — doporučujeme jako #1</span>
         </a>
 
-        <a href="https://www.youtube.com/results?search_query=CNC+Kitchen+3D+printing" target="_blank" class="yt-card">
+        <a href="https://www.youtube.com/results?search_query=CNC+Kitchen+3D+printing" target="_blank" class="yt-card" id="cnc-kitchen">
           <div class="yc-icon">▶</div>
           <h3>CNC Kitchen</h3>
           <p>Vědecké testy pevnosti různých nastavení, filamentů a infill vzorů. Stefan doslova testuje výtisky na trhacích strojích. Ideální pokud tisknete funkční díly a chcete vědět proč.</p>
           <span class="yc-lang">🌍 Anglicky — vědecký přístup</span>
         </a>
 
-        <a href="https://www.youtube.com/results?search_query=Anycubic+official+tutorial+Kobra" target="_blank" class="yt-card">
+        <a href="https://www.youtube.com/results?search_query=Anycubic+official+tutorial+Kobra" target="_blank" class="yt-card" id="anycubic-official">
           <div class="yc-icon">▶</div>
           <h3>Anycubic Official</h3>
           <p>Oficiální kanál výrobce. Návody na sestavení, kalibraci a základní obsluhu Kobra tiskáren. Výchozí bod pro nové majitele Kobry X — první kroky a setup.</p>
           <span class="yc-lang">🌍 Anglicky — výrobce</span>
         </a>
 
-        <a href="https://www.youtube.com/results?search_query=3D+tisk+n%C3%A1vod+CZ+kalibrace" target="_blank" class="yt-card">
+        <a href="https://www.youtube.com/results?search_query=3D+tisk+n%C3%A1vod+CZ+kalibrace" target="_blank" class="yt-card" id="3d-tisk-navod-cz">
           <div class="yc-icon">▶</div>
           <h3>3D tisk návod CZ</h3>
           <p>Česky mluvící kanály pro 3D tisk. Hledejte „3D tisk návod CZ" nebo „3D tiskárna CZ" — komunita roste a česky vysvětlený obsah šetří čas při pochopení složitějších konceptů.</p>
           <span class="yc-lang">🇨🇿 Česky — hledejte na YouTube</span>
         </a>
 
-        <a href="https://www.youtube.com/results?search_query=Maker%27s+Muse+3D+printing+tips" target="_blank" class="yt-card">
+        <a href="https://www.youtube.com/results?search_query=Maker%27s+Muse+3D+printing+tips" target="_blank" class="yt-card" id="maker-s-muse">
           <div class="yc-icon">▶</div>
           <h3>Maker's Muse</h3>
           <p>Design pro 3D tisk, post-processing, materiály a kreativní projekty. Angus se zaměřuje na to jak navrhovat modely s ohledem na tiskové omezení. Skvělý pro přechod od tisku k tvorbě.</p>
           <span class="yc-lang">🌍 Anglicky — design & materiály</span>
         </a>
 
-        <a href="https://www.youtube.com/results?search_query=Prusa3D+tips+slicer+tutorial" target="_blank" class="yt-card">
+        <a href="https://www.youtube.com/results?search_query=Prusa3D+tips+slicer+tutorial" target="_blank" class="yt-card" id="prusa3d">
           <div class="yc-icon">▶</div>
           <h3>Prusa3D</h3>
           <p>Přestože jde o kanál výrobce Prusa, valná část obsahu je obecně platná pro všechny FDM tiskárny. Výborné návody na OrcaSlicer/PrusaSlicer funkce a materiálové tipy.</p>
@@ -537,12 +537,12 @@
     <!-- ══════════════════════════════════════
          SEKCE 5 — UŽITEČNÉ ONLINE NÁSTROJE
     ══════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="5-uzitecne-online-nastroje">
       <div class="section-header"><h2>5 — Užitečné online nástroje</h2></div>
 
       <p>Weby a nástroje které vám ušetří čas při diagnostice problémů, výběru materiálů nebo ladění nastavení.</p>
 
-      <a href="https://teachingtechyt.github.io/calibration.html" target="_blank" class="tool-card">
+      <a href="https://teachingtechyt.github.io/calibration.html" target="_blank" class="tool-card" id="teaching-tech-calibration-site">
         <div class="tc-icon">🎯</div>
         <div>
           <h3>Teaching Tech Calibration Site</h3>
@@ -551,7 +551,7 @@
         </div>
       </a>
 
-      <a href="https://www.cnckitchen.com" target="_blank" class="tool-card">
+      <a href="https://www.cnckitchen.com" target="_blank" class="tool-card" id="cnc-kitchen-materialove-testy">
         <div class="tc-icon">🔬</div>
         <div>
           <h3>CNC Kitchen — materiálové testy</h3>
@@ -560,7 +560,7 @@
         </div>
       </a>
 
-      <a href="https://www.simplify3d.com/resources/print-quality-troubleshooting/" target="_blank" class="tool-card">
+      <a href="https://www.simplify3d.com/resources/print-quality-troubleshooting/" target="_blank" class="tool-card" id="3d-print-troubleshooting-chart">
         <div class="tc-icon">📊</div>
         <div>
           <h3>3D Print Troubleshooting Chart</h3>
@@ -569,7 +569,7 @@
         </div>
       </a>
 
-      <a href="https://www.printables.com" target="_blank" class="tool-card">
+      <a href="https://www.printables.com" target="_blank" class="tool-card" id="printables-com-repozitar-modelu">
         <div class="tc-icon">🗂️</div>
         <div>
           <h3>Printables.com — repozitář modelů</h3>
@@ -578,7 +578,7 @@
         </div>
       </a>
 
-      <a href="https://filaments.ca/pages/3d-printing-glossary" target="_blank" class="tool-card">
+      <a href="https://filaments.ca/pages/3d-printing-glossary" target="_blank" class="tool-card" id="3d-printing-glossary">
         <div class="tc-icon">📖</div>
         <div>
           <h3>3D Printing Glossary</h3>
@@ -587,7 +587,7 @@
         </div>
       </a>
 
-      <a href="https://orcaslicer.readthedocs.io" target="_blank" class="tool-card">
+      <a href="https://orcaslicer.readthedocs.io" target="_blank" class="tool-card" id="orcaslicer-dokumentace">
         <div class="tc-icon">⚙️</div>
         <div>
           <h3>OrcaSlicer Dokumentace</h3>
@@ -601,12 +601,12 @@
     <!-- ══════════════════════════════════════
          SEKCE 6 — PROFIL KOBRY X V ORCASLICERU
     ══════════════════════════════════════ -->
-    <div class="section">
+    <div class="section" id="6-profil-kobry-x-v-orcasliceru">
       <div class="section-header"><h2>6 — Profil Kobry X v OrcaSliceru</h2></div>
 
       <p>OrcaSlicer má vestavěnou databázi tiskáren — Kobra X tam je, ale komunitní profily jsou často přesnější a lépe naladěné. Zde je přehled jak profil získat, ověřit a co zkontrolovat.</p>
 
-      <a href="https://github.com/SoftFever/OrcaSlicer/releases" target="_blank" class="tool-card">
+      <a href="https://github.com/SoftFever/OrcaSlicer/releases" target="_blank" class="tool-card" id="orcaslicer-stazeni">
         <div class="tc-icon">⬇️</div>
         <div>
           <h3>OrcaSlicer — stažení</h3>
@@ -615,45 +615,45 @@
         </div>
       </a>
 
-      <h3 class="sub" style="margin-top:28px;">Klíčová nastavení profilu pro Kobru X</h3>
+      <h3 class="sub" style="margin-top:28px;" id="klicova-nastaveni-profilu-pro-kobru-x">Klíčová nastavení profilu pro Kobru X</h3>
       <div class="tip-grid" style="margin-top:14px;">
 
-        <div class="tip-card">
+        <div class="tip-card" id="rozmery-tiskove-plochy">
           <div class="tc-num">Tiskárna</div>
           <h4>Rozměry tiskové plochy</h4>
           <p>Ověřte správné rozměry: X=400, Y=400, Z=450 mm. Střed podložky musí odpovídat — nesprávné hodnoty způsobí tisk mimo plochu nebo G-kód mimo rozsah.</p>
           <div class="tc-value">Printer Settings → Bed size: 400×400×450 mm</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="purge-line-a-homing">
           <div class="tc-num">Start G-kód</div>
           <h4>Purge line a homing</h4>
           <p>Zkontrolujte Start G-kód — musí obsahovat G28 (homing), G29 (auto-leveling) a purge line na okraji podložky. Bez G29 se mesh leveling neprovede a první vrstva nebude rovná.</p>
           <div class="tc-value">Printer Settings → Machine start G-code</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="bowden-retrakce">
           <div class="tc-num">Extrudér</div>
           <h4>Bowden retrakce</h4>
           <p>Kobra X je Bowden — retrakce musí být 4–7 mm (ne 0,5–2 mm jako Direct Drive). Výchozí profil v OrcaSliceru může mít nesprávnou hodnotu — vždy ověřte před tiskem.</p>
           <div class="tc-value">Filament Settings → Retraction: 5 mm / 45 mm/s</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="limity-kobry-x">
           <div class="tc-num">Max. teploty</div>
           <h4>Limity Kobry X</h4>
           <p>Nastavte správné limity: Hotend max. 260 °C, Heatbed max. 100 °C. OrcaSlicer vás varuje pokud profil přesáhne limity — zabrání poškození hardwaru nesprávným G-kódem.</p>
           <div class="tc-value">Printer Settings → Max temp: hotend 260°C / bed 100°C</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="resonance-compensation">
           <div class="tc-num">Input Shaping</div>
           <h4>Resonance Compensation</h4>
           <p>Kobra X má vestavěný Input Shaping v firmware. V OrcaSliceru nenastavujte vlastní hodnoty akcelerace — tiskárna ji řídí sama. Nechte Acceleration na hodnotách z výchozího profilu.</p>
           <div class="tc-value">Printer Settings → Input Shaping: dle profilu</div>
         </div>
 
-        <div class="tip-card">
+        <div class="tip-card" id="github-a-printables">
           <div class="tc-num">Komunitní profily</div>
           <h4>GitHub a Printables</h4>
           <p>Komunitní profily jsou często lépe naladěné než výchozí. Hledejte „Anycubic Kobra X OrcaSlicer profile" na GitHubu nebo Printables — stáhněte .json a importujte přes File → Import Config.</p>
