@@ -133,7 +133,10 @@
   .pn a:hover{color:var(--accent);}
   .pn .nx{margin-left:auto;}
 
-  @media(max-width:900px){.sidebar{display:none;}.main-content{margin-left:0;width:100%;}}
+  @media(max-width:900px){.sidebar{display:none;}.main-content{margin-left:0;width:100%;}.logo-row{flex-wrap:wrap;row-gap:10px;}.mobile-search-bar{display:flex !important;}}
+  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
+  .mobile-search-bar input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
+  .mobile-search-bar input:focus { border-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -189,6 +192,9 @@
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 12</span>
         <span class="ver-badge">POKROČILÉ</span>
+        <div class="mobile-search-bar">
+          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
+        </div>
       </div>
       <h1>Tipy & <span>triky</span></h1>
       <p>Kalibrační výtisky, užitečné zdroje, komunity a triky které vám ušetří hodiny ladění.</p>
@@ -681,12 +687,21 @@
 
 <script>
 const searchInput = document.getElementById('sb-search-input');
+const mobileSearchInput = document.getElementById('mobile-search-input');
+
+function goToSearch(q) {
+  q = q.trim();
+  if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+}
+
 searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    const q = e.target.value.trim();
-    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
-  }
+  if(e.key === 'Enter') goToSearch(e.target.value);
 });
+mobileSearchInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') goToSearch(e.target.value);
+});
+searchInput.addEventListener('input', (e) => { mobileSearchInput.value = e.target.value; });
+mobileSearchInput.addEventListener('input', (e) => { searchInput.value = e.target.value; });
 </script>
 </body>
 </html>

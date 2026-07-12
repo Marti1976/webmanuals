@@ -142,7 +142,18 @@
   @media (max-width: 900px) {
     .sidebar { display: none; }
     .main-content { margin-left: 0; width: 100%; }
+    .logo-row { flex-wrap: wrap; row-gap: 10px; }
+    .mobile-search-bar { display: flex !important; }
   }
+
+  /* MOBILE SEARCH BAR (top-right of header, hidden on desktop where sidebar search is used) */
+  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
+  .mobile-search-bar input {
+    width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text);
+    font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none;
+  }
+  .mobile-search-bar input:focus { border-color: var(--accent); }
+
 </style>
 </head>
 <body>
@@ -253,6 +264,9 @@
       <div class="logo-row">
         <span class="tuf-badge">ANYCUBIC KOBRA X</span>
         <span class="ver-badge">ROZCESTNÍK</span>
+        <div class="mobile-search-bar">
+          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
+        </div>
       </div>
       <h1>Obsah & <span>Hledání</span></h1>
       <p>Kompletní průvodce 3D tiskem pro začátečníky. Zde naleznete přehled všech kapitol a fulltextové vyhledávání v celém návodu.</p>
@@ -688,6 +702,7 @@
 <script>
 
 const searchInput = document.getElementById('sb-search-input');
+const mobileSearchInput = document.getElementById('mobile-search-input');
 const searchContainer = document.getElementById('search-container');
 const indexContainer = document.getElementById('index-container');
 const searchOutput = document.getElementById('search-output');
@@ -697,11 +712,19 @@ const queryParam = urlParams.get('q');
 
 if(queryParam) {
   searchInput.value = queryParam;
+  mobileSearchInput.value = queryParam;
   performSearch(queryParam);
 }
 
 searchInput.addEventListener('input', (e) => {
   const query = e.target.value.trim().toLowerCase();
+  mobileSearchInput.value = e.target.value;
+  performSearch(query);
+});
+
+mobileSearchInput.addEventListener('input', (e) => {
+  const query = e.target.value.trim().toLowerCase();
+  searchInput.value = e.target.value;
   performSearch(query);
 });
 

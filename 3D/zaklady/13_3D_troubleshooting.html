@@ -136,7 +136,12 @@
     .sidebar{display:none;}.main-content{margin-left:0;width:100%;}
     .issue-inner{grid-template-columns:1fr;}
     .issue-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
+    .logo-row{flex-wrap:wrap;row-gap:10px;}
+    .mobile-search-bar{display:flex !important;}
   }
+  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
+  .mobile-search-bar input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
+  .mobile-search-bar input:focus { border-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -192,6 +197,9 @@
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 13</span>
         <span class="ver-badge">ŘEŠENÍ PROBLÉMŮ</span>
+        <div class="mobile-search-bar">
+          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
+        </div>
       </div>
       <h1><span>Troubleshooting</span></h1>
       <p>Něco se pokazilo? Přehledná tabulka desítek běžných problémů, jejich příčin a krok za krokem řešení.</p>
@@ -2655,12 +2663,21 @@ function toggleIssue(header) {
 
 // Sidebar vyhledávání
 const searchInput = document.getElementById('sb-search-input');
+const mobileSearchInput = document.getElementById('mobile-search-input');
+
+function goToSearch(q) {
+  q = q.trim();
+  if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+}
+
 searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    const q = e.target.value.trim();
-    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
-  }
+  if(e.key === 'Enter') goToSearch(e.target.value);
 });
+mobileSearchInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') goToSearch(e.target.value);
+});
+searchInput.addEventListener('input', (e) => { mobileSearchInput.value = e.target.value; });
+mobileSearchInput.addEventListener('input', (e) => { searchInput.value = e.target.value; });
 
 // Automaticky otevřít issue pokud je anchor v URL
 window.addEventListener('DOMContentLoaded', () => {
