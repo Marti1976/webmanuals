@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obsah & Hledání — Manuál Fusion 360</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0d0b09;
+    --surface:  #161210;
+    --card:     #1c1713;
+    --border:   #332821;
+    --accent:   #ff7a1a;
+    --accent2:  #ffab5c;
+    --tuf:      #c1501b;
+    --green:    #3ecf76;
+    --red:      #e85050;
+    --blue:     #4a9eff;
+    --text:     #ecdfd4;
+    --muted:    #8a7a6c;
+    --mono:     'IBM Plex Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed; left: 0; top: 0;
+    width: 260px; height: 100vh;
+    background: rgba(22, 18, 16, 0.97);
+    border-right: 1px solid var(--border);
+    border-right-color: var(--tuf);
+    display: flex; flex-direction: column;
+    z-index: 200; overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .sidebar::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+  }
+  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .sidebar-product { display: flex; align-items: center; gap: 10px; }
+  .sidebar-tuf-badge {
+    background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600;
+    letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0;
+  }
+  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
+  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+
+  .sb-search { padding: 15px 20px 5px; }
+  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
+  .sb-search input:focus { border-color: var(--accent); }
+
+  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #cba98c; text-decoration: none;
+    font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3;
+  }
+  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(255, 122, 26, 0.08); border-left-color: var(--accent); }
+  .nav-num {
+    font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(255, 122, 26, 0.1); border: 1px solid rgba(255, 122, 26, 0.25);
+    padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
+  }
+  .nav-item-text { flex: 1; min-width: 0; }
+
+  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
+  .nav-sub-item {
+    display: block; padding: 6px 20px 6px 58px; color: #cba98c; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif;
+    border-left: 2px solid transparent; transition: all 0.2s;
+  }
+  .nav-sub-item:hover { color: #fff; background: rgba(255,255,255,0.03); }
+
+  /* ── MAIN CONTENT AREA ── */
+  .main-content {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  .hero {
+    position: relative; background: linear-gradient(135deg, #0a0806 0%, #1c1410 40%, #241205 100%);
+    border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden;
+    width: 100%;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,122,26,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,122,26,.06) 40px);
+  }
+  .hero-inner { position: relative; max-width: 1056px; margin: 0 auto; width: 100%; }
+  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
+  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
+
+  /* ── LAYOUT ── */
+  .wrapper { max-width: 1056px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
+
+  /* ── SECTIONS ── */
+  .section { margin: 44px 0; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+
+  /* ── CARDS ── */
+  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; margin-top: 20px; }
+  .card { background: var(--card); border: 1px solid var(--border); padding: 22px 26px; text-decoration: none; transition: border-color 0.2s, background 0.2s; display: block; }
+  .card:hover { border-color: var(--accent); background: rgba(255,122,26,0.03); }
+  .card .card-num { font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 10px; display: inline-block; background: rgba(255, 122, 26, 0.1); padding: 2px 8px; border: 1px solid rgba(255, 122, 26, 0.25); clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
+  .card h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin-bottom: 10px; }
+  .card p { font-size: 14px; color: var(--text); line-height: 1.6; margin: 0; }
+
+  .big-card { grid-column: 1 / -1; padding: 26px 30px; }
+  .inner-cards-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+  .inner-card { background: rgba(0,0,0,0.2); border: 1px solid var(--border); padding: 18px 20px; border-radius: 4px; transition: border-color 0.2s; text-decoration: none; display: block; }
+  .inner-card:hover { border-color: var(--accent); background: rgba(255,122,26,0.05); }
+  .inner-card h4 { font-family: 'Rajdhani', sans-serif; font-size: 17px; color: #fff; margin-bottom: 6px; }
+  .inner-card p { font-size: 13px; color: var(--muted); }
+
+  /* SEARCH RESULTS */
+  .search-results { display: none; margin-top: 30px; }
+  .search-results.active { display: block; }
+  .search-item { display: block; text-decoration: none; background: var(--card); border: 1px solid var(--border); padding: 15px 20px; margin-bottom: 10px; transition: border-color 0.2s; }
+  .search-item:hover { border-color: var(--accent); }
+  .search-item-title { font-family: 'Rajdhani', sans-serif; font-size: 18px; color: var(--accent2); margin-bottom: 5px; }
+  .search-item-tags { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .search-item-tags span { background: rgba(255,255,255,0.05); padding: 2px 6px; margin-right: 6px; border-radius: 3px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main-content { margin-left: 0; width: 100%; }
+    .logo-row { flex-wrap: wrap; row-gap: 10px; }
+    .mobile-search-bar { display: flex !important; }
+  }
+
+  /* MOBILE SEARCH BAR (top-right of header, hidden on desktop where sidebar search is used) */
+  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
+  .mobile-search-bar input {
+    width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text);
+    font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none;
+  }
+  .mobile-search-bar input:focus { border-color: var(--accent); }
+
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="sidebar-brand">
+    <div class="sidebar-product">
+      <span class="sidebar-tuf-badge">F360</span>
+      <div class="sidebar-model">
+        AUTODESK FUSION 360
+        <small>Manuál CAD/CAM · CZ</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-search">
+    <input type="text" placeholder="🔍 Hledat..." id="sb-search-input">
+  </div>
+
+  <div class="nav-group-label">Základní sekce</div>
+
+  <a href="00_F360_index.html" class="nav-item active">
+    <span class="nav-num">00</span>
+    <span class="nav-item-text">Obsah & Hledání</span>
+  </a>
+  <a href="01_F360_uvod.html" class="nav-item">
+    <span class="nav-num">01</span>
+    <span class="nav-item-text">Úvod do Fusion 360</span>
+  </a>
+  <a href="02_F360_rozhrani.html" class="nav-item">
+    <span class="nav-num">02</span>
+    <span class="nav-item-text">Rozhraní & ovládání</span>
+  </a>
+  <a href="03_F360_skica_zaklad.html" class="nav-item">
+    <span class="nav-num">03</span>
+    <span class="nav-item-text">Skica — základy</span>
+  </a>
+
+  <a href="04_F360_skica_pokrocila.html" class="nav-item">
+    <span class="nav-num">04</span>
+    <span class="nav-item-text">Skica — pokročilá</span>
+  </a>
+
+  <div class="nav-item" style="cursor: default;">
+    <span class="nav-num">05</span>
+    <span class="nav-item-text">Modelování dílů</span>
+  </div>
+  <ul class="nav-subs">
+    <li><a href="05a_F360_model_zakladni.html" class="nav-sub-item">05a · Základní tělesa</a></li>
+    <li><a href="05b_F360_model_detaily.html" class="nav-sub-item">05b · Úpravy a detaily</a></li>
+    <li><a href="05c_F360_model_parametry.html" class="nav-sub-item">05c · Parametry & konfigurace</a></li>
+  </ul>
+
+  <a href="06_F360_sestavy.html" class="nav-item">
+    <span class="nav-num">06</span>
+    <span class="nav-item-text">Sestavy</span>
+  </a>
+  <a href="07_F360_vykresy.html" class="nav-item">
+    <span class="nav-num">07</span>
+    <span class="nav-item-text">Výkresy</span>
+  </a>
+  <a href="08_F360_render.html" class="nav-item">
+    <span class="nav-num">08</span>
+    <span class="nav-item-text">Renderování & vizualizace</span>
+  </a>
+  <a href="09_F360_simulace.html" class="nav-item">
+    <span class="nav-num">09</span>
+    <span class="nav-item-text">Simulace & gen. design</span>
+  </a>
+  <a href="10_F360_cam.html" class="nav-item">
+    <span class="nav-num">10</span>
+    <span class="nav-item-text">CAM & výroba</span>
+  </a>
+  <a href="11_F360_cloud.html" class="nav-item">
+    <span class="nav-num">11</span>
+    <span class="nav-item-text">Sdílení & cloud</span>
+  </a>
+  <a href="12_F360_tipy.html" class="nav-item">
+    <span class="nav-num">12</span>
+    <span class="nav-item-text">Tipy & zkratky</span>
+  </a>
+  <a href="13_F360_troubleshooting.html" class="nav-item">
+    <span class="nav-num">13</span>
+    <span class="nav-item-text">Troubleshooting</span>
+  </a>
+
+  <div class="nav-group-label">Ostatní přílohy</div>
+  <a href="#ostatni_prilohy" class="nav-item">
+    <span class="nav-num" style="background: rgba(255,122,26,0.2); border-color: rgba(255,122,26,0.5);">Soubory</span>
+    <span class="nav-item-text">Výběr příloh</span>
+  </a>
+
+  <div class="nav-group-label">Oblíbené odkazy</div>
+  <a href="#oblibene_odkazy" class="nav-item">
+    <span class="nav-num" style="background: rgba(255,122,26,0.2); border-color: rgba(255,122,26,0.5);">WEB</span>
+    <span class="nav-item-text">Výběr odkazů</span>
+  </a>
+
+  <div style="height:32px;flex-shrink:0;"></div>
+</nav>
+
+<main class="main-content">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="logo-row">
+        <span class="tuf-badge">AUTODESK FUSION 360</span>
+        <span class="ver-badge">ROZCESTNÍK</span>
+        <div class="mobile-search-bar">
+          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
+        </div>
+      </div>
+      <h1>Obsah & <span>Hledání</span></h1>
+      <p>Kompletní manuál pro CAD/CAM program Fusion 360. Zde naleznete přehled všech kapitol a fulltextové vyhledávání v celém návodu.</p>
+    </div>
+  </div>
+
+  <div class="wrapper">
+
+    <a href="../../index.html" style="display:inline-flex; align-items:center; gap:8px; margin: 28px 0 0; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; border:1px solid var(--border); padding:7px 14px; transition:color .15s, border-color .15s;">
+      <span style="color:var(--accent);">←</span> Zpět na hlavní stránku
+    </a>
+
+    <div id="search-container" class="search-results">
+      <div class="section">
+        <div class="section-header">
+          <h2>Nalezeno</h2>
+        </div>
+        <div id="search-output"></div>
+      </div>
+    </div>
+
+    <div id="index-container">
+      <div class="section">
+        <div class="section-header">
+          <h2>Přehled kapitol</h2>
+        </div>
+        <p style="margin-bottom: 20px;">Níže jsou vypsány všechny části tohoto manuálu. Obsah kapitol je zatím základní kostra — postupně jej doladíme a doplníme o konkrétní postupy a screenshoty. Začněte postupně, pokud jste ve Fusion 360 úplnými nováčky, nebo přeskočte rovnou tam, kde potřebujete poradit.</p>
+
+        <div class="chapter-grid">
+          <a href="01_F360_uvod.html" class="card">
+            <span class="card-num">01</span>
+            <h3>Úvod do Fusion 360</h3>
+            <p>Co je Fusion 360, k čemu slouží (CAD/CAM/CAE/PCB) a jak se liší od jiných programů. Založení účtu, instalace a licence pro osobní nekomerční použití.</p>
+          </a>
+          <a href="02_F360_rozhrani.html" class="card">
+            <span class="card-num">02</span>
+            <h3>Rozhraní & ovládání</h3>
+            <p>Popis pracovní plochy: panel nástrojů, prohlížeč dat (Data Panel), ViewCube, navigace a Marking Menu. Jak si nastavit vlastní klávesové zkratky.</p>
+          </a>
+          <a href="03_F360_skica_zaklad.html" class="card">
+            <span class="card-num">03</span>
+            <h3>Skica — základy</h3>
+            <p>Základy 2D náčrtu (Sketch): kreslicí nástroje, roviny, kótování a základní geometrické vazby. Jak vytvořit plně definovaný náčrt.</p>
+          </a>
+
+          <a href="04_F360_skica_pokrocila.html" class="card">
+            <span class="card-num">04</span>
+            <h3>Skica — pokročilá</h3>
+            <p>Pokročilé techniky náčrtu: projekce a odsazení geometrie, vzory (patterns), referenční body a import 2D podkladů (DXF, obrázky).</p>
+          </a>
+
+          <!-- VELKÉ OKNO PRO KAPITOLU 05 -->
+          <div class="card big-card">
+            <span class="card-num">05</span>
+            <h3>Modelování dílů</h3>
+            <p style="margin-bottom: 10px;">Jádro parametrického modelování ve Fusion 360. Tato problematika je natolik rozsáhlá, že jsme ji rozdělili do tří logických celků.</p>
+            <div class="inner-cards-wrapper">
+              <a href="05a_F360_model_zakladni.html" class="inner-card">
+                <span class="card-num" style="background:transparent; padding:0; border:none; margin-bottom:4px;">05a</span>
+                <h4>Základní tělesa</h4>
+                <p>Vysunutí (Extrude), rotace (Revolve), tažení (Sweep) a šablonování (Loft) — základní sada nástrojů pro tvorbu objemových těles.</p>
+              </a>
+              <a href="05b_F360_model_detaily.html" class="inner-card">
+                <span class="card-num" style="background:transparent; padding:0; border:none; margin-bottom:4px;">05b</span>
+                <h4>Úpravy a detaily</h4>
+                <p>Zaoblení (Fillet), sražení hran (Chamfer), vyduté skořepiny (Shell), úkosy (Draft) a booleovské operace mezi tělesy.</p>
+              </a>
+              <a href="05c_F360_model_parametry.html" class="inner-card">
+                <span class="card-num" style="background:transparent; padding:0; border:none; margin-bottom:4px;">05c</span>
+                <h4>Parametry & konfigurace</h4>
+                <p>Uživatelské parametry, úpravy pomocí Timeline a příprava modelu tak, aby šel snadno měnit a konfigurovat.</p>
+              </a>
+            </div>
+          </div>
+
+          <a href="06_F360_sestavy.html" class="card">
+            <span class="card-num">06</span>
+            <h3>Sestavy</h3>
+            <p>Skládání jednotlivých komponent do funkčního celku. Klouby (Joints), vazby, kontrola kolizí a jednoduchá simulace pohybu (Motion Study).</p>
+          </a>
+
+          <a href="07_F360_vykresy.html" class="card">
+            <span class="card-num">07</span>
+            <h3>Výkresy</h3>
+            <p>Tvorba 2D technické dokumentace z 3D modelu. Pohledy, řezy, kótování, tabulky položek (BOM) a příprava výkresu pro tisk.</p>
+          </a>
+
+          <a href="08_F360_render.html" class="card">
+            <span class="card-num">08</span>
+            <h3>Renderování & vizualizace</h3>
+            <p>Nastavení materiálů a povrchů, práce se scénou a osvětlením a export fotorealistických vizualizací i jednoduchých animací.</p>
+          </a>
+
+          <a href="09_F360_simulace.html" class="card">
+            <span class="card-num">09</span>
+            <h3>Simulace & generativní design</h3>
+            <p>Základy statické simulace (napětí, deformace) a generativního designu — necháte software navrhnout optimální tvar dílu.</p>
+          </a>
+
+          <a href="10_F360_cam.html" class="card">
+            <span class="card-num">10</span>
+            <h3>CAM & výroba</h3>
+            <p>Příprava modelu na výrobu: nastavení nástrojových drah (Toolpaths) pro CNC obrábění a export modelu pro 3D tisk.</p>
+          </a>
+
+          <a href="11_F360_cloud.html" class="card">
+            <span class="card-num">11</span>
+            <h3>Sdílení, cloud & spolupráce</h3>
+            <p>Práce s projekty v cloudu (Fusion Team), sdílení modelu s ostatními, správa verzí a export do formátů STEP, STL, IGES či DXF.</p>
+          </a>
+
+          <a href="12_F360_tipy.html" class="card">
+            <span class="card-num">12</span>
+            <h3>Tipy & klávesové zkratky</h3>
+            <p>Přehled nejužitečnějších klávesových zkratek, doporučené postupy pro čisté modelování a odkazy na užitečná videa.</p>
+          </a>
+          <a href="13_F360_troubleshooting.html" class="card">
+            <span class="card-num">13</span>
+            <h3>Troubleshooting</h3>
+            <p>Řešení nejčastějších problémů — chybějící vazby v náčrtu, nefunkční Timeline, potíže se sdílením projektu a další chyby začátečníků.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="section" style="margin-top: 60px;" id="ostatni_prilohy">
+        <div class="section-header">
+          <h2>Ostatní přílohy</h2>
+        </div>
+        <p style="margin-bottom: 20px;">Kromě samotného textového manuálu se hodí mít po ruce i oficiální zdroje přímo od Autodesku — dokumentaci, informace o licenci pro osobní použití a další doplňkové materiály.</p>
+
+        <div class="chapter-grid">
+          <a href="https://help.autodesk.com/view/fusion360/ENU/" target="_blank" class="card" style="border-color: var(--accent);">
+            <span class="card-num" style="background: rgba(255,122,26,0.2); border-color: rgba(255,122,26,0.5);">DOC</span>
+            <h3>Oficiální dokumentace (Fusion Help)</h3>
+            <p>Kompletní oficiální nápověda a referenční dokumentace k programu. Skvělý zdroj pro dohledání detailů ke konkrétnímu nástroji či příkazu.</p>
+          </a>
+          <a href="https://www.autodesk.com/products/fusion-360/personal" target="_blank" class="card" style="border-color: var(--accent);">
+            <span class="card-num" style="background: rgba(255,122,26,0.2); border-color: rgba(255,122,26,0.5);">INFO</span>
+            <h3>Fusion pro osobní použití — licence</h3>
+            <p>Podmínky a postup registrace bezplatné licence pro nekomerční/hobby použití. Licence je na 3 roky a je potřeba ji pravidelně obnovovat.</p>
+          </a>
+          <a href="https://www.autodesk.com/products/fusion-360/resources" target="_blank" class="card" style="border-color: var(--accent);">
+            <span class="card-num" style="background: rgba(255,122,26,0.2); border-color: rgba(255,122,26,0.5);">WEB</span>
+            <h3>Learning & Support Resources</h3>
+            <p>Centrální rozcestník Autodesku s lekcemi pro začátečníky, webináři a odkazem na oficiální komunitní fórum.</p>
+          </a>
+          <a href="https://apps.autodesk.com/FUSION/en/Home/Index" target="_blank" class="card" style="border-color: var(--accent);">
+            <span class="card-num" style="background: rgba(255,122,26,0.2); border-color: rgba(255,122,26,0.5);">WEB</span>
+            <h3>Fusion App Store (doplňky)</h3>
+            <p>Obchod s doplňky (Add-Ins) a skripty, kterými lze Fusion 360 rozšířit o další funkce a automatizace.</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- NOVÁ SEKCE: OBLÍBENÉ ODKAZY -->
+      <div class="section" style="margin-top: 60px;" id="oblibene_odkazy">
+        <div class="section-header">
+          <h2>Oblíbené odkazy</h2>
+        </div>
+        <p style="margin-bottom: 20px;">Zajímavé weby, komunity, návody a knihovny dílů, které by vám při práci ve Fusion 360 neměly uniknout.</p>
+
+        <h3 style="color: var(--accent2); margin: 30px 0 15px; font-family: 'Rajdhani', sans-serif;">1. Oficiální zdroje Autodesk</h3>
+        <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          <a href="https://www.autodesk.com/products/fusion-360/overview" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 122, 26, 0.2); border-color: rgba(255, 122, 26, 0.5); color: var(--accent);">INFO</span>
+            <h3>Autodesk.com — Fusion 360</h3>
+            <p>Oficiální produktová stránka s přehledem funkcí, ceníkem a odkazem na stažení zkušební verze.</p>
+          </a>
+          <a href="https://forums.autodesk.com/t5/fusion-forums/ct-p/fusion-en" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 122, 26, 0.2); border-color: rgba(255, 122, 26, 0.5); color: var(--accent);">FÓRUM</span>
+            <h3>Autodesk Fusion Forums</h3>
+            <p>Hlavní oficiální fórum Autodesku, kde odpovídají i přímo zaměstnanci a produktoví manažeři.</p>
+          </a>
+          <a href="https://discord.com/invite/fusion360-community-511261828601348121" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 122, 26, 0.2); border-color: rgba(255, 122, 26, 0.5); color: var(--accent);">CHAT</span>
+            <h3>Fusion Community (Discord)</h3>
+            <p>Rozsáhlá komunita na Discordu, skvělá na rychlou pomoc a sdílení rozpracovaných projektů.</p>
+          </a>
+        </div>
+
+        <h3 style="color: var(--accent2); margin: 40px 0 15px; font-family: 'Rajdhani', sans-serif;">2. České návody a komunita</h3>
+        <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          <a href="https://www.inventor3dblog.cz/category/fusion-360/navod/" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 122, 26, 0.2); border-color: rgba(255, 122, 26, 0.5); color: var(--accent);">NÁVOD</span>
+            <h3>Inventor3Dblog.cz</h3>
+            <p>První ucelený český textový i video seriál o Fusion 360 od firmy Adeon, Gold Partnera Autodesku.</p>
+          </a>
+          <a href="https://www.youtube.com/playlist?list=PLhriCvfs7-z0i4Oe8uQqPRvAc1C93IHdN" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 122, 26, 0.2); border-color: rgba(255, 122, 26, 0.5); color: var(--accent);">VIDEO</span>
+            <h3>Fusion 360: Základy (J. Vejtasa)</h3>
+            <p>Přehledná videoserie provázející úplným základem programu — instalace, náčrty, vysunutí i sestavy.</p>
+          </a>
+          <a href="https://www.facebook.com/groups/FusionPoradna/" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 122, 26, 0.2); border-color: rgba(255, 122, 26, 0.5); color: var(--accent);">FÓRUM</span>
+            <h3>Facebook — Fusion Poradna</h3>
+            <p>Česká Facebook poradna uživatelů Fusion 360, kde poradí komunita i zkušení modeláři.</p>
+          </a>
+          <a href="https://www.fusion360.cz" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 122, 26, 0.2); border-color: rgba(255, 122, 26, 0.5); color: var(--accent);">WEB</span>
+            <h3>Fusion360.cz</h3>
+            <p>Český distribuční web s možností stažení zkušební verze a základními informacemi o programu.</p>
+          </a>
+        </div>
+
+        <h3 style="color: var(--accent2); margin: 40px 0 15px; font-family: 'Rajdhani', sans-serif;">3. YouTube kanály (mezinárodní)</h3>
+        <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          <a href="https://www.youtube.com/@ProductDesignOnline" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); color: #fff;">VIDEO</span>
+            <h3>Product Design Online</h3>
+            <p>Přehledné a stručné tutoriály pro začátečníky — návrh běžných předmětů krok za krokem.</p>
+          </a>
+          <a href="https://www.youtube.com/@nyccnc" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); color: #fff;">VIDEO</span>
+            <h3>NYC CNC</h3>
+            <p>Zaměřeno hlavně na CAM a CNC obrábění, ale i spoustu užitečného obsahu k samotnému modelování.</p>
+          </a>
+        </div>
+
+        <h3 style="color: var(--accent2); margin: 40px 0 15px; font-family: 'Rajdhani', sans-serif;">4. Knihovny dílů a modelů</h3>
+        <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          <a href="https://grabcad.com/library" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(74, 158, 255, 0.2); border-color: rgba(74, 158, 255, 0.5); color: #4a9eff;">MODELY</span>
+            <h3>GrabCAD Library</h3>
+            <p>Obrovská knihovna hotových 3D modelů a strojírenských dílů ke stažení zdarma.</p>
+          </a>
+          <a href="https://www.traceparts.com" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(74, 158, 255, 0.2); border-color: rgba(74, 158, 255, 0.5); color: #4a9eff;">MODELY</span>
+            <h3>TraceParts.com</h3>
+            <p>Parametrické 3D modely reálných katalogových součástek přímo od výrobců (ložiska, motory, spojovací materiál).</p>
+          </a>
+          <a href="https://www.mcmaster.com" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(74, 158, 255, 0.2); border-color: rgba(74, 158, 255, 0.5); color: #4a9eff;">DÍLY</span>
+            <h3>McMaster-Carr</h3>
+            <p>Americký katalog součástek s vlastním doplňkem přímo do Fusion 360 pro rychlé vložení dílu do sestavy.</p>
+          </a>
+        </div>
+
+        <h3 style="color: var(--accent2); margin: 40px 0 15px; font-family: 'Rajdhani', sans-serif;">5. Doplňky a rozšíření</h3>
+        <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          <a href="https://apps.autodesk.com/FUSION/en/Home/Index" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(74, 158, 255, 0.2); border-color: rgba(74, 158, 255, 0.5); color: #4a9eff;">ADD-IN</span>
+            <h3>Autodesk App Store — Fusion</h3>
+            <p>Oficiální obchod s doplňky, které Fusion 360 rozšiřují o další funkce, importy a automatizace.</p>
+          </a>
+        </div>
+
+        <h3 style="color: var(--accent2); margin: 40px 0 15px; font-family: 'Rajdhani', sans-serif;">6. Alternativní a doplňkové nástroje</h3>
+        <div class="chapter-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          <a href="https://www.freecad.org" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(74, 158, 255, 0.2); border-color: rgba(74, 158, 255, 0.5); color: #4a9eff;">CAD</span>
+            <h3>FreeCAD</h3>
+            <p>Svobodná alternativa k Fusion 360, výborná i jako záložní nástroj bez nutnosti cloudového účtu.</p>
+          </a>
+          <a href="https://www.onshape.com" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(74, 158, 255, 0.2); border-color: rgba(74, 158, 255, 0.5); color: #4a9eff;">CAD</span>
+            <h3>Onshape</h3>
+            <p>Konkurenční CAD nástroj běžící kompletně v prohlížeči, dobrý pro srovnání přístupu k modelování.</p>
+          </a>
+          <a href="https://www.tinkercad.com" target="_blank" class="card">
+            <span class="card-num" style="background: rgba(74, 158, 255, 0.2); border-color: rgba(74, 158, 255, 0.5); color: #4a9eff;">CAD</span>
+            <h3>Tinkercad</h3>
+            <p>Jednoduchý CAD v prohlížeči zdarma. Ideální mezikrok pro úplné začátečníky před přechodem na Fusion 360.</p>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:60px; padding-top:26px; border-top:1px solid var(--border);">
+      <a href="../../index.html" style="display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); text-decoration:none; border:1px solid var(--border); padding:7px 14px; transition:color .15s, border-color .15s;">
+        <span style="color:var(--accent);">←</span> Zpět na hlavní stránku
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<script src="search-data.js"></script>
+<script>
+
+const searchInput = document.getElementById('sb-search-input');
+const mobileSearchInput = document.getElementById('mobile-search-input');
+const searchContainer = document.getElementById('search-container');
+const indexContainer = document.getElementById('index-container');
+const searchOutput = document.getElementById('search-output');
+
+const urlParams = new URLSearchParams(window.location.search);
+const queryParam = urlParams.get('q');
+
+if(queryParam) {
+  searchInput.value = queryParam;
+  mobileSearchInput.value = queryParam;
+  performSearch(queryParam);
+}
+
+searchInput.addEventListener('input', (e) => {
+  const query = e.target.value.trim().toLowerCase();
+  mobileSearchInput.value = e.target.value;
+  performSearch(query);
+});
+
+mobileSearchInput.addEventListener('input', (e) => {
+  const query = e.target.value.trim().toLowerCase();
+  searchInput.value = e.target.value;
+  performSearch(query);
+});
+
+function performSearch(query) {
+  query = query.toLowerCase();
+  if (query.length < 2) {
+    searchContainer.classList.remove('active');
+    indexContainer.style.display = 'block';
+    return;
+  }
+
+  const results = SEARCH_INDEX.filter(item => {
+    return item.title.toLowerCase().includes(query) || item.tags.some(tag => tag.toLowerCase().includes(query));
+  });
+
+  indexContainer.style.display = 'none';
+  searchContainer.classList.add('active');
+
+  if (results.length === 0) {
+    searchOutput.innerHTML = '<p>Nebyly nalezeny žádné výsledky pro dotaz: <strong>' + query + '</strong></p>';
+  } else {
+    searchOutput.innerHTML = results.map(item => `
+      <a href="${item.page}${item.anchor}" class="search-item">
+        <div class="search-item-title">${item.title}</div>
+        <div class="search-item-tags">
+          ${item.tags.map(t => `<span>#${t}</span>`).join('')}
+        </div>
+      </a>
+    `).join('');
+  }
+}
+</script>
+</body>
+</html>
