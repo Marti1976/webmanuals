@@ -218,7 +218,7 @@
       <p>Otevřete přes hamburger menu → <strong>Nastavení</strong> (nebo <kbd>Ctrl+P</kbd>). Klíčové volby:</p>
 
       <div class="param">
-        <div class="param-head"><div class="param-title">Jazyk<small>Language</small></div><span class="param-val">Czech</span></div>
+        <div class="param-head"><div class="param-title">Language<small>Jazyk</small></div><span class="param-val">Czech</span></div>
         <p>Nastaví celé uživatelské rozhraní do češtiny — přesně ta CZ terminologie, která je použita v celém tomto průvodci.</p>
       </div>
       <div class="param">
@@ -226,7 +226,7 @@
         <p>Oblast pro stahování filament profilů a online obsahu — Globální zahrnuje veškerý dostupný obsah.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Jednotky<small>Units</small></div><span class="param-val">Metrický (mm, g)</span></div>
+        <div class="param-head"><div class="param-title">Units<small>Jednotky</small></div><span class="param-val">Metrický (mm, g)</span></div>
         <p>Pro Českou republiku vždy metrické jednotky — milimetry a gramy. Změna na palce/unce by způsobila zmatek ve všech rozměrových polích.</p>
       </div>
       <div class="param">
@@ -234,11 +234,11 @@
         <p>Co se zobrazí při spuštění programu — Domů ukáže úvodní obrazovku s posledními projekty, alternativa je přímé otevření pracovní plochy.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Zobrazovat úvodní obrazovku<small>Show startup screen</small></div></div>
+        <div class="param-head"><div class="param-title">Show startup screen<small>Zobrazovat úvodní obrazovku</small></div></div>
         <p>Pokud chcete program co nejrychleji dostat do pracovní plochy, odškrtněte tuto volbu — program vás bude vítát přímo s prázdnou deskou.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Flushing volumes — automatický výpočet<small>Flushing volumes auto-calculate</small></div></div>
+        <div class="param-head"><div class="param-title">Flushing volumes auto-calculate<small>Flushing volumes — automatický výpočet</small></div></div>
         <p>Tři zaškrtávací políčka řídí, kdy program automaticky přepočítá objemy proplachu při vícebarevném tisku (při každé změně filamentu, barvy). Pro jednobarevný tisk (jedna cívka) tyto volby nijak nezasahují do práce — jsou relevantní jen pokud máte ACE Pro systém a tisknete více barev. Detailně viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Sekce 1</a>.</p>
       </div>
       <div class="param">
@@ -246,15 +246,15 @@
         <p>Tři volby přiřadí soubory .3MF, .STL a .STEP/STP přímo k Anycubic Slicer Next — dvojklik na takový soubor ve Průzkumníku Windows ho automaticky otevře v programu. Doporučujeme mít zaškrtnuto.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Automatické zálohování<small>Auto-backup</small></div><span class="param-val">každých 60 s</span></div>
+        <div class="param-head"><div class="param-title">Auto-backup<small>Automatické zálohování</small></div><span class="param-val">každých 60 s</span></div>
         <p>Program automaticky ukládá zálohu projektu — interval 60 sekund je rozumný kompromis. Zálohu najdete ve složce specifikované v poli Stahování.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Stahování<small>Download path</small></div></div>
+        <div class="param-head"><div class="param-title">Download path<small>Stahování</small></div></div>
         <p>Složka, kam program ukládá stažené profily a zálohy. Tlačítkem Procházet ji změňte na místo, kde máte své 3D projekty.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Tmavý režim<small>Dark mode</small></div></div>
+        <div class="param-head"><div class="param-title">Dark mode<small>Tmavý režim</small></div></div>
         <p>Zapnutím aktivujete tmavé rozhraní — výchozí a doporučené pro práci u monitoru v horších světelných podmínkách.</p>
       </div>
       <div class="param">
@@ -262,8 +262,8 @@
         <p>Pokud jste přihlášeni Anycubic účtem, vaše vlastní profily (uložené přes "Uložit stávající Filament" nebo podobné tlačítko) se synchronizují do cloudu. Výhodou je dostupnost profilů na jiném PC bez ruční exportu.</p>
       </div>
 
-      <h3 id="vyber-rezimu">Výběr režimu</h3>
-      <p>Hamburger menu → Výběr režimu nabízí <strong>Osobní režim</strong> (výchozí — pro domácí a hobby tisk, plná sada nástrojů) a <strong>Režim farmy</strong> (pro provozovatele tiskových farem — přidané nástroje pro hromadný management, fronty úkolů a vzdálené monitorování více tiskáren najednou).</p>
+      <h3 id="vyber-rezimu">Výběr režimu — Personal / Print Farm Mode</h3>
+      <p>Hamburger menu → Výběr režimu nabízí <strong>Personal Mode</strong> (osobní režim — výchozí, pro domácí a hobby tisk, plná sada nástrojů) a <strong>Print Farm Mode</strong> (režim farmy — pro provozovatele tiskových farem — přidané nástroje pro hromadný management, fronty úkolů a vzdálené monitorování více tiskáren najednou).</p>
     </div>
 
     <!-- SEKCE 3 — ROZHRANÍ A MENU -->
@@ -272,16 +272,16 @@
 
       <p>Hlavní okno se skládá ze tří oblastí: <strong>horní lišta</strong> s menu a tlačítky, <strong>3D viewport</strong> uprostřed (kde vidíte model na virtuální podložce) a <strong>pravý panel</strong> s Tiskárna/Filament/Proces.</p>
 
-      <h3 id="menu-soubor">Menu Soubor</h3>
+      <h3 id="menu-soubor">Menu File (soubor)</h3>
       <div class="menu-group">
-        <div class="menu-item">Nový Projekt <span class="shortcut">Ctrl+N</span></div>
-        <div class="menu-item">Otevřít projekt... <span class="shortcut">Ctrl+O</span></div>
-        <div class="menu-item">Nedávné projekty</div>
-        <div class="menu-item">Uložit projekt <span class="shortcut">Ctrl+S</span></div>
-        <div class="menu-item">Uložit projekt jako... <span class="shortcut">Ctrl+Shift+S</span></div>
-        <div class="menu-item">Importovat → (STL, OBJ, 3MF, STEP...)</div>
-        <div class="menu-item">Exportovat → (G-code, 3MF, STL...)</div>
-        <div class="menu-item">Ukončit</div>
+        <div class="menu-item">New Project <span style="color:var(--muted); font-size:11px;">(nový projekt)</span> <span class="shortcut">Ctrl+N</span></div>
+        <div class="menu-item">Open Project... <span style="color:var(--muted); font-size:11px;">(otevřít projekt)</span> <span class="shortcut">Ctrl+O</span></div>
+        <div class="menu-item">Recent Projects <span style="color:var(--muted); font-size:11px;">(nedávné projekty)</span></div>
+        <div class="menu-item">Save Project <span style="color:var(--muted); font-size:11px;">(uložit projekt)</span> <span class="shortcut">Ctrl+S</span></div>
+        <div class="menu-item">Save Project As... <span style="color:var(--muted); font-size:11px;">(uložit projekt jako)</span> <span class="shortcut">Ctrl+Shift+S</span></div>
+        <div class="menu-item">Import <span style="color:var(--muted); font-size:11px;">(importovat)</span> → (STL, OBJ, 3MF, STEP...)</div>
+        <div class="menu-item">Export <span style="color:var(--muted); font-size:11px;">(exportovat)</span> → (G-code, 3MF, STL...)</div>
+        <div class="menu-item">Exit <span style="color:var(--muted); font-size:11px;">(ukončit)</span></div>
       </div>
 
       <div class="alert alert-tip">
@@ -289,29 +289,29 @@
         <div><strong>Formáty souborů:</strong> <strong>STL</strong> je nejběžnější (jen geometrie, žádné barvy). <strong>3MF</strong> je modernější — ukládá i barvy, více objektů, slicovací nastavení v jednom souboru. <strong>STEP/STP</strong> jsou přesné strojní formáty z CAD programů — Anycubic Slicer Next je umí přímo importovat.</div>
       </div>
 
-      <h3 id="menu-upravit-hamburger-upravit">Menu Upravit (hamburger → Upravit)</h3>
+      <h3 id="menu-upravit-hamburger-upravit">Menu Edit (upravit) — hamburger → Edit</h3>
       <div class="menu-group">
-        <div class="menu-item">Zpět <span class="shortcut">Ctrl+Z</span></div>
-        <div class="menu-item">Vpřed <span class="shortcut">Ctrl+Y</span></div>
-        <div class="menu-item">Řezat / Kopírovat / Vložit <span class="shortcut">Ctrl+X / C / V</span></div>
-        <div class="menu-item">Smazat vybrané / Smazat vše <span class="shortcut">Del / Ctrl+D</span></div>
-        <div class="menu-item">Duplikovat aktuální desku</div>
-        <div class="menu-item">Vybrat vše / Odznačit vše <span class="shortcut">Ctrl+A / Esc</span></div>
+        <div class="menu-item">Undo <span style="color:var(--muted); font-size:11px;">(zpět)</span> <span class="shortcut">Ctrl+Z</span></div>
+        <div class="menu-item">Redo <span style="color:var(--muted); font-size:11px;">(vpřed)</span> <span class="shortcut">Ctrl+Y</span></div>
+        <div class="menu-item">Cut / Copy / Paste <span style="color:var(--muted); font-size:11px;">(řezat / kopírovat / vložit)</span> <span class="shortcut">Ctrl+X / C / V</span></div>
+        <div class="menu-item">Delete Selected / Delete All <span style="color:var(--muted); font-size:11px;">(smazat vybrané / smazat vše)</span> <span class="shortcut">Del / Ctrl+D</span></div>
+        <div class="menu-item">Duplicate Current Plate <span style="color:var(--muted); font-size:11px;">(duplikovat aktuální desku)</span></div>
+        <div class="menu-item">Select All / Deselect All <span style="color:var(--muted); font-size:11px;">(vybrat vše / odznačit vše)</span> <span class="shortcut">Ctrl+A / Esc</span></div>
       </div>
 
-      <h3 id="menu-zobrazeni-hamburger-zobrazeni">Menu Zobrazení (hamburger → Zobrazení)</h3>
+      <h3 id="menu-zobrazeni-hamburger-zobrazeni">Menu View (zobrazení) — hamburger → View</h3>
       <div class="menu-group">
-        <div class="menu-item">Výchozí zobrazení <span class="shortcut">Ctrl+0</span></div>
-        <div class="menu-item">Horní / Spodní / Zepředu / Zezadu / Zleva / Zprava <span class="shortcut">Ctrl+1–6</span></div>
-        <div class="menu-item">Použít perspektivní pohled (výchozí)</div>
-        <div class="menu-item">Použít ortogonální zobrazení</div>
-        <div class="menu-item">Automatická perspektiva</div>
+        <div class="menu-item">Default View <span style="color:var(--muted); font-size:11px;">(výchozí zobrazení)</span> <span class="shortcut">Ctrl+0</span></div>
+        <div class="menu-item">Top / Bottom / Front / Back / Left / Right <span style="color:var(--muted); font-size:11px;">(horní / spodní / zepředu / zezadu / zleva / zprava)</span> <span class="shortcut">Ctrl+1–6</span></div>
+        <div class="menu-item">Use Perspective View (default) <span style="color:var(--muted); font-size:11px;">(použít perspektivní pohled — výchozí)</span></div>
+        <div class="menu-item">Use Orthogonal View <span style="color:var(--muted); font-size:11px;">(použít ortogonální zobrazení)</span></div>
+        <div class="menu-item">Auto Perspective <span style="color:var(--muted); font-size:11px;">(automatická perspektiva)</span></div>
         <div class="menu-item">Show G-code Window <span class="shortcut">C</span></div>
-        <div class="menu-item">Zobrazit 3D navigátor</div>
-        <div class="menu-item">Obnovit rozložení oken</div>
-        <div class="menu-item">Zobrazit Popisky <span class="shortcut">Ctrl+E</span></div>
-        <div class="menu-item">Zobrazit Převis</div>
-        <div class="menu-item">Zobrazit vybraný obrys (beta)</div>
+        <div class="menu-item">Show 3D Navigator <span style="color:var(--muted); font-size:11px;">(zobrazit 3D navigátor)</span></div>
+        <div class="menu-item">Reset Window Layout <span style="color:var(--muted); font-size:11px;">(obnovit rozložení oken)</span></div>
+        <div class="menu-item">Show Labels <span style="color:var(--muted); font-size:11px;">(zobrazit popisky)</span> <span class="shortcut">Ctrl+E</span></div>
+        <div class="menu-item">Show Overhang <span style="color:var(--muted); font-size:11px;">(zobrazit převis)</span></div>
+        <div class="menu-item">Show Selected Outline (beta) <span style="color:var(--muted); font-size:11px;">(zobrazit vybraný obrys)</span></div>
       </div>
 
       <div class="alert alert-info">
@@ -319,10 +319,10 @@
         <div><strong>Zobrazit Převis</strong> je velmi užitečná funkce při přípravě modelu — barevně zvýrazní všechna místa, kde hrozí problémy s tiskem bez podpěr (převisy nad prahovým úhlem). Zapněte před slicováním, pokud si nejste jistí, zda model potřebuje podpěry.</div>
       </div>
 
-      <h3 id="tlacitko-nahled-pracovni-stul">Tlačítko Náhled / Pracovní stůl</h3>
-      <p>V horní liště jsou dvě základní obrazovky programu. <strong>Pracovní stůl</strong> je přípravný pohled, kde importujete modely, upravujete jejich polohu a nastavujete parametry. <strong>Náhled</strong> (Preview) se aktivuje automaticky po dokončení slicování a zobrazuje výsledný G-code vrstvu po vrstvě — viz Sekce 8.</p>
+      <h3 id="tlacitko-nahled-pracovni-stul">Tlačítko Preview / Prepare (náhled / pracovní stůl)</h3>
+      <p>V horní liště jsou dvě základní obrazovky programu. <strong>Prepare</strong> (pracovní stůl) je přípravný pohled, kde importujete modely, upravujete jejich polohu a nastavujete parametry. <strong>Preview</strong> (náhled) se aktivuje automaticky po dokončení slicování a zobrazuje výsledný G-code vrstvu po vrstvě — viz Sekce 8.</p>
 
-      <h3 id="tlacitko-kalibrace">Tlačítko Kalibrace</h3>
+      <h3 id="tlacitko-kalibrace">Tlačítko Calibration (kalibrace)</h3>
       <p>Přímý přístup ke všem kalibračním testům — viz Sekce 6 této kapitoly.</p>
     </div>
 
@@ -341,7 +341,7 @@
         </tbody>
       </table>
 
-      <h3 id="panel-tiskarna-vyber-a-pridani">Panel Tiskárna — výběr a přidání</h3>
+      <h3 id="panel-tiskarna-vyber-a-pridani">Panel Printer (tiskárna) — výběr a přidání</h3>
 
       <p>Kliknutím na rozbalovací seznam v panelu Tiskárna zobrazíte dostupné profily. Sekce obsahuje <strong>Systémová přednastavení</strong> (dodaná Anycubic — Kobra X je tu přednastavenou), dále možnost <strong>Select/Remove printers (system presets)</strong> pro správu zobrazených tiskáren a <strong>Vytvořit tiskárnu</strong> pro přidání vlastní/neoficiální tiskárny ručně.</p>
 
@@ -363,7 +363,7 @@
 
       <p>Tlačítko <strong>Čisticí objem</strong> a ikona Synchronize from ACE Pro jsou relevantní jen pro multi-material tisk s ACE Pro systémem — pro jednobarevný tisk je ignorujte. Detailní popis panelu Filament (jak vytvořit vlastní profil pro C-Tech PLA+) je v kapitole <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Parametry filamentu</a>.</p>
 
-      <h3 id="panel-proces-vyber-profilu-tisku">Panel Proces — výběr profilu tisku</h3>
+      <h3 id="panel-proces-vyber-profilu-tisku">Panel Process (proces) — výběr profilu tisku</h3>
 
       <p>Rozbalovací seznam nabízí profily pojmenované podle výšky vrstvy a kvality. Systémová přednastavení pro Kobru X (0.4 mm tryska):</p>
 
@@ -391,164 +391,164 @@
     <div class="section" id="zakladni-view-procesu">
       <div class="section-header"><h2>5 — Okno Proces bez přepínače „Pokročilé"</h2></div>
 
-      <p>Když je přepínač <strong>Pokročilé</strong> v okně Proces vypnutý, vidíte zkrácenou sadu záložek a polí — jen to nejdůležitější. Záložka <strong>Rychlost</strong> je v základním view skrytá úplně. Je to záměr: začátečník rychlosti nepotřebuje ladit, výchozí hodnoty z profilu jsou vhodné pro většinu tisků.</p>
+      <p>Když je přepínač <strong>Pokročilé</strong> v okně Proces vypnutý, vidíte zkrácenou sadu záložek a polí — jen to nejdůležitější. Záložka <strong>Speed</strong> (rychlost) je v základním view skrytá úplně. Je to záměr: začátečník rychlosti nepotřebuje ladit, výchozí hodnoty z profilu jsou vhodné pro většinu tisků.</p>
 
       <div class="tab-bar">
-        <span class="active">Kvalita</span>
-        <span>Pevnost</span>
-        <span class="hidden">Rychlost (skryto)</span>
-        <span>Podpěry</span>
-        <span>Multimateriál</span>
-        <span>Ostatní</span>
+        <span class="active">Quality</span>
+        <span>Strength</span>
+        <span class="hidden">Speed (hidden)</span>
+        <span>Support</span>
+        <span>Multimaterial</span>
+        <span>Others</span>
       </div>
 
-      <h3 id="zalozka-kvalita-zakladni-view">Záložka Kvalita (základní view)</h3>
+      <h3 id="zalozka-kvalita-zakladni-view">Záložka Quality (kvalita) — základní view</h3>
 
       <div class="param">
-        <div class="param-head"><div class="param-title">Výška vrstvy<small>Layer height</small></div><span class="param-val">0,2 mm</span></div>
+        <div class="param-head"><div class="param-title">Layer height<small>Výška vrstvy</small></div><span class="param-val">0,2 mm</span></div>
         <p>Tloušťka jedné vrstvy — základní volba kvality vs. rychlost. Nižší = více detailu, delší tisk. Pro trysku 0,4 mm platí maximum cca 0,3 mm. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Vrstvy</a>.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Výška první vrstvy<small>First layer height</small></div><span class="param-val">0,2 mm</span></div>
+        <div class="param-head"><div class="param-title">First layer height<small>Výška první vrstvy</small></div><span class="param-val">0,2 mm</span></div>
         <p>Výška úplně první vrstvy — lze nastavit vyšší než zbytek tisku pro lepší přilnavost k podložce.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Pozice švu<small>Seam position</small></div><span class="param-val">Zarovnaný</span></div>
+        <div class="param-head"><div class="param-title">Seam position<small>Pozice švu</small></div><span class="param-val">Zarovnaný</span></div>
         <p>Kde bude viditelný šev (místo, kde tryska začíná/končí každý perimetr). Zarovnaný = švy v jedné svislé linii. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Šev</a>.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Přesná stěna<small>Precise wall</small></div></div>
+        <div class="param-head"><div class="param-title">Precise wall<small>Přesná stěna</small></div></div>
         <p>Upřesní výslednou tloušťku stěny na přesnou zadanou hodnotu. Pro funkční mechanické díly zapněte, pro dekorativní modely nechte vypnuto.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Pouze jedna stěna na horních plochách<small>Only one wall on top surfaces</small></div></div>
+        <div class="param-head"><div class="param-title">Only one wall on top surfaces<small>Pouze jedna stěna na horních plochách</small></div></div>
         <p>Na horních plochách použije jen jeden perimetr místo plného počtu — zrychluje tisk bez ztráty vizuální kvality horní plochy.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Pouze jedna stěna v první vrstvě<small>Only one wall on first layer</small></div></div>
+        <div class="param-head"><div class="param-title">Only one wall on first layer<small>Pouze jedna stěna v první vrstvě</small></div></div>
         <p>Stejný princip pro první vrstvu — obvykle nechte vypnuto.</p>
       </div>
 
-      <h3 id="zalozka-pevnost-zakladni-view">Záložka Pevnost (základní view)</h3>
+      <h3 id="zalozka-pevnost-zakladni-view">Záložka Strength (pevnost) — základní view</h3>
 
       <div class="param">
-        <div class="param-head"><div class="param-title">Počet perimetrů/stěn<small>Wall count</small></div><span class="param-val">2</span></div>
+        <div class="param-head"><div class="param-title">Wall count<small>Počet perimetrů/stěn</small></div><span class="param-val">2</span></div>
         <p>Kolik obvodových linií tvoří stěny modelu. 2 = minimum pro dekorativní modely, 3–4 pro funkční/namáhané díly. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Stěny</a>.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Vrchní vrstvy skořepiny<small>Top shell layers</small></div><span class="param-val">5</span></div>
+        <div class="param-head"><div class="param-title">Top shell layers<small>Vrchní vrstvy skořepiny</small></div><span class="param-val">5</span></div>
         <p>Kolik plných vrstev uzavírá model nahoře. Pro 0,2 mm Layer Height je 5 vrstev (1 mm celkem) standardní hodnota.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Tloušťka horní skořepiny<small>Top shell thickness</small></div><span class="param-val">1 mm</span></div>
+        <div class="param-head"><div class="param-title">Top shell thickness<small>Tloušťka horní skořepiny</small></div><span class="param-val">1 mm</span></div>
         <p>Alternativní zadání tloušťky horní skořepiny v milimetrech místo počtu vrstev.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Vzor horního povrchu<small>Top surface pattern</small></div><span class="param-val">Monotónní</span></div>
+        <div class="param-head"><div class="param-title">Top surface pattern<small>Vzor horního povrchu</small></div><span class="param-val">Monotónní</span></div>
         <p>Vzor linií na viditelné horní ploše. Monotónní (všechny linie stejným směrem) dává nejrovnoměrnější vzhled.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Spodní vrstvy skořepiny<small>Bottom shell layers</small></div><span class="param-val">3</span></div>
+        <div class="param-head"><div class="param-title">Bottom shell layers<small>Spodní vrstvy skořepiny</small></div><span class="param-val">3</span></div>
         <p>Počet plných vrstev uzavírajících model zdola.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Hustota vnitřní výplně<small>Infill density</small></div><span class="param-val">15 %</span></div>
+        <div class="param-head"><div class="param-title">Infill density<small>Hustota vnitřní výplně</small></div><span class="param-val">15 %</span></div>
         <p>Procento vnitřního objemu vyplněného materiálem. 15 % je standardní pro dekorativní modely, 25–40 % pro funkční díly. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Výplň</a>.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Vzor vnitřní výplně<small>Infill pattern</small></div><span class="param-val">Gyroid</span></div>
+        <div class="param-head"><div class="param-title">Infill pattern<small>Vzor vnitřní výplně</small></div><span class="param-val">Gyroid</span></div>
         <p>Geometrický vzor výplně. Gyroid je dobrá univerzální volba — rovnoměrná pevnost ve všech směrech.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Vzor vnitřní plné výplně<small>Solid infill pattern</small></div><span class="param-val">Přímočarý</span></div>
+        <div class="param-head"><div class="param-title">Solid infill pattern<small>Vzor vnitřní plné výplně</small></div><span class="param-val">Přímočarý</span></div>
         <p>Vzor pro 100% plnou výplň v místech, kde ji program generuje automaticky (okolí otvorů, podpěrné body).</p>
       </div>
 
-      <h3 id="zalozka-podpery-zakladni-view">Záložka Podpěry (základní view)</h3>
+      <h3 id="zalozka-podpery-zakladni-view">Záložka Support (podpěry) — základní view</h3>
 
       <div class="param">
-        <div class="param-head"><div class="param-title">Povolit podpěry<small>Enable support</small></div></div>
+        <div class="param-head"><div class="param-title">Enable support<small>Povolit podpěry</small></div></div>
         <p>Zapne/vypne generování podpěrných struktur. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Podpěry</a>.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Typ<small>Support type</small></div><span class="param-val">Strom (auto)</span></div>
+        <div class="param-head"><div class="param-title">Support type<small>Typ</small></div><span class="param-val">Strom (auto)</span></div>
         <p>Stromové podpěry jsou výchozí — méně materiálu, snazší odstranění, vhodné pro většinu modelů.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Hraniční úhel<small>Threshold angle</small></div><span class="param-val">30°</span></div>
+        <div class="param-head"><div class="param-title">Threshold angle<small>Hraniční úhel</small></div><span class="param-val">30°</span></div>
         <p>Od jakého úhlu převisu program generuje podpěru. Nižší = agresivnější generování.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Pouze na podložce<small>Support on build plate only</small></div></div>
+        <div class="param-head"><div class="param-title">Support on build plate only<small>Pouze na podložce</small></div></div>
         <p>Podpěry jen tam, kde mohou stát na tiskové podložce. Zjednodušuje strukturu a snadnost odstranění.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Filament na podpěry<small>Support filament</small></div><span class="param-val">Výchozí</span></div>
+        <div class="param-head"><div class="param-title">Support filament<small>Filament na podpěry</small></div><span class="param-val">Výchozí</span></div>
         <p>Při multi-material tisku lze zvolit jiný materiál (např. PVA) pro podpěry — pro jednobarevný tisk nechte Výchozí.</p>
       </div>
 
-      <h3 id="zalozka-multimaterial-zakladni-view">Záložka Multimateriál (základní view)</h3>
+      <h3 id="zalozka-multimaterial-zakladni-view">Záložka Multimaterial (multimateriál) — základní view</h3>
 
       <div class="param">
-        <div class="param-head"><div class="param-title">Čistící věž — Zapnout<small>Prime tower enable</small></div></div>
+        <div class="param-head"><div class="param-title">Prime tower enable<small>Čistící věž — Zapnout</small></div></div>
         <p>Věžička pro proplach trysky při výměně barvy — relevantní jen pro vícebarevný tisk s ACE Pro.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Šířka věže / Základní objem<small>Tower width / Base volume</small></div><span class="param-val">30 mm / 30 mm³</span></div>
+        <div class="param-head"><div class="param-title">Tower width / Base volume<small>Šířka věže / Základní objem</small></div><span class="param-val">30 mm / 30 mm³</span></div>
         <p>Rozměry čistící věže. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Multimateriál</a>.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Čištění do podpěr objektů<small>Flush into supports</small></div></div>
+        <div class="param-head"><div class="param-title">Flush into supports<small>Čištění do podpěr objektů</small></div></div>
         <p>Čisticí materiál se vytlačí do podpěr místo samostatné věže — šetří materiál.</p>
       </div>
 
-      <h3 id="zalozka-ostatni-zakladni-view">Záložka Ostatní (základní view)</h3>
+      <h3 id="zalozka-ostatni-zakladni-view">Záložka Others (ostatní) — základní view</h3>
 
       <div class="param">
-        <div class="param-head"><div class="param-title">Obrysové smyčky<small>Skirt loops</small></div><span class="param-val">0 (vypnuto)</span></div>
+        <div class="param-head"><div class="param-title">Skirt loops<small>Obrysové smyčky</small></div><span class="param-val">0 (vypnuto)</span></div>
         <p>Obrys (Skirt) — obvodové linie kolem modelu pro ustálení toku plastu. 0 = bez obrysu.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Výška obrysu<small>Skirt height</small></div><span class="param-val">1 vrstva</span></div>
+        <div class="param-head"><div class="param-title">Skirt height<small>Výška obrysu</small></div><span class="param-val">1 vrstva</span></div>
         <p>Na kolik vrstev se obrys tiskne.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Typ límce<small>Brim type</small></div><span class="param-val">Automaticky</span></div>
+        <div class="param-head"><div class="param-title">Brim type<small>Typ límce</small></div><span class="param-val">Automaticky</span></div>
         <p>Límec (Brim) — přídavné "křídla" kolem základny modelu pro lepší přilnavost. Automaticky = program rozhodne sám.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Šířka límce<small>Brim width</small></div><span class="param-val">5 mm</span></div>
+        <div class="param-head"><div class="param-title">Brim width<small>Šířka límce</small></div><span class="param-val">5 mm</span></div>
         <p>Jak daleko límec sahá od modelu. Zvyšte na 8–10 mm pro materiály náchylné na warping (ABS, ASA).</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Tisková sekvence<small>Print sequence</small></div><span class="param-val">Podle vrstvy</span></div>
+        <div class="param-head"><div class="param-title">Print sequence<small>Tisková sekvence</small></div><span class="param-val">Podle vrstvy</span></div>
         <p>Pořadí tisku objektů na podložce — Podle vrstvy (všechny najednou, střídají se) vs. Podle objektu (jeden objekt celý, pak druhý).</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Spirálová váza<small>Spiral vase</small></div></div>
+        <div class="param-head"><div class="param-title">Spiral vase<small>Spirálová váza</small></div></div>
         <p>Speciální jednostěnný spirálový tisk bez výplně — jen pro duté dekorativní předměty.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Časosběr<small>Timelapse</small></div><span class="param-val">Tradiční</span></div>
+        <div class="param-head"><div class="param-title">Timelapse<small>Časosběr</small></div><span class="param-val">Tradiční</span></div>
         <p>Nastavení pro kamerový timelapse tisku — Tradiční = snímek po každé vrstvě.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Členitý povrch<small>Fuzzy skin</small></div><span class="param-val">Žádné</span></div>
+        <div class="param-head"><div class="param-title">Fuzzy skin<small>Členitý povrch</small></div><span class="param-val">Žádné</span></div>
         <p>Texturovaný matný povrch záměrnými odchylkami trysky. Skrývá viditelnost vrstev a švu. Detailně viz <a href="04_3D_slicer_pokrocily.html" style="color:var(--blue);">04 — Fuzzy Skin</a>.</p>
       </div>
 
-      <h3 id="nastaveni-podlozky-proces-objekty-kliknutim-na-nazev-podlozk">Nastavení Podložky (Proces → Objekty, kliknutím na název podložky)</h3>
+      <h3 id="nastaveni-podlozky-proces-objekty-kliknutim-na-nazev-podlozk">Plate Settings (nastavení podložky) — Proces → Objekty, kliknutím na název podložky</h3>
 
       <div class="param">
-        <div class="param-head"><div class="param-title">Typ podložky<small>Plate type</small></div><span class="param-val">Smooth Plate</span></div>
+        <div class="param-head"><div class="param-title">Plate type<small>Typ podložky</small></div><span class="param-val">Smooth Plate</span></div>
         <p>Jaký typ tiskové desky máte nasazený — program podle toho použije správné teploty podložky z filament profilu. Kobra X standardně dodává Textured PEI podložku.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Tisková sekvence<small>Print sequence (plate)</small></div><span class="param-val">Podle vrstvy</span></div>
+        <div class="param-head"><div class="param-title">Print sequence (plate)<small>Tisková sekvence</small></div><span class="param-val">Podle vrstvy</span></div>
         <p>Stejné nastavení jako v záložce Ostatní, ale na úrovni konkrétní podložky (pokud máte víc podložek/dávek v projektu).</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Sekvence filamentu první vrstvy / ostatních vrstev<small>First layer / other layers filament sequence</small></div><span class="param-val">Automaticky</span></div>
+        <div class="param-head"><div class="param-title">First layer / other layers filament sequence<small>Sekvence filamentu první vrstvy / ostatních vrstev</small></div><span class="param-val">Automaticky</span></div>
         <p>Pořadí, ve kterém se přistupuje k jednotlivým filamentovým slotům při multi-material tisku. Pro jednobarevný tisk nechte Automaticky.</p>
       </div>
 
@@ -560,7 +560,7 @@
 
     <!-- SEKCE 6 — KALIBRACE -->
     <div class="section" id="kalibrace">
-      <div class="section-header"><h2>6 — Kalibrace (menu Kalibrace v horní liště)</h2></div>
+      <div class="section-header"><h2>6 — Calibration (kalibrace) — menu v horní liště</h2></div>
 
       <p>Po přidání nového filamentu (a vždy při přechodu na jiný materiál nebo značku) je doporučeno provést kalibraci. Program nabízí přímou sadu testů přístupných přes tlačítko <strong>Kalibrace</strong> v horní liště. Výsledky kalibrace se zapíší do profilu filamentu — po kalibraci musíte vždy profil uložit.</p>
 
@@ -626,7 +626,7 @@
 
     <!-- SEKCE 8 — NÁHLED A EXPORT -->
     <div class="section" id="nahled-export">
-      <div class="section-header"><h2>8 — Náhled vrstev (Preview) a export G-code</h2></div>
+      <div class="section-header"><h2>8 — Preview (náhled vrstev) a export G-code</h2></div>
 
       <h3 id="jak-slicovat">Jak slicovat</h3>
       <p>Po nastavení všech parametrů (Tiskárna, Filament, Proces) klikněte na tlačítko <strong>Slicovat</strong> (nebo klávesová zkratka). Program vypočítá G-code — u jednoduchých modelů to trvá sekundy, u komplexních modelů se stromovými podpěrami může výpočet trvat i minuty. Po dokončení se automaticky otevře záložka <strong>Náhled</strong>.</p>
