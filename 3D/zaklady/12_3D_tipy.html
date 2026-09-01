@@ -323,7 +323,7 @@
           <div class="tc-num">TIP 01</div>
           <h4>První vrstva pomaleji</h4>
           <p>Nastavte rychlost první vrstvy na 30–40 % normální rychlosti. Pomalejší první vrstva lépe přilne k podložce a kompenzuje drobné nepřesnosti nivelace.</p>
-          <div class="tc-value">OrcaSlicer: First Layer Speed → 30 mm/s</div>
+          <div class="tc-value">OrcaSlicer: Initial layer speed → 30 mm/s</div>
         </div>
 
         <div class="tip-card" id="vyssi-teplota-prvni-vrstvy">
@@ -344,13 +344,13 @@
           <div class="tc-num">TIP 04</div>
           <h4>Brim pro vysoké tenké modely</h4>
           <p>Zapněte Brim (okraj) pro modely s malou kontaktní plochou — vysoké figurky, tenké stojany, objekty s ostrými dolními hranami. Brim 5–8 mm výrazně zabrání warpingu.</p>
-          <div class="tc-value">OrcaSlicer: Skirt/Brim → Brim width: 5 mm</div>
+          <div class="tc-value">OrcaSlicer: Brim → Brim width: 5 mm</div>
         </div>
 
         <div class="tip-card" id="tree-supports-vzdy-lepsi">
           <div class="tc-num">TIP 05</div>
           <h4>Tree supports vždy lepší</h4>
-          <p>Organické stromečkové podpory (Tree Supports) jsou téměř vždy lepší než normální mřížkové. Jsou snazší na odstranění, zanechávají menší jizvy a používají méně filamentu.</p>
+          <p>Tree Supports (organické stromečkové podpory) jsou téměř vždy lepší než normální mřížkové. Jsou snazší na odstranění, zanechávají menší jizvy a používají méně filamentu.</p>
           <div class="tc-value">OrcaSlicer: Support → Tree (Organic)</div>
         </div>
 
@@ -365,14 +365,14 @@
           <div class="tc-num">TIP 07</div>
           <h4>Vypnout větrák pro první vrstvy</h4>
           <p>Nastavte part cooling ventilátor na 0 % pro první 2–3 vrstvy. Pomalejší chladnutí první vrstvy zlepší přilnavost k podložce — zejména pro ABS, ASA a Nylon.</p>
-          <div class="tc-value">OrcaSlicer: Fan speed → Disable for first X layers: 3</div>
+          <div class="tc-value">OrcaSlicer: Cooling → Disable fan for first X layers: 3</div>
         </div>
 
         <div class="tip-card" id="vice-malych-objektu-najednou">
           <div class="tc-num">TIP 08</div>
           <h4>Více malých objektů najednou</h4>
           <p>Tiskněte několik malých objektů současně. Každý objekt má více času vychladnout před dalším layerem — výsledek je čistší než při tisku jednoho kusu (zejména pro malé detailní modely).</p>
-          <div class="tc-value">OrcaSlicer: Minimum Layer Time → 10–15 s</div>
+          <div class="tc-value">OrcaSlicer: Cooling → Minimum layer time: 10–15 s</div>
         </div>
 
         <div class="tip-card" id="ironing-pro-hladky-vrsek">
@@ -386,7 +386,7 @@
           <div class="tc-num">TIP 10</div>
           <h4>Gyroid infill pro pevnost</h4>
           <p>Gyroid infill je trojrozměrná struktura která poskytuje stejnoměrnou pevnost ve všech směrech a rychle se tiskne. Lepší volba než cubic nebo honeycomb pro díly pod mechanickým namáháním.</p>
-          <div class="tc-value">OrcaSlicer: Infill pattern → Gyroid, 20–30 %</div>
+          <div class="tc-value">OrcaSlicer: Sparse infill pattern → Gyroid, 20–30 %</div>
         </div>
 
         <div class="tip-card" id="horizontalni-rozsireni-otvoru">
@@ -656,14 +656,14 @@
           <div class="tc-num">Input Shaping</div>
           <h4>Resonance Compensation</h4>
           <p>Kobra X má vestavěný Input Shaping v firmware. V OrcaSliceru nenastavujte vlastní hodnoty akcelerace — tiskárna ji řídí sama. Nechte Acceleration na hodnotách z výchozího profilu.</p>
-          <div class="tc-value">Printer Settings → Input Shaping: dle profilu</div>
+          <div class="tc-value">Printer Settings → Motion ability → Resonance Compensation: dle profilu</div>
         </div>
 
         <div class="tip-card" id="github-a-printables">
           <div class="tc-num">Komunitní profily</div>
           <h4>GitHub a Printables</h4>
           <p>Komunitní profily jsou często lépe naladěné než výchozí. Hledejte „Anycubic Kobra X OrcaSlicer profile" na GitHubu nebo Printables — stáhněte .json a importujte přes File → Import Config.</p>
-          <div class="tc-value">File → Import Config Bundle (.json)</div>
+          <div class="tc-value">File → Import → Import Configs (.json)</div>
         </div>
 
       </div>
