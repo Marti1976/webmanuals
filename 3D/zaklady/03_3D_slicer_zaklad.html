@@ -145,7 +145,15 @@
   </ul>
   <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
   <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
-  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <div class="nav-item" style="cursor: default;">
+    <span class="nav-num">08</span>
+    <span class="nav-item-text">Filamenty</span>
+  </div>
+  <ul class="nav-subs">
+    <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
+    <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item ">08b · Kalibrace filamentu</a></li>
+    <li><a href="08c_3D_Filament_next.html" class="nav-sub-item ">08c · Filamenty rozšíření</a></li>
+  </ul>
   <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
   <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
   <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
@@ -175,7 +183,7 @@
         </div>
       </div>
       <h1>Slicer — <span>základy</span></h1>
-      <p>Co je slicer, jak vypadá Anycubic Slicer Next, jak nastavit tiskárnu, vybrat filament, zkalibrovat profil a dostat G-code do tiskárny. Vše bez přepínání do režimu Pokročilé.</p>
+      <p>Co je slicer, jak vypadá Anycubic Slicer Next, jak nastavit tiskárnu, vybrat filament, zkalibrovat profil a dostat G-code do tiskárny. Vše bez přepínání do režimu Advanced (pokročilé).</p>
     </div>
   </div>
 
@@ -183,7 +191,7 @@
 
     <div class="alert alert-info">
       <div class="alert-icon">💡</div>
-      <div><strong>Tato kapitola popisuje Anycubic Slicer Next ve výchozím zobrazení</strong> — bez zapnutého přepínače „Pokročilé". Pokud chcete vidět <strong>všechna</strong> dostupná pole (včetně pokročilých), přepněte přepínač v horní liště okna Proces nebo Filament do polohy Pokročilé a přejděte do kapitol <a href="05a_3D_slicer_tisk.html" style="color:#fff;">05a</a>, <a href="05b_3D_slicer_rychlost.html" style="color:#fff;">05b</a> a <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c</a>.</div>
+      <div><strong>Tato kapitola popisuje Anycubic Slicer Next ve výchozím zobrazení</strong> — bez zapnutého přepínače „Advanced" (pokročilé). Pokud chcete vidět <strong>všechna</strong> dostupná pole (včetně pokročilých), přepněte přepínač v horní liště okna Process (proces) nebo Filament do polohy Advanced a přejděte do kapitol <a href="05a_3D_slicer_tisk.html" style="color:#fff;">05a</a>, <a href="05b_3D_slicer_rychlost.html" style="color:#fff;">05b</a> a <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c</a>.</div>
     </div>
 
     <!-- SEKCE 1 — CO JE SLICER -->
@@ -214,23 +222,23 @@
         <li><strong>Přihlaste se</strong> Anycubic účtem pro funkci Workbench a vzdálené odesílání tisku (nepovinné, ale doporučeno)</li>
       </ol>
 
-      <h3 id="nastaveni-programu-dialog">Nastavení programu (dialog)</h3>
-      <p>Otevřete přes hamburger menu → <strong>Nastavení</strong> (nebo <kbd>Ctrl+P</kbd>). Klíčové volby:</p>
+      <h3 id="nastaveni-programu-dialog">Preferences (nastavení programu)</h3>
+      <p>Otevřete přes hamburger menu → <strong>Preferences</strong> (nastavení programu) — nebo <kbd>Ctrl+P</kbd>. Klíčové volby:</p>
 
       <div class="param">
-        <div class="param-head"><div class="param-title">Language<small>Jazyk</small></div><span class="param-val">Czech</span></div>
-        <p>Nastaví celé uživatelské rozhraní do češtiny — přesně ta CZ terminologie, která je použita v celém tomto průvodci.</p>
+        <div class="param-head"><div class="param-title">Language<small>Jazyk</small></div><span class="param-val">English</span></div>
+        <p>Nastaví celé uživatelské rozhraní do angličtiny. Doporučujeme ponechat anglicky — čeština v Anycubic Slicer Next nefunguje spolehlivě (chybějící/nekonzistentní překlady), a s angličtinou navíc snadno dohledáte cokoliv v oficiální dokumentaci, tutoriálech nebo na fórech. Tento průvodce proto všude uvádí anglický název jako hlavní, s českým vysvětlením v závorce.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Region<small>Region</small></div><span class="param-val">Globální</span></div>
+        <div class="param-head"><div class="param-title">Region<small>Region</small></div><span class="param-val">Global (globální)</span></div>
         <p>Oblast pro stahování filament profilů a online obsahu — Globální zahrnuje veškerý dostupný obsah.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Units<small>Jednotky</small></div><span class="param-val">Metrický (mm, g)</span></div>
+        <div class="param-head"><div class="param-title">Units<small>Jednotky</small></div><span class="param-val">Metric (mm, g)</span></div>
         <p>Pro Českou republiku vždy metrické jednotky — milimetry a gramy. Změna na palce/unce by způsobila zmatek ve všech rozměrových polích.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Default page<small>Výchozí stránka</small></div><span class="param-val">Domů</span></div>
+        <div class="param-head"><div class="param-title">Default page<small>Výchozí stránka</small></div><span class="param-val">Home (domů)</span></div>
         <p>Co se zobrazí při spuštění programu — Domů ukáže úvodní obrazovku s posledními projekty, alternativa je přímé otevření pracovní plochy.</p>
       </div>
       <div class="param">
@@ -250,8 +258,8 @@
         <p>Program automaticky ukládá zálohu projektu — interval 60 sekund je rozumný kompromis. Zálohu najdete ve složce specifikované v poli Stahování.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Download path<small>Stahování</small></div></div>
-        <p>Složka, kam program ukládá stažené profily a zálohy. Tlačítkem Procházet ji změňte na místo, kde máte své 3D projekty.</p>
+        <div class="param-head"><div class="param-title">Download path<small>Cesta stahování</small></div></div>
+        <p>Složka, kam program ukládá stažené profily a zálohy. Tlačítkem <strong>Browse</strong> (procházet) ji změňte na místo, kde máte své 3D projekty.</p>
       </div>
       <div class="param">
         <div class="param-head"><div class="param-title">Dark mode<small>Tmavý režim</small></div></div>
@@ -262,8 +270,8 @@
         <p>Pokud jste přihlášeni Anycubic účtem, vaše vlastní profily (uložené přes "Uložit stávající Filament" nebo podobné tlačítko) se synchronizují do cloudu. Výhodou je dostupnost profilů na jiném PC bez ruční exportu.</p>
       </div>
 
-      <h3 id="vyber-rezimu">Výběr režimu — Personal / Print Farm Mode</h3>
-      <p>Hamburger menu → Výběr režimu nabízí <strong>Personal Mode</strong> (osobní režim — výchozí, pro domácí a hobby tisk, plná sada nástrojů) a <strong>Print Farm Mode</strong> (režim farmy — pro provozovatele tiskových farem — přidané nástroje pro hromadný management, fronty úkolů a vzdálené monitorování více tiskáren najednou).</p>
+      <h3 id="vyber-rezimu">Mode Selection (výběr režimu) — Personal / Print Farm Mode</h3>
+      <p>Hamburger menu → <strong>Mode Selection</strong> (výběr režimu) nabízí <strong>Personal Mode</strong> (osobní režim — výchozí, pro domácí a hobby tisk, plná sada nástrojů) a <strong>Print Farm Mode</strong> (režim farmy — pro provozovatele tiskových farem — přidané nástroje pro hromadný management, fronty úkolů a vzdálené monitorování více tiskáren najednou).</p>
     </div>
 
     <!-- SEKCE 3 — ROZHRANÍ A MENU -->
@@ -328,22 +336,22 @@
 
     <!-- SEKCE 4 — TŘI PANELY VPRAVO -->
     <div class="section" id="tri-panely">
-      <div class="section-header"><h2>4 — Tři panely vpravo: Tiskárna, Filament, Proces</h2></div>
+      <div class="section-header"><h2>4 — Tři panely vpravo: Printer (tiskárna), Filament, Process (proces)</h2></div>
 
       <p>Celé nastavení tisku je organizováno do tří nezávislých profilů v pravém panelu. Každý lze nastavit a uložit zvlášť — jejich kombinace pak definuje, jak bude výsledný G-code vypadat.</p>
 
       <table>
         <thead><tr><th>Panel</th><th>Co obsahuje</th><th>Příklad profilu</th></tr></thead>
         <tbody>
-          <tr><td>Tiskárna</td><td>Rozměry podložky, typ extruderu, průměr trysky, G-code start/end skripty</td><td>Anycubic Kobra X 0.4 nozzle</td></tr>
+          <tr><td>Printer (tiskárna)</td><td>Rozměry podložky, typ extruderu, průměr trysky, G-code start/end skripty</td><td>Anycubic Kobra X 0.4 nozzle</td></tr>
           <tr><td>Filament</td><td>Teploty, chlazení, retrakce, průtok — vlastnosti konkrétního materiálu</td><td>Anycubic PLA+</td></tr>
-          <tr><td>Proces</td><td>Vrstvy, stěny, výplň, podpěry, rychlost — geometrie tisku</td><td>0.20mm High Quality @AC KX</td></tr>
+          <tr><td>Process (proces)</td><td>Vrstvy, stěny, výplň, podpěry, rychlost — geometrie tisku</td><td>0.20mm High Quality @AC KX</td></tr>
         </tbody>
       </table>
 
       <h3 id="panel-tiskarna-vyber-a-pridani">Panel Printer (tiskárna) — výběr a přidání</h3>
 
-      <p>Kliknutím na rozbalovací seznam v panelu Tiskárna zobrazíte dostupné profily. Sekce obsahuje <strong>Systémová přednastavení</strong> (dodaná Anycubic — Kobra X je tu přednastavenou), dále možnost <strong>Select/Remove printers (system presets)</strong> pro správu zobrazených tiskáren a <strong>Vytvořit tiskárnu</strong> pro přidání vlastní/neoficiální tiskárny ručně.</p>
+      <p>Kliknutím na rozbalovací seznam v panelu Tiskárna zobrazíte dostupné profily. Sekce obsahuje <strong>System Presets</strong> (systémová přednastavení — dodaná Anycubic, Kobra X je tu přednastavenou), dále možnost <strong>Select/Remove printers (system presets)</strong> pro správu zobrazených tiskáren a <strong>Create Printer</strong> (vytvořit tiskárnu) pro přidání vlastní/neoficiální tiskárny ručně.</p>
 
       <div class="alert alert-tip">
         <div class="alert-icon">✓</div>
@@ -356,12 +364,12 @@
       <table>
         <thead><tr><th>Skupina</th><th>Co obsahuje</th></tr></thead>
         <tbody>
-          <tr><td>Uživatelská přednastavení</td><td>Vaše vlastní uložené nebo upravené profily (např. "Elagoo PLA PRO @Anycubic Kobra X 0.4 nozzle")</td></tr>
-          <tr><td>Systémová přednastavení</td><td>Dodané Anycubic: PLA, PLA+, PLA Glow, PLA High Speed, PLA Matte, PLA Silk, PLA Translucent, ABS, ASA, PETG, PVA, TPU 95A, TPU for ACE</td></tr>
+          <tr><td>User Presets (uživatelská přednastavení)</td><td>Vaše vlastní uložené nebo upravené profily (např. "Elagoo PLA PRO @Anycubic Kobra X 0.4 nozzle")</td></tr>
+          <tr><td>System Presets (systémová přednastavení)</td><td>Dodané Anycubic: PLA, PLA+, PLA Glow, PLA High Speed, PLA Matte, PLA Silk, PLA Translucent, ABS, ASA, PETG, PVA, TPU 95A, TPU for ACE</td></tr>
         </tbody>
       </table>
 
-      <p>Tlačítko <strong>Čisticí objem</strong> a ikona Synchronize from ACE Pro jsou relevantní jen pro multi-material tisk s ACE Pro systémem — pro jednobarevný tisk je ignorujte. Detailní popis panelu Filament (jak vytvořit vlastní profil pro C-Tech PLA+) je v kapitole <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Parametry filamentu</a>.</p>
+      <p>Tlačítko <strong>Flushing Volumes</strong> (čisticí objem) a ikona Synchronize from ACE Pro jsou relevantní jen pro multi-material tisk s ACE Pro systémem — pro jednobarevný tisk je ignorujte. Detailní popis panelu Filament (jak vytvořit vlastní profil pro C-Tech PLA+) je v kapitole <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Parametry filamentu</a>.</p>
 
       <h3 id="panel-proces-vyber-profilu-tisku">Panel Process (proces) — výběr profilu tisku</h3>
 
@@ -389,9 +397,9 @@
 
     <!-- SEKCE 5 — ZÁKLADNÍ VIEW PROCESU (BEZ POKROČILÉ) -->
     <div class="section" id="zakladni-view-procesu">
-      <div class="section-header"><h2>5 — Okno Proces bez přepínače „Pokročilé"</h2></div>
+      <div class="section-header"><h2>5 — Okno Process (proces) bez přepínače Advanced (pokročilé)</h2></div>
 
-      <p>Když je přepínač <strong>Pokročilé</strong> v okně Proces vypnutý, vidíte zkrácenou sadu záložek a polí — jen to nejdůležitější. Záložka <strong>Speed</strong> (rychlost) je v základním view skrytá úplně. Je to záměr: začátečník rychlosti nepotřebuje ladit, výchozí hodnoty z profilu jsou vhodné pro většinu tisků.</p>
+      <p>Když je přepínač <strong>Advanced</strong> v okně Process vypnutý, vidíte zkrácenou sadu záložek a polí — jen to nejdůležitější. Záložka <strong>Speed</strong> (rychlost) je v základním view skrytá úplně. Je to záměr: začátečník rychlosti nepotřebuje ladit, výchozí hodnoty z profilu jsou vhodné pro většinu tisků.</p>
 
       <div class="tab-bar">
         <span class="active">Quality</span>
@@ -413,7 +421,7 @@
         <p>Výška úplně první vrstvy — lze nastavit vyšší než zbytek tisku pro lepší přilnavost k podložce.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Seam position<small>Pozice švu</small></div><span class="param-val">Zarovnaný</span></div>
+        <div class="param-head"><div class="param-title">Seam position<small>Pozice švu</small></div><span class="param-val">Aligned (zarovnaný)</span></div>
         <p>Kde bude viditelný šev (místo, kde tryska začíná/končí každý perimetr). Zarovnaný = švy v jedné svislé linii. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Šev</a>.</p>
       </div>
       <div class="param">
@@ -444,7 +452,7 @@
         <p>Alternativní zadání tloušťky horní skořepiny v milimetrech místo počtu vrstev.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Top surface pattern<small>Vzor horního povrchu</small></div><span class="param-val">Monotónní</span></div>
+        <div class="param-head"><div class="param-title">Top surface pattern<small>Vzor horního povrchu</small></div><span class="param-val">Monotonic (monotónní)</span></div>
         <p>Vzor linií na viditelné horní ploše. Monotónní (všechny linie stejným směrem) dává nejrovnoměrnější vzhled.</p>
       </div>
       <div class="param">
@@ -471,7 +479,7 @@
         <p>Zapne/vypne generování podpěrných struktur. Detailně viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a — Podpěry</a>.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Support type<small>Typ</small></div><span class="param-val">Strom (auto)</span></div>
+        <div class="param-head"><div class="param-title">Support type<small>Typ podpěr</small></div><span class="param-val">Tree (auto) (strom)</span></div>
         <p>Stromové podpěry jsou výchozí — méně materiálu, snazší odstranění, vhodné pro většinu modelů.</p>
       </div>
       <div class="param">
@@ -513,7 +521,7 @@
         <p>Na kolik vrstev se obrys tiskne.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Brim type<small>Typ límce</small></div><span class="param-val">Automaticky</span></div>
+        <div class="param-head"><div class="param-title">Brim type<small>Typ límce</small></div><span class="param-val">Auto (automaticky)</span></div>
         <p>Límec (Brim) — přídavné "křídla" kolem základny modelu pro lepší přilnavost. Automaticky = program rozhodne sám.</p>
       </div>
       <div class="param">
@@ -521,7 +529,7 @@
         <p>Jak daleko límec sahá od modelu. Zvyšte na 8–10 mm pro materiály náchylné na warping (ABS, ASA).</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Print sequence<small>Tisková sekvence</small></div><span class="param-val">Podle vrstvy</span></div>
+        <div class="param-head"><div class="param-title">Print sequence<small>Tisková sekvence</small></div><span class="param-val">By Layer (podle vrstvy)</span></div>
         <p>Pořadí tisku objektů na podložce — Podle vrstvy (všechny najednou, střídají se) vs. Podle objektu (jeden objekt celý, pak druhý).</p>
       </div>
       <div class="param">
@@ -537,24 +545,24 @@
         <p>Texturovaný matný povrch záměrnými odchylkami trysky. Skrývá viditelnost vrstev a švu. Detailně viz <a href="04_3D_slicer_pokrocily.html" style="color:var(--blue);">04 — Fuzzy Skin</a>.</p>
       </div>
 
-      <h3 id="nastaveni-podlozky-proces-objekty-kliknutim-na-nazev-podlozk">Plate Settings (nastavení podložky) — Proces → Objekty, kliknutím na název podložky</h3>
+      <h3 id="nastaveni-podlozky-proces-objekty-kliknutim-na-nazev-podlozk">Plate Settings (nastavení podložky) — Process (proces) → Objects (objekty), kliknutím na název podložky</h3>
 
       <div class="param">
         <div class="param-head"><div class="param-title">Plate type<small>Typ podložky</small></div><span class="param-val">Smooth Plate</span></div>
         <p>Jaký typ tiskové desky máte nasazený — program podle toho použije správné teploty podložky z filament profilu. Kobra X standardně dodává Textured PEI podložku.</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">Print sequence (plate)<small>Tisková sekvence</small></div><span class="param-val">Podle vrstvy</span></div>
+        <div class="param-head"><div class="param-title">Print sequence (plate)<small>Tisková sekvence</small></div><span class="param-val">By Layer (podle vrstvy)</span></div>
         <p>Stejné nastavení jako v záložce Ostatní, ale na úrovni konkrétní podložky (pokud máte víc podložek/dávek v projektu).</p>
       </div>
       <div class="param">
-        <div class="param-head"><div class="param-title">First layer / other layers filament sequence<small>Sekvence filamentu první vrstvy / ostatních vrstev</small></div><span class="param-val">Automaticky</span></div>
+        <div class="param-head"><div class="param-title">First layer / other layers filament sequence<small>Sekvence filamentu první vrstvy / ostatních vrstev</small></div><span class="param-val">Auto (automaticky)</span></div>
         <p>Pořadí, ve kterém se přistupuje k jednotlivým filamentovým slotům při multi-material tisku. Pro jednobarevný tisk nechte Automaticky.</p>
       </div>
 
       <div class="alert alert-tip">
         <div class="alert-icon">✓</div>
-        <div><strong>Nezapomeňte na přepínač Pokročilé</strong> — základní view schválně skrývá Šířku extruze, Přesnost, Žehlení, Mostování, Převisy, záložku Rychlost a mnoho dalších polí. Jakmile budete chtít ladit tisk do detailu, přepněte Pokročilé a přejděte do kapitol 05a/05b/05c kde jsou všechna pole popsána pole po poli.</div>
+        <div><strong>Nezapomeňte na přepínač Advanced</strong> — základní view schválně skrývá Extrusion Width (šířku extruze), Precision (přesnost), Ironing (žehlení), Bridging (mostování), Overhangs (převisy), záložku Speed (rychlost) a mnoho dalších polí. Jakmile budete chtít ladit tisk do detailu, přepněte Advanced a přejděte do kapitol 05a/05b/05c kde jsou všechna pole popsána pole po poli.</div>
       </div>
     </div>
 
@@ -562,7 +570,7 @@
     <div class="section" id="kalibrace">
       <div class="section-header"><h2>6 — Calibration (kalibrace) — menu v horní liště</h2></div>
 
-      <p>Po přidání nového filamentu (a vždy při přechodu na jiný materiál nebo značku) je doporučeno provést kalibraci. Program nabízí přímou sadu testů přístupných přes tlačítko <strong>Kalibrace</strong> v horní liště. Výsledky kalibrace se zapíší do profilu filamentu — po kalibraci musíte vždy profil uložit.</p>
+      <p>Po přidání nového filamentu (a vždy při přechodu na jiný materiál nebo značku) je doporučeno provést kalibraci. Program nabízí přímou sadu testů přístupných přes tlačítko <strong>Calibration</strong> (kalibrace) v horní liště. Výsledky kalibrace se zapíší do profilu filamentu — po kalibraci musíte vždy profil uložit.</p>
 
       <div class="alert alert-warn">
         <div class="alert-icon">⚠</div>
@@ -570,25 +578,25 @@
       </div>
 
       <table>
-        <thead><tr><th>Test v menu Kalibrace</th><th>Co testuje</th><th>Výsledek zapíšete do...</th></tr></thead>
+        <thead><tr><th>Test v menu Calibration (kalibrace)</th><th>Co testuje</th><th>Výsledek zapíšete do...</th></tr></thead>
         <tbody>
-          <tr><td>Teplota</td><td>Optimální teplota trysky pro daný filament (Tower s 5 segmenty od 230 do 190 °C)</td><td>Tryska — Ostatní vrstvy (záložka Filament v 05c)</td></tr>
-          <tr><td>Průtok → YOLO (doporučeno)</td><td>Korekce množství extrudovaného materiálu — Archimedova spirála s 11 vzorky</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
-          <tr><td>Průtok → YOLO (perfekcionistická)</td><td>Jemnější doladění průtoku po standardní YOLO kalibraci</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
-          <tr><td>Průtok → Postup 1</td><td>Tradiční metoda s 9 obdélníkovými bloky</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
-          <tr><td>Průtok → Postup 2</td><td>Jemné doladění po Postupu 1</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
-          <tr><td>Předstih tlaku</td><td>Kompenzace tlaku taveniny při zrychlení/zpomalení — ostrost rohů</td><td>Předstih tlaku (záložka Filament v 05c)</td></tr>
-          <tr><td>Test Retrakce</td><td>Délka zpětného tahu pro minimalizaci pavučin (stringing)</td><td>Přepsání nastavení → Vzdálenost retrakce (05c)</td></tr>
-          <tr><td>Tolerance Test</td><td>Rozměrová přesnost — lícování díry a kolíku</td><td>XY Kompenzace otvoru (05a) nebo Srážení (05c)</td></tr>
-          <tr><td>Více... → Max. průtok</td><td>Maximální objemová rychlost, kterou hotend zvládne</td><td>Maximální objemová rychlost (záložka Filament v 05c)</td></tr>
-          <tr><td>Více... → VFA</td><td>Rezonanční artefakty — ideální rychlost vnější stěny</td><td>Rychlost vnější stěny (05b)</td></tr>
-          <tr><td>Výukový program</td><td>Interaktivní průvodce přímo v programu (CZ)</td><td>—</td></tr>
+          <tr><td>Temperature (teplota)</td><td>Optimální teplota trysky pro daný filament (Tower s 5 segmenty od 230 do 190 °C)</td><td>Tryska — Ostatní vrstvy (záložka Filament v 05c)</td></tr>
+          <tr><td>Flow Rate (průtok) → YOLO (doporučeno)</td><td>Korekce množství extrudovaného materiálu — Archimedova spirála s 11 vzorky</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
+          <tr><td>Flow Rate (průtok) → YOLO (Perfectionist)</td><td>Jemnější doladění průtoku po standardní YOLO kalibraci</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
+          <tr><td>Flow Rate (průtok) → Pass 1 (postup 1)</td><td>Tradiční metoda s 9 obdélníkovými bloky</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
+          <tr><td>Flow Rate (průtok) → Pass 2 (postup 2)</td><td>Jemné doladění po Postupu 1</td><td>Poměr průtoku (záložka Filament v 05c)</td></tr>
+          <tr><td>Pressure Advance (předstih tlaku)</td><td>Kompenzace tlaku taveniny při zrychlení/zpomalení — ostrost rohů</td><td>Předstih tlaku (záložka Filament v 05c)</td></tr>
+          <tr><td>Retraction Test (test retrakce)</td><td>Délka zpětného tahu pro minimalizaci pavučin (stringing)</td><td>Přepsání nastavení → Vzdálenost retrakce (05c)</td></tr>
+          <tr><td>Tolerance Test (test tolerance)</td><td>Rozměrová přesnost — lícování díry a kolíku</td><td>XY Kompenzace otvoru (05a) nebo Srážení (05c)</td></tr>
+          <tr><td>More (více...) → Max Volumetric Speed (max. průtok)</td><td>Maximální objemová rychlost, kterou hotend zvládne</td><td>Maximální objemová rychlost (záložka Filament v 05c)</td></tr>
+          <tr><td>More (více...) → VFA</td><td>Rezonanční artefakty — ideální rychlost vnější stěny</td><td>Rychlost vnější stěny (05b)</td></tr>
+          <tr><td>Tutorial (výukový program)</td><td>Interaktivní průvodce přímo v programu (CZ)</td><td>—</td></tr>
         </tbody>
       </table>
 
       <div class="alert alert-info">
         <div class="alert-icon">💡</div>
-        <div><strong>Doporučené pořadí kalibrace:</strong> Teplota → Průtok → Předstih tlaku → Retrakce → Max. průtok → VFA. Teplota musí být první, protože ovlivňuje výsledky všech ostatních testů. Kompletní technický popis každého testu s konkrétními vzorci a vizualizacemi najdete v příloze: <a href="X_optimalizace_profilu_kalibrace.html" style="color:var(--accent2); font-weight:600;">→ Optimalizace a kalibrace profilů (kompletní postup)</a>.</div>
+        <div><strong>Doporučené pořadí kalibrace:</strong> Temperature → Flow Rate → Pressure Advance → Retraction → Max Volumetric Speed → VFA. Teplota musí být první, protože ovlivňuje výsledky všech ostatních testů. Kompletní technický popis každého testu s konkrétními vzorci a vizualizacemi najdete v příloze: <a href="X_optimalizace_profilu_kalibrace.html" style="color:var(--accent2); font-weight:600;">→ Optimalizace a kalibrace profilů (kompletní postup)</a>.</div>
       </div>
 
       <a href="https://www.youtube.com/results?search_query=Anycubic+Slicer+Next+calibration+tutorial+YOLO+flow&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Slicer Next calibration tutorial YOLO flow</a>
@@ -609,8 +617,8 @@
 
       <h3 id="fyzicka-vymena-filamentu-na-tiskarne">Fyzická výměna filamentu na tiskárně</h3>
       <ol class="steps">
-        <li><strong>Zahřejte trysku</strong> na pracovní teplotu stávajícího materiálu (přes displej tiskárny nebo Workbench panel)</li>
-        <li><strong>Vytáhněte</strong> stávající filament z extruderu (tlačítko Vytáhnout na displeji, nebo manuálně, až tryska dosáhne teploty)</li>
+        <li><strong>Zahřejte trysku</strong> na pracovní teplotu stávajícího materiálu (přes displej tiskárny — menu Prepare → Preheat, nebo Workbench panel)</li>
+        <li><strong>Vytáhněte</strong> stávající filament z extruderu (tlačítko Unload — vytáhnout — na displeji, nebo manuálně, až tryska dosáhne teploty)</li>
         <li><strong>Vložte</strong> nový filament do otvoru extruderu a zatlačte, až se z trysky začne vytlačovat nová barva — počkejte, až vytékající plast bude mít čistou, neznečištěnou barvu nového filamentu</li>
         <li><strong>Nastavte</strong> správnou teplotu pro nový materiál (pokud se liší od předchozího)</li>
         <li><strong>V programu</strong> přepněte profil filamentu dle kroku výše, reslicujte model a odešlete tisk</li>
@@ -635,21 +643,26 @@
 
       <div class="chapter-grid">
         <div class="card" id="posuvnik-vrstev">
-          <h4>Posuvník vrstev</h4>
+          <h4>Layer slider (posuvník vrstev)</h4>
           <p>Posuvník na pravé straně umožňuje procházet model vrstvu po vrstvě — zkontrolujete, jak bude tisk postupovat, kde jsou podpěry, kde začíná výplň.</p>
         </div>
         <div class="card" id="barevne-zobrazeni">
-          <h4>Barevné zobrazení</h4>
+          <h4>Feature type (barevné zobrazení)</h4>
           <p>Různé typy úseků jsou barevně odlišeny — vnější stěna, vnitřní stěna, výplň, podpěry, travel pohyby. Snadno odhalíte problém v struktuře ještě před tiskem.</p>
         </div>
         <div class="card" id="zobrazeni-dle-rychlosti">
-          <h4>Zobrazení dle rychlosti</h4>
+          <h4>Speed (zobrazení dle rychlosti)</h4>
           <p>Alternativní barevné zobrazení podle rychlosti tisku v každém úseku — vidíte, kde program zpomaluje (převisy, malé detaily).</p>
         </div>
         <div class="card" id="odhad-casu-a-materialu">
           <h4>Odhad času a materiálu</h4>
           <p>Program zobrazí odhadovaný čas tisku, délku filamentu a hmotnost spotřebovaného materiálu pro celou tiskovou dávku.</p>
         </div>
+      </div>
+
+      <div class="alert alert-info" style="margin-top:12px;">
+        <div class="alert-icon">💡</div>
+        <div>Feature type a Speed jsou konkrétní volby v rozbalovacím seznamu nad náhledem (View mode) — přepínáte mezi nimi přímo tam. Odhad času a materiálu nemá vlastní název v UI, je to jen zobrazená statistika (žádné tlačítko/volbu tedy nehledejte).</div>
       </div>
 
       <div class="alert alert-tip">

@@ -160,7 +160,15 @@
   </ul>
   <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
   <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
-  <a href="08_3D_filamenty.html" class="nav-item"><span class="nav-num">08</span><span class="nav-item-text">Filamenty</span></a>
+  <div class="nav-item" style="cursor: default;">
+    <span class="nav-num">08</span>
+    <span class="nav-item-text">Filamenty</span>
+  </div>
+  <ul class="nav-subs">
+    <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
+    <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item ">08b · Kalibrace filamentu</a></li>
+    <li><a href="08c_3D_Filament_next.html" class="nav-sub-item ">08c · Filamenty rozšíření</a></li>
+  </ul>
   <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
   <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
   <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
@@ -193,7 +201,7 @@
         </div>
       </div>
       <h1>Parametry <span>filamentu</span></h1>
-      <p>Kompletní rozpis okna „Nastavení materiálu" v Anycubic Slicer Next — pole po poli, přesně tak, jak je vidíte na obrazovce v češtině. Plus návod, jak si vytvořit vlastní profil pro filament, který v programu chybí.</p>
+      <p>Kompletní rozpis okna Filament Settings (nastavení materiálu) v Anycubic Slicer Next — pole po poli, přesně tak, jak je vidíte na obrazovce v zapnutém režimu Advanced (pokročilé). Plus návod, jak si vytvořit vlastní profil pro filament, který v programu chybí.</p>
     </div>
   </div>
 
@@ -201,13 +209,13 @@
 
     <div class="alert alert-info">
       <div class="alert-icon">💡</div>
-      <div><strong>Jak je tahle kapitola udělaná:</strong> Místo obecné teorie sliceru jdeme pole po poli přesně podle okna <strong>„Nastavení materiálu"</strong> v Anycubic Slicer Next, tak jak ho vidíte na obrazovce v češtině. Hlavní název je vždy <strong>český</strong> (přesně jak v programu), anglický název je v malé poznámce pod ním — pro případ, že budete hledat anglický tutoriál nebo název v G-code komentáři. Anycubic Slicer Next je postavený na OrcaSlicer, takže anglické názvy najdete identické i tam.</div>
+      <div><strong>Jak je tahle kapitola udělaná:</strong> Místo obecné teorie sliceru jdeme pole po poli přesně podle okna <strong>Filament Settings</strong> (nastavení materiálu) v Anycubic Slicer Next, tak jak ho vidíte na obrazovce v zapnutém režimu Advanced (pokročilé). Hlavní název je vždy <strong>anglický</strong> (přesně jak v programu — čeština v Anycubic Slicer Next nefunguje spolehlivě), český překlad je v malé poznámce pod ním. Anycubic Slicer Next je postavený na OrcaSlicer, takže anglické názvy najdete identické i tam.</div>
     </div>
 
     <p style="margin-bottom: 8px;">Propojení s ostatními kapitolami:
       <a href="05a_3D_slicer_tisk.html" class="ref-link">→ 05a Parametry tisku</a>
       <a href="05b_3D_slicer_rychlost.html" class="ref-link">→ 05b Parametry rychlosti</a>
-      <a href="08_3D_filamenty.html" class="ref-link">→ 08 Filamenty (přehled materiálů)</a>
+      <a href="08a_3D_filamenty.html" class="ref-link">→ 08 Filamenty (přehled materiálů)</a>
     </p>
 
     <!-- ═══════════════════════════════════════════
@@ -226,13 +234,13 @@
       </div>
 
       <h3 id="kde-profil-filamentu-vybrat">Kde profil filamentu vybrat</h3>
-      <p>V hlavním okně programu (ne v dialogu Nastavení materiálu) je rozbalovací seznam filamentu — v horní části panelu vpravo, kde vidíte aktuálně vybraný profil (např. "Anycubic PLA+"). Kliknutím na tento seznam se rozbalí nabídka rozdělená na dvě skupiny:</p>
+      <p>V hlavním okně programu (ne v dialogu Filament Settings) je rozbalovací seznam filamentu — v horní části panelu vpravo, kde vidíte aktuálně vybraný profil (např. "Anycubic PLA+"). Kliknutím na tento seznam se rozbalí nabídka rozdělená na dvě skupiny:</p>
 
       <table>
         <thead><tr><th>Skupina v seznamu</th><th>Co obsahuje</th></tr></thead>
         <tbody>
-          <tr><td>Uživatelská přednastavení<br><small style="color:var(--muted);">User presets</small></td><td>Vaše vlastní vytvořené nebo upravené profily (např. "Elagoo PLA PRO @Anycubic Kobra X 0.4 nozzle")</td></tr>
-          <tr><td>Systémová přednastavení<br><small style="color:var(--muted);">System presets</small></td><td>Předpřipravené profily od Anycubic — Anycubic PLA, PLA+, PLA Glow, PLA High Speed, PLA Matte, PLA Silk, PLA Translucent, ABS, ASA, PETG, PVA, TPU 95A, TPU for ACE</td></tr>
+          <tr><td>User Presets<br><small style="color:var(--muted);">uživatelská přednastavení</small></td><td>Vaše vlastní vytvořené nebo upravené profily (např. "Elagoo PLA PRO @Anycubic Kobra X 0.4 nozzle")</td></tr>
+          <tr><td>System Presets<br><small style="color:var(--muted);">systémová přednastavení</small></td><td>Předpřipravené profily od Anycubic — Anycubic PLA, PLA+, PLA Glow, PLA High Speed, PLA Matte, PLA Silk, PLA Translucent, ABS, ASA, PETG, PVA, TPU 95A, TPU for ACE</td></tr>
         </tbody>
       </table>
 
@@ -245,52 +253,52 @@
 
       <ol class="steps">
         <li><strong>Vyberte nejbližší existující profil</strong> (např. "Anycubic PLA+"), který bude základem pro úpravu</li>
-        <li>Otevřete dialog <strong>Nastavení materiálu</strong> (ikona tužky/úprav vedle rozbalovacího seznamu filamentu, nebo přes menu)</li>
+        <li>Otevřete dialog <strong>Filament Settings</strong> (nastavení materiálu) (ikona tužky/úprav vedle rozbalovacího seznamu filamentu, nebo přes menu)</li>
         <li>Upravte hodnoty, které se liší od C-Tech PLA+ — nejčastěji <strong>Doporučená teplota trysky</strong> (podle údaje na cívce), případně <strong>Teplota podložky</strong></li>
-        <li>V horní liště dialogu klikněte na ikonu <strong>uložit (disketa)</strong> — tlačítko s popiskem „Uložit stávající Filament"</li>
+        <li>V horní liště dialogu klikněte na ikonu <strong>uložit (disketa)</strong> — tlačítko <strong>Save current filament</strong> (uložit stávající filament)</li>
         <li>Zadejte vlastní název, např. <strong>„C-Tech PLA+ @Anycubic Kobra X 0.4 nozzle"</strong> — doporučujeme dodržet stejný formát názvu jako u systémových profilů (název materiálu + tiskárna + tryska), ať se v seznamu dobře hledá</li>
-        <li>Profil se uloží do skupiny <strong>Uživatelská přednastavení</strong> a od teď je vždy dostupný v rozbalovacím seznamu</li>
+        <li>Profil se uloží do skupiny <strong>User Presets</strong> (uživatelská přednastavení) a od teď je vždy dostupný v rozbalovacím seznamu</li>
       </ol>
 
       <h3 id="vytvorit-uplne-novy-filament-ne-jen-upraveny-profil">Vytvořit úplně nový filament (ne jen upravený profil)</h3>
-      <p>Pokud chcete přidat nový materiál se zachováním vlastní karty výrobce (ne jen upravit existující profil), použijte dialog <strong>Vytvořit filament</strong> — typicky dostupný přes tlačítko „+" u seznamu filamentu nebo přes menu Filament. Otevře se formulář:</p>
+      <p>Pokud chcete přidat nový materiál se zachováním vlastní karty výrobce (ne jen upravit existující profil), použijte dialog <strong>Create Filament</strong> (vytvořit filament) — typicky dostupný přes tlačítko „+" u seznamu filamentu nebo přes menu Filament. Otevře se formulář:</p>
 
       <div class="param" id="vyrobce">
         <div class="param-head">
-          <div class="param-title">Výrobce<small>Manufacturer</small></div>
+          <div class="param-title">Manufacturer<small>Výrobce</small></div>
         </div>
-        <p>Vyberte ze seznamu, nebo zaškrtněte <strong>„Nemohu najít požadovaného výrobce"</strong>, pokud C-Tech v nabídce není — pak zadáte název ručně.</p>
+        <p>Vyberte ze seznamu, nebo zaškrtněte <strong>„Can't find vendor I want"</strong> (nemohu najít požadovaného výrobce), pokud C-Tech v nabídce není — pak zadáte název ručně.</p>
       </div>
 
       <div class="param" id="typ">
         <div class="param-head">
-          <div class="param-title">Typ<small>Type</small></div>
+          <div class="param-title">Type<small>Typ materiálu</small></div>
         </div>
         <p>Vyberte základní typ materiálu — PLA, PETG, ABS, ASA, TPU atd. Toto určuje, který výchozí teplotní rozsah a sadu parametrů program nabídne jako startovní bod.</p>
       </div>
 
       <div class="param" id="seriove-cislo">
         <div class="param-head">
-          <div class="param-title">Sériové číslo<small>Serial / Variant name</small></div>
+          <div class="param-title">Serial / Variant name<small>Sériové číslo</small></div>
         </div>
         <p>Volné textové pole pro rozlišení varianty — např. "Basic", "Matte", "Silk", "Marble" (jak program sám napovídá). Pro C-Tech PLA+ sem můžete napsat třeba "Plus".</p>
       </div>
 
       <div class="param" id="pridat-prednastaveni-filamentu-pod-tento-filament">
         <div class="param-head">
-          <div class="param-title">Přidat přednastavení filamentu pod tento filament</div>
+          <div class="param-title">Add filament preset under this filament<small>přidat přednastavení filamentu pod tento filament</small></div>
         </div>
-        <p><strong>Vytvořit na základě aktuálního filamentu</strong> — nový profil zdědí všechny hodnoty z profilu, který jste měli vybraný před otevřením dialogu (doporučeno — ušetří přepisování). <strong>Kopírovat aktuální filamentový přednastavený profil</strong> — vytvoří přesnou kopii bez vazby na originál.</p>
+        <p><strong>Create based on current filament</strong> (vytvořit na základě aktuálního filamentu) — nový profil zdědí všechny hodnoty z profilu, který jste měli vybraný před otevřením dialogu (doporučeno — ušetří přepisování). <strong>Copy Current Filament Preset</strong> (kopírovat aktuální filamentový přednastavený profil) — vytvoří přesnou kopii bez vazby na originál.</p>
       </div>
 
-      <h3 id="systemove-vs-samostatne-materialy-co-je-rozdil">Systémové vs Samostatné materiály — co je rozdíl</h3>
+      <h3 id="systemove-vs-samostatne-materialy-co-je-rozdil">System vs Custom Materials (systémové vs samostatné materiály) — co je rozdíl</h3>
       <p>V dialogu pro výběr/filtrování materiálů (ikona se dvěma tlačítky v záhlaví okna Filament) najdete dvě záložky:</p>
 
       <table>
         <thead><tr><th>Záložka</th><th>Co obsahuje</th></tr></thead>
         <tbody>
-          <tr><td>Systémové materiály<br><small style="color:var(--muted);">System materials</small></td><td>Filtrovací seznam všech předpřipravených profilů — můžete zaškrtnutím/odškrtnutím vybrat, které se zobrazují v hlavním rozbalovacím seznamu (podle tiskárny, typu filamentu — PLA/ABS/TPU/ASA/PETG/PETG-CF/PLA-CF/PVA, a dodavatele — Generic/Anycubic)</td></tr>
-          <tr><td>Samostatné materiály<br><small style="color:var(--muted);">User/Custom materials</small></td><td>Zde se zobrazují vaše vlastní vytvořené profily (přes tlačítko „Nové"). Pro C-Tech PLA+ vytvořený postupem výše by se objevil zde</td></tr>
+          <tr><td>System materials<br><small style="color:var(--muted);">systémové materiály</small></td><td>Filtrovací seznam všech předpřipravených profilů — můžete zaškrtnutím/odškrtnutím vybrat, které se zobrazují v hlavním rozbalovacím seznamu (podle tiskárny, typu filamentu — PLA/ABS/TPU/ASA/PETG/PETG-CF/PLA-CF/PVA, a dodavatele — Generic/Anycubic)</td></tr>
+          <tr><td>User/Custom materials<br><small style="color:var(--muted);">samostatné materiály</small></td><td>Zde se zobrazují vaše vlastní vytvořené profily (přes tlačítko <strong>Create New</strong> — nové). Pro C-Tech PLA+ vytvořený postupem výše by se objevil zde</td></tr>
         </tbody>
       </table>
 
@@ -299,31 +307,31 @@
         <div><strong>Proč filtrovat seznam materiálů:</strong> Pokud nepoužíváte ABS ani TPU, odškrtnutím těchto typů ve filtru zkrátíte rozbalovací seznam jen na materiály, které skutečně máte — usnadní to výběr a snižuje riziko, že omylem vyberete nesprávný profil.</div>
       </div>
 
-      <h3 id="hledat-v-prednastaveni-a-pokrocile">Hledat v přednastavení a Pokročilé</h3>
-      <p>V horní liště dialogu Nastavení materiálu jsou dvě další důležité ikony/ovládací prvky:</p>
+      <h3 id="hledat-v-prednastaveni-a-pokrocile">Search in Preset (hledat v přednastavení) a Advanced (pokročilé)</h3>
+      <p>V horní liště dialogu Filament Settings jsou dvě další důležité ikony/ovládací prvky:</p>
 
       <table>
         <thead><tr><th>Ovládací prvek</th><th>Funkce</th></tr></thead>
         <tbody>
-          <tr><td>🔍 Hledat v přednastavení<br><small style="color:var(--muted);">Search in preset</small></td><td>Rychlé vyhledávání konkrétního pole/parametru v rámci celého dialogu, pokud nevíte, na které záložce se nachází</td></tr>
-          <tr><td>Pokročilé (přepínač)<br><small style="color:var(--muted);">Advanced mode toggle</small></td><td>Zapnutím se zobrazí <strong>všechna</strong> dostupná pole, včetně pokročilých/expertních, která jsou ve výchozím (jednoduchém) zobrazení skryta. Pro běžné používání může zůstat vypnuto, pro detailní ladění (jako v této kapitole) doporučujeme zapnout</td></tr>
+          <tr><td>🔍 Search in preset<br><small style="color:var(--muted);">hledat v přednastavení</small></td><td>Rychlé vyhledávání konkrétního pole/parametru v rámci celého dialogu, pokud nevíte, na které záložce se nachází</td></tr>
+          <tr><td>Advanced (přepínač)<br><small style="color:var(--muted);">pokročilé</small></td><td>Zapnutím se zobrazí <strong>všechna</strong> dostupná pole, včetně pokročilých/expertních, která jsou ve výchozím (jednoduchém) zobrazení skryta. Pro běžné používání může zůstat vypnuto, pro detailní ladění (jako v této kapitole) doporučujeme zapnout</td></tr>
         </tbody>
       </table>
 
-      <h3 id="cistici-objem-pro-vymenu-filamentu-co-to-je-a-kdy-se-to-tyka">Čisticí objem pro výměnu filamentu — co to je a kdy se to týká vás</h3>
-      <p>Tlačítko <strong>„Čisticí objem"</strong> (Flushing volumes) otevře matici hodnot, kolik materiálu (v mm³) se musí propláchnout při přechodu mezi jednotlivými filamentovými sloty (1–4) — relevantní jen pokud máte připojený <strong>ACE Pro</strong> (multi-cívkový systém) a tisknete s více barvami/materiály najednou.</p>
+      <h3 id="cistici-objem-pro-vymenu-filamentu-co-to-je-a-kdy-se-to-tyka">Flushing Volumes (čisticí objem) pro výměnu filamentu — co to je a kdy se to týká vás</h3>
+      <p>Tlačítko <strong>Flushing Volumes</strong> (čisticí objem) otevře matici hodnot, kolik materiálu (v mm³) se musí propláchnout při přechodu mezi jednotlivými filamentovými sloty (1–4) — relevantní jen pokud máte připojený <strong>ACE Pro</strong> (multi-cívkový systém) a tisknete s více barvami/materiály najednou.</p>
 
       <div class="param" id="multiplikator">
         <div class="param-head">
-          <div class="param-title">Multiplikátor<small>Flushing volume multiplier</small></div>
+          <div class="param-title">Flushing volume multiplier<small>Multiplikátor</small></div>
           <span class="param-val">0,70 (rozsah 0,00–3,00)</span>
         </div>
-        <p>Globální násobič, kterým se vynásobí všechny hodnoty v matici. Nižší multiplikátor = méně proplachovacího materiálu = méně odpadu, ale riziko zbytkové barvy v novém filamentu. Tlačítko <strong>Přepočítat</strong> hodnoty matice znovu vygeneruje na základě barevné odlišnosti mezi jednotlivými sloty.</p>
+        <p>Globální násobič, kterým se vynásobí všechny hodnoty v matici. Nižší multiplikátor = méně proplachovacího materiálu = méně odpadu, ale riziko zbytkové barvy v novém filamentu. Tlačítko <strong>Recalculate</strong> (přepočítat) hodnoty matice znovu vygeneruje na základě barevné odlišnosti mezi jednotlivými sloty.</p>
       </div>
 
       <div class="param" id="synchronize-filament-list-from-ace-pro">
         <div class="param-head">
-          <div class="param-title">Synchronize filament list from ACE Pro</div>
+          <div class="param-title">Synchronize filament list from ACE Pro<small>synchronizovat seznam filamentů z ACE Pro</small></div>
         </div>
         <p>Tlačítko (ikona vedle Čisticího objemu) stáhne aktuální obsazení slotů 1–4 přímo z připojeného ACE Pro do sliceru — program se "zeptá" tiskárny/ACE Pro, jaký materiál je fyzicky vložený v každém portu, a podle toho předvyplní filament sloty v projektu. <strong>Toto je jediný případ, kdy je profil filamentu skutečně synchronizován s tiskárnou</strong> — ale jde jen o informaci "co je v jakém slotu", ne o přenos celého teplotního profilu.</p>
       </div>
@@ -341,20 +349,20 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-filament">
       <div class="section-header">
-        <h2>2 — Záložka „Filament" (základní vlastnosti materiálu)</h2>
+        <h2>2 — Záložka Filament (základní vlastnosti materiálu)</h2>
       </div>
 
       <div class="tab-bar">
-        <span class="active">Filament</span><span>Chlazení</span><span>Přepsání nastavení</span><span>Filament G-code</span><span>Poznámky</span>
+        <span class="active">Filament</span><span>Cooling</span><span>Override</span><span>Filament G-code</span><span>Notes</span>
       </div>
 
-      <p>Toto je první a nejdůležitější záložka okna Nastavení materiálu. Obsahuje čtyři skupiny polí: Základní informace, Poměr průtoku a Pressure Advance, Teplota v tiskové komoře, Teplota tisku a Teplota podložky, a Omezení objemové rychlosti.</p>
+      <p>Toto je první a nejdůležitější záložka okna Filament Settings. Obsahuje čtyři skupiny polí: Basic Information, Flow Ratio and Pressure Advance, Chamber Temperature, Nozzle Temperature a Bed Temperature, a Volumetric Speed Limit.</p>
 
-      <h3 id="zakladni-informace">Základní informace</h3>
+      <h3 id="zakladni-informace">Basic Information (základní informace)</h3>
 
       <div class="param" id="typ-2">
         <div class="param-head">
-          <div class="param-title">Typ<small>Filament type</small></div>
+          <div class="param-title">Filament type<small>Typ</small></div>
           <span class="param-val">PLA</span>
         </div>
         <p>Základní kategorie materiálu (PLA, PETG, ABS, ASA, TPU...). Toto pole je obvykle <strong>zašedlé/needitovatelné</strong>, pokud profil vychází ze systémového přednastavení — typ se nastaví už při vytváření profilu (viz Sekce 1) a později se nemění, protože ovlivňuje, jaké další výchozí hodnoty program nabízí.</p>
@@ -362,15 +370,15 @@
 
       <div class="param" id="vyrobce-2">
         <div class="param-head">
-          <div class="param-title">Výrobce<small>Vendor / Manufacturer</small></div>
+          <div class="param-title">Vendor / Manufacturer<small>Výrobce</small></div>
           <span class="param-val">Anycubic</span>
         </div>
-        <p>Informační údaj o výrobci — pro vlastní profil C-Tech PLA+ by zde po vytvoření stálo "C-Tech" (zadané v dialogu Vytvořit filament). Nemá vliv na slicování, jen organizační/přehledová informace.</p>
+        <p>Informační údaj o výrobci — pro vlastní profil C-Tech PLA+ by zde po vytvoření stálo "C-Tech" (zadané v dialogu Create Filament). Nemá vliv na slicování, jen organizační/přehledová informace.</p>
       </div>
 
       <div class="param" id="prumer">
         <div class="param-head">
-          <div class="param-title">Průměr<small>Filament diameter</small></div>
+          <div class="param-title">Filament diameter<small>Průměr</small></div>
           <span class="param-val">1,75 mm</span>
         </div>
         <p>Průměr struny filamentu. Kobra X i naprostá většina spotřebitelských tiskárn používá standard <strong>1,75 mm</strong>. Neměňte, pokud nemáte explicitně filament jiného průměru (vzácné, hlavně u průmyslových tiskáren s 2,85 mm).</p>
@@ -379,7 +387,7 @@
 
       <div class="param" id="hustota">
         <div class="param-head">
-          <div class="param-title">Hustota<small>Filament density</small></div>
+          <div class="param-title">Filament density<small>Hustota</small></div>
           <span class="param-val">1,24 g/cm³ (PLA)</span>
         </div>
         <p>Hustota materiálu — používá se jen pro výpočet hmotnosti a odhadu spotřeby, nemá vliv na samotné slicování ani kvalitu tisku. PLA ≈ 1,24 g/cm³, PETG ≈ 1,27 g/cm³, ABS ≈ 1,05 g/cm³, TPU ≈ 1,20 g/cm³. Pro C-Tech PLA+ nechte hodnotu PLA, případně upravte podle datasheetu výrobce, pokud ho má k dispozici.</p>
@@ -387,7 +395,7 @@
 
       <div class="param" id="srazeni-xy">
         <div class="param-head">
-          <div class="param-title">Srážení (XY)<small>Shrinkage (XY) / Horizontal size compensation</small></div>
+          <div class="param-title">Shrinkage (XY) / Horizontal size compensation<small>Srážení (XY)</small></div>
           <span class="param-val">100 % (výchozí, bez kompenzace)</span>
         </div>
         <p>Procentuální přizpůsobení rozměrů modelu v rovině XY pro kompenzaci smršťování materiálu po vychladnutí. Hodnota <strong>100 %</strong> znamená žádnou kompenzaci — model se vytiskne v přesných rozměrech, jak je navržen. Hodnota nad 100 % (např. 101–102 %) model mírně zvětší, aby výsledný (smrštěný) rozměr odpovídal požadovanému — typicky potřeba u ABS/ASA, které se smršťují výrazněji než PLA.</p>
@@ -395,7 +403,7 @@
 
       <div class="param" id="srazeni-z">
         <div class="param-head">
-          <div class="param-title">Srážení (Z)<small>Shrinkage (Z)</small></div>
+          <div class="param-title">Shrinkage (Z)<small>Srážení (Z)</small></div>
           <span class="param-val">100 %</span>
         </div>
         <p>Stejný princip jako Srážení (XY), ale pro svislý rozměr (výšku) modelu. Materiály se obvykle smršťují v Z ose jinak (často méně) než v rovině XY, proto je toto oddělené pole.</p>
@@ -403,7 +411,7 @@
 
       <div class="param" id="filament-ramming-length">
         <div class="param-head">
-          <div class="param-title">Filament ramming length<small>Délka rammingu / Filament change length</small></div>
+          <div class="param-title">Filament ramming length<small>délka rammingu (filament change length)</small></div>
           <span class="param-val">10 mm</span>
         </div>
         <p><strong>Ramming</strong> je rychlé vytlačení malého množství filamentu těsně před výměnou nástroje/filamentu (jen u multi-material tisku s ACE Pro) — má za cíl "vyčistit" tvar konce filamentu a omezit prosakování (oozing) při výměně. Tato hodnota je <strong>relevantní jen pro multi-material tisk</strong> — pokud tisknete z jedné cívky, toto pole je při slicování fakticky nevyužito a nemusíte se jím zabývat.</p>
@@ -412,7 +420,7 @@
 
       <div class="param" id="cena">
         <div class="param-head">
-          <div class="param-title">Cena<small>Cost</small></div>
+          <div class="param-title">Cost<small>Cena</small></div>
           <span class="param-val">Kč/kg (volitelné)</span>
         </div>
         <p>Cena za kilogram filamentu — čistě informační údaj pro odhad cenu výtisku v náhledu (Preview). Nemá žádný vliv na slicování. Pro C-Tech PLA+ zadejte skutečnou cenu, za kterou jste cívku koupili.</p>
@@ -420,7 +428,7 @@
 
       <div class="param" id="teplota-meknuti">
         <div class="param-head">
-          <div class="param-title">Teplota měknutí<small>Softening temperature / Glass transition temperature (Tg)</small></div>
+          <div class="param-title">Softening temperature / Glass transition temperature (Tg)<small>Teplota měknutí</small></div>
           <span class="param-val">54–60 °C (PLA)</span>
         </div>
         <p>Teplota, při které materiál začíná měknout (přechází ze sklovité do pružné/měknoucí fáze) — odborně <strong>teplota skelného přechodu (Tg)</strong>. U PLA je to typicky 54–60 °C. Program tuto hodnotu používá hlavně jako bezpečný horní limit pro teplotu podložky a teplotu v komoře — pokud by byla teplota podložky vyšší než Teplota měknutí, spodní vrstvy výtisku by se mohly nežádoucně deformovat (boulit, měknout).</p>
@@ -429,7 +437,7 @@
 
       <div class="param" id="teplota-pri-necinnosti">
         <div class="param-head">
-          <div class="param-title">Teplota při nečinnosti<small>Idle temperature / Standby temperature offset</small></div>
+          <div class="param-title">Idle temperature / Standby temperature offset<small>Teplota při nečinnosti</small></div>
           <span class="param-val">0 °C (jednocívkový tisk)</span>
         </div>
         <p>Teplota, na kterou se tryska sníží, když je <strong>nečinná</strong> (nepoužívá se) — relevantní hlavně u multi-material tisku, kde jedna tryska čeká, zatímco druhá tiskne. Hodnota <strong>0 °C zde fakticky znamená "nepřepisovat", tedy zachovat běžnou pracovní teplotu</strong> u jednocívkového tisku, kde k nečinnosti trysky během tisku nedochází.</p>
@@ -437,17 +445,17 @@
 
       <div class="param" id="doporucena-teplota-trysky-min-max">
         <div class="param-head">
-          <div class="param-title">Doporučená teplota trysky — Min / Max<small>Recommended nozzle temperature range</small></div>
+          <div class="param-title">Recommended nozzle temperature range<small>Doporučená teplota trysky — Min / Max</small></div>
           <span class="param-val">190–230 °C (PLA)</span>
         </div>
         <p>Bezpečný rozsah teplot, ve kterém by se měla pohybovat skutečná pracovní teplota trysky (viz Teplota tisku níže). Toto pole slouží primárně jako <strong>orientační/varovný rozsah</strong> — pokud nastavíte teplotu tisku mimo tento rozsah, program vás na to může upozornit. Pro C-Tech PLA+ zadejte rozsah uvedený výrobcem na cívce nebo v datasheetu (typicky bývá širší nebo užší než výchozí Anycubic rozsah).</p>
       </div>
 
-      <h3 id="pomer-prutoku-a-pressure-advance">Poměr průtoku a Pressure Advance</h3>
+      <h3 id="pomer-prutoku-a-pressure-advance">Flow Ratio and Pressure Advance (poměr průtoku a pressure advance)</h3>
 
       <div class="param" id="pomer-prutoku">
         <div class="param-head">
-          <div class="param-title">Poměr průtoku<small>Flow ratio</small></div>
+          <div class="param-title">Flow ratio<small>Poměr průtoku</small></div>
           <span class="param-val">0,96–0,98 (typicky)</span>
         </div>
         <p>Globální korekce množství extrudovaného materiálu vzhledem k teoretickému výpočtu. Hodnota <strong>1,00</strong> by znamenala přesně teoretické množství; v praxi bývá lehce pod 1 (0,95–0,98), protože skutečná extruze je téměř vždy o trochu vyšší než ideální výpočet. Kalibruje se vytištěním jednostěnné krychle a změřením tloušťky stěny posuvným měřítkem — pokud je stěna silnější než nastavená šířka linie, snižte tento poměr.</p>
@@ -456,7 +464,7 @@
 
       <div class="param" id="povolit-predstih-tlaku">
         <div class="param-head">
-          <div class="param-title">Povolit předstih tlaku<small>Enable Pressure Advance</small></div>
+          <div class="param-title">Enable Pressure Advance<small>Povolit předstih tlaku</small></div>
           <span class="param-val">zapnuto (zaškrtnuto)</span>
         </div>
         <p>Hlavní vypínač funkce Pressure Advance (viz níže). Pro běžné používání doporučujeme nechat zapnuto — bez této kompenzace budou rohy modelu méně přesné (buď s kapkami přebytečného plastu, nebo propadlé).</p>
@@ -464,26 +472,26 @@
 
       <div class="param" id="predstih-tlaku">
         <div class="param-head">
-          <div class="param-title">Předstih tlaku<small>Pressure Advance value</small></div>
+          <div class="param-title">Pressure Advance value<small>Předstih tlaku</small></div>
           <span class="param-val">0,036–0,05 (direct drive PLA)</span>
         </div>
         <p>Hodnota, jak agresivně firmware predikuje a kompenzuje změny tlaku taveniny v hotendu při zrychlení/zpomalení trysky. Kobra X má <strong>direct drive</strong> extruder (filament jde přímo do hotendu, bez dlouhé Bowden trubice) — proto jsou hodnoty pro Kobru X nižší (cca 0,03–0,06) než byste našli v tutoriálech pro Bowden tiskárny (tam bývá 0,4–0,8). Vyšší hodnota = výraznější kompenzace.</p>
-        <div class="param-risk"><strong>Jak kalibrovat:</strong> Program nabízí v menu Kalibrace test Pressure Advance — vytiskne testovací vzorek s postupně narůstající hodnotou, vy vizuálně vyberete segment s nejostřejšími a nejrovnoměrnějšími rohy a tuto hodnotu zadáte sem.</div>
+        <div class="param-risk"><strong>Jak kalibrovat:</strong> Program nabízí v menu Calibration (kalibrace) test Pressure Advance — vytiskne testovací vzorek s postupně narůstající hodnotou, vy vizuálně vyberete segment s nejostřejšími a nejrovnoměrnějšími rohy a tuto hodnotu zadáte sem.</div>
       </div>
 
       <div class="param" id="povolit-adaptivni-pressure-advance-beta">
         <div class="param-head">
-          <div class="param-title">Povolit adaptivní pressure advance (beta)<small>Enable Adaptive Pressure Advance (beta)</small></div>
+          <div class="param-title">Enable Adaptive Pressure Advance (beta)<small>Povolit adaptivní pressure advance (beta)</small></div>
           <span class="param-val">vypnuto (experimentální)</span>
         </div>
         <p>Experimentální funkce, která by měla automaticky upravovat Pressure Advance v reálném čase podle aktuální rychlosti tisku, místo jedné fixní hodnoty. Je oznacena jako <strong>beta</strong> (nedokončená/testovací) — pro běžné používání doporučujeme nechat vypnuto, dokud nebude funkce plně stabilní.</p>
       </div>
 
-      <h3 id="teplota-v-tiskove-komore">Teplota v tiskové komoře</h3>
+      <h3 id="teplota-v-tiskove-komore">Chamber Temperature (teplota v tiskové komoře)</h3>
 
       <div class="param" id="teplota-v-komore">
         <div class="param-head">
-          <div class="param-title">Teplota v komoře<small>Chamber temperature</small></div>
+          <div class="param-title">Chamber temperature<small>Teplota v komoře</small></div>
           <span class="param-val">0 °C (Kobra X nemá vyhřívanou komoru)</span>
         </div>
         <p>Cílová teplota uzavřeného tiskového prostoru. <strong>Kobra X nemá aktivně vyhřívanou ani zcela uzavřenou komoru</strong> z výroby, takže toto pole zůstává na 0 (nepoužito), pokud si nepořídíte vlastní improvizovaný kryt s vyhříváním. Pro materiály jako ABS/ASA je vyhřívaná komora velkým přínosem pro omezení warpingu — ale jde o doplňkový hardware nad rámec standardní výbavy Kobry X.</p>
@@ -491,17 +499,17 @@
 
       <div class="param" id="aktivovat-rizeni-teploty">
         <div class="param-head">
-          <div class="param-title">Aktivovat řízení teploty<small>Activate temperature control / Support control chamber temperature</small></div>
+          <div class="param-title">Activate temperature control / Support control chamber temperature<small>Aktivovat řízení teploty</small></div>
           <span class="param-val">vypnuto (bez hardwarové podpory)</span>
         </div>
         <p>Zapnutím by program do G-code vložil příkaz, který čeká, až komora dosáhne cílové teploty, než začne tisknout. Toto nastavení má smysl pouze pokud má tiskárna fyzicky instalovaný a firmwarem podporovaný ohřev komory — pro standardní Kobru X nechte vypnuto.</p>
       </div>
 
-      <h3 id="teplota-tisku">Teplota tisku</h3>
+      <h3 id="teplota-tisku">Nozzle Temperature (teplota tisku)</h3>
 
       <div class="param" id="tryska-kalena-ocel-prvni-vrstva">
         <div class="param-head">
-          <div class="param-title">Tryska (Kalená ocel) — První vrstva<small>Nozzle temperature, first layer</small></div>
+          <div class="param-title">Nozzle temperature, first layer<small>Tryska (Kalená ocel) — První vrstva</small></div>
           <span class="param-val">220 °C (PLA/PLA+)</span>
         </div>
         <p>Teplota trysky při tisku úplně první vrstvy. Bývá o 5–10 °C vyšší než pracovní teplota ostatních vrstev — teplejší plast lépe "přivaří" první vrstvu k podložce. Popisek <strong>„Kalená ocel"</strong> (Hardened steel) odkazuje na materiál trysky — pokud byste měli jinou trysku (např. mosaznou nebo s rubínovým hrotem), program by zde mohl zobrazit samostatný řádek s jinými hodnotami pro daný typ trysky.</p>
@@ -509,20 +517,20 @@
 
       <div class="param" id="tryska-kalena-ocel-ostatni-vrstvy">
         <div class="param-head">
-          <div class="param-title">Tryska (Kalená ocel) — Ostatní vrstvy<small>Nozzle temperature, other layers</small></div>
+          <div class="param-title">Nozzle temperature, other layers<small>Tryska (Kalená ocel) — Ostatní vrstvy</small></div>
           <span class="param-val">210 °C (PLA+) / 220 °C (PLA Anycubic vzorový profil)</span>
         </div>
         <p>Pracovní teplota trysky pro všechny vrstvy po první. Pro C-Tech PLA+ zde zadejte teplotu doporučenou výrobcem na cívce — pokud výrobce udává rozsah (např. 200–220 °C), začněte uprostřed a doluďte podle kvality výtisku (vyšší teplota = lepší spojení vrstev, ale víc stringing; nižší = méně stringing, ale riziko špatné přilnavosti).</p>
         <div class="param-risk"><strong>Toto je nejčastější příčina ucpané trysky:</strong> Pokud nastavíte teplotu výrazně níž, než materiál potřebuje (např. PLA+ potřebuje 215 °C a vy nastavíte 195 °C, protože jste zkopírovali profil od jiného PLA), plast se nerozteče dostatečně a může se "zaseknout" v hrdle hotendu (heatbreak) — to je pravděpodobně to, co se stalo při vašem prvním pokusu.</div>
       </div>
 
-      <h3 id="teplota-podlozky-tri-typy-desek">Teplota podložky — tři typy desek</h3>
+      <h3 id="teplota-podlozky-tri-typy-desek">Bed Temperature (teplota podložky) — tři typy desek</h3>
 
       <p>Program zobrazuje <strong>tři samostatné řádky teploty podložky</strong> — pro každý typ tiskové desky, kterou lze na Kobru X nasadit, jinou hodnotu. Program podle vybrané desky v profilu tiskárny automaticky použije odpovídající řádek.</p>
 
       <div class="param" id="textured-pei-podlozka">
         <div class="param-head">
-          <div class="param-title">Textured PEI Podložka<small>Textured PEI plate</small></div>
+          <div class="param-title">Textured PEI plate<small>Textured PEI Podložka</small></div>
           <span class="param-val">60 °C (1. vrstva i ostatní)</span>
         </div>
         <p>Standardní textury povrch s PEI vrstvou — dodávaná s Kobrou X z výroby. Drsnější struktura zlepšuje přilnavost první vrstvy.</p>
@@ -530,7 +538,7 @@
 
       <div class="param" id="smooth-plate">
         <div class="param-head">
-          <div class="param-title">Smooth Plate<small>Smooth (hladká) podložka</small></div>
+          <div class="param-title">Smooth Plate<small>hladká podložka</small></div>
           <span class="param-val">60 °C (1. vrstva i ostatní)</span>
         </div>
         <p>Hladká varianta desky (pokud ji vlastníte jako příslušenství/upgrade) — dává hladší spodní povrch modelu, ale obvykle vyžaduje pečlivější kalibraci Z-offsetu pro správnou přilnavost.</p>
@@ -538,7 +546,7 @@
 
       <div class="param" id="cool-podlozka">
         <div class="param-head">
-          <div class="param-title">Cool Podložka<small>Cool plate</small></div>
+          <div class="param-title">Cool plate<small>Cool Podložka</small></div>
           <span class="param-val">35 °C (1. vrstva i ostatní)</span>
         </div>
         <p>Deska optimalizovaná pro materiály, které vyžadují nízkou teplotu podložky (typicky TPU nebo speciální flexibilní materiály) — nižší teplota zabraňuje přílišnému "lepení" měkkého materiálu k povrchu.</p>
@@ -546,23 +554,23 @@
 
       <div class="alert alert-info">
         <div class="alert-icon">💡</div>
-        <div><strong>Pro C-Tech PLA+ s běžnou PEI podložkou (výchozí na Kobře X):</strong> Upravujte jen řádek <strong>Textured PEI Podložka</strong>, zadejte teplotu dle doporučení výrobce na cívce (typicky 55–65 °C pro PLA+). Ostatní dva řádky (Smooth Plate, Cool Podložka) nechte na výchozích hodnotách, pokud tyto desky nevlastníte — program je použije pouze, pokud byste v profilu tiskárny vybrali odpovídající typ desky.</div>
+        <div><strong>Pro C-Tech PLA+ s běžnou PEI podložkou (výchozí na Kobře X):</strong> Upravujte jen řádek <strong>Textured PEI plate</strong> (Textured PEI podložka), zadejte teplotu dle doporučení výrobce na cívce (typicky 55–65 °C pro PLA+). Ostatní dva řádky (Smooth Plate, Cool plate) nechte na výchozích hodnotách, pokud tyto desky nevlastníte — program je použije pouze, pokud byste v profilu tiskárny vybrali odpovídající typ desky.</div>
       </div>
 
-      <h3 id="omezeni-objemove-rychlosti">Omezení objemové rychlosti</h3>
+      <h3 id="omezeni-objemove-rychlosti">Volumetric Speed Limit (omezení objemové rychlosti)</h3>
 
       <div class="param" id="maximalni-objemova-rychlost">
         <div class="param-head">
-          <div class="param-title">Maximální objemová rychlost<small>Max volumetric speed</small></div>
+          <div class="param-title">Max volumetric speed<small>Maximální objemová rychlost</small></div>
           <span class="param-val">13–18 mm³/s (PLA/PLA+, tryska 0,4 mm)</span>
         </div>
         <p>Maximální objem taveniny, který tryska/hotend dokáže zpracovat za sekundu (mm³/s). Pokud by zvolená kombinace rychlosti tisku, šířky linie a výšky vrstvy vyžadovala vyšší průtok, program <strong>automaticky zpomalí</strong> tisk, aby tuto hranici nepřekročil. Vyšší hodnota umožňuje rychlejší tisk bez automatického omezení, ale pokud nastavíte víc, než hotend skutečně zvládne, dojde k under-extrusion.</p>
-        <div class="param-risk"><strong>Jak kalibrovat:</strong> Program nabízí v menu Kalibrace test Max Volumetric Speed (Flow Rate) — vytiskne pyramidu/věž se zrychlujícím se průtokem, vy najdete bod, kde se kvalita začne zhoršovat (lesklý/matný přechod, slabší vrstvy), a tuto hraniční hodnotu zadáte sem, případně o 10–20 % nižší pro rezervu.</div>
+        <div class="param-risk"><strong>Jak kalibrovat:</strong> Program nabízí v menu Calibration (kalibrace) test Max Volumetric Speed (Flow Rate) — vytiskne pyramidu/věž se zrychlujícím se průtokem, vy najdete bod, kde se kvalita začne zhoršovat (lesklý/matný přechod, slabší vrstvy), a tuto hraniční hodnotu zadáte sem, případně o 10–20 % nižší pro rezervu.</div>
       </div>
 
       <div class="param" id="ramming-volumetric-speed">
         <div class="param-head">
-          <div class="param-title">Ramming volumetric speed<small>Ramming volumetric speed</small></div>
+          <div class="param-title">Ramming volumetric speed<small>objemová rychlost rammingu</small></div>
           <span class="param-val">-1 (= nepřepisovat, použít výchozí)</span>
         </div>
         <p>Objemová rychlost extruze konkrétně během procesu rammingu (viz Filament ramming length výše) — relevantní jen pro multi-material tisk. Hodnota <strong>-1</strong> je speciální "vypnuto/výchozí" stav — program použije svou interní výchozí hodnotu místo vlastní. Pro jednocívkový tisk toto pole nemá praktický dopad.</p>
@@ -576,20 +584,20 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-chlazeni">
       <div class="section-header">
-        <h2>3 — Záložka „Chlazení"</h2>
+        <h2>3 — Záložka Cooling (chlazení)</h2>
       </div>
 
       <div class="tab-bar">
-        <span>Filament</span><span class="active">Chlazení</span><span>Přepsání nastavení</span><span>Filament G-code</span><span>Poznámky</span>
+        <span>Filament</span><span class="active">Cooling</span><span>Override</span><span>Filament G-code</span><span>Notes</span>
       </div>
 
-      <p>Tato záložka řídí všechny ventilátory tiskárny — hlavní part-cooling ventilátor (chladí čerstvě vytištěný plast), případný přídavný ventilátor a box fan (pokud máte Kobru X v uzavřeném krytu s cirkulací vzduchu). Čtyři skupiny polí: Chlazení pro konkrétní vrstvu, Ventilátor chlazení části, Přídavný ventilátor P2, Box fan P3.</p>
+      <p>Tato záložka řídí všechny ventilátory tiskárny — hlavní part-cooling ventilátor (chladí čerstvě vytištěný plast), případný přídavný ventilátor a box fan (pokud máte Kobru X v uzavřeném krytu s cirkulací vzduchu). Čtyři skupiny polí: Layer Cooling, Part Cooling Fan, Auxiliary Fan P2, Box fan P3.</p>
 
-      <h3 id="chlazeni-pro-konkretni-vrstvu">Chlazení pro konkrétní vrstvu</h3>
+      <h3 id="chlazeni-pro-konkretni-vrstvu">Layer Cooling (chlazení pro konkrétní vrstvu)</h3>
 
       <div class="param" id="special-layers-first-layer">
         <div class="param-head">
-          <div class="param-title">Special layers — First layer ~<small>Close fan for the first X layers</small></div>
+          <div class="param-title">Close fan for the first X layers<small>Special layers — vypnout ventilátor pro prvních X vrstev</small></div>
           <span class="param-val">1 vrstva, 0 % rychlost ventilátoru</span>
         </div>
         <p>Definuje, že od vrstvy 1 do zadaného čísla (zde "1 Vrstva" = jen první vrstva) bude ventilátor nastaven na zadanou rychlost — v tomto případě <strong>0 %</strong>. Větrák je při první vrstvě vždy vypnutý bez ohledu na materiál — chlazení by ochlazovalo podložku a rušilo přilnavost čerstvě nanesené první vrstvy.</p>
@@ -597,17 +605,17 @@
 
       <div class="param" id="remaining-layers-after-layer">
         <div class="param-head">
-          <div class="param-title">Remaining layers — After layer<small>Full speed at layer</small></div>
+          <div class="param-title">Full speed at layer<small>Remaining layers — zbývající vrstvy od zadané vrstvy dál</small></div>
           <span class="param-val">0 vrstva, 100 % rychlost ventilátoru</span>
         </div>
         <p>Od jaké vrstvy dál (po "Special layers" bloku výše) se ventilátor rozjede na zadanou rychlost — zde 100 %. Kombinace obou řádků: vrstva 1 = 0 % větrák, od vrstvy 2 dál = 100 % (nebo lineární přechod mezi nimi, podle konkrétní logiky verze programu).</p>
       </div>
 
-      <h3 id="ventilator-chlazeni-casti-part-cooling-fan">Ventilátor chlazení části (part cooling fan)</h3>
+      <h3 id="ventilator-chlazeni-casti-part-cooling-fan">Part Cooling Fan (ventilátor chlazení části)</h3>
 
       <div class="param" id="min-rychlosti-ventilatoru-kalena-ocel">
         <div class="param-head">
-          <div class="param-title">Min rychlosti ventilátoru (Kalená ocel)<small>Min fan speed</small></div>
+          <div class="param-title">Min fan speed<small>Min rychlosti ventilátoru (Kalená ocel)</small></div>
           <span class="param-val">60 %</span>
         </div>
         <p>Spodní hranice, na kterou program nikdy nepůjde níž (mimo první vrstvu, kde je vždy 0 %) — i při pomalém tisku zůstane ventilátor alespoň na této rychlosti. Vázáno na typ trysky ("Kalená ocel" = Hardened steel, viz Sekce 2) — pokud máte jinou trysku, program by mohl nabídnout samostatný řádek.</p>
@@ -615,7 +623,7 @@
 
       <div class="param" id="max-rychlosti-ventilatoru-kalena-ocel">
         <div class="param-head">
-          <div class="param-title">Max rychlosti ventilátoru (Kalená ocel)<small>Max fan speed</small></div>
+          <div class="param-title">Max fan speed<small>Max rychlosti ventilátoru (Kalená ocel)</small></div>
           <span class="param-val">90 %</span>
         </div>
         <p>Horní hranice rychlosti ventilátoru. Program se mezi Min a Max plynule pohybuje podle toho, jak rychle se tiskne aktuální vrstva (viz Čas vrstvy níže) — pomalejší/menší vrstvy = ventilátor blíž k Max, rychlejší/velké vrstvy = blíž k Min.</p>
@@ -623,7 +631,7 @@
 
       <div class="param" id="cas-vrstvy-pro-min-max-rychlosti">
         <div class="param-head">
-          <div class="param-title">Čas vrstvy — pro Min/Max rychlosti<small>Layer time</small></div>
+          <div class="param-title">Layer time<small>Čas vrstvy — pro Min/Max rychlosti</small></div>
           <span class="param-val">Min: 80 s · Max: 8 s</span>
         </div>
         <p>Tyto dvě hodnoty čas vrstvy definují prahy pro výpočet rychlosti ventilátoru: pokud vrstva trvá <strong>80 s nebo déle</strong>, použije se Min rychlost ventilátoru (60 %) — vrstva má dost času vychladnout přirozeně, není třeba agresivní chlazení. Pokud vrstva trvá <strong>8 s nebo méně</strong>, použije se Max rychlost (90 %) — vrstva je tištěna rychle a potřebuje aktivní chlazení, aby ztuhla včas. Mezi těmito hodnotami program lineárně interpoluje.</p>
@@ -631,7 +639,7 @@
 
       <div class="param" id="ventilator-vzdy-zapnuty">
         <div class="param-head">
-          <div class="param-title">Ventilátor vždy zapnutý<small>Keep fan always on</small></div>
+          <div class="param-title">Keep fan always on<small>Ventilátor vždy zapnutý</small></div>
           <span class="param-val">zapnuto</span>
         </div>
         <p>Větrák nikdy neklesne na 0 % (kromě výslovného nastavení pro první vrstvu) — nikdy se nevypíná a znovu nerozjíždí od nuly, což je šetrnější k motoru ventilátoru a dává konzistentnější chlazení.</p>
@@ -639,7 +647,7 @@
 
       <div class="param" id="zpomalte-tisk-pro-lepsi-chlazeni-vrstvy">
         <div class="param-head">
-          <div class="param-title">Zpomalte tisk pro lepší chlazení vrstvy<small>Slow down for layer cooling / Slow printing down for better layer cooling</small></div>
+          <div class="param-title">Slow down for layer cooling / Slow printing down for better layer cooling<small>Zpomalte tisk pro lepší chlazení vrstvy</small></div>
           <span class="param-val">zapnuto</span>
         </div>
         <p>Hlavní vypínač funkce, která automaticky zpomalí tisk malých/rychlých vrstev (viz Minimální rychlost tisku níže), aby plast stihl ztuhnout. Klíčové pro úspěšný tisk malých detailů a tenkých věžiček.</p>
@@ -647,7 +655,7 @@
 
       <div class="param" id="nesnizovat-rychlost-vnejsich-sten">
         <div class="param-head">
-          <div class="param-title">Nesnižovat rychlost vnějších stěn<small>Don't slow down outer walls</small></div>
+          <div class="param-title">Don't slow down outer walls<small>Nesnižovat rychlost vnějších stěn</small></div>
           <span class="param-val">vypnuto</span>
         </div>
         <p>Pokud zaškrtnuto, funkce "Zpomalte tisk pro lepší chlazení vrstvy" se <strong>nebude</strong> aplikovat na vnější stěny modelu — vnější stěna si zachová svou nastavenou rychlost i v případě, že ostatní úseky vrstvy se zpomalují. Užitečné, pokud chcete maximální vizuální kvalitu vnějšího povrchu za každou cenu, i za cenu mírně horšího chlazení malých detailů.</p>
@@ -655,7 +663,7 @@
 
       <div class="param" id="minimalni-rychlost-tisku">
         <div class="param-head">
-          <div class="param-title">Minimální rychlost tisku<small>Min print speed</small></div>
+          <div class="param-title">Min print speed<small>Minimální rychlost tisku</small></div>
           <span class="param-val">20 mm/s</span>
         </div>
         <p>Spodní limit, na který program zpomalí při snaze dosáhnout minimálního času vrstvy. Zabraňuje extrémnímu zpomalení (např. na 1–2 mm/s), které by způsobilo přehřátí plastu na jednom místě, protože by tam tryska "postála" déle.</p>
@@ -663,7 +671,7 @@
 
       <div class="param" id="vynutit-chlazeni-pro-previsy-a-mosty">
         <div class="param-head">
-          <div class="param-title">Vynutit chlazení pro převisy a mosty<small>Force cooling for overhangs and bridges</small></div>
+          <div class="param-title">Force cooling for overhangs and bridges<small>Vynutit chlazení pro převisy a mosty</small></div>
           <span class="param-val">zapnuto</span>
         </div>
         <p>I u materiálů, kde je běžné chlazení nízké (např. PETG nebo ABS), se při tisku převisů a mostů dočasně <strong>vynutí</strong> zvýšené chlazení — rychlé ztuhnutí je v těchto krátkých kritických úsecích důležitější než riziko delaminace, protože jde o krátký úsek tisku, ne celý model.</p>
@@ -671,7 +679,7 @@
 
       <div class="param" id="prahova-hodnota-aktivace-chlazeni-previsu">
         <div class="param-head">
-          <div class="param-title">Prahová hodnota aktivace chlazení převisů<small>Overhang fan threshold</small></div>
+          <div class="param-title">Overhang fan threshold<small>Prahová hodnota aktivace chlazení převisů</small></div>
           <span class="param-val">50 %</span>
         </div>
         <p>Od jak velkého procenta "převisu" (jak málo je daný úsek podepřen materiálem pod ním) se aktivuje vynucené chlazení z řádku výše. Při 50 % se vynucené chlazení spustí, jakmile je úsek alespoň z poloviny nepodepřený.</p>
@@ -679,7 +687,7 @@
 
       <div class="param" id="rychlost-ventilatoru-pro-previsy-a-vnejsi-mosty">
         <div class="param-head">
-          <div class="param-title">Rychlost ventilátoru pro převisy a vnější mosty<small>Overhang / external bridge fan speed</small></div>
+          <div class="param-title">Overhang / external bridge fan speed<small>Rychlost ventilátoru pro převisy a vnější mosty</small></div>
           <span class="param-val">100 %</span>
         </div>
         <p>Konkrétní rychlost ventilátoru použitá při vynuceném chlazení převisů a vnějších (viditelných) mostů — typicky maximum pro nejrychlejší možné tuhnutí.</p>
@@ -687,7 +695,7 @@
 
       <div class="param" id="rychlost-ventilatoru-pro-vnitrni-mosty">
         <div class="param-head">
-          <div class="param-title">Rychlost ventilátoru pro vnitřní mosty<small>Internal bridge fan speed</small></div>
+          <div class="param-title">Internal bridge fan speed<small>Rychlost ventilátoru pro vnitřní mosty</small></div>
           <span class="param-val">-1 (= nepřepisovat, použít obecné chlazení)</span>
         </div>
         <p>Stejné jako výše, ale pro mosty <strong>uvnitř</strong> modelu (nejsou vidět zvenčí). Hodnota -1 znamená "nepoužívat speciální hodnotu", tedy ponechat normální chlazení dané vrstvy/úseku.</p>
@@ -695,13 +703,13 @@
 
       <div class="param" id="rychlost-ventilatoru-kontaktnich-vrstev-podper">
         <div class="param-head">
-          <div class="param-title">Rychlost ventilátoru kontaktních vrstev podpěr<small>Support interface fan speed</small></div>
+          <div class="param-title">Support interface fan speed<small>Rychlost ventilátoru kontaktních vrstev podpěr</small></div>
           <span class="param-val">-1 (= nepřepisovat)</span>
         </div>
         <p>Speciální rychlost chlazení pro kontaktní (interface) vrstvy podpěr — místo, kde se podpěra dotýká samotného modelu. Hodnota -1 znamená opět "použít výchozí/obecné nastavení".</p>
       </div>
 
-      <h3 id="pridavny-ventilator-chlazeni-p2-external-circulation">Přídavný ventilátor chlazení P2 (External circulation)</h3>
+      <h3 id="pridavny-ventilator-chlazeni-p2-external-circulation">External Circulation — Auxiliary Fan P2 (přídavný ventilátor chlazení)</h3>
 
       <div class="alert alert-info">
         <div class="alert-icon">💡</div>
@@ -712,7 +720,7 @@
 
       <div class="param" id="aktivovat-filtrovani-vzduchu">
         <div class="param-head">
-          <div class="param-title">Aktivovat filtrování vzduchu<small>Activate air filtration</small></div>
+          <div class="param-title">Activate air filtration<small>Aktivovat filtrování vzduchu</small></div>
           <span class="param-val">vypnuto (bez instalovaného filtru)</span>
         </div>
         <p>Zapíná řízení doplňkového ventilátoru pro filtraci vzduchu (odsávání výparů, relevantní hlavně u ABS/ASA). Vyžaduje fyzicky instalovaný box fan/filtr — pro standardní Kobru X bez tohoto příslušenství nechte vypnuto.</p>
@@ -720,7 +728,7 @@
 
       <div class="param" id="filtration-fan-speed-p3-behem-tisku-dokoncit-tisk">
         <div class="param-head">
-          <div class="param-title">Filtration fan speed P3 — Během tisku / Dokončit tisk<small>Filtration fan speed during print / at print finish</small></div>
+          <div class="param-title">Filtration fan speed — during print / at finish<small>P3 — během tisku / dokončit tisk</small></div>
           <span class="param-val">60 % / 80 %</span>
         </div>
         <p>Pokud je filtrace aktivována, určuje rychlost odsávacího ventilátoru během tisku (60 %) a po jeho dokončení (80 % — vyšší rychlost na konci pomáhá rychleji odvětrat zbytkové výpary z uzavřeného prostoru).</p>
@@ -728,7 +736,7 @@
 
       <div class="alert alert-tip">
         <div class="alert-icon">✓</div>
-        <div><strong>Pro C-Tech PLA+ a standardní Kobru X:</strong> Z celé této záložky reálně upravíte jen <strong>Min/Max rychlost ventilátoru</strong> (60–100 % je rozumný rozsah pro PLA materiály) a případně <strong>Minimální rychlost tisku</strong>, pokud tisknete hodně drobných detailů. Vše ostatní (přídavný ventilátor, box fan, vnitřní mosty) je relevantní jen při specifickém hardwarovém vybavení nebo materiálech jako ABS/ASA/PETG.</div>
+        <div><strong>Pro C-Tech PLA+ a standardní Kobru X:</strong> Z celé této záložky reálně upravíte jen <strong>Min/Max fan speed</strong> (min/max rychlost ventilátoru; 60–100 % je rozumný rozsah pro PLA materiály) a případně <strong>Min print speed</strong> (minimální rychlost tisku), pokud tisknete hodně drobných detailů. Vše ostatní (přídavný ventilátor, box fan, vnitřní mosty) je relevantní jen při specifickém hardwarovém vybavení nebo materiálech jako ABS/ASA/PETG.</div>
       </div>
 
       <a href="https://www.youtube.com/results?search_query=3D+print+cooling+fan+settings+PLA+explained&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print cooling fan settings PLA explained</a>
@@ -739,25 +747,25 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-prepsani">
       <div class="section-header">
-        <h2>4 — Záložka „Přepsání nastavení" (retrakce pro tento filament)</h2>
+        <h2>4 — Záložka Override (přepsání nastavení) — retrakce pro tento filament</h2>
       </div>
 
       <div class="tab-bar">
-        <span>Filament</span><span>Chlazení</span><span class="active">Přepsání nastavení</span><span>Filament G-code</span><span>Poznámky</span>
+        <span>Filament</span><span>Cooling</span><span class="active">Override</span><span>Filament G-code</span><span>Notes</span>
       </div>
 
       <div class="alert alert-info">
         <div class="alert-icon">💡</div>
-        <div><strong>Co znamená „Přepsání nastavení":</strong> Retrakce má svou <strong>globální</strong> hodnotu nastavenou v profilu tiskárny (Printer Settings). Tato záložka umožňuje pro konkrétní filament tuto globální hodnotu <strong>přepsat (override)</strong> — proto je u každého řádku zaškrtávací pole vlevo. Pokud je zaškrtnuto, hodnota z tohoto filament profilu "vyhraje" nad globálním nastavením tiskárny. Pokud není zaškrtnuto, řádek je zašedlý a použije se globální hodnota z profilu tiskárny.</div>
+        <div><strong>Co znamená „Override" (přepsání nastavení):</strong> Retrakce má svou <strong>globální</strong> hodnotu nastavenou v profilu tiskárny (Printer Settings). Tato záložka umožňuje pro konkrétní filament tuto globální hodnotu <strong>přepsat (override)</strong> — proto je u každého řádku zaškrtávací pole vlevo. Pokud je zaškrtnuto, hodnota z tohoto filament profilu "vyhraje" nad globálním nastavením tiskárny. Pokud není zaškrtnuto, řádek je zašedlý a použije se globální hodnota z profilu tiskárny.</div>
       </div>
 
-      <p>Na vašem screenshotu je zaškrtnuto jen <strong>Vzdálenost</strong> (0,8 mm) a <strong>Vzdálenost čištění</strong> (2 mm) — všechny ostatní řádky retrakce jsou nezaškrtnuté, tedy se použije globální nastavení z profilu tiskárny Anycubic Kobra X.</p>
+      <p>Na vašem screenshotu je zaškrtnuto jen <strong>Retraction length</strong> (vzdálenost, 0,8 mm) a <strong>Wipe distance</strong> (vzdálenost čištění, 2 mm) — všechny ostatní řádky retrakce jsou nezaškrtnuté, tedy se použije globální nastavení z profilu tiskárny Anycubic Kobra X.</p>
 
-      <h3 id="retrakce">Retrakce</h3>
+      <h3 id="retrakce">Retraction (retrakce)</h3>
 
       <div class="param" id="vzdalenost">
         <div class="param-head">
-          <div class="param-title">Vzdálenost<small>Retraction length</small></div>
+          <div class="param-title">Retraction length<small>Vzdálenost</small></div>
           <span class="param-val">0,8 mm (zaškrtnuto/přepsáno)</span>
         </div>
         <p>Kolik milimetrů filamentu se stáhne zpět při přesunu trysky bez tisku. Kobra X má <strong>direct drive</strong> extruder (filament jde přímo do hotendu) — proto je tato hodnota výrazně nižší než byste viděli v tutoriálech pro Bowden tiskárny (tam 4–7 mm). Pro direct drive je rozumný rozsah <strong>0,5–2 mm</strong>; hodnota 0,8 mm na vašem screenshotu je v tomto rozsahu zcela v pořádku.</p>
@@ -766,7 +774,7 @@
 
       <div class="param" id="vyska-z-hopu">
         <div class="param-head">
-          <div class="param-title">Výška Z-hopu<small>Z-hop height / Z lift</small></div>
+          <div class="param-title">Z-hop height / Z lift<small>Výška Z-hopu</small></div>
           <span class="param-val">0,4 mm (nezaškrtnuto = použít globální)</span>
         </div>
         <p>O kolik milimetrů se tryska nadzvedne v ose Z při přesunu bez tisku, aby se nezachytila o hrany již vytištěného modelu. Nezaškrtnuto = bere se hodnota z profilu tiskárny.</p>
@@ -774,15 +782,15 @@
 
       <div class="param" id="typ-z-hopu">
         <div class="param-head">
-          <div class="param-title">Typ Z-hopu<small>Z-hop type</small></div>
-          <span class="param-val">Sklon (Slope) / jiné: Normal, Spiral</span>
+          <div class="param-title">Z-hop type<small>Typ Z-hopu</small></div>
+          <span class="param-val">Slope (sklon) / jiné: Normal, Spiral</span>
         </div>
-        <p>Způsob, jakým se provádí pohyb nahoru/dolů při Z-hopu. <strong>Sklon</strong> (Slope) — tryska stoupá postupně po šikmé dráze současně s pohybem do strany (rychlejší, méně ostrých zastavení). <strong>Normal</strong> — čisté svislé zvednutí, pak teprve pohyb do strany. <strong>Spiral</strong> — spirálovitý pohyb nahoru, který může lépe zabránit zachycení o tenké svislé prvky.</p>
+        <p>Způsob, jakým se provádí pohyb nahoru/dolů při Z-hopu. <strong>Slope</strong> (sklon) — tryska stoupá postupně po šikmé dráze současně s pohybem do strany (rychlejší, méně ostrých zastavení). <strong>Normal</strong> — čisté svislé zvednutí, pak teprve pohyb do strany. <strong>Spiral</strong> — spirálovitý pohyb nahoru, který může lépe zabránit zachycení o tenké svislé prvky.</p>
       </div>
 
       <div class="param" id="zvednout-z-pouze-pod-pouze-nad">
         <div class="param-head">
-          <div class="param-title">Zvednout Z pouze pod / pouze nad<small>Only lift Z below / above</small></div>
+          <div class="param-title">Only lift Z below / above<small>Zvednout Z pouze pod / pouze nad</small></div>
           <span class="param-val">259 mm / 0 mm</span>
         </div>
         <p>Omezuje, v jakém rozsahu výšky Z se Z-hop vůbec aplikuje. „Zvednout Z pouze pod 259 mm" by znamenalo, že nad touto výškou se Z-hop nepoužije (užitečné třeba u vysokých tenkých modelů, kde nadbytečné Z-hopy nad určitou výškou už nejsou potřeba nebo by způsobily problém s prostorem nad modelem).</p>
@@ -790,7 +798,7 @@
 
       <div class="param" id="na-povrsich">
         <div class="param-head">
-          <div class="param-title">Na površích<small>On surfaces</small></div>
+          <div class="param-title">On surfaces<small>Na površích</small></div>
           <span class="param-val">Všechny povrchy / jiné možnosti</span>
         </div>
         <p>Na jakém typu povrchu se Z-hop provádí — typicky volba mezi "Všechny povrchy" (Z-hop při každém travel pohybu) nebo omezení jen na určité situace (např. jen při křížení perimetrů).</p>
@@ -798,7 +806,7 @@
 
       <div class="param" id="rychlost-retrakce">
         <div class="param-head">
-          <div class="param-title">Rychlost Retrakce<small>Retraction speed</small></div>
+          <div class="param-title">Retraction speed<small>Rychlost Retrakce</small></div>
           <span class="param-val">30 mm/s</span>
         </div>
         <p>Jak rychle se filament stahuje zpět při retrakci. Příliš pomalá rychlost = tavenina stihne vytékat i během stahování. Příliš rychlá = riziko grinding (ozubené kolečko extruderu prokluzuje a obrušuje filament). 30 mm/s je bezpečná střední hodnota pro PLA na direct drive.</p>
@@ -806,7 +814,7 @@
 
       <div class="param" id="rychlost-deretrakce">
         <div class="param-head">
-          <div class="param-title">Rychlost Deretrakce<small>Deretraction speed</small></div>
+          <div class="param-title">Deretraction speed<small>Rychlost Deretrakce</small></div>
           <span class="param-val">30 mm/s</span>
         </div>
         <p>Rychlost, jakou se filament posune zpět (deretrakce) před pokračováním v tisku po přesunu. Často nastavena stejně jako rychlost retrakce, ale lze i odlišit — pomalejší deretrakce může pomoct s drobnými "blob" artefakty na začátku linie po retrakci.</p>
@@ -814,7 +822,7 @@
 
       <div class="param" id="extra-vzdalenost-pri-navratu">
         <div class="param-head">
-          <div class="param-title">Extra vzdálenost při návratu<small>Extra restart distance / Extra length on restart</small></div>
+          <div class="param-title">Extra restart distance / Extra length on restart<small>Extra vzdálenost při návratu</small></div>
           <span class="param-val">0 mm</span>
         </div>
         <p>Po retrakci a přesunu, kolik filamentu navíc (oproti přesnému množství, které bylo staženo) se vytlačí při obnovení tisku. Kladná hodnota kompenzuje ztrátu tlaku v tavenině po retrakci — pomáhá, pokud vidíte mezery/slabý začátek linie po každém přesunu. Hodnota 0 je bezpečný výchozí start.</p>
@@ -822,7 +830,7 @@
 
       <div class="param" id="hranice-cestovni-vzdalenosti">
         <div class="param-head">
-          <div class="param-title">Hranice cestovní vzdálenosti<small>Retract when crossing perimeters / Minimum travel for retraction</small></div>
+          <div class="param-title">Retract when crossing perimeters / Minimum travel for retraction<small>Hranice cestovní vzdálenosti</small></div>
           <span class="param-val">1 mm</span>
         </div>
         <p>Pokud je travel pohyb (přesun bez tisku) kratší než tato hodnota, retrakce se vůbec nevykoná — u velmi krátkých přesunů (pod 1 mm) je riziko vytečení minimální, takže retrakce by jen zpomalovala tisk a zbytečně opotřebovávala extruder.</p>
@@ -830,7 +838,7 @@
 
       <div class="param" id="retrakce-pri-zmene-vrstvy">
         <div class="param-head">
-          <div class="param-title">Retrakce při změně vrstvy<small>Retract on layer change</small></div>
+          <div class="param-title">Retract on layer change<small>Retrakce při změně vrstvy</small></div>
           <span class="param-val">zapnuto</span>
         </div>
         <p>Provede retrakci při každém přechodu na novou vrstvu (Z pohyb nahoru). Zabraňuje vzniku malé kapky plastu na hraně mezi vrstvami. Doporučeno mít zapnuté.</p>
@@ -838,7 +846,7 @@
 
       <div class="param" id="ocistit-pri-retrakci">
         <div class="param-head">
-          <div class="param-title">Očistit při retrakci<small>Wipe while retracting</small></div>
+          <div class="param-title">Wipe while retracting<small>Očistit při retrakci</small></div>
           <span class="param-val">zapnuto</span>
         </div>
         <p>Tryska se při retrakci pohybuje krátce podél poslední vytištěné linie — "otírá" případnou kapku taveniny o povrch modelu (kde je méně vidět) místo do vzduchu. Zlepšuje vzhled povrchu v místě švu/retrakce.</p>
@@ -846,7 +854,7 @@
 
       <div class="param" id="vzdalenost-cisteni">
         <div class="param-head">
-          <div class="param-title">Vzdálenost čištění<small>Wipe distance</small></div>
+          <div class="param-title">Wipe distance<small>Vzdálenost čištění</small></div>
           <span class="param-val">2 mm (zaškrtnuto/přepsáno)</span>
         </div>
         <p>Délka dráhy, po které se tryska pohybuje při procesu "Očistit při retrakci". Hodnota 2 mm je standardní, dostatečná délka pro efektivní otření bez zbytečného prodloužení trasy.</p>
@@ -854,7 +862,7 @@
 
       <div class="param" id="delka-retrakce-pred-ocistenim">
         <div class="param-head">
-          <div class="param-title">Délka retrakce před očištěním<small>Retract before wipe</small></div>
+          <div class="param-title">Retract before wipe<small>Délka retrakce před očištěním</small></div>
           <span class="param-val">0 % (nezaškrtnuto)</span>
         </div>
         <p>Procentuální část celkové retrakce, která se provede <strong>ještě před</strong> pohybem čištění (wipe), zbytek až po něm. Pomáhá minimalizovat oozing rozdělením retrakce na dvě fáze kolem wipe pohybu.</p>
@@ -862,7 +870,7 @@
 
       <div class="alert alert-tip">
         <div class="alert-icon">✓</div>
-        <div><strong>Pro C-Tech PLA+:</strong> Hodnoty retrakce na vašem screenshotu (0,8 mm vzdálenost, 30 mm/s rychlost) jsou bezpečným startem pro jakékoliv PLA na direct drive Kobře X a není nutné je pro nový materiál měnit. Pokud byste přesto viděli pavučiny (stringing), zvyšte Vzdálenost po krocích 0,2 mm. Pokud vidíte mezery na začátku linií, zkuste přidat malou kladnou hodnotu do "Extra vzdálenost při návratu".</div>
+        <div><strong>Pro C-Tech PLA+:</strong> Hodnoty retrakce na vašem screenshotu (0,8 mm vzdálenost, 30 mm/s rychlost) jsou bezpečným startem pro jakékoliv PLA na direct drive Kobře X a není nutné je pro nový materiál měnit. Pokud byste přesto viděli pavučiny (stringing), zvyšte <strong>Retraction length</strong> (vzdálenost) po krocích 0,2 mm. Pokud vidíte mezery na začátku linií, zkuste přidat malou kladnou hodnotu do "Extra vzdálenost při návratu".</div>
       </div>
 
       <a href="https://www.youtube.com/results?search_query=Anycubic+Slicer+Next+retraction+settings+direct+drive&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Slicer Next retraction settings direct drive</a>
@@ -873,18 +881,18 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-gcode">
       <div class="section-header">
-        <h2>5 — Záložky „Filament G-code" a „Poznámky"</h2>
+        <h2>5 — Záložky Filament G-code a Notes (poznámky)</h2>
       </div>
 
       <div class="tab-bar">
-        <span>Filament</span><span>Chlazení</span><span>Přepsání nastavení</span><span class="active">Filament G-code</span><span>Poznámky</span>
+        <span>Filament</span><span>Cooling</span><span>Override</span><span class="active">Filament G-code</span><span>Notes</span>
       </div>
 
-      <h3 id="filament-zacatek-g-kod-filament-konec-g-kod">Filament Začátek G-kód / Filament Konec G-kód</h3>
+      <h3 id="filament-zacatek-g-kod-filament-konec-g-kod">Filament Start G-code / Filament End G-code (filament začátek/konec g-kód)</h3>
 
       <div class="param" id="filament-zacatek-g-kod">
         <div class="param-head">
-          <div class="param-title">Filament Začátek G-kód<small>Filament start G-code</small></div>
+          <div class="param-title">Filament start G-code<small>Filament Začátek G-kód</small></div>
           <span class="param-val">; filament start gcode (výchozí prázdné)</span>
         </div>
         <p>Vlastní G-code příkazy, které se vloží <strong>při každém přechodu na tento filament</strong> — tedy buď na úplném začátku tisku, nebo (u multi-material) při každé výměně na tento konkrétní materiál. Liší se od Start G-code v profilu tiskárny (ten se vykoná jen jednou na úplném začátku celého tisku, bez ohledu na filament).</p>
@@ -892,7 +900,7 @@
 
       <div class="param" id="filament-konec-g-kod">
         <div class="param-head">
-          <div class="param-title">Filament Konec G-kód<small>Filament end G-code</small></div>
+          <div class="param-title">Filament end G-code<small>Filament Konec G-kód</small></div>
           <span class="param-val">; filament end gcode (výchozí prázdné)</span>
         </div>
         <p>Stejný princip, ale příkazy se vykonají při opuštění tohoto filamentu (konec tisku s ním, nebo výměna na jiný materiál u multi-material tisku).</p>
@@ -903,11 +911,11 @@
         <div><strong>Pro běžné používání nezasahujte do těchto polí.</strong> Vkládání vlastních G-code příkazů vyžaduje přesnou znalost syntaxe a může způsobit neočekávané chování tiskárny (např. příkaz, který očekává parametr, ale nedostane ho, nebo příkaz nekompatibilní s firmwarem Kobry X). Pro 99 % uživatelů — včetně vytvoření profilu pro C-Tech PLA+ — zůstávají tato pole prázdná/výchozí.</div>
       </div>
 
-      <h3 id="poznamky">Poznámky</h3>
+      <h3 id="poznamky">Notes (poznámky)</h3>
 
       <div class="param" id="poznamky-2">
         <div class="param-head">
-          <div class="param-title">Poznámky<small>Filament notes</small></div>
+          <div class="param-title">Filament notes<small>Poznámky</small></div>
           <span class="param-val">volné textové pole</span>
         </div>
         <p>Čistě informační textové pole bez vlivu na slicování — místo, kam si můžete zapsat cokoliv užitečného o tomto konkrétním profilu/filamentu. Pro C-Tech PLA+ se sem vyplatí zapsat třeba datum nákupu, číslo šarže (batch), nebo poznámku typu "potřebuje sušení po 2 týdnech na vzduchu" — cokoliv, co byste si jinak nezapamatovali.</p>
@@ -935,12 +943,12 @@
             <td>Extruder "cvaká" nebo přeskakuje (klikání kroků), tisk najednou přestane extrudovat plast i když se hlava pohybuje</td>
           </tr>
           <tr>
-            <td>Poměr průtoku (Flow ratio) nastaven příliš vysoko v kombinaci s nízkou teplotou</td>
+            <td>Flow ratio (poměr průtoku) nastaven příliš vysoko v kombinaci s nízkou teplotou</td>
             <td>Program žádá víc materiálu, než kolik hotend při dané teplotě stihne roztavit a protlačit</td>
             <td>Extruder vydává zvuk skřípání/cvakání, na výtisku vidíte přerušovanou extruzi</td>
           </tr>
           <tr>
-            <td>Maximální objemová rychlost nastavena vyšší, než hotend skutečně zvládá</td>
+            <td>Max volumetric speed (maximální objemová rychlost) nastavena vyšší, než hotend skutečně zvládá</td>
             <td>Program nezpomalí tisk tam, kde by měl — žádá rychlejší průtok, než je fyzicky možný</td>
             <td>Postupné zhoršování kvality při rychlejších úsecích tisku (např. výplň), nedostatečná extruze</td>
           </tr>
@@ -959,14 +967,14 @@
 
       <div class="alert alert-warn">
         <div class="alert-icon">⚠</div>
-        <div><strong>Nejpravděpodobnější scénář pro váš případ:</strong> Pokud jste zkopírovali profil od jiného PLA a jen přejmenovali na "C-Tech PLA+" bez úpravy teploty, ale C-Tech PLA+ ve skutečnosti potřebuje vyšší teplotu než zkopírovaný profil nabízel — to by přesně vedlo k nedostatečnému roztavení a ucpání. <strong>První věc, kterou zkontrolujte:</strong> zda teplota trysky ve vašem profilu (Sekce 2 — Teplota tisku) odpovídá doporučení na cívce C-Tech, ne hodnotě zkopírované z jiného profilu.</div>
+        <div><strong>Nejpravděpodobnější scénář pro váš případ:</strong> Pokud jste zkopírovali profil od jiného PLA a jen přejmenovali na "C-Tech PLA+" bez úpravy teploty, ale C-Tech PLA+ ve skutečnosti potřebuje vyšší teplotu než zkopírovaný profil nabízel — to by přesně vedlo k nedostatečnému roztavení a ucpání. <strong>První věc, kterou zkontrolujte:</strong> zda teplota trysky ve vašem profilu (Sekce 2 — Nozzle Temperature) odpovídá doporučení na cívce C-Tech, ne hodnotě zkopírované z jiného profilu.</div>
       </div>
 
       <h3 id="jak-bezpecne-postupovat-pri-tvorbe-noveho-profilu-shrnuti">Jak bezpečně postupovat při tvorbě nového profilu (shrnutí)</h3>
 
       <ol class="steps">
         <li><strong>Zjistěte doporučenou teplotu z cívky/datasheetu výrobce</strong> — vždy ji nastavte přesně podle výrobce, ne podle podobného materiálu jiné značky</li>
-        <li><strong>Nechte Poměr průtoku na výchozí hodnotě</strong> (obvykle 0,95–1,00) při prvním testovacím tisku — kalibrujte až po úspěšném prvním tisku</li>
+        <li><strong>Nechte Flow ratio (poměr průtoku) na výchozí hodnotě</strong> (obvykle 0,95–1,00) při prvním testovacím tisku — kalibrujte až po úspěšném prvním tisku</li>
         <li><strong>Nechte retrakci na hodnotách zkopírovaných ze stejné kategorie materiálu</strong> (PLA→PLA, PETG→PETG) — retrakce se mezi podobnými materiály obvykle nemusí výrazně lišit</li>
         <li><strong>Vytiskněte malý testovací model</strong> (kalibrační krychle, jednoduchý tvar) před plnohodnotným tiskem — pokud se objeví problém, zjistíte to na malém modelu, ne uprostřed hodinového tisku</li>
         <li><strong>Sledujte zvuk extruderu během prvních minut tisku</strong> — pravidelné cvakání/skřípání je jasný signál, že je potřeba okamžitě zastavit a zkontrolovat teplotu</li>

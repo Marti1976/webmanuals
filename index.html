@@ -78,6 +78,16 @@
             background-clip: text;
         }
 
+        @media (max-width: 768px) {
+            header {
+                padding-top: 80px;
+                margin-bottom: 40px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
         .subtitle {
             font-size: 1.1rem;
             color: var(--text-muted);
@@ -396,6 +406,17 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 217, 255, 0.2);
         }
+
+        @media (max-width: 768px) {
+            /* Na mobilu zůstávají fixed, ale výš */
+            .firecracker-btn {
+                top: 12px;
+                right: 12px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.4rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -418,6 +439,7 @@
 
 <!-- FIRECRACKER BUTTON -->
 <button class="firecracker-btn" onclick="openAgeModal()" title="Sekce 18+">🧨</button>
+
         <header>
             <h1>Webový Manuál</h1>
             <p class="subtitle">Centrální rozcestník pro vaši dokumentaci, pravidla a průvodce. Vyberte požadovaný manuál pro pokračování.</p>
@@ -464,7 +486,7 @@
                 </a>
 
                 <!-- KARTA MANUÁLU 3: Raspberry Pi -->
-                <a href="CloudeCode/00_CLDE_index.html" class="card">
+                <a href="CloudeCode/00_CLDECO_index.html" class="card">
                     <div class="card-header">
                         <span class="card-icon">📲</span>
                         <span class="card-badge">Aktivní</span>
@@ -472,6 +494,17 @@
                     <h2 class="card-title">Claude CODE</h2>
                     <p class="card-desc">Manuál pro Cloude Code, od Claude 😁.</p>
                     <span class="card-link">Otevřít manuál <span>→</span></span>
+                </a>
+				
+                <!-- KARTA MANUÁLU: Claude -->
+                <a href="Cloude/00_CLDE_index.html" class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🤖</span>
+                        <span class="card-badge">Aktivní</span>
+                    </div>
+                    <h2 class="card-title">Claude</h2>
+                    <p class="card-desc">Návody, tipy a triky pro práci s Claude AI. Jak maximalizovat potenciál.</p>
+                    <span class="card-link">Otevřít návod <span>→</span></span>
                 </a>
 				
 				<!-- KARTA MANUÁLU 3: Raspberry Pi -->

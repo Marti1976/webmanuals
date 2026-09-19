@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08c Filamenty rozšíření — 3D Tisk průvodce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0d0f14;
+    --surface:  #13161e;
+    --card:     #181c27;
+    --border:   #252b3b;
+    --accent:   #e8a020;
+    --accent2:  #f0c050;
+    --tuf:      #c8860a;
+    --green:    #3ecf76;
+    --red:      #e85050;
+    --blue:     #4a9eff;
+    --text:     #d8dce8;
+    --muted:    #6e7590;
+    --mono:     'IBM Plex Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
+
+  /* ── SIDEBAR (žádná položka aktivní — je to mimo hlavní navigaci) ── */
+  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
+  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .sidebar-product { display: flex; align-items: center; gap: 10px; }
+  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
+  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
+  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+  .sb-back { padding: 15px 20px 5px; }
+  .sb-back a { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--accent2); font-family: var(--mono); font-size: 12px; padding: 9px 12px; text-decoration: none; transition: all .2s; }
+  .sb-back a:hover { border-color: var(--accent); background: rgba(232,160,32,.06); }
+  .sb-search { padding: 15px 20px 5px; }
+  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
+  .sb-search input:focus { border-color: var(--accent); }
+  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
+  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
+  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
+  .nav-item-text { flex: 1; min-width: 0; }
+  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
+  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
+  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
+
+  /* ── MAIN ── */
+  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
+
+  /* ── HERO ── */
+  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
+  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
+  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
+  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
+  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 680px; }
+
+  /* ── LAYOUT ── */
+  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
+
+  /* ── SECTIONS ── */
+  .section { margin: 44px 0; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
+  h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
+
+  /* ── PARAM BLOK ── */
+  .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
+  .param:hover { border-color: var(--accent); }
+  .param-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
+  .param-title { font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent2); font-weight: 600; }
+  .param-title small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  .param-val { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
+  .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .param p + p { margin-top: 6px; }
+
+  /* ── ALERTS ── */
+  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
+  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
+  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  thead tr { background: var(--surface); }
+  th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
+  td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
+
+  /* ── STEP LIST ── */
+  .steps { list-style: none; counter-reset: step; margin: 16px 0; }
+  .steps li { position: relative; padding: 10px 0 10px 42px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 8px; width: 26px; height: 26px; background: rgba(232,160,32,.12); border: 1px solid var(--accent); color: var(--accent2); font-family: var(--mono); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .steps li strong { color: var(--accent2); }
+
+  /* ── SEQUENCE FLOW (kalibrační pořadí) ── */
+  .seq-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 24px 0; }
+  .seq-step { background: var(--card); border: 1px solid var(--accent); padding: 12px 18px; font-family: var(--mono); font-size: 12.5px; color: var(--accent2); text-align: center; min-width: 110px; }
+  .seq-step .num { display: block; font-size: 10px; color: var(--accent); margin-bottom: 4px; }
+  .seq-arrow { color: var(--accent); font-size: 18px; padding: 0 10px; flex-shrink: 0; }
+
+  /* ── TOWER DIAGRAM (kalibrační věž vizualizace) ── */
+  .tower-diagram { background: var(--surface); border: 1px solid var(--border); padding: 20px; margin: 20px 0; font-family: var(--mono); font-size: 12.5px; }
+  .tower-seg { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--border); }
+  .tower-seg:last-child { border-bottom: none; }
+  .tower-seg .seg-bar { flex: 1; background: rgba(232,160,32,.15); border: 1px solid rgba(232,160,32,.4); padding: 6px 10px; color: var(--text); }
+  .tower-seg.optimal .seg-bar { background: rgba(62,207,118,.18); border-color: var(--green); color: #c8f5d8; font-weight: 600; }
+  .tower-seg .seg-val { width: 70px; flex-shrink: 0; color: var(--accent2); text-align: right; }
+
+  /* ── FORMULA BOX ── */
+  .formula { background: var(--surface); border-left: 3px solid var(--blue); padding: 14px 18px; margin: 16px 0; font-family: var(--mono); font-size: 14px; color: #cfe4ff; }
+
+  /* ── YT LINK ── */
+  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
+  .yt-link:hover { opacity: .8; }
+
+  /* ── REF LINK ── */
+  .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
+  .ref-link:hover { background: rgba(74,158,255,.14); }
+
+  /* ── PAGE NAV ── */
+  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .pn a:hover { color: var(--accent); }
+  .pn .nx { margin-left: auto; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } .seq-flow { flex-direction: column; align-items: stretch; } .seq-arrow { transform: rotate(90deg); padding: 4px 0; text-align: center; } }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR (mimo hlavní navigaci — žádná položka aktivní, jen tlačítko Zpět) ── -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-product">
+      <span class="sidebar-tuf-badge">3D</span>
+      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
+    </div>
+  </div>
+
+  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
+
+  <div class="nav-group-label">Základní sekce</div>
+  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
+  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
+  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
+  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
+  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
+  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
+  <ul class="nav-subs">
+    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
+    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
+    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
+  </ul>
+  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
+  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
+  <div class="nav-item" style="cursor: default;">
+    <span class="nav-num">08</span>
+    <span class="nav-item-text">Filamenty</span>
+  </div>
+  <ul class="nav-subs">
+    <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
+    <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item ">08b · Kalibrace filamentu</a></li>
+    <li><a href="08c_3D_Filament_next.html" class="nav-sub-item active">08c · Filamenty rozšíření</a></li>
+  </ul>
+  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
+  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
+  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
+  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
+  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
+
+  <div class="nav-group-label">Ostatní přílohy</div>
+  <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
+    <span class="nav-item-text">Výběr příloh</span>
+  </a>
+  <div class="nav-group-label">Oblíbené odkazy</div>
+  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
+    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
+    <span class="nav-item-text">Výběr odkazů</span>
+  </a>
+  <div style="height:32px;flex-shrink:0;"></div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main-content">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="logo-row">
+        <span class="tuf-badge">PŘÍLOHA</span>
+        <span class="ver-badge">POKROČILÁ KALIBRACE</span>
+      </div>
+      <h1>Filamenty — rozšíření a pokročilá témata</h1>
+      <p>Pokračování v tématech 3D tisku se zaměřením na pokročilé techniky, experimentální materiály a specifické problémy.</p>
+    </div>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- ── PAGE NAV ── -->
+    <div class="pn">
+      <a href="08b_3D_kalibrace_filamentu.html">← 08b · Kalibrace filamentu</a>
+      <a href="09_3D_modely_cad.html" class="nx">09 · 3D Modely &amp; CAD →</a>
+    </div>
+</main>
+
+<script>
+const searchInput = document.getElementById('sb-search-input');
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const q = e.target.value.trim();
+    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
+  }
+});
+</script>
+</body>
+</html>
