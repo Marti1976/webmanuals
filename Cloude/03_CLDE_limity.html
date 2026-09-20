@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLDE · Limity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="03">
+
+<div id="sidebar"></div>
+
+<div class="container">
+  <div class="main-content">
+
+    <div class="page-header">
+      <div class="page-num">DÍL 03</div>
+      <h1>Limity — jak jich dosáhnout a co s tím</h1>
+    </div>
+
+    <div class="content">
+
+      <h2>Co jsou limity zpráv?</h2>
+      <p>
+        Claude omezuje počet zpráv, které můžeš poslat v daném čase. Toto omezení se liší podle tvého plánu:
+      </p>
+
+      <div class="callout">
+        <div class="callout-title">Jak to funguje</div>
+        <p>Limit zpráv není počet slov — je to počet <strong>konverzací nebo otázek</strong> které můžeš poslat. Každá tvá zpráva a odpověď Claudea se počítá.</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Plán</th>
+            <th>Limit zpráv</th>
+            <th>Okno (čas obnovení)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free</strong></td>
+            <td>5 zpráv na 24 hodin</td>
+            <td>Obnovuje se každých 24 hodin</td>
+          </tr>
+          <tr>
+            <td><strong>Pro</strong></td>
+            <td>Neomezené zprávy</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Max</strong></td>
+            <td>Neomezené zprávy</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Co se stane když dosáhneš limitu?</h2>
+      <p>
+        Když vyčerpáš svůj denní limit (Free plán):
+      </p>
+
+      <ul class="tl">
+        <li><strong>Zpráva zablokuje</strong> — Claude ti řekne, že jsi dosáhl limitu</li>
+        <li><strong>Musíš čekat</strong> — Obnovuje se za 24 hodin od prvního použití</li>
+        <li><strong>Nebo upgradni</strong> — Přejdi na <strong>Pro plán</strong> a máš neomezené zprávy</li>
+      </ul>
+
+      <div class="callout gn">
+        <div class="callout-title">Tip</div>
+        <p>Pokud jsi blízko limitu, aplikace ti to oznamuje. Počítadlo vidíš přímo v chatu.</p>
+      </div>
+
+      <h2>Praktické tipy — jak efektivně pracovat s limity</h2>
+
+      <h3>1. Psát jasné otázky hned poprvé</h3>
+      <p>
+        Vaše první zpráva je nejdůležitější. Čím je konkrétnější a úplnější, tím lépe Claude porozumí a vrátí ti lepší odpověď napoprvé. Ušetříš si spoustu opravných zpráv.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">❌</div>
+          <div>
+            <h4>Špatně — příliš vágní</h4>
+            <p>"Napiš mi email"</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">✓</div>
+          <div>
+            <h4>Dobře — konkrétní a úplné</h4>
+            <p>"Napiš mi profesionální email panu Novákovi, kde ho pozvu na schůzku o novém projektu. Schůzka je v pátek v 14:00 v naší kanceláři. Tón: formální ale přátelský."</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>2. Neposílej zbytečné navazující zprávy</h3>
+      <p>
+        Každá zpráva, kterou pošleš, se počítá. Místo toho, aby ses ptal:
+      </p>
+
+      <div class="cb">
+        <div class="cb-label">Špatně — 3 zprávy</div>
+        <pre>
+Uživatel: "Napiš email"
+Uživatel: "Přidej comma"
+Uživatel: "Udělej to kratší"
+        </pre>
+      </div>
+
+      <p>Místo toho pošli jednu zprávu se všim co chceš:</p>
+
+      <div class="cb">
+        <div class="cb-label">Dobře — 1 zpráva</div>
+        <pre>
+Uživatel: "Napiš krátký email, přidej čárku a urči tón na profesionální"
+        </pre>
+      </div>
+
+      <h3>3. Používej projekty pro sdílený kontext</h3>
+      <p>
+        Pokud pracuješ na jednom tématu, vytvoř <strong>projekt</strong> a vkládej soubory jednou. Claude si pamatuje kontext a nemusíš znovu vysvětlovat co dělás.
+      </p>
+
+      <h3>4. Edituj svou zprávu místo posílání nové</h3>
+      <p>
+        V aplikaci můžeš kliknout na <strong>editační ikonu</strong> u své zprávy a změnit ji. Claude se pak zeptá znovu. Nemusíš posílat "ahoj, jinak řekl jsem...".
+      </p>
+
+      <h3>5. Vkládej text, nikdy PDF nebo snímky</h3>
+      <p>
+        Když máš soubor, <strong>kopíruj text přímo</strong> do chatu místo přetahování obrázku. Text je mnohem efektivnější a Claude ho lépe zpracuje.
+      </p>
+
+      <div class="callout rd">
+        <div class="callout-title">Varování</div>
+        <p>Snímek obrazovky s textem není levnější — je vlastně dražší. Model musí obrázek zpracovat na text a chybuje více.</p>
+      </div>
+
+      <h2>Kdy se limit obnovuje?</h2>
+      <p>
+        <strong>Free plán:</strong> Limit se obnovuje každých <strong>24 hodin</strong> od tvé první zprávy v daném dni. Pokud jsi poslal první zprávu v pondělí v 14:00, limit se obnoví v úterý v 14:00.
+      </p>
+
+      <div class="callout bl">
+        <div class="callout-title">Příklad</div>
+        <p>
+          Pondělí 14:00 - pošleš zprávu (limit: 4/5 zbývá)<br>
+          Pondělí 15:00 - pošleš dalších 4 zprávy (limit: 0/5, BLOKOVÁNO)<br>
+          Úterý 14:00 - limit se obnoví na 5/5
+        </p>
+      </div>
+
+      <h2>Jak kontrolovat svůj zbývající limit?</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div>
+            <h4>Otevři Claude.com nebo aplikaci</h4>
+            <p>Nová konverzace nebo projekt.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div>
+            <h4>Podívej se do levého horního rohu (web) nebo nahoře (app)</h4>
+            <p>Tam je tlačítko tvého profilu s počítadlem.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div>
+            <h4>Klikni na profil</h4>
+            <p>Vidíš svůj plán a zbývající limity.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Co dělat když limitů dojde?</h2>
+
+      <h3>Možnost 1: Počkej 24 hodin</h3>
+      <p>Pokud máš Free plán a nechceš investovat peníze, prostě si počkej. Limit se sám obnoví.</p>
+
+      <h3>Možnost 2: Upgradni na Pro</h3>
+      <p>
+        <strong>Pro plán stojí $20 měsíčně</strong> a dává ti <strong>neomezené zprávy</strong>. Nemusíš si dělat starosti s počítáním.
+      </p>
+
+      <h3>Možnost 3: Kombinuj strategie</h3>
+      <p>
+        Zůstaň na Free, ale pracuj lépe — piš jasné otázky napoprvé, kombinuj více otázek do jedné zprávy, používej projekty. Ušetříš až 50% zpráv.
+      </p>
+
+      <h2>Mýty a pravda o limitech</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Mýtus</th>
+            <th>Pravda</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"Delší zpráva = víc zpráv spočítáno"</td>
+            <td>Ne. Počítá se jeden klik/odeslání bez ohledu na délku. Delší zpráva je <strong>lepší</strong>.</td>
+          </tr>
+          <tr>
+            <td>"Limit se obnovuje v půlnoc"</td>
+            <td>Ne. Obnovuje se <strong>24 hodin od vaší první zprávy</strong>.</td>
+          </tr>
+          <tr>
+            <td>"Nečinnost chrání limit"</td>
+            <td>Ano. Pokud si dáš pauzu na oběd, limit se neznižuje — jen nepoužíváš.</td>
+          </tr>
+          <tr>
+            <td>"Chyby od Claudea se počítají"</td>
+            <td>Ano. Každá zpráva, i když udělal chybu, se počítá v limitu.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Shrnutí — 5 pravidel pro práci s limity</h2>
+
+      <ul class="tl">
+        <li><strong>Psej jasně napoprvé</strong> — Úplná a konkrétní otázka ušetří opravy.</li>
+        <li><strong>Kombinuj dotazy do jedné zprávy</strong> — "Napiš a) ... b) ..." místo 3 separat zpráv.</li>
+        <li><strong>Edituj místo nových zpráv</strong> — Klikni na ikonu a uprav co chceš.</li>
+        <li><strong>Používej projekty</strong> — Jednou nahraj soubory, pak se ptej bez opakování kontextu.</li>
+        <li><strong>Vkládej text, ne snímky</strong> — Text je efektivnější.</li>
+      </ul>
+
+      <div class="callout gn">
+        <div class="callout-title">Finální tip</div>
+        <p>Pokud používáš Claude denně, <strong>Pro plán za $20 se brzy zaplatí</strong> lepší produktivitou a bez stresu. Ale i na Free plánu můžeš pracovat chytře.</p>
+      </div>
+
+    </div>
+
+    <div id="pn"></div>
+
+    <footer>
+      <p>CLDE průvodce v češtině · <a href="https://claude.com" target="_blank">claude.com ↗</a> · <a href="https://docs.anthropic.com" target="_blank">dokumentace ↗</a></p>
+      <p>verze 1.0 · únor 2026</p>
+    </footer>
+
+  </div>
+</div>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>
