@@ -133,6 +133,18 @@
   .alert-warn  { border: 1px solid var(--red);    background: rgba(232,80,80,.07); }
   .alert-gold  { border: 1px solid var(--tuf);    background: rgba(200,134,10,.1); }
 
+  /* ── SERIES LINKS (další návody) ── */
+  .series-links { margin-top: 48px; margin-bottom: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .series-card { background: linear-gradient(135deg, rgba(232,160,32,.12) 0%, rgba(232,160,32,.04) 100%); border: 1px solid var(--tuf); padding: 24px 20px; border-radius: 2px; display: flex; flex-direction: column; gap: 12px; transition: all .2s; }
+  .series-card:hover { border-color: var(--accent); background: linear-gradient(135deg, rgba(232,160,32,.16) 0%, rgba(232,160,32,.07) 100%); }
+  .series-card-top { display: flex; align-items: center; justify-content: space-between; }
+  .series-card-icon { font-size: 32px; flex-shrink: 0; }
+  .series-card-badge { font-family: var(--mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 4px 8px; background: rgba(232,160,32,.1); }
+  .series-card-title { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: #fff; margin-top: 8px; }
+  .series-card-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .series-card-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--blue); text-decoration: none; margin-top: 4px; font-weight: 500; }
+  .series-card-link:hover { color: var(--accent2); }
+
   /* ── YT ── */
   .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin-top: 8px; }
   .yt-link:hover { opacity: .8; }
@@ -218,6 +230,31 @@
   </div>
 
   <div class="wrapper">
+
+    <!-- ═══════════════════════════════════════
+         DALŠÍ NÁVODY V SÉRII
+    ════════════════════════════════════════ -->
+    <div class="series-links">
+      <div class="series-card">
+        <div class="series-card-top">
+          <div class="series-card-icon">📐</div>
+          <span class="series-card-badge">CAD NÁVOD</span>
+        </div>
+        <div class="series-card-title">Manuál Fusion 360</div>
+        <p class="series-card-desc">Kompletní průvodce CAD/CAM programem Fusion 360 — od rozhrání přes skici a modelování až po sestavy, výkresy a výrobu.</p>
+        <a href="https://marti1976.github.io/webmanuals/3D/fusion/00_F360_index.html" target="_blank" class="series-card-link">Otevřít návod →</a>
+      </div>
+
+      <div class="series-card">
+        <div class="series-card-top">
+          <div class="series-card-icon">📏</div>
+          <span class="series-card-badge">BLENDER NÁVOD</span>
+        </div>
+        <div class="series-card-title">Manuál Blender</div>
+        <p class="series-card-desc">Kompletní průvodce Blender programem — od rozhrání přes skici a modelování až po textury, renderování a výrobu.</p>
+        <a href="https://marti1976.github.io/webmanuals/3D/blender/00_BLE_index.html" target="_blank" class="series-card-link">Otevřít návod →</a>
+      </div>
+    </div>
 
     <!-- ═══════════════════════════════════════
          SEKCE 1 — KDE STAHOVAT
