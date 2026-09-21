@@ -87,24 +87,112 @@ td.ac{color:var(--ac);font-weight:500;}td.gn{color:var(--gn);}td.mu{color:var(--
         <li><a href="#prehled-planu">Přehled plánů</a></li>
         <li><a href="#api-sazby">API sazby za tokeny</a></li>
         <li><a href="#jak-usetrit">Jak ušetřit náklady</a></li>
-        <li><a href="#prompt-caching">→ Prompt Caching</a></li>
-        <li><a href="#batch-api">→ Batch API</a></li>
-        <li><a href="#model-vyber">→ Výběr modelu</a></li>
-        <li><a href="#session-hygiena">→ Session hygiena</a></li>
         <li><a href="#realne-naklady">Reálné náklady</a></li>
-        <li><a href="#open-source">Open Source program</a></li>
       </ul>
     </div>
-    <div class="sb-ch"><a href="02_CLDECO_instalace.html" class="sb-ch-link"><span class="n">02</span>Instalace</a><ul class="sb-subs"><li><a href="02_CLDECO_instalace.html#prehled">Přehled rozhraní</a></li><li><a href="02_CLDECO_instalace.html#cli">CLI instalace</a></li><li><a href="02_CLDECO_instalace.html#desktop">Desktop app</a></li><li><a href="02_CLDECO_instalace.html#ide">IDE rozšíření</a></li><li><a href="02_CLDECO_instalace.html#autentizace">Autentizace</a></li></ul></div>
-    <div class="sb-ch"><a href="03_CLDECO_nastaveni.html" class="sb-ch-link"><span class="n">03</span>Nastavení</a><ul class="sb-subs"><li><a href="03_CLDECO_nastaveni.html#struktura">Struktura souborů</a></li><li><a href="03_CLDECO_nastaveni.html#claude-md">CLAUDE.md</a></li><li><a href="03_CLDECO_nastaveni.html#settings">settings.json</a></li><li><a href="03_CLDECO_nastaveni.html#env">ENV proměnné</a></li><li><a href="03_CLDECO_nastaveni.html#model">Výběr modelu</a></li></ul></div>
-    <div class="sb-ch"><a href="04_CLDECO_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a><ul class="sb-subs"><li><a href="04_CLDECO_zaklady.html#prvni-session">První session</a></li><li><a href="04_CLDECO_zaklady.html#slash-prikazy">Slash příkazy</a></li><li><a href="04_CLDECO_zaklady.html#one-shot">One-shot</a></li><li><a href="04_CLDECO_zaklady.html#plan-mode">Plan vs Auto</a></li><li><a href="04_CLDECO_zaklady.html#workflow">Workflow</a></li><li><a href="04_CLDECO_zaklady.html#git">Git</a></li></ul></div>
-    <div class="sb-ch"><a href="05_CLDECO_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a><ul class="sb-subs"><li><a href="05_CLDECO_pokrocile.html#mcp">MCP servery</a></li><li><a href="05_CLDECO_pokrocile.html#hooks">Hooks</a></li><li><a href="05_CLDECO_pokrocile.html#vlastni-prikazy">Vlastní příkazy</a></li><li><a href="05_CLDECO_pokrocile.html#skills">Skills</a></li><li><a href="05_CLDECO_pokrocile.html#worktrees">Worktrees</a></li><li><a href="05_CLDECO_pokrocile.html#thinking">Extended thinking</a></li></ul></div>
-    <div class="sb-ch"><a href="06_CLDECO_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a><ul class="sb-subs"><li><a href="06_CLDECO_agenti.html#co-jsou-agenti">Co jsou agenti</a></li><li><a href="06_CLDECO_agenti.html#subagenti">Subagenti</a></li><li><a href="06_CLDECO_agenti.html#paralelni">Paralelní</a></li><li><a href="06_CLDECO_agenti.html#cloud-routines">Cloud Routines</a></li></ul></div>
-    <div class="sb-ch"><a href="07_CLDECO_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a><ul class="sb-subs"><li><a href="07_CLDECO_bezpecnost.html#rizika">Rizika</a></li><li><a href="07_CLDECO_bezpecnost.html#opravneni">Oprávnění</a></li><li><a href="07_CLDECO_bezpecnost.html#secrets">Secrets</a></li></ul></div>
-    <div class="sb-ch"><a href="08_CLDECO_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy</a><ul class="sb-subs"><li><a href="08_CLDECO_zalohy.html#git-sit">Git záchranná síť</a></li><li><a href="08_CLDECO_zalohy.html#obnova">Obnova</a></li></ul></div>
-    <div class="sb-ch"><a href="09_CLDECO_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD</a><ul class="sb-subs"><li><a href="09_CLDECO_cicd.html#github-actions">GitHub Actions</a></li></ul></div>
-    <div class="sb-ch"><a href="10_CLDECO_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a><ul class="sb-subs"><li><a href="10_CLDECO_troubleshooting.html#instalace-err">Instalační chyby</a></li><li><a href="10_CLDECO_troubleshooting.html#claude-bloudí">Claude bloudí</a></li></ul></div>
-    <div class="sb-ch"><a href="11_CLDECO_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a><ul class="sb-subs"><li><a href="11_CLDECO_odkazy.html#cesky">Česky</a></li><li><a href="11_CLDECO_odkazy.html#nastroje">Nástroje</a></li></ul></div>
+    <div class="sb-ch">
+      <a href="02_CLDECO_instalace_nastaveni.html" class="sb-ch-link"><span class="n">02</span>Instalace &amp; Nastavení</a>
+      <ul class="sb-subs">
+        <li><a href="02_CLDECO_instalace_nastaveni.html#prehled">Přehled rozhraní</a></li>
+        <li><a href="02_CLDECO_instalace_nastaveni.html#cli">CLI instalace</a></li>
+        <li><a href="02_CLDECO_instalace_nastaveni.html#desktop">Desktop aplikace</a></li>
+        <li><a href="02_CLDECO_instalace_nastaveni.html#claude-md">CLAUDE.md</a></li>
+        <li><a href="02_CLDECO_instalace_nastaveni.html#settings">settings.json</a></li>
+        <li><a href="02_CLDECO_instalace_nastaveni.html#opravneni">Oprávnění</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="03_CLDECO_limity.html" class="sb-ch-link"><span class="n">03</span>Limity &amp; Efektivita</a>
+      <ul class="sb-subs">
+        <li><a href="03_CLDECO_limity.html#principy">Jak se spalují tokeny</a></li>
+        <li><a href="03_CLDECO_limity.html#ctiri-opravy">Čtyři klíčové opravy</a></li>
+        <li><a href="03_CLDECO_limity.html#master-prompt">Master Prompt</a></li>
+        <li><a href="03_CLDECO_limity.html#pet-navyku">Pět návyků</a></li>
+        <li><a href="03_CLDECO_limity.html#model-strategie">Strategie modelů</a></li>
+        <li><a href="03_CLDECO_limity.html#cache-zalezitost">Co ruší cache</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="04_CLDECO_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a>
+      <ul class="sb-subs">
+        <li><a href="04_CLDECO_zaklady.html#prvni-session">První session</a></li>
+        <li><a href="04_CLDECO_zaklady.html#slash-prikazy">Slash příkazy</a></li>
+        <li><a href="04_CLDECO_zaklady.html#one-shot">One-shot příkazy</a></li>
+        <li><a href="04_CLDECO_zaklady.html#plan-mode">Plan vs Auto mode</a></li>
+        <li><a href="04_CLDECO_zaklady.html#workflow">Základní workflow</a></li>
+        <li><a href="04_CLDECO_zaklady.html#git">Práce s Gitem</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="05_CLDECO_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a>
+      <ul class="sb-subs">
+        <li><a href="05_CLDECO_pokrocile.html#mcp">MCP servery</a></li>
+        <li><a href="05_CLDECO_pokrocile.html#hooks">Hooks</a></li>
+        <li><a href="05_CLDECO_pokrocile.html#vlastni-prikazy">Vlastní příkazy</a></li>
+        <li><a href="05_CLDECO_pokrocile.html#skills">Skills</a></li>
+        <li><a href="05_CLDECO_pokrocile.html#worktrees">Git worktrees</a></li>
+        <li><a href="05_CLDECO_pokrocile.html#thinking">Extended thinking</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="06_CLDECO_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a>
+      <ul class="sb-subs">
+        <li><a href="06_CLDECO_agenti.html#co-jsou-agenti">Co jsou agenti</a></li>
+        <li><a href="06_CLDECO_agenti.html#subagenti">Subagenti</a></li>
+        <li><a href="06_CLDECO_agenti.html#paralelni">Paralelní zpracování</a></li>
+        <li><a href="06_CLDECO_agenti.html#cloud-routines">Cloud Routines</a></li>
+        <li><a href="06_CLDECO_agenti.html#monitoring">Monitoring &amp; náklady</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="07_CLDECO_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a>
+      <ul class="sb-subs">
+        <li><a href="07_CLDECO_bezpecnost.html#rizika">Rizika a hrozby</a></li>
+        <li><a href="07_CLDECO_bezpecnost.html#opravneni">Oprávnění nástrojů</a></li>
+        <li><a href="07_CLDECO_bezpecnost.html#secrets">Ochrana secrets</a></li>
+        <li><a href="07_CLDECO_bezpecnost.html#audit">Audit &amp; logging</a></li>
+        <li><a href="07_CLDECO_bezpecnost.html#tymy">Pro týmy</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="08_CLDECO_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy před změnou</a>
+      <ul class="sb-subs">
+        <li><a href="08_CLDECO_zalohy.html#proc">Proč zálohovat</a></li>
+        <li><a href="08_CLDECO_zalohy.html#git-sit">Git záchranná síť</a></li>
+        <li><a href="08_CLDECO_zalohy.html#checkpoint">Checkpointy</a></li>
+        <li><a href="08_CLDECO_zalohy.html#obnova">Obnova po chybě</a></li>
+        <li><a href="08_CLDECO_zalohy.html#checklist">Checklist</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="09_CLDECO_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD &amp; Automatizace</a>
+      <ul class="sb-subs">
+        <li><a href="09_CLDECO_cicd.html#uvod">Úvod do CI/CD</a></li>
+        <li><a href="09_CLDECO_cicd.html#github-actions">GitHub Actions</a></li>
+        <li><a href="09_CLDECO_cicd.html#code-review">Automatické review</a></li>
+        <li><a href="09_CLDECO_cicd.html#testy">Generování testů</a></li>
+        <li><a href="09_CLDECO_cicd.html#routines">Cloud Routines</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="10_CLDECO_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a>
+      <ul class="sb-subs">
+        <li><a href="10_CLDECO_troubleshooting.html#instalace-err">Instalační chyby</a></li>
+        <li><a href="10_CLDECO_troubleshooting.html#auth-err">Autentizace</a></li>
+        <li><a href="10_CLDECO_troubleshooting.html#limity">Limity &amp; rate limiting</a></li>
+        <li><a href="10_CLDECO_troubleshooting.html#debug">Debugging sessions</a></li>
+        <li><a href="10_CLDECO_troubleshooting.html#pomoc">Kde hledat pomoc</a></li>
+      </ul>
+    </div>
+    <div class="sb-ch">
+      <a href="11_CLDECO_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a>
+      <ul class="sb-subs">
+        <li><a href="11_CLDECO_odkazy.html#cesky">Česky</a></li>
+        <li><a href="11_CLDECO_odkazy.html#anglicky">Anglicky</a></li>
+        <li><a href="11_CLDECO_odkazy.html#nastroje">Nástroje</a></li>
+        <li><a href="11_CLDECO_odkazy.html#komunita">Komunita</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
 <main class="main">
@@ -326,7 +414,7 @@ export MAX_THINKING_TOKENS=8000
 
 <div class="pn">
   <a href="00_CLDECO_index.html">← Obsah</a>
-  <a href="02_CLDECO_instalace.html" class="nx">02 · Instalace →</a>
+  <a href="02_CLDECO_instalace_nastaveni.html" class="nx">02 · Instalace &amp; Nastavení →</a>
 </div>
 </main>
 </body>

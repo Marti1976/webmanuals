@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CLDE · Průvodce Claude Code</title>
+<title>CLDECO · Průvodce Claude Code</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -44,10 +44,10 @@
 <body>
 <div class="hero">
   <div class="hero-label">průvodce · claude code · 2026</div>
-  <h1>CLDE<br><span>Průvodce</span></h1>
-  <p class="hero-sub">Kompletní průvodce Claude Code v češtině — od výběru plánu a instalace přes pokročilé agenty až po bezpečnost, zálohy a CI/CD automatizaci. Pro začátečníky i pokročilé.</p>
+  <h1>CLDECO<br><span>Průvodce</span></h1>
+  <p class="hero-sub">Kompletní průvodce Claude Code v češtině — od výběru plánu a instalace přes nastavení, práci s omezeními a základní příkazy až po pokročilé agenty a bezpečnost. Pro začátečníky i pokročilé.</p>
   <div class="hero-meta">
-    <span>11 dílů</span><span>Česky</span><span>Aktualizováno květen 2026</span><span>Sonnet 4.6 / Opus 4.7</span>
+    <span>11+ dílů</span><span>Česky</span><span>Aktualizováno září 2026</span><span>Sonnet 4.6 / Opus 4.7</span>
   </div>
 </div>
 
@@ -57,25 +57,26 @@
 <a href="01_CLDECO_salary.html" class="card hl">
   <div class="card-num">DÍL 01</div>
   <h3>Ceny &amp; Plány</h3>
-  <p>Měsíční předplatné vs. tokeny. Plány Pro, Max, Team. Prompt caching, Batch API, výběr modelu — jak reálně ušetřit 40–93 % s konkrétními čísly a kalkulacemi.</p>
-  <div class="card-tags"><span class="tag">Pro $20</span><span class="tag">Max $200</span><span class="tag">API tokeny</span><span class="tag">úspora</span></div>
+  <p>Měsíční předplatné vs. API tokeny. Plány Pro, Max, Team. Prompt caching, Batch API, výběr modelu — jak reálně ušetřit s konkrétními čísly.</p>
+  <div class="card-tags"><span class="tag">Pro/Max</span><span class="tag">API tokeny</span><span class="tag">Batch API</span><span class="tag">úspora</span></div>
   <div class="arrow">→</div>
 </a>
 
-<a href="02_CLDECO_instalace.html" class="card">
-  <div class="card-num">DÍL 02</div>
-  <h3>Instalace</h3>
-  <p>Native installer, Homebrew, WinGet. Desktop app pro macOS a Windows. VS Code a JetBrains pluginy. Webové rozhraní. Řešení nejčastějších problémů.</p>
-  <div class="card-tags"><span class="tag">macOS</span><span class="tag">Linux</span><span class="tag">Windows</span><span class="tag">VS Code</span></div>
+<a href="02_CLDECO_instalace_nastaveni.html" class="card hl">
+  <div class="card-num">DÍL 02-03</div>
+  <h3>Instalace & Nastavení</h3>
+  <p>Native installer, Desktop app, VS Code a JetBrains pluginy. CLAUDE.md, settings.json, oprávnění příkazů, ENV proměnné. Správné nastavení = efektivnější práce.</p>
+  <div class="card-tags"><span class="tag">CLI instalace</span><span class="tag">Desktop app</span><span class="tag">CLAUDE.md</span><span class="tag">permissions</span></div>
   <div class="arrow">→</div>
 </a>
 
-<a href="03_CLDECO_nastaveni.html" class="card">
+<a href="03_CLDECO_limity.html" class="card hl">
   <div class="card-num">DÍL 03</div>
-  <h3>Nastavení</h3>
-  <p>CLAUDE.md — nejdůležitější soubor projektu. settings.json, ENV proměnné, oprávnění nástrojů. Hierarchie globální vs. projektová konfigurace s příklady.</p>
-  <div class="card-tags"><span class="tag">CLAUDE.md</span><span class="tag">settings.json</span><span class="tag">oprávnění</span></div>
+  <h3>Limity & Efektivita</h3>
+  <p>Jak funguje cache, tokenů a jak se spalují. Čtyři opravy a pět návyků které ti ušetří čas a peníze. Jaké modely kdy používat a jak psát efektivně.</p>
+  <div class="card-tags"><span class="tag">cache</span><span class="tag">tokeny</span><span class="tag">efektivita</span><span class="tag">modely</span></div>
   <div class="arrow">→</div>
+  <span class="badge">NOVÉ</span>
 </a>
 
 <a href="04_CLDECO_zaklady.html" class="card">
@@ -113,7 +114,7 @@
 
 <a href="08_CLDECO_zalohy.html" class="card">
   <div class="card-num">DÍL 08</div>
-  <h3>Zálohy před změnou</h3>
+  <h3>Zálohy & Recovery</h3>
   <p>Git jako záchranná síť — branch strategie a checkpointy. Jak obnovit kód po chybě agenta. Automatické zálohy. Recovery postupy krok za krokem.</p>
   <div class="card-tags"><span class="tag">git</span><span class="tag">backup</span><span class="tag">recovery</span><span class="tag">checkpoint</span></div>
   <div class="arrow">→</div>
@@ -122,7 +123,7 @@
 
 <a href="09_CLDECO_cicd.html" class="card">
   <div class="card-num">DÍL 09</div>
-  <h3>CI/CD &amp; Automatizace</h3>
+  <h3>CI/CD & Automatizace</h3>
   <p>Claude Code v GitHub Actions. Automatické code review, generování testů, dokumentace. Cloud Routines na schedule. Integrace do existujícího pipeline.</p>
   <div class="card-tags"><span class="tag">GitHub Actions</span><span class="tag">pipeline</span><span class="tag">schedule</span><span class="tag">webhooks</span></div>
   <div class="arrow">→</div>
@@ -132,7 +133,7 @@
 <a href="10_CLDECO_troubleshooting.html" class="card">
   <div class="card-num">DÍL 10</div>
   <h3>Troubleshooting</h3>
-  <p>Instalační a autentizační chyby. Limity a rate limiting. Debugging sessions — kdy Claude bloudí a jak ho nasměrovat. Kde hledat pomoc a hlásit bugy.</p>
+  <p>Instalační a autentizační chyby. Limity a rate limiting. Debugging sessions — kdy Claude bloudí a jak ho nasměrovat. Kde hledat pomoc.</p>
   <div class="card-tags"><span class="tag">chyby</span><span class="tag">limity</span><span class="tag">debug</span><span class="tag">pomoc</span></div>
   <div class="arrow">→</div>
   <span class="badge">NOVÉ</span>
@@ -140,17 +141,17 @@
 
 <a href="11_CLDECO_odkazy.html" class="card">
   <div class="card-num">DÍL 11</div>
-  <h3>Odkazy &amp; Zdroje</h3>
-  <p>Česká komunita, videa a návody v češtině. Oficální dokumentace. Nástroje pro monitoring nákladů. GitHub repozitáře, newslettery a novinky.</p>
-  <div class="card-tags"><span class="tag">česky</span><span class="tag">videa</span><span class="tag">komunita</span><span class="tag">nástroje</span></div>
+  <h3>Odkazy & Zdroje</h3>
+  <p>Česká komunita, videa a návody. Oficální dokumentace. Nástroje pro monitoring nákladů. GitHub repozitáře, newslettery a novinky.</p>
+  <div class="card-tags"><span class="tag">česky</span><span class="tag">videa</span><span class="tag">komunita</span><span class="tag">zdroje</span></div>
   <div class="arrow">→</div>
   <span class="badge">NOVÉ</span>
 </a>
 
 </div>
 <footer>
-  <p>CLDE průvodce v češtině · <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank">oficální dokumentace ↗</a> · <a href="https://claude.com/pricing" target="_blank">aktuální ceník ↗</a></p>
-  <p>verze 2.0 · květen 2026</p>
+  <p>CLDECO průvodce v češtině · <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank">oficální dokumentace ↗</a> · <a href="https://claude.ai/pricing" target="_blank">aktuální ceník ↗</a></p>
+  <p>verze 1.0 · září 2026</p>
 </footer>
 </body>
 </html>
