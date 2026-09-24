@@ -1,201 +1,49 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>06 · Agenti — CLDE průvodce</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06 · Agenti — CLDECO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
-.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;scrollbar-color:var(--br) transparent;}
-.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
-.sb-home:hover{background:var(--sf);}
-.sb-home::before{content:'←';font-size:0.85rem;}
-.sb-chapters{padding:6px 0 24px;}
-.sb-ch{border-bottom:1px solid rgba(30,37,48,0.6);}
-.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
-.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,0.025);}
-.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
-.sb-ch-link .n{font-size:0.57rem;opacity:.45;min-width:18px;}
-.sb-ch-link.active .n{opacity:1;}
-.sb-subs{padding:2px 0 6px 36px;list-style:none;}
-.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:0.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
-.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
-.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
-.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
-.ph-num{font-family:'IBM Plex Mono',monospace;font-size:0.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
-.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
-.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
-h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
-h3{font-family:'IBM Plex Mono',monospace;font-size:0.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
-p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
-strong{color:var(--hd);font-weight:600;}
-em{color:var(--ac);font-style:italic;}
-.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
-.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
-.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
-.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
-.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
-.callout.gn .callout-title{color:var(--gn);}
-.callout.rd .callout-title{color:var(--rd);}
-.callout.bl .callout-title{color:var(--bl);}
-.callout p{font-size:.86rem;margin:0;}
-.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
-.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
-.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre;}
-.cb pre .c{color:var(--mu);}
-.cb pre .k{color:var(--bl);}
-.cb pre .v{color:var(--gn);}
-.cb pre .a{color:var(--ac);}
-code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
-.tw{overflow-x:auto;margin:20px 0;}
-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
-th{background:var(--sf);color:var(--mu);text-align:left;padding:9px 13px;border:1px solid var(--br);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:.63rem;}
-td{padding:9px 13px;border:1px solid var(--br);color:var(--tx);vertical-align:top;}
-tr:hover td{background:rgba(255,255,255,.013);}
-.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
-.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
-.tl li:last-child{border-bottom:none;}
-.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
-.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
-.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
-.pn a:hover{color:var(--ac);}
-.pn .nx{margin-left:auto;}
-@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<nav class="sidebar">
-  <a href="00_CLDECO_index.html" class="sb-home">Zpět na obsah</a>
-  <div class="sb-chapters">
-    <div class="sb-ch">
-      <a href="01_CLDECO_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a>
-      <ul class="sb-subs">
-        <li><a href="01_CLDECO_salary.html#platebni-modely">Platební modely</a></li>
-        <li><a href="01_CLDECO_salary.html#prehled-planu">Přehled plánů</a></li>
-        <li><a href="01_CLDECO_salary.html#api-sazby">API sazby za tokeny</a></li>
-        <li><a href="01_CLDECO_salary.html#jak-usetrit">Jak ušetřit náklady</a></li>
-        <li><a href="01_CLDECO_salary.html#realne-naklady">Reálné náklady</a></li>
-      </ul>
+<body data-page="06">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "co-jsou-agenti", "num": "6.1", "name": "Co jsou agenti a jak fungují" },
+    { "id": "subagenti", "num": "6.2", "name": "Subagenti" },
+    { "id": "paralelni", "num": "6.3", "name": "Paralelní zpracování" },
+    { "id": "agent-teams", "num": "6.4", "name": "Agent Teams" },
+    { "id": "cloud-routines", "num": "6.5", "name": "Cloud Routines" },
+    { "id": "monitoring", "num": "6.6", "name": "Monitoring nákladů" },
+    { "id": "kdy-pouzit", "num": "6.7", "name": "Kdy agenty použít" }
+  ]
+}
+</script>
+
+<div id="sidebar"></div>
+
+<div class="container">
+  <div class="main-content">
+
+    <div class="page-header">
+      <div class="page-num">DÍL 06</div>
+      <h1>Agenti</h1>
     </div>
-    <div class="sb-ch">
-      <a href="02_CLDECO_instalace_nastaveni.html" class="sb-ch-link"><span class="n">02</span>Instalace &amp; Nastavení</a>
-      <ul class="sb-subs">
-        <li><a href="02_CLDECO_instalace_nastaveni.html#prehled">Přehled rozhraní</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#cli">CLI instalace</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#desktop">Desktop aplikace</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#claude-md">CLAUDE.md</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#settings">settings.json</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#opravneni">Oprávnění</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="03_CLDECO_limity.html" class="sb-ch-link"><span class="n">03</span>Limity &amp; Efektivita</a>
-      <ul class="sb-subs">
-        <li><a href="03_CLDECO_limity.html#principy">Jak se spalují tokeny</a></li>
-        <li><a href="03_CLDECO_limity.html#ctiri-opravy">Čtyři klíčové opravy</a></li>
-        <li><a href="03_CLDECO_limity.html#master-prompt">Master Prompt</a></li>
-        <li><a href="03_CLDECO_limity.html#pet-navyku">Pět návyků</a></li>
-        <li><a href="03_CLDECO_limity.html#model-strategie">Strategie modelů</a></li>
-        <li><a href="03_CLDECO_limity.html#cache-zalezitost">Co ruší cache</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="04_CLDECO_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a>
-      <ul class="sb-subs">
-        <li><a href="04_CLDECO_zaklady.html#prvni-session">První session</a></li>
-        <li><a href="04_CLDECO_zaklady.html#slash-prikazy">Slash příkazy</a></li>
-        <li><a href="04_CLDECO_zaklady.html#one-shot">One-shot příkazy</a></li>
-        <li><a href="04_CLDECO_zaklady.html#plan-mode">Plan vs Auto mode</a></li>
-        <li><a href="04_CLDECO_zaklady.html#workflow">Základní workflow</a></li>
-        <li><a href="04_CLDECO_zaklady.html#git">Práce s Gitem</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="05_CLDECO_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a>
-      <ul class="sb-subs">
-        <li><a href="05_CLDECO_pokrocile.html#mcp">MCP servery</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#hooks">Hooks</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#vlastni-prikazy">Vlastní příkazy</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#skills">Skills</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#worktrees">Git worktrees</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#thinking">Extended thinking</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="#agenti.html" class="sb-ch-link active"><span class="n">06</span>Agenti</a>
-      <ul class="sb-subs">
-        <li><a href="#co-jsou-agenti">Co jsou agenti</a></li>
-        <li><a href="#subagenti">Subagenti</a></li>
-        <li><a href="#paralelni">Paralelní zpracování</a></li>
-        <li><a href="#cloud-routines">Cloud Routines</a></li>
-        <li><a href="#monitoring">Monitoring &amp; náklady</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="07_CLDECO_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a>
-      <ul class="sb-subs">
-        <li><a href="07_CLDECO_bezpecnost.html#rizika">Rizika a hrozby</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#opravneni">Oprávnění nástrojů</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#secrets">Ochrana secrets</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#audit">Audit &amp; logging</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#tymy">Pro týmy</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="08_CLDECO_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy před změnou</a>
-      <ul class="sb-subs">
-        <li><a href="08_CLDECO_zalohy.html#proc">Proč zálohovat</a></li>
-        <li><a href="08_CLDECO_zalohy.html#git-sit">Git záchranná síť</a></li>
-        <li><a href="08_CLDECO_zalohy.html#checkpoint">Checkpointy</a></li>
-        <li><a href="08_CLDECO_zalohy.html#obnova">Obnova po chybě</a></li>
-        <li><a href="08_CLDECO_zalohy.html#checklist">Checklist</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="09_CLDECO_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD &amp; Automatizace</a>
-      <ul class="sb-subs">
-        <li><a href="09_CLDECO_cicd.html#uvod">Úvod do CI/CD</a></li>
-        <li><a href="09_CLDECO_cicd.html#github-actions">GitHub Actions</a></li>
-        <li><a href="09_CLDECO_cicd.html#code-review">Automatické review</a></li>
-        <li><a href="09_CLDECO_cicd.html#testy">Generování testů</a></li>
-        <li><a href="09_CLDECO_cicd.html#routines">Cloud Routines</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="10_CLDECO_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a>
-      <ul class="sb-subs">
-        <li><a href="10_CLDECO_troubleshooting.html#instalace-err">Instalační chyby</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#auth-err">Autentizace</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#limity">Limity &amp; rate limiting</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#debug">Debugging sessions</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#pomoc">Kde hledat pomoc</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="11_CLDECO_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a>
-      <ul class="sb-subs">
-        <li><a href="11_CLDECO_odkazy.html#cesky">Česky</a></li>
-        <li><a href="11_CLDECO_odkazy.html#anglicky">Anglicky</a></li>
-        <li><a href="11_CLDECO_odkazy.html#nastroje">Nástroje</a></li>
-        <li><a href="11_CLDECO_odkazy.html#komunita">Komunita</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<main class="main">
-<div class="ph">
-  <div class="ph-num">DÍL 06 / 11</div>
-  <h1>Agenti</h1>
-  <p>Agenti jsou způsob, jak nechat Claude Code pracovat autonomně na komplexních úkolech — sám spouští nástroje, rozhoduje o dalších krocích a koordinuje ostatní instance Clauda.</p>
-</div>
+
+    <div class="content">
+
+<p><strong>Co jsou agenti, jak je konfigurovat a kdy je použít. Subagenti, paralelní zpracování, Agent Teams pro orchestraci a Cloud Routines pro automatizaci.</strong></p>
 
 <h2 id="co-jsou-agenti">Co jsou agenti a jak fungují</h2>
-<p>Standardní Claude Code session je interaktivní — napíšete příkaz, Claude ho zpracuje a čeká na další vstup. <strong>Agentic mode</strong> je zásadně jiný: Claude dostane cíl a autonomně provede celou sekvenci kroků bez průběžného schvalování každé akce.</p>
-<p>Interně agent funguje v takzvaném <em>tool-use smyčce</em>: Claude navrhne akci (spustit test, přečíst soubor, zavolat API), akce se vykoná, výsledek se vrátí Claudovi, Claude navrhne další krok — a takto se to opakuje, dokud není cíl splněn nebo dokud Claude neřekne, že skončil.</p>
+
+<p>Agent je režim, ve kterém Claude Code pracuje autonomně — sám spouští příkazy, čte výstupy, upravuje kód a vrací se k úkolu, dokud ho nedokončí. Není to chatbot, který čeká na váš vstup po každém kroku.</p>
+
+<p>Klasická interactive session: "Oprav ten bug" → Claude se ptá → vy odpovídáte → Claude dělá krok 1 → ptá se znovu … Agentic mode: "Oprav ten bug" → Claude sám prochází debuggingem, vrací se s reportem, konec.</p>
+
+<p>V praxi to znamená, že můžete agentu dát rozsáhlý úkol (refaktoring, generování testů, hromadná oprava) a on práci dokončí bez vašeho zásahu — pokud operace spadají do kategorie "schválených" (allow list ze settings.json).</p>
 
 <div class="callout bl">
   <div class="callout-title">Terminologie v dokumentaci</div>
@@ -216,6 +64,7 @@ tr:hover td{background:rgba(255,255,255,.013);}
 </pre></div>
 
 <h2 id="subagenti">Subagenti — delegování podúkolů</h2>
+
 <p>Subagent je samostatná instance Clauda spuštěná hlavním agentem (orchestrátorem) pro konkrétní podúkol. Orchestrátor definuje co se má udělat, subagent dostane vlastní kontext a provede práci.</p>
 <p>Výhoda je izolace: každý subagent pracuje ve vlastním kontextovém okně, takže hlavní agent nemusí nést v paměti všechny detaily každého podúkolu. To je klíčové pro velké projekty, kde by kontext jinak přetekl.</p>
 
@@ -231,12 +80,13 @@ Potřebuji připravit novou verzi produktu. Deleguj tyto úkoly:
 Po dokončení mi dej souhrnný report, co každý udělal.
 </pre></div>
 
-<div class="callout">
+<div class="callout rd">
   <div class="callout-title">Upozornění k nákladům</div>
   <p>Každý subagent spotřebovává tokeny samostatně. Tři paralelní subagenti = trojnásobná spotřeba oproti jednomu agentovi. Na <strong>Pro plánu ($20)</strong> limity rychle vyčerpají. Subagenty jsou praktické na <strong>Max 20× ($200)</strong> nebo přes API s rozmyslným nastavením.</p>
 </div>
 
 <h2 id="paralelni">Paralelní zpracování</h2>
+
 <p>Největší silou agentů je paralelizace — spouštět více nezávislých úkolů současně, ne sequenčně. Místo 3 hodin práce za sebou to může trvat 1 hodinu, pokud úkoly na sobě nezávisí.</p>
 
 <h3>Kdy paralelizace dává smysl</h3>
@@ -270,6 +120,7 @@ Po dokončení mi dej souhrnný report, co každý udělal.
 </pre></div>
 
 <h2 id="agent-teams">Agent Teams</h2>
+
 <p>Agent Teams je pokročilejší orchestrace dostupná v Desktop App od dubna 2026. Namísto ručního spuštění worktrees se celý tým agentů konfiguruje a monitoruje přes GUI.</p>
 <p>V rozhraní vidíte všechny aktivní agenty jako "karty" — každá ukazuje aktuální krok, spotřebu tokenů a stav. Můžete agenta pozastavit, upravit instrukce za běhu nebo ho úplně zastavit bez nutnosti přepínat terminály.</p>
 
@@ -283,6 +134,7 @@ Po dokončení mi dej souhrnný report, co každý udělal.
 </ul>
 
 <h2 id="cloud-routines">Cloud Routines — automatické spouštění</h2>
+
 <p>Cloud Routines umožňují spouštět Claude Code agenty automaticky bez vašeho zásahu — na základě časového plánu (CRON), webhooku nebo jiné události. Jde v podstatě o "crontab" pro AI agenty.</p>
 
 <h3>Jak Routines fungují</h3>
@@ -318,6 +170,7 @@ Po dokončení mi dej souhrnný report, co každý udělal.
 </div>
 
 <h2 id="monitoring">Monitoring a řízení nákladů agentů</h2>
+
 <p>Agentní úlohy mohou spotřebovat překvapivě mnoho tokenů, protože každý krok v agentic smyčce znovu posílá celý kontext. Jedna tisícistránková refaktorizace může stát desítky dolarů v API tokenech.</p>
 
 <h3>Jak sledovat spotřebu</h3>
@@ -349,23 +202,29 @@ npx cc-usage
 </pre></div>
 
 <h2 id="kdy-pouzit">Kdy agenty použít — a kdy ne</h2>
+
 <div class="tw"><table>
 <thead><tr><th>Situace</th><th>Agenti vhodní?</th><th>Proč</th></tr></thead>
 <tbody>
 <tr><td>Refaktoring celého modulu</td><td style="color:var(--gn)">✓ Ano</td><td>Mnoho souborů, opakující se vzory</td></tr>
 <tr><td>Generování testů pro existující kód</td><td style="color:var(--gn)">✓ Ano</td><td>Jasný cíl, paralelizovatelné</td></tr>
 <tr><td>Hledání a oprava bezpečnostních chyb</td><td style="color:var(--gn)">✓ Ano</td><td>Systematické prohledávání kódu</td></tr>
-<tr><td>Migrace databázového schématu</td><td style="color:var(--rd)">⚠ Opatrně</td><td>Nevratné operace — vždy záloha první</td></tr>
+<tr><td>Migrace databázového schématu</td><td style="color:var(--ac)">⚠ Opatrně</td><td>Nevratné operace — vždy záloha první</td></tr>
 <tr><td>Ladění jednoho konkrétního bugu</td><td style="color:var(--rd)">✗ Ne</td><td>Interaktivní práce je efektivnější</td></tr>
 <tr><td>Návrh architektury</td><td style="color:var(--rd)">✗ Ne</td><td>Vyžaduje váš úsudek a iteraci</td></tr>
 <tr><td>Práce s produkcí bez zálohy</td><td style="color:var(--rd)">✗ Nikdy</td><td>Příliš vysoké riziko</td></tr>
 </tbody>
 </table></div>
 
-<div class="pn">
-  <a href="05_CLDECO_pokrocile.html">← 05 · Pokročilé</a>
-  <a href="07_CLDECO_bezpecnost.html" class="nx">07 · Bezpečnost →</a>
+    </div>
+
+    <div id="pn"></div>
+
+  </div>
 </div>
-</main>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
 </body>
 </html>

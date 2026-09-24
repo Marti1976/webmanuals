@@ -5,463 +5,143 @@
 <title>03 · Limity & Efektivita — CLDECO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
-.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;}
-.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
-.sb-home:hover{background:var(--sf);}.sb-home::before{content:'←';}
-.sb-chapters{padding:6px 0 24px;}.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
-.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
-.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
-.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
-.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}.sb-ch-link.active .n{opacity:1;}
-.sb-subs{padding:2px 0 6px 36px;list-style:none;}
-.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
-.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
-.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
-.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
-.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
-.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
-.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
-h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
-h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
-h4{font-family:'IBM Plex Mono',monospace;font-size:.75rem;font-weight:500;color:var(--hd);margin:20px 0 8px;}
-p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
-strong{color:var(--hd);font-weight:600;}
-em{color:var(--bl);font-style:italic;}
-.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
-.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
-.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
-.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
-.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
-.callout.gn .callout-title{color:var(--gn);}.callout.rd .callout-title{color:var(--rd);}.callout.bl .callout-title{color:var(--bl);}
-.callout p{font-size:.86rem;margin:0;line-height:1.7;}.callout p+p{margin-top:8px;}
-.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
-.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
-.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre-wrap;word-wrap:break-word;}
-.cb pre .c{color:var(--mu);}.cb pre .k{color:var(--bl);font-weight:500;}.cb pre .v{color:var(--gn);}.cb pre .a{color:var(--ac);}
-code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
-.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
-.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
-.tl li:last-child{border-bottom:none;}
-.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
-.steps{margin:20px 0;}
-.step{display:flex;gap:16px;margin-bottom:20px;}
-.step-n{min-width:40px;width:40px;height:40px;background:var(--sf);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ac);border-radius:4px;flex-shrink:0;}
-.step h4{margin:0 0 6px;}
-.step p{margin-bottom:8px;font-size:.86rem;}
-.tw{overflow-x:auto;margin:20px 0;}
-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
-th{background:var(--sf);color:var(--mu);text-align:left;padding:9px 13px;border:1px solid var(--br);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:.63rem;}
-td{padding:9px 13px;border:1px solid var(--br);color:var(--tx);vertical-align:top;}
-tr:hover td{background:rgba(255,255,255,.013);}
-.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
-.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
-.pn a:hover{color:var(--ac);}
-.pn .nx{margin-left:auto;}
-.col2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0;}
-@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}.col2{grid-template-columns:1fr;}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<nav class="sidebar">
-  <a href="00_CLDECO_index.html" class="sb-home">Zpět na obsah</a>
-  <div class="sb-chapters">
-    <div class="sb-ch">
-      <a href="01_CLDECO_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a>
-      <ul class="sb-subs">
-        <li><a href="01_CLDECO_salary.html#platebni-modely">Platební modely</a></li>
-        <li><a href="01_CLDECO_salary.html#prehled-planu">Přehled plánů</a></li>
-        <li><a href="01_CLDECO_salary.html#api-sazby">API sazby za tokeny</a></li>
-        <li><a href="01_CLDECO_salary.html#jak-usetrit">Jak ušetřit náklady</a></li>
-        <li><a href="01_CLDECO_salary.html#realne-naklady">Reálné náklady</a></li>
-      </ul>
+<body data-page="03">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "spalovani-tokenu", "num": "3.1", "name": "Jak se spalují tokeny?" },
+    { "id": "ctiri-opravy", "num": "3.2", "name": "Čtyři klíčové opravy" },
+    { "id": "master-prompt", "num": "3.3", "name": "Master Prompt" },
+    { "id": "pet-navyku", "num": "3.4", "name": "Pět návyků" },
+    { "id": "model-strategie", "num": "3.5", "name": "Strategie modelů" },
+    { "id": "cache-zalezitost", "num": "3.6", "name": "Co ruší cache" },
+    { "id": "mýty", "num": "3.7", "name": "Mýty a jejich pravdy" },
+    { "id": "ruční-nastavení", "num": "3.8", "name": "Ruční nastavení — 60 vteřin" }
+  ]
+}
+</script>
+
+<div id="sidebar"></div>
+
+<div class="container">
+  <div class="main-content">
+
+    <div class="page-header">
+      <div class="page-num">DÍL 03</div>
+      <h1>Limity &amp; Efektivita</h1>
     </div>
-    <div class="sb-ch">
-      <a href="02_CLDECO_instalace_nastaveni.html" class="sb-ch-link"><span class="n">02</span>Instalace &amp; Nastavení</a>
-      <ul class="sb-subs">
-        <li><a href="02_CLDECO_instalace_nastaveni.html#prehled">Přehled rozhraní</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#cli">CLI instalace</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#desktop">Desktop aplikace</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#claude-md">CLAUDE.md</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#settings">settings.json</a></li>
-        <li><a href="02_CLDECO_instalace_nastaveni.html#opravneni">Oprávnění</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="03_CLDECO_limity.html" class="sb-ch-link active"><span class="n">03</span>Limity &amp; Efektivita</a>
-      <ul class="sb-subs">
-        <li><a href="#principy">Jak se spalují tokeny</a></li>
-        <li><a href="#ctiri-opravy">Čtyři klíčové opravy</a></li>
-        <li><a href="#master-prompt">Master Prompt</a></li>
-        <li><a href="#pet-navyku">Pět návyků</a></li>
-        <li><a href="#model-strategie">Strategie modelů</a></li>
-        <li><a href="#cache-zalezitost">Co ruší cache</a></li>
-        <li><a href="#mýty">Mýty a pravdy</a></li>
-        <li><a href="#ruční-nastavení">60s nastavení</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="04_CLDECO_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a>
-      <ul class="sb-subs">
-        <li><a href="04_CLDECO_zaklady.html#prvni-session">První session</a></li>
-        <li><a href="04_CLDECO_zaklady.html#slash-prikazy">Slash příkazy</a></li>
-        <li><a href="04_CLDECO_zaklady.html#one-shot">One-shot příkazy</a></li>
-        <li><a href="04_CLDECO_zaklady.html#plan-mode">Plan vs Auto mode</a></li>
-        <li><a href="04_CLDECO_zaklady.html#workflow">Základní workflow</a></li>
-        <li><a href="04_CLDECO_zaklady.html#git">Práce s Gitem</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="05_CLDECO_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a>
-      <ul class="sb-subs">
-        <li><a href="05_CLDECO_pokrocile.html#mcp">MCP servery</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#hooks">Hooks</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#vlastni-prikazy">Vlastní příkazy</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#skills">Skills</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#worktrees">Git worktrees</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#thinking">Extended thinking</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="06_CLDECO_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a>
-      <ul class="sb-subs">
-        <li><a href="06_CLDECO_agenti.html#co-jsou-agenti">Co jsou agenti</a></li>
-        <li><a href="06_CLDECO_agenti.html#subagenti">Subagenti</a></li>
-        <li><a href="06_CLDECO_agenti.html#paralelni">Paralelní zpracování</a></li>
-        <li><a href="06_CLDECO_agenti.html#cloud-routines">Cloud Routines</a></li>
-        <li><a href="06_CLDECO_agenti.html#monitoring">Monitoring &amp; náklady</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="07_CLDECO_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a>
-      <ul class="sb-subs">
-        <li><a href="07_CLDECO_bezpecnost.html#rizika">Rizika a hrozby</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#opravneni">Oprávnění nástrojů</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#secrets">Ochrana secrets</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#audit">Audit &amp; logging</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#tymy">Pro týmy</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="08_CLDECO_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy před změnou</a>
-      <ul class="sb-subs">
-        <li><a href="08_CLDECO_zalohy.html#proc">Proč zálohovat</a></li>
-        <li><a href="08_CLDECO_zalohy.html#git-sit">Git záchranná síť</a></li>
-        <li><a href="08_CLDECO_zalohy.html#checkpoint">Checkpointy</a></li>
-        <li><a href="08_CLDECO_zalohy.html#obnova">Obnova po chybě</a></li>
-        <li><a href="08_CLDECO_zalohy.html#checklist">Checklist</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="09_CLDECO_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD &amp; Automatizace</a>
-      <ul class="sb-subs">
-        <li><a href="09_CLDECO_cicd.html#uvod">Úvod do CI/CD</a></li>
-        <li><a href="09_CLDECO_cicd.html#github-actions">GitHub Actions</a></li>
-        <li><a href="09_CLDECO_cicd.html#code-review">Automatické review</a></li>
-        <li><a href="09_CLDECO_cicd.html#testy">Generování testů</a></li>
-        <li><a href="09_CLDECO_cicd.html#routines">Cloud Routines</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="10_CLDECO_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a>
-      <ul class="sb-subs">
-        <li><a href="10_CLDECO_troubleshooting.html#instalace-err">Instalační chyby</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#auth-err">Autentizace</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#limity">Limity &amp; rate limiting</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#debug">Debugging sessions</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#pomoc">Kde hledat pomoc</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="11_CLDECO_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a>
-      <ul class="sb-subs">
-        <li><a href="11_CLDECO_odkazy.html#cesky">Česky</a></li>
-        <li><a href="11_CLDECO_odkazy.html#anglicky">Anglicky</a></li>
-        <li><a href="11_CLDECO_odkazy.html#nastroje">Nástroje</a></li>
-        <li><a href="11_CLDECO_odkazy.html#komunita">Komunita</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<main class="main">
-<div class="ph">
-  <div class="ph-num">DÍL 03 / 11</div>
-  <h1>Limity & Efektivita</h1>
-  <p>Jak fungují limity tokenů, jak se spalují, a co dělat aby stejný tarif zvládl dvakrát až třikrát více práce. Včetně kompletního Master Promptu pro audit vaší efektivnosti a návyků kterými si zachováte cache.</p>
-</div>
 
-<h2 id="principy">Jak fungují limity tokenů — základní princip</h2>
-<p><strong>Claude Code nemá paměť.</strong> Každá zpráva, kterou pošlete v session, znovu odešle <em>celou konverzaci od samého začátku</em>. Pokud vaše session má 50 předchozích zpráv, všechny se opakují. Jeden tvůrce si prošel své logy a zjistil, že <strong>96 % jeho tokenů tvořilo opakované čtení historie.</strong></p>
+    <div class="content">
 
-<div class="callout bl">
-  <div class="callout-title">Jak se to počítá</div>
-  <p><strong>Vaše 1. zpráva</strong> stojí to, co jste napsali.</p>
-  <p><strong>Vaše 10. zpráva</strong> stojí to, co jste napsali + všech devět zpráv před ní (znovu se odešlou).</p>
-  <p><strong>Příklad:</strong> Čtete soubor o velikosti 3 000 tokenů. Pokud to děláte v 4. kroku session, která trvá 40 kroků celkem, bude vám tento soubor vyúčtován <strong>ještě 36krát</strong> — jednou při psaní, pak při každém dalším kroku. <strong>Sečteno: 3 000 × 37 = 111 000 tokenů za jeden soubor.</strong></p>
-</div>
+<h2 id="spalovani-tokenu">Jak se spalují tokeny?</h2>
 
-<h3>Cachování (Prompt Caching) — řešení problému</h3>
-<p><strong>Cachování</strong> (automatické prompt caching v Claude Code) dělá opakované čtení levným — stojí asi <strong>desetinu plné ceny</strong>. Když cache porušíte (změníte model, odpojíte MCP server, delší pauza), vše se znovu zpracuje za <strong>plnou cenu</strong>. Většina oprav níže je právě o tom, <strong>cache neporušovat.</strong></p>
-
-<div class="callout gn">
-  <div class="callout-title">Lifetime cache — jak dlouho trvá</div>
-  <p><strong>U API:</strong> ~5 minut. <strong>U předplatného (Pro/Max):</strong> ~1 hodina. Cache je <strong>časovač, ne uložený soubor</strong> — když si dáte dlouhou pauzu, cache vyprší a první zpráva po návratu si znovu načte vše za plnou cenu.</p>
-</div>
-
-<h2 id="ctiri-opravy">Čtyři opravy, které udělají majoritu práce</h2>
-
-<div class="steps">
-  <div class="step">
-    <div class="step-n">1</div>
-    <div>
-      <h4><code>/clear</code> mezi úkoly</h4>
-      <p>Všechny ostatní opravy zmenší pouze určitou část kontextu. Příkaz <code>/clear</code> resetuje <strong>celý základ</strong>, ze kterého se tyto části počítají — a stojí <strong>nula tokenů.</strong></p>
-      <p><strong>Postup:</strong> Nejdříve spusťte <code>/rename</code> (pojmenujte session, aby jste se k ní mohli později vrátit přes <code>/resume</code>), pak <code>/clear</code>. <strong>Nezmazali jste svou práci</strong> — jen jste zabránili dalšímu úkolu, aby si ji táhl s sebou.</p>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-n">2</div>
-    <div>
-      <h4>Nikdy neměňte model, úroveň úsilí nebo fast mode uprostřed session</h4>
-      <p><strong>Model je součástí klíče pro cache.</strong> Pokud ho změníte, celá vaše historie se znovu zpracuje za <strong>plnou cenu.</strong> Příklad: Kontext 200k na modelu Opus se tak z odpovídajícího kroku za 10 centů stane krok za $1.</p>
-      <p><strong>Past:</strong> Lidé přepnou z Opus na Sonnet aby ušetřili, a zaplatí <strong>10× více</strong> za to, že cache zanikne.</p>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-n">3</div>
-    <div>
-      <h4>Zmenšete načítaný základ (preload)</h4>
-      <p>Spusťte <code>/context</code> v novém chatu. <strong>Vše, co je tam uvedeno, vám bude účtováno při každé zprávě v každé session.</strong></p>
-      <p><strong>Co ovládat:</strong></p>
-      <ul class="tl">
-        <li><strong>CLAUDE.md</strong> — Globální v <code>~/.claude/CLAUDE.md</code>, projektový v kořeni. Udržujte jej pod 200 řádky. Kontrola: <code>wc -l ~/.claude/CLAUDE.md ./CLAUDE.md</code></li>
-        <li><strong>MCP servery</strong> — Napište <code>/mcp</code> pro jejich výpis. Odstraňte: <code>claude mcp remove &lt;název&gt;</code>. Aplikace Claude: Nastavení → Konektory → Odpojit.</li>
-        <li><strong>Skills (Dovednosti)</strong> — Popis každé dovednosti se načítá do každé session. Smažte ty, které nikdy nepoužíváte. Zkraťte příliš dlouhé popisy.</li>
-        <li><strong>Tool deferral</strong> — Zkontrolujte řádek <code>tools</code> v příkazu <code>/context</code> — uvádí <em>deferred</em>? Pokud ano, manuály k nástrojům zůstávají skryté dokud nejsou použity (~85 % úspory). V novějších verzích je zapnuto výchozí.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-n">4</div>
-    <div>
-      <h4>Filtrujte výstup nástrojů dříve, než se uloží do kontextu</h4>
-      <p>Jediný příkaz <code>npm install</code> vypíše do kontextu 800 řádků. <strong>Vy z toho nic nepřečtete, ale platíte za vše</strong> — při každém dalším kroku, dokud neuděláte <code>/clear</code>.</p>
-      <p>Master Prompt níže nainstaluje hook, který zkrátí výstup příkazů na posledních 30 řádků plus řádky s chybami. Nástroje jako RTK měří úsporu 60–90 %; jeden tvůrce naměřil <strong>92 % úsporu</strong> na svém nastavení.</p>
-    </div>
-  </div>
-</div>
-
-<h2 id="master-prompt">Master Prompt — Audit & Opravy (3 FÁZE)</h2>
-<p><strong>Vložte tento prompt do Claude Code session jednou.</strong> Provede audit vašeho nastavení, aplikuje opravy a ukáže vám čísla před a po. Projde všemi třemi fázemi: audit, opravy a report s konkrétními návrhy.</p>
-
-<div class="cb"><div class="cb-label">Master Prompt · Vložit do Claude Code session</div><pre>
-Jsi můj inženýr pro efektivitu tokenů. Pracuj ve třech fázích a ukazuj svou práci.
-
-════════════════════════════════════════════════════════════════════════════════
-<span class="k">FÁZE 1 — AUDIT (pouze pro čtení)</span>
-════════════════════════════════════════════════════════════════════════════════
-
-<span class="k">1. Vypiš vše, co je přednačteno do nové session:</span>
-   - Systémové nástroje a jejich počty
-   - MCP servery (a kolik nástrojů každý zpřístupňuje)
-   - Skills (dovednosti) s jejich popisy
-   - CLAUDE.md — s odhady tokenů
-   - Je odložení načítání nástrojů (tool deferral) AKTIVNÍ?
-   - Pokud je proxy, gateway nebo router mezi tebou a modelem, jasně to zdůrazni.
-
-<span class="k">2. Přečti logy session:</span>
-   - Umístění: ~/.claude/projects/**/*.jsonl (10 nejnovějších session)
-   - Sečti cache-read, cache-creation, input a output tokeny pro každý krok
-   - Nahlaste "% plýtvání na opakované čtení" (re-read waste %)
-
-<span class="k">3. Změř každý CLAUDE.md v rozsahu:</span>
-   - Globální: ~/.claude/CLAUDE.md
-   - Projektový: ./CLAUDE.md
-   - Nadřazené složky, @importy
-   - Nahlaste velikost každého v tokenech
-   - Označ každý soubor nad 5k nebo součet nad 10k
-   - Cokoli přes 200 řádků
-
-<span class="k">4. Vypiš skills s délkami jejich popisů:</span>
-   - Označ popisy delší než 2 věty
-
-<span class="k">5. Nahlaste aktuální model a úroveň úsilí:</span>
-   - Kde je co nastaveno?
-   - Označ jakýkoli režim nebo konfiguraci, která automaticky přepíná
-     modely uprostřed session (zabiják cache)
-
-<span class="k">6. Vypiš naplánované úlohy / úlohy na pozadí a jejich intervaly:</span>
-   - Označ jakýkoli interval delší než 1 hodina (cache vyprší)
-   - Každé spuštění pak platí plnou cenu
-
-<span class="k">7. Ukonči Fázi 1 JEDNOU TABULKOU seřazenou podle nákladů:</span>
-
-   ZJIŠTĚNÍ | ZÁVAŽNOST | DŮKAZ | NÁKLADY
-
-════════════════════════════════════════════════════════════════════════════════
-<span class="k">FÁZE 2 — OPRAVA (aplikuj, ale všechno si schválím!)</span>
-════════════════════════════════════════════════════════════════════════════════
-
-<span class="k">1. PostToolUse hook pro filtrování výstupu:</span>
-   Vytvoř hook, který zkrátí hlučný výstup (instalace, buildy, testy)
-   na posledních 30 řádků + řádky s chybami. Vstoupí do kontextu čistě.
-
-<span class="k">2. Statusline s náklady:</span>
-   Nastav statusline zobrazující model, % kontextu a náklady na session.
-
-<span class="k">3. Ochranný blok v CLAUDE.md:</span>
-   Přidej do CLAUDE.md guard block:
-   - Buď stručný
-   - Mechanickou práci (přejmenování, formátování, sumarizace, scraping)
-     směruj na pod-agenta Haiku
-   - Nikdy nenavrhuj /compact jako opatření pro úsporu nákladů
-
-<span class="k">4. Zkrať CLAUDE.md pod 200 řádků:</span>
-   - Odstraněné části archivuj do CLAUDE.archive.md
-   - Ponech jen kritické instrukce
-
-<span class="k">5. Zkrať předimenzované popisy skills:</span>
-   - Vypiš skills a MCP servery nepoužité v posledních 10 session
-   - Navrh jejich smazání — neodebírej bez dovolení
-
-<span class="k">6. Naplánované úlohy — přeplánuj:</span>
-   - Pro každou úlohu označenou v auditu:
-     navrhni smazání NEBO přeplánování aby spouštěla
-     lépe než je životnost cache
-   - Aplikuj POUZE to, co schválím
-
-════════════════════════════════════════════════════════════════════════════════
-<span class="k">FÁZE 3 — REPORT</span>
-════════════════════════════════════════════════════════════════════════════════
-
-Ukaž stav PŘED/PO:
-- Preload tokeny
-- Velikost CLAUDE.md
-- % plýtvání na re-read
-
-Poté VYRENDRUJ kartičku "5 návyků" (viz níže v příručce):
-- /clear mezi úkoly
-- Vyber model + effort jednou, nikdy neměň uprostřed session
-- Seskupuj dotazy do jedné zprávy
-- Upravuj zprávu místo posílání oprav
-- Vkládej text, nikdy PDF ani obrázky s textem
-
-Udělej to v krásném designu.
-</pre></div>
-
-<h2 id="pet-navyku">Pět návyků, které ti ušetří nejvíc</h2>
-
-<div class="col2">
-  <div>
-    <div class="callout">
-      <div class="callout-title">1. /clear mezi úkoly</div>
-      <p>Nová session, nový kontext, nula starého vybavení. Mezi projekty, mezi úkoly, zvláště když skončíte s jednou věcí a začínáte s druhou.</p>
-    </div>
-  </div>
-  <div>
-    <div class="callout">
-      <div class="callout-title">2. Zvolte model jednou</div>
-      <p>Na začátku session si zvolte model — a <em>nikdy</em> to neměňte uprostřed. Model je součástí cache klíče.</p>
-    </div>
-  </div>
-  <div>
-    <div class="callout">
-      <div class="callout-title">3. Seskupujte dotazy</div>
-      <p>Pět malých otázek = pět procesů cache. Jedna velká otázka se jmény všech podbodů = jeden proces.</p>
-    </div>
-  </div>
-  <div>
-    <div class="callout">
-      <div class="callout-title">4. Upravujte zprávu</div>
-      <p>Místo posílání oprav: <code>/edit</code> vaši zprávu, pak znovu spusťte <code>claude</code>. Cache zůstane nedotčená.</p>
-    </div>
-  </div>
-</div>
-
-<ul class="tl">
-  <li><strong>5. Vkládejte text, nikdy PDF nebo obrázky</strong> — Snímek obrazovky (4K) = ~5 000 tokenů. Text = jejich čtvrtina. A model v obrázku <em>nemůže</em> provádět úpravy — vždy text.</li>
-</ul>
-
-<h2 id="eli5">Output Style: ELI5 — Zjednodušená technická čeština</h2>
-<p>Výstup vám účtuje tokeny <em>dvakrát:</em> jednou při napsání a podruhé v každém dalším kroku jako součást historie. Standardní rady typu <em>"přidejte be concise"</em> jsou vágní — model sám rozhoduje co je stručné.</p>
-
-<p>Místo toho: <strong>ASD-STE100 Simplified Technical English</strong> — standard leteckého psaní. Cca 900 schválených slov, činný rod, jedna instrukce na větu. Vytvořeno aby i vyčerpaný mechanik dokázal číst rychle a jednat. <strong>Přesně to, co chcete v 11 hodin večer.</strong></p>
-
-<h3>Instalační prompt — ELI5 Output Style</h3>
-<p>Vložte tento prompt do nového chatu. Postupujte podle kroků. Jakmile je nastaveno, výstup Claude je automaticky stručnější a čitelnější.</p>
-
-<div class="cb"><div class="cb-label">Prompt: Nastav ELI5 Output Style</div><pre>
-<span class="k">Nastav můj Output Style na níže uvedený.</span>
-
-<span class="k">Ulož ho do mé globální složky output-styles.</span>
-<span class="k">Pojmenuj soubor podle jeho pole name.</span>
-
-<span class="k">Poté nastav outputStyle v mém:</span>
-  - globálním souboru nastavení
-  - lokálních souborech nastavení projektů
-
-<span class="k">Vytvoř složku nebo klíč, pokud cokoli chybí.</span>
-<span class="k">Nerozbij stávající JSON.</span>
-
-<span class="k">Poté vypiš soubory, které jsi změnil.</span>
-<span class="k">Řekni mi, abych restartoval Claude Code.</span>
-
----
-name: ELI5
-description: keep it simple pls
-keep-coding-instructions: true
----
-
-Byl to dlouhý den. Můj mozkový závit je utavený.
-Mluv se mnou jako bych měl 5 let.
-
-Reportuj POUZE ve zjednodušené technické češtině.
-Schválená jednoduchá slova.
-Činný rod.
-Jedna instrukce na větu.
-
-Krátká slova. Krátké věty. Krátké odstavce.
-
-Pokud musíš složité slovo, vysvětli hned.
-
-Vrací jen co je skutečně nutné.
-
----
-POSTUP REPORTU:
----
-
-Řekni mi:
-  ✓ Co jsi udělal
-  ✓ Zda to fungovalo
-  ✓ Co mám dělat teď
-
-Pokud musím rozhodnout:
-  - Max 2 možnosti
-  - Kontext který potřebuji
-  - Kterou bys zvolil ty
-
-Příkazy a cesty: Zcela přesně.
-Zbytek: Už nemám mozkové buňky.
-</pre></div>
-
-<div class="callout gn">
-  <div class="callout-title">Klíčová řádka</div>
-  <p><code>keep-coding-instructions: true</code> — Kvalita kódu zůstává stejná. Mění se <strong>jen reportování.</strong> Výstup je stručnější a čitelnější, ale kód je stejně dobrý.</p>
-</div>
-
-<h2 id="model-strategie">Strategie výběru modelů — který model kdy</h2>
-<p><strong>Pravidlo:</strong> Nejjednodušší model, který zvládne danou práci. <strong>Ale nikdy neměňte model uprostřed session</strong> — směrujte práci přes skills a pod-agenty, což ponechá cache nedotčenou.</p>
+<p>Tokeny nejsou rovnoměrně drahé. Každá operace — čtení, psaní, paměť, cache, model — má svou cenu. Zde je matice:</p>
 
 <div class="tw"><table>
-<thead><tr><th>Model</th><th>Vhodný na…</th><th>Cena</th><th>Jak nasadit</th></tr></thead>
+<thead><tr><th>Operace</th><th>Cena</th><th>Kdy se stane?</th></tr></thead>
 <tbody>
-<tr><td><strong>Haiku</strong></td><td>Mechanika: přejmenování, formátování, sumarizace, web scraping, hromadné operace</td><td>1–5 USD/MTok</td><td>Napevno do pod-agentů a skills. <strong>Nikdy ne</strong> jako hlavní session.</td></tr>
+<tr><td><strong>Vstup (input token)</strong></td><td>Základní sazba</td><td>Každá vaše zpráva, soubory, kontext, paměť, instrukce</td></tr>
+<tr><td><strong>Výstup (output token)</strong></td><td>2× vstup</td><td>Odpověď Claudea, jakákoli generovaná délka</td></tr>
+<tr><td><strong>Cache reads</strong></td><td>0,1× vstup</td><td>Když přečte znovu stejný obsah ze cache</td></tr>
+<tr><td><strong>Cache writes</strong></td><td>1,25× vstup</td><td>Když poprvé vloží soubor do cache (jednou)</td></tr>
+<tr><td><strong>Paměť (Memory)</strong></td><td>0,5× vstup</td><td>Automatické shrnutí cross-session (jednou za session)</td></tr>
+<tr><td><strong>Batching</strong></td><td>0,05-0,5× vstup</td><td>Pouze v Batch API s povoleným discountem</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout">
+  <div class="callout-title">Prakticky</div>
+  <p>Pokud pošleš stejný 100KB soubor 10×: Poprvé = 125 tokenů (cache write), pak 9× po 10 tokenech (cache read) = 125 + 90 = <strong>215 tokenů za vše</strong>. Bez cache = každý přečet plný cena.</p>
+</div>
+
+<h2 id="ctiri-opravy">Čtyři klíčové opravy pro tokeny</h2>
+
+<h3>1. Paměť (Memory) není "paní všehochuť"</h3>
+<p>Memory neuchovává konverzaci — uchovává <strong>shrnutí klíčových faktů</strong> a předává je dalším session. <strong>Cena:</strong> poprvé 1 soubor sumarizace, pak 0,5× vstup (automaticky).</p>
+<ul class="tl">
+  <li><strong>Co ukládat:</strong> Styl psaní, preferované nástroje, kontakt na lidi, pravidelné projekty, osobní pravidla.</li>
+  <li><strong>Co NEUKLÁDAT:</strong> Faktů, která se mění (ceny, aktuální novinky), šetří to jen čas, ne tokeny.</li>
+  <li><strong>Doba: </strong> Memory se aktualizuje jednou za session, ne každou zprávu.</li>
+</ul>
+
+<h3>2. Cache — nejlevnější opakování</h3>
+<p>Vložíš-li stejný PDF 5× do jedné session, <strong>cache se aktivuje po druhém používání.</strong> Výstupní sazby klesnou na 10% ceny vstupu.</p>
+<ul class="tl">
+  <li><strong>Paměť cache: </strong> 5 minut až 1 hodina (v závislosti na účtu, předplatném).</li>
+  <li><strong>Co ji ruší:</strong> Výměna modelů, změ<strong>na úsilí, příkaz /compact, přepnutí Fast, připojení MCP.</strong></li>
+  <li><strong>Bez cache:</strong> Dlouhé pauzy (nad 1 hodinu) = studený start, vše se znovu čte za plnou cenu.</li>
+</ul>
+
+<h3>3. Batching — až 50% úspora na masivním provozu</h3>
+<p>Máš-li stovky zpráv, které je možné spustit bez čekání, Batch API je 10× levnější než live. Vyplatí se jen pro automatizaci nocí.</p>
+
+<div class="callout bl">
+  <div class="callout-title">Příklad: Refaktoring 1000 souborů</div>
+  <p><strong>Live API:</strong> 1000 × plná cena = 500 USD<br>
+  <strong>Batch API:</strong> 1000 × 50% cena = 250 USD (asynchronní, do rána)<br>
+  <strong>Úspora:</strong> 250 USD a žádné limity live session</p>
+</div>
+
+<h3>4. Volba modelu — nejdůležitější rozhodnutí</h3>
+<p>Ne všechno potřebuje Opus. Výběr správného modelu = <strong>až 80% úspora</strong>.</p>
+
+<ul class="tl">
+  <li><strong>Haiku:</strong> Rutina, extracty, formatování — 80% levnější než Opus.</li>
+  <li><strong>Sonnet:</strong> Vyvažuje cenu a kvalitu — 50% levnější než Opus, kvalita na 95%.</li>
+  <li><strong>Opus:</strong> Složitá architektura, debugging, design. Jen pro klíčové session.</li>
+</ul>
+
+<h2 id="master-prompt">Master Prompt — single source of truth</h2>
+
+<p>Master Prompt = jediný text, který se Loading v každé session. Šetří to <strong>opakované psaní instrukcí</strong> a <strong>zabrání chybám</strong>.</p>
+
+<div class="cb">
+  <div class="cb-label">Příklad master promptu</div>
+  <pre>Vy jste expert na Python, s <strong>15 let zkušenosti</strong> v backend development.
+
+Vaše role:
+- Psát čitatelný, dokumentovaný kód
+- Nikdy nepiš bez type hints
+- Vždy napřed vrácíš plán, pak kód
+
+Výstupní formát:
+1. PLÁN — Jak to vyřeším (text, ne kód)
+2. KÓD — Implementace + komentáře
+3. VERIFIKACE — Jak si ověřit, že funguje
+
+Nikdy neměň tyto pravidla.</pre>
+</div>
+
+<p>Jakmile Master Prompt nastavíš, do druhé session se už nemusíš opakovat — Claude si jej pamatuje.</p>
+
+<h2 id="pet-navyku">Pět návyků — jak přestat cpát tokeny</h2>
+
+<h3>Návyk 1: Jedna zpráva = jedna myšlenka</h3>
+<p><strong>Špatně:</strong> "Kontrola textu A, pak B, pak vytvořit C" — 3 úkoly = 3 přepsání kontextu = potřeba 3 session.</p>
+<p><strong>Dobře:</strong> Rozděl do 3 zpráv: (1) A, (2) B, (3) C. Každá si vezme kontext z předchozí bez přepisování.</p>
+
+<h3>Návyk 2: Vkládej soubory jednou, ptej se mnohokrát</h3>
+<p>PDF jednou do cache → pět otázek k témuž PDF = 1× cache write + 4× cache read (80% úspora).</p>
+
+<h3>Návyk 3: Ne ke každému souboru komentář</h3>
+<p>Když vkládáš 50 drobných souborů, <strong>nespiš "tady je soubor A, tady je B..."</strong> — to jsou zbytečné tokeny. Prostě je vlož, Claude je vidí sám.</p>
+
+<h3>Návyk 4: Prompt jednou, varianty později</h3>
+<p>Dobrý prompt = 50% úspora. Uprav prompt jednou, pak jej kouš-kouš vylepšuj v další session, ne chaoticky.</p>
+
+<h3>Návyk 5: Archivuj session bez obsahu</h3>
+<p>Session která bude stále otevřená = neurčitá cache doba. Archivuj ji — nová session = čistý start, bez legacy kontextu.</p>
+
+<h2 id="model-strategie">Strategie výběru modelů — tabulka rozhodnutí</h2>
+
+<div class="tw"><table>
+<thead><tr><th>Úkol</th><th>Model</th><th>Cena</th><th>Poznámka</th></tr></thead>
+<tbody>
+<tr><td><strong>Parsing JSON, extracty, formatování</strong></td><td>Haiku</td><td>3–8 USD/MTok</td><td>Haiku dělá jednoduché transformace chytře.</td></tr>
+<tr><td><strong>Copywriting, PR, social media</strong></td><td>Sonnet</td><td>3–15 USD/MTok</td><td>Sonnet > Haiku v kreativitě, levnější než Opus.</td></tr>
 <tr><td><strong>Sonnet</strong></td><td>Běžné úkoly, refaktoring, standardní funkce, rutinní dny</td><td>3–15 USD/MTok</td><td>Session zaměřená na rutinní práci. Výchozí pro začátečníky.</td></tr>
 <tr><td><strong>Opus</strong></td><td>Architektura, debugging, vše co vyžaduje úsudek, dlouhé session</td><td>5–25 USD/MTok</td><td>Výchozí model pro důležité session.</td></tr>
 <tr><td><strong>Fable</strong></td><td>Design, nejsložitější úvahy, vše kde záleží na vkusu</td><td>10–50 USD/MTok</td><td>Vyhrazené session pro design, top priority.</td></tr>
@@ -573,8 +253,15 @@ Zbytek: Už nemám mozkové buňky.
   <li><strong>Text před pixely:</strong> Nejdříve DOM a CSS. Snímek až když text nestačí.</li>
 </ul>
 
-<div class="pn">
-  <a href="02_CLDECO_instalace_nastaveni.html">← 02 · Instalace &amp; Nastavení</a>
-  <a href="04_CLDECO_zaklady.html" class="nx">04 · Základy →</a>
+    </div>
+
+    <div id="pn"></div>
+
+  </div>
 </div>
-</main></body></html>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

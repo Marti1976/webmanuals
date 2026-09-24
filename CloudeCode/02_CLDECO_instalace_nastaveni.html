@@ -2,425 +2,159 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>02-03 · Instalace & Nastavení — CLDECO</title>
+<title>02 · Instalace &amp; Nastavení — CLDECO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0a0c0f;--sf:#111519;--sb:#0d1117;--br:#1e2530;--ac:#e8a020;--ad:rgba(232,160,32,0.09);--tx:#c9d1d9;--mu:#6e7681;--hd:#f0f6fc;--gn:#3fb950;--bl:#79c0ff;--rd:#f85149;--sw:270px;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--tx);font-family:'Lora',Georgia,serif;min-height:100vh;display:flex;}
-.sidebar{width:var(--sw);min-height:100vh;background:var(--sb);border-right:1px solid var(--br);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;scrollbar-width:thin;}
-.sb-home{display:flex;align-items:center;gap:8px;padding:15px 18px;border-bottom:1px solid var(--br);font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ac);text-decoration:none;font-weight:500;background:var(--bg);position:sticky;top:0;z-index:10;}
-.sb-home:hover{background:var(--sf);}.sb-home::before{content:'←';}
-.sb-chapters{padding:6px 0 24px;}.sb-ch{border-bottom:1px solid rgba(30,37,48,.6);}
-.sb-ch-link{display:flex;align-items:center;gap:8px;padding:9px 18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);border-left:2px solid transparent;transition:color .15s,background .15s;}
-.sb-ch-link:hover{color:var(--tx);background:rgba(255,255,255,.025);}
-.sb-ch-link.active{color:var(--ac);border-left-color:var(--ac);background:var(--ad);}
-.sb-ch-link .n{font-size:.57rem;opacity:.45;min-width:18px;}.sb-ch-link.active .n{opacity:1;}
-.sb-subs{padding:2px 0 6px 36px;list-style:none;}
-.sb-subs li a{display:block;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:#3d4451;text-decoration:none;border-left:1px solid var(--br);line-height:1.5;transition:color .12s,border-color .12s;}
-.sb-subs li a:hover{color:var(--tx);border-left-color:var(--mu);}
-.main{margin-left:var(--sw);flex:1;max-width:880px;padding:56px 64px;}
-.ph{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--br);}
-.ph-num{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:var(--ac);letter-spacing:.2em;margin-bottom:12px;}
-.ph h1{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--hd);letter-spacing:-.02em;margin-bottom:12px;}
-.ph p{color:var(--mu);font-size:.93rem;line-height:1.75;max-width:580px;}
-h2{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:var(--hd);margin:52px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--br);}
-h3{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--bl);margin:28px 0 10px;}
-p{line-height:1.85;margin-bottom:14px;font-size:.92rem;}
-strong{color:var(--hd);font-weight:600;}
-.callout{border-left:3px solid var(--ac);background:var(--ad);padding:16px 20px;margin:22px 0;border-radius:0 4px 4px 0;}
-.callout.gn{border-left-color:var(--gn);background:rgba(63,185,80,.07);}
-.callout.rd{border-left-color:var(--rd);background:rgba(248,81,73,.07);}
-.callout.bl{border-left-color:var(--bl);background:rgba(121,192,255,.07);}
-.callout-title{font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--ac);}
-.callout.gn .callout-title{color:var(--gn);}.callout.rd .callout-title{color:var(--rd);}.callout.bl .callout-title{color:var(--bl);}
-.callout p{font-size:.86rem;margin:0;line-height:1.7;}
-.cb{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;overflow-x:auto;}
-.cb-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;}
-.cb pre{font-family:'IBM Plex Mono',monospace;font-size:.79rem;color:var(--tx);line-height:1.7;white-space:pre;}
-.cb pre .c{color:var(--mu);}.cb pre .k{color:var(--bl);}.cb pre .v{color:var(--gn);}.cb pre .a{color:var(--ac);}
-code{font-family:'IBM Plex Mono',monospace;font-size:.81em;background:var(--sf);color:var(--bl);padding:2px 6px;border:1px solid var(--br);}
-.ftree{background:#0d1117;border:1px solid var(--br);padding:18px 22px;margin:14px 0;font-family:'IBM Plex Mono',monospace;font-size:.78rem;line-height:1.9;}
-.ftree .d{color:var(--ac);}.ftree .f{color:var(--tx);}.ftree .n{color:var(--mu);}
-.tw{overflow-x:auto;margin:20px 0;}
-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
-th{background:var(--sf);color:var(--mu);text-align:left;padding:9px 13px;border:1px solid var(--br);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:.63rem;}
-td{padding:9px 13px;border:1px solid var(--br);color:var(--tx);vertical-align:top;}
-tr:hover td{background:rgba(255,255,255,.013);}
-.tl{margin:14px 0 22px;padding-left:0;list-style:none;}
-.tl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:.87rem;line-height:1.65;}
-.tl li:last-child{border-bottom:none;}
-.tl li::before{content:'◆';color:var(--ac);font-size:.48rem;margin-top:7px;flex-shrink:0;}
-.pn{margin-top:60px;padding-top:28px;border-top:1px solid var(--br);display:flex;justify-content:space-between;gap:16px;}
-.pn a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mu);text-decoration:none;transition:color .15s;}
-.pn a:hover{color:var(--ac);}
-.pn .nx{margin-left:auto;}
-@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;padding:32px 22px;}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<nav class="sidebar">
-  <a href="00_CLDECO_index.html" class="sb-home">Zpět na obsah</a>
-  <div class="sb-chapters">
-    <div class="sb-ch">
-      <a href="01_CLDECO_salary.html" class="sb-ch-link"><span class="n">01</span>Ceny &amp; Plány</a>
-      <ul class="sb-subs">
-        <li><a href="01_CLDECO_salary.html#platebni-modely">Platební modely</a></li>
-        <li><a href="01_CLDECO_salary.html#prehled-planu">Přehled plánů</a></li>
-        <li><a href="01_CLDECO_salary.html#api-sazby">API sazby za tokeny</a></li>
-        <li><a href="01_CLDECO_salary.html#jak-usetrit">Jak ušetřit náklady</a></li>
-        <li><a href="01_CLDECO_salary.html#realne-naklady">Reálné náklady</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="02_CLDECO_instalace_nastaveni.html" class="sb-ch-link active"><span class="n">02</span>Instalace &amp; Nastavení</a>
-      <ul class="sb-subs">
-        <li><a href="#prehled">Přehled rozhraní</a></li>
-        <li><a href="#cli">CLI instalace</a></li>
-        <li><a href="#desktop">Desktop aplikace</a></li>
-        <li><a href="#claude-md">CLAUDE.md</a></li>
-        <li><a href="#settings">settings.json</a></li>
-        <li><a href="#opravneni">Oprávnění</a></li>
-        <li><a href="#env">ENV proměnné</a></li>
-        <li><a href="#hierarchie">Hierarchie priorit</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="03_CLDECO_limity.html" class="sb-ch-link"><span class="n">03</span>Limity &amp; Efektivita</a>
-      <ul class="sb-subs">
-        <li><a href="03_CLDECO_limity.html#principy">Jak se spalují tokeny</a></li>
-        <li><a href="03_CLDECO_limity.html#ctiri-opravy">Čtyři klíčové opravy</a></li>
-        <li><a href="03_CLDECO_limity.html#master-prompt">Master Prompt</a></li>
-        <li><a href="03_CLDECO_limity.html#pet-navyku">Pět návyků</a></li>
-        <li><a href="03_CLDECO_limity.html#model-strategie">Strategie modelů</a></li>
-        <li><a href="03_CLDECO_limity.html#cache-zalezitost">Co ruší cache</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="04_CLDECO_zaklady.html" class="sb-ch-link"><span class="n">04</span>Základy</a>
-      <ul class="sb-subs">
-        <li><a href="04_CLDECO_zaklady.html#prvni-session">První session</a></li>
-        <li><a href="04_CLDECO_zaklady.html#slash-prikazy">Slash příkazy</a></li>
-        <li><a href="04_CLDECO_zaklady.html#one-shot">One-shot příkazy</a></li>
-        <li><a href="04_CLDECO_zaklady.html#plan-mode">Plan vs Auto mode</a></li>
-        <li><a href="04_CLDECO_zaklady.html#workflow">Základní workflow</a></li>
-        <li><a href="04_CLDECO_zaklady.html#git">Práce s Gitem</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="05_CLDECO_pokrocile.html" class="sb-ch-link"><span class="n">05</span>Pokročilé</a>
-      <ul class="sb-subs">
-        <li><a href="05_CLDECO_pokrocile.html#mcp">MCP servery</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#hooks">Hooks</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#vlastni-prikazy">Vlastní příkazy</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#skills">Skills</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#worktrees">Git worktrees</a></li>
-        <li><a href="05_CLDECO_pokrocile.html#thinking">Extended thinking</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="06_CLDECO_agenti.html" class="sb-ch-link"><span class="n">06</span>Agenti</a>
-      <ul class="sb-subs">
-        <li><a href="06_CLDECO_agenti.html#co-jsou-agenti">Co jsou agenti</a></li>
-        <li><a href="06_CLDECO_agenti.html#subagenti">Subagenti</a></li>
-        <li><a href="06_CLDECO_agenti.html#paralelni">Paralelní zpracování</a></li>
-        <li><a href="06_CLDECO_agenti.html#cloud-routines">Cloud Routines</a></li>
-        <li><a href="06_CLDECO_agenti.html#monitoring">Monitoring &amp; náklady</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="07_CLDECO_bezpecnost.html" class="sb-ch-link"><span class="n">07</span>Bezpečnost</a>
-      <ul class="sb-subs">
-        <li><a href="07_CLDECO_bezpecnost.html#rizika">Rizika a hrozby</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#opravneni">Oprávnění nástrojů</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#secrets">Ochrana secrets</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#audit">Audit &amp; logging</a></li>
-        <li><a href="07_CLDECO_bezpecnost.html#tymy">Pro týmy</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="08_CLDECO_zalohy.html" class="sb-ch-link"><span class="n">08</span>Zálohy před změnou</a>
-      <ul class="sb-subs">
-        <li><a href="08_CLDECO_zalohy.html#proc">Proč zálohovat</a></li>
-        <li><a href="08_CLDECO_zalohy.html#git-sit">Git záchranná síť</a></li>
-        <li><a href="08_CLDECO_zalohy.html#checkpoint">Checkpointy</a></li>
-        <li><a href="08_CLDECO_zalohy.html#obnova">Obnova po chybě</a></li>
-        <li><a href="08_CLDECO_zalohy.html#checklist">Checklist</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="09_CLDECO_cicd.html" class="sb-ch-link"><span class="n">09</span>CI/CD &amp; Automatizace</a>
-      <ul class="sb-subs">
-        <li><a href="09_CLDECO_cicd.html#uvod">Úvod do CI/CD</a></li>
-        <li><a href="09_CLDECO_cicd.html#github-actions">GitHub Actions</a></li>
-        <li><a href="09_CLDECO_cicd.html#code-review">Automatické review</a></li>
-        <li><a href="09_CLDECO_cicd.html#testy">Generování testů</a></li>
-        <li><a href="09_CLDECO_cicd.html#routines">Cloud Routines</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="10_CLDECO_troubleshooting.html" class="sb-ch-link"><span class="n">10</span>Troubleshooting</a>
-      <ul class="sb-subs">
-        <li><a href="10_CLDECO_troubleshooting.html#instalace-err">Instalační chyby</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#auth-err">Autentizace</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#limity">Limity &amp; rate limiting</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#debug">Debugging sessions</a></li>
-        <li><a href="10_CLDECO_troubleshooting.html#pomoc">Kde hledat pomoc</a></li>
-      </ul>
-    </div>
-    <div class="sb-ch">
-      <a href="11_CLDECO_odkazy.html" class="sb-ch-link"><span class="n">11</span>Odkazy &amp; Zdroje</a>
-      <ul class="sb-subs">
-        <li><a href="11_CLDECO_odkazy.html#cesky">Česky</a></li>
-        <li><a href="11_CLDECO_odkazy.html#anglicky">Anglicky</a></li>
-        <li><a href="11_CLDECO_odkazy.html#nastroje">Nástroje</a></li>
-        <li><a href="11_CLDECO_odkazy.html#komunita">Komunita</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<main class="main">
-<div class="ph">
-  <div class="ph-num">DÍL 02-03 / 11</div>
-  <h1>Instalace & Nastavení</h1>
-  <p>Všechny způsoby jak spustit Claude Code, nastavení CLAUDE.md, settings.json, oprávnění nástrojů a proměnné prostředí. Správná konfigurace je základem — šetří tokeny, zvyšuje přesnost a chrání váš projekt.</p>
-</div>
+<body data-page="02">
 
-<h2 id="prehled">Přehled rozhraní — co si vybrat</h2>
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "prehled", "num": "2.1", "name": "Přehled rozhraní" },
+    { "id": "cli", "num": "2.2", "name": "CLI instalace" },
+    { "id": "desktop", "num": "2.3", "name": "Desktop aplikace" },
+    { "id": "claude-md", "num": "2.4", "name": "CLAUDE.md" },
+    { "id": "settings", "num": "2.5", "name": "settings.json" },
+    { "id": "opravneni", "num": "2.6", "name": "Oprávnění" },
+    { "id": "env", "num": "2.7", "name": "ENV proměnné" },
+    { "id": "hierarchie", "num": "2.8", "name": "Hierarchie priorit" }
+  ]
+}
+</script>
+
+<div id="sidebar"></div>
+
+<div class="container">
+  <div class="main-content">
+
+    <div class="page-header">
+      <div class="page-num">DÍL 02</div>
+      <h1>Instalace &amp; Nastavení</h1>
+    </div>
+
+    <div class="content">
+
+<p><strong>Claude Code má tři způsoby, jak ho spustit — a k tomu vám chybí pár souborů, aby koukal na váš projekt správně.</strong></p>
+<p>Tady se dozvíte, jak nainstalovat Claude Code do vašeho terminálu, jak ho nakonfigurovat přes CLAUDE.md a settings.json, a jak nastavit oprávnění tak, aby Claude věděl, co smí a nesmí dělat.</p>
+
+<h2 id="prehled">Přehled rozhraní</h2>
+
+<p>Claude Code běží ve třech prostředích, každé má jiný use-case:</p>
+
 <div class="tw"><table>
-<thead><tr><th>Rozhraní</th><th>Platformy</th><th>Funkce</th><th>Ideální pro</th></tr></thead>
+<thead><tr><th>Rozhraní</th><th>Příkaz</th><th>Vhodné pro</th><th>Poznámka</th></tr></thead>
 <tbody>
-<tr><td><strong>CLI (terminál)</strong></td><td>macOS · Linux · Windows</td><td style="color:var(--gn)">Plné</td><td>Vývojáři znalí terminálu, scripting, CI/CD</td></tr>
-<tr><td><strong>Desktop App</strong></td><td>macOS · Windows</td><td style="color:var(--gn)">Plné + GUI</td><td>Vizuální diff, paralelní sessions, mobil sync</td></tr>
-<tr><td><strong>VS Code plugin</strong></td><td>macOS · Linux · Windows</td><td>Téměř plné</td><td>VS Code, Cursor, Windsurf uživatelé</td></tr>
-<tr><td><strong>JetBrains plugin</strong></td><td>macOS · Linux · Windows</td><td>Téměř plné</td><td>IntelliJ, WebStorm, PyCharm, GoLand</td></tr>
-<tr><td><strong>Web rozhraní</strong></td><td>Prohlížeč</td><td>Omezené</td><td>Rychlý start, jiné zařízení, GitHub projekty</td></tr>
+<tr><td><strong>CLI (terminál)</strong></td><td><code>claude ...</code></td><td>Dev, scripty, automatizace, CI/CD</td><td>Nejjednoduší start. Je to shell session s Claudem.</td></tr>
+<tr><td><strong>VS Code plugin</strong></td><td>Sidebar v editoru</td><td>IDE integrace, inline edit, git diff</td><td>Nejlepší DX pro vývojáře. Instalace přes Extension Marketplace.</td></tr>
+<tr><td><strong>JetBrains plugin</strong></td><td>Sidebar v IntelliJ, PyCharm, atp.</td><td>JetBrains uživatelé, stejné jako VS Code</td><td>Alternativa k VS Code, stejná logika.</td></tr>
+<tr><td><strong>Web UI (claude.ai)</strong></td><td>Browser</td><td>Chat, brainstorm, dokumentace</td><td>Bez přístupu k filesystému — pro rychlé otázky a exploraci.</td></tr>
 </tbody>
 </table></div>
 
-<h2 id="cli">CLI — native installer</h2>
-<p>Claude Code CLI (command-line interface) je nejuniverzálnější způsob — běží na macOS, Linuxu i Windows v terminálu. Native installer se automaticky aktualizuje a nevyžaduje Node.js.</p>
+<p><strong>Doporučení pro začátek:</strong> Nainstalujte CLI, pak si vyzkoušejte VS Code plugin. Oba se sdílí stejnou konfigurací (CLAUDE.md, settings.json, oprávnění).</p>
 
-<div class="cb"><div class="cb-label">Instalace · Linux a macOS</div><pre>
-<span class="c"># Přímý native installer (doporučeno)</span>
-<span class="a">curl</span> -fsSL https://claude.ai/install.sh | bash
+<h2 id="cli">CLI instalace</h2>
 
-<span class="c"># Debian/Ubuntu</span>
-<span class="a">sudo</span> apt-get update && sudo apt-get install claude-code
+<p>Claude Code v terminálu se instaluje přes npm (globálně) nebo přes Homebrew (macOS).</p>
 
-<span class="c"># macOS Homebrew</span>
-<span class="a">brew</span> tap anthropics/claude-code
-<span class="a">brew</span> install claude-code
+<div class="cb"><div class="cb-label">Instalace přes npm (všechny OS)</div><pre>
+<span class="c"># Globální instalace</span>
+<span class="a">npm</span> install -g @anthropic-ai/claude-code
 
-<span class="c"># Fedora/CentOS</span>
-<span class="a">sudo</span> dnf install claude-code
-
-<span class="c"># Arch</span>
-<span class="a">yay</span> -S claude-code
-
-<span class="c"># Alpine Linux</span>
-<span class="a">apk</span> add claude-code
-
-<span class="c"># Nebo universal native installer</span>
-<span class="a">curl</span> -fsSL https://claude.ai/install.sh | bash
-</pre></div>
-
-<div class="cb"><div class="cb-label">Instalace · Windows</div><pre>
-<span class="c"># Přímý download .exe nebo .msi</span>
-<span class="a">https</span>://downloads.anthropic.com/claude-code/latest/windows-x64.exe
-
-<span class="c"># Nebo přes WinGet</span>
-<span class="a">winget</span> install anthropic.claude-code
-
-<span class="c"># Poté přidejte do PATH (obvykle automaticky)</span>
-<span class="c"># Ověřte: claude --version</span>
-</pre></div>
-
-<div class="callout rd">
-  <div class="callout-title">npm instalace — zastaralé</div>
-  <p>Instalace přes <code>npm install -g @anthropic-ai/claude-code</code> je od roku 2026 <strong>deprecated</strong>. Pokud ji máte, odinstalujte ji a přejděte na native installer. Native installer nevyžaduje Node.js a aktualizuje se automaticky.</p>
-</div>
-
-<h2 id="desktop">Desktop aplikace (vydána duben 2026)</h2>
-<p>Desktop App není jen wrapper nad CLI — je to plnohodnotné vývojové prostředí optimalizované pro agentic práci. Klíčová funkce jsou <strong>paralelní sessions</strong>: každá session dostane vlastní izolovanou kopii projektu přes Git worktrees. Můžete spustit refaktoring frontendu a backendu zároveň, sledovat oba živě a merge výsledky standardním PR workflow.</p>
-
-<ul class="tl">
-  <li><strong>Monaco editor</strong> (stejný základ jako VS Code) — vizuální diff před zápisem, zvýrazňování syntaxe</li>
-  <li><strong>Integrovaný terminál</strong> — spouštění testů přímo v aplikaci ve working directory session</li>
-  <li><strong>Vzdálené ovládání z mobilu</strong> — spouštění a monitoring desktop sessions z Claude mobilní aplikace</li>
-  <li><strong>Přehled všech sessions</strong> — jedna karta = jedna session, vidíte stav, spotřebu, progress</li>
-</ul>
-
-<div class="cb"><div class="cb-label">Stažení Desktop App</div><pre>
-<span class="c"># Stáhněte z https://claude.ai/download</span>
-<span class="c"># macOS: .dmg installer</span>
-<span class="c"># Windows: .msi nebo .exe installer</span>
-<span class="c"># Linux: NENÍ dostupné, použijte CLI</span>
-
-<span class="c"># Po instalaci se Desktop App a CLI sdílí autentizaci —</span>
-<span class="c"># přihlaste se jednou a funguje obojí</span>
-</pre></div>
-
-<h2 id="ide">IDE rozšíření</h2>
-<h3>VS Code (+ Cursor, Windsurf)</h3>
-<ul class="tl">
-  <li>Otevřete VS Code → Extensions (Ctrl+Shift+X) → hledejte <strong>Claude Code</strong></li>
-  <li>Instalujte rozšíření od Anthropic (ověřte vydavatele)</li>
-  <li>Po instalaci se logo Claude objeví v pravém horním rohu editoru a v activity baru</li>
-  <li>Přihlaste se přes claude.com nebo API klíč — sdílí session s CLI</li>
-  <li>Funguje stejně v <strong>Cursor</strong> a <strong>Windsurf</strong> (oba jsou forky VS Code)</li>
-</ul>
-
-<h3>JetBrains (IntelliJ, WebStorm, PyCharm, GoLand…)</h3>
-<ul class="tl">
-  <li>Otevřete Settings → Plugins → Marketplace → hledejte <strong>Claude Code</strong></li>
-  <li>Instalujte a restartujte IDE</li>
-  <li>Plugin přidá panel Claude Code do pravého sidebaru</li>
-  <li>Stejná autentizace jako CLI — API klíč nebo předplatné</li>
-</ul>
-
-<h2 id="web">Webové rozhraní</h2>
-<p>Claude Code lze spustit přímo z prohlížeče na <strong>claude.ai</strong>. Pro práci s kódem v GitHub repozitáři autorizujte Claude App v GitHub Settings → Applications.</p>
-<p>Omezení webového rozhraní: pomalejší než CLI, omezené bash příkazy, nelze nainstalovat vlastní MCP servery. Vhodné pro: rychlé jednorázové dotazy ke kódu, práci z jiného zařízení (tablet, školní počítač) nebo onboarding nových členů týmu bez instalace.</p>
-
-<h2 id="autentizace">Autentizace — přihlášení po instalaci</h2>
-<p>Existují dva způsoby autentizace a každý se hodí pro jiný platební model:</p>
-
-<div class="cb"><div class="cb-label">Způsoby přihlášení</div><pre>
-<span class="c">══ VARIANTA 1: Předplatné (Pro/Max) ══</span>
-<span class="c"># Přihlaste se přes browser — otevře claude.com/login</span>
-<span class="a">claude</span> auth login
-<span class="c"># Přihlaste se Claude účtem v prohlížeči</span>
-<span class="c"># Token se automaticky uloží → hotovo</span>
-
-<span class="c">══ VARIANTA 2: API klíč (pay-per-token) ══</span>
-<span class="c"># Získejte klíč na console.anthropic.com → API Keys</span>
-export ANTHROPIC_API_KEY="sk-ant-api03-..."
-
-<span class="c"># Pro trvalé uložení přidejte do ~/.zshrc nebo ~/.bashrc:</span>
-echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshrc
-source ~/.zshrc
-
-<span class="c">══ VARIANTA 3: Login loop nefunguje? ══</span>
-<span class="a">claude</span> auth login --print-redirect-url
-<span class="c"># Zkopírujte URL s tokenem a vložte ručně</span>
-</pre></div>
-
-<div class="callout gn">
-  <div class="callout-title">Kde získat API klíč</div>
-  <p>Přihlaste se na <strong>console.anthropic.com</strong> → API Keys → Create new key. Nový účet dostane $5 v kreditech zdarma pro vyzkoušení. API klíče začínají prefixem <code>sk-ant-</code>.</p>
-</div>
-
-<h2 id="overeni">Ověření a první spuštění</h2>
-<div class="cb"><div class="cb-label">Rychlé ověření</div><pre>
-<span class="c"># Ověření verze</span>
+<span class="c"># Ověření instalace</span>
 <span class="a">claude</span> --version
-<span class="c">→ claude 1.x.x  ✓</span>
 
-<span class="c"># Ověření autentizace</span>
-<span class="a">claude</span> -p "Ahoj, funguje to?"
-<span class="c">→ Claude odpoví  ✓</span>
+<span class="c"># Přihlášení (otevře OAuth browser)</span>
+<span class="a">claude</span> auth login
 
-<span class="c"># První skutečné spuštění v projektu</span>
-<span class="a">cd</span> ~/muj-projekt
-<span class="a">claude</span>
-<span class="c">→ Claude načte strukturu, přečte CLAUDE.md (pokud existuje)</span>
-<span class="c">→ Zadejte první úkol přirozeným jazykem</span>
+<span class="c"># Začátek — první session v terminálu</span>
+<span class="a">claude</span> "Přepiš tenhle Python soubor do moderního Pythonu"
 </pre></div>
 
-<!-- ===== ČÁST 2: NASTAVENÍ ===== -->
+<div class="cb"><div class="cb-label">Instalace přes Homebrew (macOS, Linux)</div><pre>
+<span class="a">brew</span> install anthropic/claude-code/claude
 
-<h2 id="struktura">Struktura konfiguračních souborů</h2>
-<p>Claude Code používá dva typy konfiguračních souborů — <strong>CLAUDE.md</strong> pro instrukce a kontext projektu, a <strong>settings.json</strong> pro technické nastavení chování. Oba existují ve dvou vrstvách: globální (platí pro všechny projekty) a projektové (specifické pro jeden repozitář).</p>
-
-<div class="ftree">
-<span class="d">~/.claude/</span>                      <span class="n">← globální konfigurace</span>
-├── <span class="f">settings.json</span>              <span class="n">← výchozí nastavení pro vše</span>
-├── <span class="f">CLAUDE.md</span>                  <span class="n">← globální instrukce (vaše preference)</span>
-└── <span class="d">projects/</span>                  <span class="n">← session historie a logy</span>
-
-<span class="d">váš-projekt/</span>                      <span class="n">← projektová konfigurace</span>
-├── <span class="f">CLAUDE.md</span>                  <span class="n">← projektové instrukce (nejvyšší priorita)</span>
-└── <span class="d">.claude/</span>
-    ├── <span class="f">settings.json</span>          <span class="n">← projektové nastavení (přepíše globální)</span>
-    ├── <span class="f">settings.local.json</span>    <span class="n">← lokální přepisy (do .gitignore!)</span>
-    └── <span class="d">commands/</span>              <span class="n">← vlastní slash příkazy projektu</span>
-</div>
-
-<div class="callout bl">
-  <div class="callout-title">Klíčové pravidlo</div>
-  <p>Projektové soubory vždy přepíší globální. <code>CLAUDE.md</code> v projektu se <em>přidá</em> ke globálnímu (oba se načtou). <code>settings.json</code> v projektu <em>přepíše</em> globální hodnotu pro každý klíč, který definuje.</p>
-</div>
-
-<h2 id="claude-md">CLAUDE.md — nejdůležitější soubor projektu</h2>
-<p>CLAUDE.md je soubor, který Claude Code automaticky přečte při každém spuštění v daném adresáři. Je to vaše "příručka projektu pro Clauda" — popisuje architekturu, konvence, příkazy, pravidla a vše, co Claude musí vědět, aby pracoval správně hned od prvního promptu.</p>
-<p><strong>Proč je to tak důležité?</strong> Bez CLAUDE.md strávíte první 2–4 prompty každé session vysvětlováním kontextu. S dobrým CLAUDE.md Claude okamžitě ví, jaký framework používáte, jak spustit testy, jaké jsou konvence pojmenování a co nesmí dělat. Každý ušetřený "ujasňovací" prompt = ušetřené tokeny a čas.</p>
-
-<h3 id="claude-md-sekce">Doporučené sekce CLAUDE.md</h3>
-<div class="cb"><div class="cb-label">CLAUDE.md — komplexní vzor pro webový projekt</div><pre>
-<span class="c"># Název projektu — krátký popis</span>
-E-shop na knihy. Next.js 15, PostgreSQL, Stripe platby.
-
-<span class="c">## Příkazy (sem patří vše co Claude bude spouštět)</span>
-- `npm run dev`          — Dev server na portu 3000
-- `npm run build`        — Produkční build (ověřuje TS typy)
-- `npm run test`         — Jest unit testy
-- `npm run test:e2e`     — Playwright E2E testy
-- `npm run lint`         — ESLint + Prettier
-- `npm run db:migrate`   — Spustí čekající migrace (Drizzle ORM)
-- `npm run db:studio`    — Otevře Drizzle Studio (DB prohlížeč)
-
-<span class="c">## Architektura</span>
-- Next.js 15 s App Router (ne Pages Router)
-- Server Components jsou výchozí; `"use client"` jen kdy nutno
-- DB přístup výhradně přes Drizzle ORM v server components
-- Autentizace: Clerk (ne NextAuth)
-- Styly: Tailwind v4 + shadcn/ui komponenty
-- API routes v: `src/app/api/`
-- Typy v: `src/types/`
-- Server akce v: `src/actions/`
-
-<span class="c">## Kódové konvence</span>
-- TypeScript strict mode — žádné `any` typy
-- Pojmenování souborů: kebab-case (user-profile.tsx)
-- Pojmenování komponent: PascalCase (UserProfile)
-- Commit messages: imperativ, česky, max 72 znaků
-  Příklad: "Přidej validaci emailového formuláře"
-- Komentáře v kódu: česky
-- Žádné console.log v commitu (jen přes logger util)
-
-<span class="c">## Pravidla pro Clauda</span>
-- Nikdy nepushovat přímo do větve `main`
-- Vždy spustit `npm run lint` před navrhovaným commitem
-- Při změně DB schématu vždy generuj migraci: `npm run db:generate`
-- Neměnit soubory v `src/generated/` — generované automaticky
-- Při nejistotě o přístupu se zeptej, neimplementuj "nejlepší odhad"
-
-<span class="c">## Prostředí</span>
-- `.env.local` pro lokální dev (není v Gitu)
-- `.env.example` ukazuje požadované proměnné
-- Produkční secrets jsou v Vercel Dashboard
+<span class="c"># Ověření a přihlášení (stejně jako npm)</span>
+<span class="a">claude</span> auth login
 </pre></div>
 
-<h3 id="claude-md-tipy">Tipy pro psaní efektivního CLAUDE.md</h3>
+<p><strong>Poznámka k Node.js:</strong> Potřebujete Node.js 18+ (ověřte <code>node --version</code>). Není třeba nic jiného.</p>
+
+<h2 id="desktop">Desktop aplikace</h2>
+
+<p>Na macOS a Windows je k dispozici <strong>Claude Code Desktop app</strong> — nativní aplikace s terminálním oknem a sidebarem. Instalace je jednoduchá:</p>
+
+<div class="callout gn">
+  <div class="callout-title">Kde stáhnout</div>
+  <p>Jděte na <strong>claude.ai/desktop</strong> (nebo <strong>code.anthropic.com</strong>) a stáhněte si instalátor pro macOS (.dmg) nebo Windows (.exe).</p>
+</div>
+
+<p>Desktop app běží přesně stejně jako CLI — používá stejný `settings.json` a `CLAUDE.md`. Jediný rozdíl je UI — v desktopové aplikaci vidíte soubory a historii v sidebaru.</p>
+
+<p><strong>Konfigurační soubory desktop app jsou na stejném místě jako CLI:</strong></p>
+<div class="tw"><table>
+<thead><tr><th>Soubor</th><th>Cesta</th><th>Účel</th></tr></thead>
+<tbody>
+<tr><td><strong>CLAUDE.md</strong></td><td><code>CLAUDE.md</code> v kořeni projektu (nebo globální <code>~/.claude/CLAUDE.md</code>)</td><td>Instrukce pro Claude — styl, konvence, preference</td></tr>
+<tr><td><strong>settings.json</strong></td><td><code>.claude/settings.json</code> v projektu (nebo <code>~/.claude/settings.json</code> globálně)</td><td>Konfigurace modelu, oprávnění, ENV proměnné</td></tr>
+<tr><td><strong>Oprávnění</strong></td><td>V <code>settings.json</code> pod <code>"permissions"</code></td><td>Určuje, které příkazy Claude smí spustit</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="claude-md">CLAUDE.md — instrukce pro projekt</h2>
+
+<p><strong>CLAUDE.md je soubor v kořeni vašeho projektu, který říká Claudovi, jak přistupovat k vašemu kódu.</strong> Je to jako system prompt, ale specifický pro váš projekt.</p>
+
+<p>Bez CLAUDE.md si Claude hádá — s dobrým CLAUDE.md ví přesně, co má dělat.</p>
+
+<div class="cb"><div class="cb-label">Příklad CLAUDE.md — minimální verze</div><pre>
+<span class="c"># Instrukce pro Claude Code v projektu MyApp</span>
+
+<span class="k">## Konvence projektu</span>
+- Používáme TypeScript, všechny funkce musí mít type hints
+- Testy píšeme do `tests/` složky, formát: `*.test.ts`
+- Git commit zprávy: Imperative mood, max 50 znaků ("Fix bug in auth", ne "Fixed")
+
+<span class="k">## Co musím vědět</span>
+- Projekt je monorepo s `apps/` a `packages/` složkami
+- Databáze je PostgreSQL, schema v `db/migrations/`
+- API běží na portu 3000, frontend na 3001
+
+<span class="k">## Omezení</span>
+- Nikdy neměň `db/seed.ts` — obsahuje testovací data
+- Ne přes `/eslint` nebo `/prettier` — ty jsou spuštěny v CI
+- Nepojívej ES5, vždy minimálně ES2020 syntax
+
+<span class="k">## Užitečné příkazy</span>
+```
+npm run dev       — vývojová Build + watch
+npm run test      — spustí testovací suite
+npm run typecheck — kontrola TypeScript
+git status        — stav repo
+```
+</pre></div>
+
+<p><strong>Doporučená struktura CLAUDE.md:</strong></p>
 <ul class="tl">
-  <li><strong>Sekce Příkazy je priorita číslo jedna.</strong> Claude bude spouštět příkazy při každé session — pokud nezná správný příkaz pro testy, buď se zeptá (= zbytečný prompt), nebo odhadne špatně. Uveďte všechny relevantní skripty.</li>
-  <li><strong>Pište co Claude dělat nemá.</strong> "Neměnit generované soubory", "nepushovat do main", "nezrušit existující migraci" — negativní instrukce jsou stejně důležité jako pozitivní.</li>
-  <li><strong>Commity do repozitáře.</strong> CLAUDE.md commitnutý do Gitu sdílí kontext s celým týmem. Každý vývojář má automaticky stejná pravidla.</li>
-  <li><strong>V monorepu jeden CLAUDE.md na každý balíček.</strong> Claude načítá CLAUDE.md hierarchicky — kořenový + balíčkový. Každý balíček může mít vlastní konvence.</li>
-  <li><strong>Nepřeplňte ho.</strong> CLAUDE.md se čte při každém spuštění — každý token navíc stojí peníze. Pište stručně, bez zbytečných vysvětlení "proč".</li>
+  <li><strong>Konvence kódu</strong> — jaký jazyk, formát, pojmenování</li>
+  <li><strong>Architektura projektu</strong> — kde je co, jak je to zorganizované</li>
+  <li><strong>Příkazy pro běžné úkoly</strong> — co spustit na test, build, lint</li>
+  <li><strong>Omezení a pravidla</strong> — co Claude nesmí dělat, co je zákazáno</li>
+  <li><strong>Důležité soubory</strong> — které soubory jsou kritické (neměnit)</li>
 </ul>
 
 <div class="callout gn">
-  <div class="callout-title">Rychlý start — nechte Clauda napsat CLAUDE.md za vás</div>
-  <p>Spusťte Claude Code v novém projektu a napište: <em>"Prozkoumej projekt a vytvoř CLAUDE.md se všemi releventními informacemi — příkazy z package.json, architekturu z adresářové struktury, konvence z existujícího kódu."</em> Pak ho zkontrolujte a doplňte pravidla specifická pro váš tým.</p>
+  <div class="callout-title">Pro týmy</div>
+  <p>CLAUDE.md commitujte do repozitáře. Každý vývojář si jej přečte a všichni mají stejné instrukce pro Claude. Nemusíte je psát v každé session.</p>
 </div>
 
-<h2 id="settings">settings.json — technická konfigurace</h2>
-<p>settings.json řídí chování Claude Code jako nástroje — výchozí model, oprávnění příkazů, prostředí sessions a MCP servery. Globální soubor je v <code>~/.claude/settings.json</code>, projektový v <code>.claude/settings.json</code>.</p>
+<h2 id="settings">settings.json — konfigurace session</h2>
 
-<div class="cb"><div class="cb-label">.claude/settings.json — kompletní příklad</div><pre>
+<p>Soubor <code>.claude/settings.json</code> (v projektu) nebo <code>~/.claude/settings.json</code> (globální) určuje technické nastavení: model, rate limity, oprávnění, ENV proměnné.</p>
+
+<div class="cb"><div class="cb-label">Kompletní settings.json — s vysvětlením</div><pre>
 {
   <span class="c">// Výchozí model pro session</span>
   <span class="k">"model"</span>: <span class="v">"claude-sonnet-4-6"</span>,
@@ -465,7 +199,8 @@ E-shop na knihy. Next.js 15, PostgreSQL, Stripe platby.
 }
 </pre></div>
 
-<h3 id="opravneni">Allow vs Deny — jak fungují oprávnění</h3>
+<h2 id="opravneni">Allow vs Deny — jak fungují oprávnění</h2>
+
 <p>Systém oprávnění pracuje na principu: vše, co Claude navrhne spustit, se buď automaticky schválí (allow), automaticky zablokuje (deny), nebo vyžaduje vaše ruční potvrzení (výchozí).</p>
 <ul class="tl">
   <li><strong>allow</strong> — příkazy bezpečné pro automatické schválení. Sem patří testování, linting, čtení stavu Gitu. Claude je spustí bez potvrzení, což urychluje práci.</li>
@@ -480,7 +215,8 @@ E-shop na knihy. Next.js 15, PostgreSQL, Stripe platby.
 </div>
 
 <h2 id="env">Proměnné prostředí</h2>
-<p>ENV proměnné lze nastavit třemi způsoby — v shellu (pro přihlašení), v settings.json (pro session kontext) nebo přes export v shellu před spuštěním Claude.</p>
+
+<p>ENV proměnné lze nastavit třemi způsoby — v shellu (pro přihlašování), v settings.json (pro session kontext) nebo přes export v shellu před spuštěním Claude.</p>
 
 <div class="cb"><div class="cb-label">Klíčové ENV proměnné · ~/.zshrc nebo ~/.bashrc</div><pre>
 <span class="c">## Autentizace (alternativa k claude auth login)</span>
@@ -502,27 +238,8 @@ export <span class="k">CLAUDE_CODE_DISABLE_AUTO_UPDATE</span>=<span class="v">1<
 export <span class="k">CLAUDE_CODE_LOG_LEVEL</span>=<span class="v">"debug"</span>
 </pre></div>
 
-<h2 id="model">Výběr výchozího modelu</h2>
-<p>Model nastavený v settings.json nebo ENV proměnné je výchozí pro všechny sessions, dokud ho nepřepíšete. Doporučení: Sonnet 4.6 jako výchozí — je výkonný pro 80 % úkolů a 3× levnější než Opus. Opus si nechte pro explicitní spuštění na náročné úkoly.</p>
-
-<div class="cb"><div class="cb-label">Nastavení výchozího modelu</div><pre>
-<span class="c">## V settings.json</span>
-{ <span class="k">"model"</span>: <span class="v">"claude-sonnet-4-6"</span> }
-
-<span class="c">## Přepsání pro konkrétní session</span>
-claude --model claude-opus-4-7
-
-<span class="c">## Přepnutí modelu uprostřed session</span>
-/model claude-haiku-4-5
-
-<span class="c">## Dostupné modely (stav: květen 2026)</span>
-claude-opus-4-7        — nejsilnější, nejdražší ($5/$25 /MTok)
-claude-opus-4-6        — stabilní alternativa k 4.7
-claude-sonnet-4-6      — výchozí, nejlepší poměr výkon/cena
-claude-haiku-4-5       — nejrychlejší, nejlevnější ($1/$5 /MTok)
-</pre></div>
-
 <h2 id="hierarchie">Hierarchie priorit — přehled</h2>
+
 <p>Když Claude Code načítá konfiguraci, aplikuje ji v tomto pořadí (vyšší číslo = vyšší priorita, přepíše nižší):</p>
 <ul class="tl">
   <li><strong>1. Globální settings</strong> <code>~/.claude/settings.json</code> — vaše osobní výchozí nastavení</li>
@@ -538,8 +255,15 @@ claude-haiku-4-5       — nejrychlejší, nejlevnější ($1/$5 /MTok)
   <p>Commitujte do repozitáře: <code>CLAUDE.md</code> a <code>.claude/settings.json</code>. Do <code>.gitignore</code> přidejte: <code>.claude/settings.local.json</code>. Tím každý vývojář sdílí projektová pravidla, ale může si lokálně přepsat třeba výchozí model nebo výchozí oprávnění.</p>
 </div>
 
-<div class="pn">
-  <a href="01_CLDECO_salary.html">← 01 · Ceny &amp; Plány</a>
-  <a href="03_CLDECO_limity.html" class="nx">03 · Limity &amp; Efektivita →</a>
+    </div>
+
+    <div id="pn"></div>
+
+  </div>
 </div>
-</main></body></html>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>
