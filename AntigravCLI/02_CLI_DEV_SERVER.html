@@ -5,240 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vývojový server – Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#08090e;--bg2:#0e1117;--bg3:#141820;--bg4:#1a2030;
-  --border:#1e2535;--border2:#2a3548;
-  --text:#c8d6e8;--text2:#7a8fa8;--text3:#4a5f78;
-  --blue:#4f9cf9;--blue2:#82c4ff;
-  --green:#2ecc71;--green2:#7feba0;
-  --amber:#f0a030;--amber2:#fbbf24;
-  --teal:#00d4b8;--teal2:#5eeedd;
-  --red:#e05555;--purple:#a78bfa;
-  --white:#e8f0fc;
-  --r:10px;
-}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:5px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;overflow-x:hidden}
-.wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
-
-/* HERO */
-.hero{padding:60px 0 40px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-80px;right:-100px;width:500px;height:400px;
-  background:radial-gradient(ellipse,rgba(79,156,249,.1) 0%,transparent 65%);pointer-events:none}
-.hero-tag{font-family:'DM Mono',monospace;font-size:.72em;color:var(--blue);letter-spacing:.14em;
-  text-transform:uppercase;margin-bottom:14px}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(1.9em,4.5vw,3em);font-weight:800;
-  color:var(--white);line-height:1.1;margin-bottom:14px}
-.hero h1 span{color:var(--blue)}
-.hero p{color:var(--text2);font-size:1.02em;max-width:580px;margin-bottom:24px}
-.badges{display:flex;flex-wrap:wrap;gap:8px}
-.badge{font-family:'DM Mono',monospace;font-size:.72em;padding:4px 12px;border-radius:16px;border:1px solid}
-.bg{color:var(--green2);border-color:rgba(46,204,113,.4);background:rgba(46,204,113,.07)}
-.bb{color:var(--blue2);border-color:rgba(79,156,249,.4);background:rgba(79,156,249,.07)}
-.ba{color:var(--amber2);border-color:rgba(240,160,48,.4);background:rgba(240,160,48,.07)}
-
-/* SECTIONS */
-.sec{margin-top:52px;padding-top:16px;border-top:1px solid var(--border)}
-.sec-tag{font-family:'DM Mono',monospace;font-size:.7em;color:var(--blue);letter-spacing:.13em;
-  text-transform:uppercase;margin-bottom:8px}
-.sec h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:14px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.08em;font-weight:600;color:var(--teal);margin:26px 0 10px}
-h4{font-family:'Syne',sans-serif;font-size:.94em;font-weight:600;color:var(--text);margin:18px 0 7px}
-p{margin-bottom:11px;color:var(--text)}
-ul,ol{padding-left:20px}
-li{margin:5px 0;color:var(--text2);font-size:.94em}
-li strong{color:var(--white)}
-strong{color:var(--white);font-weight:600}
-em{color:var(--text2);font-style:italic}
-
-/* CODE */
-code{font-family:'DM Mono',monospace;font-size:.85em;background:rgba(79,156,249,.1);
-  color:var(--blue2);border:1px solid rgba(79,156,249,.2);border-radius:4px;padding:1px 7px}
-.cb{background:#070a12;border:1px solid var(--border);border-left:3px solid var(--blue);
-  border-radius:var(--r);padding:16px 18px;margin:12px 0;font-family:'DM Mono',monospace;
-  font-size:.85em;line-height:1.9;overflow-x:auto;color:var(--blue2)}
-.cb .cm{color:var(--text3);font-style:italic}
-.cb .wh{color:var(--white)}
-.cb .gn{color:var(--green2)}
-.cb .am{color:var(--amber2)}
-.cb .rd{color:var(--red)}
-
-/* TERMINAL */
-.term{background:#060810;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:14px 0}
-.term-bar{display:flex;align-items:center;gap:6px;padding:9px 14px;background:var(--bg3);
-  border-bottom:1px solid var(--border)}
-.td{width:10px;height:10px;border-radius:50%}
-.td-r{background:#ff5f57}.td-y{background:#febc2e}.td-g{background:#28c840}
-.t-ttl{font-family:'DM Mono',monospace;font-size:.72em;color:var(--text3);margin-left:8px}
-.term-body{padding:16px 18px;font-family:'DM Mono',monospace;font-size:.83em;line-height:1.95}
-.tl{display:block}
-.tp{color:var(--green2)}.tc{color:var(--white)}.to{color:var(--text2)}
-.ts{color:var(--teal2)}.ta{color:var(--amber2)}.te{color:var(--red)}
-
-/* CALLOUTS */
-.box{display:flex;gap:12px;padding:14px 18px;border-radius:var(--r);margin:16px 0;font-size:.9em}
-.box-icon{font-size:1.2em;flex-shrink:0;margin-top:1px}
-.box-body strong{display:block;margin-bottom:3px;font-family:'Syne',sans-serif;font-size:.92em}
-.box-body p{margin:0;color:inherit}
-.tip{background:rgba(46,204,113,.07);border:1px solid rgba(46,204,113,.22);color:#90c89a}
-.tip .box-body strong{color:var(--green2)}
-.warn{background:rgba(240,160,48,.07);border:1px solid rgba(240,160,48,.22);color:#d4b870}
-.warn .box-body strong{color:var(--amber2)}
-.info{background:rgba(79,156,249,.07);border:1px solid rgba(79,156,249,.22);color:#90b8e0}
-.info .box-body strong{color:var(--blue2)}
-.danger{background:rgba(224,85,85,.07);border:1px solid rgba(224,85,85,.22);color:#d09090}
-.danger .box-body strong{color:var(--red)}
-
-/* CARDS */
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin:12px 0}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
-@media(max-width:560px){.two{grid-template-columns:1fr}}
-.mini{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
-.mini h4{margin-top:0;font-size:.88em;margin-bottom:6px}
-.mini p{margin:0;font-size:.85em;color:var(--text2)}
-
-/* BIG VISUAL */
-.workflow{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:28px;margin:20px 0;text-align:center}
-.wf-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 0}
-.wf-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;
-  padding:12px 18px;font-size:.88em;min-width:130px}
-.wf-box strong{display:block;font-family:'Syne',sans-serif;font-size:.95em;color:var(--white);margin-bottom:3px}
-.wf-box span{color:var(--text3);font-size:.8em}
-.wf-arrow{color:var(--border2);font-size:1.3em}
-.wf-box.active{border-color:var(--blue);background:rgba(79,156,249,.08)}
-.wf-box.active strong{color:var(--blue2)}
-
-/* NPM TABLE */
-.npm-table{width:100%;border-collapse:collapse;font-size:.87em;margin:14px 0}
-.npm-table th{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;
-  text-transform:uppercase;letter-spacing:.08em;color:var(--text3);
-  padding:9px 12px;text-align:left;border-bottom:2px solid var(--border)}
-.npm-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
-.npm-table tr:last-child td{border-bottom:none}
-.npm-table tr:hover td{background:var(--bg2)}
-.npm-table td:first-child{font-family:'DM Mono',monospace;color:var(--teal2);white-space:nowrap}
-.npm-table td:nth-child(2){color:var(--text2)}
-.npm-table td:last-child{color:var(--text3);font-size:.85em}
-
-/* PORT VIZ */
-.port-viz{display:flex;align-items:stretch;gap:0;border:1px solid var(--border);
-  border-radius:var(--r);overflow:hidden;margin:14px 0;font-size:.88em}
-.pv-left{background:var(--bg3);padding:18px 20px;min-width:180px;border-right:1px solid var(--border)}
-.pv-right{padding:18px 20px;flex:1}
-.pv-url{font-family:'DM Mono',monospace;font-size:1.1em;color:var(--green2);margin-bottom:6px}
-.pv-label{font-size:.78em;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
-
-/* DIV */
-.div{display:flex;align-items:center;gap:14px;margin:40px 0}
-.div::before,.div::after{content:'';flex:1;height:1px;background:var(--border)}
-.div span{font-family:'DM Mono',monospace;font-size:.7em;color:var(--text3);
-  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
-
-/* STEP CARDS */
-.steps{display:flex;flex-direction:column;gap:14px;margin:18px 0}
-.step{display:grid;grid-template-columns:46px 1fr;background:var(--bg2);
-  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
-.step-n{display:flex;align-items:flex-start;justify-content:center;padding-top:16px;
-  font-family:'Syne',sans-serif;font-size:1.2em;font-weight:800;color:var(--blue);
-  background:rgba(79,156,249,.05);border-right:1px solid var(--border)}
-.step-b{padding:14px 18px}
-.step-t{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:7px;font-size:.97em}
-.step-b p{font-size:.9em;color:var(--text2);margin-bottom:7px}
-.step-b p:last-child{margin-bottom:0}
-
-/* HMR VIZ */
-.hmr{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;
-  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:16px 0}
-.hmr-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:14px;text-align:center}
-.hmr-box .icon{font-size:1.8em;margin-bottom:6px}
-.hmr-box strong{display:block;font-family:'Syne',sans-serif;font-size:.88em;color:var(--white);margin-bottom:4px}
-.hmr-box span{font-size:.78em;color:var(--text3)}
-.hmr-arrow{text-align:center;color:var(--border2);font-size:1.4em}
-
-/* TABLE OF CONTENTS */
-.toc{background:var(--bg2);border:1px solid var(--border);border-top:3px solid var(--blue);
-  border-radius:var(--r);padding:22px 26px;margin:28px 0}
-.toc-t{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--blue);
-  letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
-.toc-g{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px}
-@media(max-width:500px){.toc-g{grid-template-columns:1fr}}
-.toc-i{display:flex;align-items:baseline;gap:9px;font-size:.87em;color:var(--text2);
-  text-decoration:none;padding:3px 0;transition:color .2s}
-.toc-i:hover{color:var(--blue2)}
-.toc-n{font-family:'DM Mono',monospace;font-size:.76em;color:var(--blue);min-width:18px}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.73em;color:var(--text3);line-height:2}
-/* ===== CHAPTER NAV ===== */
-.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
-.ch-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);color:var(--text2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
-.ch-btn:hover{border-color:var(--amber);color:var(--amber2);text-decoration:none;box-shadow:0 0 0 1px rgba(240,160,48,.15) inset}
-.ch-btn.next{justify-content:flex-end;text-align:right}
-.ch-btn .ch-label{font-size:.85em;color:var(--text3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em}
-.ch-btn .ch-name{display:block;color:var(--text);font-size:1.05em;margin-top:1px}
-
-/* ===== SIDEBAR ===== */
-.progress-bar{position:fixed;top:0;left:0;height:2px;
-  background:linear-gradient(90deg,var(--blue),var(--teal));
-  z-index:999;width:0%;transition:width 0.1s}
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
-  background:rgba(14,17,23,.97);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--blue),var(--teal),transparent)}
-.sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border)}
-.sidebar-back{color:var(--text2);text-decoration:none;font-size:11px;
-  text-transform:uppercase;letter-spacing:.08em;display:flex;gap:6px;
-  margin-bottom:16px;transition:color .2s}
-.sidebar-back:hover{color:var(--blue)}
-.sidebar-title{display:flex;align-items:center;gap:12px}
-.sidebar-icon{width:38px;height:38px;font-size:1.4rem;border-radius:10px;
-  background:rgba(79,156,249,.12);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sidebar-name{font-size:.95rem;font-weight:700;color:var(--white)}
-.sidebar-name small{font-size:.7rem;color:var(--text2);display:block;margin-top:2px}
-.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--text3);font-family:monospace}
-.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
-  color:var(--text2);text-decoration:none;font-size:13px;
-  border-left:2px solid transparent;transition:all .2s}
-.nav-link:hover,.nav-link.active{color:var(--white);
-  background:rgba(79,156,249,.05);border-left-color:var(--blue)}
-.nav-step{font-family:monospace;font-size:10px;min-width:22px;
-  color:var(--teal);background:rgba(0,212,184,.10);
-  border:1px solid rgba(0,212,184,.25);padding:2px 5px;
-  border-radius:4px;text-align:center;flex-shrink:0}
-@media(max-width:900px){.sidebar{display:none}.wrap{margin-left:0 !important}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="progress-bar" id="progressBar"></div>
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <a href="00_CLI_INDEX.html" class="sidebar-back">← Zpět na index</a>
-    <div class="sidebar-title">
-      <div class="sidebar-icon">💻</div>
-      <div class="sidebar-name">Vývojový server<small>Antigravity CLI průvodce</small></div>
-    </div>
-  </div>
-  <div class="nav-group-label">Obsah</div>
-  <a href="#s1" class="nav-link active"><span class="nav-step">01</span> Co je vývojový server</a>
-  <a href="#s2" class="nav-link"><span class="nav-step">02</span> Jak spustit dev server</a>
-  <a href="#s3" class="nav-link"><span class="nav-step">03</span> Dva terminály vedle sebe</a>
-  <a href="#s4" class="nav-link"><span class="nav-step">04</span> HMR – auto obnovení</a>
-  <a href="#s5" class="nav-link"><span class="nav-step">05</span> Všechny npm příkazy</a>
-  <a href="#s6" class="nav-link"><span class="nav-step">06</span> Pracovní postup A–Z</a>
-  <a href="#s7" class="nav-link"><span class="nav-step">07</span> Problémy a řešení</a>
-  <a href="#s8" class="nav-link"><span class="nav-step">08</span> Adresy a porty</a>
-</nav>
-<div class="wrap" style="margin-left:260px">
+<body data-page="02">
+
+<div id="sidebar"></div>
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "s1", "num": "2.1", "name": "Co je vývojový server" },
+    { "id": "s2", "num": "2.2", "name": "Jak spustit dev server" },
+    { "id": "s3", "num": "2.3", "name": "Dva terminály vedle sebe" },
+    { "id": "s4", "num": "2.4", "name": "HMR – auto obnovení" },
+    { "id": "s5", "num": "2.5", "name": "Všechny npm příkazy" },
+    { "id": "s6", "num": "2.6", "name": "Pracovní postup A–Z" },
+    { "id": "s7", "num": "2.7", "name": "Problémy a řešení" },
+    { "id": "s8", "num": "2.8", "name": "Adresy a porty" }
+  ]
+}
+</script>
+
+<div class="page">
 
 <!-- HERO -->
 <div class="hero">
@@ -477,7 +265,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   </div>
 
   <div class="two">
-    <div class="mini" style="border-color:rgba(46,204,113,.3)">
+    <div class="mini" style="border-color:rgba(63,185,80,.3)">
       <h4 style="color:var(--green2)">✅ Kdy HMR funguje perfektně</h4>
       <p>Změny v komponentách, styly, text, logika – vše co je uvnitř src/ složky.</p>
     </div>
@@ -745,51 +533,15 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
   </div>
 </div>
 
-<nav class="chapter-nav">
-  <a href="01_CLI_KOMPLETNI_PRUVODCE_WINDOWS.html" class="ch-btn">
-    <span>←</span>
-    <div>
-      <span class="ch-label">předchozí kapitola</span>
-      <span class="ch-name">Kompletní průvodce</span>
-    </div>
-  </a>
-  <a href="03_CLI_GEMINI_TAHAK.html" class="ch-btn next">
-    <div>
-      <span class="ch-label">další kapitola</span>
-      <span class="ch-name">Tahák příkazů</span>
-    </div>
-    <span>→</span>
-  </a>
-</nav>
-
-<footer>
-  02_CLI_DEV_SERVER.html &nbsp;·&nbsp;
-  Antigravity CLI Průvodce &nbsp;·&nbsp;
-  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
-  <a href="00_CLI_INDEX.html" style="color:var(--amber)">← Zpět na index</a>
-</footer>
+<div class="page-footer">
+  02_CLI_DEV_SERVER.html &nbsp;·&nbsp; Antigravity CLI Průvodce &nbsp;·&nbsp; Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
 </div>
-<script>
 
-  window.addEventListener('scroll', () => {
-    const bar = document.getElementById('progressBar');
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    bar.style.width = (scrollTop / height * 100) + '%';
-  });
-  const sections = document.querySelectorAll('.sec[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const t = document.querySelector('[href="#' + e.target.id + '"]');
-        if (t) t.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px' });
-  sections.forEach(s => observer.observe(s));
+<div id="pn"></div>
+</div>
 
-</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
 </body>
 </html>

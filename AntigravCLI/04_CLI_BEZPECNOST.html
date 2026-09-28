@@ -5,244 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bezpečnost – Antigravity CLI průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#09080d;--bg2:#0f0d14;--bg3:#16131e;--bg4:#1e1a28;
-  --border:#221e30;--border2:#302840;
-  --text:#ccc4de;--t2:#7a6e98;--t3:#45395c;
-  --red:#e05555;--red2:#f5a0a0;
-  --amber:#d4922a;--amber2:#f5c060;
-  --green:#2ea84a;--green2:#7ee88a;
-  --blue:#4878d4;--blue2:#90b8f8;
-  --purple:#8855cc;--purple2:#c4a0f0;
-  --white:#ece8f5;
-  --r:10px;
-}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:5px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;overflow-x:hidden}
-.wrap{max-width:880px;margin:0 auto;padding:0 22px 80px}
-
-/* HERO */
-.hero{padding:56px 0 38px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-60px;left:-80px;width:500px;height:380px;
-  background:radial-gradient(ellipse,rgba(224,85,85,.1) 0%,transparent 65%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:-20px;right:-60px;width:300px;height:200px;
-  background:radial-gradient(ellipse,rgba(136,85,204,.08) 0%,transparent 65%);pointer-events:none}
-.hero-tag{font-family:'DM Mono',monospace;font-size:.72em;color:var(--red);letter-spacing:.15em;
-  text-transform:uppercase;margin-bottom:12px}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2em,5vw,3.2em);font-weight:800;
-  color:var(--white);line-height:1.05;margin-bottom:14px}
-.hero h1 em{color:var(--red);font-style:normal}
-.hero-sub{color:var(--t2);font-size:1em;max-width:600px;margin-bottom:22px}
-.badges{display:flex;flex-wrap:wrap;gap:8px}
-.badge{font-family:'DM Mono',monospace;font-size:.72em;padding:4px 12px;border-radius:14px;border:1px solid}
-.br{color:var(--red2);border-color:rgba(224,85,85,.4);background:rgba(224,85,85,.08)}
-.ba{color:var(--amber2);border-color:rgba(212,146,42,.4);background:rgba(212,146,42,.08)}
-.bg{color:var(--green2);border-color:rgba(46,168,74,.4);background:rgba(46,168,74,.08)}
-
-/* TOC */
-.toc{background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--red);
-  border-radius:var(--r);padding:22px 26px;margin:32px 0}
-.toc-t{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--red);
-  letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
-.toc-g{display:grid;grid-template-columns:1fr 1fr;gap:5px 24px}
-@media(max-width:520px){.toc-g{grid-template-columns:1fr}}
-.toc-a{display:flex;align-items:baseline;gap:9px;font-size:.88em;color:var(--t2);
-  text-decoration:none;padding:3px 0;transition:color .2s}
-.toc-a:hover{color:var(--red2)}
-.toc-n{font-family:'DM Mono',monospace;font-size:.76em;color:var(--red);min-width:18px}
-
-/* SECTIONS */
-.sec{margin-top:52px;padding-top:18px;border-top:1px solid var(--border)}
-.sec-tag{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.13em;
-  text-transform:uppercase;margin-bottom:8px}
-.sec h2{font-family:'Syne',sans-serif;font-size:1.65em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.08em;font-weight:600;color:var(--purple2);
-  margin:28px 0 10px}
-h4{font-family:'Syne',sans-serif;font-size:.94em;font-weight:600;color:var(--text);margin:18px 0 7px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
-li strong{color:var(--white)}
-strong{color:var(--white);font-weight:600}
-em{color:var(--t2);font-style:italic}
-a{color:var(--blue2);text-decoration:none}
-a:hover{text-decoration:underline}
-
-/* CODE */
-code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(72,120,212,.1);
-  color:var(--blue2);border:1px solid rgba(72,120,212,.25);border-radius:4px;padding:1px 7px}
-.cb{background:#070610;border:1px solid var(--border);border-left:3px solid var(--blue);
-  border-radius:var(--r);padding:15px 18px;margin:12px 0;font-family:'DM Mono',monospace;
-  font-size:.85em;line-height:1.9;overflow-x:auto;color:var(--blue2)}
-.cb .cm{color:var(--t3);font-style:italic}
-.cb .wh{color:var(--white)}
-.cb .gn{color:var(--green2)}
-.cb .am{color:var(--amber2)}
-.cb .rd{color:var(--red2)}
-
-/* CALLOUTS */
-.box{display:flex;gap:13px;padding:15px 18px;border-radius:var(--r);margin:16px 0;font-size:.91em}
-.bi{flex-shrink:0;font-size:1.25em;margin-top:1px}
-.bb strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
-.bb p,.bb li{margin:0;color:inherit;font-size:.95em}
-.bb ul{padding-left:16px;margin-top:4px}
-.tip2 {background:rgba(46,168,74,.08);border:1px solid rgba(46,168,74,.25);color:#90c89a}
-.tip2 .bb strong{color:var(--green2)}
-.warn2{background:rgba(212,146,42,.08);border:1px solid rgba(212,146,42,.25);color:#d4b870}
-.warn2 .bb strong{color:var(--amber2)}
-.danger2{background:rgba(224,85,85,.09);border:1px solid rgba(224,85,85,.3);color:#d09090}
-.danger2 .bb strong{color:var(--red2)}
-.info2{background:rgba(72,120,212,.08);border:1px solid rgba(72,120,212,.25);color:#90b0d8}
-.info2 .bb strong{color:var(--blue2)}
-.purple2{background:rgba(136,85,204,.08);border:1px solid rgba(136,85,204,.25);color:#c0a0d8}
-.purple2 .bb strong{color:var(--purple2)}
-
-/* RISK TABLE */
-.risk-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.88em}
-.risk-table th{font-family:'Syne',sans-serif;font-size:.76em;font-weight:700;text-transform:uppercase;
-  letter-spacing:.08em;color:var(--t3);padding:9px 12px;text-align:left;border-bottom:2px solid var(--border)}
-.risk-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
-.risk-table tr:last-child td{border-bottom:none}
-.risk-table td:first-child{color:var(--white);font-weight:500;white-space:nowrap}
-.risk-table td:nth-child(2){color:var(--t2)}
-.risk-level{display:inline-block;font-family:'DM Mono',monospace;font-size:.78em;
-  padding:2px 10px;border-radius:10px;border:1px solid;white-space:nowrap}
-.rl-low{color:var(--green2);border-color:rgba(46,168,74,.4);background:rgba(46,168,74,.08)}
-.rl-mid{color:var(--amber2);border-color:rgba(212,146,42,.4);background:rgba(212,146,42,.08)}
-.rl-hi {color:var(--red2); border-color:rgba(224,85,85,.4); background:rgba(224,85,85,.08)}
-
-/* STEPS */
-.steps{display:flex;flex-direction:column;gap:12px;margin:16px 0}
-.step{display:grid;grid-template-columns:46px 1fr;background:var(--bg2);
-  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
-.step-n{display:flex;align-items:flex-start;justify-content:center;padding-top:15px;
-  font-family:'Syne',sans-serif;font-size:1.15em;font-weight:800;
-  background:rgba(224,85,85,.06);border-right:1px solid var(--border)}
-.step-b{padding:14px 18px}
-.step-t{font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:7px;font-size:.96em}
-.step-b p{font-size:.9em;color:var(--t2);margin-bottom:7px}
-.step-b p:last-child{margin-bottom:0}
-
-/* PERMISSION TABLE */
-.perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-@media(max-width:560px){.perm-grid{grid-template-columns:1fr}}
-.perm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:15px}
-.perm-title{font-family:'Syne',sans-serif;font-size:.85em;font-weight:700;margin-bottom:8px;
-  padding-bottom:7px;border-bottom:1px solid var(--border)}
-.perm-row{display:flex;justify-content:space-between;align-items:baseline;
-  padding:4px 0;font-size:.83em;border-bottom:1px solid rgba(255,255,255,.03)}
-.perm-row:last-child{border-bottom:none}
-.perm-name{font-family:'DM Mono',monospace;color:var(--t2)}
-.perm-val{font-family:'DM Mono',monospace;font-size:.9em}
-.pv-r{color:var(--red2)}
-.pv-g{color:var(--green2)}
-.pv-a{color:var(--amber2)}
-
-/* VERDICT */
-.verdict{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:22px 24px;margin:18px 0}
-.verdict-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
-.vd-row{display:flex;align-items:flex-start;gap:12px;padding:8px 0;
-  border-bottom:1px solid rgba(255,255,255,.04);font-size:.9em}
-.vd-row:last-child{border-bottom:none}
-.vd-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
-.vd-text{color:var(--t2)}
-.vd-text strong{color:var(--white)}
-
-/* DIVIDER */
-.div{display:flex;align-items:center;gap:14px;margin:38px 0 14px}
-.div::before,.div::after{content:'';flex:1;height:1px;background:var(--border)}
-.div span{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);
-  letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
-
-/* CHECKLIST */
-.checklist{background:var(--bg2);border:1px solid var(--border);
-  border-left:4px solid var(--green);border-radius:var(--r);padding:20px 22px;margin:16px 0}
-.checklist h4{color:var(--green2);font-family:'Syne',sans-serif;margin-top:0;margin-bottom:12px;
-  font-size:.9em;text-transform:uppercase;letter-spacing:.08em}
-.cl-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;
-  border-bottom:1px solid rgba(255,255,255,.04);font-size:.88em;color:var(--t2)}
-.cl-item:last-child{border-bottom:none}
-.cl-box{color:var(--green);flex-shrink:0;margin-top:2px}
-
-/* SUMMARY BOX */
-.summary{background:linear-gradient(135deg,rgba(46,168,74,.08) 0%,rgba(72,120,212,.08) 100%);
-  border:1px solid rgba(46,168,74,.25);border-radius:var(--r);padding:24px 26px;margin:24px 0}
-.summary h3{color:var(--green2);margin-top:0}
-
-footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2.2}
-/* ===== CHAPTER NAV ===== */
-.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
-.ch-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
-.ch-btn:hover{border-color:var(--amber);color:var(--amber2);text-decoration:none;box-shadow:0 0 0 1px rgba(212,146,42,.15) inset}
-.ch-btn.next{justify-content:flex-end;text-align:right}
-.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em}
-.ch-btn .ch-name{display:block;color:var(--white);font-size:1.05em;margin-top:1px}
-
-/* ===== SIDEBAR ===== */
-.progress-bar{position:fixed;top:0;left:0;height:2px;
-  background:linear-gradient(90deg,var(--red),var(--amber));
-  z-index:999;width:0%;transition:width 0.1s}
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
-  background:rgba(15,13,20,.97);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--red),var(--amber),transparent)}
-.sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border)}
-.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
-  text-transform:uppercase;letter-spacing:.08em;display:flex;gap:6px;
-  margin-bottom:16px;transition:color .2s}
-.sidebar-back:hover{color:var(--red)}
-.sidebar-title{display:flex;align-items:center;gap:12px}
-.sidebar-icon{width:38px;height:38px;font-size:1.4rem;border-radius:10px;
-  background:rgba(224,85,85,.12);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sidebar-name{font-size:.95rem;font-weight:700;color:var(--text)}
-.sidebar-name small{font-size:.7rem;color:var(--t2);display:block;margin-top:2px}
-.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--t3);font-family:monospace}
-.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
-  color:var(--t2);text-decoration:none;font-size:13px;
-  border-left:2px solid transparent;transition:all .2s}
-.nav-link:hover,.nav-link.active{color:var(--text);
-  background:rgba(224,85,85,.05);border-left-color:var(--red)}
-.nav-step{font-family:monospace;font-size:10px;min-width:22px;
-  color:var(--amber);background:rgba(212,146,42,.10);
-  border:1px solid rgba(212,146,42,.25);padding:2px 5px;
-  border-radius:4px;text-align:center;flex-shrink:0}
-@media(max-width:900px){.sidebar{display:none}.wrap{margin-left:0 !important}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="progress-bar" id="progressBar"></div>
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <a href="00_CLI_INDEX.html" class="sidebar-back">← Zpět na index</a>
-    <div class="sidebar-title">
-      <div class="sidebar-icon">🛡️</div>
-      <div class="sidebar-name">Bezpečnost<small>Antigravity CLI průvodce</small></div>
-    </div>
-  </div>
-  <div class="nav-group-label">Obsah</div>
-  <a href="#s1" class="nav-link active"><span class="nav-step">01</span> Co přesně instaluješ</a>
-  <a href="#s2" class="nav-link"><span class="nav-step">02</span> Oprávnění PowerShellu</a>
-  <a href="#s3" class="nav-link"><span class="nav-step">03</span> Co vidí a posílá Googlu</a>
-  <a href="#s4" class="nav-link"><span class="nav-step">04</span> Tabulka rizik</a>
-  <a href="#s5" class="nav-link"><span class="nav-step">05</span> Zlatá pravidla</a>
-  <a href="#s6" class="nav-link"><span class="nav-step">06</span> Odinstalace CLI</a>
-  <a href="#s7" class="nav-link"><span class="nav-step">07</span> Odinstalace Node.js</a>
-  <a href="#s8" class="nav-link"><span class="nav-step">08</span> Vrátit oprávnění PS</a>
-  <a href="#s9" class="nav-link"><span class="nav-step">09</span> Čistá odinstalace</a>
-  <a href="#s10" class="nav-link"><span class="nav-step">10</span> Výsledný verdikt</a>
-</nav>
-<div class="wrap" style="margin-left:260px">
+<body data-page="04">
+
+<div id="sidebar"></div>
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "s1", "num": "4.1", "name": "Co přesně instaluješ" },
+    { "id": "s2", "num": "4.2", "name": "Oprávnění PowerShellu" },
+    { "id": "s3", "num": "4.3", "name": "Co vidí a posílá Googlu" },
+    { "id": "s4", "num": "4.4", "name": "Tabulka rizik" },
+    { "id": "s5", "num": "4.5", "name": "Zlatá pravidla" },
+    { "id": "s6", "num": "4.6", "name": "Odinstalace CLI" },
+    { "id": "s7", "num": "4.7", "name": "Odinstalace Node.js" },
+    { "id": "s8", "num": "4.8", "name": "Vrátit oprávnění PS" },
+    { "id": "s9", "num": "4.9", "name": "Čistá odinstalace" },
+    { "id": "s10", "num": "4.10", "name": "Výsledný verdikt" }
+  ]
+}
+</script>
+
+<div class="page">
 
 <!-- HERO -->
 <div class="hero">
@@ -326,21 +112,21 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
   <h3>Jaké jsou možnosti nastavení</h3>
 
   <div class="perm-grid">
-    <div class="perm-card" style="border-color:rgba(224,85,85,.3)">
+    <div class="perm-card" style="border-color:rgba(248,81,73,.3)">
       <div class="perm-title" style="color:var(--red2)">🔴 Restricted (výchozí)</div>
-      <p style="font-size:.84em;color:var(--t2);margin-bottom:8px">Žádné skripty nesmí běžet. Nejbezpečnější, ale nefunguje npm.</p>
+      <p style="font-size:.84em;color:var(--text2);margin-bottom:8px">Žádné skripty nesmí běžet. Nejbezpečnější, ale nefunguje npm.</p>
     </div>
-    <div class="perm-card" style="border-color:rgba(46,168,74,.3)">
+    <div class="perm-card" style="border-color:rgba(63,185,80,.3)">
       <div class="perm-title" style="color:var(--green2)">🟢 RemoteSigned (co jsme nastavili)</div>
-      <p style="font-size:.84em;color:var(--t2);margin-bottom:8px">Lokální skripty (z tvého počítače) smí běžet. Skripty stažené z internetu musí mít digitální podpis od důvěryhodného vydavatele.</p>
+      <p style="font-size:.84em;color:var(--text2);margin-bottom:8px">Lokální skripty (z tvého počítače) smí běžet. Skripty stažené z internetu musí mít digitální podpis od důvěryhodného vydavatele.</p>
     </div>
-    <div class="perm-card" style="border-color:rgba(212,146,42,.3)">
+    <div class="perm-card" style="border-color:rgba(240,160,48,.3)">
       <div class="perm-title" style="color:var(--amber2)">🟡 AllSigned</div>
-      <p style="font-size:.84em;color:var(--t2);margin-bottom:8px">Každý skript musí mít digitální podpis. Bezpečnější než RemoteSigned, ale komplikovanější v praxi.</p>
+      <p style="font-size:.84em;color:var(--text2);margin-bottom:8px">Každý skript musí mít digitální podpis. Bezpečnější než RemoteSigned, ale komplikovanější v praxi.</p>
     </div>
-    <div class="perm-card" style="border-color:rgba(224,85,85,.5)">
+    <div class="perm-card" style="border-color:rgba(248,81,73,.5)">
       <div class="perm-title" style="color:var(--red2)">🔴 Unrestricted</div>
-      <p style="font-size:.84em;color:var(--t2);margin-bottom:8px">Vše smí běžet bez omezení. Nebezpečné – nikdy toto nenastavuj.</p>
+      <p style="font-size:.84em;color:var(--text2);margin-bottom:8px">Vše smí běžet bez omezení. Nebezpečné – nikdy toto nenastavuj.</p>
     </div>
   </div>
 
@@ -502,7 +288,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
       </tr>
     </tbody>
   </table>
-  <p style="font-size:.82em; color:var(--t3);">* Hvězdičkou označená rizika jsou podmíněná – závisí na tom jak Gemini CLI používáš. Při správném používání klesají na nízkou úroveň.</p>
+  <p style="font-size:.82em; color:var(--text3);">* Hvězdičkou označená rizika jsou podmíněná – závisí na tom jak Gemini CLI používáš. Při správném používání klesají na nízkou úroveň.</p>
 
   <div class="box purple2">
     <span class="bi">🔍</span>
@@ -715,7 +501,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
 
   <div class="steps">
     <div class="step">
-      <div class="step-n" style="color:var(--purple2)">1</div>
+      <div class="step-n" style="color:var(--teal)">1</div>
       <div class="step-b">
         <div class="step-t">Ukonči Gemini CLI pokud běží</div>
         <div class="cb"><span class="wh">/quit</span></div>
@@ -723,7 +509,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     </div>
 
     <div class="step">
-      <div class="step-n" style="color:var(--purple2)">2</div>
+      <div class="step-n" style="color:var(--teal)">2</div>
       <div class="step-b">
         <div class="step-t">Odinstaluj Gemini CLI přes npm</div>
         <div class="cb"><span class="wh">npm uninstall -g @google/gemini-cli</span></div>
@@ -731,7 +517,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     </div>
 
     <div class="step">
-      <div class="step-n" style="color:var(--purple2)">3</div>
+      <div class="step-n" style="color:var(--teal)">3</div>
       <div class="step-b">
         <div class="step-t">Smaž konfiguraci Gemini CLI</div>
         <div class="cb"><span class="wh">Remove-Item -Recurse -Force "$HOME\.gemini" -ErrorAction SilentlyContinue</span></div>
@@ -739,7 +525,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     </div>
 
     <div class="step">
-      <div class="step-n" style="color:var(--purple2)">4</div>
+      <div class="step-n" style="color:var(--teal)">4</div>
       <div class="step-b">
         <div class="step-t">Vrať PowerShell execution policy</div>
         <div class="cb"><span class="wh">Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser</span></div>
@@ -748,7 +534,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     </div>
 
     <div class="step">
-      <div class="step-n" style="color:var(--purple2)">5</div>
+      <div class="step-n" style="color:var(--teal)">5</div>
       <div class="step-b">
         <div class="step-t">Odinstaluj Node.js (přes Nastavení Windows)</div>
         <p>Start → Nastavení → Aplikace → hledej "Node.js" → Odinstalovat</p>
@@ -756,7 +542,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     </div>
 
     <div class="step">
-      <div class="step-n" style="color:var(--purple2)">6</div>
+      <div class="step-n" style="color:var(--teal)">6</div>
       <div class="step-b">
         <div class="step-t">Odstraň zbytky npm (volitelné)</div>
         <div class="cb">
@@ -767,7 +553,7 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
     </div>
 
     <div class="step">
-      <div class="step-n" style="color:var(--purple2)">7</div>
+      <div class="step-n" style="color:var(--teal)">7</div>
       <div class="step-b">
         <div class="step-t">Ověř že je vše pryč</div>
         <div class="cb">
@@ -824,48 +610,16 @@ footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--border);
   </div>
 </div>
 
-<nav class="chapter-nav">
-  <a href="03_CLI_GEMINI_TAHAK.html" class="ch-btn">
-    <span>←</span>
-    <div>
-      <span class="ch-label">předchozí kapitola</span>
-      <span class="ch-name">Tahák příkazů</span>
-    </div>
-  </a>
-  <div></div>
-</nav>
 
-<footer>
-  04_CLI_BEZPECNOST.html &nbsp;·&nbsp;
-  Antigravity CLI Průvodce &nbsp;·&nbsp;
-  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
-  <a href="00_CLI_INDEX.html" style="color:var(--amber)">← Zpět na index</a>
-</footer>
-
+<div class="page-footer">
+  04_CLI_BEZPECNOST.html &nbsp;·&nbsp; Antigravity CLI Průvodce &nbsp;·&nbsp; Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
 </div>
-<script>
-  // Progress bar
-  window.addEventListener('scroll', () => {
-    const bar = document.getElementById('progressBar');
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    bar.style.width = (scrollTop / height * 100) + '%';
-  });
 
-  // Scroll spy
-  const sections = document.querySelectorAll('.sec[id]');
-  const navLinks = document.querySelectorAll('.nav-link, .nav-item');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const target = document.querySelector('[href="#' + e.target.id + '"]');
-        if (target) target.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px' });
-  sections.forEach(s => observer.observe(s));
+<div id="pn"></div>
+</div>
 
-</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
 </body>
 </html>

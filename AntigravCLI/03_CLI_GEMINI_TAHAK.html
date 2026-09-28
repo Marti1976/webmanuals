@@ -5,217 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Antigravity CLI – Tahák</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#07080d;--bg2:#0c0e16;--bg3:#12151f;--bg4:#181c28;
-  --b:#1a1f2e;--b2:#242b3d;
-  --text:#bccde0;--t2:#6a7d96;--t3:#3d4f65;
-  --g:#00d26a;--g2:#5ef5a0;
-  --b1:#4a90e2;--b12:#82c4ff;
-  --a:#e8a020;--a2:#f5c842;
-  --t:#00c8b8;--t2c:#5eeedd;
-  --p:#9b72f5;--p2:#c4a8ff;
-  --r:#e05050;
-  --wh:#dde8f5;
-  --rad:8px;
-}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:4px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
-body{font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);
-  line-height:1.6;font-size:14px;overflow-x:hidden}
-.page{max-width:1000px;margin:0 auto;padding:0 20px 60px}
-
-/* HERO */
-.hero{padding:48px 0 32px;border-bottom:1px solid var(--b);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,210,106,.06) 0%,transparent 50%,rgba(74,144,226,.06) 100%);
-  pointer-events:none}
-.hero-tag{font-size:.7em;color:var(--g);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(1.8em,4vw,2.8em);font-weight:800;
-  color:var(--wh);line-height:1.05;margin-bottom:10px}
-.hero h1 em{color:var(--g);font-style:normal}
-.hero p{color:var(--t2);font-size:.9em;margin-bottom:20px}
-.tags{display:flex;flex-wrap:wrap;gap:7px}
-.tag{font-size:.7em;padding:3px 10px;border-radius:12px;border:1px solid}
-.tg{color:var(--g2);border-color:rgba(0,210,106,.35);background:rgba(0,210,106,.07)}
-.tb{color:var(--b12);border-color:rgba(74,144,226,.35);background:rgba(74,144,226,.07)}
-.ta{color:var(--a2);border-color:rgba(232,160,32,.35);background:rgba(232,160,32,.07)}
-
-/* GRID LAYOUT */
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:14px 0}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}}
-.grid-full{grid-column:1/-1}
-
-/* SECTION HEADER */
-.sh{margin-top:36px;margin-bottom:14px;padding-top:14px;border-top:1px solid var(--b)}
-.sh h2{font-family:'Syne',sans-serif;font-size:1em;font-weight:700;color:var(--wh);
-  text-transform:uppercase;letter-spacing:.1em}
-.sh-tag{font-size:.68em;color:var(--t2);margin-bottom:6px}
-
-/* CARDS */
-.card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rad);overflow:hidden}
-.card-h{padding:10px 14px;border-bottom:1px solid var(--b);font-size:.72em;font-weight:500;
-  letter-spacing:.1em;text-transform:uppercase}
-.card-b{padding:12px 14px}
-
-/* ROWS */
-.row{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline;
-  padding:5px 0;border-bottom:1px solid rgba(255,255,255,.03)}
-.row:last-child{border-bottom:none}
-.rk{color:var(--t2c);white-space:nowrap;font-size:.88em}
-.rv{color:var(--t2);font-size:.85em}
-.rv em{color:var(--t3);font-style:italic;font-size:.9em}
-
-/* PROMPT CARD */
-.pcard{background:var(--bg2);border:1px solid var(--b);border-left:3px solid var(--g);
-  border-radius:var(--rad);padding:12px 14px;margin:8px 0}
-.pcard-l{font-size:.7em;color:var(--g);margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase}
-.pcard-t{color:var(--g2);font-size:.88em;line-height:1.6}
-.pcard-n{font-size:.75em;color:var(--t3);margin-top:5px;font-style:italic}
-
-/* CMD BLOCK */
-.cb{background:#060810;border:1px solid var(--b);border-left:3px solid var(--b1);
-  border-radius:var(--rad);padding:12px 14px;margin:8px 0;font-size:.85em;
-  line-height:1.85;overflow-x:auto;color:var(--b12)}
-.cb .cm{color:var(--t3);font-style:italic}
-.cb .wh{color:var(--wh)}
-.cb .gn{color:var(--g2)}
-.cb .am{color:var(--a2)}
-.cb .rd{color:var(--r)}
-
-/* WORKFLOW */
-.wflow{background:var(--bg2);border:1px solid var(--b);border-top:2px solid var(--g);
-  border-radius:var(--rad);padding:18px;margin:14px 0}
-.wf-t{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;color:var(--g);
-  text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
-.wf-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;
-  border-bottom:1px solid rgba(255,255,255,.04)}
-.wf-item:last-child{border-bottom:none}
-.wf-num{background:rgba(0,210,106,.15);color:var(--g2);border:1px solid rgba(0,210,106,.3);
-  border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;
-  font-size:.75em;font-weight:500;flex-shrink:0;margin-top:1px}
-.wf-cmd{color:var(--g2);font-size:.88em}
-.wf-desc{color:var(--t2);font-size:.82em;margin-top:2px}
-
-/* GEMINI MD */
-.gmfile{border:1px solid var(--b);border-radius:var(--rad);overflow:hidden;margin:12px 0}
-.gmfile-h{background:var(--bg3);padding:9px 14px;border-bottom:1px solid var(--b);
-  display:flex;align-items:center;gap:8px}
-.gmdot{width:9px;height:9px;border-radius:50%}
-.gm-r{background:#ff5f57}.gm-y{background:#febc2e}.gm-g{background:#28c840}
-.gm-name{color:var(--a2);font-size:.8em;margin-left:4px}
-.gmfile-b{background:#060810;padding:14px;font-size:.8em;line-height:1.9;
-  color:var(--t2c);white-space:pre;overflow-x:auto}
-.gmfile-b .mh{color:var(--a2)}
-.gmfile-b .ml{color:var(--text)}
-.gmfile-b .mc{color:var(--t3);font-style:italic}
-
-/* BOX */
-.box{display:flex;gap:10px;padding:11px 14px;border-radius:var(--rad);margin:10px 0;font-size:.85em}
-.box-icon{flex-shrink:0;margin-top:1px}
-.box-body p{margin:0;color:inherit}
-.box-body strong{color:var(--wh);font-size:.9em}
-.tip2{background:rgba(0,210,106,.07);border:1px solid rgba(0,210,106,.2);color:#80c890}
-.warn2{background:rgba(232,160,32,.07);border:1px solid rgba(232,160,32,.2);color:#c8a850}
-.danger2{background:rgba(224,80,80,.07);border:1px solid rgba(224,80,80,.2);color:#c08080}
-
-/* KEYBOARD */
-.kbd{display:inline-block;background:var(--bg3);border:1px solid var(--b2);
-  border-bottom:2px solid var(--b2);border-radius:4px;padding:1px 7px;
-  font-size:.82em;color:var(--wh)}
-
-/* TABLE */
-table{width:100%;border-collapse:collapse;font-size:.85em;margin:10px 0}
-th{font-size:.72em;font-weight:500;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--t3);padding:7px 10px;text-align:left;border-bottom:1px solid var(--b)}
-td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
-tr:last-child td{border-bottom:none}
-td:first-child{color:var(--t2c);white-space:nowrap}
-td:nth-child(2){color:var(--t2)}
-
-/* BIG DIVIDER */
-.bdiv{display:flex;align-items:center;gap:12px;margin:32px 0 16px}
-.bdiv::before,.bdiv::after{content:'';flex:1;height:1px;background:var(--b)}
-.bdiv span{font-size:.68em;color:var(--t3);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
-
-/* PORT VIZ */
-.ports{display:flex;flex-direction:column;gap:6px;margin:8px 0}
-.port-row{display:grid;grid-template-columns:140px 1fr;gap:10px;align-items:center;
-  background:var(--bg3);border:1px solid var(--b);border-radius:6px;padding:8px 12px}
-.port-url{color:var(--g2);font-size:.88em}
-.port-desc{color:var(--t2);font-size:.82em}
-
-footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
-  text-align:center;font-size:.7em;color:var(--t3);line-height:2}
-/* ===== CHAPTER NAV ===== */
-.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--b)}
-.ch-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 20px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rad);color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
-.ch-btn:hover{border-color:var(--a);color:var(--a2);text-decoration:none;box-shadow:0 0 0 1px rgba(232,160,32,.15) inset}
-.ch-btn.next{justify-content:flex-end;text-align:right}
-.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em}
-.ch-btn .ch-name{display:block;color:var(--text);font-size:1.05em;margin-top:1px}
-
-/* ===== SIDEBAR ===== */
-.progress-bar{position:fixed;top:0;left:0;height:2px;
-  background:linear-gradient(90deg,var(--g),var(--a));
-  z-index:999;width:0%;transition:width 0.1s}
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
-  background:rgba(12,14,22,.97);border-right:1px solid var(--b);
-  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--g),var(--a),transparent)}
-.sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--b)}
-.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
-  text-transform:uppercase;letter-spacing:.08em;display:flex;gap:6px;
-  margin-bottom:16px;transition:color .2s}
-.sidebar-back:hover{color:var(--g)}
-.sidebar-title{display:flex;align-items:center;gap:12px}
-.sidebar-icon{width:38px;height:38px;font-size:1.4rem;border-radius:10px;
-  background:rgba(0,210,106,.12);border:1px solid var(--b);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sidebar-name{font-size:.95rem;font-weight:700;color:var(--wh)}
-.sidebar-name small{font-size:.7rem;color:var(--t2);display:block;margin-top:2px}
-.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--t3);font-family:monospace}
-.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
-  color:var(--t2);text-decoration:none;font-size:13px;
-  border-left:2px solid transparent;transition:all .2s}
-.nav-link:hover,.nav-link.active{color:var(--wh);
-  background:rgba(0,210,106,.05);border-left-color:var(--g)}
-.nav-step{font-family:monospace;font-size:10px;min-width:22px;
-  color:var(--a);background:rgba(232,160,32,.10);
-  border:1px solid rgba(232,160,32,.25);padding:2px 5px;
-  border-radius:4px;text-align:center;flex-shrink:0}
-@media(max-width:900px){.sidebar{display:none}.page{margin-left:0 !important}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="progress-bar" id="progressBar"></div>
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <a href="00_CLI_INDEX.html" class="sidebar-back">← Zpět na index</a>
-    <div class="sidebar-title">
-      <div class="sidebar-icon">⌨️</div>
-      <div class="sidebar-name">Tahák příkazů<small>Antigravity CLI cheatsheet</small></div>
-    </div>
-  </div>
-  <div class="nav-group-label">Obsah</div>
-  <a href="#sh-workflow" class="nav-link active"><span class="nav-step">01</span> Denní workflow</a>
-  <a href="#sh-slash" class="nav-link"><span class="nav-step">02</span> Slash příkazy</a>
-  <a href="#sh-klavesy" class="nav-link"><span class="nav-step">03</span> Klávesy v CLI</a>
-  <a href="#sh-npm" class="nav-link"><span class="nav-step">04</span> npm příkazy</a>
-  <a href="#sh-terminal" class="nav-link"><span class="nav-step">05</span> Pohyb v terminálu</a>
-  <a href="#sh-git" class="nav-link"><span class="nav-step">06</span> Git – zálohy</a>
-  <a href="#sh-aplikace" class="nav-link"><span class="nav-step">07</span> Kde je aplikace</a>
-  <a href="#sh-sablony" class="nav-link"><span class="nav-step">08</span> Šablony promptů</a>
-  <a href="#sh-geminimd" class="nav-link"><span class="nav-step">09</span> AGENTS.md šablona</a>
-  <a href="#sh-checklist" class="nav-link"><span class="nav-step">10</span> Checklist</a>
-  <a href="#sh-problemy" class="nav-link"><span class="nav-step">11</span> Časté problémy</a>
-</nav>
-<div class="page" style="margin-left:260px">
+<body data-page="03">
+
+<div id="sidebar"></div>
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "sh-workflow", "num": "3.1", "name": "Denní workflow" },
+    { "id": "sh-slash", "num": "3.2", "name": "Slash příkazy" },
+    { "id": "sh-klavesy", "num": "3.3", "name": "Klávesy v CLI" },
+    { "id": "sh-npm", "num": "3.4", "name": "npm příkazy" },
+    { "id": "sh-terminal", "num": "3.5", "name": "Pohyb v terminálu" },
+    { "id": "sh-git", "num": "3.6", "name": "Git – zálohy" },
+    { "id": "sh-aplikace", "num": "3.7", "name": "Kde je aplikace" },
+    { "id": "sh-sablony", "num": "3.8", "name": "Šablony promptů" },
+    { "id": "sh-geminimd", "num": "3.9", "name": "AGENTS.md šablona" },
+    { "id": "sh-checklist", "num": "3.10", "name": "Checklist" },
+    { "id": "sh-problemy", "num": "3.11", "name": "Časté problémy" }
+  ]
+}
+</script>
+
+<div class="page">
 
 <div class="hero">
   <div class="hero-tag">// průvodce č. 3 ze 3 – rychlý tahák</div>
@@ -273,26 +87,26 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 </div>
 
-<div class="wflow" style="border-top-color:var(--r)">
-  <div class="wf-t" style="color:var(--r)">Konec práce – čistý závěr</div>
+<div class="wflow" style="border-top-color:var(--red)">
+  <div class="wf-t" style="color:var(--red)">Konec práce – čistý závěr</div>
   <div class="wf-item">
-    <div class="wf-num" style="background:rgba(224,80,80,.1);color:var(--r);border-color:rgba(224,80,80,.3)">1</div>
+    <div class="wf-num" style="background:rgba(248,81,73,.1);color:var(--red);border-color:rgba(248,81,73,.3)">1</div>
     <div>
-      <div class="wf-cmd" style="color:var(--t2)">/quit  ← v Antigravity CLI</div>
+      <div class="wf-cmd" style="color:var(--text2)">/quit  ← v Antigravity CLI</div>
       <div class="wf-desc">Ukončení Antigravity CLI</div>
     </div>
   </div>
   <div class="wf-item">
-    <div class="wf-num" style="background:rgba(224,80,80,.1);color:var(--r);border-color:rgba(224,80,80,.3)">2</div>
+    <div class="wf-num" style="background:rgba(248,81,73,.1);color:var(--red);border-color:rgba(248,81,73,.3)">2</div>
     <div>
-      <div class="wf-cmd" style="color:var(--t2)">Ctrl+C  ← v terminálu s npm run dev</div>
+      <div class="wf-cmd" style="color:var(--text2)">Ctrl+C  ← v terminálu s npm run dev</div>
       <div class="wf-desc">Zastavení vývojového serveru</div>
     </div>
   </div>
   <div class="wf-item">
-    <div class="wf-num" style="background:rgba(224,80,80,.1);color:var(--r);border-color:rgba(224,80,80,.3)">3</div>
+    <div class="wf-num" style="background:rgba(248,81,73,.1);color:var(--red);border-color:rgba(248,81,73,.3)">3</div>
     <div>
-      <div class="wf-cmd" style="color:var(--t2)">git add . && git commit -m "popis změn"</div>
+      <div class="wf-cmd" style="color:var(--text2)">git add . && git commit -m "popis změn"</div>
       <div class="wf-desc">Ulož vše co jsi dnes udělal</div>
     </div>
   </div>
@@ -306,7 +120,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 
 <div class="grid">
   <div class="card">
-    <div class="card-h" style="color:var(--b12);background:rgba(74,144,226,.06)"># Základní ovládání</div>
+    <div class="card-h" style="color:var(--teal2);background:rgba(14,210,247,.06)"># Základní ovládání</div>
     <div class="card-b">
       <div class="row"><span class="rk">/help</span><span class="rv">Zobraz všechny dostupné příkazy</span></div>
       <div class="row"><span class="rk">/quit nebo /q</span><span class="rv">Ukonči Antigravity CLI</span></div>
@@ -316,7 +130,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--g2);background:rgba(0,210,106,.06)"># Práce se soubory</div>
+    <div class="card-h" style="color:var(--green2);background:rgba(63,185,80,.06)"># Práce se soubory</div>
     <div class="card-b">
       <div class="row"><span class="rk">/read soubor.tsx</span><span class="rv">Přečti konkrétní soubor</span></div>
       <div class="row"><span class="rk">/ls nebo /dir</span><span class="rv">Zobraz strukturu složek</span></div>
@@ -326,7 +140,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--a2);background:rgba(232,160,32,.06)"># Paměť a kontext</div>
+    <div class="card-h" style="color:var(--amber2);background:rgba(240,160,48,.06)"># Paměť a kontext</div>
     <div class="card-b">
       <div class="row"><span class="rk">/memory show</span><span class="rv">Zobraz co si Gemini pamatuje</span></div>
       <div class="row"><span class="rk">/memory add "text"</span><span class="rv">Přidej trvalou poznámku</span></div>
@@ -336,7 +150,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--p2);background:rgba(155,114,245,.06)"># Nástroje a debug</div>
+    <div class="card-h" style="color:var(--purple2);background:rgba(188,140,255,.06)"># Nástroje a debug</div>
     <div class="card-b">
       <div class="row"><span class="rk">/tools</span><span class="rv">Zobraz dostupné nástroje</span></div>
       <div class="row"><span class="rk">/stats</span><span class="rv">Statistiky použití tokenů</span></div>
@@ -354,7 +168,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 
 <div class="grid">
   <div class="card">
-    <div class="card-h" style="color:var(--t2c);background:rgba(0,200,184,.06)"># Psaní zpráv</div>
+    <div class="card-h" style="color:var(--teal);background:rgba(57,208,192,.06)"># Psaní zpráv</div>
     <div class="card-b">
       <div class="row"><span class="rk"><span class="kbd">Enter</span></span><span class="rv">Odeslat zprávu</span></div>
       <div class="row"><span class="rk"><span class="kbd">Shift</span>+<span class="kbd">Enter</span></span><span class="rv">Nový řádek bez odeslání</span></div>
@@ -364,7 +178,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--t2c);background:rgba(0,200,184,.06)"># Ovládání</div>
+    <div class="card-h" style="color:var(--teal);background:rgba(57,208,192,.06)"># Ovládání</div>
     <div class="card-b">
       <div class="row"><span class="rk"><span class="kbd">Ctrl</span>+<span class="kbd">C</span></span><span class="rv">Přeruš právě probíhající odpověď</span></div>
       <div class="row"><span class="rk"><span class="kbd">Ctrl</span>+<span class="kbd">L</span></span><span class="rv">Vymaž obrazovku (jako /clear)</span></div>
@@ -381,7 +195,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 </div>
 
 <div class="card">
-  <div class="card-h" style="color:var(--a2);background:rgba(232,160,32,.06)"># Všechny důležité npm příkazy pro tvůj projekt</div>
+  <div class="card-h" style="color:var(--amber2);background:rgba(240,160,48,.06)"># Všechny důležité npm příkazy pro tvůj projekt</div>
   <div class="card-b">
     <table>
       <thead><tr><th>Příkaz</th><th>Co dělá</th></tr></thead>
@@ -409,7 +223,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 
 <div class="grid3">
   <div class="card">
-    <div class="card-h" style="color:var(--g2);background:rgba(0,210,106,.06)"># Pohyb</div>
+    <div class="card-h" style="color:var(--green2);background:rgba(63,185,80,.06)"># Pohyb</div>
     <div class="card-b">
       <div class="row"><span class="rk">cd nazev</span><span class="rv">Vstup do složky</span></div>
       <div class="row"><span class="rk">cd ..</span><span class="rv">Složku výše</span></div>
@@ -419,7 +233,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--g2);background:rgba(0,210,106,.06)"># Kde jsem / co vidím</div>
+    <div class="card-h" style="color:var(--green2);background:rgba(63,185,80,.06)"># Kde jsem / co vidím</div>
     <div class="card-b">
       <div class="row"><span class="rk">pwd</span><span class="rv">Zobraz aktuální cestu</span></div>
       <div class="row"><span class="rk">ls</span><span class="rv">Obsah složky (Mac/Linux)</span></div>
@@ -429,7 +243,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--g2);background:rgba(0,210,106,.06)"># Zkratky terminálu</div>
+    <div class="card-h" style="color:var(--green2);background:rgba(63,185,80,.06)"># Zkratky terminálu</div>
     <div class="card-b">
       <div class="row"><span class="rk"><span class="kbd">↑</span> šipka</span><span class="rv">Předchozí příkaz</span></div>
       <div class="row"><span class="rk"><span class="kbd">Tab</span></span><span class="rv">Doplnění cesty/příkazu</span></div>
@@ -447,7 +261,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 
 <div class="grid">
   <div class="card">
-    <div class="card-h" style="color:var(--p2);background:rgba(155,114,245,.06)"># Zálohy (denní použití)</div>
+    <div class="card-h" style="color:var(--purple2);background:rgba(188,140,255,.06)"># Zálohy (denní použití)</div>
     <div class="card-b">
       <div class="row"><span class="rk">git add .</span><span class="rv">Připrav všechny změny k záloze</span></div>
       <div class="row"><span class="rk">git commit -m "text"</span><span class="rv">Ulož zálohu s popisem</span></div>
@@ -457,7 +271,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--p2);background:rgba(155,114,245,.06)"># Vrácení změn</div>
+    <div class="card-h" style="color:var(--purple2);background:rgba(188,140,255,.06)"># Vrácení změn</div>
     <div class="card-b">
       <div class="row"><span class="rk">git checkout .</span><span class="rv">⚠️ Vrátí vše do posledního commitu</span></div>
       <div class="row"><span class="rk">git diff</span><span class="rv">Zobraz co se přesně změnilo</span></div>
@@ -548,7 +362,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 <div class="gmfile">
   <div class="gmfile-h">
     <div class="gmdot gm-r"></div><div class="gmdot gm-y"></div><div class="gmdot gm-g"></div>
-    <span class="gm-name">AGENTS.md</span> <span style="color:var(--t2);font-size:.8em">(nebo GEMINI.md – obě fungují)</span>
+    <span class="gm-name">AGENTS.md</span> <span style="color:var(--text2);font-size:.8em">(nebo GEMINI.md – obě fungují)</span>
   </div>
   <div class="gmfile-b"><span class="mh"># Rodinný Receptář – Instrukce pro Gemini</span>
 
@@ -589,23 +403,23 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 <div class="card">
   <div class="card-b" style="padding:14px 18px">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t2);font-size:.88em">
-        <span style="color:var(--g)">☐</span> Záloha hotová (git commit)
+      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text2);font-size:.88em">
+        <span style="color:var(--green)">☐</span> Záloha hotová (git commit)
       </div>
-      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t2);font-size:.88em">
-        <span style="color:var(--g)">☐</span> Jsem ve správné složce projektu
+      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text2);font-size:.88em">
+        <span style="color:var(--green)">☐</span> Jsem ve správné složce projektu
       </div>
-      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t2);font-size:.88em">
-        <span style="color:var(--g)">☐</span> Dev server běží (npm run dev)
+      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text2);font-size:.88em">
+        <span style="color:var(--green)">☐</span> Dev server běží (npm run dev)
       </div>
-      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t2);font-size:.88em">
-        <span style="color:var(--g)">☐</span> Prohlížeč otevřen na localhost:3000
+      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text2);font-size:.88em">
+        <span style="color:var(--green)">☐</span> Prohlížeč otevřen na localhost:3000
       </div>
-      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;color:var(--t2);font-size:.88em">
-        <span style="color:var(--g)">☐</span> Antigravity CLI spuštěn (agy) v jiném terminálu
+      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;color:var(--text2);font-size:.88em">
+        <span style="color:var(--green)">☐</span> Antigravity CLI spuštěn (agy) v jiném terminálu
       </div>
-      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;color:var(--t2);font-size:.88em">
-        <span style="color:var(--g)">☐</span> Úvodní prompt odeslán Gemini
+      <div style="display:flex;align-items:center;gap:9px;padding:6px 0;color:var(--text2);font-size:.88em">
+        <span style="color:var(--green)">☐</span> Úvodní prompt odeslán Gemini
       </div>
     </div>
   </div>
@@ -619,7 +433,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
 
 <div class="grid">
   <div class="card">
-    <div class="card-h" style="color:var(--r);background:rgba(224,80,80,.06)"># Chyby instalace</div>
+    <div class="card-h" style="color:var(--red);background:rgba(248,81,73,.06)"># Chyby instalace</div>
     <div class="card-b">
       <div class="row"><span class="rk">agy: not found</span><span class="rv">Znovu otevři terminál – ověř že ~/.local/bin (Unix) nebo %LOCALAPPDATA%\Antigravity\ (Win) je na PATH</span></div>
       <div class="row"><span class="rk">EACCES (Mac)</span><span class="rv">Přidej sudo před příkaz</span></div>
@@ -628,7 +442,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--r);background:rgba(224,80,80,.06)"># Chyby dev serveru</div>
+    <div class="card-h" style="color:var(--red);background:rgba(248,81,73,.06)"># Chyby dev serveru</div>
     <div class="card-b">
       <div class="row"><span class="rk">Site can't be reached</span><span class="rv">Dev server neběží → npm run dev</span></div>
       <div class="row"><span class="rk">Port in use</span><span class="rv">npm run dev -- --port 3001</span></div>
@@ -638,7 +452,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--r);background:rgba(224,80,80,.06)"># Chyby Gemini</div>
+    <div class="card-h" style="color:var(--red);background:rgba(248,81,73,.06)"># Chyby Gemini</div>
     <div class="card-b">
       <div class="row"><span class="rk">Nevidí soubory</span><span class="rv">Jsi v nesprávné složce → /quit, cd projekt, agy</span></div>
       <div class="row"><span class="rk">Ignoruje pravidla</span><span class="rv">AGENTS.md nebo GEMINI.md není vedle package.json nebo špatný název</span></div>
@@ -647,7 +461,7 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 
   <div class="card">
-    <div class="card-h" style="color:var(--r);background:rgba(224,80,80,.06)"># Gemini to pokazil</div>
+    <div class="card-h" style="color:var(--red);background:rgba(248,81,73,.06)"># Gemini to pokazil</div>
     <div class="card-b">
       <div class="row"><span class="rk">Vrátit vše (git)</span><span class="rv">git checkout . (vrátí do posledního commitu)</span></div>
       <div class="row"><span class="rk">Jeden soubor</span><span class="rv">git checkout HEAD -- src/soubor.tsx</span></div>
@@ -656,51 +470,16 @@ footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--b);
   </div>
 </div>
 
-<nav class="chapter-nav">
-  <a href="02_CLI_DEV_SERVER.html" class="ch-btn">
-    <span>←</span>
-    <div>
-      <span class="ch-label">předchozí kapitola</span>
-      <span class="ch-name">Vývojový server</span>
-    </div>
-  </a>
-  <a href="04_CLI_BEZPECNOST.html" class="ch-btn next">
-    <div>
-      <span class="ch-label">další kapitola</span>
-      <span class="ch-name">Bezpečnost</span>
-    </div>
-    <span>→</span>
-  </a>
-</nav>
 
-<footer>
-  03_CLI_GEMINI_TAHAK.html &nbsp;·&nbsp;
-  Antigravity CLI Průvodce &nbsp;·&nbsp;
-  Claude (Anthropic) &nbsp;·&nbsp; Duben 2026<br>
-  <a href="00_CLI_INDEX.html" style="color:var(--a)">← Zpět na index</a>
-</footer>
+<div class="page-footer">
+  03_CLI_GEMINI_TAHAK.html &nbsp;·&nbsp; Antigravity CLI Průvodce &nbsp;·&nbsp; Claude (Anthropic) &nbsp;·&nbsp; Duben 2026
 </div>
-<script>
 
-  window.addEventListener('scroll', () => {
-    const bar = document.getElementById('progressBar');
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    bar.style.width = (scrollTop / height * 100) + '%';
-  });
-  const sections = document.querySelectorAll('.sh[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const t = document.querySelector('[href="#' + e.target.id + '"]');
-        if (t) t.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px' });
-  sections.forEach(s => observer.observe(s));
+<div id="pn"></div>
+</div>
 
-</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
 </body>
 </html>
