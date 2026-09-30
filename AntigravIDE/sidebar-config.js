@@ -1,0 +1,20 @@
+// Jediný zdroj pravdy pro pořadí, názvy a soubory kapitol IDE průvodce.
+const chapters = [
+  { num: '00', name: 'Index',                  file: '00_IDE_INDEX.html' },
+  { num: '01', name: 'Editor View',             file: '01_IDE_Editor_View.html' },
+  { num: '02', name: 'Manager View',            file: '02_IDE_Manager_View.html' },
+  { num: '03', name: 'Nastavení',               file: '03_IDE_Nastaveni.html' },
+  { num: '04', name: 'Bezpečnost',              file: '04_IDE_Bezpecnost.html' },
+  { num: '05', name: 'Projekty',                file: '05_IDE_Projekty.html' },
+  { num: '06', name: 'Vlastní Pravidla',        file: '06_IDE_Pravidla.html' },
+  { num: '07', name: 'Git & Verze',             file: '07_IDE_Git_Verze.html' },
+  { num: '08', name: 'Firebase Alternativa',    file: '08_IDE_Firebase_Alt.html' },
+  { num: '09', name: 'Chyby & Limity',          file: '09_IDE_Chyby_Limity.html' },
+  { num: '10', name: 'Tipy & Triky',            file: '10_IDE_Tipy_Triky.html' },
+  { num: '11', name: 'Instalace & Cleanup',     file: '11_IDE_Instalace.html' },
+  { num: '12', name: 'Další Agenty',            file: '12_IDE_Agenty.html' },
+  { num: '13', name: 'Vytvoř Svého Agenta',     file: '13_IDE_New_Agent.html' },
+  { num: '14', name: 'Orchestrace Agentů',      file: '14_IDE_Orchestrace.html' },
+  { num: '15', name: 'Scénáře & Příklady',      file: '15_IDE_Scenare.html' },
+  { num: '16', name: 'Doplňky (Extensions)',    file: '16_IDE_Doplnky.html' },
+];

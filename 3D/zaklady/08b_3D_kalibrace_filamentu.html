@@ -1,145 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Optimalizace a kalibrace profilů — 3D Tisk průvodce</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalibrace filamentu a tiskárny · Anycubic Kobra X</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:       #0d0f14;
-    --surface:  #13161e;
-    --card:     #181c27;
-    --border:   #252b3b;
-    --accent:   #e8a020;
-    --accent2:  #f0c050;
-    --tuf:      #c8860a;
-    --green:    #3ecf76;
-    --red:      #e85050;
-    --blue:     #4a9eff;
-    --text:     #d8dce8;
-    --muted:    #6e7590;
-    --mono:     'IBM Plex Mono', monospace;
+  :root{
+    --bg:#0d0f14;--surface:#13161e;--card:#181c27;--border:#252b3b;
+    --accent:#e8a020;--accent2:#f0c050;--tuf:#c8860a;
+    --green:#3ecf76;--red:#e85050;--blue:#4a9eff;
+    --text:#d8dce8;--muted:#6e7590;--mono:'IBM Plex Mono',monospace;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:18px}
+  body{margin:0;padding-left:260px;background:var(--bg);color:var(--text);font:15.5px/1.65 'Inter',sans-serif;overflow-x:hidden}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  ::selection{background:rgba(232,160,32,.3)}
 
-  /* ── SIDEBAR (žádná položka aktivní — je to mimo hlavní navigaci) ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
-  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
-  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-  .sidebar-product { display: flex; align-items: center; gap: 10px; }
-  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
-  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
-  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-  .sb-back { padding: 15px 20px 5px; }
-  .sb-back a { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--accent2); font-family: var(--mono); font-size: 12px; padding: 9px 12px; text-decoration: none; transition: all .2s; }
-  .sb-back a:hover { border-color: var(--accent); background: rgba(232,160,32,.06); }
-  .sb-search { padding: 15px 20px 5px; }
-  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .sb-search input:focus { border-color: var(--accent); }
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
-  .nav-item-text { flex: 1; min-width: 0; }
-  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
-  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
+  /* ── SIDEBAR (z původního souboru) ── */
+  .sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:rgba(19,22,30,.97);border-right:1px solid var(--tuf);display:flex;flex-direction:column;z-index:200;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+  .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent)}
+  .sidebar a:hover{text-decoration:none}
+  .sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+  .sidebar-product{display:flex;align-items:center;gap:10px}
+  .sidebar-tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:2px;padding:3px 7px;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);flex-shrink:0}
+  .sidebar-model{font-family:var(--mono);font-size:11px;color:var(--text);font-weight:500;line-height:1.4}
+  .sidebar-model small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+  .sb-search{padding:15px 20px 5px}
+  .sb-search input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 12px;border-radius:3px;outline:none}
+  .sb-search input:focus{border-color:var(--accent)}
+  .nav-group-label{padding:16px 20px 6px;font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);flex-shrink:0}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:8px 20px;color:#8aadcc;text-decoration:none;font-size:13px;transition:all .2s;border-left:2px solid transparent;line-height:1.3}
+  .nav-item:hover,.nav-item.active{color:#fff;background:rgba(232,160,32,.06);border-left-color:var(--accent)}
+  .nav-num{font-family:var(--mono);font-size:10px;color:var(--accent);background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);padding:1px 5px;flex-shrink:0;min-width:28px;text-align:center;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%)}
+  .nav-item-text{flex:1;min-width:0}
+  .nav-subs{margin:0;padding:0 0 10px;list-style:none;display:flex;flex-direction:column}
+  .nav-sub-item{display:block;padding:6px 20px 6px 58px;color:#8aadcc;font-size:12.5px;border-left:2px solid transparent;transition:all .2s}
+  .nav-sub-item:hover,.nav-sub-item.active{color:#fff;background:rgba(255,255,255,.03);border-left-color:var(--accent)}
+  .nav-sub-item.active{background:rgba(232,160,32,.08);color:#fff}
 
-  /* ── MAIN ── */
-  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
+  /* kapitoly pod názvem dílu (styl dle vzoru) */
+  .nav-chapters-wrap{list-style:none}
+  .nav-chapters{list-style:none;margin:0 0 4px 58px;padding:0;background:rgba(0,0,0,.22);border-left:1px solid var(--border)}
+  .nav-chapters li{list-style:none}
+  .nav-chap{display:block;padding:6px 12px 6px 14px;font-family:var(--mono);font-size:11px;line-height:1.4;color:#56607a;border-bottom:1px solid rgba(255,255,255,.04);transition:all .15s}
+  .nav-chap:hover{color:var(--accent2);background:rgba(232,160,32,.06)}
+  .nav-chap.ext-start{border-top:1px dashed var(--border)}
+
+  /* ── HLAVIČKA / LAYOUT ── */
+  .top{background:var(--surface);border-bottom:1px solid var(--tuf)}
+  .topin{max-width:960px;margin:auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:#fff;letter-spacing:1px}
+  .brand span{color:var(--accent)}
+  .top small{color:var(--muted);font-family:var(--mono);font-size:11px;text-align:right}
+  .layout{max-width:960px;margin:0 auto;padding:30px 32px 70px;display:block}
+  .content{min-width:0}
 
   /* ── HERO ── */
-  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
-  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
-  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
-  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
-  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
-  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
-  .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 680px; }
+  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0a0c10 0%,#141925 40%,#1a1208 100%);border:1px solid var(--border);border-bottom:2px solid var(--tuf);padding:32px 30px 28px;margin-bottom:26px}
+  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px)}
+  .hero>*{position:relative}
+  .eyebrow{display:inline-block;background:var(--accent);color:#000;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
+  .hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,4.4vw,44px);font-weight:700;line-height:1.12;letter-spacing:1px;color:#fff;margin:14px 0 12px}
+  .hero p{font-size:15px;color:var(--muted);max-width:780px;margin:0}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--border);background:rgba(19,22,30,.6);padding:3px 9px}
 
-  /* ── LAYOUT ── */
-  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
+  /* ── OBSAH ── */
+  .toc{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:18px 22px;margin:20px 0 34px}
+  .toc strong{display:block;margin-bottom:7px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .toc ul{columns:2;margin:0;padding-left:20px}
+  .toc li{break-inside:avoid;margin:3px 0}
 
-  /* ── SECTIONS ── */
-  .section { margin: 44px 0; }
-  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
-  h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
+  /* ── NADPISY ── */
+  .section{padding-top:10px;margin-top:48px}
+  h2,.section h2{font-family:'Rajdhani',sans-serif;font-size:28px;line-height:1.2;font-weight:700;color:#fff;letter-spacing:.5px;padding-bottom:10px;border-bottom:1px solid var(--border);margin:0 0 17px}
+  h3,.section h3{font-family:'Rajdhani',sans-serif;font-size:21px;line-height:1.3;font-weight:600;color:var(--accent2);margin:30px 0 10px}
+  h4,.section h4{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:600;color:var(--accent2);margin:20px 0 7px}
+  .test{padding-top:18px;margin-top:30px;border-top:1px solid var(--border)}
+  .test h2{font-size:25px;margin:0 0 12px;border:0;padding:0;display:flex;align-items:baseline;gap:11px}
+  .num{font-family:var(--mono);font-size:12px;font-weight:500;background:var(--accent);color:#000;padding:2px 9px;white-space:nowrap;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%)}
+  .subnum{font-family:var(--mono);font-size:14px;color:var(--accent);font-weight:600}
+  .lead{font-size:16.5px;color:#c2c7d8}
+  .small{font-size:13px;color:var(--muted)}
+  b,strong{color:#eef0f7}
+  .mark{font-weight:700;color:var(--accent2)}
+  .mono{font-family:var(--mono);font-size:.88em;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.2);color:var(--accent2);padding:1px 6px}
 
-  /* ── PARAM BLOK ── */
-  .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
-  .param:hover { border-color: var(--accent); }
-  .param-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
-  .param-title { font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent2); font-weight: 600; }
-  .param-title small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
-  .param-val { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
-  .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
-  .param p + p { margin-top: 6px; }
-
-  /* ── ALERTS ── */
-  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
-  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
-  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
-  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
-
-  /* ── TABLE ── */
-  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-  thead tr { background: var(--surface); }
-  th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
-  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
-  td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
-
-  /* ── STEP LIST ── */
-  .steps { list-style: none; counter-reset: step; margin: 16px 0; }
-  .steps li { position: relative; padding: 10px 0 10px 42px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
-  .steps li:last-child { border-bottom: none; }
-  .steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 8px; width: 26px; height: 26px; background: rgba(232,160,32,.12); border: 1px solid var(--accent); color: var(--accent2); font-family: var(--mono); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
-  .steps li strong { color: var(--accent2); }
-
-  /* ── SEQUENCE FLOW (kalibrační pořadí) ── */
-  .seq-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 24px 0; }
-  .seq-step { background: var(--card); border: 1px solid var(--accent); padding: 12px 18px; font-family: var(--mono); font-size: 12.5px; color: var(--accent2); text-align: center; min-width: 110px; }
-  .seq-step .num { display: block; font-size: 10px; color: var(--accent); margin-bottom: 4px; }
-  .seq-arrow { color: var(--accent); font-size: 18px; padding: 0 10px; flex-shrink: 0; }
-
-  /* ── TOWER DIAGRAM (kalibrační věž vizualizace) ── */
-  .tower-diagram { background: var(--surface); border: 1px solid var(--border); padding: 20px; margin: 20px 0; font-family: var(--mono); font-size: 12.5px; }
-  .tower-seg { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--border); }
-  .tower-seg:last-child { border-bottom: none; }
-  .tower-seg .seg-bar { flex: 1; background: rgba(232,160,32,.15); border: 1px solid rgba(232,160,32,.4); padding: 6px 10px; color: var(--text); }
-  .tower-seg.optimal .seg-bar { background: rgba(62,207,118,.18); border-color: var(--green); color: #c8f5d8; font-weight: 600; }
-  .tower-seg .seg-val { width: 70px; flex-shrink: 0; color: var(--accent2); text-align: right; }
-
-  /* ── FORMULA BOX ── */
-  .formula { background: var(--surface); border-left: 3px solid var(--blue); padding: 14px 18px; margin: 16px 0; font-family: var(--mono); font-size: 14px; color: #cfe4ff; }
-
-  /* ── YT LINK ── */
-  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
-  .yt-link:hover { opacity: .8; }
-
-  /* ── REF LINK ── */
-  .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
-  .ref-link:hover { background: rgba(74,158,255,.14); }
-
-  /* ── PAGE NAV ── */
-  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
-  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
-  .pn a:hover { color: var(--accent); }
-  .pn .nx { margin-left: auto; }
+  /* ── BLOKY ── */
+  .intro-note,.callout{padding:14px 18px;border:1px solid rgba(74,158,255,.35);border-left:4px solid var(--blue);background:rgba(74,158,255,.07);margin:18px 0}
+  .callout.warning{border-color:rgba(232,160,32,.35);border-left-color:var(--accent);background:rgba(232,160,32,.07)}
+  .callout.danger{border-color:rgba(232,80,80,.35);border-left-color:var(--red);background:rgba(232,80,80,.07)}
+  .callout.good{border-color:rgba(62,207,118,.35);border-left-color:var(--green);background:rgba(62,207,118,.07)}
+  .callout p:last-child{margin-bottom:0}
+  .route{border:1px solid var(--border);border-left:3px solid var(--blue);background:var(--surface);padding:10px 14px;margin:14px 0}
+  .route b{color:var(--accent2)}
+  .steps{counter-reset:step;list-style:none;padding:0;margin:16px 0}
+  .steps li{counter-increment:step;position:relative;padding:10px 0 10px 44px;border-bottom:1px solid var(--border)}
+  .steps li:last-child{border-bottom:none}
+  .steps li:before{content:counter(step);position:absolute;left:0;top:10px;width:27px;height:27px;display:flex;align-items:center;justify-content:center;background:rgba(232,160,32,.12);border:1px solid var(--accent);color:var(--accent2);font-family:var(--mono);font-size:12px;font-weight:600}
+  .steps li b{color:var(--accent2)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--card);border:1px solid var(--border);padding:16px 18px;transition:border-color .2s}
+  .card:hover{border-color:var(--accent)}
+  .card h3,.card h4{margin-top:0}
+  .figure{margin:20px 0;border:1px solid var(--border);padding:10px;background:var(--card)}
+  .figure img{display:block;max-width:100%;max-height:560px;width:auto;height:auto;margin:0 auto;background:#fff}
+  .figure img.wide{width:100%;max-height:none}
+  .figure figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);padding:9px 3px 2px}
+  .formula{font-family:var(--mono);font-size:14px;line-height:1.7;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--blue);color:#cfe4ff;padding:14px 18px;overflow:auto;margin:14px 0}
+  .formula strong{font-family:'Inter',sans-serif;color:#fff}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px 0}
+  .bad,.goodbox{padding:13px 15px}
+  .bad{background:rgba(232,80,80,.07);border:1px solid rgba(232,80,80,.35)}
+  .goodbox{background:rgba(62,207,118,.07);border:1px solid rgba(62,207,118,.35)}
+  .bad strong,.goodbox strong{display:block;margin-bottom:5px}
+  .bad strong{color:var(--red)}.goodbox strong{color:var(--green)}
+  .table-wrap{overflow:auto;margin:16px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  thead tr{background:var(--surface)}
+  th{text-align:left;padding:10px 14px;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.06em;background:var(--surface);border:1px solid var(--border);border-bottom:1px solid var(--tuf)}
+  td{padding:10px 14px;border:1px solid var(--border);vertical-align:top}
+  tbody tr:nth-child(even){background:rgba(255,255,255,.02)}
+  .mini-diagram{border:1px solid var(--border);background:var(--surface);padding:14px;margin:18px 0}
+  .bar{height:14px;background:linear-gradient(90deg,#4087cf,#62bd9a,#d5c35c,#dc7c61);position:relative;margin:12px 10px}
+  .bar:before,.bar:after{content:"";position:absolute;top:-5px;height:24px;border-left:2px dashed #aab}
+  .bar:before{left:35%}.bar:after{left:72%}
+  .bar-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+  .stepsline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0}
+  .stepsline span{background:var(--card);border:1px solid var(--accent);color:var(--accent2);font-family:var(--mono);font-size:12.5px;padding:9px 13px}
+  .stepsline b{color:var(--accent)}
+  .endlinks{background:var(--surface);border:1px solid var(--border);padding:17px;margin:14px 0}
+  .sources li{margin:8px 0}
+  details{border:1px solid var(--border);background:var(--card);padding:10px 14px;margin:12px 0}
+  summary{cursor:pointer;font-weight:600;color:var(--accent2)}
+  details[open] summary{margin-bottom:8px}
+  .footer{border-top:1px solid var(--border);margin-top:50px;padding-top:16px;color:var(--muted);font-size:13px}
+  .backtop{float:right;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .backtop:hover{color:var(--accent)}
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } .seq-flow { flex-direction: column; align-items: stretch; } .seq-arrow { transform: rotate(90deg); padding: 4px 0; text-align: center; } }
+  @media(max-width:900px){body{padding-left:0}.sidebar{display:none}.hero h1{font-size:31px}.toc ul{columns:1}.topin{padding:12px 18px}.layout{padding:20px 18px 60px}}
+  @media(max-width:600px){.grid2,.compare{grid-template-columns:1fr}.hero h1{font-size:28px}.section h2{font-size:24px}.test h2{font-size:21px}.top small{display:none}}
 </style>
 </head>
-<body>
-
-<!-- ── SIDEBAR (mimo hlavní navigaci — žádná položka aktivní, jen tlačítko Zpět) ── -->
+<body id="top">
+<header class="top"><div class="topin"><div class="brand"><span>ORCA</span> · průvodce kalibrací</div><small>Anycubic Slicer Next · Anycubic Kobra X · český návod pro začátečníka</small></div></header>
+<div class="layout">
 <nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-product">
@@ -171,6 +180,29 @@
   <ul class="nav-subs">
     <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
     <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item active">08b · Kalibrace filamentu</a></li>
+    <li class="nav-chapters-wrap"><ul class="nav-chapters">
+      <li><a href="#start" class="nav-chap">Jak průvodce použít</a></li>
+      <li><a href="#poradi" class="nav-chap">Pořadí kalibrace</a></li>
+      <li><a href="#t1" class="nav-chap">1 · Temperature</a></li>
+      <li><a href="#t2a" class="nav-chap">2a · Flow YOLO Recommended</a></li>
+      <li><a href="#t2b" class="nav-chap">2b · YOLO perfectionist</a></li>
+      <li><a href="#t2c" class="nav-chap">2c · Flow Pass 1/2</a></li>
+      <li><a href="#t3a" class="nav-chap">3a · PA Line</a></li>
+      <li><a href="#t3b" class="nav-chap">3b · PA Tower</a></li>
+      <li><a href="#t3c" class="nav-chap">3c · PA Pattern</a></li>
+      <li><a href="#t4" class="nav-chap">4 · Retraction</a></li>
+      <li><a href="#t5" class="nav-chap">5 · Max flowrate</a></li>
+      <li><a href="#t6" class="nav-chap">6 · XYZ Cube</a></li>
+      <li><a href="#t7" class="nav-chap">7 · VFA</a></li>
+      <li><a href="#t8" class="nav-chap">8 · Orca Tolerance Test</a></li>
+      <li><a href="#i1" class="nav-chap ext-start">I · Rozumím profilu</a></li>
+      <li><a href="#i2" class="nav-chap">II · Input Shaping</a></li>
+      <li><a href="#i3" class="nav-chap">III · Adaptive PA</a></li>
+      <li><a href="#i4" class="nav-chap">IV · Cornering</a></li>
+      <li><a href="#i5" class="nav-chap">V · Další testovací modely</a></li>
+      <li><a href="#i6" class="nav-chap">VI · Když se něco nedaří</a></li>
+      <li><a href="#i7" class="nav-chap">VII · Videa a zdroje</a></li>
+    </ul></li>
     <li><a href="08c_3D_Filament_next.html" class="nav-sub-item ">08c · Filamenty rozšíření</a></li>
   </ul>
   <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
@@ -191,390 +223,66 @@
   </a>
   <div style="height:32px;flex-shrink:0;"></div>
 </nav>
+<main class="content">
+<header class="hero"><div class="eyebrow">Návod · podrobný díl</div><h1>Jak vyladit filament a poznat, co způsobuje vadu</h1><p>Podrobný průvodce kalibracemi z Anycubic Slicer Next. Ukazuje, co každý test skutečně měří, jak připravit tisk, jak vybrat nejlepší vzorek a jak výsledek bezpečně uložit do profilu.</p><div class="chips"><span class="chip">Pro úplné začátečníky</span><span class="chip">EN názvy z aplikace + český význam</span><span class="chip">Kobra X · direct drive (přímý náhon)</span><span class="chip">Obrázky uložené místně v pic/</span></div></header>
+<section id="start"><h2>Než začneš: co se vlastně kalibruje?</h2><p>Kalibrace filamentu znamená hledat nastavení, při kterém se <em>konkrétní filament</em> dobře taví, správné množství plastu opouští trysku a tiskárna jej čitelně ukládá. Jedna cívka PLA se může chovat jinak než jiná cívka PLA; barvivo, značka, vlhkost, průměr trysky a rychlost tisku výsledek ovlivňují. Proto si poznač výrobce, materiál, barvu, případně šarži a kalibruj pro každou cívku/profil, u které se výsledek liší.</p>
+<p>Ne všechny testy v menu mění profil filamentu. <b>Temperature, Flow Ratio, Pressure advance, Retraction a Max volumetric speed</b> obvykle ukládáš do profilu filamentu. Naproti tomu <b>VFA, Input Shaping a Cornering</b> řeší hlavně mechaniku/pohyb konkrétní tiskárny. Kostka a test vůlí jsou měřicí pomůcky. Když nastavíš tiskárnu chybně, nelze to spolehlivě napravit přidáním průtoku.</p>
+<div class="callout warning"><b>Důležité o Kobra X a firmwaru</b><p>Každou kalibraci spouštěj z aktivního profilu <b>Anycubic Kobra X</b> a správného procesu. Kobra X používá přímý náhon (DDE/direct drive), proto u PA a Retract nevybírej Bowden. Některé návody OrcaSlicer popisují hodnoty pro Klipper, Marlin nebo jiné tiskárny. Nezadávej příkazy firmwaru a nepřebírej jejich rychlosti naslepo: použij je jen tehdy, když přesně víš, jaký firmware a nastavení tvá Kobra X podporuje.</p></div>
+<h3>Společná příprava každého testu</h3><ol class="steps"><li><b>Zapiš si výchozí nastavení.</b> Než něco změníš, poznamenej původní teplotu, Flow Ratio, PA, retrakci a rychlost průtoku. V případě zhoršení se vrátíš zpět.</li><li><b>Použij suchý filament.</b> Vlhkost dělá nitky, bublinky a drsný povrch a může způsobit falešný závěr, že je špatná teplota nebo retrakce.</li><li><b>Vyber správné profily.</b> V horní části Anycubic Slicer Next zvol Kobra X, materiál, který skutečně tiskneš, a obvyklý Process (Proces). Zkontroluj průměr nasazené trysky.</li><li><b>Vytiskni vygenerovaný test beze změn.</b> Calibration (Kalibrace) vytváří samostatný projekt, který obsahuje měnící se zkušební hodnoty. Slicuj jej a vytiskni jako celek; nepřepisuj běžné nastavení uprostřed testu.</li><li><b>Měň vždy jednu věc.</b> Po každé kalibraci ulož hodnotu do odpovídajícího profilu a udělej kontrolní běžný tisk. Když je horší, vrať poslední změnu, ne všechno najednou.</li></ol>
+<div class="callout good"><b>Jednoduché pravidlo pro čtení vzorku</b><p>Nehledej „nejhezčí na první pohled“ jen na jednom místě. Porovnej stejnou plochu každého vzorku, stejné rohy nebo stejné patro. U flow sleduj horní plochu a mezery; u PA rohy a začátky/konce čar; u teplotní věže pevnost, nitky a převisy. Když jsou dvě hodnoty podobně dobré, zvol bezpečnější prostřední hodnotu a ověř ji běžným dílem.</p></div></section>
 
-<!-- ── MAIN ── -->
-<main class="main-content">
-
-  <div class="hero">
-    <div class="hero-inner">
-      <div class="logo-row">
-        <span class="tuf-badge">PŘÍLOHA</span>
-        <span class="ver-badge">POKROČILÁ KALIBRACE</span>
-      </div>
-      <h1>Optimalizace a kalibrace <span>tiskových profilů</span></h1>
-      <p>Kompletní sekvenční postup kalibrace nového filamentu na Anycubic Kobra X v Anycubic Slicer Next — od teploty přes průtok a předstih tlaku až po retrakci a kontrolu kvality povrchu. Technický pohled na interakci Direct Drive extruderu a ACE Gen 2 systému s kalibrační logikou sliceru.</p>
-    </div>
-  </div>
-
-  <div class="wrapper">
-
-    <div class="alert alert-info">
-      <div class="alert-icon">📍</div>
-      <div><strong>Tato stránka je samostatná příloha</strong> mimo hlavní číslovanou posloupnost kapitol — najdete na ni odkaz z kapitoly <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Parametry filamentu</a> a z hlavního <a href="00_3D_index.html#ostatni_prilohy" style="color:#fff;">Obsahu</a>. Navazuje na základní popis kalibračních testů v <a href="03_3D_slicer_zaklad.html" style="color:#fff;">03 — Slicer základy</a>, ale jde mnohem víc do hloubky — konkrétní hodnoty, vzorce přepočtu a sekvenční logika, proč musí testy proběhnout v přesně daném pořadí.</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 1 — TECHNICKÝ ZÁKLAD: DDE A ACE GEN 2
-    ════════════════════════════════════════════ -->
-    <div class="section" id="technicky-zaklad">
-      <div class="section-header">
-        <h2>1 — Proč je Kobra X jiná: Direct Drive a ACE Gen 2</h2>
-      </div>
-
-      <p>Úspěšná kalibrace nového filamentu vyžaduje pochopení interakce mezi mechanickým hardwarem Kobry X a softwarem Anycubic Slicer Next. Kobra X využívá kinematiku typu <strong>Cartesian (bedslinger)</strong> s duální synchronizovanou osou Z a automatickou kalibrací podložky <strong>LeviQ 3.0</strong>. Klíčová je přítomnost integrovaného <strong>Direct Drive Extruderu (DDE)</strong> a pokročilého systému <strong>ACE Gen 2</strong> přímo v tiskové hlavě.</p>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Direct Drive Extruder (DDE)<small>Extruder s přímým pohonem</small></div>
-        </div>
-        <p>Podávací ozubená kola jsou umístěna přímo nad hotendem — vzdálenost mezi nimi a tavnou zónou je minimalizována. To drasticky snižuje potřebnou retrakční vzdálenost na hodnoty hluboko pod 2 mm (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Retrakce</a>), na rozdíl od Bowden systémů, kde je nutná retrakce 4–7 mm.</p>
-      </div>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">ACE Gen 2<small>Automatický systém výměny cívek, generace 2</small></div>
-        </div>
-        <p>Integrovaný přímo v tiskové hlavě. Zkrácení dráhy taveniny při přechodu barev vede k výraznému snížení odpadu materiálu oproti starším systémům (např. Kobra 3 s externím ACE Pro, kde je nutná retrakce až několik mm pro bezpečné vytažení filamentu z horké zóny). Kratší dráha taveniny zároveň poskytuje ostřejší reakci na změny tlaku v trysce při běžném jednobarevném tisku — to je důvod, proč jsou hodnoty Pressure Advance pro Kobru X nižší než u jiných tiskáren.</p>
-      </div>
-
-      <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div><strong>Anycubic Slicer Next je optimalizovaný fork OrcaSlicer</strong> — přebírá pokročilé matematické algoritmy pro řízení toku a tlaku materiálu i vestavěnou sadu osmi kalibračních testů. Výsledné korekční hodnoty z kalibrace se ukládají přímo do profilu filamentu, kde při slicování přepisují výchozí nastavení firmwaru — kalibrace provedená v Anycubic Slicer Next je tedy plně kompatibilní s firmwarem Kobry X.</div>
-      </div>
-
-      <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
-        <div><strong>Síťový tisk může být občas nestabilní.</strong> Provozní zkušenosti komunity poukazují na občasnou nestabilitu cloudového odesílání tisku přes Anycubic účet (viz <a href="03_3D_slicer_zaklad.html" style="color:#fff;">03 — Sekce 8</a>). Pokud narazíte na problémy, zvažte lokální odeslání G-kódu přes USB flash disk jako spolehlivější alternativu.</div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 2 — POŘADÍ KALIBRACE
-    ════════════════════════════════════════════ -->
-    <div class="section" id="poradi-kalibrace">
-      <div class="section-header">
-        <h2>2 — Proč na pořadí záleží</h2>
-      </div>
-
-      <p>Pro nalezení ideálního nastavení nového filamentu je nezbytné provést kalibrační testy v přesně definovaném sekvenčním pořadí. Důvod je fyzikální: nastavení teploty přímo ovlivňuje viskozitu a průtok taveniny, což následně mění chování předstihu tlaku a retrakcí. Pokud byste kalibrovali v opačném pořadí, výsledky vyšších testů by byly zkreslené špatně nastavenou teplotou pod nimi.</p>
-
-      <div class="seq-flow">
-        <div class="seq-step"><span class="num">KROK 1</span>Teplota</div>
-        <div class="seq-arrow">→</div>
-        <div class="seq-step"><span class="num">KROK 2</span>Průtok</div>
-        <div class="seq-arrow">→</div>
-        <div class="seq-step"><span class="num">KROK 3</span>Předstih tlaku</div>
-        <div class="seq-arrow">→</div>
-        <div class="seq-step"><span class="num">KROK 4</span>Retrakce</div>
-        <div class="seq-arrow">→</div>
-        <div class="seq-step"><span class="num">KROK 5</span>Max. průtok</div>
-        <div class="seq-arrow">→</div>
-        <div class="seq-step"><span class="num">KROK 6</span>VFA</div>
-      </div>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div>Kalibrační testy jsou přístupné přes horní lištu programu <strong>Kalibrace</strong> (viz <a href="03_3D_slicer_zaklad.html" style="color:#fff;">03 — Sekce 6</a>). Každá podkapitola níže odpovídá jedné položce v tomto menu a jde do detailu, který v základní kapitole 03 není.</div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 3 — KALIBRACE TEPLOTY
-    ════════════════════════════════════════════ -->
-    <div class="section" id="kalibrace-teploty">
-      <div class="section-header">
-        <h2>3 — Kalibrace teploty (Temperature Tower)</h2>
-      </div>
-
-      <p>Tento test generuje vertikální věž rozdělenou do několika teplotních segmentů — teplota trysky automaticky klesá s rostoucí výškou tisku. Pro testovaný filament (např. ELEGOO PLA+) se doporučuje nastavit rozsah testu od 230 °C (základna) do 190 °C (vrchol) s krokem 10 °C.</p>
-
-      <div class="tower-diagram">
-        <div class="tower-seg"><div class="seg-bar">Bridge Test</div><div class="seg-val">190 °C</div></div>
-        <div class="tower-seg"><div class="seg-bar">Overhang 60°</div><div class="seg-val">200 °C</div></div>
-        <div class="tower-seg optimal"><div class="seg-bar">Overhang 45° ← Optimální bod (příklad)</div><div class="seg-val">210 °C</div></div>
-        <div class="tower-seg"><div class="seg-bar">Overhang 30°</div><div class="seg-val">220 °C</div></div>
-        <div class="tower-seg"><div class="seg-bar">Základna</div><div class="seg-val">230 °C</div></div>
-      </div>
+<nav class="toc"><strong>Testy v checklistu a doplňkové kapitoly</strong><ul><li><a href="#poradi">Pořadí a rozhodovací cesta</a></li><li><a href="#t1">1 Temperature</a></li><li><a href="#t2a">2a YOLO Recommended</a></li><li><a href="#t2b">2b YOLO perfectionist</a></li><li><a href="#t2c">2c Pass 1 / Pass 2</a></li><li><a href="#t3a">3a PA Line</a></li><li><a href="#t3b">3b PA Tower</a></li><li><a href="#t3c">3c PA Pattern</a></li><li><a href="#t4">4 Retraction test</a></li><li><a href="#t5">5 Max flowrate</a></li><li><a href="#t6">6 XYZ Cube</a></li><li><a href="#t7">7 VFA</a></li><li><a href="#t8">8 Orca Tolerance Test</a></li><li><a href="#i2">II Input Shaping</a></li><li><a href="#i3">III Adaptive PA</a></li><li><a href="#i4">IV Cornering</a></li></ul></nav>
 
-      <h3>Co se hodnotí po vytištění</h3>
+<section id="poradi"><h2>Jak testy řadit, aby si navzájem nepřekážely</h2><p>Není třeba tisknout úplně všechno. Začni testy, které ovlivňují množství a tavitelnost plastu, potom dolaď změny tlaku při pohybu a nakonec rychlostní limit. Kostku a test vůlí vytiskni, když potřebuješ ověřit rozměry; pohybové kalibrace nech až na chvíli, kdy se chceš zabývat rychlostí nebo vlnami na stěnách.</p><div class="stepsline"><span><b>1</b> teplota</span><b>→</b><span><b>2a</b> flow YOLO</span><b>→</b><span><b>3a</b> PA Line</span><b>→</b><span><b>4</b> retrakce</span><b>→</b><span><b>5</b> max flow</span><b>→</b><span>běžný kontrolní tisk</span></div><div class="table-wrap"><table><thead><tr><th>Co na běžném tisku pozoruješ?</th><th>Kam se vrátit</th><th>Proč právě tam</th></tr></thead><tbody><tr><td>Mezery nebo naopak vystouplé hřebeny na horní ploše</td><td>#2a Flow Ratio YOLO</td><td>Nejdřív uprav poměr vytlačovaného materiálu.</td></tr><tr><td>Boule/mezera jen při rozjezdu a v rohu</td><td>#3 Pressure advance</td><td>PA upravuje tlak při změně rychlosti, ne stálý objem vytlačování.</td></tr><tr><td>Nitky mezi oddělenými částmi</td><td>#1 teplota → #4 Retract; zkontroluj vlhkost</td><td>Horký nebo vlhký materiál teče a nitkuje; retrakce řeší zatažení při přejezdu.</td></tr><tr><td>Vady začnou až u rychlejších/vyšších pater</td><td>#5 Max flowrate</td><td>Tavicí soustava nemusí stíhat dodat plast při vysokém objemovém průtoku.</td></tr><tr><td>Pravidelné vlnky na stěně po změně směru</td><td>IV Cornering / II Input Shaping / #7 VFA</td><td>Jde pravděpodobně o pohyb, vibrace nebo rezonanci tiskárny.</td></tr><tr><td>Díly do sebe nezapadají</td><td>#6 kostka a #8 tolerance</td><td>Zkontroluj rozměr a skutečnou vůli před úpravou kompenzací.</td></tr></tbody></table></div></section>
 
-      <table>
-        <thead><tr><th>Fyzikální projev</th><th>Co sledovat</th></tr></thead>
-        <tbody>
-          <tr><td>Kvalita přemostění (Bridges)</td><td>Průhyb spodních vláken v horizontálních přemostěních — ideální teplota minimalizuje prověšení</td></tr>
-          <tr><td>Kvalita převisů (Overhangs)</td><td>Geometrická přesnost struktur pod úhly 30°, 45° a 60°. Při příliš vysoké teplotě dochází k deformaci hran vlivem gravitace před ztuhnutím taveniny</td></tr>
-          <tr><td>Soudržnost vrstev (Layer Adhesion)</td><td>Empirickým tlakem na jednotlivé segmenty se ověří mechanická pevnost spojení vrstev; příliš nízká teplota vede k delaminaci</td></tr>
-          <tr><td>Tvorba vlasových nití (Stringing)</td><td>Identifikuje se teplotní úroveň s nejnižším výskytem nití při přejezdech tiskové hlavy</td></tr>
-        </tbody>
-      </table>
+<section id="t1" class="test"><h2><span class="num">1</span> Temperature (Teplota) · teplotní věž</h2><p class="lead">Teplota určuje, jak snadno plast protéká tryskou a jak dobře se spojují vrstvy. Cílem je najít kompromis mezi hladkým povrchem, pevnými vrstvami, čistými převisy a minimem nití.</p><div class="route"><b>Cesta v aplikaci:</b> Calibration (Kalibrace) → Temperature (Teplota). Vyber správný filament a běžný proces ještě před spuštěním.</div><figure class="figure"><img src="pic/temperature-tower.png" alt="Teplotní věž jako sada výškových úseků"><figcaption>OrcaSlicer Wiki: každé patro věže se tiskne při jiné teplotě. Přesné teploty čti podle generovaného projektu, ne odhadem podle pořadí pater. <a href="https://www.orcaslicer.com/wiki/calibration/temp_calib.html">Otevřít dokumentaci Temperature Calibration</a>.</figcaption></figure><h3>Jak zvolit Start, End a Step</h3><p>Na cívce nebo v technickém listu hledej doporučený rozsah teplot trysky. Jestli výrobce například uvádí PLA <b>190–220 °C</b>, můžeš pro první zkoušku zadat Start 190, End 220 a Step 5 °C. Je to jen příklad výpočtu, nikoliv univerzální nastavení všech PLA. Pokud výrobce píše užší rozsah, použij jeho údaje; nezkoušej teplotu mimo bezpečné rozmezí.</p><ul><li><b>Start (Začátek)</b> je nejnižší teplota věže; <b>End (Konec)</b> nejvyšší.</li><li><b>Step (Krok)</b> udává rozdíl mezi úseky. Menší krok porovnává přesněji, ale vytváří více pater. Krok 5 °C je rozumný první výběr při rozsahu kolem třiceti stupňů.</li><li><b>Auto-scale for nozzle (Automatické měřítko pro trysku)</b> je ve výchozím stavu zapnuté. Referenční věž je navržená pro 0,4mm trysku a vrstvu 0,2 mm; zapnuté měřítko mění velikost modelu podle průměru trysky a nastaví výšku vrstvy na polovinu průměru, aby detaily zůstaly čitelné. Vypínej ho jen tehdy, když chceš původní rozměr modelu a víš proč.</li></ul><h3>Jak věž posoudit</h3><div class="compare"><div class="bad"><strong>Příliš nízká teplota může vypadat takto</strong>Matný, drsný nebo přerušovaný povrch, slabší spojení vrstev, podextruze, křehké stěny. Nitky se také mohou objevit, protože studenější plast protéká nepravidelně.</div><div class="goodbox"><strong>Příliš vysoká teplota může vypadat takto</strong>Více nití, lesklý rozteklý povrch, měkké převisy, slité detaily; při přehřátí se může materiál zhoršovat nebo ucpat trysku.</div></div><ol class="steps"><li>Prohlédni všechna patra při stejném světle. U každého porovnej stěny, převisy/mosty a prostor mezi sloupky.</li><li>Pokud několik sousedních pater vypadá dobře, zvol jejich prostředek. Jestli budeš tisknout vyšší rychlostí nebo větším průtokem, zvaž hornější část dobrého rozsahu; teplejší plast se často snáze taví a spojuje.</li><li>Nezaměňuj teplotu běžných vrstev za teplotu první vrstvy. Do profilu zapiš zvlášť hodnotu pro běžné vrstvy a případně upravenou první vrstvu.</li><li>Ulož změnu do Filament settings (Nastavení filamentu) → nozzle temperature (teplota trysky) a vytiskni malý běžný díl.</li></ol><figure class="figure"><img src="pic/temperature-result.jpg" alt="Vytištěná teplotní věž s různými teplotními patry"><figcaption>Při volbě nehledej jediné „dokonalé“ patro na jednu vadu. Vyber teplotu, která nejlépe vyvažuje pevnost vrstev, převisy, povrch a nitkování.</figcaption></figure><div class="callout"><b>Když nevíš, co zvolit:</b> spolehlivý první výsledek z cívky bývá lepší výchozí bod než internetová teplota cizího filamentu. Značka, barva i rychlost mění výsledek.</div></section>
 
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div><strong>Pokud více segmentů vykazuje srovnatelné výsledky, volte nižší teplotu</strong> z tohoto rozsahu — snižuje tepelné pnutí ve výtisku a omezuje stringing. Naměřenou optimální hodnotu zapište do pole <strong>Tryska — Ostatní vrstvy</strong> ve <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">filament profilu (05c)</a>.</div>
-      </div>
+<section id="t2a" class="test"><h2><span class="num">2a</span> Flow rate (Průtok) · YOLO (Recommended) (Doporučeno)</h2><p class="lead">Test upravuje Flow Ratio (Poměr průtoku): číslo, kterým slicer násobí vypočítané množství plastu. Měří se horní povrch vzorků, ne průměr filamentu posuvným měřítkem.</p><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Flow rate (Průtok) → YOLO (Recommended) (Doporučeno). Tato metoda používá vzor Archimedean chords (Archimédovy oblouky) a jediný průchod.</div><figure class="figure"><img src="pic/flow-yolo-example.png" alt="Ukázka vzorků Flow Ratio YOLO"><figcaption>Vzorky se liší malým modifierem (změnou Flow Ratio). Horní povrch a mezery mezi oblouky jsou hlavní vodítka. <a href="https://www.orcaslicer.com/wiki/calibration/flow_ratio_calib.html">OrcaSlicer Wiki · Flow Ratio Calibration</a>.</figcaption></figure><h3>Rozsah a tisk</h3><p>Doporučené výchozí hodnoty OrcaSliceru jsou <b>−0,05 až +0,05</b> po <b>0,01</b> Flow Ratio. Vznikne 11 dílků. Slicer vytvoří nový projekt s jedenácti vzorky/bloky, každý má jiný modifier; slicuj a vytiskni celý připravený projekt. Test vychází z právě vybraného Flow Ratio, takže nejprve vyber správný filament.</p><h3>Jak číst povrch</h3><ol class="steps"><li>Postav dílky vedle sebe a hledej nejhladší, rovnoměrný vršek.</li><li>Zkontroluj, zda mezi oblouky nejsou viditelné mezery. Mezery značí, že plastu může být málo.</li><li>Podívej se na kontaktní čáru mezi vnitřní spirálou a vnějšími oblouky. OrcaSlicer upozorňuje, že v ukázce může být jemná čára i na nejlepším vzorku; přílišné snižování průtoku už vytvoří mezery.</li><li>Najdi modifier vybraného dílku. Znaménko je důležité: <b>+0,01</b> přičítáš, <b>−0,01</b> odečítáš.</li></ol><div class="formula"><strong>Vzorec</strong><br>Nový Flow Ratio = dosavadní Flow Ratio + modifier<br><strong>Příklad z wiki</strong><br>Dosavadní Flow Ratio 0,98; nejlepší vzorek +0,01<br>0,98 + 0,01 = <b>0,99</b></div><p>Dosavadní hodnotou je číslo, které je právě uložené v profilu filamentu před přepsáním. Zapiš výsledek do Filament settings (Nastavení filamentu) → Flow Ratio (Poměr průtoku), ulož profil a nový projekt slicuj znovu.</p><div class="callout warning"><b>Neber pruh jako jediný rozsudek.</b> Pokud všechny dílky vypadají stejně, ověř suchý filament, čistou trysku a stejný profil/process. Tenká čára sama o sobě nemusí znamenat špatné nastavení.</div></section>
 
-      <a href="https://www.youtube.com/results?search_query=temperature+tower+calibration+3D+printing+PLA&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Temperature tower calibration 3D printing PLA</a>
-    </div>
+<section id="t2b" class="test"><h2><span class="num">2b</span> Flow rate (Průtok) · YOLO (perfectionist version) (jemné doladění)</h2><p>Jemnější YOLO použij, jen když test 2a ukázal několik téměř stejně dobrých vzorků a chceš mezi nimi rozlišit. Není potřeba dělat ho automaticky po každém průtoku.</p><p>Výchozí doporučená sada OrcaSliceru je <b>−0,04 až +0,035</b> po <b>0,005</b>. Oproti kroku 0,01 jsou vzorky blíž u sebe, takže jejich rozdíl bývá méně zřejmý. Podívej se na výsledek při dobrém světle a porovnávej stejné místo.</p><ol class="steps"><li>Nejprve ulož vítěznou hodnotu z 2a do profilu filamentu.</li><li>Spusť YOLO (perfectionist version) se stejným filamentem a procesem.</li><li>Vyber nejhladší vzorek bez mezer; zapiš i znaménko dílku.</li><li>Přičti modifier k hodnotě, kterou jsi uložil po 2a.</li></ol><div class="formula"><strong>Vzorec:</strong> nový Flow Ratio = hodnota uložená po 2a + jemný modifier<br><strong>Příklad:</strong> 0,99 + 0,005 = 0,995<br>Ulož 0,995 do profilu filamentu a ověř běžným tiskem.</div><p>Pokud povrch po jemném kroku začne mít mezery, vrať se na předchozí hodnotu nebo o jeden dílek směrem k vyššímu průtoku. Číslo není obecný „kalibrační faktor“; platí pro konkrétní filament a profil.</p></section>
 
-    <!-- ═══════════════════════════════════════════
-         SEKCE 4 — KALIBRACE PRŮTOKU
-    ════════════════════════════════════════════ -->
-    <div class="section" id="kalibrace-prutoku">
-      <div class="section-header">
-        <h2>4 — Kalibrace průtoku (Průtok / Flow Rate)</h2>
-      </div>
+<section id="t2c" class="test"><h2><span class="num">2c</span> Flow rate (Průtok) · Pass 1 / Pass 2 (Dva průchody)</h2><p>Pass 1/2 je druhý způsob kalibrace Flow Ratio založený na vzoru Monotonic Line (Monotónní čáry). Je alternativou k YOLO, nikoli povinným pokračováním. Každý dílek v těchto testech má procentní modifier, proto se výsledek počítá jinak než u YOLO.</p><h3>Pass 1 (Průchod 1)</h3><p>Vyber Pass 1 v Calibration → Flow rate. Projekt obsahuje devět vzorků. Porovnej jejich hladký horní povrch, vyber nejlepší modifier a vypočítej novou hodnotu. Potom ji ulož do profilu dřív, než spustíš Pass 2.</p><div class="formula">Nový Flow Ratio = dosavadní Flow Ratio × (100 + modifier v %) ÷ 100<br>Příklad: starý 0,98 a dílek +5<br>0,98 × (100 + 5) ÷ 100 = 1,029</div><p>Modifier <b>+5</b> znamená zvýšit dosavadní hodnotu o pět procent. Neznamená přičíst číslo 5 k hodnotě Flow Ratio.</p><h3>Pass 2 (Průchod 2)</h3><p>Teprve po uložení Pass 1 otevři Pass 2. Vytvoří deset vzorků s modifiery od −9 do 0. Vyber nejlepší dílek a pro výpočet jako „dosavadní“ použij právě hodnotu uloženou po Pass 1.</p><div class="formula">Příklad Pass 2: po Pass 1 je Flow Ratio 1,029; vybereš dílek −6<br>1,029 × (100 − 6) ÷ 100 = 0,96726</div><ol class="steps"><li>Zapiš vstupní hodnotu z aktivního profilu a modifier vybraného vzorku.</li><li>Vypočti výsledek podle procentního vzorce; zachovej znaménko.</li><li>Po Pass 1 výsledek ulož. Pass 2 nesmí začínat starou hodnotou 0,98, pokud už jsi do profilu uložil novou.</li><li>Po Pass 2 ulož finální hodnotu a znovu slicuj běžný projekt.</li></ol><div class="callout"><b>Jak nepomíchat vzorce</b><p>YOLO: dosavadní Flow Ratio + modifier (například 0,98 + 0,01). Pass 1/2: dosavadní Flow Ratio × procentní násobek (například 0,98 × 1,05). Zkontroluj název zvolené metody.</p></div></section>
 
-      <p>Kalibrace průtokového poměru zajišťuje rozměrovou přesnost a hladký povrch výtisku eliminací přeextruze (drsný povrch, otřepy) nebo podextruze (mezery mezi liniemi, křehkost). V menu <strong>Kalibrace → Průtok</strong> jsou k dispozici čtyři metody.</p>
+<section id="t3a" class="test"><h2><span class="num">3a</span> Pressure advance (Předstih tlaku) · PA Line (Čárový test)</h2><p class="lead">Pressure Advance (PA; předstih tlaku) kompenzuje zpoždění tlaku v trysce při zrychlování a zpomalování tiskové hlavy. Když hlava zpomalí do rohu, plast se ještě chvíli tlačí ven; při rozjezdu se naopak tlak chvíli buduje.</p><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Pressure advance (Předstih tlaku) → Extruder type (Typ extruderu) <b>DDE</b> → PA Line (Čárový test). Kobra X má přímý náhon, nikoli Bowden.</div><h3>Proč začít linií</h3><p>PA Line je rychlý a přímočarý. Na podložce vytiskne několik čar s různými hodnotami PA. Jeho přesnost ale závisí na první vrstvě: pokud je jedna část čáry přimáčknutá více než jiná, zdánlivá změna šířky může být nerovnou podložkou, ne PA. OrcaSlicer doporučuje pro tento test zapnout bed mesh leveling (vyrovnání/mesh podložky), pokud ho tiskárna a profil podporují.</p><ol class="steps"><li>V okně PA zvol DDE. Rozsah a krok pro první pokus ponech na hodnotách, které nabídne slicer.</li><li>Slice a vytiskni test. Nehodnoť čáru, která se odlepila, má díru v první vrstvě nebo je nerovnoměrně přimáčknutá.</li><li>Hledej linii se stejnou šířkou od začátku do konce. Příliš nízká kompenzace může nechat nahrnutý plast u konce/rohu; příliš vysoká může linku ztenčit nebo přerušit.</li><li>Odečti PA přiřazené nejrovnoměrnější čáře a zapiš ho do Filament settings → Pressure advance (Předstih tlaku).</li></ol><figure class="figure"><img src="pic/pa-line-samples.png" alt="Sada čar PA Line s různými hodnotami"><figcaption>Ukázka PA Line: porovnej stejnorodost čar. Čára, která je celá rovnoměrná, ukazuje na nejvhodnější hodnotu PA. <a href="https://www.orcaslicer.com/wiki/calibration/pressure_advance_calib.html">Pressure Advance · OrcaSlicer Wiki</a>.</figcaption></figure><div class="callout warning"><b>Výsledek PA není teplota ani průtok.</b> Není to číslo, které se má automaticky vynásobit nebo přenést na jinou tiskárnu. Ukázková hodnota 0,016 v dokumentaci je jen příklad čtení testu, ne předpis pro Kobra X.</div></section>
 
-      <h3>YOLO (doporučeno)</h3>
+<section id="t3b" class="test"><h2><span class="num">3b</span> Pressure advance (Předstih tlaku) · PA Tower (Věž)</h2><p>PA Tower zabere více času než Line, ale vyhodnocení není tolik závislé na perfektní první vrstvě. Věž mění hodnotu PA postupně s výškou; každý milimetr odpovídá jednomu kroku PA na mm podle nastavení testu. Věž se přizpůsobí zvolenému rozsahu: horní část nepřekročí zadaný End.</p><div class="route"><b>Cesta:</b> Calibration → Pressure advance → Extruder type: DDE → PA Tower (Věž). Nezaměňuj direct-drive variantu s Bowden.</div><figure class="figure"><img src="pic/pa-tower-measure.jpg" alt="Odečítání výšky nejlepší části PA věže"><figcaption>Vyber nejlepší výšku a odečti hodnotu podle výšky v náhledu/g-code. Wiki ukazuje, že výška 8 mm při Start 0 a kroku 0,002/mm odpovídá PA 0,016.</figcaption></figure><h3>Co sledovat na jednotlivých patrech</h3><p>Prohlédni rohy i švy. Při malé PA může být na vnější straně rohu boule, plast se může nahrnout a přechod po rohu je nečistý. Při příliš velké PA se na rohu objevuje zeslabení či mezera, protože extruder tlak snížil až příliš. Hledej část, kde roh zůstává ostrý, ale linka po něm je pořád souvislá.</p><div class="formula">PA = Pressure Advance Start + (Pressure Advance Step × změřená výška)<br>Příklad z OrcaSlicer Wiki: 0 + (0,002 × 8 mm) = <b>0,016</b></div><ol class="steps"><li>Zapiš Start PA a Step PA/mm z okna testu.</li><li>Vytiskni věž a vyber nejlepší patro podle rohů a návaznosti čar.</li><li>Výšku měř od spodního začátku stupňů, ne od horní hrany podložky modelu. Použij Preview (Náhled) a posuvník vrstev, aby ses trefil ke správnému úseku.</li><li>Vypočti PA podle vzorce. Ulož hodnotu do profilu filamentu a ověř běžným dílem.</li></ol><p>Pokud se nejlepší patro nachází těsně na samém horním či spodním konci věže, rozsah nemusel pokrýt správnou hodnotu. Zopakuj věž s rozsahem přesunutým k nalezené oblasti; nevybírej hodnotu mimo to, co test skutečně vytiskl.</p></section>
 
-      <p>Moderní metoda využívající vzor Archimedovy spirály — rychlý tisk 11 vzorků s odstupňovaným modifikátorem průtoku od −0,05 do +0,05 s krokem 0,01 vůči aktuálně nastavenému poměru průtoku v profilu.</p>
+<section id="t3c" class="test"><h2><span class="num">3c</span> Pressure advance (Předstih tlaku) · PA Pattern (Vzorek)</h2><p>PA Pattern je plošný vzor pro přímé porovnání tlakové kompenzace v rozích. OrcaSlicer umožňuje vytvořit jeden nebo více testů; při více testech přidá podle potřeby další desku. Každý vzorek je doplněn malým obdélníkovým hranolem, který je nosičem vrstev a zároveň úchopem pro přemístění vzorku.</p><div class="route"><b>Cesta:</b> Calibration → Pressure advance → DDE → PA Pattern (Vzorek). Podle verze aplikace uvidíš jednotlivé testy nebo dávkové zadání rychlostí/zrychlení.</div><h3>Jak číst pattern</h3><ul><li>Porovnej rohy a čáry ve všech oblastech. Nízké PA vytváří výduť u rohu; příliš vysoké PA může způsobit rozestup nebo nedostatek plastu za rohem.</li><li>Testovací čísla/parametry bývají uvedené na objektu nebo v seznamu objektů. Preview (Náhled) ukazuje i vložený vlastní G-code vzoru.</li><li>Vzorek používá nastavení šířky Default (Výchozí) a First layer (První vrstva) a rychlosti First layer speed → First layer a Other layers speed → Outer wall. Pruhovaná „výplň“ vzoru je ručně zapsaný G-code, ne standardní infill (výplň), který by převzal vzor nastavený v běžném profilu.</li><li>U jednoho nejasného vzorku hoď raději druhý test s užším rozsahem. Nemusíš tisknout PA Line, Tower i Pattern všechny: jsou to alternativní způsoby měření téhož nastavení.</li></ul><div class="callout"><b>Pro běžné použití Kobra X:</b> začni 3a PA Line, pokud první vrstva drží rovnoměrně. Když je výsledek nejasný nebo první vrstva zkresluje čáry, vyzkoušej 3b PA Tower. Pattern je další možnost, když ti jeho rohy a popisky dávají lépe čitelný výsledek.</div></section>
 
-      <div class="tower-diagram">
-        <div class="tower-seg"><div class="seg-bar">−0,05 · −0,04 · −0,03 · −0,02 · −0,01 · 0,00 · +0,01 · +0,02 · +0,03 · +0,04 · +0,05</div></div>
-      </div>
+<section id="t4" class="test"><h2><span class="num">4</span> Retraction test (Test retrakce)</h2><p>Retrakce na chvíli stáhne filament zpět, když tryska cestuje bez tisku. Správná délka pomáhá omezit nitky a odkapávání. Příliš velké zatažení může způsobit zpožděný tok po přejezdu nebo jiné vady, proto nehledáme co největší číslo, ale nejkratší hodnotu, která je ještě čistá.</p><div class="route"><b>Cesta:</b> Calibration → Retraction test. Pro Kobra X použij přímý náhon (DDE/direct drive).</div><figure class="figure"><img src="pic/retraction-tower.jpg" alt="Vytištěná retrakční věž"><figcaption>Každý zářez/výškový úsek retrakční věže odpovídá jiné délce zatažení. Nejčistší část je třeba spojit s hodnotou dané výšky v náhledu G-code.</figcaption></figure><h3>Výchozí parametry podle OrcaSlicer Wiki</h3><div class="table-wrap"><table><thead><tr><th>Typ extruderu</th><th>Start</th><th>End</th><th>Step</th><th>Použít na Kobra X?</th></tr></thead><tbody><tr><td>Direct drive (Přímý náhon)</td><td>0 mm</td><td>2 mm</td><td>0,1 mm</td><td><b>Ano, doporučený začátek</b></td></tr><tr><td>Bowden (Bowdenova trubice)</td><td>1 mm</td><td>6 mm</td><td>0,2 mm</td><td>Ne; jde o rozsah pro jiný typ vedení filamentu</td></tr></tbody></table></div><ol class="steps"><li>Zadej direct-drive rozsah Start 0 / End 2 / Step 0,1 mm, pokud už nemáš důvod použít vlastní úzký rozsah.</li><li>Po tisku prohlédni věž, hledej místo s nejmenším stringing (nitkováním) a oozing (samovolným vytékáním).</li><li>Změř výšku čistého úseku a v Preview/G-code vyhledej komentář <span class="mono">Calib_Retraction_tower</span>. Ten říká, jaká retraction length (délka retrakce) patří k této výšce.</li><li>Ulož nejkratší čistou hodnotu do Filament settings → Retraction length (Délka retrakce). Rychlost retrakce měň pouze samostatným testem, pokud jej tvůj slicer nabízí.</li></ol><div class="callout danger"><b>Nečti jen obecný příkaz <span class="mono">; retract</span>.</b> OrcaSlicer výslovně doporučuje hledat <span class="mono">Calib_Retraction_tower</span>, protože samotný příkaz <span class="mono">; retract</span> nemusí obsahovat celou efektivní délku (například při Retract amount before wipe / zatažení před otřením).</div><p>Někdy je věž čistá už od začátku, zvlášť u PLA nebo ABS, kde je vytékání malé. Pak může stačit nízká délka kolem <b>0,2–0,4 mm</b> jako zkušební výchozí hodnota; neznamená to, že pro každou Kobra X a filament musí platit přesně tato hodnota. Pokud horní část věže stále hodně nitkuje, nejdřív vysuš filament a zkontroluj, zda je tryska správně usazená a nikde neteče.</p></section>
 
-      <p>Při analýze vzorků hledejte destičku s nejhladším vrchním povrchem, bez viditelných mezer mezi liniemi spirály a bez hromadění přebytečného materiálu na rozhraních. Doporučená vyhodnocovací metoda je <strong>hmatová analýza</strong>: vyberte vzorek s nejnižším číslem, kde hmatem detekujete první známky přeextruze (jemný vystouplý okraj na přechodových čarách), a pro výsledné nastavení zvolte hodnotu o jeden krok vyšší (směrem k nižšímu toku).</p>
+<section id="t5" class="test"><h2><span class="num">5</span> Max flowrate (Maximální průtok)</h2><p class="lead">Tento test hledá, kolik plastu za sekundu dokáže konkrétní filament protlačit tryskou bez viditelného zhoršení kvality. Jde o <b>Max Volumetric Speed (Maximální objemovou rychlost/průtok)</b> v mm³/s. Není to rychlost hlavy v mm/s. Název v checklistu odpovídá nabídce Anycubic Slicer Next; dokumentace OrcaSlicer označuje test Max Volumetric Speed (FlowRate).</p><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Max flowrate (Maximální průtok). Dialog žádá Start volumetric speed (Počáteční objemový průtok), End volumetric speed (Koncový objemový průtok) a Step (Krok).</div><div class="callout good"><b>Doporučený bezpečný první rozsah z OrcaSlicer Wiki:</b> Start <b>5 mm³/s</b>, End <b>20 mm³/s</b>, Step <b>0,5 mm³/s</b>. Wiki doporučuje tyto výchozí hodnoty, pokud už neznáš nižší nebo horní limit filamentu. Není vhodné začít 5–50: OrcaSlicer už pokládá End 20 za výchozí horní hranici testu a vyšší rozsah může zbytečně tisknout dlouho, plýtvat filamentem a zkoušet daleko nad dosavadním limitem.</div><figure class="figure"><img src="pic/max-flow-measurement.jpg" alt="Místo před vadou pro měření výšky max flow věže"><figcaption>Najdi patro těsně před tím, než se kvalita začne zhoršovat. Matnější/lesklejší změna povrchu může být známkou zhoršeného toku nebo spojení vrstev.</figcaption></figure><figure class="figure"><img src="pic/max-flow-caliper.jpg" alt="Měření výšky věže posuvným měřítkem"><figcaption>Výšku před začátkem vady změř pravítkem nebo posuvným měřítkem. Neodečítej ji podle odhadované rychlosti hlavy.</figcaption></figure><h3>Co je „vada“ v tomto testu?</h3><p>Sleduj okamžik, kdy vrstvy začnou být méně kvalitní: povrch se změní z lesklého na matný nebo naopak, přijdou mezery, drsná linka, zeslabení stěny či slabé spojení vrstev. OrcaSlicer varuje, že vysoký průtok může zhoršit pevnost spojení vrstev nebo ucpat trysku. Je to zkušební „nejlepší možný“ limit a nemusí zahrnovat jiné situace, které zvyšují riziko ucpání nebo podextruze, třeba retrakce.</p><h3>Výpočet podle výšky</h3><p>Změř výšku modelu těsně před první vadou. Vzorec níže používá Start z dialogu a počet milimetrů naměřené výšky krát Step. V příkladu OrcaSliceru je výška 19 mm:</p><div class="formula">Max Volumetric Speed = Start + (změřená výška × Step)<br>5 + (19 × 0,5) = <b>14,5 mm³/s</b></div><p>V nastavení materiálu lze zadat naměřených 14,5. Pro běžnou spolehlivost ale wiki doporučuje limit snížit asi o <b>10–20 %</b> (nebo více, pokud kvalita/pevnost není dobrá). Při 10% rezervě:</p><div class="formula">14,5 × 0,90 = <b>13,05 mm³/s</b><br>Procentní násobek: 10% rezerva → 0,90; 15% → 0,85; 20% → 0,80.</div><h3>Alternativní odečet v Preview (Náhled)</h3><p>OrcaSlicer dovoluje i jiný způsob: v Preview zvol barevné schéma <b>Flow (Průtok)</b>, posuň svislý náhled vrstev k výšce, kterou jsi změřil, a klikni na posuvník hlavy nástroje. Aplikace ukáže maximální průtok pro danou vrstvu. Tento způsob může ušetřit ruční výpočet, ale přesto si výsledek poznamenej a zvaž 10–20% rezervu.</p><ol class="steps"><li>Začni Start 5 / End 20 / Step 0,5 mm³/s, pokud neznáš nižší limit filamentu.</li><li>Vytiskni a najdi poslední čistou výšku před zhoršením.</li><li>Výsledek odečti vzorcem nebo přes Preview → Flow.</li><li>Ulož bezpečnější Max volumetric speed (Maximální objemový průtok) do profilu filamentu.</li><li>U rychlejšího tisku může být třeba zvýšit nozzle temperature (teplotu trysky), ideálně jen směrem k hornímu okraji výrobcem uvedeného rozsahu. Nejprve ji ověř teplotní věží; vyšší průtok může zhoršit spojení vrstev.</li></ol><div class="callout warning"><b>Každá cívka může mít jiné maximum.</b> Záleží na konkrétním materiálu, tiskárně, průměru trysky, extruderu, výrobci i barvě PLA. Výsledek pro jeden filament automaticky nepřenášej na jiný.</div></section>
 
-      <div class="formula">Nový poměr průtoku = Výchozí poměr průtoku + Hodnota vybraného vzorku</div>
+<section id="t6" class="test"><h2><span class="num">6</span> XYZ Cube (Kostka XYZ) · kontrola rozměrů</h2><p>Kostka není „kalibrace průtoku“. Je to jednoduchý kontrolní model se známými rozměry v osách X, Y a Z. Ukáže, zda se vytištěné rozměry zhruba shodují s modelem; výsledek však mohou ovlivnit měření, smrštění materiálu, první vrstva, mechanika, model i kompenzace sliceru.</p><div class="route"><b>Vložení do projektu:</b> pravým tlačítkem na pracovní plochu → Add Handy models (Přidat praktické modely) → XYZ Cube (Kostka XYZ). Kostka tedy v programu je, jen není v menu Calibration.</div><ol class="steps"><li>Vytiskni kostku v běžném profilu, bez podpěr a bez mimořádných kompenzací.</li><li>Nech ji vychladnout. Posuvným měřítkem změř odpovídající rovné plochy X, Y, Z. Neměř hranu s brimem, sloní nohou nebo nahrnutým švem.</li><li>Porovnej nominální rozměr modelu s měřením. Zaznamenej rozdíl se znaménkem: naměřeno minus model.</li><li>Pokud jsou odchylky velké, nejprve ověř správný model, jednotky a měřidlo, první vrstvu, napnutí řemenů, vůle a přímou geometrii. Neprováděj náhodnou změnu steps/mm.</li></ol><div class="formula">Odchylka = naměřený rozměr − rozměr v modelu<br>Příklad: model 20,0 mm; naměřeno 19,9 mm → rozdíl −0,1 mm.</div><div class="callout danger"><b>Nepoužívej kostku k automatickému přepočtu steps/mm.</b> U běžné 3D tiskárny se špatné vnější rozměry často řeší jinými příčinami než kalibrací kroků motoru. Steps/mm měň jen podle postupu výrobce/firmwaru a po diagnostice, ne podle jednoho plastového modelu.</div></section>
 
-      <p style="color:var(--muted); font-size:13.5px;">Příklad: Pokud byl výchozí Poměr průtoku 0,98 a nejlepší povrch vykázal vzorek s hodnotou +0,02, nová hodnota bude 0,98 + 0,02 = <strong style="color:var(--accent2);">1,00</strong>.</p>
+<section id="t7" class="test"><h2><span class="num">7</span> VFA (Vertical Fine Artifacts; Jemné svislé artefakty)</h2><p>VFA jsou jemné opakující se stopy na svislých stěnách, zvlášť poblíž ostrých rohů a změn směru. Mohou souviset s vibracemi, rezonancí krokových motorů, řemeny, kladkami, změnou směru nebo nastavením pohybu. MRR (Motor Resonance Rippling; vlnění rezonancí motoru) je jeden z typů VFA. VFA není druhý test průtoku filamentu.</p><div class="route"><b>Cesta:</b> Calibration → VFA. Test vytvoří vysokou věž s různými úhly stěn a postupně se zvyšující rychlostí.</div><figure class="figure"><img src="pic/vfa-test-menu.png" alt="Okno nastavení VFA testu"><figcaption>Nastavení VFA tower. Zadej rychlostní rozsah pokrývající rychlosti vnějších stěn, které opravdu používáš. <a href="https://www.orcaslicer.com/wiki/calibration/vfa_calib.html">VFA · OrcaSlicer Wiki</a>.</figcaption></figure><h3>Jak zvolit rozsah bez slepého honění rychlosti</h3><p>OrcaSlicer uvádí jako příklad rychlost vnější stěny 20–200 mm/s a přírůstek 10 mm/s. To je příklad z wiki, <b>ne automatický bezpečný rozsah Kobra X</b>. Nastav rozsah podle své tiskárny a běžného profilu Outer wall (Vnější stěna); drž se rychlostí, které Kobra X, proces a filament skutečně zvládnou. Nižší <i>Step</i> ukáže užší rychlostní pásmo, ale vytvoří více úseků a prodlouží test.</p><ul><li><b>Auto-scale for nozzle (Automatické měřítko pro trysku)</b> je standardně zapnuté; reference počítá s 0,4mm tryskou/0,2mm vrstvou. Při zapnutí nastaví šířku modelu podle trysky a výšku vrstvy na polovinu průměru, takže každý rychlostní blok má 25 vrstev a změny se srovnávají s viditelnými hranami.</li><li><b>Auto-adjust to max volumetric speed (Automaticky upravit podle maximálního průtoku)</b> je dostupné jen při zapnutém Auto-scale. Když by požadovaná rychlost překročila Max Volumetric Speed z profilu, slicer může snížit výšku vrstvy v běžných krocích; pokud to nestačí ani při nejnižší vrstvě, sníží koncovou rychlost a požádá o potvrzení.</li><li>Pokud oba přepínače vypneš, věž zachová původní proporce 0,4mm modelu a limit průtoku filamentu může zastavit test dřív, než dosáhne End speed. Pak můžeš možnosti znovu zapnout, použít filament s vyšším limitem, nebo test připravit s nižší koncovou rychlostí.</li></ul><figure class="figure"><img src="pic/vfa-test-print.jpg" alt="Vytištěná VFA věž se stěnami v různých směrech"><figcaption>Vytištěná věž vytváří stěny v různých úhlech. Prohlížej opakované svislé stopy pod stejným světlem, ideálně zešikma.</figcaption></figure><ol class="steps"><li>Vytiskni věž. Najdi rychlostní pásma, kde se stěna výrazně zhorší nebo zlepší.</li><li>Do Printer settings (Nastavení tiskárny) → Resonance avoidance speed range (Rozsah rychlostí vyhýbajících se rezonanci) zapiš problematické pásmo, pokud danou volbu profil podporuje. Cílem bývá vyhnout se rezonančním rychlostem, ne měnit Flow Ratio.</li><li>Pokud chceš řešit fyzický původ artefaktu, prohlédni také řemeny, kladky, motory a pevnost rámu; změna rychlostního pásma neodstraní mechanickou vůli.</li></ol><div class="callout warning"><b>Omezení verze:</b> automaticky nozlu přizpůsobená věž a automatické omezení objemovým průtokem jsou podle wiki dostupné v nightly nebo vydáních novějších než 2.4.2. Pokud Anycubic Slicer Next příslušné volby nemá, řiď se reálným dialogem své verze.</div></section>
 
-      <h3>YOLO (perfekcionistická verze)</h3>
+<section id="t8" class="test"><h2><span class="num">8</span> Orca Tolerance Test (Test vůlí) · volitelně</h2><p>Každá kombinace tiskárny, filamentu a profilu může dávat trochu jiné rozměrové vůle. OrcaSlicer testuje, jak těsně mohou do sebe zapadat vytištěné tvary. Není to základní nastavení průtoku, ale pomáhá při modelování dílů, které mají zapadnout nebo se pohybovat.</p><div class="route"><b>Vložení do projektu:</b> Prepare (Příprava) → pravé tlačítko na desce → Add Handy models (Přidat praktické modely) → Orca Tolerance Test (Test vůlí).</div><figure class="figure"><img src="pic/tolerance-test.jpg" alt="Vytištěný Orca Tolerance Test"><figcaption>Model má šest otvorů s různou vůlí a samostatný šestihranný zkušební díl.</figcaption></figure><p>Model obsahuje šestihranné otvory s vůlemi <b>0 / 0,05 / 0,1 / 0,2 / 0,3 / 0,4 mm</b> a šestihranný tester. Vůli lze zkusit přiloženým vytištěným testerem nebo 6mm imbusovým klíčem. Zkoušej díl bez násilí: když se síla zvýší, otvor ještě není volný.</p><ol class="steps"><li>Vytiskni základnu a zkušební díl se stejným filamentem a běžným procesem, se kterým budeš navrhovat funkční součásti.</li><li>Zkoušej otvory postupně od nejmenší vůle. Zapiš nejmenší otvor, kam tester hladce vstoupí nebo se pohybuje.</li><li>Pokud otvory vycházejí příliš těsné, lze po ověření rozměrů ladit X-Y hole compensation (Kompenzace otvorů X-Y). Pokud vnější obrysy vycházejí moc malé/velké, samostatně prověř X-Y contour compensation (Kompenzace obrysu X-Y).</li><li>Kompenzace měň v malých krocích a po každé změně znovu vytiskni test. Do poznámek k profilu si zapiš filament, proces a zvolenou vůli.</li></ol><div class="callout warning"><b>Neměň obě kompenzace naráz.</b> Kompenzace otvorů a obrysu ovlivňují jinou stranu rozměru. Nejdříve zjisti, zda je problém na vnitřním otvoru, vnějším dílu, nebo v obou.</div></section>
 
-      <p>Funguje na identickém principu jako doporučená verze YOLO, ale nabízí jemnější rozlišení modifikátorů (typicky s menším krokem). Používá se pro finální doladění kritických materiálů po předchozím hrubém vymezení standardním testem YOLO.</p>
+<section id="i1" class="section"><h2>I · Co patří do profilu filamentu a co do tiskárny</h2><p>V Anycubic Slicer Next se profily skládají z několika vrstev nastavení. Když měníš filament, zaměř se na Material/Filament settings (Materiál/filament). Pokud přepneš tiskárnu, neměl bys přenést její mechanické limity do jiného profilu jako by to byla vlastnost filamentu.</p><div class="table-wrap"><table><thead><tr><th>Skupina nastavení</th><th>Typické položky</th><th>Kam výsledek obvykle uložit</th></tr></thead><tbody><tr><td>Materiál</td><td>Nozzle temperature (Teplota trysky), Flow Ratio (Poměr průtoku), Pressure advance (Předstih tlaku), Retraction length (Délka retrakce), Max volumetric speed (Maximální objemový průtok)</td><td>Filament/Material profile konkrétního materiálu a barvy</td></tr><tr><td>Pohyb tiskárny</td><td>Input Shaping (Kompenzace rezonance), Resonance Avoidance (Vyhýbání rezonanci), Cornering/Jerk (Průjezd rohů)</td><td>Printer profile/firmware; jen položky, které zařízení podporuje</td></tr><tr><td>Rozměrová kompenzace</td><td>Shrinkage XY/Z (Smrštění), X-Y hole/contour compensation (Kompenzace otvoru/obrysu)</td><td>Filament nebo Process podle konkrétní volby a účelu</td></tr></tbody></table></div><p>Když slicer při kalibraci vytvoří nový projekt, ulož si výsledek do profilu, který byl při vytvoření testu aktivní. Po změně nastavení vytvoř nový běžný projekt a znovu ho slicuj, aby do G-code vstoupila nová hodnota.</p></section>
 
-      <h3>Postup 1 (Pass 1)</h3>
+<section id="i2" class="section"><h2>II · Input Shaping (Kompenzace rezonance)</h2><p>Input Shaping cílí na ringing/ghosting (opakující se ozvěnu za rohem) způsobenou rezonancemi. Zkušební model záměrně probouzí vibrace, aby šlo porovnat jejich četnost a tlumení. Tohle nastavení se týká hlavně pohybu tiskárny/firmwaru, ne konkrétní cívky filamentu.</p><figure class="figure"><img src="pic/input-shaping-frequency.png" alt="Dialog pro Input Shaping frequency"><figcaption>OrcaSlicer Frequency test; běžný počáteční rozsah podle wiki je 15–110 Hz. Druh shaperu a výsledek závisí na firmwaru.</figcaption></figure><figure class="figure"><img src="pic/input-shaping-measure.jpg" alt="Měření výšky Input Shaping testu"><figcaption>U os X i Y zvlášť změř výšku, kde zvolený frekvenční výsledek nejlépe omezuje opakované vlnky.</figcaption></figure><h3>Kdy to má smysl</h3><p>OrcaSlicer uvádí, že některé tiskárny mají akcelerometry, které měří rezonanční frekvence automaticky a přesněji. Pokud je Kobra X/firmware nabízí, tato měření jsou vhodnější než vizuální věž. Ruční kalibraci je užitečné zopakovat po zásadní mechanické změně, přemístění tiskárny, výměně řemenů, motorů/rámu nebo podložky, na které stojí.</p><h3>Frekvenční věž a damping test</h3><ol class="steps"><li>Pro lepší viditelnost zvol neprůhledný, lesklý filament. Lesklá plocha ukáže opakované vlnky lépe než matná.</li><li>Orca wiki ukazuje vysoké testovací hodnoty jako příklady, například 20 000 mm/s² a 200 mm/s, ale říká použít nejrychlejší akceleraci/rychlost/Jerk, které tiskárna zvládne bez ztráty kroků. <b>Nekopíruj čísla 20 000/200 do Kobra X bez ověření limitu.</b> Použij limity svého profilu a firmware.</li><li>Zvol Test Model (Testovací model) Ringing Tower (Doporučená věž) nebo Fast Tower (Rychlá věž; menší varianta vhodná při výrazném ringingu).</li><li>Vyber Input Shaper Type (Typ kompenzátoru) dostupný pro konkrétní firmware. Pro první odhad použij Frekvenční rozsah 15–110 Hz. Damping (Tlumení) 0,1–0,2 bývá výchozí; hodnota 0 může použít výchozí tlumení firmwaru, pokud ho firmware má. Test limituje hodnotami pohybu tiskárny i maximálním průtokem; wiki doporučuje pro tento test nepoužívat filament s limitem pod 10 mm³/s.</li><li>Vytiskni frekvenční test. Změř výšku zvlášť pro X a Y, použij Preview nebo firmware-specific čtení a odečti frekvence pro nejlepší výsledek.</li><li>Když výsledek není jasný, vyznač přijatelnou oblast (min/max) a zopakuj test v užším rozsahu. Potom nastav známou frekvenci pro X a Y a vytiskni Damping test; z něj odečti tlumení každé osy.</li></ol><p>Výsledek se ukládá do firmware a/nebo printer profilu, nikoli jako obecná Flow Ratio. U Marlin/RepRap OrcaSlicer dokumentace popisuje cestu Printer settings (Nastavení tiskárny) → Motion ability (Pohybové vlastnosti) → Resonance Compensation (Kompenzace rezonance). U Klipperu uvádí nastavení start G-code nebo firmware příkazu <span class="mono">SET_INPUT_SHAPER</span>. Použij pouze cestu, kterou podporuje tvá tiskárna/Anycubic Slicer Next.</p><details><summary>Ukázkové firmware příkazy z OrcaSlicer Wiki · pouze pro odpovídající firmware</summary><p><b>Klipper — příklad, ne obecné nastavení Kobra X:</b></p><pre class="formula">SET_INPUT_SHAPER SHAPER_TYPE=MZV SHAPER_FREQ_X=37.25 DAMPING_RATIO_X=0.16 SHAPER_FREQ_Y=37.5 DAMPING_RATIO_Y=0.06</pre><p><b>Marlin — příklad:</b></p><pre class="formula">M593 X F37.25 D0.16
+M593 Y F37.5 D0.06
+M500</pre><p>Čísla jsou ukázková naměřená data z wiki. Nevkládej je do tiskárny bez vlastní kalibrace a potvrzené podpory firmwaru.</p></details><div class="callout danger"><b>Po testu vrať testovací rychlosti a akcelerace na normální profil.</b> Kalibrace může dočasně tisknout agresivně, aby vyvolala ringing. Nenechávej neověřené testovací limity aktivní pro běžné tisky.</div></section>
 
-      <p>Tradiční dvoukroková metoda generující 9 obdélníkových bloků s odstupňovanými modifikátory. Výpočet pro aktualizaci profilu po vytištění a výběru vizuálně nejlepšího vzorku využívá <strong>multiplikativní</strong> vzorec:</p>
+<section id="i3" class="section"><h2>III · Adaptive Pressure Advance (Adaptivní předstih tlaku) · pokročilá kalibrace</h2><p>Adaptive PA nepoužívá jednu hodnotu PA pro každý pohyb. Slicer vytvoří model, který vybírá PA podle volumetric flow (objemového průtoku) a acceleration (zrychlení). Wiki vysvětluje důvod: vhodné PA se obvykle snižuje při vyšší rychlosti/průtoku, větší výšce vrstvy a vyšším zrychlení. Jedna stálá hodnota proto bývá kompromisem mezi čistým vnějším rohem při pomalém pohybu a bezchybně navazujícími vnitřními stěnami při rychlejším pohybu.</p><figure class="figure"><img src="pic/adaptive-pa-settings.png" alt="Nastavení Adaptive Pressure Advance v profilu"><figcaption>Nastavení vyžaduje tabulku naměřených trojic PA, Flow a Acceleration. Funkce musí být podporovaná firmwarem.</figcaption></figure><h3>Nejdříve ověř kompatibilitu</h3><p>OrcaSlicer Wiki uvádí, že funkci testovala na tiskárnách s <b>Klipperem</b>. U Marlinu a Bambu ji označuje jako neověřenou, i když nemusí tiskárnu poškodit. Wiki upozorňuje, že Klipper starší než 11. 7. 2024 může při dynamickém PA vytvářet artefakty; oprava je v Klipperu 0.13.0 (2025-04-11) a novějších nebo vývojových verzích po tomto datu. Pro Kobra X proto tuto část ber jako pokročilou pouze v případě, že tvoje konkrétní verze firmwaru skutečně podporuje proměnlivý PA a Anycubic Slicer Next zobrazuje odpovídající filamentové volby. Pokud je nevidíš, přeskoč ji; základní PA Line/Tower/Pattern je správná cesta.</p><div class="callout warning"><b>Orca CoreXY ukázkové hodnoty nejsou profil Kobra X.</b> Wiki používá pro běžný CoreXY příklad zrychlení 1k/2k/4k a rychlosti 50/100/150/200 mm/s (12 kombinací). To je metoda, nikoliv bezpečný předpis pro jinou tiskárnu. Horní zrychlení musí být nanejvýš limit doporučený kalibrací Input Shaping pro nejpomalejší osu; jinak rohové mezery mohou být artefaktem input-shaperu, který by PA chybně „opravoval“.</div><h3>Co adaptive model potřebuje</h3><p>Každý měřený bod má trojici:</p><div class="formula">Pressure Advance, volumetric flow (mm³/s), acceleration (mm/s²)<br>Příklad formátu: 0.036, 7.68, 1000</div><p>Ideálně se sbírají data v několika rychlostech/průtocích i úrovních zrychlení. Dokumentace doporučuje nejméně tři body pro rozměr, který chceš modelovat. Pokud flow kalibrovat nechceš, můžeš nechat flow stejné a zadat jen sérii zrychlení; model pak ignoruje flow. Totéž platí pro zrychlení. Vždy ale zadávej celé trojice PA, Flow, Acceleration.</p><ul><li>V každé zkoušce najdi PA, kde rohy nemají bouli, ale zároveň se v nich neoddělují stěny.</li><li>Vyšší průtok a zrychlení bývají užitečné pro čtení hranice: příliš malé PA viditelně vyboulí roh, příliš velké PA začne dělat mezery.</li><li>Pro jednotlivé PA zkoušky se v dokumentaci doporučuje malý krok 0,001, aby šlo rozpoznat rozdíly. Koncovou PA nastav dost vysoko, aby u nejnižšího průtoku začalo být vidět oddělování perimetrů. Pokud vzor nevejde na desku, uprav počáteční PA nebo krok tak, aby se tiskový vzor zmenšil, ale zachovej pokrytí hodnot, které skutečně potřebuješ.</li></ul><details><summary>Číselný příklad tabulky ze scénáře OrcaSlicer Wiki (CoreXY, není profil Kobra X)</summary><p>Wiki ukazuje, jak se testovací kombinace rozprostřou do tabulky. Rychlost je mm/s, průtok mm³/s, zrychlení mm/s². Čísla níže pouze vysvětlují tvar dat:</p><div class="table-wrap"><table><thead><tr><th>Rychlost</th><th>Flow</th><th>Acceleration</th><th>Ukázkový PA</th></tr></thead><tbody><tr><td>50</td><td>3,84</td><td>1000</td><td>0,036</td></tr><tr><td>100</td><td>7,68</td><td>1000</td><td>0,036</td></tr><tr><td>150</td><td>11,51</td><td>1000</td><td>0,036</td></tr><tr><td>200</td><td>15,35</td><td>1000</td><td>0,036</td></tr><tr><td>50 / 100 / 150 / 200</td><td>3,84 / 7,68 / 11,51 / 15,35</td><td>2000</td><td>0,036 / 0,030 / 0,029 / 0,028</td></tr><tr><td>50 / 100 / 150 / 200</td><td>3,84 / 7,68 / 11,51 / 15,35</td><td>4000</td><td>0,032 / 0,028 / 0,026 / 0,024</td></tr></tbody></table></div><p>Každý výsledek se do profilu ukládá jako trojice PA, Flow, Acceleration. Protože příklad vychází z CoreXY a hodnot až 4000 mm/s², nepoužívej ho jako návod k nastavení Kobra X.</p></details><h3>Jak zjistit průtok odpovídající testu</h3><p>V OrcaSlicer 2.2 a novějším bývají potřebné parametry testu vytištěné na vzorku. U starší verze wiki doporučuje po nastavení testu přepnout G-code Preview na Flow (Průtok), posunout vodorovný posuvník k rybí-kostře/herringbone vzoru a zapsat flow pro jednotlivé rychlosti. Vyšší rychlost je v tomto testu náhradní ukazatel průtoku, protože průtok nelze zadat přímo.</p><h3>Spuštění a verze programu</h3><ul><li><b>OrcaSlicer 2.3.0 a novější:</b> dialog zjednodušuje dávkový režim: zadej seznam akcelerací a rychlostí; program vytvoří odpovídající testy/desky, ty slicuj a vytiskni.</li><li><b>OrcaSlicer 2.2.0 a starší:</b> nastav test a pak v jeho objektech/parametrech zadej cílové rychlosti, akcelerace a případný Jerk XY. Udrž stejné hodnoty ve všech odpovídajících polích; Jerk má odpovídat hodnotě v profilu pro vnější stěnu.</li><li>Wiki nedoporučuje v PA pattern testu rychlost nad přibližně 200–250 mm/s při zrychlení pod 1k, protože krátké segmenty nemusí dosáhnout cílového průtoku. Při vyšším nejnižším zrychlení může být odpovídajícím způsobem vyšší i testovací rychlost.</li></ul><p>Po testech sestav tabulku rychlost, průtok, zrychlení a nejlepší PA. Každý řádek potom vlož jako trojici do Adaptive pressure advance measurements (Měření adaptivního PA), jednotlivé sady odděl čárkou/novým řádkem podle políčka. Ulož filamentový profil.</p><h3>Volby profilu a očekávaný výsledek</h3><ul><li><b>Enable adaptive pressure advance (Zapnout adaptivní PA):</b> hlavní přepínač.</li><li><b>Enable adaptive pressure advance for overhangs (Zapnout adaptivní PA pro převisy):</b> experimentální volba. Nech ji vypnutou, dokud základní adaptive profil není správně ověřený; nepřesný model může dělat rozdíly v odstínu/jednotnosti povrchu před a za převisem.</li><li><b>Pressure advance for bridges (PA pro mosty):</b> nižší hodnota může omezit podextrusi po tisku mostu; orientační začátek z wiki je asi polovina běžného PA. Nula funkci vypne.</li><li>Staré samostatné pole <b>Pressure advance</b> zůstává povinné. Vlož přibližnou střední („dost dobrou“) hodnotu jako nouzovou zálohu například při výměně nástroje, wipe/purge toweru nebo pokud model nemá vhodný bod.</li></ul><p>Dobře nastavený model má rohy bez výdutí (zůstane jen přirozené zaoblení dané pohybem tiskárny), čistý šev a plnou výplň bez děr a separace od obvodových stěn. Pokud mají všechny testy téměř stejné PA, adaptivní model nejspíš nepřinese užitek; při tisku jednou rychlostí, výškou vrstvy a akcelerací také není potřeba.</p><figure class="figure"><img src="pic/adaptive-pa-expected.jpg" alt="Ukázka očekávaného vzhledu rohů při správném adaptive PA"><figcaption>OrcaSlicer Wiki: správný výsledek má čisté rohy a šev bez výdutě či podextruze. Funkce nejvíce pomáhá vysokorychlostním sestavám s velkým rozsahem průtoků a zrychlení.</figcaption></figure></section>
 
-      <div class="formula">Nový poměr průtoku = Výchozí poměr průtoku × Modifikátor vybraného vzorku</div>
+<section id="i4" class="section"><h2>IV · Cornering (Průjezd rohů) · jen když řešíš rychlost a rohy</h2><p>Cornering popisuje, jak tiskárna zvládá zatáčky a změny směru. Kalibrace hledá nejvyšší cornering/jerk limit, při kterém ještě nedochází ke zhoršení rohů a kvality. Jestli rohy vypadají dobře a rychlost ti stačí, můžeš test přeskočit. Není to nastavení filamentu.</p><p>Slicer se pokusí detekovat firmware a přizpůsobit test: Klipper používá Square Corner Velocity (SCV); Marlin 2 použije Junction Deviation (JD), pokud je Maximum Junction Deviation větší než 0, jinak Classic Jerk; legacy Marlin používá Classic Jerk; RepRap může použít Maximum instantaneous speed changes. Zkontroluj, co firmware skutečně podporuje.</p><figure class="figure"><img src="pic/cornering-test-menu.png" alt="Nastavení Cornering testu"><figcaption>Začni širokým rozsahem jen v případě, že odpovídá schopnostem zařízení. Test je užitečný, když skutečně hledáš hranici kvality rohu.</figcaption></figure><ol class="steps"><li>Použij neprůhledný, lesklý filament pro lepší viditelnost ringing. Nastav rychlost a zrychlení, které chceš ověřit a které zařízení dovoluje. Wiki uvádí jako příklad 2000 mm/s² a 100 mm/s, ne však univerzální nastavení Kobra X.</li><li>V prvním testu zvol široký Start/End rozsah. Pokud se kvalita vůbec nezhorší, horní limit nebyl dosažen a můžeš End opatrně zvýšit. Pokud rohy ztrácejí ostrost, změř výšku tohoto místa a v slicerovém náhledu odečti odpovídající cornering/Jerk/JD hodnotu.</li><li>Vytiskni druhou věž s horní hodnotou poblíž místa, kde se kvalita začala horšit, abys hranici zpřesnil. OrcaSlicer doporučuje také Ringing Tower model pro snazší vizualizaci Jerk limitu.</li><li>Ulož hodnoty pouze do printer profilu: Printer settings (Nastavení tiskárny) → Motion ability (Pohybové vlastnosti) → Jerk limitation (Omezení Jerk). Použij X/Y Jerk nebo Junction Deviation podle firmware.</li></ol><details><summary>Příklady zápisu firmware z OrcaSlicer Wiki · nepřebírat bez ověření</summary><p>Wiki uvádí jako příklady pro různé firmware například Klipper SCV 5,0; Marlin 2 s Junction Deviation 0,012 pomocí M205 J 0.012 a uložení M500; nebo Classic Jerk X/Y 10 pomocí M205 X 10 Y 10 a M500. Jsou to ukázkové hodnoty a příkazy pro konkrétní kompatibilní firmware, ne nastavení Kobra X.</p><pre class="formula">Klipper: SET_VELOCITY_LIMIT SQUARE_CORNER_VELOCITY=5.0
+Marlin JD: M205 J 0.012  →  M500
+Marlin Classic Jerk: M205 X 10 Y 10  →  M500</pre><p>Některé změny mají trvalejší uložení ve firmware/configu a mohou vyžadovat restart nebo úpravu a překompilování konfigurace. Pokud nerozumíš konkrétnímu firmware, hodnoty neměň příkazy.</p></details><figure class="figure"><img src="pic/cornering-test-measure.jpg" alt="Zjištění výšky ztráty kvality rohu"><figcaption>Změř patro, v němž roh začne ztrácet ostrost, a potom najdi odpovídající hodnotu v Preview.</figcaption></figure><div class="callout warning"><b>Jednotky nejsou stejné:</b> JD se v příkladech pohybuje v mm (wiki uvádí 0–0,3 mm), Jerk v mm/s (často 1–20 mm/s nebo více) a SCV je vlastní firmware proměnná. Nepiš číslo z jedné metody do druhé. Pokud ukládáš změny přímo ve firmwaru, nejdřív si zjisti jeho postup a po testu vrať zkušební akceleraci/rychlost do běžných hodnot.</div></section>
 
-      <h3>Postup 2 (Pass 2)</h3>
+<section id="i5" class="section"><h2>V · Handy Models a další tisknutelné testy</h2><p>Handy Models jsou pomůcky v pracovním prostoru sliceru, ne všechny jsou filamentové kalibrace. V Anycubic Slicer Next je otevřeš pravým kliknutím na pracovní plochu → Add Handy models (Přidat praktické modely). Model ti nic automaticky nezměří: musíš vědět, co na něm sledovat a kam výsledek zapsat.</p><h3>Vestavěné modely na tvém snímku nabídky</h3><div class="table-wrap"><table><thead><tr><th>Model v nabídce (EN)</th><th>Co na něm ověřuješ</th><th>Co z něj nevyvozovat</th></tr></thead><tbody><tr><td>XYZ Cube (Kostka XYZ)</td><td>Základní rozměry, osy, čitelnost detailů.</td><td>Nepřenastavuj podle jedné kostky steps/mm.</td></tr><tr><td>Orca Tolerance Test (Test vůlí)</td><td>Vůle otvoru a vloženého tvaru; funkční zapadnutí.</td><td>Není to Flow Ratio ani univerzální hodnota pro všechny spoje.</td></tr><tr><td>3DBenchy (Model 3DBenchy)</td><td>Více běžných dovedností najednou: převisy, mosty, otvory, komínek, švy a drobné detaily.</td><td>Protože se na něm míchá mnoho jevů, sám o sobě neřekne, kterou jedinou hodnotu změnit.</td></tr><tr><td>Autodesk FDM Test (Test FDM od Autodesku)</td><td>Různé převisy, mosty, mezery/rozlišení a geometrické prvky podle verze modelu.</td><td>Porovnávej jen stejný soubor a profil; nepovažuj ho za kalibrační věž.</td></tr><tr><td>Voron Cube (Kostka Voron)</td><td>Často používaný rychlejší/technický test povrchů, rohů a geometrie.</td><td>Není to oficiální profil Kobra X ani ověření mechaniky bez správného měřítka.</td></tr><tr><td>Stanford Bunny (Stanfordský králík)</td><td>Obecná kontrola zakřivení, jemných detailů, převisů a povrchu modelu.</td><td>Neizoluje konkrétní chybu; použij ho až po základní kalibraci.</td></tr><tr><td>Orca String Hell (Orca test nitkování)</td><td>Viditelnost stringing (nitkování) a přejezdů v opakovaných sloupcích/obloucích.</td><td>Nitky mohou být i vlhkostí či teplotou, nejen retrakcí.</td></tr></tbody></table></div><h3>Externí modely, které sis poznamenal</h3><div class="grid2"><article class="card"><h4>Calibration cube (Kalibrační kostka)</h4><p>Model z MakerOnline s rozměrovou kontrolou. Před tiskem otevři popis a ověř uvedenou velikost, jednotky a zda je kostka čistě 20 mm. Změř X/Y/Z a spočítej rozdíl stejně jako u #6. Je to druhý model pro porovnání, ne automatické měřítko steps.</p><a href="https://www.makeronline.com/en/model/Calibration%20cube/12086.html?trackModuleType=6a">Otevřít Calibration cube na MakerOnline</a></article><article class="card"><h4>Ultimate 3D Printer Calibration and Test Block</h4><p>Víceúčelový testovací blok může obsahovat několik geometrií (například převisy, mosty nebo rozlišení) v jednom tisku. Před změnou nastavení si označ, která konkrétní část selhává; pak pro izolaci problému spusť samostatnou teplotu, flow, PA či test průtoku. Blok ti pomůže ukázat symptom, ne vždy jeho jedinou příčinu.</p><a href="https://makerworld.com/cs/models/1451728-ultimate-3d-printer-calibration-and-test-block#profileId-2201347">Otevřít model na MakerWorld</a></article><article class="card"><h4>Support Z Distance Test (Test Z vzdálenosti podpor)</h4><p>Pomáhá nastavit rozestup mezi podporou a modelem v ose Z. Když je vzdálenost příliš malá, podpora drží příliš pevně a po odtržení poškodí povrch. Když je moc velká, spodní plocha nad podporou klesá a je hrubá. Testuj stejným materiálem i vrstvou jako běžný díl a měň Z distance po malých krocích v Process/Support settings (Proces/Nastavení podpor), ne v Flow Ratio.</p><a href="https://makerworld.com/cs/models/1916452-support-z-distance-test#profileId-2055876">Otevřít Support Z Distance Test na MakerWorld</a></article><article class="card"><h4>Ready-to-print Temperature &amp; Bridging Tower ABS</h4><p>Předpřipravená věž kombinuje teplotní patra s mosty pro ABS v uvedeném rozsahu 230–270 °C. Než ji pošleš do tisku, ověř, že daný ABS výrobce skutečně dovoluje tento rozsah, že máš vhodnou podložku/prostředí a že Kobra X zvládá materiál bezpečně tisknout. Hodnotu vyber podle nejlepších současně vypadajících teplotních částí a mostů, ne jen podle nejhezčího jednorázového můstku.</p><a href="https://www.makeronline.com/en/model/Ready-to-print%20Temperature%20%26%20Bridging%20Tower%20ABS%20(230-270C)/14200.html?trackModuleType=6">Otevřít ABS Temperature &amp; Bridging Tower na MakerOnline</a></article></div><div class="callout"><b>U modelových stránek:</b> ověř licenční podmínky, rozměr, trysku a tiskový profil. Cizí tiskový profil může používat jiné zrychlení, chlazení, vrstvu nebo materiál. Bezpečnější je stáhnout samotný model a slicovat s vlastním ověřeným profilem.</div></section>
 
-      <p>Jemný dokončovací test navazující na Postup 1. Generuje 10 bloků s užším rozsahem modifikátorů. Výsledná hodnota se přepočítá stejným multiplikativním vzorcem jako u Postupu 1, čímž se dosáhne maximální hladkosti vrchních vrstev.</p>
+<section id="i6" class="section"><h2>VI · Když se něco nedaří: hledání příčiny</h2><p>Jedna viditelná vada může mít několik příčin. Nedělej náhodně tři změny najednou. Vyber malý test, který příčinu rozliší, a zapiš, co se změnilo.</p><div class="table-wrap"><table><thead><tr><th>Příznak</th><th>Začni tímto ověřením</th><th>Teprve potom zvaž</th></tr></thead><tbody><tr><td>Mezery v horní ploše, slabé vrstvy</td><td>Zkontroluj, že je tryska čistá, profil vybraný správně a filament suchý. Podívej se na vrstvu/první vrstvu.</td><td>#2 Flow Ratio; pokud se to děje jen při vysoké rychlosti, #5 Max flow.</td></tr><tr><td>Hrboly/hřebeny na top surface (horní ploše)</td><td>Porovnej vzorky Flow YOLO; ověř, že povrch není jen seam (šev) nebo nerovná podložka.</td><td>Sniž modifier o malý krok, ulož a přetiskni. Neopravuj to bez ověření teplotou.</td></tr><tr><td>Roh má výduť nebo za ním zeje mezera</td><td>Teplota a Flow Ratio už musí být rozumné; zkontroluj rychlost a první vrstvu.</td><td>#3 Pressure Advance; PA Line, Tower nebo Pattern podle toho, který výsledek jde čistě číst.</td></tr><tr><td>Nitky a pavučiny</td><td>Vysuš filament; očisti trysku; ověř teplotu v rámci výrobce. Zkus několik přejezdů na čistém kusu.</td><td>#4 Retraction test. Zvyšuj délku po malých krocích, ne bez limitu.</td></tr><tr><td>Silné nitky i na vršku věže</td><td>Suchost filamentu a správně usazená/netěsná tryska.</td><td>Teprve poté zvaž další retrakci; extrémní zatažení může přinést další problémy.</td></tr><tr><td>Povrch se zhorší ve vysokých vrstvách Max-flow testu</td><td>Odečti výšku poslední čisté vrstvy, zkontroluj teplotu a MVS.</td><td>#5 limit s rezervou 10–20 %, případně znovu otestuj horní oblast.</td></tr><tr><td>Rozměr otvoru se liší od vnějšího obrysu</td><td>Změř oba zvlášť stejným měřidlem a vytiskni tolerance test.</td><td>Hole compensation pro otvor, contour compensation pro obrys – ne současně.</td></tr><tr><td>Pravidelné vlnky po rohu</td><td>Ověř mechanické vůle, řemeny, kladky a rychlosti profilu.</td><td>VFA, Input Shaping či Cornering, pokud je firmware podporuje.</td></tr><tr><td>Filament se nelepí na podložku</td><td>Čistá podložka, správná první vrstva/Z offset, teplota podložky, materiál. Vady přilnavosti matou PA Line.</td><td>Nekalibruj Flow/PA na testu, který nedrží na podložce rovnoměrně.</td></tr></tbody></table></div><h3>Bezpečný návrat po neúspěšném pokusu</h3><ol class="steps"><li>Poznamenej novou hodnotu a zapiš, co se zhoršilo.</li><li>Vrať pouze poslední změněné nastavení na dřívější hodnotu.</li><li>Ulož profil a znovu slicuj stejný kontrolní model.</li><li>Pokud se kvalita vrátí, víš, že příčina souvisela s poslední úpravou. Pokud ne, hledej ve filamentu, první vrstvě, trysce nebo mechanice.</li></ol></section>
 
-      <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div><strong>Kdy použít kterou metodu:</strong> Pro běžné používání postačuje samotný <strong>YOLO (doporučeno)</strong> test — je rychlý a dostatečně přesný. Pro kritické aplikace (přesné funkční díly, viditelné povrchy u prodejních modelů) navažte YOLO perfekcionistickou verzí pro finální doladění. Postup 1/2 je starší tradiční metoda, použijte ji pouze pokud preferujete obdélníkové vzorky před spirálou nebo pokud YOLO nedává konzistentní výsledky pro váš konkrétní materiál.</div>
-      </div>
+<section id="i7" class="section"><h2>VII · Oficiální dokumentace, videa a další zdroje</h2><p>Dokumentace OrcaSlicer je primární zdroj pro kalibrační postupy, rozsahy a způsob čtení testů. Rozhraní Anycubic Slicer Next se může podle verze lišit; názvy testů v nabídce proto porovnávej se svým programem.</p><h3>Deset článků OrcaSlicer Wiki použitých v tomto návodu</h3><ol class="sources"><li><a href="https://www.orcaslicer.com/wiki/calibration/temp_calib.html">Temp Calibration · Nozzle Temp Tower</a> — význam teploty, výchozí věž, auto-scale a výběr středu dobrého rozsahu.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/flow_ratio_calib.html">Flow Ratio Calibration</a> — YOLO Recommended, YOLO perfectionist, Archimedean chords, Monotonic Line/Pass 1/2, hodnoticí znaky a vzorce.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/pressure_advance_calib.html">Pressure Advance</a> — PA Line, Tower a Pattern; DDE/Bowden; měření výšky a výpočet.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/retraction_calib.html">Retraction test</a> — rozdílné hodnoty direct drive/Bowden, odečet z komentáře G-code, stringing a kontrola vlhkosti/netěsnosti.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/volumetric_speed_calib.html">Max Volumetric Speed (FlowRate) Calibration</a> — 5/20/0,5, měření výšky, Preview/Flow a bezpečnostní rezerva.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/vfa_calib.html">VFA</a> — VFA/MRR, speed tower, auto-scale/nozzle, max-flow omezení a resonance avoidance.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/tolerance_calib.html">Filament Tolerance Calibration</a> — Handy Models, tolerance model, šestihranný tester a X-Y kompenzace.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/input_shaping_calib.html">Input Shaping</a> — Ringing/Fast tower, frekvenční rozsah, damping test, X/Y měření a uložení dle firmwaru.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/adaptive_pressure_advance_calib.html">Adaptive Pressure Advance</a> — kompatibilita, tabulka dat, příprava PA testů a interpretace výsledku.</li><li><a href="https://www.orcaslicer.com/wiki/calibration/cornering_calib.html">Cornering</a> — firmware-specific cornering, typy hodnot, dvoufázová věž a uložení do profilu tiskárny.</li></ol>
+<h3>Videa z tvých podkladů</h3><div class="grid2"><article class="card"><h4>Česky</h4><p>Odkaz z podkladů s názvem <em>Filament calibrations in #anycubic Slicer Next #3d #3dprinting</em>.</p><a href="https://www.youtube.com/watch?v=0o0-d8qw1Ek">Otevřít video na YouTube</a></article><article class="card"><h4>English</h4><ul><li><a href="https://www.youtube.com/watch?v=lyXyvcES4b8">Exactly How I Calibrate Filament For 3D Printing</a></li><li><a href="https://www.youtube.com/watch?v=gVU5If1VsAM">Filament Calibration Masterclass – 95% do it wrong!</a></li><li><a href="https://www.youtube.com/watch?v=g8kNuXuziCc">OrcaSlicer Calibration – Getting the most out of EVERY filament!</a></li></ul></article></div><div class="endlinks"><b>Další pomoc pro začátečníka</b><ul><li><a href="https://www.sovol3d.com/blogs/news/3d-printer-calibration-step-by-step-beginners-guide?srsltid=AfmBOorYOv05fejd8dkbhGfIy6_LI7M7JmfuxvTIvsEYEJYyzGEYD2kV">Sovol: 3D Printer Calibration Step by Step for Beginners</a> — obecný postup a základní přehled.</li><li><a href="https://www.youtube.com/results?search_query=kalibrace+filamentu+3D+tisk+%C4%8Desky">Vyhledat česká videa: kalibrace filamentu 3D tisk</a>.</li><li><a href="https://www.youtube.com/results?search_query=OrcaSlicer+filament+calibration+flow+PA+retraction">Vyhledat anglická videa: OrcaSlicer filament calibration</a>.</li><li><a href="https://www.makeronline.com/en/model/Calibration%20cube/12086.html?trackModuleType=6a">Calibration cube · MakerOnline</a> · <a href="https://makerworld.com/cs/models/1451728-ultimate-3d-printer-calibration-and-test-block#profileId-2201347">Ultimate calibration block · MakerWorld</a> · <a href="https://makerworld.com/cs/models/1916452-support-z-distance-test#profileId-2055876">Support Z Distance Test · MakerWorld</a> · <a href="https://www.makeronline.com/en/model/Ready-to-print%20Temperature%20%26%20Bridging%20Tower%20ABS%20(230-270C)/14200.html?trackModuleType=6">ABS temperature &amp; bridging tower · MakerOnline</a>.</li></ul></div><div class="callout good"><b>Nejdůležitější věta na konec:</b> změň jednu hodnotu, ulož profil, znovu slicuj běžný model a porovnej stejný problém. To je spolehlivější než přepisovat mnoho hodnot podle jednoho cizího tisku.</div></section>
 
-      <a href="https://www.youtube.com/results?search_query=YOLO+flow+rate+calibration+OrcaSlicer+Archimedean+spiral&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: YOLO flow rate calibration OrcaSlicer Archimedean spiral</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 5 — PŘEDSTIH TLAKU
-    ════════════════════════════════════════════ -->
-    <div class="section" id="kalibrace-predstihu-tlaku">
-      <div class="section-header">
-        <h2>5 — Kompenzace tlaku (Předstih tlaku / Pressure Advance)</h2>
-      </div>
-
-      <p>Předstih tlaku (PA) predikuje nárůst tlaku v trysce při zrychlení a pokles tlaku při zpomalení. Správné nastavení odstraňuje vyboulené rohy na koncích tiskových drah a zajišťuje ostrost stěn. V menu sliceru jsou k dispozici tři kalibrační metody přizpůsobené pro Direct Drive tiskárny.</p>
-
-      <h3>Metoda čar (PA Line)</h3>
-
-      <p>Tiskárna vytiskne sérii čar s různými hodnotami PA. Vybírá se čára s nejkonzistentnější tloušťkou v celé délce, zejména v přechodových zónách zrychlení a zpomalení.</p>
-
-      <div class="tower-diagram">
-        <div class="tower-seg"><div class="seg-bar">PA = 0,00 — Vyboulené konce</div></div>
-        <div class="tower-seg"><div class="seg-bar">PA = 0,02 — Mírné zlepšení</div></div>
-        <div class="tower-seg optimal"><div class="seg-bar">PA = 0,05 — Ideální stav (konzistentní šířka)</div></div>
-        <div class="tower-seg"><div class="seg-bar">PA = 0,08 — Přerušovaná dráha / podextruze</div></div>
-      </div>
-
-      <h3>Metoda vzorů (Pattern Method)</h3>
-
-      <p>Vytiskne geometrický obrazec, kde se hodnotí ostrost rohů a plynulost napojení linií výplně na obvodové stěny.</p>
-
-      <h3>Metoda věže (Tower Method)</h3>
-
-      <p>Generuje dutou věž, která se tiskne do výšky s plynule se zvyšující hodnotou PA. Pro Kobru X se hodnota zvyšuje o pevný krok na každý milimetr výšky. Po vytištění se změří výška h v milimetrech od základny k nejostřejšímu rohu bez deformací.</p>
-
-      <div class="formula">Finální hodnota PA = (Výška h / Celková výška věže) × Maximální testovaná hodnota PA</div>
-
-      <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div>Výsledná hodnota PA se zapíše do pole <strong>Předstih tlaku</strong> v záložce Filament (viz <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c</a>) a aktivuje se zaškrtnutím pole <strong>Povolit předstih tlaku</strong>. Typická hodnota pro Direct Drive tiskárnu jako Kobra X bývá v rozmezí 0,02–0,06 — pokud máte v profilu hodnotu výrazně mimo tento rozsah, doporučujeme ji tímto testem ověřit.</div>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=pressure+advance+tower+calibration+direct+drive&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Pressure advance tower calibration direct drive</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 6 — TEST RETRAKCE
-    ════════════════════════════════════════════ -->
-    <div class="section" id="kalibrace-retrakce">
-      <div class="section-header">
-        <h2>6 — Test retrakce (Retraction Test)</h2>
-      </div>
-
-      <p>Retrakční test generuje vertikální sloupkový model s plynule se měnící délkou retrakce. Pro Kobru X s Direct Drive extruderem se doporučuje nastavit rozsah délky retrakce od 0,0 do 2,0 mm s krokem 0,2 nebo 0,4 mm a rychlostí retrakce kolem 30 mm/s.</p>
-
-      <div class="tower-diagram">
-        <div class="tower-seg"><div class="seg-bar">2,0 mm — Možná podextruze / ucpávání</div></div>
-        <div class="tower-seg"><div class="seg-bar">1,5 mm</div></div>
-        <div class="tower-seg optimal"><div class="seg-bar">0,8 mm — Optimální bod (čisté přechody bez nití)</div></div>
-        <div class="tower-seg"><div class="seg-bar">0,4 mm — Mírný stringing</div></div>
-        <div class="tower-seg"><div class="seg-bar">0,0 mm — Extrémní stringing / vlasové nitě</div></div>
-      </div>
-
-      <p>Po vytištění vizuálně identifikujte nejnižší bod věže, ve kterém zcela mizí jemné vlasové nitě (stringing). Výšku tohoto bodu změřte a porovnejte s náhledem ve sliceru pro zjištění přesné hodnoty délky retrakce.</p>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div>Naměřenou hodnotu zapište do karty <strong>Přepsání nastavení → Retrakce → Vzdálenost</strong> ve filament profilu (viz <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Sekce 4</a>). Pro PLA se optimální hodnota na Kobře X obvykle pohybuje v rozmezí 0,6–1,2 mm.</div>
-      </div>
-
-      <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
-        <div><strong>Pokud stringing přetrvává i při vyšších hodnotách retrakce, problém není v nastavení.</strong> Vlhký filament nelze retrakcí úspěšně kompenzovat — pokud zvyšování retrakce nepomáhá, je nutné filament vysušit (viz <a href="11_3D_udrzba.html" style="color:#fff;">11 — Údržba</a>) než pokračovat v ladění retrakce.</div>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=retraction+test+tower+stringing+direct+drive&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Retraction test tower stringing direct drive</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 7 — TOLERANCE TEST
-    ════════════════════════════════════════════ -->
-    <div class="section" id="tolerance-test">
-      <div class="section-header">
-        <h2>7 — Tolerance Test</h2>
-      </div>
-
-      <p>Tento test ověřuje mechanické tolerance a lícování vytištěných součástí. Generuje model obsahující šestici kruhových nebo šestiúhelníkových kolíků s různou definovanou vůlí (např. od 0,1 do 0,6 mm) vůči protikusu.</p>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Vyhodnocení</div>
-        </div>
-        <p>Po vytištění mechanicky zkuste, které kolíky lze volně vyjmout nebo jimi otočit. Pokud lze uvolnit pouze kolíky s vůlí 0,3 mm a vyšší, tiskárna vykazuje mechanické odchylky nebo mírnou přeextruzi.</p>
-      </div>
-
-      <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
-        <div><strong>Co dělat při špatném výsledku:</strong> Vyžaduje to korekci parametrů smrštění (Shrinkage) v kartě Filament (viz <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Sekce 2</a>) nebo doladění rozměrové kompenzace (XY Kompenzace otvoru) v procesním profilu (viz <a href="05a_3D_slicer_tisk.html" style="color:#fff;">05a — Sekce 3</a>).</div>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=3D+print+tolerance+test+calibration+pins&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print tolerance test calibration pins</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 8 — MAXIMÁLNÍ OBJEMOVÝ PRŮTOK
-    ════════════════════════════════════════════ -->
-    <div class="section" id="max-objemovy-prutok">
-      <div class="section-header">
-        <h2>8 — Maximální objemový průtok (Více... → Max. průtok)</h2>
-      </div>
-
-      <p>Tento pokročilý test určuje maximální rychlost tavení polymeru, kterou je hotend schopen kontinuálně poskytovat bez poklesu teploty taveniny a bez prokluzu podávacího mechanismu extruderu. Test generuje spirálovitý nebo lineární model s postupně se zvyšující rychlostí tisku, což lineárně zvyšuje objemový průtok materiálu tryskou.</p>
-
-      <div class="tower-diagram">
-        <div class="tower-seg"><div class="seg-bar">Vyšší výška → ztráta lesku, drsný povrch, vynechávání kroků motoru (limit roztavení)</div></div>
-        <div class="tower-seg optimal"><div class="seg-bar">Výška h_fail → dokonale hladký lesklý povrch (bezpečné průtokové pásmo)</div></div>
-      </div>
-
-      <p>Sledujte výšku modelu h_fail, ve které začíná povrch výtisku vykazovat drsnost, ztrátu lesku, ztenčení stěny nebo kdy se ozve přeskakování krokového motoru extruderu.</p>
-
-      <div class="formula">Bezpečný limit objemové rychlosti = Objemová rychlost při h_fail × Bezpečnostní koeficient (typicky 0,9)</div>
-
-      <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div>Výsledná hodnota se zapíše do pole <strong>Maximální objemová rychlost</strong> na kartě Filament (viz <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Sekce 2</a>). Pro PLA na vysokorychlostních tiskárnách jako Kobra X je běžný limit v rozmezí 15–20 mm³/s. Pro méně viskózní materiály (např. PETG) je nutné tuto hodnotu snížit na cca 10–14 mm³/s, aby se předešlo strukturálnímu oslabení výtisků.</div>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=max+volumetric+flow+rate+test+3D+printing&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Max volumetric flow rate test 3D printing</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 9 — VFA
-    ════════════════════════════════════════════ -->
-    <div class="section" id="vfa-test">
-      <div class="section-header">
-        <h2>9 — VFA (Více... → VFA / Vertical Fine Artifacts)</h2>
-      </div>
-
-      <p>Test VFA analyzuje jemné vertikální vlny a rezonanční artefakty na stěnách výtisku, způsobené rezonancemi krokových motorů a ozubených řemenů při specifických rychlostech pohybu. Test vytiskne stěnu s proměnnou rychlostí tisku, obvykle v širokém rozsahu s pevným krokem.</p>
-
-      <div class="param">
-        <div class="param-head">
-          <div class="param-title">Vyhodnocení</div>
-        </div>
-        <p>Při vizuálním hodnocení pod šikmým světlem hledejte rychlostní pásmo, ve kterém jsou vertikální vlnky na povrchu nejméně patrné.</p>
-      </div>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div>Pokud zjistíte, že při určité rychlosti (např. kolem 60 mm/s) vykazuje povrch stěny absolutní hladkost, nastavte rychlost tisku vnějších stěn (<strong>Vnější stěna</strong> v <a href="05b_3D_slicer_rychlost.html" style="color:#fff;">05b — Sekce 1</a>) právě na tuto hodnotu — maximalizuje to estetickou kvalitu viditelných povrchů. Rychlosti pro vnitřní stěny a výplně, kde estetika nehraje roli, lze nastavit na vyšší hodnoty až k hranici limitu objemového průtoku (Sekce 8 výše).</div>
-      </div>
-
-      <a href="https://www.youtube.com/results?search_query=VFA+vertical+fine+artifacts+ringing+test+3D+print&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: VFA vertical fine artifacts ringing test 3D print</a>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SEKCE 10 — DOPORUČENÍ A ÚDRŽBA
-    ════════════════════════════════════════════ -->
-    <div class="section" id="doporuceni-systemove">
-      <div class="section-header">
-        <h2>10 — Doporučení pro systémové nastavení a odstraňování problémů</h2>
-      </div>
-
-      <p>Pro zajištění konzistentních výsledků a dlouhodobé stability tiskového procesu doporučujeme implementovat následující postupy.</p>
-
-      <h3>Závislost kalibrace na barvě a šarži</h3>
-
-      <p>Fyzikální vlastnosti se neliší pouze mezi různými typy polymerů, ale i mezi jednotlivými barevnými odstíny stejného výrobce. <strong>Tmavé pigmenty</strong> (např. černá nebo uhlíková šeď) často obsahují abrazivní plniva zvyšující viskozitu, zatímco <strong>bílé pigmenty</strong> (oxid titaničitý) vyžadují vyšší teplotu pro optimální tokovost.</p>
-
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div>Kalibraci teploty a průtoku doporučujeme provést <strong>pro každou novou cívku</strong> — i v rámci stejné značky a typu materiálu, pokud jde o jinou barvu nebo šarži.</div>
-      </div>
-
-      <h3>Ukončení kalibračního režimu</h3>
-
-      <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
-        <div><strong>Po úspěšném dokončení jakéhokoliv testu a zapsání zkalibrovaných hodnot do profilu je nezbytné vytvořit nový projekt</strong> (<em>Soubor → Nový Projekt</em>, viz <a href="03_3D_slicer_zaklad.html" style="color:#fff;">03 — Sekce 5</a>). Pokud byste pokračovali v přípravě běžného tisku v původním kalibračním projektu, slicer by nadále aplikoval skryté modifikátory G-kódu určené pro testy, což by vedlo ke znehodnocení výsledného výtisku.</div>
-      </div>
-
-      <h3>Mechanická údržba tiskového systému</h3>
-
-      <p>Před spuštěním citlivých testů (zejména Předstihu tlaku a Tolerance Testu) je nutné zajistit dokonalý mechanický stav tiskárny:</p>
-
-      <table>
-        <thead><tr><th>Kontrola</th><th>Proč na tom záleží</th></tr></thead>
-        <tbody>
-          <tr><td>Napnutí ozubených řemenů os X a Y</td><td>Příliš volné řemeny způsobují zdvojené hrany a nepřesné tolerance</td></tr>
-          <tr><td>Opotřebení trysky</td><td>Opotřebená tryska zvětšuje efektivní průměr a deformuje geometrii stěn</td></tr>
-          <tr><td>Čistota podávacího mechanismu extruderu</td><td>Prach z filamentu v podávacím mechanismu způsobuje nekonzistentní extruzi a zkresluje výsledky kalibrace</td></tr>
-        </tbody>
-      </table>
-
-      <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div>Detailní postup mechanické údržby (napínání řemenů, výměna trysky, čištění extruderu) najdete v kapitole <a href="11_3D_udrzba.html" style="color:#fff;">11 — Údržba & spotřební materiál</a>.</div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         PAGE NAV
-    ════════════════════════════════════════════ -->
-    <div class="pn">
-      <a href="08a_3D_filamenty.html">← 08a · Vše o Filamentech</a>
-      <a href="08c_3D_Filament_next.html" class="nx">08c · Filamenty rozšíření →</a>
-    </div>
-
-  </div><!-- /wrapper -->
-</main>
-
-<script>
-const searchInput = document.getElementById('sb-search-input');
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    const q = e.target.value.trim();
-    if (q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
-  }
-});
+<footer class="footer"><a class="backtop" href="#top">Zpět na začátek ↑</a><strong>Průvodce kalibrací · Anycubic Slicer Next · Anycubic Kobra X</strong><br>Číslované kapitoly odpovídají testům v tištěném Checklistu. Římské kapitoly jsou doplňkové/pokročilé. Obrázky v <span class="mono">pic/</span> pocházejí z OrcaSlicer Wiki; odkazy na zdroje jsou uvedené u obrázků a v seznamu literatury.<br><span class="small">Před použitím zkontroluj, že nastavení odpovídá přesně tvé verzi sliceru, tiskárně, trysce a firmwaru.</span></footer>
+</main></div><script>
+const searchInput=document.getElementById('sb-search-input');
+if(searchInput){searchInput.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=e.target.value.trim();if(q)window.location.href='00_3D_index.html?q='+encodeURIComponent(q);}});}
+const sbEl=document.querySelector('.sidebar'),actEl=document.querySelector('.nav-sub-item.active');
+if(sbEl&&actEl){sbEl.scrollTop=Math.max(0,actEl.offsetTop-140);}
 </script>
-</body>
-</html>
+</body></html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checklist kalibrace filamentu — Anycubic Kobra X</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#e7e7e7;color:#111;font-family:Arial,"Segoe UI",sans-serif}body{font-size:9pt;line-height:1.2}
+.page{position:relative;width:210mm;height:297mm;margin:8mm auto;background:#fff;padding:8mm 9mm 14mm;overflow:hidden;box-shadow:0 1mm 4mm #888;page-break-after:always;break-after:page}.page:last-child{page-break-after:auto;break-after:auto}
+.header{display:flex;align-items:flex-end;justify-content:space-between;gap:8mm;border-bottom:3px solid #111;padding-bottom:2mm;margin-bottom:2mm}.header h1{font-size:18pt;line-height:1.05;margin:0 0 1mm}.subtitle{font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase}.badge{background:#111;color:#fff;padding:1.4mm 2.4mm;font:bold 9pt "Courier New",monospace;letter-spacing:.06em;text-align:center}.meta{font:7.5pt "Courier New",monospace;text-align:right;margin-top:1.4mm;white-space:nowrap}
+.intro{border:1px solid #111;padding:1.8mm 2.2mm;margin-bottom:2mm;font-size:7.8pt}.intro strong{font-weight:800}.columns{display:grid;grid-template-columns:1fr 1fr;gap:2.4mm;align-items:start}.stack{display:flex;flex-direction:column;gap:1.5mm;min-width:0}
+
+.card{border:1px solid #111;break-inside:avoid;page-break-inside:avoid;min-width:0}.card-head{display:flex;gap:1.8mm;align-items:center;padding:1.1mm 1.6mm;background:#111;color:#fff}.number{min-width:7mm;height:5.5mm;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#111;font-weight:800;font-size:9pt}.card-head h2{font-size:8.5pt;line-height:1.08;margin:0}.body{padding:1.25mm 1.6mm 1.1mm;font-size:7.6pt;line-height:1.15}.route{font-size:6.8pt;border-bottom:1px solid #888;padding-bottom:.8mm;margin-bottom:.8mm}.explain{margin:0 0 .9mm}.cols{display:grid;grid-template-columns:44% 56%;gap:1.5mm}.label{font-size:7.2pt;font-weight:700}.write{display:inline-block;min-width:14mm;height:4mm;border-bottom:1px dotted #222;vertical-align:bottom}.write.wide{min-width:25mm}.write.xwide{min-width:38mm}.write.small{min-width:9mm}.row{margin:.65mm 0;display:flex;gap:.8mm;align-items:flex-end;flex-wrap:wrap}.formula{border:1px solid #777;background:#f5f5f5;padding:1mm 1.3mm;margin:.8mm 0;font:7pt/1.15 "Courier New",monospace}.work{border:1px solid #888;min-height:9mm;padding:1mm 1.3mm;margin:.7mm 0;font-size:7pt}.work b{display:block;margin-bottom:.5mm}.p1work{min-height:15mm}.result{border:1.6px solid #111;padding:.9mm 1.2mm;margin-top:.8mm;font-weight:800}.result b{background:#111;color:#fff;padding:.3mm .8mm;margin-right:.8mm}.result-detail{display:block;margin-top:1mm;min-height:6mm}.result-space{display:inline-block;min-width:28mm;height:5mm;border-bottom:1px solid #111;vertical-align:bottom}.result-space.wide{min-width:42mm}.note{margin-top:.8mm;border-top:1px solid #888;padding-top:.6mm;font-size:7pt}.note-lines{height:4.5mm;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3mm,#888 3.1mm,#888 3.2mm);margin-top:.5mm}.hint{font-size:7.1pt;margin:0 0 .6mm}.gate{position:absolute;left:9mm;bottom:13mm;width:94mm;border:1.5px solid #111;padding:1.3mm 1.6mm;font-size:7.2pt;line-height:1.15}.gate h3{font-size:8pt;margin:0 0 .7mm}.gate p{margin:0}.extra-notes{margin-top:1.5mm;border:1px solid #111;padding:1.2mm 1.5mm;font-size:7pt}.extra-notes .note-lines{height:10mm}.section{margin:1.6mm 0 .3mm;padding:.7mm 0 .4mm;border-bottom:2px solid #111;font-size:8pt;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.full{width:100%}.footer{position:absolute;left:9mm;right:9mm;bottom:5mm;border-top:1px solid #111;padding-top:1mm;display:flex;justify-content:space-between;font:7pt "Courier New",monospace}.final-table{width:100%;border-collapse:collapse;font-size:7.2pt;margin-top:.8mm}.final-table th,.final-table td{border:1px solid #111;padding:.7mm 1mm;text-align:left}.final-table th{font-size:7pt}.final-table td{height:5mm}.muted{font-size:7pt}
+@page{size:A4 portrait;margin:0}
+@media print{html,body{width:210mm;background:#fff}.page{margin:0;box-shadow:none}.card-head,.number,.result b,.badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body>
+<section class="page">
+ <header class="header"><div><h1>Kalibrace filamentu</h1><div class="subtitle">Pracovní checklist · strana 1 · základní nastavení</div></div><div><div class="badge">ANYCUBIC KOBRA X</div><div class="meta">Filament: ____________________ &nbsp; Datum: __________</div></div></header>
+ <div class="intro"><strong>Než začneš:</strong> vyber v Anycubic Slicer Next tiskárnu Kobra X i správný filament. Kalibruj suchý filament se stejnou tryskou, podložkou a běžným profilem, které budeš používat. U každého testu nejdřív vytiskni projekt vytvořený slicerem; hodnoty a výsledek si opiš sem. <strong>EN názvy jsou názvy v anglickém rozhraní; český význam je v závorce.</strong></div>
+ <div class="columns">
+  <div class="stack">
+<article class="card">
+   <div class="card-head"><span class="number">1</span><h2>Temperature (Teplota)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Temperature (Teplota)</div><p class="explain">Teplota mění tekutost plastu i pevnost spojení vrstev. Začni rozsahem na cívce; například u PLA označeného 190–220 °C zadej Start 190, End 220, Step 5 °C. Krok 5 °C porovná smysluplně odlišná patra, zatímco krok 1 °C by test zbytečně prodloužil. Tento příklad nepřebírej pro jiný materiál. Na věži hledej pevné vrstvy, hladké stěny a co nejméně nití.</p>
+    <div class="row"><span class="label">VSTUP · Start / End / Step:</span><span class="write small"></span> / <span class="write small"></span> / <span class="write small"></span> °C</div>
+    <div class="row"><span class="label">Nejlepší patro / teplota z Preview (Náhled):</span><span class="write"></span> / <span class="write"></span> °C</div>
+    <div class="result"><b>VÝSLEDEK</b><span class="result-detail">Běžné vrstvy: <span class="result-space"></span> °C</span><span class="result-detail">1. vrstva: <span class="result-space"></span> °C</span></div>
+    <div class="note"><b>Poznámka k testu 1</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+<article class="card">
+   <div class="card-head"><span class="number">2a</span><h2>Flow rate (Průtok) · YOLO (Recommended) (Doporučeno)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Flow rate (Průtok) → YOLO (Recommended) (Doporučeno)</div><p class="explain">YOLO mění <b>Flow Ratio (Poměr průtoku)</b> o malé číslo na každém dílku. Ponech výchozí rozsah. Vyber horní povrch, který je souvislý a hladký: bez mezer i bez vystouplých hřebenů. Zapiš znaménko i hodnotu vybraného dílku.</p>
+    <div class="formula"><b>Vzorec:</b> nový Flow Ratio = uložený Flow Ratio + změna dílku<br><b>Příklad:</b> 0,98 + 0,01 = 0,99</div><div class="row"><span class="label">VSTUP · uložený Flow Ratio:</span><span class="write"></span> &nbsp; <span class="label">Dílek (modifier):</span><span class="write"></span></div><div class="work p1work"><b>Můj výpočet:</b> __________ + __________ = __________________</div><div class="result"><b>VÝSLEDEK</b> nový Flow Ratio k uložení do profilu: __________</div>
+    <div class="note"><b>Poznámka k testu 2a</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+<article class="card">
+   <div class="card-head"><span class="number">2b</span><h2>Flow rate (Průtok) · YOLO (perfectionist version) (jemné doladění)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Flow rate (Průtok) → YOLO (perfectionist version) (jemnější krok)</div><p class="explain">Použij až po 2a, pokud chceš rozhodnout mezi podobnými výsledky. Výchozí jemná řada bývá −0,04 až +0,035 po 0,005. Rozdíly jsou menší, proto povrch porovnávej pečlivě. Když výsledek 2a vypadá dobře, tento test přeskoč.</p>
+    <div class="formula"><b>Vzorec:</b> nový Flow Ratio = hodnota po 2a + změna dílku<br><b>Příklad:</b> 0,99 + 0,005 = 0,995</div><div class="row"><span class="label">VSTUP · hodnota po 2a:</span><span class="write"></span> &nbsp; <span class="label">Dílek:</span><span class="write"></span></div><div class="work p1work"><b>Můj výpočet:</b> __________ + __________ = __________________</div><div class="result"><b>VÝSLEDEK</b> nový Flow Ratio k uložení do profilu: __________</div>
+    <div class="note"><b>Poznámka k testu 2b</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+  </div>
+  <div class="stack">
+<article class="card">
+   <div class="card-head"><span class="number">3a</span><h2>Pressure advance (Předstih tlaku) · PA Line (Čárový test)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Pressure advance (Předstih tlaku) → Extruder type (Typ extruderu): DDE (přímý náhon) → PA Line (Čárový test)</div><p class="explain">Tiskne se sada čar s různými hodnotami. Hledej čáru stejné šířky po celé délce: bez tlustého začátku či konce a bez přerušení. Tento test závisí na rovné první vrstvě; pokud čáry nejsou rovnoměrně přilepené, nejdřív vyřeš první vrstvu. Pro první pokus ponech rozsah a krok předvyplněné slicerem po zvolení DDE.</p>
+    <div class="row"><span class="label">VSTUP · Start / End / Step z okna testu:</span><span class="write small"></span> / <span class="write small"></span> / <span class="write small"></span></div>
+    <div class="row"><span class="label">Nejrovnoměrnější čára · hodnota PA:</span><span class="write"></span></div>
+    <div class="result"><b>VÝSLEDEK</b><span class="result-detail">Pressure advance (Předstih tlaku) k uložení do profilu:</span><span class="result-detail"><span class="result-space wide"></span></span></div>
+    <div class="note"><b>Poznámka k testu 3a</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+<article class="card">
+   <div class="card-head"><span class="number">4</span><h2>Retraction test (Test retrakce)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Retraction test (Test zatažení filamentu)</div><p class="explain">Kobra X používá přímý náhon (DDE). Začni rozsahem <b>Start 0 / End 2 / Step 0,1 mm</b> doporučeným pro direct drive. Vyber nejkratší zatažení, které ještě odstraní nitky. Vlhký filament nebo příliš vysoká teplota také způsobují nitky.</p>
+    <div class="row"><span class="label">VSTUP · Start / End / Step:</span><span class="write small"></span> / <span class="write small"></span> / <span class="write small"></span> mm</div>
+    <div class="row"><span class="label">Nejčistší patro · výška z Preview (Náhled):</span><span class="write"></span> mm</div>
+    <div class="result"><b>VÝSLEDEK</b> Retraction length (Délka retrakce): ______ mm</div>
+    <div class="note"><b>Poznámka k testu 4</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+<article class="card">
+   <div class="card-head"><span class="number">5</span><h2>Max flowrate (Maximální průtok)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Max flowrate (Maximální průtok). V dialogu nastav Start volumetric speed (Počáteční objemový průtok), End volumetric speed (Koncový objemový průtok) a Step (Krok).</div>
+    <p class="explain">Začni rozsahem doporučeným pro tento test: <b>Start 5 / End 20 / Step 0,5 mm³/s</b>. Krok 0,5 dává dost jemné rozlišení. <b>End 50 nepoužívej:</b> zkoušel by zbytečně vysoký průtok a spotřeboval více filamentu. Jde o objem plastu za sekundu (mm³/s), ne rychlost hlavy (mm/s).</p>
+    <div class="row"><span class="label">VSTUP · Start / End / Step:</span><span class="write small"></span> / <span class="write small"></span> / <span class="write small"></span> mm³/s</div>
+    <p class="explain">Po tisku otevři <b>Preview (Náhled)</b> a najdi první vrstvu, kde se objeví mezery nebo hrubý povrch. Změř výšku poslední čisté vrstvy od základny v mm (lze použít pravítko podle výšky vrstev). Je-li celá věž čistá, zopakuj test s vyšším End; objeví-li se vada hned, sniž End. U jiného materiálu nepřekračuj jeho aktuální limit v profilu.</p><div class="row"><span class="label">Výška poslední čisté vrstvy:</span><span class="write"></span> mm &nbsp; <span class="label">Použij Start a Step z řádku výše.</span></div><div class="formula"><b>Vzorec:</b> průtok na hranici vady = Start + (výška × Step)<br><b>Příklad:</b> 5 + (19 × 0,5) = 14,5 mm³/s<br>Pro profil nech 10 % rezervu: 14,5 × 0,90 = 13,05 mm³/s</div><div class="work p1work"><b>Můj výpočet:</b><br>Start ______ + (výška ______ × Step ______) = __________ mm³/s<br>Limit do profilu: __________ × 0,90 = __________________ mm³/s</div><div class="result"><b>VÝSLEDEK</b><span class="result-detail">Max volumetric speed (Max. objemový průtok):</span><span class="result-detail"><span class="result-space wide"></span> mm³/s</span></div><div class="note"><b>Poznámka k testu 5</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+  </div>
+ </div>
+ <aside class="gate"><h3>Kontrolní tisk · rozhodni, co dál</h3><p>Po testech 1–5 vytiskni běžný díl. Horní plocha → #2; rohy → #3; nitky → nejdřív suchý filament a teplotu, potom Retraction test (#4); vady jen při rychlém tisku → #5. Rozměry a VFA najdeš na straně 2.</p></aside>
+ <footer class="footer"><span>STRANA 1 · ZÁKLADNÍ KALIBRACE · ZAPISUJ HODNOTY DO PROFILU FILAMENTU</span><span>1 / 2</span></footer>
+</section>
+
+<section class="page">
+ <header class="header"><div><h1>Kontrola a doladění</h1><div class="subtitle">Pracovní checklist · strana 2 · doplňkové testy a alternativy</div></div><div><div class="badge">ANYCUBIC KOBRA X</div><div class="meta">Filament: ____________________ &nbsp; Datum: __________</div></div></header>
+ <div class="intro"><strong>Stranu 2 použij podle potřeby.</strong> Testy 3b a 3c jsou jiné způsoby měření Pressure advance — zvol jen jeden, pokud PA Line na straně 1 nedal jasný výsledek. Pass 1/2 je alternativní metoda Flow rate, není nutné ji dělat po YOLO.</div>
+ <div class="columns">
+  <div class="stack">
+<article class="card">
+   <div class="card-head"><span class="number">2c</span><h2>Flow rate (Průtok) · Pass 1 / Pass 2 (Dva průchody)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Flow rate (Průtok) → Pass 1 (Průchod 1), potom Pass 2 (Průchod 2)</div><p class="explain">Každý dílek ukazuje procentní změnu. „Dosavadní hodnota“ znamená číslo Flow Ratio, které je právě uložené ve filamentovém profilu. Po Pass 1 ho ulož; teprve potom spusť Pass 2. Blok/dílek například −5 znamená snížit dosavadní hodnotu o 5 %, ne odečíst 5 celé jednotky.</p>
+    <div class="formula">Nová hodnota = dosavadní hodnota × (100 + číslo dílku v %) ÷ 100<br>Příklad: 0,98 × (100 − 5) ÷ 100 = 0,931</div>
+    <div class="row"><span class="label">Pass 1 · vstup / dílek:</span><span class="write small"></span> / <span class="write small"></span></div><div class="work"><b>Můj výpočet Pass 1:</b> __________ × (100 + ______) ÷ 100 = __________</div>
+    <div class="row"><span class="label">Výsledek Pass 1 (uložit před Pass 2):</span><span class="write"></span></div>
+    <div class="row"><span class="label">Pass 2 · vstup / dílek:</span><span class="write small"></span> / <span class="write small"></span></div><div class="work"><b>Můj výpočet Pass 2:</b> __________ × (100 + ______) ÷ 100 = __________</div>
+    <div class="result"><b>VÝSLEDEK</b> finální Flow Ratio: __________</div><div class="note"><b>Poznámka k testu 2c</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+<article class="card">
+   <div class="card-head"><span class="number">3b</span><h2>Pressure advance (Předstih tlaku) · PA Tower (Věž)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Pressure advance (Předstih tlaku) → DDE (přímý náhon) → PA Tower (Věž)</div><p class="explain">Na věži hledej patro, jehož rohy jsou nejčistší: bez boule na začátku a bez zeslabení či mezery za rohem. Odečti výšku tohoto patra v milimetrech. Metoda tolik nezávisí na dokonalé první vrstvě jako PA Line.</p>
+    <div class="row"><span class="label">VSTUP · start PA / krok PA na mm:</span><span class="write small"></span> / <span class="write small"></span></div><div class="row"><span class="label">Výška nejlepšího patra:</span><span class="write small"></span> mm</div>
+    <div class="formula">PA = start PA + (krok PA/mm × výška)<br>Příklad: 0 + (0,002 × 8) = 0,016</div><div class="work"><b>Můj výpočet:</b> ______ + (______ × ______) = __________________</div>
+    <div class="result"><b>VÝSLEDEK</b> Pressure advance: __________</div><div class="note"><b>Poznámka k testu 3b</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+<article class="card">
+   <div class="card-head"><span class="number">3c</span><h2>Pressure advance (Předstih tlaku) · PA Pattern (Vzorek)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → Pressure advance (Předstih tlaku) → DDE (přímý náhon) → PA Pattern (Vzorek)</div><p class="explain">Na desce je několik čtvercových vzorů s různým PA. Vyber vzorek, kde jsou rohy čisté a čáry souvislé. Pokud se mezi vzorky nedá rozhodnout, vrať se k PA Line nebo Tower; nemusíš tisknout všechny tři metody.</p>
+    <div class="row"><span class="label">VSTUP · rozsah PA / krok:</span><span class="write wide"></span></div><div class="row"><span class="label">Nejlepší vzorek · hodnota PA:</span><span class="write"></span></div>
+    <div class="result"><b>VÝSLEDEK</b> Pressure advance: __________</div><div class="note"><b>Poznámka k testu 3c</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+  <div class="extra-notes"><b>Další poznámky k tomuto profilu / co vyzkouším příště</b><div class="note-lines"></div></div>
+  </div>
+  <div class="stack">
+<article class="card">
+   <div class="card-head"><span class="number">6</span><h2>XYZ Cube (Kostka XYZ) · kontrola rozměrů</h2></div>
+   <div class="body"><div class="route"><b>Cesta v programu:</b> pravým klikem na pracovní plochu → Add Handy models (Přidat praktické modely) → XYZ Cube (Kostka XYZ)</div><p class="explain">Kostka je diagnostický model, ne přímý test filamentu. Změř vychladlou kostku posuvným měřítkem a zapiš X/Y/Z. Odchylka může souviset s modelem, mechanikou, měřením nebo nastavením tisku; <b>neměň podle ní svévolně steps/mm (kroky motoru)</b>. Při větší odchylce nejdřív ověř rozměr modelu a mechaniku.</p>
+    <div class="formula"><b>Vzorec:</b> rozdíl = naměřeno − rozměr modelu<br><b>Příklad:</b> 19,9 − 20,0 = −0,1 mm</div><div class="row"><span class="label">Rozměr modelu X / Y / Z:</span><span class="write small"></span> / <span class="write small"></span> / <span class="write small"></span> mm</div><div class="row"><span class="label">Naměřeno X / Y / Z:</span><span class="write small"></span> / <span class="write small"></span> / <span class="write small"></span> mm</div><div class="work"><b>Moje rozdíly X / Y / Z:</b> ______ − ______ = ______ &nbsp; / &nbsp; ______ − ______ = ______ &nbsp; / &nbsp; ______ − ______ = ______</div>
+    <div class="result"><b>VÝSLEDEK</b> pozorování / další krok: __________________________</div><div class="note"><b>Poznámka k testu 6</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+<article class="card">
+   <div class="card-head"><span class="number">7</span><h2>VFA (Jemné svislé artefakty)</h2></div>
+   <div class="body"><div class="route"><b>Cesta:</b> Calibration (Kalibrace) → VFA</div><p class="explain">VFA znamená jemné opakující se stopy na stěně. Podívej se na vytištěnou stěnu zešikma proti světlu a hledej nejhladší pásmo. Jde hlavně o chování pohybu tiskárny při různých rychlostech; není to další Flow Ratio.</p>
+    <div class="row"><span class="label">VSTUP · Start / End / Step:</span><span class="write small"></span> / <span class="write small"></span> / <span class="write small"></span> mm/s</div><div class="row"><span class="label">Nejhladší pásmo / odpovídající rychlost:</span><span class="write"></span> / <span class="write small"></span> mm/s</div>
+    <div class="result"><b>VÝSLEDEK</b> poznámka k vnějším stěnám: __________________</div><div class="note"><b>Poznámka k testu 7</b><div class="note-lines"></div></div>
+   </div>
+  </article>
+<article class="card">
+   <div class="card-head"><span class="number">8</span><h2>Orca Tolerance Test (Test vůlí) · volitelně</h2></div>
+   <div class="body"><div class="route"><b>Cesta v programu:</b> pravým klikem na pracovní plochu → Add Handy models (Přidat praktické modely) → Orca Tolerance Test (Test vůlí)</div><p class="explain">Užitečný, když mají do sebe zapadat pohyblivé nebo zasouvané díly. Vyzkouší několik mezer a ukáže, jakou vůli potřebuje tato tiskárna, tento filament a toto nastavení. Nejde o kalibraci profilu filamentu; vůli si poznamenej pro návrh podobných spojů.</p><div class="row"><span class="label">VSTUP · rozsah vůlí uvedený na modelu:</span><span class="write"></span> mm</div><div class="row"><span class="label">Nejmenší mezera, která se volně pohybuje:</span><span class="write"></span> mm</div><div class="result"><b>VÝSLEDEK</b> vůle použitelná pro tento spoj: ______ mm</div><div class="note"><b>Poznámka k testu 8</b><div class="note-lines"></div></div></div>
+  </article>
+
+  <div class="section">Přepiš finální hodnoty do profilu filamentu</div>
+  <div class="full"><table class="final-table"><thead><tr><th style="width:31%">Nastavení (EN v aplikaci)</th><th style="width:25%">Výsledná hodnota</th><th>Poznámka / co se změnilo</th></tr></thead><tbody>
+   <tr><td>Temperature (Teplota) · běžné vrstvy</td><td></td><td></td></tr><tr><td>Flow Ratio (Poměr průtoku)</td><td></td><td></td></tr><tr><td>Pressure advance (Předstih tlaku)</td><td></td><td></td></tr><tr><td>Retraction length (Délka retrakce)</td><td></td><td></td></tr><tr><td>Max volumetric speed (Max. objemový průtok)</td><td></td><td></td></tr>
+  </tbody></table></div>
+  </div>
+ </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+ <footer class="footer"><span>STRANA 2 · ALTERNATIVY PA A FLOW · KONTROLA ROZMĚRŮ A VŮLÍ</span><span>2 / 2</span></footer>
+</section>
+</body>
+</html>
