@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git & Verze – Antigravity IDE průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="07">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "s1", "num": "7.1", "name": "Git v Antigravity IDE" },
+    { "id": "s2", "num": "7.2", "name": "Source Control panel — kde je Git" },
+    { "id": "s3", "num": "7.3", "name": "Agent & Git commits — jak to funguje" },
+    { "id": "s4", "num": "7.4", "name": "Konflikty — co když se změní to samé" },
+    { "id": "s5", "num": "7.5", "name": "Vrácení zpět — undo a revert" },
+    { "id": "s6", "num": "7.6", "name": "Strategie pro bezpečné backupy" },
+    { "id": "s7", "num": "7.7", "name": "Pro tvůj receptář — konkrétní postup" }
+  ]
+}
+</script>
+
+<div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
+<div class="wrap" style="max-width:900px">
+
+<header>
+  <div class="h-num">// kapitola 07</div>
+  <h1>Git & <em>Verze</em></h1>
+  <p class="h-desc">Jak Antigravity IDE funguje s Gitem. Commits, verzování, co když se agent a ty měníte stejný soubor. Jak se chránit a vracet zpět.</p>
+  <div class="badges">
+    <span class="badge badge-c">🔄 Commits</span>
+    <span class="badge badge-p">↩️ Undo & Revert</span>
+    <span class="badge badge-c">🔀 Merge Conflicts</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Git v Antigravity IDE</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Source Control panel</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Agent & Git commits</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Konflikty — co když</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Vrácení zpět — undo</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Strategie pro backup</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Pro tvůj receptář</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Git v Antigravity IDE</h2>
+
+  <p>Antigravity IDE má vestavěnou Git integraci — podobně jako VS Code. Je to důležité pro tvou bezpečnost.</p>
+
+  <h3>Co Antigravity IDE dělá s Gitem</h3>
+  <ul>
+    <li>Vidí tvůj Git status — co se změnilo od posledního commitu</li>
+    <li>Umožňuje ti commitovat (nebo agentovi commitovat)</li>
+    <li>Vidí historii commits (git log)</li>
+    <li>Umožňuje checkout — vrátit se na starší verzi</li>
+    <li>Řeší merge konflikty když se někdo změní</li>
+  </ul>
+
+  <h3>Git vs Antigravity IDE</h3>
+  <p>Git existuje nezávisle — na disku. Antigravity IDE jen s ním komunikuje. Můžeš používat Git z terminálu, VS Code, nebo Antigravity IDE — všechno vidíš.</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Bez Gitu se Antigravity IDE také dá</strong>
+      <p>Ale kdyby se agent zbláznil — nemáš jak se vrátit. Git je tvoje pojistka.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Source Control panel — kde je Git</h2>
+
+  <p>Levý sidebar v Antigravity IDE → ikona "větvičky" (Source Control)</p>
+
+  <h3>Co tam vidíš</h3>
+  <ul>
+    <li><strong>CHANGES</strong> — co se změnilo od posledního commitu (soubory s "M", "A", "D")</li>
+    <li><strong>STAGED CHANGES</strong> — co jsi vybral na commit</li>
+    <li><strong>COMMIT MESSAGE</strong> — pole pro zprávu</li>
+    <li><strong>Branches</strong> — jaká větev je aktivní</li>
+    <li><strong>HISTORY</strong> — poslední commity</li>
+  </ul>
+
+  <h3>Jak commitovat</h3>
+  <div class="code-block">
+1. Vidíš změněné soubory<br/>
+2. Klikni na "+" vedle souboru → stages se (přesune do STAGED)<br/>
+3. Napiš zprávu do pole<br/>
+4. Klikni [Commit] tlačítko<br/>
+5. Hotovo — změna je v Gitu
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Agent & Git commits — jak to funguje</h2>
+
+  <h3>Scénář 1: Agent změní soubor</h3>
+  <p><strong>Agent udělá změnu</strong> → změní se soubor na disku → Git to vidí jako CHANGED</p>
+  <p>Ty: vidíš v Source Control panelu že se soubor změní</p>
+  <p>Ty: máš volbu — commitnout (uložit do Gitu) nebo vrátit se <code>git checkout</code></p>
+
+  <h3>Scénář 2: Agent chce commitovat sám</h3>
+  <p>Pokud máš v Rules nastaveno <code>ALLOW: git commit</code>, agent si může commitovat sám.</p>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>To je riziková volba</strong>
+      <p>Pokud agent commituje a později zjistíš že to bylo špatně — musíš znát <code>git revert</code>. Raději ručně commituj.</p>
+    </div>
+  </div>
+
+  <h3>Scénář 3: Oba (ty i agent) měníte stejný soubor</h3>
+  <p>Ty edituješ <code>RecipeCard.tsx</code> → agent také chce editovat <code>RecipeCard.tsx</code></p>
+  <p><strong>Konflikt!</strong> Git ti to řekne. Musíš rozhodnout kdo má pravdu. (Viz sekce 04)</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Strategie: Commituj před agentem</strong>
+      <p>Před tím než dáš úkol agentovi, commituj svůj kód. Pak agent má jasnou výchozí pozici a konflikty jsou méně pravděpodobné.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Konflikty — co když se změní to samé</h2>
+
+  <h3>Jak se konflikt stane</h3>
+  <div class="code-block">
+1. Ty jsi commitnul: RecipeCard.tsx v1<br/>
+2. Agent změnil: RecipeCard.tsx v2 (jinou součást)<br/>
+3. Git vidí: oba měníte stejný soubor<br/>
+4. KONFLIKT — kdo má pravdu?
+  </div>
+
+  <h3>Jak to vypadá v editoru</h3>
+  <div class="code-block">
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (tvůj kód)<br/>
+const x = 5;<br/>
+=======<br/>
+const x = 10; (agentův kód)<br/>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; agent-branch
+  </div>
+
+  <h3>Jak to vyřešit</h3>
+  <p><strong>Ruční rozlišení:</strong> Otevři soubor, rozhodni se který kód chceš, smaž markery.</p>
+  <p><strong>V Antigravity IDE:</strong> Source Control panel má "Resolve Conflicts" — můžeš vybrat "Current" (tvůj) nebo "Incoming" (agent).</p>
+
+  <h3>Strategie aby to nebyl problém</h3>
+  <ul>
+    <li><strong>Commit svůj kód</strong> — než dáš úkol agentovi</li>
+    <li><strong>Agent pracuje jiné soubory</strong> — všichni editují různé věci</li>
+    <li><strong>Sekvence: ty → agent → ty</strong> — ne paralelně</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Pokud je konflikt složitý</strong>
+      <p>Zeptej se agenta: "Vidím konflikt. Co jsi měnil? Jak to vyřešit?" Agent se často sám podvolí tvému kódu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Vrácení zpět — undo a revert</h2>
+
+  <h3>Situace: Agent dělal nezvladatelné věci</h3>
+  <p>Řešení: vrátit se na poslední dobrý commit.</p>
+
+  <h3>Metoda 1: Git Checkout (pokud jsi necommitl)</h3>
+  <div class="code-block">
+# Vrátí VŠECHNY změny v souborech<br/>
+git checkout .<br/>
+<br/>
+# Nebo konkrétní soubor:<br/>
+git checkout src/App.tsx
+  </div>
+
+  <h3>Metoda 2: Git Revert (pokud jsi commitl špatný commit)</h3>
+  <div class="code-block">
+# Podívej se na poslední commity:<br/>
+git log --oneline<br/>
+<br/>
+# Vrátí konkrétní commit:<br/>
+git revert HEAD  (vrátí poslední commit)<br/>
+git revert abcd123  (vrátí konkrétní commit)
+  </div>
+
+  <h3>Metoda 3: V Antigravity IDE GUI</h3>
+  <p>Source Control → History → pravý klik na commit → "Revert to this commit"</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Metoda 1 je nejjednodušší</strong>
+      <p>Pokud se agent zbláznil ale necommitl — <code>git checkout .</code> a všechno se vrátí. Jednoduché.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Strategie pro bezpečné backupy</h2>
+
+  <h3>Golden Rule: Commit před agentem</h3>
+  <div class="code-block">
+# Tvůj pracovní postup:<br/>
+git add . && git commit -m "Before agent work"<br/>
+<br/>
+# Teď dáš agentovi úkol<br/>
+# Pokud se zblázní: git reset --hard HEAD~1<br/>
+# (vrátí se o jeden commit zpět)
+  </div>
+
+  <h3>Větvení (Branching) — pro větší úkoly</h3>
+  <div class="code-block">
+# Vytvoř novou větev:<br/>
+git checkout -b feature/price-filter<br/>
+<br/>
+# Agent pracuje v tomhle branch<br/>
+# Pokud se zblázní: smaž branch<br/>
+git checkout main<br/>
+git branch -D feature/price-filter<br/>
+# Main je v bezpečí
+  </div>
+
+  <h3>Remote Backup — na GitHub</h3>
+  <p>Pokud máš projekt na GitHubu:</p>
+  <div class="code-block">
+# Push do GitHubu (bezpečný backup)<br/>
+git push origin main<br/>
+<br/>
+# Pokud se všechno pokazí:<br/>
+git reset --hard origin/main<br/>
+# (vrátí se na to co je na GitHub)
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Tady je tvoje pojistka</strong>
+      <p>GitHub = remote backup. Pokud se agent zblázní, tvůj kód na GitHubu pořád existuje. Budeš trvat.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Pro tvůj receptář — konkrétní postup</h2>
+
+  <h3>Nastavení Git v receptáři</h3>
+  <p>Pokud to ještě nemáš:</p>
+  <div class="code-block">
+cd rodinny-receptar<br/>
+git init  (inicializuj git)<br/>
+git add .<br/>
+git commit -m "Initial commit"
+  </div>
+
+  <h3>Pracovní postup s Antigravity IDE</h3>
+  <ol>
+    <li>Otevři projekt v Antigravity IDE</li>
+    <li>Commituj svůj aktuální kód: <code>git add . && git commit -m "Checkpoint before agent work"</code></li>
+    <li>Dej agentovi úkol</li>
+    <li>Agent pracuje a změní soubory</li>
+    <li>Vidíš změny v Source Control panelu</li>
+    <li>Pokud jsou OK: commituj — <code>git commit -m "Agent: přidal filtr na cenu"</code></li>
+    <li>Pokud nejsou OK: <code>git checkout .</code> a vrátíš se</li>
+  </ol>
+
+  <h3>Emergency Undo</h3>
+  <p>Pokud se agent zbláznil a commitnul špatný kód:</p>
+  <div class="code-block">
+# Vrátí se o jeden commit zpět:<br/>
+git reset --hard HEAD~1<br/>
+<br/>
+# Nebo na konkrétní commit:<br/>
+git log --oneline  (podívej se na historii)<br/>
+git reset --hard abc123  (vrátí se na ten commit)
+  </div>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Tvůj receptář je v bezpečí</strong>
+      <p>Pokud máš Git nastavený a commituješ před agentem — není co se bát. V nejhorším případě <code>git reset</code> a jsi zpět.</p>
+    </div>
+  </div>
+</div>
+
+<div id="pn"></div>
+
+<footer>
+  <span>07_IDE_Git_Verze.html · Antigravity IDE průvodce · Claude (Anthropic) · Duben 2026</span>
+  <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
+</footer>
+
+</div><!-- .wrap -->
+</div><!-- .main-content -->
+</div><!-- .container -->
+
+<script>
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progressBar');
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  bar.style.width = (scrollTop / height * 100) + '%';
+});
+</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

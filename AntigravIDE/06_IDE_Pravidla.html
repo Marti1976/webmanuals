@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vlastní Pravidla – Antigravity IDE průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="06">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "s1", "num": "6.1", "name": "Rules vs Instructions — rozdíl" },
+    { "id": "s2", "num": "6.2", "name": "ANTIGRAVITY.rules soubor" },
+    { "id": "s3", "num": "6.3", "name": "Syntaxe pravidel — konkrétně" },
+    { "id": "s4", "num": "6.4", "name": "Workflows — sekvence akcí" },
+    { "id": "s5", "num": "6.5", "name": "Praktické příklady" },
+    { "id": "s6", "num": "6.6", "name": "Pro tvůj receptář — co napsat" }
+  ]
+}
+</script>
+
+<div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
+<div class="wrap" style="max-width:900px">
+
+<header>
+  <div class="h-num">// kapitola 06</div>
+  <h1>Vlastní <em>Pravidla</em></h1>
+  <p class="h-desc">Workflows a Rules — jak napsat vlastní instrukce pro agenta které zůstanou platné. Jak se to liší od GEMINI.md. Persistentní pravidla která se dodržují automaticky.</p>
+  <div class="badges">
+    <span class="badge badge-p">📋 Rules Engine</span>
+    <span class="badge badge-c">🔄 Workflows</span>
+    <span class="badge badge-p">🎯 Constraints</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Rules vs Instructions</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> ANTIGRAVITY.rules soubor</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Syntaxe pravidel</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Workflows — sekvence</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Praktické příklady</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Pro tvůj receptář</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Rules vs Instructions — rozdíl</h2>
+
+  <h3>Instructions (v promptu)</h3>
+  <p>Vždy když napíšeš agentovi "Udělej X" — to je jednorázová instrukce. Agent ji udělá a pak čeká na další.</p>
+
+  <div class="example">
+    <div class="example-title">Příklad: jednorázová instrukce</div>
+    <p style="font-size:.85em;color:var(--t2)">Ty: "Přidej button Logout"<br/>Agent: Dělá<br/>Ty: "Teď CSS"<br/>Agent: Dělá</p>
+  </div>
+
+  <h3>Rules (v souboru)</h3>
+  <p>Permanentní pravidla která agent používá v KAŽDÉ konverzaci. Jsou to věty jako "VŽDY" nebo "NIKDY".</p>
+
+  <div class="example">
+    <div class="example-title">Příklad: permanentní pravidlo</div>
+    <div class="example-code">
+RULE: Never modify package.json without explicit approval
+RULE: Always check tests pass before finishing
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Rules jsou jako vnitřní instrukce pro agenta</strong>
+      <p>Ty je jednou napíšeš a agent je dodržuje navždy, pokud je používáš v tomhle projektu. Perfektní pro osobní hranice.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>ANTIGRAVITY.rules soubor</h2>
+
+  <p>V kořeni projektu vytvoříš soubor <code>.antigravity-rules</code> (nebo <code>ANTIGRAVITY.rules</code>).</p>
+
+  <h3>Jak vytvořit</h3>
+  <p>V Antigravity IDE: File Explorer → project root → New File → <code>.antigravity-rules</code></p>
+
+  <p>Obsah je prostý text. Jedno pravidlo na řádek.</p>
+
+  <h3>Struktura</h3>
+  <div class="code-block">
+# Komentáře začínají #<br/>
+<br/>
+RULE: Nikdy neprováduj více změn najednou<br/>
+RULE: Před každou akcí se mě ptej<br/>
+ALLOW: modify soubory v /src<br/>
+DENY: delete libovolné soubory<br/>
+CONSTRAINT: Zkontroluj že build projde
+  </div>
+
+  <h3>Klíčová slova</h3>
+  <ul>
+    <li><strong>RULE:</strong> Obecné pravidlo které si agent pamatuje</li>
+    <li><strong>ALLOW:</strong> Co agent smí dělat (Allow list)</li>
+    <li><strong>DENY:</strong> Co agent nesmí dělat (Deny list)</li>
+    <li><strong>CONSTRAINT:</strong> Omezení — co ověřit na konci</li>
+    <li><strong>WORKFLOW:</strong> Sekvence akcí (viz sekce 04)</li>
+  </ul>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Syntaxe pravidel — konkrétně</h2>
+
+  <h3>Příklad úplného rules souboru</h3>
+  <div class="code-block">
+# Rodinný Receptář — Agent Rules<br/>
+# Vytvořeno: duben 2026<br/>
+<br/>
+# === ZÁKLADNÍ PRAVIDLA ===<br/>
+RULE: Vždy se ptej na schválení než něco mažeš<br/>
+RULE: Měň pouze jeden soubor na úkol<br/>
+RULE: Pokud selže build, okamžitě řekni proč<br/>
+<br/>
+# === POVOLENÍ ===<br/>
+ALLOW: modify soubory v /src<br/>
+ALLOW: modify soubory v /public<br/>
+ALLOW: run npm run build<br/>
+ALLOW: run npm run dev<br/>
+<br/>
+# === ZÁKAZY ===<br/>
+DENY: delete jakékoli soubory<br/>
+DENY: modify package.json<br/>
+DENY: run npm install<br/>
+DENY: modify .git<br/>
+<br/>
+# === OMEZENÍ ===<br/>
+CONSTRAINT: Všechny soubory TypeScript musí projít TS check<br/>
+CONSTRAINT: Build musí projít bez warnings<br/>
+CONSTRAINT: Udělej screenshot výsledku
+  </div>
+
+  <h3>Bezpečné pravidlo vs bezpečné nebylo</h3>
+  <div class="grid2">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <p style="font-size:.85em;color:var(--green2);font-weight:600;margin-bottom:8px">✓ Konkrétní</p>
+      <p style="font-size:.8em;color:var(--t2)">"DENY: modify soubory mimo /src"</p>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <p style="font-size:.85em;color:var(--amber2);font-weight:600;margin-bottom:8px">✗ Vágní</p>
+      <p style="font-size:.8em;color:var(--t2)">"DENY: nedělej blbosti"</p>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Workflows — sekvence akcí</h2>
+
+  <p>Pro pokročilé: můžeš definovat celé workflow — sadu akcí které mají být provedeny v pořadí.</p>
+
+  <h3>Syntaxe WORKFLOW</h3>
+  <div class="code-block">
+WORKFLOW: feature-complete<br/>
+  STEP: Vytvoř komponentu<br/>
+  STEP: Nastyluj CSS<br/>
+  STEP: Napiš testy<br/>
+  CONSTRAINT: Všechny testy prochází<br/>
+  CONSTRAINT: Build OK
+  </div>
+
+  <h3>Jak to funguje?</h3>
+  <p>Když napíšeš agentovi: "Spusť workflow feature-complete" — agent to provede krok za krokem.</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Pro tvůj receptář: možná zbytečné</strong>
+      <p>Workflow je pro komplexní projekty. Ty si stačí napsat jednotlivé prompty.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Praktické příklady</h2>
+
+  <h3>Příklad 1: Security rules</h3>
+  <div class="code-block">
+# Security<br/>
+RULE: Nikdy nemaž .env soubory<br/>
+RULE: Nikdy nemaž .git složku<br/>
+RULE: Nikdy nemodifikuj soubory mimo /src<br/>
+DENY: modify .env<br/>
+DENY: modify .env.local
+  </div>
+
+  <h3>Příklad 2: Code quality</h3>
+  <div class="code-block">
+# Code Quality<br/>
+CONSTRAINT: Build musí projít bez TS errors<br/>
+CONSTRAINT: ESLint musí být OK<br/>
+CONSTRAINT: Uděláš screenshot výsledku<br/>
+RULE: Přidej JSDoc komentář k nové funkci<br/>
+RULE: Nepoužívej `any` typ v TypeScript
+  </div>
+
+  <h3>Příklad 3: Communication</h3>
+  <div class="code-block">
+# Communication<br/>
+RULE: Vždy vysvětli co jsi změnil<br/>
+RULE: Před smazáním se zeptej<br/>
+RULE: Při chybě vysvětli proč se to stalo<br/>
+CONSTRAINT: Odpověz v češtině
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Pro tvůj receptář — co napsat</h2>
+
+  <p>Tady je .antigravity-rules soubor který bych doporučil:</p>
+
+  <div class="code-block">
+# Rodinný Receptář — Agent Rules<br/>
+# Projekt: rodinny-receptar<br/>
+<br/>
+# === ZÁKLADNÍ PRAVIDLA ===<br/>
+RULE: Jedna změna = jeden commit<br/>
+RULE: Vždy se ptej než smažeš cokoliv<br/>
+RULE: Vysvětli co se změnilo a proč<br/>
+<br/>
+# === POVOLENÍ ===<br/>
+ALLOW: modify /src<br/>
+ALLOW: modify /public<br/>
+ALLOW: run npm run dev<br/>
+ALLOW: run npm run build<br/>
+ALLOW: run npm run test<br/>
+ALLOW: git commit<br/>
+<br/>
+# === ZÁKAZY ===<br/>
+DENY: delete soubory<br/>
+DENY: modify package.json<br/>
+DENY: modify .git<br/>
+DENY: run npm install<br/>
+DENY: run npm uninstall<br/>
+<br/>
+# === OMEZENÍ ===<br/>
+CONSTRAINT: TypeScript build musí projít<br/>
+CONSTRAINT: Udělej screenshot výsledku<br/>
+CONSTRAINT: Všechny změny commituj
+  </div>
+
+  <h3>Jak to nastavit</h3>
+  <ul>
+    <li>Vytvoř soubor <code>.antigravity-rules</code> v kořeni projektu</li>
+    <li>Vlož obsah výše</li>
+    <li>Git add + commit: `git add .antigravity-rules && git commit -m "Add agent rules"`</li>
+    <li>Agent to automaticky detekuje a bude to používat</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Tímto máš jasně daná pravidla</strong>
+      <p>Agent je bude automaticky dodržovat. Měl by být disciplinovaný bez toho abys musel pokaždé říkat co smí a nesmí.</p>
+    </div>
+  </div>
+</div>
+
+<div id="pn"></div>
+
+<footer>
+  <span>06_IDE_Pravidla.html · Antigravity IDE průvodce · Claude (Anthropic) · Duben 2026</span>
+  <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
+</footer>
+
+</div><!-- .wrap -->
+</div><!-- .main-content -->
+</div><!-- .container -->
+
+<script>
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progressBar');
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  bar.style.width = (scrollTop / height * 100) + '%';
+});
+</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

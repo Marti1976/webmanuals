@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tipy & Triky – Antigravity IDE průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="10">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "s1", "num": "10.1", "name": "Anatomie dobrého promptu" },
+    { "id": "s2", "num": "10.2", "name": "Co funguje a co ne — příklady" },
+    { "id": "s3", "num": "10.3", "name": "Patterns — vzorce které fungují" },
+    { "id": "s4", "num": "10.4", "name": "Jak se chovat k agentovi — interpersonální" },
+    { "id": "s5", "num": "10.5", "name": "Když agent udělá chybu" },
+    { "id": "s6", "num": "10.6", "name": "Komunikace — chat s agentem" },
+    { "id": "s7", "num": "10.7", "name": "Příklady z praxe" },
+    { "id": "s8", "num": "10.8", "name": "Cheatsheet — máš 5 minut" }
+  ]
+}
+</script>
+
+<div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
+<div class="wrap" style="max-width:900px">
+
+<header>
+  <div class="h-num">// kapitola 10</div>
+  <h1>Tipy & <em>Triky</em></h1>
+  <p class="h-desc">Jak psát prompty aby agent poslouchal. Co funguje, co ne. Patterns, chyby k vyhnutí, a reálné příklady z praxe.</p>
+  <div class="badges">
+    <span class="badge badge-g">💡 Promptování</span>
+    <span class="badge badge-c">🎯 Best practices</span>
+    <span class="badge badge-g">⚡ Patterns</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Anatomie dobrého promptu</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Co funguje (a co ne)</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Patterns — vzorce</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Jak se chovat k agentovi</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Když agent udělá chybu</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Komunikace — chat s agentem</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Příklady z praxe</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Cheatsheet — máš 5 minut</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Anatomie dobrého promptu</h2>
+
+  <p>Dobrý prompt pro agenta má tři části:</p>
+
+  <h3>1. KONTEXT — co by měl vědět</h3>
+  <p>Pojmenuj soubor, který měníš. Řekni mu co tam už je.</p>
+  <div class="example-block">
+    <div class="ex-title">✓ S kontextem</div>
+    <p>"V souboru <code>src/components/RecipeCard.tsx</code> (line 45) je button pro delete. Vedle něj chci přidat button pro edit s ikonou tužky."</p>
+  </div>
+  <div class="example-block ex-bad">
+    <div class="ex-title">✗ Bez kontextu</div>
+    <p>"Přidej button pro edit."</p>
+  </div>
+
+  <h3>2. ÚKOL — co přesně má dělat</h3>
+  <p>Buď konkrétní. Co se má změnit, ne jak by to mohlo být lépe.</p>
+  <div class="example-block">
+    <div class="ex-title">✓ Konkrétní</div>
+    <p>"Přidej tlačítko Edit s ikonou z Lucide React (Edit2Icon). Tlačítko by mělo volat callback <code>onEdit()</code>."</p>
+  </div>
+  <div class="example-block ex-bad">
+    <div class="ex-title">✗ Vágní</div>
+    <p>"Vylepši komponentu."</p>
+  </div>
+
+  <h3>3. VÝSLEDEK — co by mělo být na konci</h3>
+  <p>Řekni mu jak poznáš že je to hotovo.</p>
+  <div class="example-block">
+    <div class="ex-title">✓ S výsledkem</div>
+    <p>"Až skončíš, mělo by být vidět: button vedle delete buttonu v RecipeCard, build by měl projít bez chyb, testy by měly pasovat."</p>
+  </div>
+
+  <h3>Kompletní prompt (příklad):</h3>
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin:12px 0;font-size:.85em;line-height:1.7;color:var(--cyan)">
+V souboru <code>src/components/RecipeCard.tsx</code> na řádku 45 vidíš button delete.<br/>
+<br/>
+Vedle něj přidej nový button "Edit" s ikonou tužky (Lucide React: <code>Edit2Icon</code>).<br/>
+Tlačítko by mělo mít stejný styling jako delete button.<br/>
+Button by měl volat <code>props.onEdit(recipe.id)</code>.<br/>
+<br/>
+Ověř že:<br/>
+• Build projde bez chyb (npm run build)<br/>
+• Button je viditelný v aplikaci<br/>
+• OnEdit callback se volá když klikneš na button<br/>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Zlaté pravidlo: Konkrétní > Vágní</strong>
+      <p>Agent si nemůže "myslet" co máš na mysli. Čím konkrétnější, tím lepší výsledek.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Co funguje a co ne — příklady</h2>
+
+  <div class="grid2">
+    <div class="pattern">
+      <div class="pattern-title" style="color:var(--green2)">✓ KONKRÉTNÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">Soubor + řádek:<br/>src/App.tsx<br/>line 23</p>
+    </div>
+    <div class="pattern">
+      <div class="pattern-title" style="color:var(--amber2)">✗ VÁGNÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">"Někde v kódu<br/>to opravit"</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="pattern">
+      <div class="pattern-title" style="color:var(--green2)">✓ AKČNÍ SLOVA</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">Přidej, Změň,<br/>Oprav, Odstraň</p>
+    </div>
+    <div class="pattern">
+      <div class="pattern-title" style="color:var(--amber2)">✗ SUBJEKTIVNÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">Vylepši, Posílej,<br/>Zdokonal</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="pattern">
+      <div class="pattern-title" style="color:var(--green2)">✓ S KRITÉRII</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">"Build musí<br/>projít bez chyb"</p>
+    </div>
+    <div class="pattern">
+      <div class="pattern-title" style="color:var(--amber2)">✗ BEZ KRITÉRIÍ</div>
+      <p style="font-size:.85em;color:var(--t2);margin:0;line-height:1.4">"Udělej to"<br/>(agent neví jestli OK)</p>
+    </div>
+  </div>
+
+  <h3>Co VŮBEC neudělej:</h3>
+  <ul>
+    <li><strong>Nepiš si seznamy bez priorit</strong> — "Udělej A, B, C, D, E..." Agent si vezme všechny. Řekni co je kritické.</li>
+    <li><strong>Neměň úkol během práce</strong> — Pokud jsi mu řekl "Udělej X" a pak "Taky Y" — on to dělá všechno. Řekni: "Zatím jenom X, Y bude později"</li>
+    <li><strong>Nezdůvodňuj vždy "proč"</strong> — Není to nutné. "Přidej tlačítko" je dost. Pokud agent chce vědět — zeptá se.</li>
+  </ul>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Patterns — vzorce které fungují</h2>
+
+  <h3>Pattern 1: Incremental (postupný)</h3>
+  <div class="pattern">
+    <div class="pattern-title">Jeden malý krok za druhým</div>
+    <p class="pattern-desc">Místo abys řekl všechno najednou, řekni první krok. Agent udělá. Pak druhý.</p>
+    <div class="pattern-code">
+Krok 1: Vytvoř soubor utils/priceFilter.ts<br/>
+→ Agent dělá<br/>
+Ty: OK, teď to importuj<br/>
+Krok 2: Importuj v RecipeFilter.tsx<br/>
+→ Agent dělá<br/>
+Ty: OK, teď to použij
+    </div>
+    <p style="font-size:.8em;color:var(--t2);margin-top:6px"><strong>Výhoda:</strong> Menší chyby, větší kontrola</p>
+  </div>
+
+  <h3>Pattern 2: Example-driven (příklady)</h3>
+  <div class="pattern">
+    <div class="pattern-title">Ukaž co chceš vzorem</div>
+    <p class="pattern-desc">Místo abys popsal, dej příklad.</p>
+    <div class="pattern-code">
+Nechci aby ten kód vypadal:<br/>
+const x = getSomething()<br/>
+<br/>
+Chci aby vypadal:<br/>
+const filterPrice = priceFilter.apply(options)
+    </div>
+    <p style="font-size:.8em;color:var(--t2);margin-top:6px"><strong>Výhoda:</strong> Agent přesně vidí co chceš</p>
+  </div>
+
+  <h3>Pattern 3: Constraint (omezení)</h3>
+  <div class="pattern">
+    <div class="pattern-title">Řekni co NESMÍ dělat</div>
+    <p class="pattern-desc">Někdy je lehčeji říct "Neměň nic mimo tento soubor"</p>
+    <div class="pattern-code">
+Oprav chybu v RecipeCard.tsx.<br/>
+Neměň nic jiného — ne imports, ne style, jen logiku.
+    </div>
+    <p style="font-size:.8em;color:var(--t2);margin-top:6px"><strong>Výhoda:</strong> Ochrana před "iniciativou" agenta</p>
+  </div>
+
+  <h3>Pattern 4: Approval (schválení mezi kroky)</h3>
+  <div class="pattern">
+    <div class="pattern-title">Ptej se na mezivýsledky</div>
+    <p class="pattern-desc">Místo "Udělej všechno" → "Udělej A, ukaž mi, pak dál"</p>
+    <div class="pattern-code">
+1. Vytvoř strukturu databáze<br/>
+2. Ukaž mi design<br/>
+3. Implementuj<br/>
+4. Napiš testy<br/>
+5. Ukaž mi pokrytí
+    </div>
+    <p style="font-size:.8em;color:var(--t2);margin-top:6px"><strong>Výhoda:</strong> Kontrola v každém kroku</p>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Jak se chovat k agentovi — interpersonální</h2>
+
+  <p>Agent je jako junior developer. Jak bys komunikoval s juniorem?</p>
+
+  <h3>✓ Dobré chování</h3>
+  <ul>
+    <li><strong>Buď konkrétní a jasný</strong> — "Řádek 23" ne "někde tam"</li>
+    <li><strong>Klidně mu vysvětli co se stalo</strong> — "Build selhal protože..." agent se učí</li>
+    <li><strong>Poděkuj když je to dobrý kód</strong> — psychologie! Agent pracuje lépe</li>
+    <li><strong>Řekni mu co je důležité</strong> — prioritizuj</li>
+    <li><strong>Vzdej se kontroly kde můžeš</strong> — "Jak myslíš že bychom to měli dělat?"</li>
+  </ul>
+
+  <h3>✗ Špatné chování</h3>
+  <ul>
+    <li><strong>Vágní instrukce bez detailů</strong> — agent kouká a neví</li>
+    <li><strong>Schvalovat všechno bez čtení</strong> — když to spadne, je to tvoje chyba</li>
+    <li><strong>Honit agenta</strong> — "Dělej to rychle" — vede k chybám</li>
+    <li><strong>Měnit zadání v letu</strong> — "Taky přidej X, a Y, a Z..." Chaos.</li>
+    <li><strong>Ignorovat co agent říká</strong> — "Potřebuji reinstalovat balíčky" — "Neinstaluj nic!" Konflikt.</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Ton má zásadní vliv</strong>
+      <p>Když píšeš agentovi "Zkus to znova, tentokrát pořádně" vs. "Build selhal, zkusme jiný přístup" — druhý přístup vede k lepším výsledkům.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Když agent udělá chybu</h2>
+
+  <h3>Situace 1: Agent ne-rozumí úkolu</h3>
+  <div class="example-block">
+    <div class="ex-title">Ty jsi řekl:</div>
+    <p>"Oprav ten bug"</p>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.1)">
+    <div class="ex-title" style="color:var(--amber2);margin-bottom:6px">Agent se ptá:</div>
+    <p>"Jaký bug?"</p>
+    </div>
+  </div>
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Řešení:</strong>
+      <p>Buď konkrétní: "V RecipeCard.tsx line 52, když klikneš delete, mělo by se zobrazit potvrzení. Teď se nic nestane."</p>
+    </div>
+  </div>
+
+  <h3>Situace 2: Agent dělá víc než chceš</h3>
+  <div class="example-block">
+    <div class="ex-title">Ty jsi řekl:</div>
+    <p>"Přidej filter na cenu"</p>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.1)">
+    <div class="ex-title" style="color:var(--amber2);margin-bottom:6px">Agent plánuje:</div>
+    <p>Filter na cenu PLUS refaktor celé komponenty</p>
+    </div>
+  </div>
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Řešení (v approval kroku):</strong>
+      <p>[Edit] → "Jen přidej filter, refaktor později. Nechci jeden velký change."</p>
+    </div>
+  </div>
+
+  <h3>Situace 3: Build selhává</h3>
+  <div class="box danger">
+    <span class="icon">❌</span>
+    <div class="content">
+      <strong>Co vidíš v terminálu:</strong>
+      <p><code>error TS2339: Property 'filter' does not exist on type 'Array&lt;Recipe&gt;'</code></p>
+    </div>
+  </div>
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Co udělat:</strong>
+      <p>Nepanikař, je to normální. Agent to vidí. Řekni: "Build selhal s TS error. Zkus to opravit."</p>
+    </div>
+  </div>
+
+  <h3>Všeobecný postup když selže:</h3>
+  <ol>
+    <li><strong>Podívej se co se stalo</strong> — error message, log</li>
+    <li><strong>Řekni agentovi co vidíš</strong> — přesný error</li>
+    <li><strong>Čekej co agent navrhne</strong> — často ví řešení</li>
+    <li><strong>Pokud neví — udělej to sám</strong> — <code>git diff</code>, oprava, commit</li>
+  </ol>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Komunikace — chat s agentem</h2>
+
+  <p>Když agent něco nedělá jak by měl — můžeš mu napsat zprávu v chatu (ne nový prompt).</p>
+
+  <h3>Příklady komunikace:</h3>
+
+  <div class="example-block">
+    <div class="ex-title">✓ Zpráva která funguje</div>
+    <div style="margin-top:8px;line-height:1.8">
+"Vidím že ses pokusil importovat komponentu<br/>
+ale import není správný.<br/>
+Zkus: import { LoginForm } from './forms'"
+    </div>
+  </div>
+
+  <div class="example-block ex-bad">
+    <div class="ex-title">✗ Zpráva která nefunguje</div>
+    <div style="margin-top:8px;line-height:1.8">
+"To není správně"
+    </div>
+  </div>
+
+  <h3>Chat tipy:</h3>
+  <ul>
+    <li><strong>Buď konkrétní o chybě</strong> — "Error na řádku 23 je..." ne "Něco je špatně"</li>
+    <li><strong>Ptej se otázkami</strong> — "Vidíš že build selhává? Co si myslíš že je špatně?" Agent přemýšlí</li>
+    <li><strong>Navrhuj řešení</strong> — "Snad bychom měli použít X místo Y?" Agent to přezkoumá</li>
+    <li><strong>Klidně řekni když je to dobré</strong> — "Dobrý nápad, pokračuj" motivuje agenta</li>
+  </ul>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Příklady z praxe</h2>
+
+  <h3>Příklad 1: "Nejsem spokojen"</h3>
+
+  <div class="example-block">
+    <div class="ex-title">❌ Co NEUDĚLEJ:</div>
+    <p>"Není to dobré, zkus znova"</p>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-title">✓ Co UDĚLEJ:</div>
+    <p>"Button vypadá OK ale font je moc malý.<br/>
+Zvětši ho na 16px a srovnej ho se stylingem ostatních buttonů.<br/>
+Pak mi ukaž screenshot."</p>
+  </div>
+
+  <h3>Příklad 2: Dělání více věcí</h3>
+
+  <div class="example-block">
+    <div class="ex-title">❌ Co NEUDĚLEJ:</div>
+    <p>"Přidej login, nastyluj to, napiš testy, optimalizuj perf"</p>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-title">✓ Co UDĚLEJ:</div>
+    <p>"Krok 1: Vytvoř login komponentu (form + submit button).<br/>
+Neřeš styling teď, jen struktura."</p>
+  </div>
+
+  <h3>Příklad 3: Nejistota</h3>
+
+  <div class="example-block">
+    <div class="ex-title">❌ Co NEUDĚLEJ:</div>
+    <p>"Myslíš že by to mělo tak fungovat?"</p>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-title">✓ Co UDĚLEJ:</div>
+    <p>"Filter by měl fungovat takto:<br/>
+1. Uživatel zadá min a max cenu<br/>
+2. Tlačítko Apply se klikne<br/>
+3. Receptář se vyfiltruje<br/>
+Tak to implementuj."</p>
+  </div>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Cheatsheet — máš 5 minut</h2>
+
+  <div class="checklist">
+    <h4>Before prompting:</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Git commit — záloha před rizikem</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Jasný task — ne "Udělej to lépe"</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Konkrétní soubory a řádky</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Výsledek — jak poznáš že je hotovo</div>
+  </div>
+
+  <div class="checklist">
+    <h4>During approval:</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Přečti si plán — co agent udělá</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Pokud chceš jen část — [Edit] a řekni</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Pokud je plán divný — [Reject]</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Pokud je OK — [Approve]</div>
+  </div>
+
+  <div class="checklist">
+    <h4>After execution:</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Podívej se na build — jsou chyby?</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Vidíš screenshot — je to OK?</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Pokud je chyba — řekni agentovi konkrétně</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Git commit — vše je uloženo</div>
+  </div>
+</div>
+
+<div id="pn"></div>
+
+<footer>
+  <span>10_IDE_Tipy_Triky.html · Antigravity IDE průvodce · Claude (Anthropic) · Duben 2026</span>
+  <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
+</footer>
+
+</div><!-- .wrap -->
+</div><!-- .main-content -->
+</div><!-- .container -->
+
+<script>
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progressBar');
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  bar.style.width = (scrollTop / height * 100) + '%';
+});
+</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

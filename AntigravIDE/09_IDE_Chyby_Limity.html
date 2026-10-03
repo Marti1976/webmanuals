@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chyby & Limity – Antigravity IDE průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="09">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "s1", "num": "9.1", "name": "Chyby agenta — co může selhat" },
+    { "id": "s2", "num": "9.2", "name": "Build chyby — TypeScript a runtime" },
+    { "id": "s3", "num": "9.3", "name": "API limity — Gemini quota" },
+    { "id": "s4", "num": "9.4", "name": "Rate limiting — timeout čekání" },
+    { "id": "s5", "num": "9.5", "name": "Network & Connection chyby" },
+    { "id": "s6", "num": "9.6", "name": "Jak diagnostikovat problém" },
+    { "id": "s7", "num": "9.7", "name": "Checklist — co dělat když selže" }
+  ]
+}
+</script>
+
+<div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
+<div class="wrap" style="max-width:900px">
+
+<header>
+  <div class="h-num">// kapitola 09</div>
+  <h1>Chyby & <em>Limity</em></h1>
+  <p class="h-desc">Co se stane když skončí API limit, jak se vrátit z chyby agenta, rate limiting, troubleshooting, co nedělá správně a jak to fixovat.</p>
+  <div class="badges">
+    <span class="badge badge-r">⚠️ Chyby</span>
+    <span class="badge badge-c">📊 Limity</span>
+    <span class="badge badge-r">🔧 Troubleshooting</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Chyby agenta — co může selhat</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Build chyby — TypeScript errors</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> API limity — Gemini quota</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Rate limiting — timeout čekání</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Network & Connection chyby</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Jak diagnostikovat problém</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Checklist — co dělat když selže</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Chyby agenta — co může selhat</h2>
+
+  <h3>Scénář 1: Agent nerozumí úkolu</h3>
+  <div class="error-box">
+Agent: "Nepochopil jsem co chceš. Můžeš mi vysvětlit jasněji?"
+  </div>
+  <div class="solution">
+    <div class="solution-title">Řešení:</div>
+    <p>Buď konkrétní. Místo "Přidej button" → "Přidej button Delete v RecipeCard.tsx na řádku 42, vedle buttonu Save."</p>
+  </div>
+
+  <h3>Scénář 2: Agent dělá více než chceš</h3>
+  <div class="error-box">
+Ty: "Přidej CSS"<br/>
+Agent plán: "Přidám CSS, refaktoruji logiku, updatnu testy"
+  </div>
+  <div class="solution">
+    <div class="solution-title">Řešení:</div>
+    <p>V approval kroku: [Edit] → "Jen CSS, nic jiného. Refaktor později."</p>
+  </div>
+
+  <h3>Scénář 3: Agent smazal co neměl</h3>
+  <div class="error-box">
+Agent: "Smazal jsem staré komponenty"<br/>
+Ty: "To byla komponenta kterou jsi měl zachovat!"
+  </div>
+  <div class="solution">
+    <div class="solution-title">Řešení:</div>
+    <p><code>git checkout .</code> nebo <code>git reset --hard HEAD</code> — vrátíš se. V pravidlech: <code>DENY: delete files</code></p>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Build chyby — TypeScript a runtime</h2>
+
+  <h3>Chyba 1: TypeScript error</h3>
+  <div class="error-box">
+error TS2339: Property 'name' does not exist on type '{}'
+  </div>
+  <div class="solution">
+    <div class="solution-title">Co se stalo:</div>
+    <p>Agent změnil typ nebo zapomněl property. TypeScript kontrola selže.</p>
+    <div class="solution-title" style="margin-top:8px">Řešení:</div>
+    <p>Řekni agentovi error message. Agent to obvykle sám opraví.</p>
+  </div>
+
+  <h3>Chyba 2: Runtime error</h3>
+  <div class="error-box">
+Cannot read property 'map' of undefined<br/>
+at App.tsx:23
+  </div>
+  <div class="solution">
+    <div class="solution-title">Co se stalo:</div>
+    <p>Agent předpokládá že data existují, ale nejsou tam. Null/undefined problem.</p>
+    <div class="solution-title" style="margin-top:8px">Řešení:</div>
+    <p>Agent musí přidat null check: <code>data?.map(...)</code> nebo <code>if (data)</code></p>
+  </div>
+
+  <h3>Chyba 3: Module not found</h3>
+  <div class="error-box">
+Module not found: 'react-dom'
+  </div>
+  <div class="solution">
+    <div class="solution-title">Co se stalo:</div>
+    <p>Závislost není instalovaná nebo agent importuje špatný balíček.</p>
+    <div class="solution-title" style="margin-top:8px">Řešení:</div>
+    <p><code>npm install react-dom</code> a agent to opraví.</p>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>API limity — Gemini quota</h2>
+
+  <p>Antigravity IDE používá Google Gemini API. Máš limity free tier.</p>
+
+  <h3>Jaké limity?</h3>
+  <div class="limit-item">
+    <div class="limit-icon">⚡</div>
+    <div class="limit-content">
+      <h4>Requesty za minutu (RPM)</h4>
+      <p><strong>Free:</strong> 60 requestů za minutu</p>
+      <p>Pokud agent dělá 10 kroků za minutu — je to limit. Musíš počkat.</p>
+    </div>
+  </div>
+
+  <div class="limit-item">
+    <div class="limit-icon">📊</div>
+    <div class="limit-content">
+      <h4>Tokeny za den</h4>
+      <p><strong>Free:</strong> 50,000 input tokenů / den</p>
+      <p>Pokud máš velký projekt s dlouhými soubory — můžeš přesáhnout.</p>
+    </div>
+  </div>
+
+  <div class="limit-item">
+    <div class="limit-icon">🔄</div>
+    <div class="limit-content">
+      <h4>Concurrent requests</h4>
+      <p><strong>Free:</strong> 1 request najednou</p>
+      <p>Manager View s více agenty? Nejde. Musí počkat na sebe.</p>
+    </div>
+  </div>
+
+  <h3>Chyba: Rate limit exceeded</h3>
+  <div class="error-box">
+API Error: Rate limit exceeded. Retry after 60s
+  </div>
+  <div class="solution">
+    <div class="solution-title">Co dělat:</div>
+    <p>Počkej minutu. Poté zkus znovu. Je to normální — free tier omezení.</p>
+  </div>
+
+  <h3>Chyba: Daily quota exceeded</h3>
+  <div class="error-box">
+API Error: Daily quota exceeded (50,000 tokens)
+  </div>
+  <div class="solution">
+    <div class="solution-title">Co dělat:</div>
+    <p>Počkej do zítřka. Pokud potřebuješ více — upgraduj na Google Cloud paid plan.</p>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Pro hobby projekt: FREE stačí</strong>
+      <p>60 requestů za minutu = 3,600 za hodinu. To je hodně. Jen pokud intenzivně pracuješ — nemusíš se bát.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Rate limiting — timeout čekání</h2>
+
+  <p>Když je agent pomalý nebo čeká na API.</p>
+
+  <h3>Chyba: Request timeout</h3>
+  <div class="error-box">
+Timeout: Request took longer than 30 seconds
+  </div>
+  <div class="solution">
+    <div class="solution-title">Co se stalo:</div>
+    <p>Agent dělá moc velký úkol. Gemini API trvá dlouho odpovědět.</p>
+    <div class="solution-title" style="margin-top:8px">Řešení:</div>
+    <p>Rozděl úkol na menší kusy. "Přidej filtr" je OK, ale "Redesignuj celou aplikaci" je moc.</p>
+  </div>
+
+  <h3>Chyba: Connection timeout (offline)</h3>
+  <div class="error-box">
+Error: Network timeout. Agent offline?
+  </div>
+  <div class="solution">
+    <div class="solution-title">Řešení:</div>
+    <p>Zkontroluj internet. Zkus znovu. Pokud je stále offline — restartuj Antigravity IDE.</p>
+  </div>
+
+  <h3>Jak se vyhnout timeoutům</h3>
+  <ul>
+    <li><strong>Menší úkoly</strong> — "Přidej button" ne "Udělej vše"</li>
+    <li><strong>Bez velkých souborů v kontextu</strong> — pokud máš 10MB soubor, agent to nebude číst</li>
+    <li><strong>Patience</strong> — někdy jde to pomaleji. Je to OK.</li>
+  </ul>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Network & Connection chyby</h2>
+
+  <h3>Chyba: No internet</h3>
+  <div class="error-box">
+Error: Unable to reach Gemini API. Check your connection.
+  </div>
+  <div class="solution">
+    <div class="solution-title">Řešení:</div>
+    <p>WiFi OK? Zkus: <code>ping google.com</code> v terminálu. Pokud není internet — restart routeru.</p>
+  </div>
+
+  <h3>Chyba: 403 Forbidden (API key invalid)</h3>
+  <div class="error-box">
+Error 403: Invalid API key or permission denied
+  </div>
+  <div class="solution">
+    <div class="solution-title">Co se stalo:</div>
+    <p>Tvůj Google účet není propojený nebo API key skončil.</p>
+    <div class="solution-title" style="margin-top:8px">Řešení:</div>
+    <p>File → Settings → Account → Reauth. Znovu se přihlas Google účtem.</p>
+  </div>
+
+  <h3>Chyba: 500 Server error</h3>
+  <div class="error-box">
+Error 500: Gemini API server error
+  </div>
+  <div class="solution">
+    <div class="solution-title">Řešení:</div>
+    <p>Není tvoje chyba. Google servery mají problém. Počkej 5 minut a zkus znovu.</p>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Jak diagnostikovat problém</h2>
+
+  <h3>Step 1: Co vidíš?</h3>
+  <ul>
+    <li>Chyba v Agent panelu? → Error message</li>
+    <li>Build padá? → Terminal output</li>
+    <li>Agent vůbec neodpovídá? → Network issue</li>
+  </ul>
+
+  <h3>Step 2: Kde je chyba?</h3>
+  <div class="solution">
+    <div class="solution-title">Terminal</div>
+    <p>Ctrl+` (backtick) → otevři terminal. <code>npm run build</code> a podívej se kde přesně selže.</p>
+  </div>
+
+  <div class="solution">
+    <div class="solution-title">Agent panel (vpravo)</div>
+    <p>Vidíš error message. Klikni "Details" pro víc info.</p>
+  </div>
+
+  <div class="solution">
+    <div class="solution-title">Browser console (DevTools)</div>
+    <p>F12 → Console → podívej se na JS chyby. Pokud je to runtime error, bude tam.</p>
+  </div>
+
+  <h3>Step 3: Jak to diagnostikovat</h3>
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Checklist diagnostiky</strong>
+      <p>1. Přečti si error message — co říká<br/>
+      2. Google error →StackOverflow řešení<br/>
+      3. Řekni agentovi přesně co vidíš<br/>
+      4. Agent zkusí opravit<br/>
+      5. Pokud nejde — revert (<code>git checkout .</code>)</p>
+    </div>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Checklist — co dělat když selže</h2>
+
+  <h3>Rychlý triage</h3>
+  <ol>
+    <li><strong>Přečti chybu</strong> — error message je tvůj průvodce</li>
+    <li><strong>Je to TypeScript?</strong> → Fixuj typ. Agent to často neví.</li>
+    <li><strong>Je to runtime?</strong> → Null check. <code>if (data)</code></li>
+    <li><strong>Je to network?</strong> → Zkontroluj internet. Reauth.</li>
+    <li><strong>Je to rate limit?</strong> → Počkej. Nebo downsize úkol.</li>
+    <li><strong>Nic z toho?</strong> → Undo. <code>git checkout .</code></li>
+  </ol>
+
+  <h3>Emergency Undo List</h3>
+  <ul>
+    <li><strong>Necommitnuté změny:</strong> <code>git checkout .</code></li>
+    <li><strong>Commitnuté změny:</strong> <code>git reset --hard HEAD~1</code></li>
+    <li><strong>Vrátit víc commitů zpět:</strong> <code>git reset --hard HEAD~5</code></li>
+    <li><strong>Specifický commit:</strong> <code>git reset --hard abc123</code></li>
+  </ul>
+
+  <h3>Preventivní opatření</h3>
+  <ul>
+    <li>✅ Commit PŘED tím než dáš agentovi úkol</li>
+    <li>✅ Push na GitHub (backup)</li>
+    <li>✅ .antigravity-rules soubor (limits agent)</li>
+    <li>✅ Malé úkoly (timeoutu se vyhneš)</li>
+    <li>✅ Čti approval plán (než schválíš)</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Není to strašné</strong>
+      <p>Antigravity IDE je bezpečné. Git ti vždycky umožní vrátit se. Zkoušej, neboj se selhání.</p>
+    </div>
+  </div>
+</div>
+
+<div id="pn"></div>
+
+<footer>
+  <span>09_IDE_Chyby_Limity.html · Antigravity IDE průvodce · Claude (Anthropic) · Duben 2026</span>
+  <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
+</footer>
+
+</div><!-- .wrap -->
+</div><!-- .main-content -->
+</div><!-- .container -->
+
+<script>
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progressBar');
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  bar.style.width = (scrollTop / height * 100) + '%';
+});
+</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

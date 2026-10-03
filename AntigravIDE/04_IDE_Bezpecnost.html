@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bezpečnost Antigravity IDE – průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="04">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "s1", "num": "4.1", "name": "Co agent vidí v tvém projektu" },
+    { "id": "s2", "num": "4.2", "name": "Approval workflow — jak funguje schválení" },
+    { "id": "s3", "num": "4.3", "name": "Allow/Deny listy — co smí agent dělat" },
+    { "id": "s4", "num": "4.4", "name": "Chránění citlivých dat" },
+    { "id": "s5", "num": "4.5", "name": "Data privacy — kde běží kód a data" },
+    { "id": "s6", "num": "4.6", "name": "Audit trail — co se dělo" },
+    { "id": "s7", "num": "4.7", "name": "Role-based access — pro týmy" },
+    { "id": "s8", "num": "4.8", "name": "Praktické bezpečnostní tipy" }
+  ]
+}
+</script>
+
+<div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
+<div class="wrap" style="max-width:900px">
+
+<header>
+  <div class="h-num">// kapitola 04</div>
+  <h1>Bezpečnost <em>Agenta</em></h1>
+  <p class="h-desc">Jak zkrotit autonomního agenta. Approval workflows, Allow/Deny listy, data privacy. Zaměřeno na tvůj problém s AI Studiem — aby se to NEOPAKOVALO.</p>
+  <div class="badges">
+    <span class="badge badge-r">🔒 Přístupová kontrola</span>
+    <span class="badge badge-g">✓ Schválení akcí</span>
+    <span class="badge badge-r">⚡ Bezpečnostní režimy</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Co agent vidí v tvém projektu</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Approval workflow — jak funguje</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Allow/Deny listy — co smí dělat</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Chránění citlivých dat</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Data privacy — kde běží kód</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Audit trail — co se dělo</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Role-based access — týmová práce</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Praktické bezpečnostní tipy</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Co agent vidí v tvém projektu</h2>
+
+  <p>Antigravity IDE agent pracuje v Workspace ve kterém ho otevřeš. <strong>Vidí všechny soubory ve všech přidaných složkách.</strong></p>
+
+  <h3>Co vidí agent?</h3>
+  <ul>
+    <li>Všechny soubory v <code>/src</code>, <code>/public</code>, <code>package.json</code>, vše</li>
+    <li>Obsah tvého terminálu a výstupy příkazů</li>
+    <li>Git historii (commity, větve)</li>
+    <li>Obsah <code>.env</code> souboru (pokud není ignorován!)</li>
+    <li>Obsah jakéhokoliv souboru co bude otevřený v editoru</li>
+  </ul>
+
+  <div class="box danger">
+    <span class="icon">🔴</span>
+    <div class="content">
+      <strong>Nikdy neukládej hesla či klíče v .env nebo v kódu</strong>
+      <p>Pokud je tam API klíč, heslo k databázi nebo cokoliv citlivého — agent to vidí a může to poslat Google serverům. <strong>Vždy</strong> používej <code>.env</code> který je v <code>.gitignore</code> a v Antigravity IDE project settings ho ignorovat.</p>
+    </div>
+  </div>
+
+  <h3>Co agent NEVIDÍ?</h3>
+  <ul>
+    <li>Soubory mimo tvůj Workspace (v jiných složkách)</li>
+    <li>Ostatní projekty které nejsou v Workspace</li>
+    <li>Tvůj obsah v prohlížeči (jen pokud máš Chrome extension a ty mu řekneš aby se tam podíval)</li>
+    <li>Obsah tvého disku mimo projekt</li>
+  </ul>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Approval workflow — jak funguje schválení</h2>
+
+  <p>Toto je tvoje hlavní ochrana. Agent si nemůže jen tak "rozmyslet" co udělá — musí tě požádat.</p>
+
+  <h3>Kroky schvalovacího procesu</h3>
+
+  <div class="card-mini" style="border-left:3px solid var(--green);margin:14px 0">
+    <h4 style="color:var(--green2)">1️⃣ Agent vidí task</h4>
+    <p>Ty napíšeš: "Přidej filter na cenu". Agent si to přečte.</p>
+  </div>
+
+  <div class="card-mini" style="border-left:3px solid var(--cyan);margin:14px 0">
+    <h4 style="color:var(--cyan2)">2️⃣ Agent tvoří PLÁN</h4>
+    <p>Zobrazí se v Artifacts: "Změní soubor X na řádku Y, přidá komponenty Z". <strong>Stále nic není změněno.</strong></p>
+  </div>
+
+  <div class="card-mini" style="border-left:3px solid var(--amber);margin:14px 0">
+    <h4 style="color:var(--amber2)">3️⃣ TY schválíš nebo odmítneš</h4>
+    <p>Vidíš plán a rozhodneš se. Tlačítka: <code>[Approve]</code> <code>[Edit]</code> <code>[Reject]</code></p>
+  </div>
+
+  <div class="card-mini" style="border-left:3px solid var(--green);margin:14px 0">
+    <h4 style="color:var(--green2)">4️⃣ Agent PROVÁDÍ (jen pokud yes)</h4>
+    <p>Změny se aplikují, vidíš to v terminálu, vidíš diffs.</p>
+  </div>
+
+  <div class="card-mini" style="border-left:3px solid var(--cyan);margin:14px 0">
+    <h4 style="color:var(--cyan2)">5️⃣ Agent ověřuje (Verification)</h4>
+    <p>Spustí build, screenshoty, ukazuje že to funguje.</p>
+  </div>
+
+  <h3>V Review-Driven režimu (doporučeno)</h3>
+  <p><strong>Agent si nemůže nic vzít jako samozřejmost.</strong> Každý krok musí být schválen. Není "iniciativy" která by tě překvapila.</p>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>To je rozdíl od AI Studio</strong>
+      <p>V AI Studiu agent viděl tvůj kód, řekl si "hmm, k tomu by se hodilo i tohle" a dělal to bez ptaní. V Antigravity IDE: "Chceš aby já taky udělal X?" A ty můžeš říct "NE, jenom Y!"</p>
+    </div>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Allow/Deny listy — co smí agent dělat</h2>
+
+  <p>Kromě schválení jednotlivých akcí můžeš agentovi permanentně určit hranice.</p>
+
+  <h3>Kde to nastavit?</h3>
+  <p>Settings → Agent → Permissions → Allow/Deny Lists</p>
+
+  <h3>Allow List — co agent SMÍ dělat</h3>
+  <p>Pokud je Allow list zapnutý, agent může dělat <strong>POUZE</strong> co tam máš:</p>
+
+  <div class="config-block" style="color:var(--cyan)">
+Allow:
+  - modify files in /src
+  - modify files in /public
+  - run: npm run build
+  - run: npm run dev
+  - Deny: delete files
+  - Deny: modify package.json
+  - Deny: run npm install
+  </div>
+
+  <p><strong>Efekt:</strong> Agent může měnit kód, ale NEMŮŽE instalovat balíčky ani mazat soubory. Ochrana!</p>
+
+  <h3>Deny List — co agent NESMÍ dělat</h3>
+  <p>Opačné — co konkrétně je zakázáno:</p>
+
+  <div class="config-block" style="color:var(--red2)">
+Deny:
+  - delete any files
+  - modify database.json
+  - modify .env
+  - run: rm -rf
+  </div>
+
+  <h3>Jak to použít pro tvůj projekt?</h3>
+  <div class="grid2">
+    <div class="card-mini" style="border-color:rgba(16,185,129,.3)">
+      <h4 style="color:var(--green2)">✓ Co doporučuji povolit</h4>
+      <p>modify files in /src<br/>modify files in /public<br/>run: npm run dev<br/>run: npm run build</p>
+    </div>
+    <div class="card-mini" style="border-color:rgba(239,68,68,.3)">
+      <h4 style="color:var(--red2)">✗ Co zakázat</h4>
+      <p>delete any files<br/>modify package.json<br/>run: npm install<br/>modify .env</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Pozor: Allow list je přísnější</strong>
+      <p>Pokud máš Allow list — agent NIČEHO jiného nemůže dělat. Pokud máš Deny list — agent smí všechno kromě zakázaného. Volba pro receptář: Deny list.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Chránění citlivých dat</h2>
+
+  <p>Konkrétní věci které musíš chránit:</p>
+
+  <h3>❌ NIKDY v projektu:</h3>
+  <ul>
+    <li><strong>API klíče</strong> — Google, Firebase, atd.</li>
+    <li><strong>Hesla</strong> — databáze, služby</li>
+    <li><strong>Database URL</strong> — pokud je produkční</li>
+    <li><strong>Privátní tokeny</strong> — JWT, OAuth tokeny</li>
+  </ul>
+
+  <h3>Jak je správně chránit?</h3>
+  <div class="checklist">
+    <h4>✓ Bezpečný postup</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Vytvoř soubor <code>.env.local</code> — tam všechny klíče</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Přidej <code>.env.local</code> do <code>.gitignore</code> — nesmí jít na GitHub</div>
+    <div class="cl-item"><span class="cl-box">☐</span> V Antigravity IDE Settings → Project → Ignore Files → přidej <code>.env.local</code></div>
+    <div class="cl-item"><span class="cl-box">☐</span> Agent nebude vidět <code>.env.local</code> — ochrana</div>
+  </div>
+
+  <h3>Pro receptář konkrétně:</h3>
+  <p><code>.env.local</code> tam patří:</p>
+  <div class="config-block">
+# .env.local (NEVER na GitHub, nikdy pro agenta)
+VITE_GOOGLE_API_KEY=tvuj-tajny-klic
+NEXT_PUBLIC_SUPABASE_URL=https://...
+DATABASE_PASSWORD=super-tajne
+  </div>
+
+  <div class="box info">
+    <span class="icon">💡</span>
+    <div class="content">
+      <strong>Env variables v kódu</strong>
+      <p>V kódu pak používáš <code>process.env.VITE_GOOGLE_API_KEY</code> — a ta se na runtime načte z <code>.env.local</code>. Agent vidí jen že tu je reference, ale ne hodnotu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Data privacy — kde běží kód a data</h2>
+
+  <h3>Kde se zpracovávají tvá data?</h3>
+
+  <table class="risk-table">
+    <thead><tr><th>Komponenta</th><th>Kde běží</th><th>Privátnost</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Antigravity IDE</td>
+        <td>Tvůj lokální počítač</td>
+        <td style="color:var(--green2)">✓ Lokální, nic se neodesílá</td>
+      </tr>
+      <tr>
+        <td>Tvůj kód (src/)</td>
+        <td>Tvůj počítač + Gemini API</td>
+        <td style="color:var(--amber2)">⚠️ Agent to vidí a může to poslat Google</td>
+      </tr>
+      <tr>
+        <td>Terminal výstup</td>
+        <td>Tvůj počítač</td>
+        <td style="color:var(--green2)">✓ Lokální, pokud agent to nesdílí</td>
+      </tr>
+      <tr>
+        <td>Chrome Extension screenshoty</td>
+        <td>Tvůj počítač + Gemini API</td>
+        <td style="color:var(--amber2)">⚠️ Screenshot se může poslat Google (pokud ho agent sdílí)</td>
+      </tr>
+      <tr>
+        <td>Aplikace (localhost:3000)</td>
+        <td>Tvůj počítač (ve VS Code)</td>
+        <td style="color:var(--green2)">✓ Lokální, není na internetu</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box danger">
+    <span class="icon">🔴</span>
+    <div class="content">
+      <strong>Kód = data na Google serverech</strong>
+      <p>Když agent pracuje, tvůj kód jde na Google API. To je normální pro Gemini/AI. Pokud máš velmi citlivý kód (na produkční data, bezpečnostní logiku) — měl bys si to uvědomit.</p>
+    </div>
+  </div>
+
+  <h3>Local-only režim (pokud je dostupný)</h3>
+  <p>Některé Antigravity IDE verze mají "Local Only Mode" — agent pracuje bez posílání do cloudu. Pokud je to pro tebe kritické, zjisti si jestli je dostupné.</p>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Audit trail — co se dělo</h2>
+
+  <p>Antigravity IDE si pamatuje co agent dělal. Můžeš si to prohlédnout.</p>
+
+  <h3>Kde je historii akcí?</h3>
+  <p>View → Agent History (nebo Command Palette → Show Agent Activity)</p>
+
+  <h3>Co vidíš v historii?</h3>
+  <ul>
+    <li>Kdy se spustilo</li>
+    <li>Co agent dělal (plán)</li>
+    <li>Co přesně změnil (diff)</li>
+    <li>Co se stalo (build status, výstupy)</li>
+    <li>Byl-li schválen či ne</li>
+  </ul>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Praktické užití: "Kontrola zpět"</strong>
+      <p>Pokud si myslíš že agent něco podivného dělal — otevři historii, podívej se přesně co se změnilo. Pak můžeš <code>git checkout</code> nebo <code>undo</code>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Role-based access — pro týmy</h2>
+
+  <p>Pokud by na projektu pracovalo více lidí (nyní pro tebe neaktuální, ale užitečné vědět):</p>
+
+  <h3>Role které existují</h3>
+  <ul>
+    <li><strong>Owner</strong> — tvůrce. Všechna práva.</li>
+    <li><strong>Editor</strong> — může měnit kód, spouštět agenty.</li>
+    <li><strong>Reviewer</strong> — vidí změny, schvaluje. Nemůže sám měnit.</li>
+    <li><strong>Viewer</strong> — jen čte, nic nezmění.</li>
+  </ul>
+
+  <p>Pro tvůj projekt sám: Ty jsi Owner. Hotovo.</p>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Praktické bezpečnostní tipy</h2>
+
+  <div class="checklist">
+    <h4>🔒 Tvůj checklist bezpečnosti</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Spusť Antigravity IDE s Review-Driven režimem (ne Full Autonomy)</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Vytvoř .gitignore s .env.local a jeho zákaz v Antigravity IDE</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Postav Deny list: delete, package.json, .env, npm install</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Před prací s agentem: git commit (záloha)</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Čti každý plán. Nepřeskakuj schvalování.</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Když agent neví — řekni mu "Show me what you changed"</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Pravidelně kontroluj Agent History</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Nesdílej API klíče. Nikdy. Vůbec.</div>
+  </div>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Při prvního spuštění s agentem</strong>
+      <p>Dej agentovi malý, nekritický task. Třeba "Přidej komentář do souboru README". Uvidíš jak pracuje, jak vypadá workflow. Pak když budeš jistý — komplexnější věci.</p>
+    </div>
+  </div>
+
+  <h3>Když se agent choval divně:</h3>
+  <ol>
+    <li>Podívej se do Agent History — co přesně dělal?</li>
+    <li><code>git checkout .</code> — vrátí vše do posledního commitu</li>
+    <li>Znovu si sedni s agentem — co se stalo? Řekni mu pravidla znova.</li>
+  </ol>
+</div>
+
+<div id="pn"></div>
+
+<footer>
+  <span>04_IDE_Bezpecnost.html · Antigravity IDE průvodce · Claude (Anthropic) · Duben 2026</span>
+  <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
+</footer>
+
+</div><!-- .wrap -->
+</div><!-- .main-content -->
+</div><!-- .container -->
+
+<script>
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progressBar');
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  bar.style.width = (scrollTop / height * 100) + '%';
+});
+</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

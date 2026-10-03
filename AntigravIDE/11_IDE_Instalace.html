@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instalace & Cleanup – Antigravity IDE průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="11">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "s1", "num": "11.1", "name": "Instalace — co se děje" },
+    { "id": "s2", "num": "11.2", "name": "Kde se co instaluje" },
+    { "id": "s3", "num": "11.3", "name": "Ověření instalace" },
+    { "id": "s4", "num": "11.4", "name": "Systémové permise a přístupy" },
+    { "id": "s5", "num": "11.5", "name": "Jak odinstalovat Antigravity IDE" },
+    { "id": "s6", "num": "11.6", "name": "Jak očistit všechny zbytky" },
+    { "id": "s7", "num": "11.7", "name": "Kompletní cleanup checklist" },
+    { "id": "s8", "num": "11.8", "name": "Windows vs Linux — důležité rozdíly" }
+  ]
+}
+</script>
+
+<div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
+<div class="wrap" style="max-width:900px">
+
+<header>
+  <div class="h-num">// kapitola 11</div>
+  <h1>Instalace & <em>Cleanup</em></h1>
+  <p class="h-desc">Kde se všechno instaluje, co se stane na tvém počítači, a jak to všechno úplně čistě odstranit když to přestaneš potřebovat. Bez zbytků.</p>
+  <div class="badges">
+    <span class="badge badge-r">📦 Instalace</span>
+    <span class="badge badge-c">🧹 Cleanup</span>
+    <span class="badge badge-r">🔍 Co se změní</span>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="toc-title">Obsah kapitoly</div>
+  <div class="toc-list">
+    <a class="toc-item" href="#s1"><span class="toc-dot">01</span> Instalace — co se děje</a>
+    <a class="toc-item" href="#s2"><span class="toc-dot">02</span> Kde se co instaluje</a>
+    <a class="toc-item" href="#s3"><span class="toc-dot">03</span> Ověření instalace</a>
+    <a class="toc-item" href="#s4"><span class="toc-dot">04</span> Systémové permise a přístupy</a>
+    <a class="toc-item" href="#s5"><span class="toc-dot">05</span> Jak odinstalovat Antigravity IDE</a>
+    <a class="toc-item" href="#s6"><span class="toc-dot">06</span> Jak očistit všechny zbytky</a>
+    <a class="toc-item" href="#s7"><span class="toc-dot">07</span> Kompletní cleanup checklist</a>
+    <a class="toc-item" href="#s8"><span class="toc-dot">08</span> Windows vs Linux — rozdíly</a>
+  </div>
+</div>
+
+<!-- 01 -->
+<div class="sec" id="s1">
+  <div class="sec-label">// sekce 01</div>
+  <h2>Instalace — co se děje</h2>
+
+  <p>Antigravity IDE je aplikace na bázi VS Code, kterou si nainstaluješ na lokální počítač. Nic se neposílá do cloudu během instalace.</p>
+
+  <h3>Co se stane během instalace?</h3>
+  <ul>
+    <li><strong>Stáhne se balíček</strong> (cca 200-400 MB) z Google serverů</li>
+    <li><strong>Rozbalí se do složky</strong> na tvém disku (obvykle Program Files nebo /usr/local)</li>
+    <li><strong>Vytvoří se registrační klíč</strong> (Windows) nebo konfigurace (Linux/Mac)</li>
+    <li><strong>Integruje se do systému</strong> — můžeš spustit <code>antigravity</code> z terminálu kdekoliv</li>
+    <li><strong>Vytvoří se konfigurační složka</strong> (~/.antigravity) v domovské složce</li>
+  </ul>
+
+  <h3>Jak instalace vypadá prakticky</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Stažení</div>
+        <p>Stáhneš instalátor z <code>antigravity.google.com/download</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Spuštění instalace</div>
+        <p>Dvakrát klikni na <code>.exe</code> (Windows) nebo <code>.dmg/.deb</code> (Linux/Mac)</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Průvodce instalací</div>
+        <p>Klikáš "Next" → "Install" → "Finish". Standardní proces.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">První spuštění</div>
+        <p>Antigravity IDE se otevře, poprosí tě aby ses přihlásil Google účtem</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Instalace je jednoduchá — žádné překvapení</strong>
+      <p>Je to jako instalovat jakýkoliv program. Klikáš, čekáš, hotovo. Žádné skryté složky, žádné chytrosti.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="sec" id="s2">
+  <div class="sec-label">// sekce 02</div>
+  <h2>Kde se co instaluje</h2>
+
+  <h3>Windows</h3>
+  <div class="diagram">
+Program Files<br/>
+├─ Google<br/>
+│  └─ Antigravity IDE<br/>
+│     ├─ antigravity.exe<br/>
+│     ├─ resources<br/>
+│     └─ ...files...<br/>
+<br/>
+AppData\Roaming<br/>
+├─ Google\Antigravity IDE<br/>
+│  └─ settings.json<br/>
+│  └─ workspaces<br/>
+│  └─ extensions
+  </div>
+
+  <h3>Linux</h3>
+  <div class="diagram">
+/usr/local/bin<br/>
+└─ antigravity<br/>
+<br/>
+/usr/local/share<br/>
+└─ antigravity<br/>
+   ├─ resources<br/>
+   └─ ...files...<br/>
+<br/>
+~/.config/antigravity<br/>
+├─ settings.json<br/>
+├─ workspaces<br/>
+└─ extensions
+  </div>
+
+  <h3>Klíčové složky (důležité pro cleanup)</h3>
+  <ul>
+    <li><strong>Aplikace</strong> — Program Files (Windows) / /usr/local (Linux)</li>
+    <li><strong>Konfigurace & Data</strong> — ~/.antigravity (na všech OS)</li>
+    <li><strong>Workspace settings</strong> — .antigravity-config v projektu (lokálně v složce kde pracuješ)</li>
+    <li><strong>Extensions</strong> — ~/.antigravity/extensions</li>
+  </ul>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Skryté složky</strong>
+      <p>Složky začínající tečkou (.) jsou skryté. Abys je viděl v File Exploreru (Windows) nebo Finderu (Mac), musíš zapnout "Show hidden files".</p>
+    </div>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="sec" id="s3">
+  <div class="sec-label">// sekce 03</div>
+  <h2>Ověření instalace</h2>
+
+  <p>Jak vědět že se Antigravity IDE správně nainstaloval?</p>
+
+  <h3>Kontrola 1: Antigravity IDE je přístupný z terminálu</h3>
+  <div class="code-block">
+$ antigravity --version<br/>
+Antigravity IDE 1.2.5<br/>
+<br/>
+✓ Pokud vidíš verzi — OK
+  </div>
+
+  <h3>Kontrola 2: Aplikace se spustí</h3>
+  <div class="code-block">
+$ antigravity
+<br/>
+(Měla by se otevřít GUI aplikace)
+  </div>
+
+  <h3>Kontrola 3: Konfigurace existuje</h3>
+  <div class="code-block">
+# Windows:<br/>
+dir %APPDATA%\Google\Antigravity IDE<br/>
+<br/>
+# Linux/Mac:<br/>
+ls ~/.antigravity
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Pokud všechny tři kontroly projdou — instalace je OK</strong>
+      <p>Antigravity IDE je připravený na použití.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="sec" id="s4">
+  <div class="sec-label">// sekce 04</div>
+  <h2>Systémové permise a přístupy</h2>
+
+  <p>Antigravity IDE nepoužívá žádná speciální systémová oprávnění, ale měl by mít přístup k:</p>
+
+  <h3>Co Antigravity IDE potřebuje:</h3>
+  <ul>
+    <li><strong>Čtení a zápis do souborů v Workspace</strong> — tvoje projekty</li>
+    <li><strong>Spouštění příkazů v terminálu</strong> — npm, git, build</li>
+    <li><strong>Přístup k Internetu</strong> — propojení s Google Gemini API</li>
+    <li><strong>Přístup k Chrome/Chromium</strong> — pokud máš extension (screenshot)</li>
+  </ul>
+
+  <h3>Co NEPOTŘEBUJE:</h3>
+  <ul>
+    <li>Administrátorský přístup (na Windows)</li>
+    <li>root přístup (na Linux)</li>
+    <li>Přístup k systémovým souborům mimo instalační složku</li>
+    <li>Přístup k ostatním uživatelským účtům</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>Nikdy nespouštěj Antigravity IDE "jako správce"</strong>
+      <p>Na Windows to není potřeba a zvyšuje to rizika. Antigravity IDE pracuje bez admin práv.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="sec" id="s5">
+  <div class="sec-label">// sekce 05</div>
+  <h2>Jak odinstalovat Antigravity IDE</h2>
+
+  <h3>Windows — Nastavení Aplikace</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-b">
+        <div class="step-t">Otevři Nastavení</div>
+        <p>Start → Settings → Apps → Installed apps</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-b">
+        <div class="step-t">Najdi Antigravity IDE</div>
+        <p>Hledej "Antigravity IDE" nebo "Google Antigravity IDE"</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-b">
+        <div class="step-t">Klikni na tři tečky → Uninstall</div>
+        <p>Potvrď že chceš odinstalovat. Průvodce udělá zbytek.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-b">
+        <div class="step-t">Restart (pokud se zeptá)</div>
+        <p>Někdy je potřeba restartovat Windows</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Linux — Package Manager</h3>
+  <div class="code-block">
+# Debian/Ubuntu:<br/>
+sudo apt-get remove antigravity<br/>
+sudo apt-get autoremove<br/>
+<br/>
+# Fedora:<br/>
+sudo dnf remove antigravity
+  </div>
+
+  <h3>Mac — Uninstaller</h3>
+  <div class="code-block">
+# Pokud existuje uninstall skript:<br/>
+/Applications/Google\ Antigravity IDE.app/Contents/MacOS/uninstall<br/>
+<br/>
+# Nebo tradičně:<br/>
+rm -rf /Applications/Google\ Antigravity IDE.app
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Po odinstalaci:</strong>
+      <p>Hlavní aplikace je pryč. Ale konfigurační soubory a data zůstávají (viz sekce 06).</p>
+    </div>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="sec" id="s6">
+  <div class="sec-label">// sekce 06</div>
+  <h2>Jak očistit všechny zbytky</h2>
+
+  <p>Po odinstalaci je chytré smazat i konfigurační složky a data.</p>
+
+  <h3>Windows — Smazání zbytků</h3>
+  <div class="code-block">
+# 1. Smaž konfiguraci:<br/>
+rmdir /S %APPDATA%\Google\Antigravity IDE<br/>
+<br/>
+# 2. Smaž workspace data:<br/>
+rmdir /S %APPDATA%\Google\AntigravityData<br/>
+<br/>
+# 3. Smaž z registry (pokud existuje):<br/>
+# (To udělá automaticky uninstaller)
+  </div>
+
+  <h3>Linux/Mac — Smazání zbytků</h3>
+  <div class="code-block">
+# Smaž všechny konfigurace:<br/>
+rm -rf ~/.antigravity<br/>
+rm -rf ~/.config/antigravity<br/>
+<br/>
+# Smaž workspace data:<br/>
+rm -rf ~/.local/share/antigravity
+  </div>
+
+  <h3>Projekt-specifické soubory (v Workspace)</h3>
+  <p>V každé složce projektu kde jsi s Antigravity IDE pracoval mohou být soubory:</p>
+  <div class="code-block">
+.antigravity-config.json  ← smaž pokud chceš<br/>
+.antigravity-cache/       ← lze smazat, bude regenerována
+  </div>
+
+  <p>Ty nejsou kritické — projekty budou fungovat bez nich. Ale čistota je pěkná.</p>
+
+  <div class="box warn">
+    <span class="icon">⚠️</span>
+    <div class="content">
+      <strong>NEPŘEKRAČUJ toto!</strong>
+      <p>Nemaž <code>.git</code>, <code>node_modules</code>, <code>src</code> nebo ostatní součásti projektu. Smaž jen Antigravity IDE-specifické věci (`.antigravity-*`).</p>
+    </div>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="sec" id="s7">
+  <div class="sec-label">// sekce 07</div>
+  <h2>Kompletní cleanup checklist</h2>
+
+  <div class="checklist">
+    <h4>🧹 Pokud chceš Antigravity IDE úplně smazat</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Zavřít všechny otevřené projekty v Antigravity IDE</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Zavřít Antigravity IDE aplikaci úplně</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Odinstalovat přes Nastavení/Package Manager</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Smazat ~/.antigravity složku</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Smazat ~/.config/antigravity (Linux/Mac)</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Smazat AppData\Google\Antigravity IDE (Windows)</div>
+    <div class="cl-item"><span class="cl-box">☐</span> V projektech: smazat .antigravity-config.json soubory</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Restartovat počítač (pro jistotu)</div>
+  </div>
+
+  <div class="checklist">
+    <h4>✓ Ověření že je všechno pryč</h4>
+    <div class="cl-item"><span class="cl-box">☐</span> Zkus: antigravity --version → "command not found"</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Zkus: ls ~/.antigravity → složka neexistuje</div>
+    <div class="cl-item"><span class="cl-box">☐</span> V Nastavení: Antigravity IDE se v seznamu aplikací neobjevuje</div>
+    <div class="cl-item"><span class="cl-box">☐</span> Projekty můžeš otevřít v normálním VS Code bez problémů</div>
+  </div>
+
+  <div class="box tip">
+    <span class="icon">✓</span>
+    <div class="content">
+      <strong>Po tomto checklistu je počítač ve stejném stavu jako před instalací</strong>
+      <p>Žádné zbytky, žádné konflikty, nic.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 08 -->
+<div class="sec" id="s8">
+  <div class="sec-label">// sekce 08</div>
+  <h2>Windows vs Linux — důležité rozdíly</h2>
+
+  <div class="grid2">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px">
+      <h4 style="margin-top:0;color:var(--cyan2)">Windows</h4>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Instalace přes exe + Nastavení</p>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Soubory jsou v AppData</p>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Odinstaluje se přes GUI</p>
+      <p style="font-size:.85em;color:var(--t2)">Složky jsou skryté — musíš zapnout View Hidden</p>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px">
+      <h4 style="margin-top:0;color:var(--cyan2)">Linux/Mac</h4>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Instalace přes package manager</p>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Soubory jsou v ~/.config</p>
+      <p style="font-size:.85em;color:var(--t2);margin-bottom:8px">Odinstalace přes apt-get/dnf</p>
+      <p style="font-size:.85em;color:var(--t2)">Cleanup přes rm -rf (pozor na příkaz!)</p>
+    </div>
+  </div>
+
+  <h3>Terminál vs GUI</h3>
+  <p><strong>Windows:</strong> Odinstalace v GUI je nejjednodušší. Terminálem je zbytečně komplikované.</p>
+  <p><strong>Linux:</strong> Terminálem je nejrychlejší a nejbezpečnější. GUI není vždycky dostupné.</p>
+
+  <h3>Skryté složky — Linux/Mac je jednodušší</h3>
+  <p><strong>Windows:</strong> Musíš zapnout "Show hidden files" v File Exploreru</p>
+  <p><strong>Linux/Mac:</strong> <code>ls -la</code> v terminálu všechno ukazuje</p>
+
+  <div class="box info">
+    <span class="icon">ℹ️</span>
+    <div class="content">
+      <strong>Pro Linux uživatele:</strong>
+      <p>Nenech se zmást — <code>rm -rf ~/.antigravity</code> je bezpečné. Tečka znamená "home directory", ne root. Smaž jen to.</p>
+    </div>
+  </div>
+</div>
+
+<div id="pn"></div>
+
+<footer>
+  <span>11_IDE_Instalace.html · Antigravity IDE průvodce · Claude (Anthropic) · Duben 2026</span>
+  <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
+</footer>
+
+</div><!-- .wrap -->
+</div><!-- .main-content -->
+</div><!-- .container -->
+
+<script>
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progressBar');
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  bar.style.width = (scrollTop / height * 100) + '%';
+});
+</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

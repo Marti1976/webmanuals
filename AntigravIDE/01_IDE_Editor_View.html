@@ -65,7 +65,7 @@
 
   <p>Antigravity IDE má dva různé módy práce. Právě teď se zaměříme na <strong>Editor View</strong> — to je ten tradičnější, více "pod tvou kontrolou".</p>
 
-  <h3>Editor View = VS Code + bočný agent panel</h3>
+  <h3>Editor View = VS Code + boční agent panel</h3>
   <p>Levá strana: klasické VS Code — soubory, struktura projektu, editace kódu, všechno co znáš. Pravá strana (nebo v panelu): agent kterého můžeš psát. Můžeš sám kódovat, agent ti pomáhá — nebo mu dáš úkol a on kóduje zatímco ty čekáš.</p>
 
   <div class="compare">
@@ -81,7 +81,7 @@
       <div class="comp-title" style="color:var(--amber2)">❌ Co Editor View NENÍ</div>
       <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Není to Agent-first (to je Manager View)</span></div>
       <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Nejde tu paralelně více agentů</span></div>
-      <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Agent neví co chceš dok ho explicitně neřekneš</span></div>
+      <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Agent neví co chceš dokud ho explicitně neřekneš</span></div>
       <div class="comp-row"><span class="comp-icon">✗</span><span class="comp-text">Není to AI Studio chatbox</span></div>
     </div>
   </div>
@@ -121,7 +121,7 @@
   <ul>
     <li><strong>Chat s agentem</strong> — napíšeš task, agent mu rozumí v kontextu celého projektu, může se ptát dál.</li>
     <li><strong>Artifacts panel</strong> — agent zde zobrazuje to co dělá: plány, diffs kódu, screenshoty (pokud má Chrome extension).</li>
-    <li><strong>Status agenta</strong> — víš jestli agent čeká, pracuje, nebo čeka na tvé schválení.</li>
+    <li><strong>Status agenta</strong> — víš jestli agent čeká, pracuje, nebo čeká na tvé schválení.</li>
   </ul>
 
   <div class="diagram">
@@ -162,7 +162,7 @@
   <div class="sec-label">// sekce 03</div>
   <h2>Jak agent v Editor View funguje</h2>
 
-  <p>Přihlášeníš si v Antigravity IDE, otevřeš Editor View, a vidíš agent panel. Co se stane když mu cokoliv řekneš?</p>
+  <p>Přihlásíš se v Antigravity IDE, otevřeš Editor View, a vidíš agent panel. Co se stane když mu cokoliv řekneš?</p>
 
   <h3>Typický workflow agenta</h3>
   <div class="steps">
@@ -181,7 +181,7 @@
         <div class="step-t">Agent PLÁNUJE (Plan Artifact)</div>
         <p>Zobrazí se plán co bude dělat:</p>
         <p style="font-size:.85em;color:var(--cyan);font-family:'DM Mono'">📋 Plan:<br/>- Otevřu RecipeCard.tsx<br/>- Přidám import Lucide Heart ikony<br/>- Přidám state pro isFavorite<br/>- Rendernu button s ikonou na řádku 45<br/>- Uložím soubor</p>
-        <p><strong>Klíčové:</strong> Agent se PTÁŠ na schválení. Nečeká jen tak.</p>
+        <p><strong>Klíčové:</strong> Agent se PTÁ na schválení. Nečeká jen tak.</p>
       </div>
     </div>
 
@@ -207,7 +207,7 @@
       <div class="step-n">5</div>
       <div class="step-b">
         <div class="step-t">Agent OVĚŘUJE (Verification)</div>
-        <p>Pokud má Chrome extension nainstalovanou, spustí aplikaci v prohlížeči, udělá screenshot, ukaže že tlačítko se zobrazuje správně.</p>
+        <p>Pokud má Chrome extension nainstalovanou, spustí aplikaci v prohlížeči, udělá screenshot, ukáže že tlačítko se zobrazuje správně.</p>
         <p><strong>Nebo jen sám řekne:</strong> "Hotovo, 3 soubory změněno, žádných chyb"</p>
       </div>
     </div>
@@ -227,25 +227,25 @@
   <div class="sec-label">// sekce 04</div>
   <h2>Artifacts — co to je a proč je to důležité</h2>
 
-  <p>Artifacts jsou věci které agent vytváří a mezi vámi sdílí. Nejde o "raw tool calls" nebo technické hlášky — jde o věci které chypeš i ty.</p>
+  <p>Artifacts jsou věci které agent vytváří a mezi vámi sdílí. Nejde o "raw tool calls" nebo technické hlášky — jde o věci které chápeš i ty.</p>
 
   <h3>Jaké Artifacts agent generuje?</h3>
   <ul>
     <li><strong>Plan (Plánování)</strong> — co bude agent dělat, krok za krokem. Vidíš to předtím než se stane.</li>
-    <li><strong>Code Diff</strong> — změny v souborech. Barevně zvýrazneno co se změnilo (+zelená, -červená).</li>
+    <li><strong>Code Diff</strong> — změny v souborech. Barevně zvýrazněno co se změnilo (+zelená, -červená).</li>
     <li><strong>Screenshot</strong> — pokud agent spustil aplikaci v prohlížeči, vidíš jak to vypadá.</li>
     <li><strong>Task List</strong> — seznam úkolů pro agent nebo progress report.</li>
     <li><strong>Error Report</strong> — pokud něco selhalo, agent to dokumentuje s vysvětlením.</li>
   </ul>
 
   <h3>Proč na Artifacts záleží?</h3>
-  <p>V AI Studiu jsi viděl jen výsledky — a případně jsi si všimla až když už bylo pozdě. Artifacts ti dávají <strong>vizibilitu a kontrolu</strong>. Vidíš přesně co se změní dřív než se to změní.</p>
+  <p>V AI Studiu jsi viděl jen výsledky — a případně jsi si všiml až když už bylo pozdě. Artifacts ti dávají <strong>viditelnost a kontrolu</strong>. Vidíš přesně co se změní dřív než se to změní.</p>
 
   <div class="box tip">
     <span class="icon">✓</span>
     <div class="content">
       <strong>Jak Artifacts fungují v praxi</strong>
-      <p>Agent zobrazí Plan → ty si ho přečteš → buď klikneš Approve (pokračuj), nebo comentuješ jako v Google Docs ("ne, nechci smazat DB, jenom přidej nový field"). Agent vidí tvůj komentář a přizpůsobí se.</p>
+      <p>Agent zobrazí Plan → ty si ho přečteš → buď klikneš Approve (pokračuj), nebo komentuješ jako v Google Docs ("ne, nechci smazat DB, jenom přidej nový field"). Agent vidí tvůj komentář a přizpůsobí se.</p>
     </div>
   </div>
 </div>
@@ -525,7 +525,7 @@ $ npm run build<br/>
     <span class="icon">💡</span>
     <div class="content">
       <strong>Pozorování z příkladu</strong>
-      <p>Vidíš PLÁN předtím než se cokoliv změní. Vidíš DIFFU co se změnilo. Vidíš SCREENSHOT výsledku. Má jsi šanci zastavit v kterémkoliv kroku. To je kontrola kterou jsi měla z AI Studio.</p>
+      <p>Vidíš PLÁN předtím než se cokoliv změní. Vidíš DIFFU co se změnilo. Vidíš SCREENSHOT výsledku. Máš šanci zastavit v kterémkoliv kroku. To je kontrola kterou jsi měl z AI Studio.</p>
     </div>
   </div>
 </div>
