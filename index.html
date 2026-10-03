@@ -57,7 +57,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1536px;
             margin: 0 auto;
             padding: 60px 24px;
             flex: 1;
@@ -440,12 +440,25 @@
 <!-- FIRECRACKER BUTTON -->
 <button class="firecracker-btn" onclick="openAgeModal()" title="Sekce 18+">🧨</button>
 
+        <div class="container">
         <header>
             <h1>Webový Manuál</h1>
             <p class="subtitle">Centrální rozcestník pro vaši dokumentaci, pravidla a průvodce. Vyberte požadovaný manuál pro pokračování.</p>
         </header>
 
         <main>
+
+            <!-- ══════════════════════════════════════
+                 ODDĚLOVAČ — HLAVNÍ MANUÁLY
+            ══════════════════════════════════════ -->
+            <div class="section-divider">
+                <div class="section-divider-line"></div>
+                <div class="section-divider-label">
+                    <span class="div-icon">🤖</span>
+                    <span>AI</span>
+                </div>
+                <div class="section-divider-line"></div>
+            </div>
 
             <!-- ══════════════════════════════════════
                  HLAVNÍ MANUÁLY
@@ -625,7 +638,28 @@
                     <p class="card-desc">Instalace Pythonu, nastavení PATH a instalace všech potřebných knihoven přes pip. Krok za krokem.</p>
                     <span class="card-link">Otevřít návod <span>→</span></span>
                 </a>				
-                <a href="Ostatni/asus-tuf-b550-plus-bios-cz.html" class="card">
+                <a href="Ostatni/winget.html" class="card">
+                    <div class="card-header">
+                        <span class="card-icon">💾</span>
+                        <span class="card-badge badge-ostatni">Návod</span>
+                    </div>
+                    <h2 class="card-title">Alternativa instalace programů</h2>
+                    <p class="card-desc">Instalace, aktualizace a přenos aplikací ve Windows 11 pomocí správce balíčků winget — bez stahování instalátorů z webu.</p>
+                    <span class="card-link">Otevřít návod <span>→</span></span>
+                </a>
+
+                <a href="Ostatni/powershell.html" class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🐚</span>
+                        <span class="card-badge badge-ostatni">Návod</span>
+                    </div>
+                    <h2 class="card-title">Práce s PowerShell ve Win11</h2>
+                    <p class="card-desc">Základy i pokročilejší práce s PowerShellem — pohyb v systému, proměnné, execution policy, skripty .ps1 a vlastní profil.</p>
+                    <span class="card-link">Otevřít návod <span>→</span></span>
+                </a>
+
+                <!-- Pro <AI> tato karta je vždy poslední -->
+                <a href="Ostatni/asus_tuf_b550_plus_bios_cz.html" class="card">
                     <div class="card-header">
                         <span class="card-icon">🖥</span>
                         <span class="card-badge badge-ostatni">Návod</span>
@@ -633,7 +667,7 @@
                     <h2 class="card-title">Asus TUF B550plus Nastavení BIOSU</h2>
                     <p class="card-desc">Stručný popis a překlad nastavení BIOSu na nové základní desce.</p>
                     <span class="card-link">Otevřít návod <span>→</span></span>
-                </a>				
+                </a>
  
 
 

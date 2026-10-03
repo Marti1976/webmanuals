@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Práce s PowerShell ve Win11 (CZ)</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #dceefc;
+    --panel:   #ffffff;
+    --deep:    #063a6e;
+    --blue:    #0b6fd1;
+    --blue2:   #1668b8;
+    --line:    #cfe0f0;
+    --text:    #0e1f33;
+    --muted:   #4b6a89;
+    --dim:     #7d99b4;
+    --green:   #1a9e6b;
+    --amber:   #c2790f;
+    --mono:    'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--deep));
+    z-index: 999; width: 0%; transition: width .1s;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed; left: 0; top: 0; width: 260px; height: 100vh;
+    background: var(--bg);
+    border-right: 1px solid var(--line);
+    overflow-y: auto; z-index: 200;
+  }
+  .sidebar::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--deep));
+  }
+  .sidebar-brand { padding: 28px 22px 18px; border-bottom: 1px solid var(--line); }
+  .sidebar-back {
+    display: flex; align-items: center; gap: 6px; color: #000;
+    text-decoration: none; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .sidebar-back:hover { color: var(--blue); }
+  .sidebar-title { display: flex; align-items: center; gap: 10px; }
+  .sidebar-badge {
+    background: var(--blue); color: #fff; font-family: var(--mono);
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px;
+    clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+  }
+  .sidebar-name { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; color: var(--deep); }
+  .sidebar-name small { display: block; font-family: 'Inter', sans-serif; font-size: 10px; color: #000; font-weight: 400; margin-top: 2px; }
+
+  .nav-label {
+    padding: 16px 22px 6px; font-family: var(--mono); font-size: 9px;
+    letter-spacing: .16em; text-transform: uppercase; color: #000;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 9px; padding: 7px 22px;
+    color: #000; text-decoration: none; font-size: 13px;
+    border-left: 2px solid transparent; transition: all .2s;
+  }
+  .nav-item:hover, .nav-item.active { color: #000; background: rgba(6,58,110,.18); border-left-color: var(--deep); font-weight: 600; }
+  .nav-item.sub { padding-left: 34px; font-size: 12px; }
+  .nav-num {
+    font-family: var(--mono); font-size: 9px; color: var(--blue);
+    background: rgba(11,111,209,.1); border: 1px solid rgba(11,111,209,.25);
+    padding: 1px 5px; min-width: 24px; text-align: center; flex-shrink: 0;
+  }
+
+  /* ── LAYOUT ── */
+  .main { margin-left: 260px; max-width: 980px; padding: 56px 56px 20px; }
+  footer { margin-left: 260px; padding: 24px 56px; border-top: 1px solid var(--line); }
+
+  /* ── HERO (terminal window motiv) ── */
+  .hero {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    overflow: hidden; margin-bottom: 48px; box-shadow: 0 10px 30px rgba(11,111,209,.08);
+  }
+  .hero-bar { background: var(--deep); padding: 9px 18px; display: flex; align-items: center; gap: 7px; }
+  .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #9cc3e8; }
+  .hero-bar span.label { margin-left: 8px; color: #cfe4fb; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
+  .hero-body { padding: 32px 34px; }
+  .hero h1 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 34px; color: var(--deep); letter-spacing: -.3px; }
+  .hero p { color: #000; font-size: 14.5px; margin-top: 10px; max-width: 620px; }
+  .hero-cmd {
+    margin-top: 20px; background: var(--text); border-radius: 6px; padding: 12px 16px;
+    font-family: var(--mono); font-size: 13px; color: #8fd3ff;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .hero-cmd .prompt { color: #5fb6ff; }
+
+  /* ── SEKCE ── */
+  .section { margin-bottom: 52px; scroll-margin-top: 24px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .section-num {
+    font-family: var(--mono); font-size: 11px; color: var(--blue);
+    background: rgba(11,111,209,.08); border: 1px solid rgba(11,111,209,.25);
+    padding: 3px 8px;
+  }
+  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 23px; font-weight: 700; color: var(--deep); }
+
+  .section > p { color: #000; margin-bottom: 14px; }
+
+  h3.sub-title {
+    font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 700;
+    color: var(--deep); margin: 26px 0 8px;
+  }
+
+  /* ── PŘÍKAZOVÝ BLOK (terminál styl) ── */
+  .cmd {
+    background: var(--text); border-radius: 6px; margin: 10px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; font-family: var(--mono); font-size: 13px; color: #8fd3ff;
+  }
+  .cmd .prompt { color: #5fb6ff; margin-right: 2px; }
+  .copy-btn {
+    font-family: var(--mono); font-size: 10px; color: #8fd3ff;
+    background: rgba(143,211,255,.12); border: 1px solid rgba(143,211,255,.3);
+    border-radius: 4px; padding: 3px 9px; cursor: pointer; flex-shrink: 0; margin-left: 14px;
+    transition: background .2s;
+  }
+  .copy-btn:hover { background: rgba(143,211,255,.22); }
+
+  /* ── VÍCEŘÁDKOVÝ BLOK (skripty) ── */
+  .cmd-block {
+    background: var(--text); border-radius: 6px; margin: 10px 0; padding: 14px 16px;
+    font-family: var(--mono); font-size: 13px; color: #8fd3ff;
+  }
+  .cmd-block pre { white-space: pre; overflow-x: auto; margin: 0 0 10px; line-height: 1.6; }
+  .cmd-block .cmd-block-actions { display: flex; justify-content: flex-end; }
+  .cmd-block .cmt { color: #5a7a99; }
+
+  /* ── KARTA PŘÍKAZU ── */
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--blue);
+    border-radius: 4px; padding: 18px 22px; margin-bottom: 14px;
+  }
+  .card h4 { font-family: var(--mono); font-size: 13px; color: var(--deep); letter-spacing: .3px; margin-bottom: 6px; }
+  .card p { font-size: 13.5px; color: #000; margin-bottom: 4px; }
+
+  /* ── ALERT BOXY ── */
+  .alert { display: flex; gap: 12px; border: 1px solid; border-radius: 6px; padding: 13px 16px; margin: 16px 0; font-size: 13.5px; }
+  .alert-tip  { border-color: rgba(26,158,107,.35); background: rgba(26,158,107,.06); }
+  .alert-warn { border-color: rgba(194,121,15,.35); background: rgba(194,121,15,.06); }
+  .alert-info { border-color: rgba(11,111,209,.3);  background: rgba(11,111,209,.05); }
+  .alert-icon { flex-shrink: 0; }
+  .alert b { color: var(--deep); }
+
+  /* ── KROKY (číslované) ── */
+  .steps { list-style: none; counter-reset: step; }
+  .steps li {
+    counter-increment: step; display: flex; gap: 14px; align-items: flex-start;
+    padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(step); font-family: var(--mono); font-size: 11px; color: #fff;
+    background: var(--blue); min-width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .steps li b { color: var(--deep); }
+  .steps code { font-family: var(--mono); font-size: 12.5px; color: var(--blue2); background: rgba(11,111,209,.08); padding: 1px 6px; border-radius: 3px; }
+
+  a.inline-link { color: var(--blue); font-weight: 500; }
+
+  footer p { font-size: 12px; color: #000; font-family: var(--mono); }
+  footer a { color: var(--blue); text-decoration: none; }
+  .footer-back {
+    display: inline-flex; align-items: center; gap: 6px; color: var(--blue);
+    text-decoration: none; font-family: var(--mono); font-size: 11px;
+    background: rgba(11,111,209,.08); border: 1px solid rgba(11,111,209,.25);
+    padding: 6px 14px; margin-top: 8px;
+  }
+  .footer-back:hover { background: rgba(11,111,209,.15); }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main, footer { margin-left: 0; padding: 36px 24px; }
+    .hero h1 { font-size: 27px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="../index.html" class="sidebar-back">← Zpět na rozcestník</a>
+    <div class="sidebar-title">
+      <span class="sidebar-badge">CZ</span>
+      <div class="sidebar-name">PowerShell<small>Práce s PowerShell ve Win11</small></div>
+    </div>
+  </div>
+
+  <div class="nav-label">Obsah</div>
+  <a href="#uvod" class="nav-item active"><span class="nav-num">01</span>Úvod</a>
+  <a href="#otevreni" class="nav-item"><span class="nav-num">02</span>Jak PowerShell otevřít</a>
+  <a href="#pohyb" class="nav-item"><span class="nav-num">03</span>Pohyb a práce se soubory</a>
+  <a href="#napoveda" class="nav-item"><span class="nav-num">04</span>Aliasy a nápověda</a>
+  <a href="#promenne" class="nav-item"><span class="nav-num">05</span>Proměnné a datové typy</a>
+  <a href="#policy" class="nav-item"><span class="nav-num">06</span>Execution Policy</a>
+  <a href="#skripty" class="nav-item"><span class="nav-num">07</span>Skripty .ps1</a>
+  <a href="#profil" class="nav-item"><span class="nav-num">08</span>Vlastní profil</a>
+  <a href="#zdroje" class="nav-item"><span class="nav-num">09</span>Zdroje</a>
+</nav>
+
+<main class="main">
+
+  <div class="hero">
+    <div class="hero-bar"><span class="hero-dot"></span><span class="hero-dot"></span><span class="hero-dot"></span><span class="label">POWERSHELL.EXE</span></div>
+    <div class="hero-body">
+      <h1>Práce s PowerShellem ve Windows 11</h1>
+      <p>Od otevření okna až po vlastní skripty a profil — praktický průvodce příkazovou řádkou, která ve Windows nahradila starý CMD.</p>
+      <div class="hero-cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Command</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    </div>
+  </div>
+
+  <!-- 01 ÚVOD -->
+  <section class="section" id="uvod">
+    <div class="section-header"><span class="section-num">01</span><h2>Úvod – co je PowerShell</h2></div>
+    <p>PowerShell je příkazová řádka a skriptovací jazyk od Microsoftu, nástupce starého CMD. Zásadní rozdíl: CMD pracuje čistě s textem, zatímco PowerShell pracuje s <b>objekty</b> — výstup každého příkazu je strukturovaná data s vlastnostmi, nejen řádky textu k rozsekání. Díky tomu lze výstup jednoho příkazu snadno „protáhnout" (pipe, znak <code style="font-family:var(--mono); color:var(--blue2);">|</code>) do dalšího a dál s daty pracovat, třídit je, filtrovat nebo exportovat.</p>
+    <p>Od Windows 11 je PowerShell výchozím shellem ve Windows Terminálu — CMD zůstává jen kvůli zpětné kompatibilitě se staršími skripty. V praxi se PowerShell hodí na: automatizaci opakujících se úkolů, hromadnou správu souborů, instalaci a správu aplikací (i winget z předchozího návodu běží nad PowerShellem), správu uživatelů a služeb, nebo jednoduché plánované úlohy.</p>
+    <div class="card">
+      <h4>UKÁZKA — SEZNAM DOSTUPNÝCH PŘÍKAZŮ</h4>
+      <p>Příkaz níže vypíše všechny dostupné příkazy (cmdlety) v aktuální relaci.</p>
+    </div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Command</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Příkazy v PowerShellu mají tvar <b>Sloveso-Podstatné jméno</b> (např. <code style="font-family:var(--mono);">Get-Command</code>, <code style="font-family:var(--mono);">Set-Location</code>) — jakmile znáte pár základních sloves (Get, Set, New, Remove, Copy...), uhodnete smysl spousty příkazů i bez učení nazpaměť.</span>
+    </div>
+  </section>
+
+  <!-- 02 JAK OTEVŘÍT -->
+  <section class="section" id="otevreni">
+    <div class="section-header"><span class="section-num">02</span><h2>Jak PowerShell otevřít</h2></div>
+    <p>Nejrychlejší cesta: klikněte pravým tlačítkem na nabídku <b>Start</b> (nebo <kbd style="font-family:var(--mono); background:var(--panel); border:1px solid var(--line); padding:1px 6px; border-radius:3px;">Win + X</kbd>) a vyberte <b>Terminál</b>. Otevře se Windows Terminal s PowerShellem jako výchozí kartou. Alternativně stačí dát do vyhledávání na Start „PowerShell" nebo „Terminal".</p>
+
+    <h3 class="sub-title">Windows PowerShell 5.1 vs. PowerShell 7+</h3>
+    <p>Ve Windows je předinstalovaná starší <b>Windows PowerShell 5.1</b> (modré okno v klasickém zobrazení). Microsoft ale dál vyvíjí novější, rychlejší a multiplatformní <b>PowerShell 7+</b> (open-source, spouští se příkazem <code style="font-family:var(--mono); color:var(--blue2);">pwsh</code>), kterou je potřeba doinstalovat zvlášť — třeba přes winget z předchozího návodu.</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> winget install Microsoft.PowerShell</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-tip">
+      <span class="alert-icon">💡</span>
+      <span>Pro běžné použití i skriptování v tomto návodu doporučujeme nainstalovat <b>PowerShell 7+</b> — je rychlejší, má lepší chybové hlášky a aktivně se vyvíjí. Windows Terminal pak v nabídce karet nabídne obě verze zvlášť.</span>
+    </div>
+
+    <h3 class="sub-title">Spuštění jako správce</h3>
+    <p>Pro úkony vyžadující administrátorská práva (např. <code style="font-family:var(--mono); color:var(--blue2);">Set-ExecutionPolicy</code> pro celý počítač, instalace do systému) spusťte PowerShell se zvýšenými právy:</p>
+    <ul class="steps">
+      <li>Pravý klik na <b>Start</b> → <b>Terminál (správce)</b>, nebo</li>
+      <li>Najděte „PowerShell" ve vyhledávání, pravý klik na výsledek → <b>Spustit jako správce</b>.</li>
+    </ul>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Okno spuštěné jako správce má plný přístup k systému — příkazy v něm mohou nevratně změnit nastavení celého počítače, ne jen vašeho účtu. Používejte ho jen když je to nutné.</span>
+    </div>
+  </section>
+
+  <!-- 03 POHYB A SOUBORY -->
+  <section class="section" id="pohyb">
+    <div class="section-header"><span class="section-num">03</span><h2>Pohyb v systému a práce se soubory</h2></div>
+    <p>Dobrá zpráva pro zvyklé na CMD: příkazy jako <code style="font-family:var(--mono); color:var(--blue2);">dir</code> nebo <code style="font-family:var(--mono); color:var(--blue2);">cd</code> v PowerShellu dál fungují — jsou to jen <b>aliasy</b> (zkratky) na skutečné PowerShell cmdlety. Níže je přehled plných názvů i jejich zkratek.</p>
+
+    <table style="width:100%; border-collapse:collapse; margin:14px 0; font-size:13px;">
+      <thead><tr style="text-align:left; border-bottom:1px solid var(--line);"><th style="padding:6px 8px;">Co chci udělat</th><th style="padding:6px 8px;">Plný cmdlet</th><th style="padding:6px 8px;">Alias(y)</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px;">Zobrazit aktuální složku</td><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">Get-Location</td><td style="padding:6px 8px; font-family:var(--mono);">pwd</td></tr>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px;">Přejít do jiné složky</td><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">Set-Location</td><td style="padding:6px 8px; font-family:var(--mono);">cd</td></tr>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px;">Vypsat obsah složky</td><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">Get-ChildItem</td><td style="padding:6px 8px; font-family:var(--mono);">dir, ls</td></tr>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px;">Vytvořit soubor/složku</td><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">New-Item</td><td style="padding:6px 8px; font-family:var(--mono);">ni</td></tr>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px;">Kopírovat</td><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">Copy-Item</td><td style="padding:6px 8px; font-family:var(--mono);">copy, cp</td></tr>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px;">Přesunout / přejmenovat</td><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">Move-Item / Rename-Item</td><td style="padding:6px 8px; font-family:var(--mono);">move, ren</td></tr>
+        <tr><td style="padding:6px 8px;">Smazat</td><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">Remove-Item</td><td style="padding:6px 8px; font-family:var(--mono);">del, rm</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:14px;">V praxi:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Set-Location C:\Users\Jan\Dokumenty</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-ChildItem</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> New-Item -ItemType Directory -Name "NovaSlozka"</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> New-Item -ItemType File -Name "poznamky.txt"</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Copy-Item .\poznamky.txt .\zaloha-poznamky.txt</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Remove-Item .\zaloha-poznamky.txt</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <h3 class="sub-title">Čtení obsahu souboru a hledání v něm</h3>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Content .\poznamky.txt</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Select-String -Path .\log.txt -Pattern "chyba"</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span><code style="font-family:var(--mono);">Get-Content</code> vypíše celý obsah textového souboru (obdoba <code style="font-family:var(--mono);">cat</code>) &middot; <code style="font-family:var(--mono);">Select-String</code> v souboru vyhledá řádky odpovídající zadanému textu — užitečné třeba při prohledávání logů.</span>
+    </div>
+  </section>
+
+  <!-- 04 ALIASY A NÁPOVĚDA -->
+  <section class="section" id="napoveda">
+    <div class="section-header"><span class="section-num">04</span><h2>Aliasy a nápověda</h2></div>
+    <p>PowerShell má zabudovanou nápovědu ke každému příkazu. Při prvním použití je potřeba stáhnout aktuální texty nápovědy (jednorázově, jako správce):</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Update-Help</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <h3 class="sub-title">Get-Help — jak příkaz použít</h3>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Help Get-ChildItem</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Help Get-ChildItem -Examples</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Help Get-ChildItem -Online</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span><b>-Examples</b> zobrazí jen praktické ukázky použití (nejrychlejší cesta k pochopení) &middot; <b>-Online</b> otevře aktuální dokumentaci přímo na webu Microsoftu.</span>
+    </div>
+
+    <h3 class="sub-title">Get-Command — když neznáte přesný název</h3>
+    <p>Hledá mezi všemi dostupnými příkazy podle části názvu — výborné, když víte jen přibližně, co chcete udělat.</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Command *process*</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Command *service*</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <h3 class="sub-title">Aliasy — zkratky pro dlouhé příkazy</h3>
+    <p>Zjistěte, který plný příkaz se za daným aliasem skrývá, nebo si vytvořte vlastní zkratku:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-Alias ls</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Set-Alias gh Get-Help</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-tip">
+      <span class="alert-icon">💡</span>
+      <span>Při psaní příkazu stačí napsat jeho začátek a zmáčknout <kbd style="font-family:var(--mono); background:var(--panel); border:1px solid var(--line); padding:1px 6px; border-radius:3px;">Tab</kbd> — PowerShell automaticky doplní zbytek názvu (a opakovaným mačkáním prochází další možnosti).</span>
+    </div>
+  </section>
+
+  <!-- 05 PROMĚNNÉ -->
+  <section class="section" id="promenne">
+    <div class="section-header"><span class="section-num">05</span><h2>Proměnné a datové typy</h2></div>
+    <p>Proměnná v PowerShellu vždy začíná znakem <code style="font-family:var(--mono); color:var(--blue2);">$</code>. Typ se nedeklaruje ručně — PowerShell si ho odvodí sám podle přiřazené hodnoty (tzv. dynamické typování).</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $jmeno = "Jan"</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $cislo = 42</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $jmeno.GetType()</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <p>Hodnotu proměnné vložíte do textu dvojitými uvozovkami (tzv. interpolace):</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Write-Host "Ahoj $jmeno, dnes je ti $cislo let"</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <h3 class="sub-title">Pole (array)</h3>
+    <p>Seznam hodnot pod jednou proměnnou, přístup k prvku přes index od nuly:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $ovoce = @("jablko", "hruska", "banan")</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $ovoce[0]</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $ovoce.Count</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <h3 class="sub-title">Hashtabulka (klíč → hodnota)</h3>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $osoba = @{ Jmeno = "Jan"; Mesto = "Praha" }</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $osoba.Mesto</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <h3 class="sub-title">Proměnné prostředí a automatické proměnné</h3>
+    <p>Kromě vlastních proměnných má PowerShell i vestavěné — třeba systémové proměnné prostředí nebo informace o sobě samém:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $env:USERNAME</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $PSVersionTable</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span><code style="font-family:var(--mono);">$env:NÁZEV</code> čte systémové proměnné prostředí (např. <code style="font-family:var(--mono);">$env:PATH</code>) &middot; <code style="font-family:var(--mono);">$PSVersionTable</code> ukáže, jakou verzi PowerShellu právě používáte.</span>
+    </div>
+  </section>
+
+  <!-- 06 EXECUTION POLICY -->
+  <section class="section" id="policy">
+    <div class="section-header"><span class="section-num">06</span><h2>Execution Policy</h2></div>
+    <p>Execution Policy je bezpečnostní pojistka Windows, která řídí, jaké <code style="font-family:var(--mono); color:var(--blue2);">.ps1</code> skripty smí na počítači běžet. Ve výchozím nastavení Windows (<b>Restricted</b>) neběží žádné skripty vůbec — jen jednotlivé příkazy zadané ručně. To je důvod, proč stažený skript často „nejde spustit", dokud politiku nezměníte.</p>
+
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Get-ExecutionPolicy</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <table style="width:100%; border-collapse:collapse; margin:14px 0; font-size:13px;">
+      <thead><tr style="text-align:left; border-bottom:1px solid var(--line);"><th style="padding:6px 8px;">Úroveň</th><th style="padding:6px 8px;">Co povoluje</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">Restricted</td><td style="padding:6px 8px;">Výchozí stav. Žádné skripty neběží, jen ruční příkazy.</td></tr>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">RemoteSigned</td><td style="padding:6px 8px;">Vlastní lokální skripty běží bez omezení, stažené z internetu musí mít digitální podpis. Doporučeno pro běžné použití.</td></tr>
+        <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">AllSigned</td><td style="padding:6px 8px;">Úplně všechny skripty (i vlastní) musí být digitálně podepsané.</td></tr>
+        <tr><td style="padding:6px 8px; font-family:var(--mono); color:var(--blue2);">Unrestricted</td><td style="padding:6px 8px;">Běží vše, u stažených skriptů jen upozornění. Nedoporučeno bez důvodu.</td></tr>
+      </tbody>
+    </table>
+
+    <p>Změna politiky jen pro váš účet (nevyžaduje práva správce):</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <h3 class="sub-title">Skript stažený z internetu nejde spustit</h3>
+    <p>I při politice <code style="font-family:var(--mono);">RemoteSigned</code> Windows označí soubor stažený z internetu zvláštním příznakem („mark of the web"). Odstraníte ho příkazem:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Unblock-File .\skript.ps1</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Execution Policy je pojistka proti <b>nechtěnému</b> spuštění skriptu, ne tvrdá bezpečnostní hranice — jde ji záměrně obejít (např. parametrem <code style="font-family:var(--mono);">-ExecutionPolicy Bypass</code>). Spouštějte proto jen skripty, kterým důvěřujete.</span>
+    </div>
+  </section>
+
+  <!-- 07 SKRIPTY .PS1 -->
+  <section class="section" id="skripty">
+    <div class="section-header"><span class="section-num">07</span><h2>Skripty .ps1</h2></div>
+    <p>Skript je obyčejný textový soubor s příponou <code style="font-family:var(--mono); color:var(--blue2);">.ps1</code>, který obsahuje posloupnost příkazů — vytvoříte ho v libovolném textovém editoru (Poznámkový blok, VS Code...).</p>
+
+    <h3 class="sub-title">Spuštění skriptu</h3>
+    <p>Na rozdíl od CMD nestačí napsat jen název souboru — z bezpečnostních důvodů je nutné uvést i cestu, i když skript je v aktuální složce:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> .\muj-skript.ps1</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Pokud skript nejde spustit, zkontrolujte Execution Policy (sekce 06 výše) — nejčastější příčina.</span>
+    </div>
+
+    <h3 class="sub-title">Jednoduchý ukázkový skript</h3>
+    <p>Pozdraví uživatele podle jména zadaného při spuštění:</p>
+    <div class="cmd-block">
+      <pre><span class="cmt"># pozdrav.ps1</span>
+param(
+    [string]$Jmeno = "Host"
+)
+
+Write-Host "Ahoj, $Jmeno! Dnes je $(Get-Date -Format 'dd.MM.yyyy')."</pre>
+      <div class="cmd-block-actions"><span class="copy-btn" onclick="copyBlock(this)">kopírovat</span></div>
+    </div>
+    <p>Spuštění s parametrem:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> .\pozdrav.ps1 -Jmeno "Petra"</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+
+    <h3 class="sub-title">Podmínky a cyklus — rychlý přehled</h3>
+    <div class="cmd-block">
+      <pre><span class="cmt"># projde soubory ve složce a vypíše jen ty větší než 1 MB</span>
+foreach ($soubor in Get-ChildItem) {
+    if ($soubor.Length -gt 1MB) {
+        Write-Host "$($soubor.Name) je větší než 1 MB"
+    }
+}</pre>
+      <div class="cmd-block-actions"><span class="copy-btn" onclick="copyBlock(this)">kopírovat</span></div>
+    </div>
+
+    <h3 class="sub-title">Jednorázové spuštění bez měnění politiky natrvalo</h3>
+    <p>Pro ověřený skript, který chcete pustit jednou bez trvalé změny Execution Policy:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> powershell -ExecutionPolicy Bypass -File .\muj-skript.ps1</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+  </section>
+
+  <!-- 08 VLASTNÍ PROFIL -->
+  <section class="section" id="profil">
+    <div class="section-header"><span class="section-num">08</span><h2>Vlastní profil PowerShellu</h2></div>
+    <p>Profil je skript, který se automaticky spustí při <b>každém otevření</b> PowerShellu — ideální místo pro vlastní zkratky, barvy nebo uvítací zprávu. Cestu k vašemu profilu (liší se podle toho, kde PowerShell běží — klasická konzole, VS Code, Windows Terminal) najdete v proměnné <code style="font-family:var(--mono); color:var(--blue2);">$PROFILE</code>.</p>
+
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> $PROFILE</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Test-Path $PROFILE</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Soubor profilu obvykle <b>neexistuje</b>, dokud si ho sami nevytvoříte — proto <code style="font-family:var(--mono);">Test-Path</code> vrátí <code style="font-family:var(--mono);">False</code>.</span>
+    </div>
+
+    <h3 class="sub-title">Vytvoření a úprava profilu</h3>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> New-Item -Path $PROFILE -ItemType File -Force</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> notepad $PROFILE</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="alert alert-tip">
+      <span class="alert-icon">💡</span>
+      <span><code style="font-family:var(--mono);">-Force</code> u <code style="font-family:var(--mono);">New-Item</code> vytvoří i nadřazené složky, pokud zatím neexistují.</span>
+    </div>
+
+    <h3 class="sub-title">Ukázkový obsah profilu</h3>
+    <div class="cmd-block">
+      <pre><span class="cmt"># Microsoft.PowerShell_profile.ps1</span>
+
+<span class="cmt"># vlastní zkratka pro rychlý přechod do oblíbené složky</span>
+function Projekty { Set-Location "C:\Users\Jan\Projekty" }
+Set-Alias proj Projekty
+
+<span class="cmt"># uvítací zpráva při startu</span>
+Write-Host "Vítej zpět, $env:USERNAME! Dnes je $(Get-Date -Format 'dddd dd.MM.yyyy')." -ForegroundColor Cyan</pre>
+      <div class="cmd-block-actions"><span class="copy-btn" onclick="copyBlock(this)">kopírovat</span></div>
+    </div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Profil je taky jen <code style="font-family:var(--mono);">.ps1</code> skript — pokud máte Execution Policy nastavenou na <code style="font-family:var(--mono);">Restricted</code> (viz sekce 06), ani profil se nespustí. Potřebujete minimálně <code style="font-family:var(--mono);">RemoteSigned</code>.</span>
+    </div>
+  </section>
+
+  <!-- 09 ZDROJE -->
+  <section class="section" id="zdroje">
+    <div class="section-header"><span class="section-num">09</span><h2>Zdroje</h2></div>
+    <div class="card">
+      <h4>DOKUMENTACE · OFICIÁLNÍ NÁVOD OD MICROSOFTU</h4>
+      <p><a class="inline-link" href="https://learn.microsoft.com/powershell/" target="_blank" rel="noopener">learn.microsoft.com/powershell</a> — kompletní referenční dokumentace ke všem cmdletům a konceptům (anglicky).</p>
+    </div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Kvalitní české video k PowerShellu jsem zatím nenašel — pokud nějaké znáš a chceš ho sem přidat, pošli odkaz a doplním.</span>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>PowerShell · Práce s PowerShellem ve Windows 11</p>
+  <a href="../index.html" class="footer-back">← Zpět na rozcestník</a>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const bar = document.getElementById('progressBar');
+    const st = document.documentElement.scrollTop;
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (st / h * 100) + '%';
+  });
+
+  const sections = document.querySelectorAll('[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(l => l.classList.remove('active'));
+        const t = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (t) t.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  function copyCmd(btn) {
+    const line = btn.closest('.cmd') || btn.closest('.hero-cmd');
+    const text = line.querySelector('.prompt').nextSibling.textContent.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.textContent;
+      btn.textContent = 'zkopírováno!';
+      setTimeout(() => btn.textContent = old, 1800);
+    });
+  }
+
+  function copyBlock(btn) {
+    const block = btn.closest('.cmd-block');
+    const text = block.querySelector('pre').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.textContent;
+      btn.textContent = 'zkopírováno!';
+      setTimeout(() => btn.textContent = old, 1800);
+    });
+  }
+</script>
+
+</body>
+</html>
