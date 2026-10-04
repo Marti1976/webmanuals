@@ -5,188 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Orchestrace Agentů – Antigravity IDE průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
-  --border:#2a1f3d;--border2:#3d2855;
-  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --cyan:#00d9ff;--cyan2:#5fffff;
-  --purple:#a855f7;--purple2:#d8a8ff;
-  --accent:#ff006e;--accent2:#ff5599;
-  --green:#10b981;--green2:#6ee7b7;
-  --white:#f0e8ff;
-  --r:12px;
-}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:6px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
-.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--cyan);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s}
-.nav-back:hover{gap:12px}
-
-header{padding:40px 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-header::before{content:'';position:absolute;top:-80px;right:-150px;width:500px;height:400px;
-  background:radial-gradient(ellipse,rgba(16,185,129,.1) 0%,transparent 65%);pointer-events:none}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--green2)}
-.h-desc{color:var(--t2);font-size:1em;max-width:700px;margin-bottom:24px}
-.badges{display:flex;flex-wrap:wrap;gap:8px}
-.badge{font-family:'DM Mono',monospace;font-size:.7em;padding:5px 12px;border-radius:12px;
-  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
-.badge-g{color:var(--green2);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08)}
-.badge-c{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
-
-.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);
-  border-radius:var(--r);padding:20px 24px;margin:32px 0}
-.toc-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;color:var(--green2);
-  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
-.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
-@media(max-width:560px){.toc-list{grid-template-columns:1fr}}
-.toc-item{display:flex;align-items:baseline;gap:8px;font-size:.88em;color:var(--t2);
-  text-decoration:none;padding:4px 0;transition:color .2s}
-.toc-item:hover{color:var(--green2)}
-.toc-dot{font-family:'DM Mono',monospace;font-size:.8em;color:var(--green);min-width:16px}
-
-.sec{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
-.sec-label{font-family:'DM Mono',monospace;font-size:.7em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:700;color:var(--white);
-  margin-bottom:16px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--green2);
-  margin:28px 0 10px}
-h4{font-family:'Syne',sans-serif;font-size:.95em;font-weight:600;color:var(--text);margin:18px 0 7px}
-p{margin-bottom:11px}
-ul,ol{padding-left:22px}
-li{margin:6px 0;color:var(--t2);font-size:.93em}
-li strong{color:var(--white)}
-strong{color:var(--white);font-weight:600}
-code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(16,185,129,.1);
-  color:var(--green2);border:1px solid rgba(16,185,129,.2);border-radius:4px;padding:1px 7px}
-
-.box{display:flex;gap:12px;padding:16px 18px;border-radius:var(--r);margin:14px 0;border:1px solid}
-.icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
-.content strong{display:block;font-family:'Syne',sans-serif;font-size:.92em;margin-bottom:4px}
-.content p{margin:0;font-size:.9em;color:inherit}
-.content ul{margin:4px 0 0;padding-left:16px}
-.content li{margin:3px 0;font-size:.88em}
-
-.tip{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#86d4b8}
-.tip .content strong{color:#6ee7b7}
-.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:#e0c87a}
-.warn .content strong{color:var(--accent)}
-
-.code-block{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--green);
-  border-radius:8px;padding:12px;margin:12px 0;font-family:'DM Mono',monospace;font-size:.75em;
-  color:var(--green2);line-height:1.5;overflow-x:auto}
-
-footer{margin-top:60px;padding:24px 32px;border-top:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3)}
-/* === CHAPTER NAVIGATION === */
-.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
-.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
-  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
-  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
-.ch-btn:hover{border-color:var(--purple);color:var(--purple2);text-decoration:none}
-.ch-btn.next{justify-content:flex-end;text-align:right}
-.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
-.ch-btn .ch-name{color:var(--purple2)}
-/* === SIDEBAR === */
-.progress-bar {
-  position: fixed; top: 0; left: 0; height: 2px;
-  background: linear-gradient(90deg, var(--cyan), var(--purple));
-  z-index: 999; width: 0%; transition: width 0.1s;
-}
-.sidebar {
-  position: fixed; left: 0; top: 0; width: 260px; height: 100vh;
-  background: rgba(15, 12, 24, 0.97); border-right: 1px solid var(--border);
-  display: flex; flex-direction: column; z-index: 100; overflow-y: auto;
-}
-.sidebar::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--cyan), var(--purple), transparent);
-}
-.sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); }
-.sidebar-back { color: var(--t2); text-decoration: none; font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.08em; display: flex; gap: 6px;
-  margin-bottom: 16px; transition: color 0.2s; }
-.sidebar-back:hover { color: var(--cyan); }
-.sidebar-icon { width: 38px; height: 38px; font-size: 1.4rem; border-radius: 10px;
-  background: rgba(168, 85, 247, 0.12); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center; }
-.sidebar-name { font-size: 0.95rem; font-weight: 700; color: var(--white); }
-.sidebar-name small { font-size: 0.7rem; color: var(--t2); display: block; margin-top: 2px; }
-.nav-group-label { padding: 16px 20px 6px; font-size: 9px; letter-spacing: 0.15em;
-  text-transform: uppercase; color: var(--t3); font-family: monospace; }
-.nav-link, .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 20px;
-  color: var(--t2); text-decoration: none; font-size: 13px;
-  border-left: 2px solid transparent; transition: all 0.2s; }
-.nav-link:hover, .nav-link.active,
-.nav-item:hover, .nav-item.active { color: var(--white);
-  background: rgba(0, 217, 255, 0.05); border-left-color: var(--cyan); }
-.nav-step, .nav-num { font-family: monospace; font-size: 10px; min-width: 22px;
-  color: var(--purple); background: rgba(168, 85, 247, 0.10);
-  border: 1px solid rgba(168, 85, 247, 0.25); padding: 2px 5px;
-  border-radius: 4px; text-align: center; flex-shrink: 0; }
-
-/* Layout */
-.wrap   { margin-left: 260px; }
-footer  { margin-left: 260px; }
-
-@media (max-width: 900px) {
-  .sidebar { display: none; }
-  .wrap, footer { margin-left: 0; }
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="14">
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    {
+      "id": "s1",
+      "num": "14.1",
+      "name": "Základy Orchestrace — Kdo Řídí Tanec"
+    },
+    {
+      "id": "s2",
+      "num": "14.2",
+      "name": "Komunikační Kanály — Jak Si Agenti Předávají Věci"
+    },
+    {
+      "id": "s3",
+      "num": "14.3",
+      "name": "Interface Definice — Smlouva Mezi Agenty"
+    },
+    {
+      "id": "s4",
+      "num": "14.4",
+      "name": "Závislosti & Workflow DAG — Kdo Čeká Na Koho"
+    },
+    {
+      "id": "s5",
+      "num": "14.5",
+      "name": "Konflikt Resolution — Když Se Agenti Neshodnou"
+    },
+    {
+      "id": "s6",
+      "num": "14.6",
+      "name": "Best Practices & Anti-Patterns — Co Funguje, Co Ne"
+    }
+  ]
+}
+</script>
+
 <div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
 
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <a href="00_IDE_INDEX.html" class="sidebar-back">← Zpět na rozcestník</a>
-    <div class="sidebar-title">
-      <div class="sidebar-icon">🎭</div>
-      <div class="sidebar-name">
-        Orchestrace
-        <small>Multi-agent · Kapitola 14</small>
-      </div>
-    </div>
-  </div>
-
-  <div class="nav-group-label">Obsah</div>
-
-  <a href="#s1" class="nav-link active">
-    <span class="nav-step">01</span> Základy orchestrace
-  </a>
-  <a href="#s2" class="nav-link">
-    <span class="nav-step">02</span> Komunikační kanály
-  </a>
-  <a href="#s3" class="nav-link">
-    <span class="nav-step">03</span> Interface definice
-  </a>
-  <a href="#s4" class="nav-link">
-    <span class="nav-step">04</span> Workflow DAG
-  </a>
-  <a href="#s5" class="nav-link">
-    <span class="nav-step">05</span> Konflikt resolution
-  </a>
-  <a href="#s6" class="nav-link">
-    <span class="nav-step">06</span> Best practices
-  </a>
-</nav>
-
-<div class="wrap">
-
-<a href="00_IDE_INDEX.html" class="nav-back">← Zpět na index</a>
+<div class="container">
+<div class="main-content">
+<div class="wrap" style="max-width:900px">
 
 <header>
   <div class="h-num">// kapitola 14</div>
@@ -260,7 +125,7 @@ FAILURE testera   →   INPUT implementera<br/>
     <li>Sleduj progress — vidíš co dělají, kdy skončili</li>
   </ol>
 
-  <p><strong>Kontrola:</strong> Quando vidíš že Agent A skončil, můžeš spustit Agenta B. Nebo to nastavíš aby se spustilo automaticky.</p>
+  <p><strong>Kontrola:</strong> Když vidíš že Agent A skončil, můžeš spustit Agenta B. Nebo to nastavíš aby se spustilo automaticky.</p>
 </div>
 
 <!-- 02 KOMUNIKAČNÍ KANÁLY -->
@@ -272,7 +137,7 @@ FAILURE testera   →   INPUT implementera<br/>
 
   <h3>5 Hlavních Kanálů</h3>
 
-  <h4>1. Git Commits (Nejjednoduší)</h4>
+  <h4>1. Git Commits (Nejjednodušší)</h4>
   <p><strong>Co to je:</strong> Když agent commituje kód, všichni vidí změnu.</p>
   <p><strong>Výhoda:</strong> Je to permanentní, traceable, má historii</p>
   <p><strong>Jak:</strong> Implementer writes code, commits: `git commit -m "feat: PriceTable component"`</p>
@@ -371,7 +236,7 @@ TY napíšeš komentář:<br/>
 IMPLEMENTER vidí feedback a opravuje:<br/>
 "Changing button color to blue"<br/>
 <br/>
-TY schvaliíš:<br/>
+TY schvalíš:<br/>
 [Approve] ✓<br/>
 <br/>
 IMPLEMENTER vidí že je schváleno a commituje
@@ -420,7 +285,7 @@ export interface PriceTableProps {<br/>
   </div>
 
   <h4>Level 2: Data Models (Struktury)</h4>
-  <p><strong>Co:</strong> Jaké jsou datastructures? (Database, API responses)</p>
+  <p><strong>Co:</strong> Jaké jsou data structures? (Database, API responses)</p>
   <div class="code-block">
 // ARCHITECT definuje:<br/>
 export interface Recipe {<br/>
@@ -627,7 +492,7 @@ Total: 5.5h (místo 8h sériově)
     <li><strong>List všechny agenty</strong> které potřebuješ</li>
     <li><strong>Definuj "co agent dostane" (input)</strong> a "co agent vydá" (output)</li>
     <li><strong>Nakresli šipky</strong> — "agent A → agent B" znamená "A musí skončit před B"</li>
-    <li><strong>Hledej paralelizaci</strong> — pokud jsou agenti nezávislí, běžou zároveň</li>
+    <li><strong>Hledej paralelizaci</strong> — pokud jsou agenti nezávislí, běží zároveň</li>
     <li><strong>Spočítej čas</strong> — Max(paralelní) + Sum(sériové)</li>
   </ol>
 
@@ -695,7 +560,7 @@ IMPLEMENTER pak to implementuje.
   <h4>Typ 2: Implementace vs Testing</h4>
   <p><strong>Co:</strong> Tester najde bug, ale Implementer nesouhlasí že je to bug.</p>
   <p><strong>Příčina:</strong> Různé chápání specifikace.</p>
-  <p><strong>Řešení:</strong> RULE: "Pokud Tester říká že je to bug → je to bug. Dokud není fixnuto, nechod dál."</p>
+  <p><strong>Řešení:</strong> RULE: "Pokud Tester říká že je to bug → je to bug. Dokud není fixnuto, nechoď dál."</p>
 
   <div class="code-block">
 TESTER testuje component:<br/>
@@ -751,7 +616,7 @@ Konflikt se nestane — TypeScript to chytí.
   <p>Každá rozhodnutí má jednoho ownera. Design decisions = DESIGNER (final say). Implementation decisions = IMPLEMENTER (final say). Test coverage = TESTER (final say).</p>
 
   <p><strong>Princip 2: Interface Je Zákaz</strong></p>
-  <p>Pokud je něco v interface/types → je TO ZÁKAZ. Nemenitelné. Pokud chceš to změnit → schválení owncera.</p>
+  <p>Pokud je něco v interface/types → je TO ZÁKAZ. Neměnitelné. Pokud chceš to změnit → schválení owncera.</p>
 
   <p><strong>Princip 3: Escalation</strong></p>
   <p>Pokud se dva agenti neshodnou → escalate to YOU (orchestrátor). TY rozhodneš.</p>
@@ -787,7 +652,7 @@ Konflikt se nestane — TypeScript to chytí.
 
   <h4>4. Review-Driven Approval</h4>
   <p><strong>Pravidlo:</strong> Když agent skončí → vidíš to, můžeš schválit nebo poprosit o změnu.</p>
-  <p><strong>Jak:</strong> V Antigravity IDE Manager View nastaviš Approval Mode = Review-Driven</p>
+  <p><strong>Jak:</strong> V Antigravity IDE Manager View nastavíš Approval Mode = Review-Driven</p>
   <p><strong>Výhoda:</strong> Plná kontrola. Žádné surprise.</p>
 
   <h4>5. Atomic Commits</h4>
@@ -801,13 +666,13 @@ git commit -m "docs: PriceTable JSDoc"<br/>
 <br/>
 ❌ ŠPATNÉ:<br/>
 git commit -m "did stuff"<br/>
-(3 věci v jednom commit — historia je nepřehledná)
+(3 věci v jednom commit — historie je nepřehledná)
   </div>
 
   <h4>6. Constraint-Driven Design</h4>
   <p><strong>Pravidlo:</strong> Agenti mají limity. "DESIGNER: dark theme only. IMPLEMENTER: TypeScript strict. TESTER: 80%+ coverage."</p>
   <p><strong>Jak:</strong> Rules a Constraints v system promptu + .antigravity-rules</p>
-  <p><strong>Výhoda:</strong> Konzistentnost. Všichni víděl kam mohou, kam ne.</p>
+  <p><strong>Výhoda:</strong> Konzistentnost. Všichni vědí kam mohou, kam ne.</p>
 
   <h3>❌ ANTI-PATTERNS (Co Vyhnout)</h3>
 
@@ -875,25 +740,17 @@ Oba kódují proti rozhraní, bez čekání
   </div>
 </div>
 
-<!-- FOOTER -->
-<!-- CHAPTER NAV -->
-<nav class="chapter-nav">
-  <a href="13_IDE_New_Agent.html" class="ch-btn">
-    <span>←</span>
-    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Nový Agent</span></div>
-  </a>
-  <a href="15_IDE_Scenare.html" class="ch-btn next">
-    <div><span class="ch-label">další kapitola</span><span class="ch-name">Scénáře</span></div>
-    <span>→</span>
-  </a>
-</nav>
+<div id="pn"></div>
 
 <footer>
   <span>14_IDE_Orchestrace.html · Antigravity IDE průvodce · Claude (Anthropic) · Květen 2026</span>
   <a href="00_IDE_INDEX.html" style="color:var(--cyan)">← Zpět na rozcestník</a>
 </footer>
 
-</div>
+</div><!-- .wrap -->
+</div><!-- .main-content -->
+</div><!-- .container -->
+
 <script>
 window.addEventListener('scroll', () => {
   const bar = document.getElementById('progressBar');
@@ -901,20 +758,9 @@ window.addEventListener('scroll', () => {
   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   bar.style.width = (scrollTop / height * 100) + '%';
 });
-
-const sections = document.querySelectorAll('.sec[id]');
-const navLinks = document.querySelectorAll('.nav-link');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(l => l.classList.remove('active'));
-      const target = document.querySelector(`[href="#${e.target.id}"]`);
-      if (target) target.classList.add('active');
-    }
-  });
-}, { rootMargin: '-20% 0px -70% 0px' });
-sections.forEach(s => observer.observe(s));
 </script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 
 </body>
 </html>

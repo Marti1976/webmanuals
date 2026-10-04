@@ -403,6 +403,40 @@ code { font-family: 'DM Mono', monospace; font-size: .84em; background: rgba(0,2
 .cl-item:last-child { border-bottom: none; }
 .cl-box { color: var(--green); flex-shrink: 0; margin-top: 2px; }
 
+/* Extensions (16) */
+.ext-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 20px 0; }
+.ext-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; position: relative; transition: border-color .2s; }
+.ext-card:hover { border-color: var(--border2); }
+.ext-card.top1 { border-left: 3px solid var(--cyan); }
+.ext-rank { font-family: 'DM Mono', monospace; font-size: .7em; color: var(--t3); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+.ext-rank span { font-size: 1.1em; font-weight: 700; }
+.ext-name { font-family: 'Syne', sans-serif; font-size: 1.05em; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.ext-id { font-family: 'DM Mono', monospace; font-size: .75em; color: var(--cyan2); margin-bottom: 10px; }
+.ext-desc { font-size: .9em; color: var(--t2); line-height: 1.65; margin-bottom: 8px; }
+.ext-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ext-tag { font-family: 'DM Mono', monospace; font-size: .68em; padding: 3px 9px; border-radius: 6px; border: 1px solid rgba(168,85,247,.25); background: rgba(168,85,247,.06); color: var(--purple2); }
+.ext-tag.green { border-color: rgba(16,185,129,.25); background: rgba(16,185,129,.06); color: var(--green2); }
+.ext-tag.cyan { border-color: rgba(0,217,255,.25); background: rgba(0,217,255,.06); color: var(--cyan2); }
+.ext-where { font-size: .8em; color: var(--t3); margin-top: 8px; }
+.ext-where a { color: var(--cyan); text-decoration: none; }
+.ext-where a:hover { text-decoration: underline; }
+.sources { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 20px 24px; margin: 20px 0; }
+.sources-title { font-family: 'Syne', sans-serif; font-size: .85em; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+.source-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: .88em; }
+.source-row:last-child { border-bottom: none; }
+.source-name { color: var(--white); font-weight: 600; }
+.source-note { color: var(--t2); font-size: .82em; margin-top: 3px; }
+.source-url { font-family: 'DM Mono', monospace; font-size: .8em; }
+.source-url a { color: var(--cyan); text-decoration: none; }
+.source-url a:hover { text-decoration: underline; }
+.step-list { margin: 16px 0; }
+.step-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.step-item:last-child { border-bottom: none; }
+.step-num { font-family: 'DM Mono', monospace; font-size: .75em; color: var(--cyan); font-weight: 700; min-width: 24px; margin-top: 3px; }
+.step-body { flex: 1; }
+.step-title { font-family: 'Syne', sans-serif; font-size: .95em; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+.step-text { font-size: .88em; color: var(--t2); line-height: 1.65; }
+
 /* Example block good/bad + Pattern (10) */
 .example-block { background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 8px; padding: 14px; margin: 12px 0; font-size: .85em; line-height: 1.7; }
 .ex-title { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--green2); margin-bottom: 6px; }
