@@ -28,7 +28,7 @@
   --red2: #fca5a5;
   --white: #f0e8ff;
   --r: 12px;
-  --sidebar-width: 357px;
+  --sidebar-width: 375px;
 }
 
 /* ── Reset ── */
@@ -51,7 +51,8 @@ body.menu-open { overflow: hidden; }
 /* ── Layout ── */
 .container { min-height: 100vh; }
 .main-content { margin-left: var(--sidebar-width); }
-.wrap { margin: 0; padding: 0 40px 80px 56px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 48px 80px; }
+body[data-page="00"] .wrap { max-width: 1320px; }
 
 /* ── Progress bar ── */
 .progress-bar {
@@ -561,9 +562,13 @@ footer a:hover { text-decoration: underline; }
 
 @media (max-width: 900px) {
   .sidebar {
+    width: min(var(--sidebar-width), 88vw);
+    z-index: 180;
     transform: translateX(-100%);
     transition: transform 0.24s ease;
   }
+
+  .sb-home { padding-left: 68px; }
 
   .sidebar.open {
     transform: translateX(0);
