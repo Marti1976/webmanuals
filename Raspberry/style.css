@@ -1,0 +1,535 @@
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
+  --border:#2a1f3d;--border2:#3d2855;
+  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
+  --rasp1:#e30b5c;--rasp1-light:#ff3377;
+  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
+  --cyan:#00d9ff;--cyan2:#5fffff;
+  --accent:#00d9ff;--accent2:#5fffff;
+  --green:#00e5a0;--green2:#00ffb3;
+  --yellow:#f5c542;--orange:#ff7c2a;
+  --white:#f0e8ff;
+  --r:12px;
+  --sidebar-width:260px;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px}
+body.menu-open{overflow:hidden}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px 80px}
+
+/* HEADER */
+header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
+  line-height:1.1;margin-bottom:14px}
+h1 em{color:var(--rasp1-light);font-style:normal}
+.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
+
+/* TYPOGRAPHY */
+.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);
+  margin-bottom:18px;line-height:1.2}
+h2 .h2-num{color:var(--rasp1-light);margin-right:.45em}
+h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
+  margin:28px 0 10px;letter-spacing:.02em}
+p{margin-bottom:14px;color:var(--text);line-height:1.75}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
+li strong{color:var(--white)}
+strong{color:var(--white);font-weight:600}
+a{color:var(--rasp1-light);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
+  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;
+  color:var(--t2);line-height:1.65;overflow-x:auto}
+pre code{background:none;border:none;padding:0;color:inherit;font-size:1em}
+
+/* CALLOUTS */
+.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
+.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
+.callout ul{margin-bottom:0;padding-left:18px}
+.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);
+  border-left:3px solid var(--cyan)}
+.callout-info .callout-title{color:var(--cyan2)}
+.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);
+  border-left:3px solid var(--green)}
+.callout-tip .callout-title{color:var(--green2)}
+.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);
+  border-left:3px solid var(--yellow)}
+.callout-warn .callout-title{color:var(--yellow)}
+.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);
+  border-left:3px solid var(--rasp1)}
+.callout-danger .callout-title{color:var(--rasp1-light)}
+
+/* RESULT LIST */
+.result-list{list-style:none;padding:0;margin:0}
+.result-list li{display:flex;align-items:flex-start;gap:14px;padding:14px 0;
+  border-bottom:1px solid var(--border);font-size:.93em;color:var(--t2)}
+.result-list li:last-child{border-bottom:none}
+.result-list .icon{font-size:1.3em;flex-shrink:0;margin-top:1px}
+.result-list strong{color:var(--white);display:block;margin-bottom:2px;font-size:.97em}
+
+/* ARCHITECTURE DIAGRAM */
+.arch{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:28px 24px;margin:20px 0;font-family:'DM Mono',monospace;font-size:.83em;
+  line-height:1.8;color:var(--t2);overflow-x:auto}
+.arch-layer{display:flex;align-items:center;gap:0;margin:6px 0}
+.arch-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;
+  padding:10px 16px;color:var(--white);font-size:.85em;white-space:nowrap}
+.arch-box.primary{border-color:var(--rasp1);color:var(--rasp1-light);
+  background:rgba(227,11,92,.08)}
+.arch-box.secondary{border-color:rgba(0,217,255,.3);color:var(--cyan2);
+  background:rgba(0,217,255,.06)}
+.arch-box.tertiary{border-color:rgba(0,229,160,.3);color:var(--green2);
+  background:rgba(0,229,160,.06)}
+.arch-arrow{color:var(--t3);padding:0 10px;font-size:1.1em}
+.arch-label{color:var(--t3);font-size:.78em;padding:0 8px}
+
+/* STACK TABLE */
+.stack-table{width:100%;border-collapse:collapse;margin:18px 0}
+.stack-table th{font-family:'Syne',sans-serif;font-size:.8em;font-weight:700;
+  color:var(--t3);text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;
+  border-bottom:2px solid var(--border);text-align:left}
+.stack-table td{padding:12px 14px;border-bottom:1px solid var(--border);
+  font-size:.9em;vertical-align:top}
+.stack-table td:first-child{color:var(--white);font-weight:500;
+  font-family:'DM Mono',monospace;font-size:.83em;white-space:nowrap}
+.stack-table td:nth-child(2){color:var(--rasp1-light)}
+.stack-table td:last-child{color:var(--t2)}
+.stack-table tr:hover td{background:rgba(227,11,92,.03)}
+
+/* FOOTER */
+footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
+  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
+  z-index:999;width:0%;transition:width 0.1s}
+
+/* ── SIDEBAR ── */
+#sidebar{display:block}
+.sidebar{position:fixed;left:0;top:0;width:var(--sidebar-width);height:100vh;
+  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
+.sb-home{color:var(--t2);text-decoration:none;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;padding:24px 20px 18px;
+  border-bottom:1px solid var(--border);transition:color .2s}
+.sb-home:hover{color:var(--rasp1-light)}
+.sb-chapters{list-style:none;padding:8px 0 24px;margin:0}
+.sb-chapters li{margin:0}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
+  color:var(--t2);text-decoration:none;font-size:12.5px;
+  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
+.sb-link:hover,.sb-link.active{color:var(--white);
+  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
+.sb-link span{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+  color:var(--rasp1-light);background:rgba(227,11,92,.1);
+  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
+  border-radius:4px;text-align:center;flex-shrink:0}
+
+/* PODSEKCE (LOKÁLNÍ KAPITOLY) */
+.sb-subchapters{list-style:none;padding:2px 0 6px;margin:0}
+.sb-subchapters li{margin:0}
+.sb-subchapter{display:block;padding:6px 20px 6px 52px;color:var(--t2);
+  text-decoration:none;font-size:12px;font-family:'Inter',sans-serif;line-height:1.4;
+  border-left:2px solid transparent;transition:all .2s}
+.sb-subchapter:hover{color:var(--white)}
+.sb-subchapter.active{color:var(--rasp1-light);border-left-color:var(--rasp1)}
+.sidebar a,.sidebar a:hover{text-decoration:none}
+
+/* PREV / NEXT */
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:60px;
+  padding-top:28px;border-top:1px solid var(--border)}
+.pn a{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;
+  text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
+.pn a:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.pn-next{justify-content:flex-end;text-align:right}
+.pn span{flex:1;max-width:48%}
+
+/* ── LAYOUT ── */
+.main-content{margin-left:var(--sidebar-width);padding-top:40px}
+.hamburger,.sidebar-backdrop{display:none}
+
+@media(max-width:899px){
+  .sidebar{transform:translateX(-100%);transition:transform .24s ease}
+  .sidebar.open{transform:translateX(0)}
+  .hamburger{display:grid;place-items:center;position:fixed;top:14px;left:14px;
+    z-index:30;width:42px;height:42px;border:1px solid var(--border);border-radius:8px;
+    background:var(--bg2);color:var(--rasp1-light);font-size:1.25rem;cursor:pointer}
+  .sidebar-backdrop{display:block;position:fixed;inset:0;z-index:19;
+    background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .24s ease}
+  .sidebar-backdrop.visible{opacity:1;pointer-events:auto}
+  .main-content{margin-left:0;padding-top:64px}
+}
+
+/* ── DÍL 02 – Hardware ── */
+.hw-grid{display:grid;gap:14px;margin:20px 0}
+.hw-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;
+  position:relative;transition:border-color .2s}
+.hw-card:hover{border-color:var(--border2)}
+.hw-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.hw-card-title{font-family:'Syne',sans-serif;font-size:1em;font-weight:700;color:var(--white)}
+.hw-badge{font-family:'DM Mono',monospace;font-size:.7em;padding:3px 10px;border-radius:10px;
+  border:1px solid;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0}
+.hw-badge-required{color:var(--rasp1-light);border-color:rgba(227,11,92,.3);background:rgba(227,11,92,.08)}
+.hw-badge-recommended{color:var(--cyan2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+.hw-badge-optional{color:var(--t2);border-color:var(--border);background:var(--bg3)}
+.hw-card p{font-size:.88em;color:var(--t2);margin-bottom:8px;line-height:1.65}
+.hw-card ul{padding-left:18px;margin-bottom:0}
+.hw-card li{font-size:.85em;margin:5px 0}
+.power-spec{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;margin:20px 0}
+.power-row{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--border)}
+.power-row:last-child{border-bottom:none}
+.power-label{font-family:'DM Mono',monospace;font-size:.83em;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+.power-value{font-family:'Syne',sans-serif;font-size:1.1em;font-weight:700;color:var(--rasp1-light)}
+.power-note{font-size:.8em;color:var(--t3);margin-top:2px}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:16px 0}
+.shop-link{display:block;background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;font-family:'DM Mono',monospace;font-size:.8em;color:var(--t2);
+  text-decoration:none;transition:all .2s;letter-spacing:.04em}
+.shop-link:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.shop-link span{display:block;color:var(--white);font-size:1.05em;margin-bottom:2px;font-family:'Inter',sans-serif;font-weight:600}
+
+/* ── DÍL 03 – Poznámka k modulu Zigbee ── */
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.product-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;position:relative;overflow:hidden}
+.product-card.recommended{border-color:rgba(0,229,160,.3)}
+.product-card.recommended::before{content:'★ DOPORUČENO';position:absolute;top:14px;right:14px;
+  font-family:'DM Mono',monospace;font-size:.68em;color:var(--green2);letter-spacing:.08em;
+  background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);border-radius:6px;padding:3px 8px}
+.product-card.caution{border-color:rgba(245,197,66,.25)}
+.product-card-title{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:700;
+  color:var(--white);margin-bottom:6px}
+.product-card-sub{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);
+  margin-bottom:16px;letter-spacing:.04em}
+.spec-row{display:flex;justify-content:space-between;align-items:flex-start;
+  padding:8px 0;border-bottom:1px solid var(--border);gap:12px}
+.spec-row:last-child{border-bottom:none}
+.spec-key{font-size:.8em;color:var(--t3);font-family:'DM Mono',monospace;text-transform:uppercase;
+  letter-spacing:.06em;flex-shrink:0;padding-top:1px}
+.spec-val{font-size:.87em;color:var(--text);text-align:right;line-height:1.5}
+.spec-val.good{color:var(--green2)}
+.spec-val.warn{color:var(--yellow)}
+.spec-val.bad{color:var(--rasp1-light)}
+.alt-table{width:100%;border-collapse:collapse;margin:18px 0}
+.alt-table th{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;border-bottom:2px solid var(--border);text-align:left}
+.alt-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:.88em;vertical-align:top}
+.alt-table td:first-child{color:var(--white);font-weight:600}
+.alt-table td:nth-child(2){color:var(--t2);font-family:'DM Mono',monospace;font-size:.82em}
+.alt-table td:nth-child(3){color:var(--t2)}
+.alt-table td:last-child{color:var(--t3)}
+.alt-table tr:hover td{background:rgba(227,11,92,.03)}
+.star{color:var(--yellow)}
+@media(max-width:640px){.product-grid{grid-template-columns:1fr}}
+
+/* ── DÍL 04 – Příprava USB mSATA SSD ── */
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
+.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
+.step{display:flex;gap:20px;padding:16px 0}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);
+  border:2px solid var(--rasp1);display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.9em;color:var(--rasp1-light);
+  flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
+.step-desc ul{padding-left:18px;margin:8px 0 4px}
+.step-desc li{margin:5px 0;font-size:1em}
+.step-desc code{font-size:.9em}
+.step-desc strong{color:var(--white)}
+.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
+.status-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:18px 22px;margin:20px 0}
+.status-bar-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.status-items{display:flex;flex-wrap:wrap;gap:12px}
+.status-item{display:flex;align-items:center;gap:8px;font-size:.85em;color:var(--t2)}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.status-dot.ok{background:var(--green)}
+.status-dot.warn{background:var(--yellow)}
+.status-dot.info{background:var(--cyan)}
+
+/* ── DÍL 05 – První spuštění Home Assistant ── */
+.cable-order{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;margin:20px 0}
+.cable-order-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.cable-item{display:flex;align-items:center;gap:16px;padding:10px 0;
+  border-bottom:1px solid var(--border)}
+.cable-item:last-child{border-bottom:none;padding-bottom:0}
+.cable-order-num{font-family:'Syne',sans-serif;font-size:1.3em;font-weight:800;
+  color:var(--rasp1);width:32px;flex-shrink:0;text-align:center}
+.cable-detail{flex:1}
+.cable-name{font-size:.9em;color:var(--white);font-weight:600;margin-bottom:2px}
+.cable-note{font-size:.82em;color:var(--t2)}
+.form-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;margin:20px 0}
+.form-row{margin-bottom:16px}
+.form-label{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:block}
+.form-hint{font-size:.82em;color:var(--t2);margin-top:5px;line-height:1.5}
+.form-field{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;
+  padding:10px 14px;font-size:.9em;color:var(--text);width:100%;font-family:'Inter',sans-serif}
+.ip-methods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.ip-method{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.ip-method-title{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:8px}
+.ip-method p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.65}
+@media(max-width:580px){.ip-methods{grid-template-columns:1fr}}
+
+/* ── DÍL 06 – Základní nastavení HA ── */
+.addon-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.addon-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.addon-card.required{border-color:rgba(227,11,92,.25)}
+.addon-card-name{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:4px}
+.addon-card-type{font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.addon-card.required .addon-card-type{color:var(--rasp1-light)}
+.addon-card p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.6}
+@media(max-width:580px){.addon-grid{grid-template-columns:1fr}}
+
+/* ── DÍL 07 – Instalace MQTT (Mosquitto) ── */
+.mqtt-flow{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin:20px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);text-align:center}
+.mqtt-flow-row{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0}
+.mqtt-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 18px;font-size:.88em}
+.mqtt-box.active{border-color:var(--rasp1);color:var(--rasp1-light);background:rgba(227,11,92,.07)}
+.mqtt-arrow{color:var(--t3);font-size:1.2em}
+.cred-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:20px 22px;margin:18px 0}
+.cred-box-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.cred-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+.cred-row:last-child{border-bottom:none}
+.cred-key{font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
+.cred-val{font-family:'DM Mono',monospace;font-size:.85em;color:var(--white);font-weight:500}
+
+/* ── DÍL 08 – Instalace Zigbee2MQTT ── */
+.port-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:20px 22px;margin:18px 0}
+.port-box-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.port-example{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:10px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.7}
+.port-example .label{font-size:.75em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.port-example .value{color:var(--rasp1-light)}
+
+/* ── DÍL 09 – Konfigurace Zigbee2MQTT ── */
+.tab-group{margin:20px 0}
+.tab-btns{display:flex;gap:8px;margin-bottom:0;flex-wrap:wrap}
+.tab-btn{font-family:'DM Mono',monospace;font-size:.78em;padding:8px 16px;border-radius:8px 8px 0 0;
+  border:1px solid var(--border);border-bottom:none;color:var(--t2);background:var(--bg3);
+  cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:all .2s}
+.tab-btn.active{color:var(--rasp1-light);background:var(--bg2);border-color:var(--rasp1)}
+.tab-content{display:none;background:var(--bg2);border:1px solid var(--border);border-radius:0 8px 8px 8px;padding:20px}
+.tab-content.active{display:block}
+.channel-table{width:100%;border-collapse:collapse;margin:14px 0}
+.channel-table th{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;border-bottom:2px solid var(--border);text-align:left}
+.channel-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:.88em;vertical-align:middle}
+.channel-table td:first-child{font-family:'DM Mono',monospace;color:var(--white);font-weight:600}
+.channel-table td:last-child{color:var(--t2)}
+.tag-good{display:inline-block;font-family:'DM Mono',monospace;font-size:.72em;padding:2px 8px;
+  border-radius:4px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);color:var(--green2)}
+.tag-warn{display:inline-block;font-family:'DM Mono',monospace;font-size:.72em;padding:2px 8px;
+  border-radius:4px;background:rgba(245,197,66,.1);border:1px solid rgba(245,197,66,.25);color:var(--yellow)}
+
+/* ── DÍL 10 – Přidávání Zigbee zařízení ── */
+.reset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin:18px 0}
+.reset-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.reset-card-title{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:8px}
+.reset-card p{font-size:.84em;color:var(--t2);margin-bottom:0;line-height:1.6}
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px 0}
+.brand-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.brand-card-name{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:4px}
+.brand-card-tag{font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.brand-card p{font-size:.84em;color:var(--t2);margin-bottom:0;line-height:1.6}
+.mesh-diagram{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin:18px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
+
+/* ── DÍL 11 – Bezpečnost ── */
+.remote-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:20px 0}
+.remote-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
+.remote-card.recommended{border-color:rgba(0,229,160,.3)}
+.remote-card-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:4px}
+.remote-card-sub{font-family:'DM Mono',monospace;font-size:.72em;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;color:var(--t3)}
+.remote-card.recommended .remote-card-sub{color:var(--green2)}
+.remote-card p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.6}
+.sec-check{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:18px 0}
+.sec-check-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.sec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.sec-item:last-child{border-bottom:none}
+.sec-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
+.sec-item-body{flex:1}
+.sec-item-title{font-size:.9em;color:var(--white);font-weight:600;margin-bottom:2px}
+.sec-item-desc{font-size:.83em;color:var(--t2);line-height:1.55}
+
+/* ── DÍL 12 – Zálohování ── */
+.backup-strategy{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.backup-layer{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center}
+.backup-layer-icon{font-size:2em;display:block;margin-bottom:8px}
+.backup-layer-title{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:4px}
+.backup-layer-sub{font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.backup-layer p{font-size:.83em;color:var(--t2);margin-bottom:0;line-height:1.55}
+.restore-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:20px 22px;margin:18px 0}
+.restore-box-title{font-family:'Syne',sans-serif;font-size:.88em;font-weight:700;color:var(--white);margin-bottom:14px}
+@media(max-width:640px){.backup-strategy{grid-template-columns:1fr}}
+
+/* ── DÍL 13 – Tipy pro provoz ── */
+.checklist{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:18px 0}
+.checklist-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.check-item:last-child{border-bottom:none}
+.check-box{width:18px;height:18px;border:1px solid var(--border2);border-radius:4px;flex-shrink:0;margin-top:2px;background:var(--bg3)}
+.check-item-body{flex:1}
+.check-item-title{font-size:.9em;color:var(--white);margin-bottom:1px}
+.check-item-desc{font-size:.82em;color:var(--t2)}
+.perf-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin:16px 0}
+.perf-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.perf-row:last-child{border-bottom:none}
+.perf-name{font-size:.88em;color:var(--text)}
+.perf-val{font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
+.perf-val.ok{color:var(--green2)}
+.perf-val.warn{color:var(--yellow)}
+.perf-val.bad{color:var(--rasp1-light)}
+
+/* ── DÍL 14 – Řešení problémů ── */
+.issue{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:16px 0}
+.issue-title{font-family:'Syne',sans-serif;font-size:1em;font-weight:700;color:var(--rasp1-light);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.issue-tag{font-family:'DM Mono',monospace;font-size:.7em;padding:2px 8px;border-radius:4px;
+  background:rgba(227,11,92,.1);border:1px solid rgba(227,11,92,.2);color:var(--rasp1-light);letter-spacing:.06em;text-transform:uppercase}
+.issue h4{font-family:'Syne',sans-serif;font-size:.85em;font-weight:600;color:var(--white);margin:14px 0 6px}
+.issue ul{padding-left:18px;margin-bottom:0}
+.issue li{margin:5px 0;font-size:.88em}
+.issue p{font-size:.88em;margin-bottom:8px}
+
+/* ── DÍL 15 – Užitečné odkazy ── */
+ul{padding-left:22px;margin-bottom:14px}
+.link-group{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+.link-card{display:flex;align-items:flex-start;gap:16px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px 18px;text-decoration:none;transition:border-color .2s,background .2s}
+.link-card:hover{border-color:var(--rasp1);background:rgba(227,11,92,.04);text-decoration:none}
+.link-icon{font-size:1.4em;flex-shrink:0;margin-top:1px}
+.link-body{flex:1;min-width:0}
+.link-title{font-family:'Syne',sans-serif;font-size:.92em;font-weight:700;color:var(--white);margin-bottom:3px}
+.link-url{font-family:'DM Mono',monospace;font-size:.75em;color:var(--rasp1-light);letter-spacing:.03em;
+  display:block;margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.link-desc{font-size:.84em;color:var(--t2);line-height:1.55}
+.link-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:.68em;padding:2px 7px;
+  border-radius:4px;letter-spacing:.06em;text-transform:uppercase;margin-right:6px;margin-bottom:5px}
+.tag-official{background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--green2)}
+.tag-community{background:rgba(0,217,255,.1);border:1px solid rgba(0,217,255,.2);color:var(--cyan2)}
+.tag-czech{background:rgba(227,11,92,.1);border:1px solid rgba(227,11,92,.2);color:var(--rasp1-light)}
+.tag-shop{background:rgba(245,197,66,.1);border:1px solid rgba(245,197,66,.2);color:var(--yellow)}
+.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.link-grid .link-card{margin:0}
+.creds-table{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:0;margin:20px 0;overflow:hidden}
+.creds-table-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;
+  letter-spacing:.08em;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.creds-row{display:grid;grid-template-columns:1fr 2fr;align-items:center;padding:12px 20px;
+  border-bottom:1px solid var(--border)}
+.creds-row:last-child{border-bottom:none}
+.creds-key{font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
+.creds-val{font-family:'DM Mono',monospace;font-size:.85em;color:var(--border2);border-bottom:1px dashed var(--border2);
+  padding-bottom:2px;min-width:180px}
+.finish-banner{background:linear-gradient(135deg,rgba(227,11,92,.12) 0%,rgba(197,26,74,.08) 100%);
+  border:1px solid rgba(227,11,92,.25);border-radius:var(--r);padding:32px 28px;margin:40px 0;text-align:center}
+.finish-banner h2{font-family:'Syne',sans-serif;font-size:1.6em;font-weight:800;color:var(--white);
+  margin-bottom:10px;border:none;padding:0}
+.finish-banner p{color:var(--t2);font-size:.95em;max-width:560px;margin:0 auto 20px;line-height:1.7}
+.finish-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;
+  background:var(--rasp1);border-radius:8px;color:var(--white);font-family:'Syne',sans-serif;
+  font-size:.9em;font-weight:700;text-decoration:none;transition:background .2s}
+.finish-btn:hover{background:var(--rasp1-light);text-decoration:none;color:var(--white)}
+@media(max-width:580px){.link-grid{grid-template-columns:1fr}}
+
+/* ══════════════════════════════════════════════
+   INDEX (00) – pravidla, která se liší od základu
+   ══════════════════════════════════════════════ */
+body[data-page="00"]{line-height:1.6;overflow-x:hidden}
+body[data-page="00"] .main-content{padding-top:0}
+body[data-page="00"] a:hover{text-decoration:none}
+
+/* HEADER */
+body[data-page="00"] header{padding:60px 0 50px}
+body[data-page="00"] header::before{content:'';position:absolute;top:-100px;right:-200px;width:600px;height:500px;
+  background:radial-gradient(ellipse,rgba(227, 11, 92,.08) 0%,transparent 65%);pointer-events:none}
+body[data-page="00"] header::after{content:'';position:absolute;bottom:-50px;left:-100px;width:400px;height:300px;
+  background:radial-gradient(ellipse,rgba(197, 26, 74,.06) 0%,transparent 65%);pointer-events:none}
+body[data-page="00"] .logo{font-family:'Syne',sans-serif;font-size:2.5em;font-weight:800;color:var(--white);
+  margin-bottom:12px;line-height:1.6}
+body[data-page="00"] .logo span{color:var(--rasp1)}
+body[data-page="00"] .tagline{color:var(--t2);font-size:1.05em;max-width:700px;margin-bottom:28px;line-height:1.6}
+body[data-page="00"] .badges-h{display:flex;flex-wrap:wrap;gap:10px}
+body[data-page="00"] .badge-h{font-family:'DM Mono',monospace;font-size:.75em;padding:6px 14px;border-radius:16px;
+  border:1px solid;letter-spacing:.08em;text-transform:uppercase}
+body[data-page="00"] .bh-rasp1{color:var(--rasp1-light);border-color:rgba(227,11,92,.3);background:rgba(227,11,92,.08)}
+body[data-page="00"] .bh-rasp2{color:var(--rasp2-light);border-color:rgba(197,26,74,.3);background:rgba(197,26,74,.08)}
+body[data-page="00"] .bh-accent{color:var(--accent2);border-color:rgba(0,217,255,.3);background:rgba(0,217,255,.08)}
+
+/* GRID */
+body[data-page="00"] .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:40px 0}
+body[data-page="00"] .card{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+body[data-page="00"] .card::before{content:'';position:absolute;top:-50px;right:-50px;width:150px;height:150px;
+  background:radial-gradient(circle,rgba(227,11,92,.1) 0%,transparent 70%);opacity:0;
+  transition:opacity .3s}
+body[data-page="00"] .card:hover{border-color:var(--border2);transform:translateY(-4px)}
+body[data-page="00"] .card:hover::before{opacity:1}
+body[data-page="00"] .card-num{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--rasp1);
+  margin-bottom:10px;display:block}
+body[data-page="00"] .card-title{font-family:'Syne',sans-serif;font-size:1.1em;font-weight:700;color:var(--white);
+  margin-bottom:8px;position:relative;z-index:1}
+body[data-page="00"] .card-desc{font-size:.87em;color:var(--t2);line-height:1.7;position:relative;z-index:1}
+body[data-page="00"] .card-link{display:inline-block;margin-top:12px;font-family:'DM Mono',monospace;font-size:.78em;
+  color:var(--rasp1-light);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 12px;border:1px solid rgba(227,11,92,.3);border-radius:6px;transition:all .2s}
+body[data-page="00"] .card-link:hover{border-color:var(--rasp1-light);background:rgba(227,11,92,.08)}
+
+/* SECTIONS */
+body[data-page="00"] .sec{margin:50px 0;padding-top:0;border-top:none}
+body[data-page="00"] .sec-title{font-family:'Syne',sans-serif;font-size:1.5em;font-weight:700;color:var(--white);
+  margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--border);line-height:1.6}
+
+/* STATS */
+body[data-page="00"] .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:30px 0}
+body[data-page="00"] .stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px;text-align:center}
+body[data-page="00"] .stat-num{font-family:'Syne',sans-serif;font-size:2.5em;font-weight:800;color:var(--rasp1);display:block}
+body[data-page="00"] .stat-label{font-size:.85em;color:var(--t2);margin-top:6px}
+
+/* CALLOUT */
+body[data-page="00"] .callout{background:linear-gradient(135deg,rgba(227,11,92,.08) 0%,rgba(197,26,74,.08) 100%);
+  border:1px solid var(--border);border-left:3px solid var(--rasp1);border-radius:var(--r);
+  padding:20px 24px;margin:20px 0}
+body[data-page="00"] .callout-title{font-size:.9em;color:var(--rasp1-light);margin-bottom:6px}
+body[data-page="00"] .callout p{margin:0}
+
+/* FOOTER */
+body[data-page="00"] footer{margin-top:80px;padding:30px 0;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  font-size:.75em;text-align:left}
+body[data-page="00"] .footer-copy{color:var(--t3)}
+body[data-page="00"] .footer-back{display:inline-flex;align-items:center;gap:7px;color:var(--t2);
+  text-decoration:none;font-size:.9em;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 16px;border:1px solid var(--border);border-radius:8px;
+  transition:all .2s}
+body[data-page="00"] .footer-back:hover{color:var(--rasp1-light);border-color:rgba(227,11,92,.4);
+  background:rgba(227,11,92,.06)}
+/* Odkaz zpět – nahoře v headeru */
+body[data-page="00"] .header-back{display:inline-flex;align-items:center;gap:7px;
+  color:var(--t2);text-decoration:none;font-family:'DM Mono',monospace;
+  font-size:.78em;letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 14px;border:1px solid var(--border);border-radius:8px;
+  margin-bottom:24px;transition:all .2s}
+body[data-page="00"] .header-back:hover{color:var(--rasp1-light);border-color:rgba(227,11,92,.4);
+  background:rgba(227,11,92,.06)}

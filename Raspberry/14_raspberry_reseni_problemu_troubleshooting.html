@@ -5,142 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Řešení Problémů (Troubleshooting) – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
-  --border:#2a1f3d;--border2:#3d2855;
-  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c;--rasp1-light:#ff3377;
-  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
-  --cyan:#00d9ff;--cyan2:#5fffff;
-  --green:#00e5a0;--green2:#00ffb3;
-  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
-}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:6px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
-.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
-.nav-back:hover{gap:12px}
-header{padding:0 0 36px;border-bottom:1px solid var(--border)}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light);font-style:normal}
-.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
-.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
-p{margin-bottom:14px;color:var(--text);line-height:1.75}
-ul,ol{padding-left:22px;margin-bottom:14px}
-li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
-li strong{color:var(--white)}
-strong{color:var(--white);font-weight:600}
-a{color:var(--rasp1-light);text-decoration:none}
-a:hover{text-decoration:underline}
-code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
-pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.65;overflow-x:auto}
-pre code{background:none;border:none;padding:0;color:inherit}
-.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
-.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
-.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
-.callout ul{margin-bottom:0;padding-left:18px}
-.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
-.callout-info .callout-title{color:var(--cyan2)}
-.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
-.callout-tip .callout-title{color:var(--green2)}
-.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
-.callout-warn .callout-title{color:var(--yellow)}
-.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
-.callout-danger .callout-title{color:var(--rasp1-light)}
-/* issue cards */
-.issue{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:16px 0}
-.issue-title{font-family:'Syne',sans-serif;font-size:1em;font-weight:700;color:var(--rasp1-light);margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.issue-tag{font-family:'DM Mono',monospace;font-size:.7em;padding:2px 8px;border-radius:4px;
-  background:rgba(227,11,92,.1);border:1px solid rgba(227,11,92,.2);color:var(--rasp1-light);letter-spacing:.06em;text-transform:uppercase}
-.issue h4{font-family:'Syne',sans-serif;font-size:.85em;font-weight:600;color:var(--white);margin:14px 0 6px}
-.issue ul{padding-left:18px;margin-bottom:0}
-.issue li{margin:5px 0;font-size:.88em}
-.issue p{font-size:.88em;margin-bottom:8px}
-.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
-.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
-  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
-  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
-.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
-.ch-btn.next{justify-content:flex-end;text-align:right}
-.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
-
-/* ── PROGRESS BAR ── */
-.progress-bar{position:fixed;top:0;left:0;height:3px;
-  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
-  z-index:999;width:0%;transition:width 0.1s}
-
-/* ── SIDEBAR ── */
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
-  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
-.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
-.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
-  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
-  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
-.sidebar-back:hover{color:var(--rasp1-light)}
-.sidebar-title{display:flex;align-items:center;gap:12px}
-.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
-  background:rgba(227,11,92,.12);border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
-.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
-.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
-.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
-  color:var(--t2);text-decoration:none;font-size:12.5px;
-  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
-.nav-link:hover,.nav-link.active{color:var(--white);
-  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
-.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
-  color:var(--rasp1-light);background:rgba(227,11,92,.1);
-  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
-  border-radius:4px;text-align:center;flex-shrink:0}
-
-/* ── LAYOUT ── */
-.wrap{margin-left:260px}
-footer{margin-left:260px}
-@media(max-width:900px){
-  .sidebar{display:none}
-  .wrap,footer{margin-left:0}
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="14">
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "debug-logika", "num": "14.1", "name": "Jak řešit problémy" },
+    { "id": "ha-nedostupne", "num": "14.2", "name": "Home Assistant nedostupný" },
+    { "id": "z2m-problemy", "num": "14.3", "name": "Problémy se Zigbee2MQTT" },
+    { "id": "mqtt-problemy", "num": "14.4", "name": "Problémy s MQTT (Mosquitto)" },
+    { "id": "zalohy-probl", "num": "14.5", "name": "Problémy se zálohami" },
+    { "id": "ssd-problemy", "num": "14.6", "name": "Problémy s USB SSD" },
+    { "id": "prikazy-ssh", "num": "14.7", "name": "Diagnostické příkazy (SSH)" },
+    { "id": "kde-pomoc", "num": "14.8", "name": "Kde hledat pomoc" }
+  ]
+}
+</script>
+
 <div class="progress-bar" id="progressBar"></div>
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
-    <div class="sidebar-title">
-      <div class="sidebar-icon">🛠️</div>
-      <div class="sidebar-name">Troubleshooting<small>Řešení problémů</small></div>
-    </div>
-  </div>
-  <div class="nav-group-label">Obsah kapitoly</div>
-  <a href="#debug-logika" class="nav-link active"><span class="nav-step">01</span>Jak debugovat</a>
-  <a href="#ha-nedostupne" class="nav-link"><span class="nav-step">02</span>HA nedostupné</a>
-  <a href="#z2m-problemy" class="nav-link"><span class="nav-step">03</span>Zigbee2MQTT</a>
-  <a href="#mqtt-problemy" class="nav-link"><span class="nav-step">04</span>MQTT Mosquitto</a>
-  <a href="#zalohy-probl" class="nav-link"><span class="nav-step">05</span>Zálohy</a>
-  <a href="#ssd-problemy" class="nav-link"><span class="nav-step">06</span>USB SSD</a>
-  <a href="#prikazy-ssh" class="nav-link"><span class="nav-step">07</span>SSH příkazy</a>
-  <a href="#kde-pomoc" class="nav-link"><span class="nav-step">08</span>Kde hledat pomoc</a>
-</nav>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
 <div class="wrap">
-<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
 <header>
   <div class="h-num">// kapitola 14</div>
   <h1>Řešení <em>problémů</em></h1>
@@ -148,8 +36,8 @@ footer{margin-left:260px}
 </header>
 
 <!-- LOGIKA DEBUGOVANI -->
-<section class="sec" id="debug-logika">>
-  <h2>Jak přistupovat k problémům</h2>
+<section class="sec">
+  <h2 id="debug-logika">Jak řešit problémy</h2>
   <p>Před zkoumáním konkrétního problému – vždy začni od základů:</p>
   <ol>
     <li>Zkontroluj <strong>záložku PROTOKOL</strong> problematického add-onu – chybová zpráva obvykle řekne přesně co je špatně</li>
@@ -161,8 +49,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- HA NEDOSTUPNE -->
-<section class="sec" id="ha-nedostupne">>
-  <h2>Problémy s dostupností Home Assistant</h2>
+<section class="sec">
+  <h2 id="ha-nedostupne">Home Assistant nedostupný</h2>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">HA</span> http://homeassistant.local:8123 se nenačte</div>
@@ -225,8 +113,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- ZIGBEE2MQTT -->
-<section class="sec" id="z2m-problemy">>
-  <h2>Problémy se Zigbee2MQTT</h2>
+<section class="sec">
+  <h2 id="z2m-problemy">Problémy se Zigbee2MQTT</h2>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">Z2M</span> Z2M nejde spustit – "Failed to start"</div>
@@ -282,8 +170,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- MQTT -->
-<section class="sec" id="mqtt-problemy">>
-  <h2>Problémy s MQTT (Mosquitto)</h2>
+<section class="sec">
+  <h2 id="mqtt-problemy">Problémy s MQTT (Mosquitto)</h2>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">MQTT</span> MQTT integrace v HA hlásí "disconnected"</div>
@@ -297,8 +185,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- ZALOHY -->
-<section class="sec" id="zalohy-probl">>
-  <h2>Problémy se zálohami</h2>
+<section class="sec">
+  <h2 id="zalohy-probl">Problémy se zálohami</h2>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">Zálohy</span> Google Drive záloha se nenahrává</div>
@@ -325,8 +213,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- USB SSD -->
-<section class="sec" id="ssd-problemy">>
-  <h2>Problémy s USB SSD</h2>
+<section class="sec">
+  <h2 id="ssd-problemy">Problémy s USB SSD</h2>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">SSD</span> RPi se nespouští z USB SSD / pád systému</div>
@@ -348,8 +236,8 @@ usb-storage.quirks=XXXX:YYYY:u</code></pre>
 </section>
 
 <!-- UZITECNE PRIKAZY -->
-<section class="sec" id="prikazy-ssh">>
-  <h2>Užitečné příkazy pro diagnostiku (SSH)</h2>
+<section class="sec">
+  <h2 id="prikazy-ssh">Diagnostické příkazy (SSH)</h2>
   <p>Pokud máš nainstalovaný SSH add-on, tyto příkazy pomůžou s diagnostikou:</p>
   <pre><code># Zobrazí seznam sériových zařízení (Zigbee dongle)
 ls -la /dev/serial/by-id/
@@ -381,8 +269,8 @@ ping -c 4 8.8.8.8</code></pre>
 </section>
 
 <!-- KDE HLEDAT POMOC -->
-<section class="sec" id="kde-pomoc">>
-  <h2>Kde hledat pomoc</h2>
+<section class="sec">
+  <h2 id="kde-pomoc">Kde hledat pomoc</h2>
   <p>Pokud nic z výše uvedeného nezabralo, existuje velká komunita kde lidé rádi pomůžou. Doporučené zdroje v pořadí:</p>
 
   <div class="issue">
@@ -418,37 +306,16 @@ ping -c 4 8.8.8.8</code></pre>
   </div>
 </section>
 
-<nav class="chapter-nav">
-  <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html" class="ch-btn">
-    <span>←</span>
-    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Tipy pro provoz</span></div>
-  </a>
-  <a href="15_raspberry_uzitecne_odkazy.html" class="ch-btn next">
-    <div><span class="ch-label">další kapitola</span><span class="ch-name">Užitečné odkazy</span></div>
-    <span>→</span>
-  </a>
-</nav>
-<footer>14_raspberry_reseni_problemu_troubleshooting.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
+<div id="pn"></div>
+<footer>
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+</footer>
+
 </div>
-<script>
-window.addEventListener('scroll',()=>{
-  const b=document.getElementById('progressBar');
-  const t=document.documentElement.scrollTop;
-  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-  b.style.width=(t/h*100)+'%';
-});
-const sections=document.querySelectorAll('section[id]');
-const navLinks=document.querySelectorAll('.nav-link');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      navLinks.forEach(l=>l.classList.remove('active'));
-      const t=document.querySelector('[href="#'+e.target.id+'"]');
-      if(t)t.classList.add('active');
-    }
-  });
-},{rootMargin:'-20% 0px -70% 0px'});
-sections.forEach(s=>obs.observe(s));
-</script>
+</div>
+</div>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>

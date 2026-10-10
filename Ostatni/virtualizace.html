@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<!--
+  VIRTUALIZACE — průvodce zdrojovým souborem
+  1. CSS: základní styly, poté označené finální úpravy palety a rozvržení.
+  2. SIDEBAR: odkaz na ../index.html, nadpis a odkazy na kapitoly.
+  3. OBSAH: kapitoly mají id kap-1 až kap-20 a vlastní komentáře.
+  4. SKRIPTY: kopírování příkazů a aktivní položka menu.
+  Obrázky jsou ve složce pic/ vedle HTML.
+  Při změně id kapitoly upravte i odpovídající href v sidebaru.
+-->
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>
+      Virtualizace – podrobný praktický manuál
+    </title>
+    <style>
+    :root {
+      --bg: #eef4fa;
+      --panel: #ffffff;
+      --deep: #063a6e;
+      --blue: #0b6fd1;
+      --blue2: #1668b8;
+      --line: #cfe0f0;
+      --text: #0e1f33;
+      --muted: #4b6a89;
+      --dim: #7d99b4;
+      --green: #1a9e6b;
+      --amber: #c2790f;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--deep));
+      z-index: 999;
+      width: 0%;
+      transition: width .1s;
+    }
+    
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 260px;
+      height: 100vh;
+      background: var(--panel);
+      border-right: 1px solid var(--line);
+      overflow-y: auto;
+      z-index: 200;
+    }
+    
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--deep));
+    }
+    
+    .sidebar-brand {
+      padding: 28px 22px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    
+    .sidebar-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    
+    .sidebar-back:hover {
+      color: var(--blue);
+    }
+    
+    .sidebar-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .sidebar-badge {
+      background: var(--blue);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      padding: 3px 7px;
+      clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+    }
+    
+    .sidebar-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--deep);
+    }
+    
+    .sidebar-name small {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      color: var(--dim);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+    
+    .nav-label {
+      padding: 16px 22px 6px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 22px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      border-left: 2px solid transparent;
+      transition: all .2s;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      color: var(--deep);
+      background: rgba(11,111,209,.06);
+      border-left-color: var(--blue);
+    }
+    
+    .nav-item.sub {
+      padding-left: 34px;
+      font-size: 12px;
+    }
+    
+    .nav-num {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--blue);
+      background: rgba(11,111,209,.1);
+      border: 1px solid rgba(11,111,209,.25);
+      padding: 1px 5px;
+      min-width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    
+    /* ── LAYOUT ── */
+    .main {
+      margin-left: 260px;
+      max-width: 1470px;
+      padding: 56px 56px 20px;
+    }
+    
+    footer {
+      margin-left: 260px;
+      padding: 24px 56px;
+      border-top: 1px solid var(--line);
+    }
+    
+    /* ── HERO (terminal window motiv) ── */
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 48px;
+      box-shadow: 0 10px 30px rgba(11,111,209,.08);
+    }
+    
+    .hero-bar {
+      background: var(--deep);
+      padding: 9px 18px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    
+    .hero-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #9cc3e8;
+    }
+    
+    .hero-bar span.label {
+      margin-left: 8px;
+      color: #cfe4fb;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    
+    .hero-body {
+      padding: 32px 34px;
+    }
+    
+    .hero h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 34px;
+      color: var(--deep);
+      letter-spacing: -.3px;
+    }
+    
+    .hero p {
+      color: var(--muted);
+      font-size: 14.5px;
+      margin-top: 10px;
+      max-width: 620px;
+    }
+    
+    .hero-cmd {
+      margin-top: 20px;
+      background: var(--text);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: #8fd3ff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .hero-cmd .prompt {
+      color: #5fb6ff;
+    }
+    
+    /* ── SEKCE ── */
+    .section {
+      margin-bottom: 52px;
+      scroll-margin-top: 24px;
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    
+    .section-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--blue);
+      background: rgba(11,111,209,.08);
+      border: 1px solid rgba(11,111,209,.25);
+      padding: 3px 8px;
+    }
+    
+    .section h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 23px;
+      font-weight: 700;
+      color: var(--deep);
+    }
+    
+    .section > p {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    
+    h3.sub-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--deep);
+      margin: 26px 0 8px;
+    }
+    
+    /* ── PŘÍKAZOVÝ BLOK (terminál styl) ── */
+    .cmd {
+      background: var(--text);
+      border-radius: 6px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: #8fd3ff;
+    }
+    
+    .cmd .prompt {
+      color: #5fb6ff;
+      margin-right: 2px;
+    }
+    
+    .copy-btn {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: #8fd3ff;
+      background: rgba(143,211,255,.12);
+      border: 1px solid rgba(143,211,255,.3);
+      border-radius: 4px;
+      padding: 3px 9px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: 14px;
+      transition: background .2s;
+    }
+    
+    .copy-btn:hover {
+      background: rgba(143,211,255,.22);
+    }
+    
+    /* ── VÍCEŘÁDKOVÝ BLOK ── */
+    .cmd-block {
+      background: var(--text);
+      border-radius: 6px;
+      margin: 10px 0;
+      padding: 14px 16px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: #8fd3ff;
+    }
+    
+    .cmd-block pre {
+      white-space: pre;
+      overflow-x: auto;
+      margin: 0 0 10px;
+      line-height: 1.6;
+    }
+    
+    .cmd-block .cmd-block-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    /* ── KARTA PŘÍKAZU ── */
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--blue);
+      border-radius: 4px;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+    }
+    
+    .card h4 {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--deep);
+      letter-spacing: .3px;
+      margin-bottom: 6px;
+    }
+    
+    .card p {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    
+    /* ── ALERT BOXY ── */
+    .alert {
+      display: flex;
+      gap: 12px;
+      border: 1px solid;
+      border-radius: 6px;
+      padding: 13px 16px;
+      margin: 16px 0;
+      font-size: 13.5px;
+    }
+    
+    .alert-tip {
+      border-color: rgba(26,158,107,.35);
+      background: rgba(26,158,107,.06);
+    }
+    
+    .alert-warn {
+      border-color: rgba(194,121,15,.35);
+      background: rgba(194,121,15,.06);
+    }
+    
+    .alert-info {
+      border-color: rgba(11,111,209,.3);
+      background: rgba(11,111,209,.05);
+    }
+    
+    .alert-icon {
+      flex-shrink: 0;
+    }
+    
+    .alert b {
+      color: var(--deep);
+    }
+    
+    /* ── KROKY (číslované) ── */
+    .steps {
+      list-style: none;
+      counter-reset: step;
+    }
+    
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+    }
+    
+    .steps li:last-child {
+      border-bottom: none;
+    }
+    
+    .steps li::before {
+      content: counter(step);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #fff;
+      background: var(--blue);
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    
+    .steps li b {
+      color: var(--deep);
+    }
+    
+    .steps code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--blue2);
+      background: rgba(11,111,209,.08);
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+    
+    a.inline-link {
+      color: var(--blue);
+      font-weight: 500;
+    }
+    
+    footer p {
+      font-size: 12px;
+      color: var(--dim);
+      font-family: var(--mono);
+    }
+    
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    
+    .footer-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 11px;
+      background: rgba(11,111,209,.08);
+      border: 1px solid rgba(11,111,209,.25);
+      padding: 6px 14px;
+      margin-top: 8px;
+    }
+    
+    .footer-back:hover {
+      background: rgba(11,111,209,.15);
+    }
+    
+    @media (max-width: 900px) {
+      .sidebar {
+        display: none;
+      }
+      .main, footer {
+        margin-left: 0;
+        padding: 36px 24px;
+        max-width: none;
+      }
+      .hero h1 {
+        font-size: 27px;
+      }
+    }
+    
+    /* ÚPRAVY MANUÁLU: finální šedá paleta a rozvržení. Pravidla přepisují základ výše. */
+    :root {
+      --bg:#e9ebee;
+      --deep:#103e70;
+      --text:#192635;
+      --muted:#465564;
+      --dim:#526579;
+      --line:#cbd2da
+    }
+    
+    body {
+      font-family:'Segoe UI',Arial,sans-serif;
+      font-size:16px
+    }
+    
+    .sidebar-name,.hero h1,.section h2,h3.sub-title {
+      font-family:'Segoe UI',Arial,sans-serif
+    }
+    
+    .section h2 {
+      font-size:25px
+    }
+    
+    .section p {
+      margin-bottom:14px
+    }
+    
+    .section h3 {
+      margin:24px 0 10px;
+      color:var(--deep);
+      font-size:19px
+    }
+    
+    .section li {
+      margin-bottom:8px
+    }
+    
+    .section ul {
+      padding-left:25px
+    }
+    
+    .steps li {
+      display:flex
+    }
+    
+    .sidebar {
+      width:280px
+    }
+    
+    .main,footer {
+      margin-left:280px
+    }
+    
+    .nav-item {
+      font-size:12px;
+      padding:8px 16px
+    }
+    
+    .nav-label {
+      padding-left:16px
+    }
+    
+    .table-wrap {
+      overflow-x:auto;
+      margin:18px 0
+    }
+    
+    table {
+      width:100%;
+      border-collapse:collapse;
+      background:white;
+      font-size:14px
+    }
+    
+    td,th {
+      text-align:left;
+      padding:12px;
+      border-bottom:1px solid var(--line);
+      vertical-align:top
+    }
+    
+    th {
+      color:var(--deep);
+      background:#e1eaf3
+    }
+    
+    .illustration {
+      display:block;
+      width:100%;
+      max-width:800px;
+      margin:20px auto
+    }
+    
+    .cmd-block pre {
+      font-family:var(--mono);
+      font-size:12px
+    }
+    
+    .section {
+      scroll-margin-top:20px
+    }
+    
+    .hero p {
+      max-width:800px
+    }
+    
+    .copy-btn:focus-visible,a:focus-visible {
+      outline:3px solid #c2790f;
+      outline-offset:3px
+    }
+    
+    .copy-btn {
+      min-height:32px
+    }
+    
+    @media(max-width:900px) {
+      .sidebar {
+        position:static;
+        width:100%;
+        height:auto;
+        max-height:none
+      }
+      .sidebar-brand {
+        padding:18px
+      }
+      .sidebar nav {
+        display:grid;
+        grid-template-columns:1fr 1fr
+      }
+      .main,footer {
+        margin:0;
+        padding:26px 18px
+      }
+      .nav-label {
+        display:none
+      }
+      .nav-item {
+        font-size:11px
+      }
+      .hero-body {
+        padding:24px
+      }
+      .hero h1 {
+        font-size:30px
+      }
+      .steps li {
+        font-size:14px
+      }
+    }
+    
+    @media print {
+      .sidebar,.copy-btn,.progress-bar {
+        display:none
+      }
+      .main,footer {
+        margin:0;
+        padding:0
+      }
+      body {
+        background:white
+      }
+      .table-wrap {
+        overflow:visible
+      }
+      .hero {
+        box-shadow:none
+      }
+      .section {
+        break-before:auto
+      }
+      a {
+        color:#103e70
+      }
+    }
+    
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        scroll-behavior:auto!important
+      }
+    }
+    
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar" id="progressBar">
+    </div>
+
+    <!-- SIDEBAR: odkaz zpět, název a obsah manuálu -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="sidebar-back">← Zpět na rozcestník</a>
+        <div class="sidebar-title">
+          <span class="sidebar-badge">CZ</span>
+          <div class="sidebar-name">
+            Virtualizace<small>Windows · Linux · Android · izolace</small>
+          </div>
+        </div>
+      </div>
+      <div class="nav-label">
+        20 kapitol · obsah
+      </div>
+      <nav aria-label="Obsah">
+        <a class="nav-item" href="#kap-1"><span class="nav-num">01</span>Úvod a hranice bezpečnosti</a>
+        <a class="nav-item" href="#kap-2"><span class="nav-num">02</span>Jak virtuální prostředí funguje</a>
+        <a class="nav-item" href="#kap-3"><span class="nav-num">03</span>Vyberte správný režim</a>
+        <a class="nav-item" href="#kap-4"><span class="nav-num">04</span>Příprava vašeho počítače</a>
+        <a class="nav-item" href="#kap-5"><span class="nav-num">05</span>Windows Sandbox: první spuštění</a>
+        <a class="nav-item" href="#kap-6"><span class="nav-num">06</span>Sandbox s omezeným propojením</a>
+        <a class="nav-item" href="#kap-7"><span class="nav-num">07</span>Plná VM: výběr a instalace nástroje</a>
+        <a class="nav-item" href="#kap-8"><span class="nav-num">08</span>Instalace Linuxu krok za krokem</a>
+        <a class="nav-item" href="#kap-9"><span class="nav-num">09</span>Další Windows a starší systémy</a>
+        <a class="nav-item" href="#kap-10"><span class="nav-num">10</span>Android a emulátory</a>
+        <a class="nav-item" href="#kap-11"><span class="nav-num">11</span>Síť: offline, internet, laboratoř</a>
+        <a class="nav-item" href="#kap-12"><span class="nav-num">12</span>Sdílení souborů a zařízení</a>
+        <a class="nav-item" href="#kap-13"><span class="nav-num">13</span>Snímky, klony a zálohy</a>
+        <a class="nav-item" href="#kap-14"><span class="nav-num">14</span>Postup pro podezřelý soubor</a>
+        <a class="nav-item" href="#kap-15"><span class="nav-num">15</span>Kontrola izolace a první neškodný test</a>
+        <a class="nav-item" href="#kap-16"><span class="nav-num">16</span>Kdy použít samostatné laboratorní PC</a>
+        <a class="nav-item" href="#kap-17"><span class="nav-num">17</span>Údržba a řešení problémů</a>
+        <a class="nav-item" href="#kap-18"><span class="nav-num">18</span>Kontrolní seznamy a slovníček</a>
+        <a class="nav-item" href="#kap-19"><span class="nav-num">19</span>Videa a další návody</a>
+        <a class="nav-item" href="#kap-20"><span class="nav-num">20</span>Katalog systémů, emulátorů a nástrojů</a>
+      </nav>
+    </aside>
+
+    <!-- HLAVNÍ OBSAH: úvodní panel a kapitoly 01–20 -->
+    <main class="main">
+      <header class="hero">
+        <div class="hero-bar">
+          <span class="label">PRAKTICKÝ MANUÁL / VERZE 01 / 5. 10. 2026</span>
+        </div>
+        <div class="hero-body">
+          <h1>
+            Druhý počítač. Uvnitř toho vašeho.
+          </h1>
+          <p>
+            Od prvního Sandboxu přes plné Windows a Linux až po opatrné offline testování. Podrobné kroky,
+            rozdíly mezi nástroji a kontrola hranic izolace.
+          </p>
+          <div class="alert alert-info">
+            Začněte kapitolami 01–06. Pro Linux pokračujte 07–08; pro podezřelý soubor nejprve 11–15. Skutečný
+            malware patří do samostatné laboratoře, viz 16.
+          </div>
+        </div>
+      </header>
+
+      <!-- KAPITOLA 01 — Úvod a hranice bezpečnosti -->
+      <section class="section" id="kap-1">
+        <div class="section-header">
+          <span class="section-num">01</span>
+          <h2>
+            Úvod a hranice bezpečnosti
+          </h2>
+        </div>
+        <p>
+          Tento návod vás provede od prvního spuštění virtuálních Windows až k Linuxu, Androidu a opatrnému
+          zacházení s podezřelými soubory. Na každodenním PC začněte důvěryhodnými aplikacemi a oficiálními
+          instalačními obrazy.
+        </p>
+        <div class="alert alert-warn">
+          <b>Žádný virtuál nezaručuje nulové riziko.</b> Chyba hypervizoru může umožnit únik; sdílená složka, účet nebo síť mohou způsobit škodu i bez úniku. Silně podezřelý obsah na každodenním PC nespouštějte.
+        </div>
+        <p>
+          Cílem je snížit riziko, ne prohlásit neznámý program za bezpečný. Návod nevyžaduje vyhledávání
+          živých virů ani vypínání ochrany hostitele.
+        </p>
+        <img class="illustration" src="pic/izolace.svg" alt="Hlavní Windows a oddělená VM; propojení představují síť, sdílení a zařízení.">
+      </section>
+
+      <!-- KAPITOLA 02 — Jak virtuální prostředí funguje -->
+      <section class="section" id="kap-2">
+        <div class="section-header">
+          <span class="section-num">02</span>
+          <h2>
+            Jak virtuální prostředí funguje
+          </h2>
+        </div>
+        <p>
+          <b>Hostitel</b> je skutečný počítač, <b>hostovaný systém</b> jsou Windows či Linux uvnitř VM. <b>Hypervizor</b> přiděluje výkon a vytváří hranici mezi systémy. <b>Virtuální disk</b> je obvykle soubor VHDX, VDI nebo VMDK.
+        </p>
+        <p>
+          Instalátor uvnitř VM mění její systém. Pokud však připojíte osobní složku, může číst její skutečný
+          obsah. Oprávnění správce uvnitř hosta nejsou automaticky oprávnění správce hostitele.
+        </p>
+        <p>
+          Virtualizace využívá vhodný skutečný procesor; emulace napodobuje hardware, třeba starší PC či jinou
+          architekturu. Emulace může být podstatně pomalejší. Virtuální plochy ve Windows pouze organizují
+          okna a tuto izolaci nevytvářejí.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 03 — Vyberte správný režim -->
+      <section class="section" id="kap-3">
+        <div class="section-header">
+          <span class="section-num">03</span>
+          <h2>
+            Vyberte správný režim
+          </h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <tr>
+              <th>
+                Účel
+              </th>
+              <th>
+                Prostředí
+              </th>
+              <th>
+                Síť a sdílení
+              </th>
+            </tr>
+            <tr>
+              <td>
+                Krátký test důvěryhodné aplikace
+              </td>
+              <td>
+                Windows Sandbox
+              </td>
+              <td>
+                Podle potřeby
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Linux, další Windows, dlouhodobá práce
+              </td>
+              <td>
+                Hyper-V / VirtualBox / VMware
+              </td>
+              <td>
+                Internet pro přípravu; omezené sdílení
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Mírně podezřelý soubor
+              </td>
+              <td>
+                Čistá offline VM nebo omezený Sandbox
+              </td>
+              <td>
+                Žádná síť, osobní účty ani zapisovatelné sdílení
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Známý malware, silné podezření
+              </td>
+              <td>
+                Samostatné laboratorní PC
+              </td>
+              <td>
+                Fyzicky oddělená síť; odborný postup
+              </td>
+            </tr>
+          </table>
+        </div>
+        <p>
+          Pro Android použijte emulátor určený pro tuto platformu. WSL, Docker a herní emulátor nepovažujte
+          automaticky za laboratoř pro malware.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 04 — Příprava vašeho počítače -->
+      <section class="section" id="kap-4">
+        <div class="section-header">
+          <span class="section-num">04</span>
+          <h2>
+            Příprava vašeho počítače
+          </h2>
+        </div>
+        <p>
+          Výchozí sestava podle vašich údajů: Ryzen 7 5700X, 32 GB RAM, GTX 1070, Windows 11 Pro. Souhrnné
+          volné místo je přibližně 2,33 TB; důležité je volné místo na konkrétním disku. Build a verzi Windows
+          bereme jako vámi dodané údaje.
+        </p>
+        <ol class="steps">
+          <li>
+            <div>
+              Zálohujte důležitá data na úložiště, které nebude během rizikového testu připojené. Ověřte, že umíte
+              soubor ze zálohy obnovit.
+            </div>
+          </li>
+          <li>
+            <div>
+              Aktualizujte Windows, ochranu systému a zvolený hypervizor. Ve Správci úloh → Výkon → Procesor
+              ověřte „Virtualizace: Povoleno“.
+            </div>
+          </li>
+          <li>
+            <div>
+              Je-li vypnutá, podle manuálu základní desky zapněte SVM / AMD-V v UEFI. Neměňte zároveň
+              nesouvisející volby ani nevypínejte Secure Boot kvůli běžnému testu.
+            </div>
+          </li>
+          <li>
+            <div>
+              Na SSD vytvořte složku například D:\VM-Lab; písmeno přizpůsobte svému disku. Připravte podsložky
+              ISO, VM a Poznamky. Nedávejte virtuální disky do synchronizované složky OneDrive.
+            </div>
+          </li>
+          <li>
+            <div>
+              Začněte jednou VM: Linux 4 GB RAM a 2 vCPU; Windows 8 GB a 2–4 vCPU. Pro hlavní Windows ponechte
+              dostatek paměti. Jsou to startovní návrhy, ne univerzální minima.
+            </div>
+          </li>
+        </ol>
+        <p>
+          Dynamický disk nerovná se předem obsazená celá kapacita; snímky přesto mohou rychle spotřebovat skutečné místo.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 05 — Windows Sandbox: první spuštění -->
+      <section class="section" id="kap-5">
+        <div class="section-header">
+          <span class="section-num">05</span>
+          <h2>
+            Windows Sandbox: první spuštění
+          </h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              V hlavních Windows vyhledejte „Zapnout nebo vypnout funkce systému Windows“.
+            </div>
+          </li>
+          <li>
+            <div>
+              Zaškrtněte Windows Sandbox, potvrďte OK a podle výzvy restartujte. Vyžaduje oprávnění správce.
+            </div>
+          </li>
+          <li>
+            <div>
+              V nabídce Start spusťte Windows Sandbox. Nechte načíst samostatnou plochu.
+            </div>
+          </li>
+          <li>
+            <div>
+              Nejprve pouze prohlédněte prostředí. Zavřete okno a potvrďte odstranění obsahu. Znovu jej otevřete a
+              ověřte čistý start.
+            </div>
+          </li>
+        </ol>
+        <p>
+          Sandbox podporují například Pro, Enterprise a Education. Potřebuje zapnutou hardwarovou
+          virtualizaci, nejméně 4 GB RAM (doporučeno 8 GB), dvě jádra a 1 GB volného místa.
+        </p>
+        <div class="alert alert-warn">
+          Výchozí Sandbox má síť a sdílení schránky zapnuté. První spuštění pouze ověřuje funkci; pro
+          podezřelý soubor pokračujte další kapitolou.
+        </div>
+        <p>
+          Podklad: <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-install" target="_blank" rel="noopener noreferrer">Microsoft: instalace</a>.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 06 — Sandbox s omezeným propojením -->
+      <section class="section" id="kap-6">
+        <div class="section-header">
+          <span class="section-num">06</span>
+          <h2>
+            Sandbox s omezeným propojením
+          </h2>
+        </div>
+        <p>
+          Následující konfiguraci vytváříte v <b>hlavních Windows</b>. Přenosová složka obsahuje pouze vstupní
+          soubor, žádné osobní dokumenty.
+        </p>
+        <ol class="steps">
+          <li>
+            <div>
+              Vytvořte C:\SandboxInput a vložte do ní pouze soubor pro test. Nespouštějte jej na hostiteli. Pokud
+              jej ochrana blokuje, neobcházejte blokování.
+            </div>
+          </li>
+          <li>
+            <div>
+              V Poznámkovém bloku vložte konfiguraci níže. Uložte jako TestOffline.wsb; typ „Všechny soubory“, nikoli .wsb.txt.
+            </div>
+          </li>
+          <li>
+            <div>
+              Dvojklikem na .wsb spusťte Sandbox. Uvnitř otevřete C:\Input a pro běžný instalační test zkopírujte
+              vstupní soubor na jeho vlastní plochu.
+            </div>
+          </li>
+          <li>
+            <div>
+              Po skončení zavřete Sandbox a potvrďte odstranění. Obsah vstupní složky na hostiteli zůstává.
+            </div>
+          </li>
+        </ol>
+        <div class="cmd-block">
+          <pre><code>&lt;Configuration&gt;
+  &lt;Networking&gt;Disable&lt;/Networking&gt;
+  &lt;ClipboardRedirection&gt;Disable&lt;/ClipboardRedirection&gt;
+  &lt;vGPU&gt;Disable&lt;/vGPU&gt;
+  &lt;AudioInput&gt;Disable&lt;/AudioInput&gt;
+  &lt;VideoInput&gt;Disable&lt;/VideoInput&gt;
+  &lt;PrinterRedirection&gt;Disable&lt;/PrinterRedirection&gt;
+  &lt;ProtectedClient&gt;Enable&lt;/ProtectedClient&gt;
+  &lt;MappedFolders&gt;
+    &lt;MappedFolder&gt;
+      &lt;HostFolder&gt;C:\SandboxInput&lt;/HostFolder&gt;
+      &lt;SandboxFolder&gt;C:\Input&lt;/SandboxFolder&gt;
+      &lt;ReadOnly&gt;true&lt;/ReadOnly&gt;
+    &lt;/MappedFolder&gt;
+  &lt;/MappedFolders&gt;
+&lt;/Configuration&gt;</code></pre>
+          <button class="copy-btn" type="button">
+            Kopírovat
+          </button>
+        </div>
+        <p>
+          ReadOnly chrání proti běžnému zápisu, nikoli čtení. MappedFolders stále vytváří propojení. Pro
+          přísnější VM použijte vstupní ISO bez sdílené složky. Protected Client nenahrazuje odpojení sítě.
+          Offline webový instalátor nemusí fungovat.
+        </p>
+        <p>
+          <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-configure-using-wsb-file" target="_blank" rel="noopener noreferrer">Microsoft: parametry .wsb</a>
+        </p>
+      </section>
+
+      <!-- KAPITOLA 07 — Plná VM: výběr a instalace nástroje -->
+      <section class="section" id="kap-7">
+        <div class="section-header">
+          <span class="section-num">07</span>
+          <h2>
+            Plná VM: výběr a instalace nástroje
+          </h2>
+        </div>
+        <p>
+          Vyberte nejprve jeden nástroj. Pro vaši edici Pro je praktický Hyper-V; VirtualBox a VMware nabízejí
+          alternativní rozhraní a vlastnosti. Bezpečnost nelze určit jen podle značky.
+        </p>
+        <h3>
+          Hyper-V
+        </h3>
+        <ol class="steps">
+          <li>
+            <div>
+              V hlavních Windows otevřete systémové funkce, zaškrtněte Hyper-V včetně nástrojů správy a platformy.
+              Restartujte podle výzvy.
+            </div>
+          </li>
+          <li>
+            <div>
+              Spusťte Správce technologie Hyper-V a vyberte místní počítač.
+            </div>
+          </li>
+          <li>
+            <div>
+              Nový → Virtuální počítač. Zadejte název, umístění, generaci 2 pro moderní Windows/Linux, paměť a nový VHDX.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro začátek nastavte síť „Nepřipojeno“, vložte oficiální ISO a dokončete průvodce. V Nastavení VM
+              upravte procesory.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro Windows 11 ponechte Secure Boot a zapněte virtuální TPM; pro Linux může být potřeba šablona
+              Secure Boot „Microsoft UEFI Certificate Authority“.
+            </div>
+          </li>
+        </ol>
+        <h3>
+          VirtualBox
+        </h3>
+        <ol class="steps">
+          <li>
+            <div>
+              Stáhněte Windows hosts z oficiálních stránek Oracle. Instalátor mění hostitele a může dočasně přerušit síť.
+            </div>
+          </li>
+          <li>
+            <div>
+              New / Nový → název a ISO. Pro přehledný ruční postup přeskočte unattended installation, je-li nabízena.
+            </div>
+          </li>
+          <li>
+            <div>
+              Nastavte RAM, procesory a nový VDI. Před spuštěním zkontrolujte Network, Shared Folders, General → Advanced a USB.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro izolovaný test zakažte všechny síťové adaptéry, schránku a drag-and-drop. Extension Pack není
+              pro základní offline VM nutný; má vlastní licenci.
+            </div>
+          </li>
+        </ol>
+        <h3>
+          VMware Workstation Pro
+        </h3>
+        <ol class="steps">
+          <li>
+            <div>
+              Použijte oficiální stránku VMware/Broadcom. Stažení může vyžadovat účet. Aktuálně je Workstation Pro
+              dostupný zdarma pro osobní i komerční použití, podmínky ověřte při stažení.
+            </div>
+          </li>
+          <li>
+            <div>
+              Create a New Virtual Machine → Typical. Zvolte ruční instalaci systému později, pokud nechcete
+              automatické Easy Install.
+            </div>
+          </li>
+          <li>
+            <div>
+              Vyberte systém, nový virtuální disk, RAM a CPU. V nastavení CD/DVD vložte ISO.
+            </div>
+          </li>
+          <li>
+            <div>
+              Před startem odpojte síť; vypněte Shared Folders a Guest Isolation → copy/paste, drag/drop.
+              Odstraňte zbytečná zařízení.
+            </div>
+          </li>
+        </ol>
+        <p>
+          Souběh s Hyper-V/VBS může změnit výkon či možnosti jiných nástrojů. Kvůli pohodlí neoslabujte hlavní
+          Windows; hledejte podporovanou konfiguraci.
+        </p>
+        <p>
+          <a href="https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/create-a-virtual-machine-in-hyper-v" target="_blank" rel="noopener noreferrer">Hyper-V: průvodce VM</a> · <a href="https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html" target="_blank" rel="noopener noreferrer">Oracle: instalace</a> · <a href="https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion" target="_blank" rel="noopener noreferrer">VMware: oficiální stránka</a>
+        </p>
+      </section>
+
+      <!-- KAPITOLA 08 — Instalace Linuxu krok za krokem -->
+      <section class="section" id="kap-8">
+        <div class="section-header">
+          <span class="section-num">08</span>
+          <h2>
+            Instalace Linuxu krok za krokem
+          </h2>
+        </div>
+        <p>
+          Pro první pokus vyberte Ubuntu LTS nebo Linux Mint; jiné distribuce mohou mít jiný instalátor.
+          Stahujte x86-64/amd64 obraz pro tento počítač. „amd64“ funguje i na procesorech Intel.
+        </p>
+        <ol class="steps">
+          <li>
+            <div>
+              Stáhněte ISO z oficiálního webu distribuce. Porovnejte SHA-256 s publikovaným kontrolním součtem;
+              podpis součtů poskytuje silnější ověření původu.
+            </div>
+          </li>
+          <li>
+            <div>
+              Vytvořte novou VM: startovně 4 GB RAM, 2 vCPU, 40–60 GB dynamický disk. Připojte ISO.
+            </div>
+          </li>
+          <li>
+            <div>
+              Spusťte VM a zvolte vyzkoušení nebo instalaci. Ve virtuálním okně ověřte, že instalátor vidí pouze
+              připravený virtuální disk.
+            </div>
+          </li>
+          <li>
+            <div>
+              Volba „Erase disk“ je přijatelná pouze pro nový virtuální disk. Nikdy nepřipojujte fyzický disk
+              hostitele. Pokud si nejste jistí, zastavte instalaci.
+            </div>
+          </li>
+          <li>
+            <div>
+              Zvolte jazyk, klávesnici a místní testovací účet. Dokončete instalaci, restartujte VM a odpojte ISO,
+              pokud startuje instalátor znovu.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro přípravu důvěryhodné VM povolte NAT / vhodné připojení. Nainstalujte aktualizace; pro
+              Ubuntu/Mint lze uvnitř použít příkazy níže.
+            </div>
+          </li>
+          <li>
+            <div>
+              Vypněte VM a vytvořte čistý snímek. Pro offline test znovu odpojte síť.
+            </div>
+          </li>
+        </ol>
+        <div class="cmd-block">
+          <pre><code>sudo apt update
+sudo apt upgrade</code></pre>
+          <button class="copy-btn" type="button">
+            Kopírovat
+          </button>
+        </div>
+        <p>
+          Příkazy platí pro Ubuntu/Mint/Debian, ne pro všechny distribuce. Fedora používá dnf, Arch pacman.
+          Integrační doplňky zlepší rozlišení, ale automaticky nepovolujte sdílení.
+        </p>
+        <p>
+          <a href="https://ubuntu.com/tutorials/install-ubuntu-desktop" target="_blank" rel="noopener noreferrer">Ubuntu: instalační průvodce</a>
+        </p>
+      </section>
+
+      <!-- KAPITOLA 09 — Další Windows a starší systémy -->
+      <section class="section" id="kap-9">
+        <div class="section-header">
+          <span class="section-num">09</span>
+          <h2>
+            Další Windows a starší systémy
+          </h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              Stáhněte Windows ISO od Microsoftu nebo použijte své legitimní médium. Licence hlavních Windows
+              automaticky nezaručuje právo na další instalaci.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro Windows 11 vytvořte moderní VM s UEFI, Secure Boot a vTPM. Startovně 8 GB RAM a 80–100 GB disk;
+              minimální požadavky ověřte u Microsoftu.
+            </div>
+          </li>
+          <li>
+            <div>
+              Instalujte uvnitř okna VM na nový virtuální disk. Pokud nastavení vyžaduje účet, použijte oddělený
+              testovací účet bez osobních dat; neobcházejte zde bezpečnostní požadavky.
+            </div>
+          </li>
+          <li>
+            <div>
+              Aktualizujte důvěryhodný systém, ponechte ochranu a vytvořte čistý snímek.
+            </div>
+          </li>
+          <li>
+            <div>
+              Starší Windows provozujte offline. Pro DOS a velmi staré Windows může být vhodnější generace 1,
+              VirtualBox, VMware nebo emulátor 86Box. Kompatibilitu ověřte pro konkrétní systém.
+            </div>
+          </li>
+        </ol>
+        <p>
+          Nepodporovaný systém se nestane bezpečným tím, že běží virtuálně. Nepřihlašujte se v něm k e-mailu
+          či bankovnictví. macOS má omezení licence i hardwaru; tento Windows PC není univerzální podporovaný
+          hostitel pro macOS.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 10 — Android a emulátory -->
+      <section class="section" id="kap-10">
+        <div class="section-header">
+          <span class="section-num">10</span>
+          <h2>
+            Android a emulátory
+          </h2>
+        </div>
+        <p>
+          Pro transparentní vývojové testy začněte oficiálním Android Emulator v Android Studiu. Běžný Android
+          emulátor může být silně propojený s hostitelem; není automaticky vhodný pro podezřelé APK.
+        </p>
+        <ol class="steps">
+          <li>
+            <div>
+              Z oficiálního webu nainstalujte Android Studio a v průvodci požadované SDK a Emulator.
+            </div>
+          </li>
+          <li>
+            <div>
+              V Device Manager / Virtual Device Manager zvolte Create Device a profil zařízení.
+            </div>
+          </li>
+          <li>
+            <div>
+              Stáhněte doporučený systémový obraz pro podporovanou architekturu, nastavte přiměřenou paměť a spusťte AVD.
+            </div>
+          </li>
+          <li>
+            <div>
+              Nejprve otestujte běžnou aplikaci. Používejte samostatný testovací účet, případně žádný účet.
+            </div>
+          </li>
+          <li>
+            <div>
+              Při návratu k čistému stavu použijte Wipe Data. Cold Boot pouze vypne rychlý start; nesmaže všechna
+              uživatelská data.
+            </div>
+          </li>
+        </ol>
+        <p>
+          Na Windows lze pro akceleraci využít Windows Hypervisor Platform podle dokumentace. Neinstalujte
+          několik různých akceleračních ovladačů naslepo. Bluetooth, kamera a grafika nemusí odpovídat
+          telefonu.
+        </p>
+        <p>
+          <a href="https://developer.android.com/studio/run/emulator" target="_blank" rel="noopener noreferrer">Android: Emulator</a> · <a href="https://developer.android.com/studio/run/managing-avds" target="_blank" rel="noopener noreferrer">AVD</a> · <a href="https://developer.android.com/studio/run/emulator-acceleration" target="_blank" rel="noopener noreferrer">Akcelerace</a>
+        </p>
+      </section>
+
+      <!-- KAPITOLA 11 — Síť: offline, internet, laboratoř -->
+      <section class="section" id="kap-11">
+        <div class="section-header">
+          <span class="section-num">11</span>
+          <h2>
+            Síť: offline, internet, laboratoř
+          </h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <tr>
+              <th>
+                Režim
+              </th>
+              <th>
+                Co znamená
+              </th>
+              <th>
+                Vhodnost
+              </th>
+            </tr>
+            <tr>
+              <td>
+                Adaptér vypnutý / odpojený
+              </td>
+              <td>
+                Žádná běžná komunikace přes tento adaptér
+              </td>
+              <td>
+                Výchozí pro podezřelý soubor
+              </td>
+            </tr>
+            <tr>
+              <td>
+                NAT / Hyper-V Default Switch
+              </td>
+              <td>
+                Pohodlné odchozí spojení; neznamená blokování LAN
+              </td>
+              <td>
+                Důvěryhodné instalace a aktualizace
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Bridged / External
+              </td>
+              <td>
+                VM je zařízení v běžné síti
+              </td>
+              <td>
+                Ne pro podezřelý obsah
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Host-only / Hyper-V Internal
+              </td>
+              <td>
+                VM může komunikovat s hostitelem
+              </td>
+              <td>
+                Není oddělení od hostitele
+              </td>
+            </tr>
+            <tr>
+              <td>
+                VirtualBox Internal / Hyper-V Private / VMware LAN Segment
+              </td>
+              <td>
+                Skupina VM bez běžného síťového rozhraní hostitele
+              </td>
+              <td>
+                Laboratorní síť, pokud nic nepřidá směrování
+              </td>
+            </tr>
+          </table>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              Vypněte VM. U každého adaptéru prověřte režim; skryté druhé rozhraní může izolaci zrušit.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro offline test vypněte/odstraňte adaptéry v nastavení hypervizoru, ne pouze ikonou uvnitř hosta.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro internet na důvěryhodné VM zapněte běžné NAT připojení. Není to režim pro malware.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro více laboratorních VM vytvořte Private/Internal síť podle nástroje. Nepřipojujte další adaptér k
+              internetu ani nepovolujte Internet Connection Sharing.
+            </div>
+          </li>
+        </ol>
+        <p>
+          VM-router se dvěma adaptéry může z izolované sítě udělat propojenou. VPN v hostiteli ani neúspěšný
+          ping nejsou důkaz izolace.
+        </p>
+        <p>
+          <a href="https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html" target="_blank" rel="noopener noreferrer">Oracle: síťové režimy</a>
+        </p>
+      </section>
+
+      <!-- KAPITOLA 12 — Sdílení souborů a zařízení -->
+      <section class="section" id="kap-12">
+        <div class="section-header">
+          <span class="section-num">12</span>
+          <h2>
+            Sdílení souborů a zařízení
+          </h2>
+        </div>
+        <p>
+          Nejčastější otevřené cesty jsou shared folders, sdílená schránka, drag-and-drop, přesměrované disky,
+          USB, mikrofon a kamera.
+        </p>
+        <ol class="steps">
+          <li>
+            <div>
+              Na vypnuté VM vyprázdněte seznam sdílených složek. Vypněte obousměrnou schránku a přetahování.
+            </div>
+          </li>
+          <li>
+            <div>
+              V Hyper-V pro rizikový test nepoužívejte Enhanced Session s přesměrováním disků a zařízení.
+              Zkontrolujte také nastavení RDP, pokud jej používáte.
+            </div>
+          </li>
+          <li>
+            <div>
+              Vypněte automatické připojování USB a nepřipojujte zálohovací disky. Nepovolujte přístup k fyzickým diskům.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro neškodné instalace použijte úzkou složku jen pro čtení. Pro přísnější test připravte read-only
+              vstupní ISO a po přenosu jej odpojte.
+            </div>
+          </li>
+          <li>
+            <div>
+              Nic nevynášejte automaticky ven. Reporty a dokumenty mohou obsahovat aktivní obsah; export je nové
+              rozhodnutí o riziku.
+            </div>
+          </li>
+        </ol>
+        <p>
+          Read-only nechrání důvěrnost. Také soubor připravený na hostiteli může zpracovat jeho antivir,
+          náhled či indexer; zacházení s podezřelými vstupy má riziko ještě před spuštěním VM.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 13 — Snímky, klony a zálohy -->
+      <section class="section" id="kap-13">
+        <div class="section-header">
+          <span class="section-num">13</span>
+          <h2>
+            Snímky, klony a zálohy
+          </h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              Po instalaci a aktualizaci vypněte čistou VM. V Hyper-V vytvořte Checkpoint; ve VirtualBox Snapshot;
+              ve VMware Snapshot.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pojmenujte jej datum + „cisty-zaklad“ a zapište systém, verzi hypervizoru a stav sítě.
+            </div>
+          </li>
+          <li>
+            <div>
+              Ve VM vytvořte neškodný soubor a změňte pozadí. Obnovte snímek a ověřte, že pokus zmizel.
+            </div>
+          </li>
+          <li>
+            <div>
+              Zachovejte samostatnou kopii/Export vypnuté čisté VM mimo pracovní řetězec snímků.
+            </div>
+          </li>
+          <li>
+            <div>
+              Po testu VM vypněte, vraťte čistý snímek a před dalším spuštěním zkontrolujte i nastavení hypervizoru.
+            </div>
+          </li>
+        </ol>
+        <p>
+          Hyper-V Standard Checkpoint zahrnuje stav paměti; Production Checkpoint používá mechanismy
+          konzistence hosta. Snímek není nezávislá záloha. Smazání snímku obvykle slučuje disky, nikoli vrací
+          VM. Klon může mít závislost na původním disku, pokud je linked clone.
+        </p>
+        <div class="alert alert-warn">
+          Návrat neobnoví sdílené soubory, odcizené heslo ani změny v cloudu. Neodstraňuje případné napadení hostitele.
+        </div>
+      </section>
+
+      <!-- KAPITOLA 14 — Postup pro podezřelý soubor -->
+      <section class="section" id="kap-14">
+        <div class="section-header">
+          <span class="section-num">14</span>
+          <h2>
+            Postup pro podezřelý soubor
+          </h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              Nejprve posuďte původ a potřebu. Nejbezpečnější rozhodnutí může být soubor nespouštět a získat
+              důvěryhodnou alternativu.
+            </div>
+          </li>
+          <li>
+            <div>
+              Proveďte kontrolu aktuální ochranou; zkontrolujte digitální podpis a původ. Ani podpis, ani nulový
+              počet detekcí nejsou záruka.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pokud ochrana označí obsah jako škodlivý, na každodenním PC test nepokračujte a neobcházejte karanténu.
+            </div>
+          </li>
+          <li>
+            <div>
+              Pro mírné podezření připravte čistou offline VM bez účtů a propojení. Zapište hash, čas a nastavení.
+            </div>
+          </li>
+          <li>
+            <div>
+              Použijte jen smyšlená data. Sledujte chování ve VM; neinstalujte zkoušený soubor do hostitele.
+            </div>
+          </li>
+          <li>
+            <div>
+              Po skončení VM vypněte a obnovte základ. Pokud něco nasvědčuje zásahu hostitele, neomezujte reakci na obnovu VM.
+            </div>
+          </li>
+        </ol>
+        <p>
+          Nepředávejte citlivé soubory veřejným online skenerům bez zvážení důvěrnosti: upload může znamenat
+          sdílení s dalšími stranami. Offline chování může být neúplné; malware může čekat, rozpoznat VM nebo
+          vyžadovat internet.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 15 — Kontrola izolace a první neškodný test -->
+      <section class="section" id="kap-15">
+        <div class="section-header">
+          <span class="section-num">15</span>
+          <h2>
+            Kontrola izolace a první neškodný test
+          </h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              Na vypnuté VM prověřte všechny adaptéry, sdílení, USB a přesměrování. Pořiďte si záznam nastavení.
+            </div>
+          </li>
+          <li>
+            <div>
+              Spusťte VM. Zkontrolujte dostupné disky a síťové adaptéry. Ve Windows použijte ipconfig /all; v Linuxu ip addr.
+            </div>
+          </li>
+          <li>
+            <div>
+              Zkuste otevřít běžnou veřejnou stránku; v offline režimu nesmí fungovat. Neúspěch stránky samotný
+              ale nedokazuje izolaci.
+            </div>
+          </li>
+          <li>
+            <div>
+              Zkopírujte na hostiteli neškodný text a zkuste jej vložit do hosta. Sdílená schránka má být vypnutá.
+            </div>
+          </li>
+          <li>
+            <div>
+              Nacvičte obnovení snímku s textovým souborem, nikoli s živým virem.
+            </div>
+          </li>
+          <li>
+            <div>
+              Volitelně ověřte reakci antiviru souborem EICAR z oficiálního webu, uvnitř vyhrazeného testovacího
+              prostředí. Ochranu nevypínejte; blokování je očekávaný výsledek.
+            </div>
+          </li>
+        </ol>
+        <p>
+          EICAR testuje reakci ochrany, nikoli únik z VM. Žádný jednoduchý kontrolní seznam neprokáže
+          nepřítomnost zranitelnosti hypervizoru.
+        </p>
+        <p>
+          <a href="https://www.eicar.org/download-anti-malware-testfile/" target="_blank" rel="noopener noreferrer">EICAR: neškodný antivirový test</a>
+        </p>
+      </section>
+
+      <!-- KAPITOLA 16 — Kdy použít samostatné laboratorní PC -->
+      <section class="section" id="kap-16">
+        <div class="section-header">
+          <span class="section-num">16</span>
+          <h2>
+            Kdy použít samostatné laboratorní PC
+          </h2>
+        </div>
+        <p>
+          Známý malware, silné podezření, potřeba vypnout ochranu pro analýzu nebo experiment s únikem z VM
+          překračují běžné domácí testování na pracovním PC.
+        </p>
+        <ol class="steps">
+          <li>
+            <div>
+              Vyhraďte samostatný počítač bez osobních souborů, účtů, cloudové synchronizace a firemního připojení.
+            </div>
+          </li>
+          <li>
+            <div>
+              Před testem fyzicky odpojte síťový kabel a vypněte Wi-Fi/Bluetooth. Oddělená VM síť má zůstat i uvnitř laboratoře.
+            </div>
+          </li>
+          <li>
+            <div>
+              Připravte čistý obnovovací obraz a média pro reinstalaci. Potřebné aktualizace stáhněte před testem.
+            </div>
+          </li>
+          <li>
+            <div>
+              Přenosová média považujte za součást laboratoře. Nepoužívejte je zároveň pro zálohy a běžný počítač.
+            </div>
+          </li>
+          <li>
+            <div>
+              Při požadavku na internet pro skutečný malware využijte odborně navrženou laboratoř. Prosté NAT
+              připojení není náhradou řízené izolace.
+            </div>
+          </li>
+        </ol>
+        <p>
+          I fyzická laboratoř má zbytková rizika. Tento domácí průvodce neposkytuje certifikaci bezpečnosti
+          ani návod na obcházení antivirové ochrany.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 17 — Údržba a řešení problémů -->
+      <section class="section" id="kap-17">
+        <div class="section-header">
+          <span class="section-num">17</span>
+          <h2>
+            Údržba a řešení problémů
+          </h2>
+        </div>
+        <h3>
+          VM nestartuje
+        </h3>
+        <p>
+          Prověřte SVM/AMD-V, restart po aktivaci funkcí a podporu hosta. Hlášení o obsazené virtualizaci
+          řešte podle dokumentace nástroje; neodstraňujte bezpečnostní vrstvy naslepo.
+        </p>
+        <h3>
+          Černá obrazovka nebo instalátor stále znovu
+        </h3>
+        <p>
+          Zkontrolujte ISO, pořadí bootování a generaci BIOS/UEFI. Po instalaci odpojte ISO. Změna generace
+          již vytvořené VM může vyžadovat novou VM.
+        </p>
+        <h3>
+          Secure Boot odmítá Linux
+        </h3>
+        <p>
+          Prověřte oficiální obraz a podporu distribuce; v Hyper-V ověřte Linuxovou šablonu certifikátu. Změnu
+          dělejte pouze v testovací VM.
+        </p>
+        <h3>
+          Málo výkonu nebo místa
+        </h3>
+        <p>
+          Sledujte RAM hostitele a volné místo. Nedávejte hostu všech 16 vláken. Snímky spravujte přes
+          hypervizor; soubory rozdílových disků nemažte ručně.
+        </p>
+        <h3>
+          Internet nefunguje
+        </h3>
+        <p>
+          V offline režimu je to správně. U důvěryhodné VM prověřte připojení adaptéru, NAT a DNS. Zapnutí
+          bridge není univerzální oprava.
+        </p>
+        <h3>
+          Pravidelná údržba
+        </h3>
+        <p>
+          Aktualizujte hypervizor i čistý základ. Rizikově změněnou VM nepřipojujte na internet jen kvůli
+          aktualizaci; obnovte důvěryhodný základ a aktualizujte ten.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 18 — Kontrolní seznamy a slovníček -->
+      <section class="section" id="kap-18">
+        <div class="section-header">
+          <span class="section-num">18</span>
+          <h2>
+            Kontrolní seznamy a slovníček
+          </h2>
+        </div>
+        <h3>
+          Před podezřelým testem
+        </h3>
+        <ul>
+          <li>
+            Vím, proč potřebuji soubor spustit; ochrana hostitele zůstává zapnutá.
+          </li>
+          <li>
+            Mám ověřenou zálohu a čistý základ VM.
+          </li>
+          <li>
+            Všechny síťové adaptéry jsou vypnuté, sdílení a přesměrování odpojené.
+          </li>
+          <li>
+            Nemám uvnitř osobní data, skutečné účty ani připojené zálohy.
+          </li>
+          <li>
+            Umím VM vypnout a obnovit; vím, kdy test zastavit.
+          </li>
+        </ul>
+        <h3>
+          Po testu
+        </h3>
+        <ul>
+          <li>
+            VM vypnu a obnovím čistý stav.
+          </li>
+          <li>
+            Výstup nepovažuji za bezpečný jen proto, že vznikl ve VM.
+          </li>
+          <li>
+            Zapíšu pozorování a před dalším startem znovu prověřím nastavení.
+          </li>
+        </ul>
+        <h3>
+          Podezření na napadení hostitele
+        </h3>
+        <p>
+          Odpojte jeho síť, zastavte test, nepřipojujte zálohy a nepracujte s citlivými účty. Hesla měňte z
+          jiného důvěryhodného zařízení. Proveďte kontrolu ochrany, podle závažnosti odborné posouzení a
+          čistou reinstalaci. Samotné smazání VM nestačí.
+        </p>
+        <p>
+          <b>ISO:</b> obraz instalačního média. <b>Snapshot:</b> zachycený stav. <b>NAT:</b> překlad adres, nikoli bezpečnostní certifikát. <b>Bridge:</b> připojení do běžné sítě. <b>vCPU:</b> procesor přidělený VM. <b>Passthrough:</b> přímé zpřístupnění zařízení. <b>Guest Additions/Tools:</b> integrační doplňky.
+        </p>
+      </section>
+
+      <!-- KAPITOLA 19 — Videa a další návody -->
+      <section class="section" id="kap-19">
+        <div class="section-header">
+          <span class="section-num">19</span>
+          <h2>
+            Videa a další návody
+          </h2>
+        </div>
+        <p>
+          Výběr odkazů zkontrolován 5. 10. 2026. Videa jsou doplněk: vyhledáním jsme ověřili téma a dostupné
+          popisy, nikoli bezpečnost každého kroku ve videu. Rozhraní starších verzí se může lišit. Izolaci
+          nastavujte podle tohoto manuálu a aktuální dokumentace.
+        </p>
+        <div class="card">
+          <h3>
+            CZ · Fedora ve VirtualBoxu · 2025
+          </h3>
+          <p>
+            <a href="https://www.youtube.com/watch?v=kZRkZ_tC-Sw" target="_blank" rel="noopener noreferrer">PetitShingo: Instalace Linuxu na Windows přes VirtualBox</a> — začátečník, stažení a instalace Fedory; není to malware laboratoř.
+          </p>
+        </div>
+        <div class="card">
+          <h3>
+            SK · Ubuntu a VirtualBox · 2022
+          </h3>
+          <p>
+            <a href="https://www.youtube.com/watch?v=ChS5hXxexQU" target="_blank" rel="noopener noreferrer">Informatika s Mišom: Kurz Linuxu, část 1</a> — blízký jazykový doplněk; starší rozhraní.
+          </p>
+        </div>
+        <div class="card">
+          <h3>
+            EN · Hyper-V a VM · 2022
+          </h3>
+          <p>
+            <a href="https://www.youtube.com/watch?v=CaDzYUSdVn8" target="_blank" rel="noopener noreferrer">TUTORIAL: Install Hyper-V and a Virtual Machine on Windows 11</a> — instalace a první VM; starší rozhraní.
+          </p>
+        </div>
+        <div class="card">
+          <h3>
+            EN · Zapnutí Hyper-V · 2025
+          </h3>
+          <p>
+            <a href="https://www.youtube.com/watch?v=ZRXWs02FJpo" target="_blank" rel="noopener noreferrer">Install Hyper V on Windows 11</a> — zaměřeno na aktivaci funkce.
+          </p>
+        </div>
+        <h3>
+          Další vyhledávání videí
+        </h3>
+        <p>
+          Následující odkazy jsou <b>výsledky hledání, ne jednotlivá ověřená videa</b>: <a href="https://www.youtube.com/results?search_query=Windows+Sandbox+cesky+bezpecnost" target="_blank" rel="noopener noreferrer">CZ: Sandbox a izolace</a> · <a href="https://www.youtube.com/results?search_query=VirtualBox+snapshots+networking+tutorial" target="_blank" rel="noopener noreferrer">EN: VirtualBox snapshots networking</a> · <a href="https://www.youtube.com/results?search_query=VirtualBox+Linux+installieren+Deutsch" target="_blank" rel="noopener noreferrer">DE: VirtualBox Linux installieren</a> · <a href="https://www.youtube.com/results?search_query=Hyper-V+Windows+11+Anleitung+Deutsch" target="_blank" rel="noopener noreferrer">DE: Hyper-V Anleitung</a>.
+        </p>
+        <h3>
+          Psané návody
+        </h3>
+        <ul>
+          <li>
+            EN: <a href="https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/" target="_blank" rel="noopener noreferrer">Oracle VirtualBox User Guide</a> — síť, instalace, snímky.
+          </li>
+          <li>
+            EN: <a href="https://ubuntu.com/tutorials/install-ubuntu-desktop" target="_blank" rel="noopener noreferrer">Ubuntu installation tutorial</a> — instalátor Ubuntu.
+          </li>
+          <li>
+            EN/CZ: <a href="https://learn.microsoft.com/cs-cz/windows-server/virtualization/hyper-v/overview" target="_blank" rel="noopener noreferrer">Microsoft Learn Hyper-V</a> — jazyk a dostupnost překladu mohou kolísat.
+          </li>
+          <li>
+            DE: <a href="https://docs.oracle.com/de/learn/ol-vbox/index.html" target="_blank" rel="noopener noreferrer">Oracle: VirtualBox pod Oracle Linux</a> — hostitelem je Linux, nikoli Windows; pro pokročilejší.
+          </li>
+          <li>
+            EN: <a href="https://developer.android.com/studio/run/managing-avds" target="_blank" rel="noopener noreferrer">Android Developers: AVD</a> — virtuální Android zařízení.
+          </li>
+        </ul>
+      </section>
+
+      <!-- KAPITOLA 20 — Katalog systémů, emulátorů a nástrojů -->
+      <section class="section" id="kap-20">
+        <div class="section-header">
+          <span class="section-num">20</span>
+          <h2>
+            Katalog systémů, emulátorů a nástrojů
+          </h2>
+        </div>
+        <p>
+          Katalog je rozcestník, nikoli potvrzení bezpečnosti každého produktu. Podporované hostitele, licence
+          a požadavky ověřte před instalací na uvedeném oficiálním webu. Grafický desktop obvykle potřebuje
+          více paměti než server bez GUI.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Oblast
+                </th>
+                <th>
+                  Projekt / oficiální web
+                </th>
+                <th>
+                  Účel a omezení
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Nástroje
+                </td>
+                <td>
+                  <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-overview" target="_blank" rel="noopener noreferrer">Windows Sandbox</a>
+                </td>
+                <td>
+                  Windows Pro a vyšší; dočasné Windows, snadný start
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Nástroje
+                </td>
+                <td>
+                  <a href="https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview" target="_blank" rel="noopener noreferrer">Hyper-V</a>
+                </td>
+                <td>
+                  Windows Pro a vyšší; plné VM, střední obtížnost
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Nástroje
+                </td>
+                <td>
+                  <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener noreferrer">VirtualBox</a>
+                </td>
+                <td>
+                  Windows/Linux/macOS podle podporované verze; doplňky mají vlastní licence
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Nástroje
+                </td>
+                <td>
+                  <a href="https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion" target="_blank" rel="noopener noreferrer">VMware Workstation Pro</a>
+                </td>
+                <td>
+                  Windows/Linux; plné VM; Fusion je pro Mac
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Nástroje
+                </td>
+                <td>
+                  <a href="https://www.qemu.org/" target="_blank" rel="noopener noreferrer">QEMU</a>
+                </td>
+                <td>
+                  Více hostitelů a architektur; emulace i virtualizace, pokročilé
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Nástroje
+                </td>
+                <td>
+                  <a href="https://www.proxmox.com/en/products/proxmox-virtual-environment/overview" target="_blank" rel="noopener noreferrer">Proxmox VE</a>
+                </td>
+                <td>
+                  Samostatný serverový hostitel; není běžná aplikace do Windows
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Linux
+                </td>
+                <td>
+                  <a href="https://ubuntu.com/download/desktop" target="_blank" rel="noopener noreferrer">Ubuntu</a>
+                </td>
+                <td>
+                  Desktop, vhodný první pokus; přibližně 4 GB RAM pro pohodlný start
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Linux
+                </td>
+                <td>
+                  <a href="https://linuxmint.com/download.php" target="_blank" rel="noopener noreferrer">Linux Mint</a>
+                </td>
+                <td>
+                  Desktop blízký běžnému uživateli; oficiální ISO
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Linux
+                </td>
+                <td>
+                  <a href="https://www.debian.org/distrib/" target="_blank" rel="noopener noreferrer">Debian</a>
+                </td>
+                <td>
+                  Desktop/server; více voleb instalátoru
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Linux
+                </td>
+                <td>
+                  <a href="https://fedoraproject.org/" target="_blank" rel="noopener noreferrer">Fedora</a>
+                </td>
+                <td>
+                  Aktuální desktop/server ekosystém
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Linux
+                </td>
+                <td>
+                  <a href="https://www.opensuse.org/" target="_blank" rel="noopener noreferrer">openSUSE</a>
+                </td>
+                <td>
+                  Varianty pro různé aktualizační režimy
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Linux
+                </td>
+                <td>
+                  <a href="https://archlinux.org/download/" target="_blank" rel="noopener noreferrer">Arch Linux</a>
+                </td>
+                <td>
+                  Pokročilé sestavení; není nejjednodušší první instalace
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Linux
+                </td>
+                <td>
+                  <a href="https://www.q4os.org/" target="_blank" rel="noopener noreferrer">Q4OS</a>
+                </td>
+                <td>
+                  Alternativní desktop; vybírejte podporovaný obraz
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Systémy
+                </td>
+                <td>
+                  <a href="https://www.microsoft.com/software-download/windows11" target="_blank" rel="noopener noreferrer">Windows 11</a>
+                </td>
+                <td>
+                  Oficiální ISO; licence, UEFI a TPM požadavky
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Systémy
+                </td>
+                <td>
+                  <a href="https://www.freebsd.org/where/" target="_blank" rel="noopener noreferrer">FreeBSD</a>
+                </td>
+                <td>
+                  BSD, server i experimentální desktop; jiný systém než Linux
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Systémy
+                </td>
+                <td>
+                  <a href="https://www.freedos.org/" target="_blank" rel="noopener noreferrer">FreeDOS</a>
+                </td>
+                <td>
+                  DOSové aplikace; kompatibilita není úplná
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Systémy
+                </td>
+                <td>
+                  <a href="https://reactos.org/" target="_blank" rel="noopener noreferrer">ReactOS</a>
+                </td>
+                <td>
+                  Experimentální systém; ne pro běžné citlivé použití
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Systémy
+                </td>
+                <td>
+                  <a href="https://www.haiku-os.org/" target="_blank" rel="noopener noreferrer">Haiku</a>
+                </td>
+                <td>
+                  Alternativní systém pro poznávání
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Android
+                </td>
+                <td>
+                  <a href="https://developer.android.com/studio/run/emulator" target="_blank" rel="noopener noreferrer">Android Studio Emulator</a>
+                </td>
+                <td>
+                  Windows/Linux/macOS podle aktuálních požadavků; začněte zde
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Android
+                </td>
+                <td>
+                  <a href="https://www.android-x86.org/" target="_blank" rel="noopener noreferrer">Android-x86</a>
+                </td>
+                <td>
+                  Experimentální port; ověřte stáří obrazu a podporu
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Historie
+                </td>
+                <td>
+                  <a href="https://86box.net/" target="_blank" rel="noopener noreferrer">86Box</a>
+                </td>
+                <td>
+                  Emulace historického PC; BIOS/ROM a média mají vlastní práva
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Historie
+                </td>
+                <td>
+                  <a href="https://www.dosbox.com/" target="_blank" rel="noopener noreferrer">DOSBox</a>
+                </td>
+                <td>
+                  DOSové programy/hry; mount zpřístupňuje hostitelské složky
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Sítě
+                </td>
+                <td>
+                  <a href="https://www.gns3.com/" target="_blank" rel="noopener noreferrer">GNS3</a>
+                </td>
+                <td>
+                  Síťové topologie; obrazy zařízení mohou vyžadovat licenci
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Sítě
+                </td>
+                <td>
+                  <a href="https://www.eve-ng.net/" target="_blank" rel="noopener noreferrer">EVE-NG</a>
+                </td>
+                <td>
+                  Síťová laboratoř; pokročilé, vlastní nároky a licence obrazů
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Pomocné
+                </td>
+                <td>
+                  <a href="https://learn.microsoft.com/en-us/sysinternals/" target="_blank" rel="noopener noreferrer">Sysinternals</a>
+                </td>
+                <td>
+                  Process Explorer, Process Monitor, Autoruns; pozorování uvnitř VM
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Pomocné
+                </td>
+                <td>
+                  <a href="https://www.eicar.org/download-anti-malware-testfile/" target="_blank" rel="noopener noreferrer">EICAR</a>
+                </td>
+                <td>
+                  Neškodný test antiviru; nedokazuje izolaci
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Jiný režim
+                </td>
+                <td>
+                  <a href="https://learn.microsoft.com/en-us/windows/wsl/" target="_blank" rel="noopener noreferrer">WSL</a>
+                </td>
+                <td>
+                  Linux pro práci s Windows; integrace s hostitelem
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Jiný režim
+                </td>
+                <td>
+                  <a href="https://docs.docker.com/" target="_blank" rel="noopener noreferrer">Docker</a>
+                </td>
+                <td>
+                  Kontejnery aplikací; nejsou automaticky laboratoř pro malware
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Další témata k virtuálním pokusům: webový server, databáze, vývojové prostředí, test aktualizací,
+          obnova záloh, domácí server, BSD firewall a síť několika VM. U NAS systémů nepřipojujte skutečné
+          datové disky pro první pokus. U macOS respektujte hardware a licenci Apple.
+        </p>
+        <p>
+          Záměrně nepoužíváme neoficiální balíky starých Windows, pirátské ROM ani katalogy živého malwaru.
+          Široký seznam není důvod instalovat vše; první zvládnutá VM přinese více než deset neověřených
+          prostředí.
+        </p>
+      </section>
+    </main>
+
+    <!-- PATIČKA -->
+    <footer>
+      <p>
+        Virtualizace · první kompletní verze · odkazy a rozhraní se mohou měnit
+      </p>
+      <a href="#kap-1">↑ Zpět na úvod</a>
+    </footer>
+
+    <!-- SKRIPTY: kopírování a navigace -->
+    <script>
+      // Kopírování příkazů; při nedostupné schránce označí text pro Ctrl+C.
+      document.querySelectorAll(".copy-btn").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const code = button.closest(".cmd-block").querySelector("code");
+      
+          try {
+            await navigator.clipboard.writeText(code.textContent);
+            button.textContent = "Zkopírováno";
+          } catch {
+            const range = document.createRange();
+            range.selectNodeContents(code);
+      
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            button.textContent = "Stiskněte Ctrl+C";
+          }
+      
+          setTimeout(() => {
+            button.textContent = "Kopírovat";
+          }, 2200);
+        });
+      });
+      
+      // Ukazatel přečtené části a zvýraznění aktuální kapitoly v sidebaru.
+      function updateNavigation() {
+        const documentRoot = document.documentElement;
+        const scrollableHeight = documentRoot.scrollHeight - documentRoot.clientHeight;
+        const progress = scrollableHeight
+          ? (documentRoot.scrollTop / scrollableHeight) * 100
+          : 0;
+      
+        document.getElementById("progressBar").style.width = progress + "%";
+      
+        let currentSection = document.querySelector("section");
+      
+        document.querySelectorAll("section").forEach((section) => {
+          if (section.getBoundingClientRect().top < 130) {
+            currentSection = section;
+          }
+        });
+      
+        document.querySelectorAll(".nav-item").forEach((link) => {
+          const isActive = link.hash === "#" + currentSection.id;
+          link.classList.toggle("active", isActive);
+      
+          if (isActive) {
+            link.setAttribute("aria-current", "location");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      }
+      
+      window.addEventListener("scroll", updateNavigation, { passive: true });
+      updateNavigation();
+    </script>
+  </body>
+</html>

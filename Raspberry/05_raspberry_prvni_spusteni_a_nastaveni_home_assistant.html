@@ -5,198 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>První Spuštění Home Assistant – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
-  --border:#2a1f3d;--border2:#3d2855;
-  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c;--rasp1-light:#ff3377;
-  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
-  --cyan:#00d9ff;--cyan2:#5fffff;
-  --green:#00e5a0;--green2:#00ffb3;
-  --yellow:#f5c542;--orange:#ff7c2a;
-  --white:#f0e8ff;
-  --r:12px;
-}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:6px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
-.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s;margin-top:40px}
-.nav-back:hover{gap:12px}
-
-header{padding:0 0 36px;border-bottom:1px solid var(--border)}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light);font-style:normal}
-.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
-
-.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
-p{margin-bottom:14px;color:var(--text);line-height:1.75}
-ul,ol{padding-left:22px;margin-bottom:14px}
-li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
-li strong{color:var(--white)}
-strong{color:var(--white);font-weight:600}
-a{color:var(--rasp1-light);text-decoration:none}
-a:hover{text-decoration:underline}
-code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
-pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;
-  color:var(--t2);line-height:1.65;overflow-x:auto}
-pre code{background:none;border:none;padding:0;color:inherit}
-
-/* CALLOUTS */
-.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
-.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
-.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
-.callout ul{margin-bottom:0;padding-left:18px}
-.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
-.callout-info .callout-title{color:var(--cyan2)}
-.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
-.callout-tip .callout-title{color:var(--green2)}
-.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
-.callout-warn .callout-title{color:var(--yellow)}
-.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
-.callout-danger .callout-title{color:var(--rasp1-light)}
-
-/* STEPS */
-.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
-.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
-  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
-.step{display:flex;gap:20px;padding:16px 0}
-.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);
-  border:2px solid var(--rasp1);display:flex;align-items:center;justify-content:center;
-  font-family:'Syne',sans-serif;font-weight:800;font-size:.9em;color:var(--rasp1-light);
-  flex-shrink:0;position:relative;z-index:1}
-.step-body{flex:1;padding-top:8px}
-.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
-.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
-.step-desc ul{padding-left:18px;margin:8px 0 4px}
-.step-desc li{margin:5px 0;font-size:1em}
-.step-desc code{font-size:.9em}
-.step-desc strong{color:var(--white)}
-.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
-
-/* CABLE DIAGRAM */
-.cable-order{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:22px;margin:20px 0}
-.cable-order-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
-  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
-.cable-item{display:flex;align-items:center;gap:16px;padding:10px 0;
-  border-bottom:1px solid var(--border)}
-.cable-item:last-child{border-bottom:none;padding-bottom:0}
-.cable-order-num{font-family:'Syne',sans-serif;font-size:1.3em;font-weight:800;
-  color:var(--rasp1);width:32px;flex-shrink:0;text-align:center}
-.cable-detail{flex:1}
-.cable-name{font-size:.9em;color:var(--white);font-weight:600;margin-bottom:2px}
-.cable-note{font-size:.82em;color:var(--t2)}
-
-/* FORM FIELDS PREVIEW */
-.form-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:22px;margin:20px 0}
-.form-row{margin-bottom:16px}
-.form-label{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
-  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:block}
-.form-hint{font-size:.82em;color:var(--t2);margin-top:5px;line-height:1.5}
-.form-field{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;
-  padding:10px 14px;font-size:.9em;color:var(--text);width:100%;font-family:'Inter',sans-serif}
-
-/* IP TABLE */
-.ip-methods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
-@media(max-width:580px){.ip-methods{grid-template-columns:1fr}}
-.ip-method{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px}
-.ip-method-title{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:8px}
-.ip-method p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.65}
-
-/* CHAPTER NAV */
-.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;
-  padding-top:28px;border-top:1px solid var(--border)}
-.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;
-  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;
-  text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
-.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
-.ch-btn.next{justify-content:flex-end;text-align:right}
-.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
-
-/* ── PROGRESS BAR ── */
-.progress-bar{position:fixed;top:0;left:0;height:3px;
-  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
-  z-index:999;width:0%;transition:width 0.1s}
-
-/* ── SIDEBAR ── */
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
-  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
-.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
-.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
-  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
-  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
-.sidebar-back:hover{color:var(--rasp1-light)}
-.sidebar-title{display:flex;align-items:center;gap:12px}
-.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
-  background:rgba(227,11,92,.12);border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
-.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
-.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
-.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
-  color:var(--t2);text-decoration:none;font-size:12.5px;
-  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
-.nav-link:hover,.nav-link.active{color:var(--white);
-  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
-.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
-  color:var(--rasp1-light);background:rgba(227,11,92,.1);
-  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
-  border-radius:4px;text-align:center;flex-shrink:0}
-
-/* ── LAYOUT ── */
-.wrap{margin-left:260px}
-footer{margin-left:260px}
-@media(max-width:900px){
-  .sidebar{display:none}
-  .wrap,footer{margin-left:0}
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="progress-bar" id="progressBar"></div>
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
-    <div class="sidebar-title">
-      <div class="sidebar-icon">🚀</div>
-      <div class="sidebar-name">První spuštění<small>Home Assistant OS</small></div>
-    </div>
-  </div>
-  <div class="nav-group-label">Obsah kapitoly</div>
-  <a href="#fyzicke-zapojeni" class="nav-link active"><span class="nav-step">01</span>Fyzické zapojení</a>
-  <a href="#prvni-boot" class="nav-link"><span class="nav-step">02</span>První boot</a>
-  <a href="#ip-adresa" class="nav-link"><span class="nav-step">03</span>Nalezení IP adresy</a>
-  <a href="#prvni-nastaveni" class="nav-link"><span class="nav-step">04</span>Průvodce nastavením</a>
-  <a href="#staticka-ip" class="nav-link"><span class="nav-step">05</span>Pevná IP adresa</a>
-  <a href="#wifi-setup" class="nav-link"><span class="nav-step">06</span>Nastavení WiFi</a>
-  <a href="#dokonceni" class="nav-link"><span class="nav-step">07</span>Co jsi dokončil</a>
-</nav>
-<div class="wrap">
+<body data-page="05">
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "fyzicke-zapojeni", "num": "5.1", "name": "Fyzické zapojení" },
+    { "id": "prvni-boot", "num": "5.2", "name": "První boot" },
+    { "id": "ip-adresa", "num": "5.3", "name": "Nalezení IP adresy" },
+    { "id": "prvni-nastaveni", "num": "5.4", "name": "Průvodce prvním nastavením" },
+    { "id": "staticka-ip", "num": "5.5", "name": "Pevná IP adresa" },
+    { "id": "wifi-setup", "num": "5.6", "name": "Nastavení WiFi" },
+    { "id": "dokonceni", "num": "5.7", "name": "Co jsi právě dokončil" }
+  ]
+}
+</script>
 
-<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
+<div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
+<div class="wrap">
 
 <header>
   <div class="h-num">// kapitola 05</div>
@@ -205,8 +36,8 @@ footer{margin-left:260px}
 </header>
 
 <!-- FYZICKÉ ZAPOJENÍ -->
-<section class="sec" id="fyzicke-zapojeni">>
-  <h2>Fyzické zapojení</h2>
+<section class="sec">
+  <h2 id="fyzicke-zapojeni">Fyzické zapojení</h2>
   <p>Pořadí zapojení je důležité. Napájení zapojuj vždy jako <strong>poslední</strong> – tím se RPi spustí. Vše ostatní musí být připojeno dřív.</p>
 
   <div class="cable-order">
@@ -253,8 +84,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- PRVNÍ BOOT -->
-<section class="sec" id="prvni-boot">>
-  <h2>První boot – co se děje</h2>
+<section class="sec">
+  <h2 id="prvni-boot">První boot</h2>
   <p>Po připojení napájení se spustí první boot. Tento proces trvá výrazně déle než normální start – systém se rozbaluje, konfiguruje a nastavuje. <strong>Buď trpělivý.</strong></p>
 
   <ul>
@@ -281,8 +112,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- NALEZENÍ IP -->
-<section class="sec" id="ip-adresa">>
-  <h2>Nalezení IP adresy v síti</h2>
+<section class="sec">
+  <h2 id="ip-adresa">Nalezení IP adresy</h2>
   <p>Adresa <code>homeassistant.local</code> funguje přes mDNS a nemusí fungovat na všech sítích (zejména starší routery). Jako zálohu si zjisti přímou IP adresu:</p>
 
   <div class="ip-methods">
@@ -301,8 +132,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- PRVNÍ NASTAVENÍ -->
-<section class="sec" id="prvni-nastaveni">>
-  <h2>Průvodce prvním nastavením</h2>
+<section class="sec">
+  <h2 id="prvni-nastaveni">Průvodce prvním nastavením</h2>
   <p>Po otevření <code>http://homeassistant.local:8123</code> nebo IP adresy se zobrazí průvodce. Projdeme ho krok za krokem:</p>
 
   <div class="callout callout-warn">
@@ -381,8 +212,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- STATICKÁ IP -->
-<section class="sec" id="staticka-ip">>
-  <h2>Nastavení pevné IP adresy (doporučeno)</h2>
+<section class="sec">
+  <h2 id="staticka-ip">Pevná IP adresa</h2>
   <p>DHCP router přiděluje IP adresy dynamicky – po restartu se může IP RPi změnit. Pro server který běží 24/7 chceme <strong>pevnou IP</strong>, aby záložky v prohlížeči vždy fungovaly.</p>
 
   <h3>Varianta A – Rezervace v routeru (nejlepší způsob)</h3>
@@ -424,8 +255,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- WIFI -->
-<section class="sec" id="wifi-setup">>
-  <h2>Nastavení WiFi (alternativa k Ethernet)</h2>
+<section class="sec">
+  <h2 id="wifi-setup">Nastavení WiFi</h2>
   <p>Pokud nemůžeš přivést Ethernet kabel, Home Assistant OS podporuje WiFi připojení. Konfiguruje se po prvním spuštění přímo v rozhraní HA.</p>
   <ol>
     <li>Jdi do <strong>Nastavení → Systém → Síť</strong></li>
@@ -441,8 +272,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- CO DÁL -->
-<section class="sec" id="dokonceni">>
-  <h2>Co jsi právě dokončil</h2>
+<section class="sec">
+  <h2 id="dokonceni">Co jsi právě dokončil</h2>
   <ul>
     <li>✅ RPi 3 B+ fyzicky zapojen a spuštěn z USB SSD</li>
     <li>✅ Home Assistant OS nabooting a plně funkční</li>
@@ -453,48 +284,17 @@ footer{margin-left:260px}
   <p>Pokračuj na <a href="06_raspberry_zakladni_nastaveni_home_assistant.html">Kapitolu 06 – Základní nastavení Home Assistant</a> kde povolíme pokročilý režim, provedeme aktualizace a připravíme systém na instalaci add-onů.</p>
 </section>
 
-<nav class="chapter-nav">
-  <a href="04_raspberry_priprava_usb_msata_ssd_windows.html" class="ch-btn">
-    <span>←</span>
-    <div>
-      <span class="ch-label">předchozí kapitola</span>
-      <span class="ch-name">Příprava USB SSD</span>
-    </div>
-  </a>
-  <a href="06_raspberry_zakladni_nastaveni_home_assistant.html" class="ch-btn next">
-    <div>
-      <span class="ch-label">další kapitola</span>
-      <span class="ch-name">Základní nastavení HA</span>
-    </div>
-    <span>→</span>
-  </a>
-</nav>
+<div id="pn"></div>
 
 <footer>
-  05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a>
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
 </footer>
 
 </div>
-<script>
-window.addEventListener('scroll',()=>{
-  const b=document.getElementById('progressBar');
-  const t=document.documentElement.scrollTop;
-  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-  b.style.width=(t/h*100)+'%';
-});
-const sections=document.querySelectorAll('section[id]');
-const navLinks=document.querySelectorAll('.nav-link');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      navLinks.forEach(l=>l.classList.remove('active'));
-      const t=document.querySelector('[href="#'+e.target.id+'"]');
-      if(t)t.classList.add('active');
-    }
-  });
-},{rootMargin:'-20% 0px -70% 0px'});
-sections.forEach(s=>obs.observe(s));
-</script>
+</div>
+</div>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>

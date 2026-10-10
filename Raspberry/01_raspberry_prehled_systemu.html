@@ -5,197 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Přehled Systému – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
-  --border:#2a1f3d;--border2:#3d2855;
-  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c;--rasp1-light:#ff3377;
-  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
-  --cyan:#00d9ff;--cyan2:#5fffff;
-  --green:#00e5a0;--green2:#00ffb3;
-  --yellow:#f5c542;--orange:#ff7c2a;
-  --white:#f0e8ff;
-  --r:12px;
-}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:6px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
-.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-/* NAV */
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;transition:gap .2s;margin-top:40px}
-.nav-back:hover{gap:12px}
-
-/* HEADER */
-header{padding:0 0 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);
-  line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light);font-style:normal}
-.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
-
-/* TYPOGRAPHY */
-.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);
-  margin-bottom:18px;line-height:1.2}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);
-  margin:28px 0 10px;letter-spacing:.02em}
-p{margin-bottom:14px;color:var(--text);line-height:1.75}
-ul,ol{padding-left:22px;margin-bottom:14px}
-li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
-li strong{color:var(--white)}
-strong{color:var(--white);font-weight:600}
-a{color:var(--rasp1-light);text-decoration:none}
-a:hover{text-decoration:underline}
-code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
-pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;
-  color:var(--t2);line-height:1.65;overflow-x:auto}
-pre code{background:none;border:none;padding:0;color:inherit;font-size:1em}
-
-/* CALLOUTS */
-.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
-.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
-.callout p{margin:0;font-size:.9em;line-height:1.7;color:var(--t2)}
-.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);
-  border-left:3px solid var(--cyan)}
-.callout-info .callout-title{color:var(--cyan2)}
-.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);
-  border-left:3px solid var(--green)}
-.callout-tip .callout-title{color:var(--green2)}
-.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);
-  border-left:3px solid var(--yellow)}
-.callout-warn .callout-title{color:var(--yellow)}
-.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);
-  border-left:3px solid var(--rasp1)}
-.callout-danger .callout-title{color:var(--rasp1-light)}
-
-/* RESULT LIST */
-.result-list{list-style:none;padding:0;margin:0}
-.result-list li{display:flex;align-items:flex-start;gap:14px;padding:14px 0;
-  border-bottom:1px solid var(--border);font-size:.93em;color:var(--t2)}
-.result-list li:last-child{border-bottom:none}
-.result-list .icon{font-size:1.3em;flex-shrink:0;margin-top:1px}
-.result-list strong{color:var(--white);display:block;margin-bottom:2px;font-size:.97em}
-
-/* ARCHITECTURE DIAGRAM */
-.arch{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:28px 24px;margin:20px 0;font-family:'DM Mono',monospace;font-size:.83em;
-  line-height:1.8;color:var(--t2);overflow-x:auto}
-.arch-layer{display:flex;align-items:center;gap:0;margin:6px 0}
-.arch-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;
-  padding:10px 16px;color:var(--white);font-size:.85em;white-space:nowrap}
-.arch-box.primary{border-color:var(--rasp1);color:var(--rasp1-light);
-  background:rgba(227,11,92,.08)}
-.arch-box.secondary{border-color:rgba(0,217,255,.3);color:var(--cyan2);
-  background:rgba(0,217,255,.06)}
-.arch-box.tertiary{border-color:rgba(0,229,160,.3);color:var(--green2);
-  background:rgba(0,229,160,.06)}
-.arch-arrow{color:var(--t3);padding:0 10px;font-size:1.1em}
-.arch-label{color:var(--t3);font-size:.78em;padding:0 8px}
-
-/* STACK TABLE */
-.stack-table{width:100%;border-collapse:collapse;margin:18px 0}
-.stack-table th{font-family:'Syne',sans-serif;font-size:.8em;font-weight:700;
-  color:var(--t3);text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;
-  border-bottom:2px solid var(--border);text-align:left}
-.stack-table td{padding:12px 14px;border-bottom:1px solid var(--border);
-  font-size:.9em;vertical-align:top}
-.stack-table td:first-child{color:var(--white);font-weight:500;
-  font-family:'DM Mono',monospace;font-size:.83em;white-space:nowrap}
-.stack-table td:nth-child(2){color:var(--rasp1-light)}
-.stack-table td:last-child{color:var(--t2)}
-.stack-table tr:hover td{background:rgba(227,11,92,.03)}
-
-/* CHAPTER NAV */
-.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;
-  padding-top:28px;border-top:1px solid var(--border)}
-.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;
-  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  color:var(--t2);font-family:'DM Mono',monospace;font-size:.78em;letter-spacing:.06em;
-  text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
-.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
-.ch-btn.next{justify-content:flex-end;text-align:right}
-.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
-.ch-btn .ch-name{color:inherit;font-size:.95em}
-
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
-  text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
-
-/* ── PROGRESS BAR ── */
-.progress-bar{position:fixed;top:0;left:0;height:3px;
-  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
-  z-index:999;width:0%;transition:width 0.1s}
-
-/* ── SIDEBAR ── */
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
-  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
-.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
-.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
-  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
-  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
-.sidebar-back:hover{color:var(--rasp1-light)}
-.sidebar-title{display:flex;align-items:center;gap:12px}
-.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
-  background:rgba(227,11,92,.12);border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
-.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
-.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
-.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
-  color:var(--t2);text-decoration:none;font-size:12.5px;
-  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
-.nav-link:hover,.nav-link.active{color:var(--white);
-  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
-.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
-  color:var(--rasp1-light);background:rgba(227,11,92,.1);
-  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
-  border-radius:4px;text-align:center;flex-shrink:0}
-
-/* ── LAYOUT ── */
-.wrap{margin-left:260px}
-footer{margin-left:260px}
-@media(max-width:900px){
-  .sidebar{display:none}
-  .wrap,footer{margin-left:0}
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="progress-bar" id="progressBar"></div>
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
-    <div class="sidebar-title">
-      <div class="sidebar-icon">🏗️</div>
-      <div class="sidebar-name">Přehled Systému<small>Architektura systému</small></div>
-    </div>
-  </div>
-  <div class="nav-group-label">Obsah kapitoly</div>
-  <a href="#co-mas" class="nav-link active"><span class="nav-step">01</span>Co budeš mít</a>
-  <a href="#architektura" class="nav-link"><span class="nav-step">02</span>Architektura</a>
-  <a href="#stack" class="nav-link"><span class="nav-step">03</span>Softwarový stack</a>
-  <a href="#hw-prehled" class="nav-link"><span class="nav-step">04</span>Hardware – přehled</a>
-  <a href="#cas-narocnost" class="nav-link"><span class="nav-step">05</span>Časová náročnost</a>
-  <a href="#spotreba" class="nav-link"><span class="nav-step">06</span>Spotřeba energie</a>
-  <a href="#rozsireni" class="nav-link"><span class="nav-step">07</span>Budoucí rozšíření</a>
-</nav>
-<div class="wrap">
+<body data-page="01">
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "co-mas", "num": "1.1", "name": "Co budeš mít" },
+    { "id": "architektura", "num": "1.2", "name": "Architektura systému" },
+    { "id": "stack", "num": "1.3", "name": "Softwarový stack" },
+    { "id": "hw-prehled", "num": "1.4", "name": "Přehled hardware" },
+    { "id": "cas-narocnost", "num": "1.5", "name": "Časová náročnost" },
+    { "id": "spotreba", "num": "1.6", "name": "Spotřeba a náklady" },
+    { "id": "rozsireni", "num": "1.7", "name": "Budoucí rozšíření" }
+  ]
+}
+</script>
 
-<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
+<div class="progress-bar" id="progressBar"></div>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
+<div class="wrap">
 
 <header>
   <div class="h-num">// kapitola 01</div>
@@ -204,8 +36,8 @@ footer{margin-left:260px}
 </header>
 
 <!-- CO BUDEŠ MÍT -->
-<section class="sec" id="co-mas">>
-  <h2>Co budeš mít po dokončení</h2>
+<section class="sec">
+  <h2 id="co-mas">Co budeš mít</h2>
   <p>Po splnění všech kapitol tohoto průvodce budeš mít plně funkční systém chytré domácnosti. Všechny komponenty běží lokálně na Raspberry Pi – žádná data neopouštějí tvoji síť, pokud ty sám nechceš.</p>
 
   <ul class="result-list">
@@ -243,8 +75,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- ARCHITEKTURA -->
-<section class="sec" id="architektura">>
-  <h2>Architektura systému</h2>
+<section class="sec">
+  <h2 id="architektura">Architektura systému</h2>
   <p>Celý systém je postaven do vrstev. Každá vrstva komunikuje pouze s bezprostředně sousední – to zaručuje jednoduchost, přehlednost a snadné ladění.</p>
 
   <div class="arch">
@@ -297,8 +129,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- SOFTWAROVÝ STACK -->
-<section class="sec" id="stack">>
-  <h2>Přehled softwarového stacku</h2>
+<section class="sec">
+  <h2 id="stack">Softwarový stack</h2>
   <table class="stack-table">
     <thead>
       <tr>
@@ -348,8 +180,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- HARDWARE PŘEHLED -->
-<section class="sec" id="hw-prehled">>
-  <h2>Hardware na první pohled</h2>
+<section class="sec">
+  <h2 id="hw-prehled">Přehled hardware</h2>
   <p>Detaily k nákupu jsou v <a href="02_raspberry_hardware.html">Kapitole 02 – Hardware</a>. Tady je rychlý přehled co budeš fyzicky potřebovat:</p>
   <ul>
     <li><strong>Raspberry Pi 3 Model B+</strong> – hlavní výpočetní jednotka</li>
@@ -367,8 +199,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- ČASOVÁ NÁROČNOST -->
-<section class="sec" id="cas-narocnost">>
-  <h2>Časová náročnost instalace</h2>
+<section class="sec">
+  <h2 id="cas-narocnost">Časová náročnost</h2>
   <p>Odhadem si připrav tento čas – záleží na tvých zkušenostech a rychlosti internetu:</p>
   <ul>
     <li><strong>Příprava SSD a první boot:</strong> 30–60 minut</li>
@@ -386,8 +218,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- SPOTŘEBA ENERGIE -->
-<section class="sec" id="spotreba">>
-  <h2>Spotřeba energie a provozní náklady</h2>
+<section class="sec">
+  <h2 id="spotreba">Spotřeba a náklady</h2>
   <p>Raspberry Pi 3 B+ je velmi úsporné zařízení. Provoz 24/7 tě nebude stát téměř nic – a to je jedna z velkých výhod oproti plnohodnotnému PC serveru.</p>
   <ul>
     <li><strong>Spotřeba v klidu:</strong> cca 3–5 W (HA běží, žádná velká zátěž)</li>
@@ -402,8 +234,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- BUDOUCÍ ROZŠÍŘENÍ -->
-<section class="sec" id="rozsireni">>
-  <h2>Co dalšího lze integrovat – budoucí rozšíření</h2>
+<section class="sec">
+  <h2 id="rozsireni">Budoucí rozšíření</h2>
   <p>Tento průvodce pokrývá Zigbee zařízení jako základ. Home Assistant ale umí mnohem více – jakmile bude základní systém stabilní, lze ho rozšířit o:</p>
 
   <h3>Další bezdrátové protokoly</h3>
@@ -436,49 +268,17 @@ footer{margin-left:260px}
   </div>
 </section>
 
-<!-- CHAPTER NAV -->
-<nav class="chapter-nav">
-  <a href="00_raspberry_index.html" class="ch-btn">
-    <span>←</span>
-    <div>
-      <span class="ch-label">zpět na</span>
-      <span class="ch-name">Index</span>
-    </div>
-  </a>
-  <a href="02_raspberry_hardware.html" class="ch-btn next">
-    <div>
-      <span class="ch-label">další kapitola</span>
-      <span class="ch-name">Hardware</span>
-    </div>
-    <span>→</span>
-  </a>
-</nav>
+<div id="pn"></div>
 
 <footer>
-  01_raspberry_prehled_systemu.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br>
-  <a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a>
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
 </footer>
 
 </div>
-<script>
-window.addEventListener('scroll',()=>{
-  const b=document.getElementById('progressBar');
-  const t=document.documentElement.scrollTop;
-  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-  b.style.width=(t/h*100)+'%';
-});
-const sections=document.querySelectorAll('section[id]');
-const navLinks=document.querySelectorAll('.nav-link');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      navLinks.forEach(l=>l.classList.remove('active'));
-      const t=document.querySelector('[href="#'+e.target.id+'"]');
-      if(t)t.classList.add('active');
-    }
-  });
-},{rootMargin:'-20% 0px -70% 0px'});
-sections.forEach(s=>obs.observe(s));
-</script>
+</div>
+</div>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>

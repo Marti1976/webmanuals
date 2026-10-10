@@ -11,43 +11,47 @@
 .card{border:1px solid #111;break-inside:avoid;min-width:0}.card-head{display:flex;gap:1.5mm;align-items:center;padding:1mm 1.4mm;background:#111;color:#fff}.number{min-width:9mm;height:5mm;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#111;font-weight:800;font-size:9pt;padding:0 1mm}.card-head h2{font-size:9pt;line-height:1.05;margin:0}
 .body{padding:1.2mm 1.5mm;font-size:8.1pt;line-height:1.2}
 .row{margin:.8mm 0;display:flex;gap:.8mm;align-items:flex-end;flex-wrap:wrap}.label{font-weight:700}
-.write{display:inline-block;min-width:13mm;height:5mm;border-bottom:1px dotted #222;vertical-align:bottom}.write.s{min-width:11mm}.write.m{min-width:19mm}.write.l{min-width:30mm}
+.write{display:inline-block;min-width:13mm;height:5mm;border-bottom:1px dotted #222;vertical-align:bottom}.write.s{min-width:11mm}.write.t{min-width:9mm}.write.m{min-width:19mm}.write.l{min-width:30mm}
 .formula{border:1px solid #777;background:#f5f5f5;padding:1mm 1.2mm;margin:1mm 0;font:7.8pt/1.2 "Courier New",monospace}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:2mm;align-items:stretch;margin-bottom:2mm}
-.goal{margin:0 0 1mm}.mf{border-top:1px dotted #777;margin-top:1mm;padding-top:.7mm}.tag{display:inline-block;background:#111;color:#fff;font-weight:800;padding:0 1.6mm;margin-right:1mm}
+.goal{margin:0 0 1mm}.help.warn{font-weight:700}.help{font-size:6.9pt;color:#444;line-height:1.18;margin:.2mm 0 .8mm}.xs,.tw{font-size:7pt;color:#333;margin-left:1.5mm}.mf{border-top:1px dotted #777;margin-top:1mm;padding-top:.7mm}.tag{display:inline-block;background:#111;color:#fff;font-weight:800;padding:0 1.6mm;margin-right:1mm}
 .result{border:1.5px solid #111;padding:.5mm 1.3mm;margin-top:.8mm;font-weight:800}
 .notes{border:1px solid #111;padding:1.3mm 1.6mm;font-size:8.8pt;flex:1 1 auto;min-height:14mm;position:relative}
 .foot{position:absolute;left:9mm;right:9mm;bottom:4.5mm;border-top:1px solid #111;padding-top:.8mm;display:flex;justify-content:space-between;font:7.5pt "Courier New",monospace}
+@media print{input::placeholder{color:transparent}}
 @page{size:A4 portrait;margin:0}@media print{html,body{width:210mm;background:#fff}.page{margin:0;box-shadow:none}.card-head,.number,.badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}.print-btn{display:none!important}}
 .print-btn{display:block;margin:10px auto;padding:7px 22px;background:#111;color:#fff;border:1px solid #111;font:700 12px "Courier New",monospace;cursor:pointer}
 @media(max-width:600px){.grid2{grid-template-columns:1fr}}
 </style></head><body>
 <section class="page">
 <header class="header"><div><h1>Rychlostní profily S,M,F</h1><div class="subtitle">Checklist ke kapitole 10 · čísla jako v návodu 08B</div></div><div><div class="badge">ANYCUBIC KOBRA X</div><div class="meta">Filament: ________________ Datum: ________</div></div></header>
-<div class="intro"><b>Postup:</b> do výpočtů níže dosaď ověřené hodnoty S (kalibrace 1 až 5). Rychlost a akceleraci M a F opiš z Process profilu, ze S se nepočítají. Potom vytiskni testy 10.3 až 10.6, zapisuj výsledek a měň vždy jen jednu hodnotu. <b>Jen odhad:</b> teplota, PA a chlazení jsou startovní hypotézy, Flow Ratio začíná stejně jako S, průtok je požadavek modelu, ne limit hotendu; ten určí až 10.6. Chlazení 80 / 100 % platí pro PLA, jiný materiál podle výrobce.
-<div class="row"><span class="label">Rozsah teplot výrobce:</span><span class="write m"></span> až <span class="write m"></span> °C &nbsp; <span class="label">Max flow S:</span><span class="write s"></span> mm³/s &nbsp; <span class="label">Šířka stopy:</span><span class="write s"></span> mm &nbsp; <span class="label">Vrstva:</span><span class="write s"></span> mm</div></div>
+<div class="intro"><b>Postup:</b> dosaď ověřené hodnoty S (kalibrace 1 až 5), šedé číslo je jen příklad; předvyplněné běžné hodnoty (šířka 0,42, vrstva 0,20, rychlost S 100) přepiš svými. Rychlost a akceleraci M a F opiš z Process profilu. Potom vytiskni testy 10.3 až 10.6 a měň vždy jen jednu hodnotu. <b>Jen odhad:</b> teplota, PA a chlazení (S + 20 / + 40 %, nejvýš 100 %) jsou startovní hypotézy; skutečný limit hotendu určí až 10.6.
+<div class="row"><span class="label">Rozsah teplot výrobce:</span><span class="write m" data-k="tmin" data-ph="200"></span> až <span class="write m" data-k="tmax" data-ph="260"></span> °C &nbsp; <span class="label">Max flow S (z kalibrace 5):</span><span class="write s" data-k="maxS" data-ph="15"></span> mm³/s</div>
+<div class="row"><span class="label">Šířka stopy:</span><span class="write s" data-k="w"></span> mm &nbsp; <span class="label">Vrstva:</span><span class="write s" data-k="h"></span> mm &nbsp; <span class="label">Rychlost S (vnější stěna):</span><span class="write s" data-k="vS"></span> mm/s &nbsp; → <span class="label">průtok S ≈</span><span class="write s" data-k="qS"></span> mm³/s</div>
+<div class="help">Průtok = šířka × vrstva × rychlost (údaje najdeš v Process profilu S). Průtok S je výchozí bod: M a F ho zvýší vyšší rychlostí.</div></div>
+
 <div class="grid2">
 <article class="card"><div class="card-head"><span class="number">10.1</span><h2>Profil M (Medium)</h2></div><div class="body">
-<div class="row"><b>Rychlost vnější stěny M:</b><span class="write m"></span> mm/s</div>
-<div class="row"><b>Akcelerace M:</b><span class="write m"></span> mm/s²</div>
-<div class="formula">Teplota S + 15 °C · Flow beze změny · PA × 0,93 · chlazení 80 % (PLA)</div>
-<div class="row"><b>Teplota:</b> S <span class="write s"></span> + 15 = <span class="write s"></span> °C</div>
-<div class="row"><b>Flow Ratio:</b> S <span class="write s"></span> + 0 = <span class="write s"></span></div>
-<div class="row"><b>PA:</b> S <span class="write s"></span> × 0,93 = <span class="write s"></span></div>
-<div class="row"><b>Chlazení:</b> S <span class="write s"></span> % → M <span class="write s"></span> %</div>
-<div class="row"><b>Průtok:</b> <span class="write s"></span> × <span class="write s"></span> × <span class="write s"></span> ≈ <span class="write s"></span> mm³/s</div>
-<div class="row"><b>Max volumetric speed (strop = S, po 10.6):</b><span class="write s"></span></div>
+<div class="row"><b>Rychlost M (vnější stěna):</b><span class="write m" data-k="m.v" data-ph="250"></span> mm/s</div>
+<div class="row"><b>Akcelerace M:</b><span class="write m" data-k="m.acc"></span> mm/s²</div>
+<div class="row"><b>Teplota:</b> S <span class="write s" data-k="m.tS" data-ph="205"></span> + 15 = <span class="write s" data-k="m.t"></span> °C</div>
+<div class="row"><b>Flow Ratio:</b> S <span class="write s" data-k="m.flS" data-ph="0,95"></span> + 0 = <span class="write s" data-k="m.fl"></span></div>
+<div class="row"><b>PA:</b> S <span class="write s" data-k="m.paS" data-ph="0,040"></span> × 0,93 = <span class="write s" data-k="m.pa"></span></div>
+<div class="row"><b>Chlazení:</b> S <span class="write s" data-k="m.cS" data-ph="60"></span> % + 20 = <span class="write s" data-k="m.c"></span> %</div>
+<div class="row"><b>Průtok:</b> šířka <span class="write t" data-k="m.w"></span> × vrstva <span class="write t" data-k="m.h"></span> × rychlost <span class="write t" data-k="m.vv"></span> ≈ <span class="write t" data-k="m.q"></span> mm³/s</div>
+<div class="row"><b>Max volumetric speed</b> (limit S, po 10.6 nový):<span class="write s" data-k="m.mvs"></span> mm³/s</div>
+<div class="help" data-st="m"></div>
 </div></article>
 <article class="card"><div class="card-head"><span class="number">10.2</span><h2>Profil F (Fast)</h2></div><div class="body">
-<div class="row"><b>Rychlost vnější stěny F:</b><span class="write m"></span> mm/s</div>
-<div class="row"><b>Akcelerace F:</b><span class="write m"></span> mm/s²</div>
-<div class="formula">Teplota S + 30 °C · Flow beze změny · PA × 0,87 · chlazení 100 % (PLA)</div>
-<div class="row"><b>Teplota:</b> S <span class="write s"></span> + 30 = <span class="write s"></span> °C</div>
-<div class="row"><b>Flow Ratio:</b> S <span class="write s"></span> + 0 = <span class="write s"></span></div>
-<div class="row"><b>PA:</b> S <span class="write s"></span> × 0,87 = <span class="write s"></span></div>
-<div class="row"><b>Chlazení:</b> S <span class="write s"></span> % → F <span class="write s"></span> %</div>
-<div class="row"><b>Průtok:</b> <span class="write s"></span> × <span class="write s"></span> × <span class="write s"></span> ≈ <span class="write s"></span> mm³/s</div>
-<div class="row"><b>Max volumetric speed (strop = S, po 10.6):</b><span class="write s"></span></div>
+<div class="row"><b>Rychlost F (vnější stěna):</b><span class="write m" data-k="f.v" data-ph="400"></span> mm/s</div>
+<div class="row"><b>Akcelerace F:</b><span class="write m" data-k="f.acc"></span> mm/s²</div>
+<div class="row"><b>Teplota:</b> S <span class="write s" data-k="f.tS" data-ph="205"></span> + 30 = <span class="write s" data-k="f.t"></span> °C</div>
+<div class="row"><b>Flow Ratio:</b> S <span class="write s" data-k="f.flS" data-ph="0,95"></span> + 0 = <span class="write s" data-k="f.fl"></span></div>
+<div class="row"><b>PA:</b> S <span class="write s" data-k="f.paS" data-ph="0,040"></span> × 0,87 = <span class="write s" data-k="f.pa"></span></div>
+<div class="row"><b>Chlazení:</b> S <span class="write s" data-k="f.cS" data-ph="60"></span> % + 40 = <span class="write s" data-k="f.c"></span> %</div>
+<div class="row"><b>Průtok:</b> šířka <span class="write t" data-k="f.w"></span> × vrstva <span class="write t" data-k="f.h"></span> × rychlost <span class="write t" data-k="f.vv"></span> ≈ <span class="write t" data-k="f.q"></span> mm³/s</div>
+<div class="row"><b>Max volumetric speed</b> (limit S, po 10.6 nový):<span class="write s" data-k="f.mvs"></span> mm³/s</div>
+<div class="help" data-st="f"></div>
 </div></article>
 </div>
 <div class="grid2">
@@ -59,18 +63,23 @@
 <article class="card"><div class="card-head"><span class="number">10.4</span><h2>Orca Tolerance Test · vůle a slévání</h2></div><div class="body">
 <p class="goal"><b>O co jde:</b> ověřit, že rychlejší profil nezměnil rozměry a vůle.</p>
 <p class="goal"><b>Co hledáme:</b> nejmenší vůli, která se volně pohybuje (bez páčení). Při slití zkontroluj rozměry a Flow Ratio.</p>
+<p class="goal"><b>Jak na to:</b> vytiskni test zvlášť v M a ve F (stejná vrstva a materiál) a porovnej vůli s výsledkem ze S. Menší vůle než u S značí větší průtok, vyšší teplotu nebo slabší chlazení.</p>
 <div class="mf"><span class="tag">M</span><b>nejmenší volná vůle:</b><span class="write s"></span> mm &nbsp; □ volná □ slila se<div class="row"><b>Změna:</b><span class="write l"></span></div><div class="result">□ SCHVÁLENO &nbsp; □ OPAKOVAT</div></div><div class="mf"><span class="tag">F</span><b>nejmenší volná vůle:</b><span class="write s"></span> mm &nbsp; □ volná □ slila se<div class="row"><b>Změna:</b><span class="write l"></span></div><div class="result">□ SCHVÁLENO &nbsp; □ OPAKOVAT</div></div></div></article>
 <article class="card"><div class="card-head"><span class="number">10.5</span><h2>Orca String Hell · nitkování</h2></div><div class="body">
-<p class="goal"><b>O co jde:</b> ověřit, že vyšší teplota nezpůsobila nitkování (nejvíc u F).</p>
-<p class="goal"><b>Co hledáme:</b> tenké nitky mezi sloupky. Ověř suchý □ filament; při nitkách −5 °C, pak retrakce po malých krocích.</p>
+<p class="goal" style="margin-bottom:3.6mm"><b>O co jde:</b> ověřit, že vyšší teplota profilu nezpůsobila nitkování (tenká vlákna plastu při přejezdech); nejvíc hrozí u F.</p>
+<p class="goal"><b>Co hledáme:</b> tenké nitky mezi sloupky. Ověř suchý □ filament.</p>
+<p class="goal"><b>Jak na to:</b> vytiskni test zvlášť v M a ve F se stejnou geometrií a nitky hodnoť po vychladnutí. Zůstávají-li, uber teplotu o 5 °C, pak uprav retrakci po malých krocích a měň vždy jen jednu hodnotu.</p>
 <div class="mf"><span class="tag">M</span><b>nitkování:</b> □ přijatelné □ výrazné<div class="row"><b>Změna:</b><span class="write l"></span></div><div class="result">□ SCHVÁLENO &nbsp; □ OPAKOVAT</div></div><div class="mf"><span class="tag">F</span><b>nitkování:</b> □ přijatelné □ výrazné<div class="row"><b>Změna:</b><span class="write l"></span></div><div class="result">□ SCHVÁLENO &nbsp; □ OPAKOVAT</div></div></div></article>
 <article class="card"><div class="card-head"><span class="number">10.6</span><h2>Max flowrate · skutečný limit M i F</h2></div><div class="body">
-<p class="goal"><b>O co jde:</b> zjistit, kolik mm³/s hotend opravdu zvládne (odhad z 10.1 / 10.2 je jen teorie).</p>
-<p class="goal"><b>Co hledáme:</b> první vrstvu s mezerami nebo matným povrchem; změř její výšku v mm a dosaď do vzorce.</p>
-<div class="formula">Limit = Start + (výška v mm × Step) · uložit limit × 0,90 · End ≈ odhad průtoku + 30 %</div>
-<div class="mf"><div class="row"><span class="tag">M</span><b>Start</b><span class="write s"></span><b>End</b><span class="write s"></span><b>Step</b><span class="write s"></span><b>výška mm</b><span class="write s"></span></div><div class="row"><b>uložený limit:</b><span class="write m"></span> mm³/s</div></div>
-<div class="mf"><div class="row"><span class="tag">F</span><b>Start</b><span class="write s"></span><b>End</b><span class="write s"></span><b>Step</b><span class="write s"></span><b>výška mm</b><span class="write s"></span></div><div class="row"><b>uložený limit:</b><span class="write m"></span> mm³/s</div></div>
+<p class="goal"><b>O co jde:</b> zjistit, kolik mm³/s hotend opravdu zvládne. <b>Hledáme:</b> první vrstvu věže s mezerami nebo matným povrchem.</p>
+<div class="formula">Limit = Start + (výška × Step) · uložit 90 % limitu</div>
+<div class="help"><b>Jak vyplnit:</b> Start = limit S, End = odhad průtoku z 10.1 / 10.2 + 30 % (obojí se předvyplní), Step = 1 (jemněji 0,5). Vytiskni věž a změř výšku první vadné vrstvy v mm. Příklad: 15 + 17 × 1 = 32 → uložit 28,8 mm³/s.</div>
+<div class="mf"><div class="row"><span class="tag">M</span><b>Start</b><span class="write t" data-k="m6.s"></span><b>End</b><span class="write t" data-k="m6.e"></span><b>Step</b><span class="write t" data-k="m6.st"></span><span class="tw" data-tw="m"></span></div>
+<div class="row"><b>výška vady</b><span class="write t" data-k="m6.h"></span> mm → <b>limit</b><span class="write t" data-k="m6.l"></span> → <b>uložit ×0,9</b><span class="write t" data-k="m6.u"></span> mm³/s</div></div>
+<div class="mf"><div class="row"><span class="tag">F</span><b>Start</b><span class="write t" data-k="f6.s"></span><b>End</b><span class="write t" data-k="f6.e"></span><b>Step</b><span class="write t" data-k="f6.st"></span><span class="tw" data-tw="f"></span></div>
+<div class="row"><b>výška vady</b><span class="write t" data-k="f6.h"></span> mm → <b>limit</b><span class="write t" data-k="f6.l"></span> → <b>uložit ×0,9</b><span class="write t" data-k="f6.u"></span> mm³/s</div></div>
 <div class="result">□ LIMITY ULOŽENY &nbsp; □ OPAKOVAT</div></div></article>
+
 </div>
 <div class="notes"><b>Poznámky:</b></div>
 <div class="foot"><span>ZÁPIS VÝPOČTU → OVĚŘENÍ V REÁLNÉM PROFILU · JEDNA ZMĚNA NAJEDNOU</span><span>1 / 1</span></div>
@@ -118,7 +127,7 @@ function setAuto(e,v){if(!e||e.dataset.touched)return;e.value=v==null?'':v;if(v=
 function dflt(t,s){if(!t||!s||t.dataset.touched)return;t.value=s.value;t.classList.toggle('auto',!!s.value)}
 function ins(c){return c?tin(c):[]}
 if(!snap){
- $a('span.write,span.result-space').forEach(function(sp){var cs=getComputedStyle(sp),i=document.createElement('input');i.type='text';i.className=sp.className+' fi';i.style.width=cs.minWidth;i.setAttribute('inputmode','decimal');sp.parentNode.replaceChild(i,sp)});
+ $a('span.write,span.result-space').forEach(function(sp){var cs=getComputedStyle(sp),i=document.createElement('input');i.type='text';i.className=sp.className+' fi';i.style.width=cs.minWidth;if(sp.dataset.k)i.dataset.k=sp.dataset.k;if(sp.dataset.ph)i.placeholder=sp.dataset.ph;i.setAttribute('inputmode','decimal');sp.parentNode.replaceChild(i,sp)});
  var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentElement;if(!p||p.closest('script,style,textarea,.tools,button'))return NodeFilter.FILTER_REJECT;return /□|_{3,}|\.{6,}/.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}}),list=[];
  while(w.nextNode())list.push(w.currentNode);
  list.forEach(function(n){var f=document.createDocumentFragment();n.nodeValue.split(/(□|_{3,}|\.{6,})/).forEach(function(t){
@@ -140,15 +149,36 @@ function calc(){syncMeta();
  var a2=card('2a'),b2=card('2b'),c5=card('5');
  [a2,b2].forEach(function(c){var x=ins(c);if(x.length<6)return;setAuto(x[2],x[0].value||null);setAuto(x[3],x[1].value||null);var p=num(x[0].value),q=num(x[1].value);var s=(p!=null&&q!=null)?fmt(p+q,3):null;setAuto(x[4],s);setAuto(x[5],s)});
  if(c5){var x=ins(c5);if(x.length>=11){var s=num(x[0].value),h=num(x[3].value),st=num(x[2].value);setAuto(x[4],x[0].value||null);setAuto(x[5],x[3].value||null);setAuto(x[6],x[2].value||null);var L=(s!=null&&h!=null&&st!=null)?s+h*st:null;setAuto(x[7],L==null?null:fmt(L,2));setAuto(x[8],L==null?null:fmt(L,2));var Y=L==null?null:fmt(L*0.9,2);setAuto(x[9],Y);setAuto(x[10],Y)}}
- var i1=card('10.1'),i2=card('10.2'),i6=card('10.6'),intro=$a('.intro')[0];
- if(i1&&i2&&i6&&intro){var I=ins(intro),c1=ins(i1),c2=ins(i2),c6=ins(i6);
-  [2,4,6,8].forEach(function(k){dflt(c2[k],c1[k])});
-  [[c1,15,0.93],[c2,30,0.87]].forEach(function(z){var c=z[0],t=num(c[2].value);setAuto(c[3],t==null?null:fmt(t+z[1],0));setAuto(c[5],c[4].value||null);var p=num(c[6].value);setAuto(c[7],p==null?null:fmt(p*z[2],3));dflt(c[10],I[3]);dflt(c[11],I[4]);dflt(c[12],c[0]);var ww=num(c[10].value),hh=num(c[11].value),vv=num(c[12].value);setAuto(c[13],(ww&&hh&&vv)?fmt(ww*hh*vv,1):null)});
-  [[0,c1[13]],[5,c2[13]]].forEach(function(z){var o=z[0],s=num(c6[o].value),st=num(c6[o+2].value),h=num(c6[o+3].value);setAuto(c6[o+4],(s!=null&&st!=null&&h!=null)?fmt((s+h*st)*0.9,1):null);var q=num(z[1].value);c6[o+1].placeholder=q?'≈ '+Math.ceil(q*1.3):''})}
+ function K(k){return document.querySelector('[data-k="'+k+'"]')}
+ if(K('qS')){
+  setAuto(K('w'),'0,42');setAuto(K('h'),'0,20');setAuto(K('vS'),'100');setAuto(K('m.v'),'250');setAuto(K('f.v'),'400');
+  var w0=num(K('w').value),h0=num(K('h').value),vS=num(K('vS').value),qS=(w0&&h0&&vS)?w0*h0*vS:null;
+  setAuto(K('qS'),qS==null?null:fmt(qS,1));
+  ['m','f'].forEach(function(p){
+   var dt=p==='m'?15:30,kf=p==='m'?0.93:0.87;
+   if(p==='f'){['tS','flS','paS','cS'].forEach(function(s){dflt(K('f.'+s),K('m.'+s))})}
+   var t=num(K(p+'.tS').value);setAuto(K(p+'.t'),t==null?null:fmt(t+dt,0));
+   setAuto(K(p+'.fl'),K(p+'.flS').value||null);
+   var pa=num(K(p+'.paS').value);setAuto(K(p+'.pa'),pa==null?null:fmt(pa*kf,3));
+   var cS=num(K(p+'.cS').value);setAuto(K(p+'.c'),cS==null?null:String(Math.min(100,Math.round(cS+(p==='m'?20:40)))));
+   dflt(K(p+'.w'),K('w'));dflt(K(p+'.h'),K('h'));dflt(K(p+'.vv'),K(p+'.v'));
+   var ww=num(K(p+'.w').value),hh=num(K(p+'.h').value),vv=num(K(p+'.vv').value),q=(ww&&hh&&vv)?ww*hh*vv:null;
+   setAuto(K(p+'.q'),q==null?null:fmt(q,1));
+   var xs=document.querySelector('[data-x="'+p+'"]');if(xs)xs.textContent=(q&&qS)?'(×'+fmt(q/qS,1)+' oproti S)':(q?'('+fmt(q,1)+' mm³/s)':'');
+   var s6=p+'6',lim=K(s6+'.u');
+   var Lm=(lim&&num(lim.value))||num(K('maxS').value),stt=document.querySelector('[data-st="'+p+'"]');if(stt){if(q&&Lm){stt.textContent=(q>Lm?'⚠ Chce ':'✓ Chce ')+fmt(q,1)+(qS?' (×'+fmt(q/qS,1)+' oproti S)':'')+', limit '+fmt(Lm,1)+' mm³/s: '+(q>Lm?'změř v 10.6.':'stačí.');stt.classList.toggle('warn',q>Lm)}else stt.textContent=''}
+   setAuto(K(p+'.mvs'),(lim&&lim.value)?lim.value:(K('maxS').value||null));
+   setAuto(K(s6+'.s'),K('maxS').value||null);setAuto(K(s6+'.e'),q==null?null:String(Math.ceil(q*1.3)));setAuto(K(s6+'.st'),'1');
+   var st=num(K(s6+'.s').value),en=num(K(s6+'.e').value),sp=num(K(s6+'.st').value),hv=num(K(s6+'.h').value);
+   var tw=document.querySelector('[data-tw="'+p+'"]');if(tw)tw.textContent=(st!=null&&en!=null&&sp>0&&en>st)?'věž ≈ '+fmt((en-st)/sp,0)+' mm':'';
+   var L=(st!=null&&sp!=null&&hv!=null)?st+hv*sp:null;
+   setAuto(K(s6+'.l'),L==null?null:fmt(L,1));setAuto(K(s6+'.u'),L==null?null:fmt(L*0.9,1));
+  })}
 }
-document.addEventListener('input',function(e){var t=e.target;if(!t.classList||!t.classList.contains('fi'))return;if(e.isTrusted&&t.type!=='checkbox'){t.dataset.touched='1';t.classList.remove('auto')}calc();store()});
+document.addEventListener('input',function(e){var t=e.target;if(!t.classList||!t.classList.contains('fi'))return;if(e.isTrusted&&t.type!=='checkbox'){if(t.value===''){delete t.dataset.touched}else{t.dataset.touched='1';t.classList.remove('auto')}}calc();calc();store()});
+document.addEventListener('focusin',function(e){var t=e.target;if(t.classList&&t.classList.contains('auto')&&t.type==='text'&&!t.readOnly){var v0=t.value;try{t.select()}catch(_){}setTimeout(function(){if(t.value===v0){try{t.select()}catch(_){}}},60)}});
 document.addEventListener('change',function(e){if(e.target.classList&&e.target.classList.contains('fi'))store()});
-calc();store();
+calc();calc();store();
 function today(){var d=new Date(),p=function(n){return(n<10?'0':'')+n};return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())}
 function clean(s){return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'_')}
 async function saveCopy(){
@@ -161,7 +191,12 @@ async function saveCopy(){
 }
 document.getElementById('b-save').onclick=saveCopy;
 document.getElementById('b-print').onclick=function(){window.print()};
-document.getElementById('b-clear').onclick=function(){if(!confirm('Opravdu vymazat všechny vyplněné údaje?'))return;fields().forEach(function(e){if(e.type==='checkbox')e.checked=false;else e.value='';delete e.dataset.touched;e.classList.remove('auto')});try{localStorage.removeItem(KEY)}catch(_){}calc();store()};
+var clr=document.getElementById('b-clear'),clrT=null,clrTxt=clr.textContent;
+clr.onclick=function(){
+ if(!clr.dataset.arm){clr.dataset.arm='1';clr.textContent='❗ Opravdu smazat? Klikni znovu';clrT=setTimeout(function(){delete clr.dataset.arm;clr.textContent=clrTxt},4000);return}
+ clearTimeout(clrT);delete clr.dataset.arm;clr.textContent=clrTxt;
+ fields().forEach(function(e){if(e.type==='checkbox')e.checked=false;else e.value='';delete e.dataset.touched;e.classList.remove('auto')});
+ try{localStorage.removeItem(KEY)}catch(_){}calc();calc();store()};
 })();
 </script>
 </body></html>

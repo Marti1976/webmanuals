@@ -5,168 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bezpečnost – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0a0810;--bg2:#0f0c18;--bg3:#151220;--bg4:#1d1830;
-  --border:#2a1f3d;--border2:#3d2855;
-  --text:#d4c8e8;--t2:#8073a8;--t3:#5a4a75;
-  --rasp1:#e30b5c;--rasp1-light:#ff3377;
-  --rasp2:#c51a4a;--rasp2-light:#ff4d88;
-  --cyan:#00d9ff;--cyan2:#5fffff;
-  --green:#00e5a0;--green2:#00ffb3;
-  --yellow:#f5c542;--white:#f0e8ff;--r:12px;
-}
-html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:6px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
-.wrap{max-width:900px;margin:0 auto;padding:0 24px 80px}
-.nav-back{display:inline-flex;align-items:center;gap:8px;margin:40px 0 28px;color:var(--rasp1-light);
-  font-family:'DM Mono',monospace;font-size:.8em;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:gap .2s}
-.nav-back:hover{gap:12px}
-header{padding:0 0 36px;border-bottom:1px solid var(--border)}
-.h-num{font-family:'DM Mono',monospace;font-size:.75em;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-h1{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px}
-h1 em{color:var(--rasp1-light);font-style:normal}
-.h-desc{color:var(--t2);font-size:.95em;max-width:640px;line-height:1.7}
-.sec{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
-h2{font-family:'Syne',sans-serif;font-size:1.45em;font-weight:700;color:var(--white);margin-bottom:18px}
-h3{font-family:'Syne',sans-serif;font-size:1.05em;font-weight:600;color:var(--rasp1-light);margin:28px 0 10px}
-p{margin-bottom:14px;color:var(--text);line-height:1.75}
-ul,ol{padding-left:22px;margin-bottom:14px}
-li{margin:7px 0;color:var(--t2);font-size:.93em;line-height:1.65}
-li strong{color:var(--white)}
-strong{color:var(--white);font-weight:600}
-a{color:var(--rasp1-light);text-decoration:none}
-a:hover{text-decoration:underline}
-code{font-family:'DM Mono',monospace;font-size:.84em;background:rgba(227,11,92,.1);
-  color:var(--rasp1-light);border:1px solid rgba(227,11,92,.2);border-radius:4px;padding:2px 7px}
-pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin:14px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.65;overflow-x:auto}
-pre code{background:none;border:none;padding:0;color:inherit}
-.callout{border-radius:var(--r);padding:18px 22px;margin:20px 0;border:1px solid}
-.callout-title{font-family:'Syne',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
-.callout p,.callout li{font-size:.9em;line-height:1.7;color:var(--t2);margin-bottom:4px}
-.callout ul{margin-bottom:0;padding-left:18px}
-.callout-info{background:rgba(0,217,255,.06);border-color:rgba(0,217,255,.2);border-left:3px solid var(--cyan)}
-.callout-info .callout-title{color:var(--cyan2)}
-.callout-tip{background:rgba(0,229,160,.06);border-color:rgba(0,229,160,.2);border-left:3px solid var(--green)}
-.callout-tip .callout-title{color:var(--green2)}
-.callout-warn{background:rgba(245,197,66,.06);border-color:rgba(245,197,66,.2);border-left:3px solid var(--yellow)}
-.callout-warn .callout-title{color:var(--yellow)}
-.callout-danger{background:rgba(227,11,92,.08);border-color:rgba(227,11,92,.25);border-left:3px solid var(--rasp1)}
-.callout-danger .callout-title{color:var(--rasp1-light)}
-.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
-.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
-  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
-.step{display:flex;gap:20px;padding:16px 0}
-.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);border:2px solid var(--rasp1);
-  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;
-  font-size:.9em;color:var(--rasp1-light);flex-shrink:0;position:relative;z-index:1}
-.step-body{flex:1;padding-top:8px}
-.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
-.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
-.step-desc ul{padding-left:18px;margin:8px 0 4px}
-.step-desc li{margin:5px 0;font-size:1em}
-.step-desc strong{color:var(--white)}
-.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
-.step-desc code{font-size:.9em}
-/* remote access options */
-.remote-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:20px 0}
-.remote-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
-.remote-card.recommended{border-color:rgba(0,229,160,.3)}
-.remote-card-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:4px}
-.remote-card-sub{font-family:'DM Mono',monospace;font-size:.72em;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;color:var(--t3)}
-.remote-card.recommended .remote-card-sub{color:var(--green2)}
-.remote-card p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.6}
-/* security checklist */
-.sec-check{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:18px 0}
-.sec-check-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
-.sec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.sec-item:last-child{border-bottom:none}
-.sec-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
-.sec-item-body{flex:1}
-.sec-item-title{font-size:.9em;color:var(--white);font-weight:600;margin-bottom:2px}
-.sec-item-desc{font-size:.83em;color:var(--t2);line-height:1.55}
-.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border)}
-.ch-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;background:var(--bg2);
-  border:1px solid var(--border);border-radius:var(--r);color:var(--t2);font-family:'DM Mono',monospace;
-  font-size:.78em;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s;flex:1;max-width:48%}
-.ch-btn:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
-.ch-btn.next{justify-content:flex-end;text-align:right}
-.ch-btn .ch-label{font-size:.85em;color:var(--t3);display:block;margin-bottom:2px}
-footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);text-align:center;font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);line-height:2}
-
-/* ── PROGRESS BAR ── */
-.progress-bar{position:fixed;top:0;left:0;height:3px;
-  background:linear-gradient(90deg,var(--rasp1),var(--rasp2));
-  z-index:999;width:0%;transition:width 0.1s}
-
-/* ── SIDEBAR ── */
-.sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;
-  background:rgba(10,8,16,.98);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-.sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
-.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
-.sidebar-back{color:var(--t2);text-decoration:none;font-size:11px;
-  text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
-  display:flex;align-items:center;gap:6px;margin-bottom:16px;transition:color .2s}
-.sidebar-back:hover{color:var(--rasp1-light)}
-.sidebar-title{display:flex;align-items:center;gap:12px}
-.sidebar-icon{width:38px;height:38px;font-size:1.3rem;border-radius:10px;
-  background:rgba(227,11,92,.12);border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sidebar-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--white)}
-.sidebar-name small{font-size:.68rem;color:var(--t2);display:block;margin-top:2px;font-family:'DM Mono',monospace}
-.nav-group-label{padding:16px 20px 6px;font-size:9px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--t3);font-family:'DM Mono',monospace}
-.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
-  color:var(--t2);text-decoration:none;font-size:12.5px;
-  border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
-.nav-link:hover,.nav-link.active{color:var(--white);
-  background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
-.nav-step{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
-  color:var(--rasp1-light);background:rgba(227,11,92,.1);
-  border:1px solid rgba(227,11,92,.25);padding:2px 4px;
-  border-radius:4px;text-align:center;flex-shrink:0}
-
-/* ── LAYOUT ── */
-.wrap{margin-left:260px}
-footer{margin-left:260px}
-@media(max-width:900px){
-  .sidebar{display:none}
-  .wrap,footer{margin-left:0}
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="11">
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "zakladni-pravidlo", "num": "11.1", "name": "Základní pravidlo" },
+    { "id": "firewall", "num": "11.2", "name": "Firewall na routeru" },
+    { "id": "dvfa", "num": "11.3", "name": "2FA autentizace" },
+    { "id": "silne-heslo", "num": "11.4", "name": "Silné heslo" },
+    { "id": "trusted-nets", "num": "11.5", "name": "Trusted Networks" },
+    { "id": "mqtt-bezpecnost", "num": "11.6", "name": "Zabezpečení MQTT" },
+    { "id": "vzdaleny-pristup", "num": "11.7", "name": "Vzdálený přístup" },
+    { "id": "logovani", "num": "11.8", "name": "Logování přihlášení" },
+    { "id": "sdilet-config", "num": "11.9", "name": "Sdílení konfigurace" },
+    { "id": "guest-wifi", "num": "11.10", "name": "Guest WiFi pro IoT" },
+    { "id": "bezp-checklist", "num": "11.11", "name": "Bezpečnostní checklist" }
+  ]
+}
+</script>
+
 <div class="progress-bar" id="progressBar"></div>
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <a href="00_raspberry_index.html" class="sidebar-back">← Zpět na index</a>
-    <div class="sidebar-title">
-      <div class="sidebar-icon">🔒</div>
-      <div class="sidebar-name">Bezpečnost<small>Firewall · 2FA · VPN</small></div>
-    </div>
-  </div>
-  <div class="nav-group-label">Obsah kapitoly</div>
-  <a href="#zakladni-pravidlo" class="nav-link active"><span class="nav-step">01</span>Základní pravidlo</a>
-  <a href="#firewall" class="nav-link"><span class="nav-step">02</span>Firewall routeru</a>
-  <a href="#dvfa" class="nav-link"><span class="nav-step">03</span>2FA autentizace</a>
-  <a href="#silne-heslo" class="nav-link"><span class="nav-step">04</span>Silné heslo</a>
-  <a href="#trusted-nets" class="nav-link"><span class="nav-step">05</span>Trusted Networks</a>
-  <a href="#mqtt-bezpecnost" class="nav-link"><span class="nav-step">06</span>MQTT zabezpečení</a>
-  <a href="#vzdaleny-pristup" class="nav-link"><span class="nav-step">07</span>Vzdálený přístup</a>
-  <a href="#logovani" class="nav-link"><span class="nav-step">08</span>Logování</a>
-  <a href="#sdilet-config" class="nav-link"><span class="nav-step">09</span>Sdílení konfigurace</a>
-  <a href="#guest-wifi" class="nav-link"><span class="nav-step">10</span>Guest WiFi</a>
-  <a href="#bezp-checklist" class="nav-link"><span class="nav-step">11</span>Bezpečnostní checklist</a>
-</nav>
+<div id="sidebar"></div>
+
+<div class="container">
+<div class="main-content">
 <div class="wrap">
-<a href="00_raspberry_index.html" class="nav-back">← Zpět na index</a>
 <header>
   <div class="h-num">// kapitola 11</div>
   <h1><em>Bezpečnost</em></h1>
@@ -174,8 +39,8 @@ footer{margin-left:260px}
 </header>
 
 <!-- ZAKLADNI PRAVIDLO -->
-<section class="sec" id="zakladni-pravidlo">>
-  <h2>Základní pravidlo</h2>
+<section class="sec">
+  <h2 id="zakladni-pravidlo">Základní pravidlo</h2>
   <div class="callout callout-danger">
     <div class="callout-title">🔴 Nikdy přímo nevystavuj HA do internetu!</div>
     <p>Home Assistant by měl být dostupný <strong>pouze z lokální sítě</strong>, pokud nevíš přesně co děláš. Nikdy neotvírej port 8123 (ani žádný jiný HA port) z internetu. Pro vzdálený přístup existují bezpečné alternativy popsané níže.</p>
@@ -183,8 +48,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- FIREWALL ROUTER -->
-<section class="sec" id="firewall">>
-  <h2>Firewall na routeru</h2>
+<section class="sec">
+  <h2 id="firewall">Firewall na routeru</h2>
   <p>Router je první linie obrany. Standardně blokuje příchozí spojení z internetu – je důležité toto nastavení neporušit.</p>
   <div class="steps">
     <div class="step">
@@ -214,12 +79,12 @@ footer{margin-left:260px}
 </section>
 
 <!-- 2FA -->
-<section class="sec" id="dvfa">>
-  <h2>Dvoufaktorová autentizace (2FA)</h2>
+<section class="sec">
+  <h2 id="dvfa">2FA autentizace</h2>
   <p>I kdyby někdo znal tvoje heslo, bez 2FA kódu se do HA nepřihlásí. <strong>Doporučuji aktivovat vždy.</strong></p>
   <div class="steps">
     <div class="step">
-      <div class="step-num">3</div>
+      <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Aktivuj TOTP (Time-based One-Time Password)</div>
         <div class="step-desc">
@@ -244,8 +109,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- SILNE HESLO -->
-<section class="sec" id="silne-heslo">>
-  <h2>Silné heslo a správa přihlašovacích údajů</h2>
+<section class="sec">
+  <h2 id="silne-heslo">Silné heslo</h2>
   <p>Základní hygienická pravidla pro přihlašovací údaje:</p>
   <ul>
     <li>Heslo HA admina: <strong>min. 16 znaků</strong>, kombinace písmen, čísel a symbolů</li>
@@ -261,12 +126,12 @@ footer{margin-left:260px}
 </section>
 
 <!-- TRUSTED NETWORKS -->
-<section class="sec" id="trusted-nets">>
-  <h2>Trusted Networks – přístup bez hesla z lokální sítě</h2>
+<section class="sec">
+  <h2 id="trusted-nets">Trusted Networks</h2>
   <p>Pokud chceš, aby zařízení v lokální síti (tablety na zdi, domácí PC) nemusela zadávat heslo, lze nakonfigurovat Trusted Networks.</p>
   <div class="steps">
     <div class="step">
-      <div class="step-num">4</div>
+      <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Přidej Trusted Networks do configuration.yaml</div>
         <div class="step-desc">
@@ -291,12 +156,12 @@ footer{margin-left:260px}
 </section>
 
 <!-- ZABEZPECENI MQTT -->
-<section class="sec" id="mqtt-bezpecnost">>
-  <h2>Zabezpečení MQTT brokeru</h2>
+<section class="sec">
+  <h2 id="mqtt-bezpecnost">Zabezpečení MQTT</h2>
   <p>Mosquitto v HAOS je ve výchozím nastavení dostupný <strong>pouze uvnitř sítě add-onů</strong> – port 1883 není přístupný z internetu ani z lokální sítě jiných zařízení. To je správné chování.</p>
   <div class="steps">
     <div class="step">
-      <div class="step-num">5</div>
+      <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Ověř konfiguraci Mosquitto</div>
         <div class="step-desc">
@@ -312,8 +177,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- VZDALENY PRISTUP -->
-<section class="sec" id="vzdaleny-pristup">>
-  <h2>Vzdálený přístup – bezpečné možnosti</h2>
+<section class="sec">
+  <h2 id="vzdaleny-pristup">Vzdálený přístup</h2>
   <p>Pokud chceš přistupovat k HA z internetu (mimo domov), nikdy neotvírej porty přímo. Místo toho použi jednu z těchto bezpečných metod:</p>
 
   <div class="remote-grid">
@@ -342,7 +207,7 @@ footer{margin-left:260px}
   <h3>Jak nastavit Tailscale (doporučeno pro zdarma přístup)</h3>
   <div class="steps">
     <div class="step">
-      <div class="step-num">6</div>
+      <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Zaregistruj se na Tailscale</div>
         <div class="step-desc">
@@ -351,7 +216,7 @@ footer{margin-left:260px}
       </div>
     </div>
     <div class="step">
-      <div class="step-num">7</div>
+      <div class="step-num">2</div>
       <div class="step-body">
         <div class="step-title">Nainstaluj Tailscale add-on v HA</div>
         <div class="step-desc">
@@ -363,7 +228,7 @@ footer{margin-left:260px}
       </div>
     </div>
     <div class="step">
-      <div class="step-num">8</div>
+      <div class="step-num">3</div>
       <div class="step-body">
         <div class="step-title">Nainstaluj Tailscale na telefon / PC</div>
         <div class="step-desc">
@@ -377,11 +242,11 @@ footer{margin-left:260px}
 </section>
 
 <!-- LOGOVANI -->
-<section class="sec" id="logovani">>
-  <h2>Logování a sledování přihlášení</h2>
+<section class="sec">
+  <h2 id="logovani">Logování přihlášení</h2>
   <div class="steps">
     <div class="step">
-      <div class="step-num">9</div>
+      <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Sleduj logy v Home Assistant</div>
         <div class="step-desc">
@@ -391,7 +256,7 @@ footer{margin-left:260px}
       </div>
     </div>
     <div class="step">
-      <div class="step-num">10</div>
+      <div class="step-num">2</div>
       <div class="step-body">
         <div class="step-title">Nastav notifikaci při neúspěšném přihlášení (volitelné)</div>
         <div class="step-desc">
@@ -407,8 +272,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- BEZPECNOSTNI CHECKLIST -->
-<section class="sec" id="sdilet-config">>
-  <h2>Sdílení konfigurace – co nikdy nezveřejňovat</h2>
+<section class="sec">
+  <h2 id="sdilet-config">Sdílení konfigurace</h2>
   <p>Komunita HA je přátelská a lidé rádi sdílejí své konfigurace. Před sdílením (fórum, GitHub, Slack) vždy zkontroluj, že neobsahuje citlivé informace.</p>
   <ul>
     <li><strong>Nikdy nezveřejňuj:</strong> hesla, API tokeny, long-lived access tokeny, IP adresy zařízení</li>
@@ -423,8 +288,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- GUEST WIFI -->
-<section class="sec" id="guest-wifi">>
-  <h2>Guest WiFi pro IoT zařízení</h2>
+<section class="sec">
+  <h2 id="guest-wifi">Guest WiFi pro IoT</h2>
   <p>Zigbee zařízení WiFi nepotřebují – komunikují přes Zigbee koordinátor. Pokud ale máš v síti WiFi IoT zařízení (chytré televize, IP kamery, WiFi zásuvky s Tasmota firmware), je moudré je izolovat od hlavní sítě.</p>
   <ul>
     <li><strong>Proč izolace?</strong> Kompromitované IoT zařízení (hacknutá kamera, zranitelná chytrá TV) může v nechráněné síti napadat ostatní zařízení – tvůj PC, NAS, telefony</li>
@@ -441,8 +306,8 @@ footer{margin-left:260px}
 </section>
 
 <!-- BEZPECNOSTNI CHECKLIST -->
-<section class="sec" id="bezp-checklist">>
-  <h2>Bezpečnostní checklist</h2>
+<section class="sec">
+  <h2 id="bezp-checklist">Bezpečnostní checklist</h2>
   <div class="sec-check">
     <div class="sec-check-title">Zkontroluj před nasazením do produkce</div>
     <div class="sec-item">
@@ -504,37 +369,16 @@ footer{margin-left:260px}
   </div>
 </section>
 
-<nav class="chapter-nav">
-  <a href="10_raspberry_pridavani_zigbee_zarizeni.html" class="ch-btn">
-    <span>←</span>
-    <div><span class="ch-label">předchozí kapitola</span><span class="ch-name">Přidávání zařízení</span></div>
-  </a>
-  <a href="12_raspberry_zalohovani.html" class="ch-btn next">
-    <div><span class="ch-label">další kapitola</span><span class="ch-name">Zálohování</span></div>
-    <span>→</span>
-  </a>
-</nav>
-<footer>11_raspberry_bezpecnost.html &nbsp;·&nbsp; Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026<br><a href="00_raspberry_index.html" style="color:var(--rasp1-light)">← Zpět na index</a></footer>
+<div id="pn"></div>
+<footer>
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+</footer>
+
 </div>
-<script>
-window.addEventListener('scroll',()=>{
-  const b=document.getElementById('progressBar');
-  const t=document.documentElement.scrollTop;
-  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-  b.style.width=(t/h*100)+'%';
-});
-const sections=document.querySelectorAll('section[id]');
-const navLinks=document.querySelectorAll('.nav-link');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      navLinks.forEach(l=>l.classList.remove('active'));
-      const t=document.querySelector('[href="#'+e.target.id+'"]');
-      if(t)t.classList.add('active');
-    }
-  });
-},{rootMargin:'-20% 0px -70% 0px'});
-sections.forEach(s=>obs.observe(s));
-</script>
+</div>
+</div>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>
