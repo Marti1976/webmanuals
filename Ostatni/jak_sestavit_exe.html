@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jak sestavit EXE soubor (CZ)</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #f6ece9;
+    --panel:   #ffffff;
+    --deep:    #6e2a1f;
+    --blue:    #b8472f;
+    --blue2:   #9c3a26;
+    --line:    #e3cfc8;
+    --text:    #241611;
+    --muted:   #6b4a40;
+    --dim:     #9b7d72;
+    --green:   #1a9e6b;
+    --amber:   #c2790f;
+    --danger:  #a81f1f;
+    --mono:    'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--deep));
+    z-index: 999; width: 0%; transition: width .1s;
+  }
+
+  .sidebar {
+    position: fixed; left: 0; top: 0; width: 273px; height: 100vh;
+    background: var(--bg);
+    border-right: 1px solid var(--line);
+    overflow-y: auto; z-index: 200;
+  }
+  .sidebar::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--deep));
+  }
+  .sidebar-brand { padding: 28px 22px 18px; border-bottom: 1px solid var(--line); }
+  .sidebar-back {
+    display: flex; align-items: center; gap: 6px; color: #000;
+    text-decoration: none; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .sidebar-back:hover { color: var(--blue); }
+  .sidebar-title { display: flex; align-items: center; gap: 10px; }
+  .sidebar-badge {
+    background: var(--blue); color: #fff; font-family: var(--mono);
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px;
+    clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+  }
+  .sidebar-name { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; color: var(--deep); }
+  .sidebar-name small { display: block; font-family: 'Inter', sans-serif; font-size: 10px; color: #000; font-weight: 400; margin-top: 2px; }
+
+  .nav-label {
+    padding: 16px 22px 6px; font-family: var(--mono); font-size: 9px;
+    letter-spacing: .16em; text-transform: uppercase; color: #000;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 9px; padding: 7px 22px;
+    color: #000; text-decoration: none; font-size: 13px;
+    border-left: 2px solid transparent; transition: all .2s;
+  }
+  .nav-item:hover, .nav-item.active { color: #000; background: rgba(110,42,31,.12); border-left-color: var(--deep); font-weight: 600; }
+  .nav-num {
+    font-family: var(--mono); font-size: 9px; color: var(--blue);
+    background: rgba(184,71,47,.1); border: 1px solid rgba(184,71,47,.25);
+    padding: 1px 5px; min-width: 24px; text-align: center; flex-shrink: 0;
+  }
+
+  .main { margin-left: 273px; max-width: 1200px; padding: 56px 56px 20px; }
+  footer { margin-left: 273px; padding: 24px 56px; border-top: 1px solid var(--line); }
+
+  .hero {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    overflow: hidden; margin-bottom: 48px; box-shadow: 0 10px 30px rgba(110,42,31,.08);
+  }
+  .hero-bar { background: var(--deep); padding: 9px 18px; display: flex; align-items: center; gap: 7px; }
+  .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #e3c3b8; }
+  .hero-bar span.label { margin-left: 8px; color: #f0ddd5; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
+  .hero-body { padding: 32px 34px; }
+  .hero h1 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 34px; color: var(--deep); letter-spacing: -.3px; }
+  .hero p { color: #000; font-size: 14.5px; margin-top: 10px; max-width: 680px; }
+
+  .section { margin-bottom: 56px; scroll-margin-top: 24px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .section-num {
+    font-family: var(--mono); font-size: 11px; color: var(--blue);
+    background: rgba(184,71,47,.08); border: 1px solid rgba(184,71,47,.25);
+    padding: 3px 8px;
+  }
+  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 23px; font-weight: 700; color: var(--deep); }
+  .section > p { color: #000; margin-bottom: 14px; }
+
+  h3.sub-title {
+    font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700;
+    color: var(--deep); margin: 30px 0 10px;
+    padding-top: 18px; border-top: 1px dashed var(--line);
+  }
+  h3.sub-title:first-of-type { border-top: none; padding-top: 0; }
+
+  .cmd {
+    background: var(--text); border-radius: 6px; margin: 10px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; font-family: var(--mono); font-size: 13px; color: #f2b9a3;
+  }
+  .cmd .prompt { color: #e5806a; margin-right: 2px; }
+  .copy-btn {
+    font-family: var(--mono); font-size: 10px; color: #f2b9a3;
+    background: rgba(242,185,163,.12); border: 1px solid rgba(242,185,163,.3);
+    border-radius: 4px; padding: 3px 9px; cursor: pointer; flex-shrink: 0; margin-left: 14px;
+    transition: background .2s;
+  }
+  .copy-btn:hover { background: rgba(242,185,163,.22); }
+
+  .cmd-block {
+    background: var(--text); border-radius: 6px; margin: 10px 0; padding: 14px 16px;
+    font-family: var(--mono); font-size: 13px; color: #f2b9a3;
+  }
+  .cmd-block pre { white-space: pre; overflow-x: auto; margin: 0 0 10px; line-height: 1.6; }
+  .cmd-block .cmd-block-actions { display: flex; justify-content: flex-end; }
+  .cmd-block .cmt { color: #9b7d72; }
+
+  .syntax-block {
+    background: var(--text); border-radius: 6px; margin: 14px 0 6px; padding: 16px 18px;
+    font-family: var(--mono); font-size: 13.5px; color: #f6e8e3;
+    border: 1px solid rgba(255,207,92,.25);
+  }
+  .syntax-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #ffcf5c; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+  }
+  .syntax-label::before { content: "◆"; font-size: 9px; }
+  .syntax-block code { font-size: 14px; line-height: 1.7; }
+  .ph { color: #ffcf5c; border-bottom: 1px dashed #ffcf5c; padding-bottom: 1px; }
+  .syntax-legend { list-style: none; margin: 14px 0 0; padding: 0; }
+  .syntax-legend li {
+    display: flex; gap: 10px; padding: 7px 0; font-size: 13.5px;
+    border-top: 1px solid var(--line); color: #000;
+  }
+  .syntax-legend li:first-child { border-top: none; }
+  .syntax-legend code {
+    font-family: var(--mono); font-size: 12.5px; color: var(--blue2);
+    background: rgba(184,71,47,.08); padding: 1px 7px; border-radius: 3px;
+    flex-shrink: 0; height: fit-content;
+  }
+  .syntax-legend .req { color: var(--amber); font-weight: 600; font-size: 11px; }
+  .syntax-legend .opt { color: var(--dim); font-size: 11px; }
+
+  .examples-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--blue); margin: 18px 0 8px; font-weight: 600;
+  }
+  .example {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--blue);
+    border-radius: 4px; padding: 14px 18px; margin-bottom: 12px;
+  }
+  .example .cmd { margin: 0 0 10px; }
+  .example p { font-size: 13.5px; color: #000; margin-bottom: 4px; }
+  .example p.what-it-shows { color: var(--muted); font-style: italic; margin-top: 8px; }
+  .example p.what-it-shows b { color: var(--deep); font-style: normal; }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--blue);
+    border-radius: 4px; padding: 18px 22px; margin-bottom: 14px;
+  }
+  .card h4 { font-family: var(--mono); font-size: 13px; color: var(--deep); letter-spacing: .3px; margin-bottom: 6px; }
+  .card p { font-size: 13.5px; color: #000; margin-bottom: 4px; }
+
+  .alert { display: flex; gap: 12px; border: 1px solid; border-radius: 6px; padding: 13px 16px; margin: 16px 0; font-size: 13.5px; }
+  .alert-tip    { border-color: rgba(26,158,107,.35); background: rgba(26,158,107,.06); }
+  .alert-warn   { border-color: rgba(194,121,15,.35); background: rgba(194,121,15,.06); }
+  .alert-info   { border-color: rgba(184,71,47,.3);   background: rgba(184,71,47,.05); }
+  .alert-danger { border-color: rgba(168,31,31,.45);  background: rgba(168,31,31,.08); }
+  .alert-icon { flex-shrink: 0; }
+  .alert b { color: var(--deep); }
+  .alert span:not(.alert-icon) { color: #000; }
+
+  .steps { list-style: none; counter-reset: step; }
+  .steps li {
+    counter-increment: step; display: flex; gap: 14px; align-items: flex-start;
+    padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: #000;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(step); font-family: var(--mono); font-size: 11px; color: #fff;
+    background: var(--blue); min-width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .steps li b { color: var(--deep); }
+  .steps code { font-family: var(--mono); font-size: 12.5px; color: var(--blue2); background: rgba(184,71,47,.08); padding: 1px 6px; border-radius: 3px; }
+
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:13px; color:#000; }
+  table th { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); }
+  table td { padding:6px 8px; border-bottom:1px solid var(--line); }
+
+  a.inline-link { color: var(--blue); font-weight: 500; }
+  code.inline { font-family: var(--mono); color: var(--blue2); background: rgba(184,71,47,.08); padding: 1px 6px; border-radius: 3px; font-size: 13px; }
+
+  footer p { font-size: 12px; color: #000; font-family: var(--mono); }
+  footer a { color: var(--blue); text-decoration: none; }
+  .footer-back {
+    display: inline-flex; align-items: center; gap: 6px; color: var(--blue);
+    text-decoration: none; font-family: var(--mono); font-size: 11px;
+    background: rgba(184,71,47,.08); border: 1px solid rgba(184,71,47,.25);
+    padding: 6px 14px; margin-top: 8px;
+  }
+  .footer-back:hover { background: rgba(184,71,47,.15); }
+
+  .menu-toggle {
+    display: none; position: fixed; top: 14px; left: 14px; z-index: 300;
+    width: 42px; height: 42px; align-items: center; justify-content: center;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    font-size: 20px; color: var(--deep); cursor: pointer;
+    box-shadow: 0 4px 14px rgba(110,42,31,.15);
+  }
+  .sidebar-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(36,22,17,.45); z-index: 190;
+  }
+
+  @media (max-width: 900px) {
+    .menu-toggle { display: flex; }
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform .25s ease;
+      box-shadow: 6px 0 24px rgba(0,0,0,.2);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-backdrop.open { display: block; }
+    .main, footer { margin-left: 0; padding: 36px 24px 36px 72px; }
+    .hero h1 { font-size: 27px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Otevřít menu kapitol">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <a href="../index.html" class="sidebar-back">← Zpět na rozcestník</a>
+    <div class="sidebar-title">
+      <span class="sidebar-badge">EXE</span>
+      <div class="sidebar-name">Sestavení EXE<small>Z Python skriptu do spustitelného souboru</small></div>
+    </div>
+  </div>
+
+  <div class="nav-label">Obsah</div>
+  <a href="#co-je-exe" class="nav-item active"><span class="nav-num">01</span>Co je EXE soubor</a>
+  <a href="#postup" class="nav-item"><span class="nav-num">02</span>Postup sestavení</a>
+  <a href="#bezpecnost" class="nav-item"><span class="nav-num">03</span>Bezpečnost</a>
+  <a href="#certifikat" class="nav-item"><span class="nav-num">04</span>Certifikát (podpis EXE)</a>
+  <a href="#priklady" class="nav-item"><span class="nav-num">05</span>Příklady v příloze</a>
+</nav>
+
+<main class="main">
+
+  <div class="hero">
+    <div class="hero-bar"><span class="hero-dot"></span><span class="hero-dot"></span><span class="hero-dot"></span><span class="label">BUILD.EXE</span></div>
+    <div class="hero-body">
+      <h1>Jak sestavit EXE soubor</h1>
+      <p>Návod od úplného začátku – co je to EXE soubor, jak z vlastního Python skriptu vyrobit samostatně spustitelnou aplikaci, jaká jsou bezpečnostní rizika a jak si i jako úplný laik vytvořit vlastní podpis, aby to Windows na vašem počítači nebral jako „neznámého vydavatele".</p>
+    </div>
+  </div>
+
+  <!-- 01 CO JE EXE -->
+  <section class="section" id="co-je-exe">
+    <div class="section-header"><span class="section-num">01</span><h2>Co je EXE soubor</h2></div>
+
+    <p>Soubor s příponou <code class="inline">.exe</code> je spustitelný program pro Windows. Je to balík strojového kódu a dat, který umí operační systém rovnou spustit – na rozdíl od souboru <code class="inline">.py</code> nebo <code class="inline">.pyw</code>, který sám o sobě spustit nejde. Ten potřebuje nainstalovaný Python, který ho za vás „přečte" a provede.</p>
+
+    <h3 class="sub-title">Proč nejde jen poslat .pyw souboru kamarádovi</h3>
+    <p>Pokud pošlete <code class="inline">.pyw</code> soubor někomu, kdo nemá nainstalovaný Python (a navíc přesně ty knihovny, které skript používá), nic se nespustí. Řešením je zabalit Python i s potřebnými knihovnami a vaším kódem do jednoho balíčku – a přesně to dělá nástroj <b>PyInstaller</b>, který uvidíte ve všech přiložených <code class="inline">.bat</code> souborech.</p>
+
+    <div class="card">
+      <h4>JAK TO FUNGUJE „POD KAPOTOU"</h4>
+      <p>PyInstaller nevytváří z Pythonu nic jiného – jen ho i s potřebnými knihovnami a vaším skriptem zabalí do jednoho souboru nebo složky. Když pak EXE soubor spustíte, program se za běhu rozbalí do dočasné složky na disku a odtud se teprve spustí – proto se první spuštění (hlavně u <code class="inline">--onefile</code>, viz níže) může zdát o chvilku pomalejší.</p>
+    </div>
+
+    <h3 class="sub-title">Dva způsoby zabalení</h3>
+    <table>
+      <thead><tr><th></th><th><code class="inline">--onefile</code></th><th><code class="inline">--onedir</code></th></tr></thead>
+      <tbody>
+        <tr><td>Výsledek</td><td>Jeden samostatný .exe soubor</td><td>Složka s .exe a dalšími soubory kolem</td></tr>
+        <tr><td>Spouštění</td><td>Mírně pomalejší start (rozbaluje se při každém spuštění)</td><td>Rychlejší start</td></tr>
+        <tr><td>Přehlednost</td><td>Nejde dovnitř nahlédnout</td><td>Vidíte, co všechno je uvnitř zabalené</td></tr>
+        <tr><td>Sdílení</td><td>Stačí poslat jeden soubor</td><td>Musíte poslat/zazipovat celou složku</td></tr>
+      </tbody>
+    </table>
+    <p>Všechny přiložené <code class="inline">.bat</code> soubory používají <code class="inline">--onefile</code> – pro jednoduché aplikace, které chcete jen někomu poslat, je to obvykle pohodlnější volba.</p>
+  </section>
+
+  <!-- 02 POSTUP -->
+  <section class="section" id="postup">
+    <div class="section-header"><span class="section-num">02</span><h2>Postup sestavení</h2></div>
+
+    <h3 class="sub-title">Co budete potřebovat</h3>
+    <ul class="steps">
+      <li>Nainstalovaný <b>Python</b> s zaškrtnutou volbou <code class="inline">Add python.exe to PATH</code> při instalaci.</li>
+      <li>Svůj hotový a otestovaný <code class="inline">.py</code> nebo <code class="inline">.pyw</code> soubor.</li>
+      <li>Volitelně ikonu ve formátu <code class="inline">.ico</code>, pokud chcete, aby EXE měl vlastní ikonu místo výchozí.</li>
+    </ul>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Pokud Python ještě nemáte, postup instalace najdete v samostatném návodu k základům Pythonu.</span>
+    </div>
+
+    <h3 class="sub-title">Instalace PyInstalleru</h3>
+    <p>PyInstaller se instaluje přes <code class="inline">pip</code>, stejně jako jakákoli jiná knihovna:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> python -m pip install --user --upgrade pyinstaller</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <p>Všechny přiložené <code class="inline">.bat</code> soubory tenhle příkaz spouští automaticky na začátku, takže se o to ručně starat nemusíte – stačí soubor spustit.</p>
+
+    <h3 class="sub-title">Klíčové přepínače PyInstalleru</h3>
+    <div class="syntax-block">
+      <div class="syntax-label">Obecný zápis</div>
+      <code>pyinstaller --onefile --noconsole --name <span class="ph">NazevAplikace</span> --icon <span class="ph">ikona.ico</span> --add-data <span class="ph">"ikona.ico;."</span> <span class="ph">muj_skript.pyw</span></code>
+    </div>
+    <ul class="syntax-legend">
+      <li><code>--onefile</code><span class="opt">VOLITELNÉ</span><span> — zabalí vše do jednoho EXE souboru (vysvětleno v kapitole 01).</span></li>
+      <li><code>--noconsole</code><span class="opt">VOLITELNÉ</span><span> — nezobrazí u GUI aplikace černé okno příkazové řádky na pozadí. Vynechejte u konzolových nástrojů, kde chcete vidět textový výstup.</span></li>
+      <li><code>--name</code><span class="opt">VOLITELNÉ</span><span> — jméno výsledného souboru. Bez něj se použije jméno vstupního skriptu.</span></li>
+      <li><code>--icon</code><span class="opt">VOLITELNÉ</span><span> — cesta k souboru <code class="inline">.ico</code>, který se zobrazí jako ikona EXE souboru.</span></li>
+      <li><code>--add-data</code><span class="opt">VOLITELNÉ</span><span> — přibalí dovnitř další soubor (např. tu samou ikonu, aby ji program uměl načíst i za běhu). Na Windows se zdroj a cíl oddělují středníkem.</span></li>
+      <li><code>muj_skript.pyw</code><span class="req">POVINNÉ</span><span> — vstupní soubor, který se má zabalit.</span></li>
+    </ul>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Pořadí přepínačů obvykle nevadí, ale vstupní skript (<code class="inline">muj_skript.pyw</code>) musí být vždy <b>poslední</b>.</span>
+    </div>
+
+    <h3 class="sub-title">Co nepatří dovnitř EXE souboru</h3>
+    <p>Ne všechno, co aplikace potřebuje, by mělo být zabalené uvnitř EXE souboru:</p>
+    <div class="card">
+      <h4>ZAPISOVATELNÁ NASTAVENÍ</h4>
+      <p>Pokud si aplikace ukládá nastavení (např. do souboru <code class="inline">.json</code>), musí tento soubor zůstat <b>vedle</b> EXE souboru, ne uvnitř. Zabalený EXE soubor se při každém spuštění chová jako „čerstvě nainstalovaný" – nic do sebe natrvalo zapsat neumí.</p>
+    </div>
+    <div class="card">
+      <h4>CITLIVÉ ÚDAJE (API KLÍČE, HESLA)</h4>
+      <p>Pokud váš skript používá soubor s tajným klíčem (např. <code class="inline">.env</code>), tenhle soubor se do EXE souboru <b>schválně nebalí</b>. Kdybyste EXE soubor s klíčem uvnitř s někým sdíleli, měl by k vašemu klíči přístup i on.</p>
+    </div>
+    <div class="card">
+      <h4>VÝSTUPNÍ DATA</h4>
+      <p>Složky, kam si aplikace sama ukládá výsledky své práce, patří vedle EXE souboru, ne do něj – stejně jako nastavení výše.</p>
+    </div>
+
+    <h3 class="sub-title">Spuštění přes přiložený .bat soubor</h3>
+    <p>Všechny přiložené <code class="inline">.bat</code> soubory dělají tyto kroky za vás v tomto pořadí:</p>
+    <ul class="steps">
+      <li>Nainstaluje nebo aktualizuje PyInstaller.</li>
+      <li>Spustí PyInstaller se správnými přepínači pro danou aplikaci.</li>
+      <li>Vypíše, kde výsledný EXE soubor najdete – obvykle ve složce <code class="inline">dist</code>.</li>
+    </ul>
+    <p>Stačí tedy dvojklik na <code class="inline">.bat</code> soubor a počkat, než doběhne.</p>
+  </section>
+
+  <!-- 03 BEZPEČNOST -->
+  <section class="section" id="bezpecnost">
+    <div class="section-header"><span class="section-num">03</span><h2>Bezpečnost</h2></div>
+
+    <h3 class="sub-title">Proč Windows EXE souborům z PyInstalleru nedůvěřuje</h3>
+    <p>Je běžné, že antivirus nebo SmartScreen (hláška „Windows ochránil váš počítač") u čerstvě sestaveného EXE souboru zahlásí varování, i když je naprosto neškodný. Má to dva hlavní důvody:</p>
+    <ul class="steps">
+      <li><b>Žádný digitální podpis</b> — EXE soubor nenese žádnou informaci o tom, kdo ho vytvořil (viz kapitola 04).</li>
+      <li><b>Žádná „reputace"</b> — SmartScreen částečně vyhodnocuje i to, kolikrát už byl daný soubor stažený jinde ve světě. Čerstvě sestavený soubor nemá za sebou žádnou historii, takže je automaticky podezřelejší.</li>
+    </ul>
+    <p>Navíc samotný způsob, jakým se <code class="inline">--onefile</code> EXE soubor za běhu sám rozbaluje do dočasné složky, se chováním trochu podobá tomu, jak fungují některé škodlivé programy – antivir to proto častěji označí jako podezřelé, i když jde o false positive (falešný poplach).</p>
+
+    <h3 class="sub-title">Rizika, na která si dát pozor</h3>
+    <div class="alert alert-danger">
+      <span class="alert-icon">⛔</span>
+      <span><b>Nikdy nebalte dovnitř EXE souboru citlivé údaje</b> (API klíče, hesla, přístupové tokeny) – viz kapitola 02. Kdokoli dostane EXE soubor, teoreticky z něj dokáže zpětně vytáhnout zabalená data.</span>
+    </div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Spouštějte jen EXE soubory, kterým důvěřujete (znáte autora, nebo soubor pochází z ověřeného zdroje). EXE soubor může dělat cokoliv, co umí jiný program ve Windows.</span>
+    </div>
+
+    <h3 class="sub-title">Jak soubor ověřit a snížit falešné poplachy</h3>
+    <ul class="steps">
+      <li>Podepište soubor vlastním certifikátem – řeší to alespoň důvěru na vašem vlastním počítači (kapitola 04).</li>
+      <li>Nahrajte EXE soubor na <code class="inline">virustotal.com</code> — bezplatná služba, která soubor zkontroluje desítkami různých antivirových enginů najednou a zobrazí souhrnný výsledek.</li>
+      <li>Pokud falešné poplachy vadí často, zvažte sestavení přes <code class="inline">--onedir</code> místo <code class="inline">--onefile</code> — antivirům obvykle vadí míň, protože nejde o jeden sebe-rozbalovací soubor.</li>
+    </ul>
+  </section>
+
+  <!-- 04 CERTIFIKÁT -->
+  <section class="section" id="certifikat">
+    <div class="section-header"><span class="section-num">04</span><h2>Certifikát (podpis EXE)</h2></div>
+
+    <p>Tahle kapitola je psaná tak, aby ji zvládl i někdo, kdo s certifikáty nikdy nepracoval. Projdeme si to krok za krokem, s vysvětlením, co každý příkaz dělá a proč.</p>
+
+    <h3 class="sub-title">Co je „podpis kódu" a co od něj čekat</h3>
+    <p>Digitální podpis kódu (anglicky <i>code signing</i>) je trochu jako razítko notáře na dokumentu: říká „vím, kdo tento soubor vytvořil, a od podepsání se nezměnil ani o bit". Windows pak místo hlášky „Neznámý vydavatel" zobrazí jméno, které jste při vytváření certifikátu zadali.</p>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">⛔</span>
+      <span><b>Důležité, přečtěte si nejdřív tohle:</b> certifikát, který si v této kapitole vyrobíte sami (tzv. <i>self-signed</i>), zajistí důvěru <b>jen na počítači, kde si ho sami naimportujete</b> (krok 6). Pošlete-li EXE soubor někomu jinému, na jeho počítači se varování objeví dál — jen s vaším jménem místo „Neznámý vydavatel". To není chyba postupu, to je podstata samopodepsaného certifikátu. Pro důvěru na cizích počítačích je potřeba jiný typ certifikátu — viz box na konci této kapitoly.</span>
+    </div>
+
+    <h3 class="sub-title">Co přesně v téhle kapitole uděláme a proč</h3>
+    <p>Než se pustíme do jednotlivých kroků, krátký přehled celé cesty — ať víte, proč děláte zrovna to, co děláte:</p>
+    <ul class="steps">
+      <li><b>Vyrobíme certifikát</b> (krok 2) — pár „klíč + osvědčení", kterým budeme moct podepisovat.</li>
+      <li><b>Uložíme ho jako soubor na disk</b> (krok 3) — Windows ho zatím má jen schovaný uvnitř sebe, ale nástroj na podepisování potřebuje soubor.</li>
+      <li><b>Stáhneme nástroj, který umí podepisovat</b> (krok 4) — Windows samo o sobě tohle neumí.</li>
+      <li><b>Podepíšeme EXE soubor</b> (krok 5) — tady se certifikát reálně použije.</li>
+      <li><b>Řekneme svému počítači, ať certifikátu věří</b> (krok 6) — bez tohoto kroku by podpis sice existoval, ale Windows by mu stejně nevěřil.</li>
+      <li><b>Ověříme, že to funguje</b> (krok 7).</li>
+    </ul>
+
+    <h3 class="sub-title">Krok 1 — Otevřete PowerShell jako správce</h3>
+    <p><b>Proč zrovna jako správce?</b> V kroku 6 budeme certifikátu říkat „věř mu" na úrovni celého počítače, ne jen vašeho uživatelského účtu — a to Windows bez oprávnění správce nedovolí. Je jednodušší pustit si PowerShell jako správce rovnou teď, než kvůli tomu později zavírat a znovu otevírat okno v polovině postupu.</p>
+    <ul class="steps">
+      <li>Klikněte na tlačítko <b>Start</b> a napište <code class="inline">PowerShell</code>.</li>
+      <li>Na nalezenou položku „Windows PowerShell" klikněte <b>pravým tlačítkem</b> myši.</li>
+      <li>Vyberte <b>„Spustit jako správce"</b> a potvrďte případný dotaz systému (okno „Chcete povolit, aby tato aplikace provedla změny...?" → <b>Ano</b>).</li>
+      <li>Otevře se modré nebo tmavé okno s textem začínajícím <code class="inline">PS C:\WINDOWS\system32&gt;</code> — to je PowerShell spuštěný jako správce. Tohle okno nechte otevřené, budeme ho potřebovat i v dalších krocích.</li>
+    </ul>
+
+    <h3 class="sub-title">Krok 2 — Vytvoření vlastního certifikátu</h3>
+    <p><b>Proč tohle děláme:</b> certifikát je vlastně dvojice dat — veřejná část (ta se bude moct ukazovat komukoliv) a tajný „privátní klíč" (ten zůstává jen u vás). Tenhle příkaz obojí vyrobí najednou a rovnou to uloží do osobního úložiště certifikátů ve Windows, odkud to v kroku 3 vyexportujeme do souborů.</p>
+    <p>Nejdřív obecný zápis příkazu, s vysvětlením každé jeho části:</p>
+    <div class="syntax-block">
+      <div class="syntax-label">Obecný zápis</div>
+      <code>New-SelfSignedCertificate -Type CodeSigning -Subject "CN=<span class="ph">Vaše Jméno</span>" -CertStoreLocation Cert:\CurrentUser\My -NotAfter (Get-Date).AddYears(5)</code>
+    </div>
+    <ul class="syntax-legend">
+      <li><code>New-SelfSignedCertificate</code><span> — příkaz PowerShellu, který certifikát vytvoří.</span></li>
+      <li><code>-Type CodeSigning</code><span class="req">POVINNÉ</span><span> — říká, že certifikát bude sloužit k podepisování programů, ne třeba webových stránek. Opište přesně tak, jak je napsáno.</span></li>
+      <li><code>-Subject "CN=..."</code><span class="req">POVINNÉ</span><span> — jméno, které se pak zobrazí uživateli namísto „Neznámý vydavatel". Místo <span class="ph">Vaše Jméno</span> napište své vlastní jméno nebo název — ale uvozovky a <code class="inline">CN=</code> před ním nechte beze změny.</span></li>
+      <li><code>-CertStoreLocation</code><span class="req">POVINNÉ</span><span> — kam se certifikát uloží; osobní úložiště vašeho účtu. Opište přesně tak, jak je napsáno.</span></li>
+      <li><code>-NotAfter</code><span class="opt">VOLITELNÉ</span><span> — datum konce platnosti, zde 5 let od vytvoření. Bez tohoto parametru platí jen 1 rok.</span></li>
+    </ul>
+
+    <p>A teď přesně to samé, ale napsané naostro — takhle by to vypadalo, kdyby se jmenoval <b>Jan Novák</b>. Klidně zkopírujte tlačítkem a jen si v uvozovkách přepište jméno na své vlastní:</p>
+    <div class="examples-label">Konkrétní příklad</div>
+    <div class="example">
+      <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> New-SelfSignedCertificate -Type CodeSigning -Subject "CN=Jan Novák" -CertStoreLocation Cert:\CurrentUser\My -NotAfter (Get-Date).AddYears(5)</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+      <p>Po stisknutí Enter se během chvilky vypíše tabulka s informacemi o nově vytvořeném certifikátu.</p>
+      <p class="what-it-shows"><b>Co z toho vyčtete:</b> řádek <code class="inline">Subject</code> by měl ukazovat <code class="inline">CN=Jan Novák</code> (resp. vaše jméno) — to je potvrzení, že se certifikát vytvořil správně. Dlouhý kód na řádku <code class="inline">Thumbprint</code> si nikam opisovat nemusíte, PowerShell certifikát najde sám podle toho, že je typu „CodeSigning".</p>
+    </div>
+
+    <h3 class="sub-title">Krok 3 — Export certifikátu do souborů</h3>
+    <p><b>Proč tohle děláme:</b> certifikát z kroku 2 teď existuje jen „schovaný" uvnitř Windows, v osobním úložišti vašeho účtu. Nástroj na podepisování (<code class="inline">signtool.exe</code>, krok 5) ale potřebuje certifikát jako obyčejný soubor na disku — proto ho musíme vyexportovat. Budete potřebovat dva soubory:</p>
+    <ul class="steps">
+      <li><code class="inline">.pfx</code> — obsahuje <b>i tajnou část</b> (privátní klíč), proto je chráněný heslem. Tenhle soubor použijete v kroku 5 k samotnému podepisování.</li>
+      <li><code class="inline">.cer</code> — obsahuje jen <b>veřejnou část</b>, není tajný. Tenhle soubor použijete v kroku 6, abyste Windows řekli „tomuhle certifikátu věřím".</li>
+    </ul>
+
+    <p>Nejdřív si vytvořte složku, kam oba soubory uložíte — do stejného okna PowerShellu (pořád jako správce) napište:</p>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> mkdir C:\certifikat</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <p style="font-size:13.5px;color:#000;margin:4px 0 14px">Tím vznikne úplně nová, prázdná složka <code class="inline">C:\certifikat</code> přímo na disku C. Pokud chcete jiné umístění, stačí cestu v tomto i následujících příkazech změnit — hlavně ji pak používejte všude stejně.</p>
+
+    <p>Teď samotný export. Tenhle blok obsahuje víc příkazů za sebou — zkopírujte celý najednou tlačítkem a vložte do PowerShellu:</p>
+    <div class="cmd-block">
+      <pre><span class="cmt"># Heslo, kterým bude .pfx soubor chráněný - nahraďte vlastním silným heslem</span>
+$heslo = ConvertTo-SecureString -String "MojeTajneHeslo123" -Force -AsPlainText
+
+<span class="cmt"># Najde certifikát, který jste právě vytvořili v kroku 2</span>
+$cert = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert | Select-Object -First 1
+
+<span class="cmt"># Export obou souborů do složky C:\certifikat</span>
+Export-PfxCertificate -Cert $cert -FilePath C:\certifikat\jan_novak.pfx -Password $heslo
+Export-Certificate -Cert $cert -FilePath C:\certifikat\jan_novak.cer</pre>
+      <div class="cmd-block-actions"><span class="copy-btn" onclick="copyBlock(this)">kopírovat</span></div>
+    </div>
+    <p class="what-it-shows" style="margin:-4px 0 14px;color:var(--muted);font-style:italic;font-size:13.5px"><b style="color:var(--deep);font-style:normal">Co z toho vyčtete:</b> žádná chybová hláška a po chvíli se znovu objeví řádek <code class="inline">PS C:\WINDOWS\system32&gt;</code>. V Průzkumníku pak ve složce <code class="inline">C:\certifikat</code> uvidíte dva nové soubory — <code class="inline">jan_novak.pfx</code> a <code class="inline">jan_novak.cer</code>. Jméno souborů <code class="inline">jan_novak</code> si samozřejmě přejmenujte podle sebe, pokud chcete.</p>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Heslo i soubor <code class="inline">.pfx</code> si dobře uschovejte a nikam je neposílejte — je to tajná část certifikátu, kterou by zneužít mohl i cizí člověk k podepsání svého vlastního programu „vaším jménem". Soubor <code class="inline">.cer</code> naopak tajný není, obsahuje jen veřejnou část.</span>
+    </div>
+
+    <h3 class="sub-title">Krok 4 — Stažení nástroje signtool.exe</h3>
+    <p><b>Proč je potřeba něco stahovat navíc:</b> samotné Windows umí certifikáty vytvářet a spravovat (to jsme dělali v krocích 2–3), ale samotné <i>podepsání</i> konkrétního souboru už je úkol pro vývojářský nástroj. Ten se jmenuje <code class="inline">signtool.exe</code> a není součástí běžné instalace Windows pro koncové uživatele — Microsoft ho dává k dispozici zdarma v sadě nástrojů pro vývojáře, tzv. <b>Windows SDK</b>.</p>
+    <ul class="steps">
+      <li>Jděte na oficiální stránku <a class="inline-link" href="https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/" target="_blank" rel="noopener">developer.microsoft.com/en-us/windows/downloads/windows-sdk</a> a stáhněte si instalátor Windows SDK.</li>
+      <li>Spusťte stažený instalátor. Na obrazovce s výběrem součástí <b>odškrtněte vše</b> a zaškrtněte <b>jen</b> položku <b>„Windows SDK Signing Tools for Desktop Apps"</b> — nic jiného z celého SDK nepotřebujete, stažení se tím zmenší na pár desítek MB místo několika GB.</li>
+      <li>Klikněte na instalaci a počkejte na dokončení.</li>
+      <li>Po instalaci najdete <code class="inline">signtool.exe</code> typicky zde (verze ve složce se u vás může lišit, prostě tam najděte jedinou dostupnou):<br><code class="inline">C:\Program Files (x86)\Windows Kits\10\bin\&lt;verze, např. 10.0.22621.0&gt;\x64\signtool.exe</code></li>
+    </ul>
+    <div class="alert alert-tip">
+      <span class="alert-icon">💡</span>
+      <span>Pro pohodlí si <code class="inline">signtool.exe</code> zkopírujte přímo do složky <code class="inline">C:\certifikat</code>, kterou jsme vytvořili v kroku 3. V kroku 5 pak nemusíte psát dlouhou cestu k nástroji, jen název souboru.</span>
+    </div>
+
+    <h3 class="sub-title">Krok 5 — Podepsání EXE souboru</h3>
+    <p><b>Proč tohle je ten hlavní krok:</b> doteď jsme jen připravovali nástroje. Teprve tenhle příkaz spojí váš EXE soubor s certifikátem z kroku 2–3 — od této chvíle soubor nese digitální podpis a Windows u něj umí zobrazit jméno autora.</p>
+    <p>Příkaz se spouští v PowerShellu nebo v obyčejném CMD — stejné okno jako doteď funguje. Nejdřív obecný zápis:</p>
+    <div class="syntax-block">
+      <div class="syntax-label">Obecný zápis</div>
+      <code>signtool sign /f <span class="ph">cesta\k\certifikatu.pfx</span> /p <span class="ph">heslo</span> /fd SHA256 <span class="ph">cesta\k\programu.exe</span></code>
+    </div>
+    <ul class="syntax-legend">
+      <li><code>signtool sign</code><span> — vždy stejné, spouští podepsání. Pokud jste <code class="inline">signtool.exe</code> nepřidali do systémové proměnné PATH, musíte před něj napsat i jeho vlastní cestu — viz konkrétní příklad níže.</span></li>
+      <li><code>/f</code><span class="req">POVINNÉ</span><span> — celá cesta k souboru <code class="inline">.pfx</code> z kroku 3.</span></li>
+      <li><code>/p</code><span class="req">POVINNÉ</span><span> — heslo k souboru <code class="inline">.pfx</code>, stejné jako jste zadali v kroku 3.</span></li>
+      <li><code>/fd SHA256</code><span class="req">POVINNÉ</span><span> — jakým matematickým způsobem se má podpis spočítat („otisk" souboru). SHA256 je dnešní standard, bez tohoto parametru by signtool použil zastaralý a dnes už nedůvěryhodný způsob.</span></li>
+      <li><code>cesta\k\programu.exe</code><span class="req">POVINNÉ</span><span> — celá cesta k EXE souboru, který chcete podepsat.</span></li>
+    </ul>
+
+    <p>A teď naostro — takhle to vypadá, když má Jan Novák nástroj <code class="inline">signtool.exe</code> zkopírovaný do <code class="inline">C:\certifikat</code> (tip z konce kroku 4) a svůj hotový program má ve složce <code class="inline">dist</code> na ploše:</p>
+    <div class="examples-label">Konkrétní příklad</div>
+    <div class="example">
+      <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> C:\certifikat\signtool.exe sign /f C:\certifikat\jan_novak.pfx /p MojeTajneHeslo123 /fd SHA256 C:\Users\Jan\Desktop\MojeAplikace\dist\MojeAplikace.exe</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+      <p>V reálném použití si upravte tři věci: cestu k <code class="inline">signtool.exe</code> (pokud ho máte jinde), heslo za <code class="inline">/p</code> (stejné, jaké jste zadali v kroku 3), a úplně na konci cestu ke svému vlastnímu EXE souboru.</p>
+      <p class="what-it-shows"><b>Co z toho vyčtete:</b> na konci by se měla objevit hláška <code class="inline">Successfully signed: ...</code> (anglicky, ale slovo „Successfully" = úspěšně). Pokud se místo toho objeví chyba zmiňující heslo nebo cestu, nejčastěji je překlepnutá cesta k souboru nebo špatně opsané heslo.</p>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Existuje i volitelný parametr <code class="inline">/tr</code> s adresou časového razítkového serveru, který zajistí, že podpis zůstane platný i po vypršení certifikátu. Vyžaduje ale připojení k internetu v okamžiku podepisování — pro čistě lokální a bezplatný postup ho zde vynecháváme.</span>
+    </div>
+
+    <h3 class="sub-title">Krok 6 — Aby podpisu důvěřoval i váš počítač</h3>
+    <p>Samotné podepsání ještě neznamená, že Windows podpisu bude důvěřovat — je to podobné, jako kdybyste si sami razítko vyrobili a orazítkovali jím vlastní dokument: razítko samo o sobě nikoho nepřesvědčí, pokud ten, kdo dokument čte, neví, že tomuhle razítku má věřit.</p>
+    <p><b>Proč tohle vůbec funguje:</b> Windows má seznam „důvěryhodných kořenových certifikačních autorit" — v podstatě seznam vydavatelů certifikátů, kterým automaticky věří (typicky velké firmy jako DigiCert). Tímto krokem do stejného seznamu přidáte i svůj vlastní certifikát — Windows ho tak začne brát jako by patřil mezi důvěryhodné vydavatele, ale <b>jen na tomto konkrétním počítači</b>, protože jste si ho sem sami přidali ručně.</p>
+    <p>Na výběr jsou dvě stejně platné cesty — stačí jedna z nich:</p>
+
+    <div class="card">
+      <h4>A) PŘES POWERSHELL</h4>
+      <p>V okně PowerShellu spuštěném jako správce (stejně jako v kroku 1):</p>
+      <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> Import-Certificate -FilePath C:\certifikat\jan_novak.cer -CertStoreLocation Cert:\LocalMachine\Root</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+      <p style="font-size:13.5px;color:#000">Použijte soubor <code class="inline">.cer</code> z kroku 3 (ne <code class="inline">.pfx</code> — ten zůstává jen pro podepisování a není potřeba ho nikam importovat).</p>
+    </div>
+
+    <div class="card">
+      <h4>B) MYŠÍ, BEZ PŘÍKAZŮ</h4>
+      <p>Dvojklik na soubor <code class="inline">jan_novak.cer</code> (resp. jméno vašeho vlastního souboru z kroku 3) → <b>Instalovat certifikát</b> → zvolte <b>Místní počítač</b> → <b>Ano</b> na dotaz systému → <b>Umístit všechny certifikáty do následujícího úložiště</b> → <b>Procházet</b> → <b>Důvěryhodné kořenové certifikační autority</b> → <b>OK</b> → <b>Další</b> → <b>Dokončit</b>.</p>
+    </div>
+
+    <h3 class="sub-title">Krok 7 — Jak ověřit, že to zafungovalo</h3>
+    <ul class="steps">
+      <li>Klikněte na podepsaný EXE soubor <b>pravým tlačítkem</b> → <b>Vlastnosti</b>.</li>
+      <li>Přepněte na záložku <b>Digitální podpisy</b> — mělo by se tam objevit vaše jméno.</li>
+      <li>Při spuštění EXE souboru by se ve Windows místo „Neznámý vydavatel" mělo zobrazit vaše jméno.</li>
+    </ul>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">⛔</span>
+      <span>Připomínka: tohle řeší důvěru jen na <b>tomto</b> počítači. Jakmile EXE soubor pošlete jinam, na cizím počítači se bez kroku 6 provedeného tam zobrazí varování dál — teď už jen s vaším jménem místo „Neznámý vydavatel", což je stále o něco lepší, ale ne totéž jako plná důvěra.</span>
+    </div>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">📖</span>
+      <span><b>Další možnosti (nad rámec tohoto návodu):</b> pro důvěru na cizích počítačích bez nutnosti tam cokoliv ručně importovat existují komerční certifikáty od uznávaných certifikačních autorit (např. DigiCert, Sectigo) nebo novější cloudové služby podepisování od Microsoftu. Tyto certifikáty stojí peníze a je potřeba u nich ověřit totožnost — nejsou tedy zdarma ani čistě lokální, proto nejsou součástí tohoto návodu. Oficiální dokumentaci k nástroji signtool najdete na <a class="inline-link" href="https://learn.microsoft.com/en-us/windows/win32/seccrypto/signtool" target="_blank" rel="noopener">learn.microsoft.com/en-us/windows/win32/seccrypto/signtool</a>.</span>
+    </div>
+  </section>
+
+  <!-- 05 PŘÍKLADY -->
+  <section class="section" id="priklady">
+    <div class="section-header"><span class="section-num">05</span><h2>Příklady v příloze</h2></div>
+
+    <p>Ke stažení ve složce <code class="inline">Ostatni/exe/</code> najdete sadu souborů, na kterých si celý postup můžete rovnou vyzkoušet.</p>
+
+    <h3 class="sub-title">Co ve složce najdete</h3>
+    <div class="card">
+      <h4>KOMPLETNÍ FUNKČNÍ PŘÍKLAD</h4>
+      <p>Hotová malá aplikace i s ikonou a vlastním <code class="inline">.bat</code> souborem pro sestavení — na ní vidíte celý postup z kapitoly 02 pohromadě a funkční od začátku do konce.</p>
+    </div>
+    <div class="card">
+      <h4>DALŠÍ .BAT SOUBORY — RŮZNÉ SITUACE</h4>
+      <p>Několik dalších <code class="inline">.bat</code> souborů (bez přiložených zdrojových aplikací) ukazuje, jak se sestavení přizpůsobí různým situacím: aplikace s vlastní ikonou, aplikace se zapisovatelným nastavením mimo EXE, aplikace s citlivým údajem (API klíčem) mimo EXE, a aplikace, která si sama zabalí potřebné externí knihovny.</p>
+    </div>
+
+    <h3 class="sub-title">Jak soubory použít</h3>
+    <ul class="steps">
+      <li>Stáhněte si celou složku <code class="inline">exe</code> k sobě na disk.</li>
+      <li>Otevřete <code class="inline">.bat</code> soubor v textovém editoru (třeba Poznámkovém bloku) a podívejte se, jaké přepínače používá — podle legendy v kapitole 02 poznáte, co každý dělá.</li>
+      <li>Pro vlastní projekt si <code class="inline">.bat</code> soubor zkopírujte a upravte jména souborů a ikony na svoje.</li>
+      <li>Spusťte dvojklikem a počkejte na dokončení.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <p>Jak sestavit EXE soubor · Od Python skriptu po podepsanou aplikaci</p>
+  <a href="../index.html" class="footer-back">← Zpět na rozcestník</a>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const bar = document.getElementById('progressBar');
+    const st = document.documentElement.scrollTop;
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (st / h * 100) + '%';
+  });
+
+  const sections = document.querySelectorAll('[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(l => l.classList.remove('active'));
+        const t = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (t) t.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  function copyCmd(btn) {
+    const line = btn.closest('.cmd');
+    const text = line.querySelector('.prompt').nextSibling.textContent.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.textContent;
+      btn.textContent = 'zkopírováno!';
+      setTimeout(() => btn.textContent = old, 1800);
+    });
+  }
+
+  function copyBlock(btn) {
+    const block = btn.closest('.cmd-block');
+    const text = block.querySelector('pre').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.textContent;
+      btn.textContent = 'zkopírováno!';
+      setTimeout(() => btn.textContent = old, 1800);
+    });
+  }
+
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebarEl = document.getElementById('sidebar');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function closeMobileMenu() {
+    sidebarEl.classList.remove('open');
+    sidebarBackdrop.classList.remove('open');
+  }
+
+  menuToggle.addEventListener('click', () => {
+    sidebarEl.classList.toggle('open');
+    sidebarBackdrop.classList.toggle('open');
+  });
+  sidebarBackdrop.addEventListener('click', closeMobileMenu);
+  document.querySelectorAll('.nav-item').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+</script>
+
+</body>
+</html>

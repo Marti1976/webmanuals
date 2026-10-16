@@ -526,8 +526,26 @@
   .footer-back:hover { background: rgba(232,160,32,0.15); color: var(--accent2); }
 
   /* ── RESPONSIVE ── */
+  /* ── Mobilní hamburger menu ── */
+  .menu-toggle {
+    display: none; position: fixed; top: 14px; left: 14px; z-index: 300;
+    width: 42px; height: 42px; align-items: center; justify-content: center;
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    font-size: 20px; color: var(--accent); cursor: pointer;
+  }
+  .sidebar-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 190;
+  }
+
   @media (max-width: 900px) {
-    .sidebar { display: none; }
+    .menu-toggle { display: flex; }
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform .25s ease;
+      box-shadow: 6px 0 24px rgba(0,0,0,.2);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-backdrop.open { display: block; }
     .hero, .wrapper, footer { margin-left: 0; }
     footer { flex-direction: column; text-align: center; }
   }
@@ -536,6 +554,9 @@
 <body>
 
 <div class="progress-bar" id="progressBar"></div>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Otevřít menu kapitol">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
 <!-- ── SIDEBAR ── -->
 <nav class="sidebar" id="sidebar">
@@ -1087,6 +1108,23 @@
   }, { rootMargin: '-20% 0px -70% 0px' });
 
   sections.forEach(s => observer.observe(s));
+
+  // Mobilní hamburger menu
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebarEl = document.getElementById('sidebar');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function closeMobileMenu() {
+    sidebarEl.classList.remove('open');
+    sidebarBackdrop.classList.remove('open');
+  }
+
+  menuToggle.addEventListener('click', () => {
+    sidebarEl.classList.toggle('open');
+    sidebarBackdrop.classList.toggle('open');
+  });
+  sidebarBackdrop.addEventListener('click', closeMobileMenu);
+  navItems.forEach(link => link.addEventListener('click', closeMobileMenu));
 </script>
 
 </body>

@@ -447,10 +447,29 @@
             transition: width 0.1s;
         }
 
+        /* ── Mobilní hamburger menu ── */
+        .menu-toggle {
+            display: none; position: fixed; top: 14px; left: 14px; z-index: 300;
+            width: 42px; height: 42px; align-items: center; justify-content: center;
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px;
+            font-size: 20px; color: var(--accent-primary); cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0,0,0,.35);
+        }
+        .sidebar-backdrop {
+            display: none; position: fixed; inset: 0; background: rgba(5,3,10,.6); z-index: 190;
+        }
+
         /* ── Responsive ── */
         @media (max-width: 900px) {
-            .sidebar { display: none; }
-            .main, footer { margin-left: 0; padding: 36px 24px; }
+            .menu-toggle { display: flex; }
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform .25s ease;
+                box-shadow: 6px 0 24px rgba(0,0,0,.4);
+            }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-backdrop.open { display: block; }
+            .main, footer { margin-left: 0; padding: 36px 24px 36px 72px; }
             .hero h1 { font-size: 2.4rem; }
             .pip-grid { grid-template-columns: 1fr; }
         }
@@ -460,8 +479,11 @@
 
 <div class="progress-bar" id="progressBar"></div>
 
+<button class="menu-toggle" id="menuToggle" aria-label="Otevřít menu kapitol">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
 <!-- ── SIDEBAR ── -->
-<nav class="sidebar">
+<nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
         <a href="../index.html">← Zpět na rozcestník</a>
         <div class="sidebar-title">
@@ -737,6 +759,25 @@ pip 23.x.x from C:\...\pip (python 3.12)</span></code>
             setTimeout(() => btn.textContent = 'Kopírovat', 2000);
         });
     }
+
+    // Mobilní hamburger menu
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebarEl = document.getElementById('sidebar');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+    function closeMobileMenu() {
+        sidebarEl.classList.remove('open');
+        sidebarBackdrop.classList.remove('open');
+    }
+
+    menuToggle.addEventListener('click', () => {
+        sidebarEl.classList.toggle('open');
+        sidebarBackdrop.classList.toggle('open');
+    });
+    sidebarBackdrop.addEventListener('click', closeMobileMenu);
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
 </script>
 
 </body>

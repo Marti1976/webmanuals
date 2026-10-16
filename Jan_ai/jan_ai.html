@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jan AI – lokální umělá inteligence (CZ)</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #fafafa;
+    --panel:   #ffffff;
+    --deep:    #111111;
+    --blue:    #2563eb;
+    --blue2:   #1d4ed8;
+    --sky:     #0ea5e9;
+    --line:    #e5e7eb;
+    --text:    #111111;
+    --muted:   #4b5563;
+    --dim:     #9ca3af;
+    --green:   #1a9e6b;
+    --amber:   #c2790f;
+    --danger:  #a81f1f;
+    --mono:    'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.65; }
+
+  .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--sky)); z-index: 999; width: 0%; transition: width .1s; }
+
+  .sidebar { position: fixed; left: 0; top: 0; width: 273px; height: 100vh; background: var(--bg); border-right: 1px solid var(--line); overflow-y: auto; z-index: 200; }
+  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--sky)); }
+  .sidebar-brand { padding: 28px 22px 18px; border-bottom: 1px solid var(--line); }
+  .sidebar-back { display: flex; align-items: center; gap: 6px; color: var(--text); text-decoration: none; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 16px; }
+  .sidebar-back:hover { color: var(--blue); }
+  .sidebar-title { display: flex; align-items: center; gap: 10px; }
+  .sidebar-badge { background: var(--blue); color: #fff; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%); }
+  .sidebar-name { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; color: var(--deep); }
+  .sidebar-name small { display: block; font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text); font-weight: 400; margin-top: 2px; }
+
+  .nav-label { padding: 16px 22px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--text); }
+  .nav-item { display: flex; align-items: center; gap: 9px; padding: 7px 22px; color: var(--text); text-decoration: none; font-size: 13px; border-left: 2px solid transparent; transition: all .2s; }
+  .nav-item:hover, .nav-item.active { background: rgba(37,99,235,.08); border-left-color: var(--blue); font-weight: 600; }
+  .nav-num { font-family: var(--mono); font-size: 9px; color: var(--blue); background: rgba(37,99,235,.1); border: 1px solid rgba(37,99,235,.25); padding: 1px 5px; min-width: 24px; text-align: center; flex-shrink: 0; }
+
+  .main { margin-left: 273px; max-width: 1200px; padding: 56px 56px 20px; }
+  footer { margin-left: 273px; padding: 24px 56px; border-top: 1px solid var(--line); }
+
+  .hero { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 48px; box-shadow: 0 10px 30px rgba(17,17,17,.06); }
+  .hero-bar { background: var(--deep); padding: 9px 18px; display: flex; align-items: center; gap: 7px; }
+  .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #6b7280; }
+  .hero-bar span.label { margin-left: 8px; color: #d1d5db; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
+  .hero-body { padding: 32px 34px; }
+  .hero h1 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 34px; color: var(--deep); letter-spacing: -.3px; }
+  .hero p { color: var(--text); font-size: 14.5px; margin-top: 10px; max-width: 680px; }
+
+  .section { margin-bottom: 56px; scroll-margin-top: 24px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .section-num { font-family: var(--mono); font-size: 11px; color: var(--blue); background: rgba(37,99,235,.08); border: 1px solid rgba(37,99,235,.25); padding: 3px 8px; }
+  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 23px; font-weight: 700; color: var(--deep); }
+  .section > p { color: var(--text); margin-bottom: 14px; }
+
+  h3.sub-title { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: var(--deep); margin: 30px 0 10px; padding-top: 18px; border-top: 1px dashed var(--line); }
+  h3.sub-title:first-of-type { border-top: none; padding-top: 0; }
+
+  .cmd { background: var(--text); border-radius: 6px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; font-family: var(--mono); font-size: 13px; color: #bfdbfe; }
+  .cmd .prompt { color: #7dd3fc; margin-right: 2px; }
+  .copy-btn { font-family: var(--mono); font-size: 10px; color: #bfdbfe; background: rgba(191,219,254,.12); border: 1px solid rgba(191,219,254,.3); border-radius: 4px; padding: 3px 9px; cursor: pointer; flex-shrink: 0; margin-left: 14px; transition: background .2s; }
+  .copy-btn:hover { background: rgba(191,219,254,.22); }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--blue); border-radius: 4px; padding: 18px 22px; margin-bottom: 14px; }
+  .card h4 { font-family: var(--mono); font-size: 13px; color: var(--deep); letter-spacing: .3px; margin-bottom: 6px; }
+  .card p { font-size: 13.5px; color: var(--text); margin-bottom: 4px; }
+
+  .alert { display: flex; gap: 12px; border: 1px solid; border-radius: 6px; padding: 13px 16px; margin: 16px 0; font-size: 13.5px; }
+  .alert-tip    { border-color: rgba(26,158,107,.35); background: rgba(26,158,107,.06); }
+  .alert-warn   { border-color: rgba(194,121,15,.35); background: rgba(194,121,15,.06); }
+  .alert-info   { border-color: rgba(37,99,235,.3);   background: rgba(37,99,235,.05); }
+  .alert-danger { border-color: rgba(168,31,31,.45);  background: rgba(168,31,31,.08); }
+  .alert-icon { flex-shrink: 0; }
+  .alert b { color: var(--deep); }
+  .alert span:not(.alert-icon) { color: var(--text); }
+
+  .steps { list-style: none; counter-reset: step; }
+  .steps li { counter-increment: step; display: flex; gap: 14px; align-items: flex-start; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--text); }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { content: counter(step); font-family: var(--mono); font-size: 11px; color: #fff; background: var(--blue); min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .steps li b { color: var(--deep); }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; color: var(--text); }
+  table th { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  table td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+
+  .paid { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: .08em; color: #fff; background: var(--amber); padding: 1px 7px; border-radius: 3px; vertical-align: middle; }
+  .free { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: .08em; color: #fff; background: var(--green); padding: 1px 7px; border-radius: 3px; vertical-align: middle; }
+  a.inline-link { color: var(--blue); font-weight: 500; }
+  code.inline { font-family: var(--mono); color: var(--blue2); background: rgba(37,99,235,.08); padding: 1px 6px; border-radius: 3px; font-size: 13px; }
+
+  footer p { font-size: 12px; color: var(--text); font-family: var(--mono); }
+  .footer-back { display: inline-flex; align-items: center; gap: 6px; color: var(--blue); text-decoration: none; font-family: var(--mono); font-size: 11px; background: rgba(37,99,235,.08); border: 1px solid rgba(37,99,235,.25); padding: 6px 14px; margin-top: 8px; }
+  .footer-back:hover { background: rgba(37,99,235,.15); }
+
+  .menu-toggle { display: none; position: fixed; top: 14px; left: 14px; z-index: 300; width: 42px; height: 42px; align-items: center; justify-content: center; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; font-size: 20px; color: var(--deep); cursor: pointer; box-shadow: 0 4px 14px rgba(17,17,17,.15); }
+  .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(17,17,17,.45); z-index: 190; }
+
+  @media (max-width: 900px) {
+    .menu-toggle { display: flex; }
+    .sidebar { transform: translateX(-100%); transition: transform .25s ease; box-shadow: 6px 0 24px rgba(0,0,0,.2); }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-backdrop.open { display: block; }
+    .main, footer { margin-left: 0; padding: 36px 24px 36px 72px; }
+    .hero h1 { font-size: 27px; }
+  }
+  .steps.bullets li::before { content: ''; min-width: 8px; width: 8px; height: 8px; margin: 8px 3px 0 7px; border-radius: 2px; background: var(--sky); }
+  .imgph { border: 2px dashed var(--line); border-radius: 8px; background: var(--panel); padding: 22px; margin: 16px 0; text-align: center; color: var(--muted); font-size: 13px; }
+  .imgph b { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--blue); margin-bottom: 4px; }
+  .gen, .adv { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: .08em; padding: 1px 7px; border-radius: 3px; vertical-align: middle; }
+  .gen { color: var(--blue2); background: rgba(37,99,235,.1); border: 1px solid rgba(37,99,235,.25); }
+  .adv { color: var(--amber); border: 1px solid var(--amber); margin-left: auto; }
+  dl.gloss dt { font-weight: 600; color: var(--deep); margin-top: 12px; }
+  dl.gloss dd { padding-bottom: 8px; border-bottom: 1px solid var(--line); font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Otevřít menu kapitol">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <a href="../index.html" class="sidebar-back">← Zpět na rozcestník</a>
+    <div class="sidebar-title">
+      <span class="sidebar-badge">JAN</span>
+      <div class="sidebar-name">Jan AI<small>Lokální umělá inteligence na Windows</small></div>
+    </div>
+  </div>
+
+  <div class="nav-label">Obsah</div>
+  <a href="#rychla-cesta" class="nav-item active"><span class="nav-num">▶</span>Rychlá cesta</a>
+  <a href="#co-je-jan" class="nav-item"><span class="nav-num">01</span>Co je Jan</a>
+  <a href="#pozadavky" class="nav-item"><span class="nav-num">02</span>Požadavky a příprava</a>
+  <a href="#instalace" class="nav-item"><span class="nav-num">03</span>Instalace na Windows</a>
+  <a href="#prvni-model" class="nav-item"><span class="nav-num">04</span>První model a první chat</a>
+  <a href="#chat" class="nav-item"><span class="nav-num">05</span>Chat, asistenti, projekty</a>
+  <a href="#umi" class="nav-item"><span class="nav-num">06</span>Co Jan umí</a>
+  <a href="#rozsireni" class="nav-item"><span class="nav-num">07</span>Jak Jan rozšířit</a>
+  <a href="#limity" class="nav-item"><span class="nav-num">08</span>Limity a problémy</a>
+  <a href="#videa" class="nav-item"><span class="nav-num">09</span>Videa a odkazy</a>
+  <a href="#slovnicek" class="nav-item"><span class="nav-num">A–Z</span>Slovníček pojmů</a>
+</nav>
+
+<main class="main">
+
+  <div class="hero">
+    <div class="hero-bar"><span class="hero-dot"></span><span class="hero-dot"></span><span class="hero-dot"></span><span class="label">JAN.AI</span></div>
+    <div class="hero-body">
+      <h1>Jan AI – vlastní umělá inteligence v počítači</h1>
+      <p>Návod od úplného začátku – co je Jan, jaký počítač potřebuje, jak ho nainstalovat na Windows a jak si stáhnout první model, co všechno Jan umí, jak ho rozšířit a na jaké limity narazíte.</p>
+    </div>
+  </div>
+
+  <!-- RYCHLÁ CESTA -->
+  <section class="section" id="rychla-cesta">
+    <div class="section-header"><span class="section-num">START</span><h2>Rychlá cesta pro začátečníka</h2></div>
+    <p>Chcete jen začít? Pět kroků stačí. Podrobnosti jsou v kapitolách níže.</p>
+    <ul class="steps">
+      <li><span><b>Zkontrolujte počítač.</b> Windows 10 nebo novější, aspoň 8 GB RAM a 10 GB volného místa. Jak to zjistit, ukazuje kapitola 02.</span></li>
+      <li><span><b>Stáhněte Jan</b> na <a class="inline-link" href="https://www.jan.ai/download" target="_blank" rel="noopener">jan.ai/download</a> (verze pro Windows x64).</span></li>
+      <li><span><b>Nainstalujte ho:</b> spusťte stažený soubor <code class="inline">.exe</code> a počkejte na dokončení. Windows se může zeptat na potvrzení (kapitola 03).</span></li>
+      <li><span><b>Počkejte na první model.</b> Při prvním spuštění si Jan stáhne výchozí model sám. Může to chvíli trvat.</span></li>
+      <li><span><b>Napište první zprávu</b>, třeba „Vysvětli mi jednoduše, co je umělá inteligence.“</span></li>
+    </ul>
+    <div class="alert alert-tip"><span class="alert-icon">✔</span><span>Víc nepotřebujete. Vše ostatní je volitelné. Placené jsou jen cloudové modely třetích stran (kapitola 07).</span></div>
+  </section>
+
+  <!-- 01 CO JE JAN -->
+  <section class="section" id="co-je-jan">
+    <div class="section-header"><span class="section-num">01</span><h2>Co je Jan</h2></div>
+
+    <p>Jan je desktopová aplikace pro chatování s umělou inteligencí – open-source a zdarma. Na rozdíl od ChatGPT umí modely spouštět přímo na vašem počítači, takže funguje i bez internetu a vaše konverzace se nikam neodesílají. Vyvíjí ho firma Menlo Research a jeho kód je veřejně na GitHubu.</p>
+
+    <h3 class="sub-title">Dva způsoby, jak Jan používat</h3>
+    <p>V jedné aplikaci můžete oba způsoby libovolně kombinovat.</p>
+    <table>
+      <thead><tr><th></th><th>Lokální modely</th><th>Cloudové modely</th></tr></thead>
+      <tbody>
+        <tr><td>Kde běží</td><td>Na vašem počítači</td><td>Na serverech poskytovatele (OpenAI, Anthropic, Google…)</td></tr>
+        <tr><td>Internet</td><td>Není potřeba</td><td>Je potřeba</td></tr>
+        <tr><td>API klíč</td><td>Ne</td><td>Ano</td></tr>
+        <tr><td>Cena</td><td>Zdarma</td><td><b>PLACENÉ</b> – platíte poskytovateli, ne Janu</td></tr>
+        <tr><td>Soukromí</td><td>Zprávy i soubory zůstávají u vás</td><td>Zprávy i soubory se odesílají poskytovateli</td></tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Samotný Jan je zdarma. Placené jsou pouze cloudové služby třetích stran, které si volitelně připojíte.</span>
+    </div>
+    <div class="alert alert-tip"><span class="alert-icon">✔</span><span>Narazíte na neznámý pojem (model, RAM, kontext…)? Vysvětluje ho <a class="inline-link" href="#slovnicek">slovníček na konci návodu</a>.</span></div>
+  </section>
+
+  <!-- 02 POŽADAVKY -->
+  <section class="section" id="pozadavky">
+    <div class="section-header"><span class="section-num">02</span><h2>Požadavky a příprava</h2></div>
+
+    <h3 class="sub-title">Co musí počítač splňovat</h3>
+    <table>
+      <tbody>
+        <tr><td><b>Systém</b></td><td>Windows 10 nebo novější</td></tr>
+        <tr><td><b>Procesor</b></td><td>x64 s podporou AVX2 (Intel od roku 2013, AMD od roku 2015) nebo ARM64 (Windows on ARM)</td></tr>
+        <tr><td><b>Paměť</b></td><td>minimálně 8 GB RAM, doporučeno 16 GB</td></tr>
+        <tr><td><b>Grafická karta</b></td><td>volitelná – NVIDIA, AMD nebo Intel Arc, minimálně 6 GB VRAM</td></tr>
+        <tr><td><b>Disk</b></td><td>minimálně 10 GB volného místa</td></tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Grafická karta není povinná. Pokud ji počítač nemá, nebo má méně než 6 GB VRAM, Jan počítá na procesoru – funguje to, jen pomaleji.</span>
+    </div>
+
+    <h3 class="sub-title">Jak zjistit parametry svého počítače <span class="gen">OBECNÁ RADA</span></h3>
+    <ul class="steps bullets">
+      <li><b>RAM, procesor a typ systému:</b> Start → Nastavení → Systém → Informace. Hledejte řádky <b>Procesor</b>, <b>Nainstalovaná paměť RAM</b> a <b>Typ systému</b> (x64 = stáhněte verzi x64, ARM = verzi ARM64).</li>
+      <li><b>Grafická karta a VRAM:</b> stiskněte <b>Ctrl+Shift+Esc</b> (Správce úloh) → záložka <b>Výkon</b> → <b>GPU</b>. Hodnota <b>Vyhrazená paměť GPU</b> je VRAM. Pokud GPU v seznamu není, počítač ji nemá a Jan poběží na procesoru.</li>
+      <li><b>Volné místo na disku:</b> otevřete Průzkumník → Tento počítač. Pod diskem C: je napsáno, kolik GB je volných.</li>
+    </ul>
+    <div class="imgph"><b>OBRÁZEK: Správce úloh, záložka Výkon, GPU</b>Zvýrazněte řádek „Vyhrazená paměť GPU“ a v nastavení „Informace“ řádky Procesor a RAM.</div>
+    <div class="alert alert-info"><span class="alert-icon">ℹ</span><span>Názvy v české Windows se mohou mírně lišit podle verze. Zda má procesor AVX2, Windows neukáže. Procesory z roku 2015 a novějších ho obvykle mají, jistotu dá bezplatný program CPU-Z (karta Instructions). <span class="gen">OBECNÁ RADA</span></span></div>
+
+    <h3 class="sub-title">Jak velký model zvolit</h3>
+    <p>Lokální model se při práci načte do paměti (pojmy RAM, VRAM a model viz <a class="inline-link" href="#slovnicek">slovníčku</a>), proto musí odpovídat vašemu počítači. Jan doporučuje vybírat modely, které zaberou méně než 80&nbsp;% dostupné paměti RAM:</p>
+    <ul class="steps bullets">
+      <li>Počítač s <b>8 GB RAM</b> – modely do velikosti 6 GB.</li>
+      <li>Počítač s <b>16 GB RAM</b> – modely do velikosti 13 GB.</li>
+    </ul>
+    <div class="alert alert-tip">
+      <span class="alert-icon">✔</span>
+      <span>Nemusíte počítat ručně. V Hubu (kapitola 04) je u každého modelu štítek, jestli se na váš počítač vejde.</span>
+    </div>
+  </section>
+
+  <!-- 03 INSTALACE -->
+  <section class="section" id="instalace">
+    <div class="section-header"><span class="section-num">03</span><h2>Instalace na Windows</h2></div>
+
+    <h3 class="sub-title">Postup instalace</h3>
+    <ul class="steps">
+      <li>Otevřete stránku <a class="inline-link" href="https://www.jan.ai/download" target="_blank" rel="noopener">jan.ai/download</a>.</li>
+      <li>Stáhněte verzi pro <b>Windows (x64)</b>. Na počítači s ARM procesorem vyberte na stejné stránce verzi <b>ARM64</b>.</li>
+      <li>Spusťte stažený soubor <code class="inline">.exe</code>.</li>
+      <li>Počkejte, až se instalace dokončí.</li>
+      <li>Spusťte Jan.</li>
+    </ul>
+
+    <h3 class="sub-title">Co uvidíte na obrazovce <span class="gen">OBECNÁ RADA</span></h3>
+    <ul class="steps bullets">
+      <li><b>Windows SmartScreen:</b> modré okno „Windows ochránil váš počítač“. Klikněte na <b>Další informace</b> a potom <b>Přesto spustit</b>. Okno se objevuje u programů, které Windows ještě nezná.</li>
+      <li><b>Řízení uživatelských účtů (UAC):</b> otázka, zda aplikaci povolit provádět změny v zařízení. Potvrďte <b>Ano</b>.</li>
+      <li><b>Průvodce instalací:</b> proběhne sám. Po dokončení se Jan spustí.</li>
+    </ul>
+    <div class="imgph"><b>OBRÁZEK: Okno SmartScreen s tlačítkem „Přesto spustit“</b>Označte odkaz „Další informace“ a tlačítko „Přesto spustit“.</div>
+    <div class="alert alert-warn"><span class="alert-icon">⚠</span><span>Spouštějte jen soubor stažený z <b>jan.ai</b>. U jiných zdrojů potvrzení nepřijímejte.</span></div>
+
+    <h3 class="sub-title">Kde Jan ukládá data</h3>
+    <div class="card">
+      <h4>VŠE ZŮSTÁVÁ NA VAŠEM POČÍTAČI</h4>
+      <p>Stažené modely, konverzace, nastavení i logy jsou ve složce <code class="inline">C:\Users\VašeJméno\AppData\Roaming\Jan\data</code>. U lokálních modelů se nic neposílá do cloudu.</p>
+    </div>
+
+    <h3 class="sub-title">Jak otevřít příkazový řádek <span class="gen">OBECNÁ RADA</span></h3>
+    <p>Příkazový řádek je okno, do kterého se píší textové příkazy. Otevřete ho takto: klikněte na Start, napište <code class="inline">PowerShell</code> a stiskněte Enter. Příkaz napište (nebo vložte pravým tlačítkem myši) a potvrďte Enter. Tlačítko „kopírovat“ u příkazů v tomto návodu zkopíruje jen samotný příkaz bez úvodního <code class="inline">PS C:\&gt;</code>.</p>
+
+    <h3 class="sub-title">Zapnutí grafické karty (volitelné)</h3>
+    <p>Jan si grafickou kartu vybere a použije sám. Pokud by ji nevyužíval, ověřte následující.</p>
+
+    <h4 style="font-family:'Rajdhani',sans-serif;font-size:16px;margin:14px 0 6px">NVIDIA</h4>
+    <ul class="steps">
+      <li>Nainstalujte ovladač NVIDIA verze <b>470.63.01 nebo vyšší</b> a ověřte ho příkazem níže.</li>
+      <li>Nainstalujte <b>CUDA Toolkit 11.7 nebo vyšší</b> a ověřte ho druhým příkazem.</li>
+      <li>V Janu otevřete <b>Settings → Hardware → GPUs</b> a zapněte přepínač <b>GPU Acceleration</b>, pokud není zapnutý.</li>
+      <li>Jan restartujte.</li>
+    </ul>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> nvidia-smi</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> nvcc --version</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <p><span class="gen">OBECNÁ RADA</span> Příkaz <code class="inline">nvidia-smi</code> vypíše tabulku s údajem <b>Driver Version</b> (verze ovladače). Hláška, že příkaz „není rozpoznán“, znamená, že ovladač nebo CUDA Toolkit chybí.</p>
+
+    <h4 style="font-family:'Rajdhani',sans-serif;font-size:16px;margin:14px 0 6px">AMD a Intel Arc</h4>
+    <p>Používá se backend Vulkan. Důležité jsou aktuální ovladače grafické karty. Backend lze přepnout v <b>Settings → Model Providers → Llama.cpp → Backend</b>.</p>
+
+    <h3 class="sub-title">Odinstalace</h3>
+    <ul class="steps">
+      <li>Otevřete <b>Ovládací panely → Programy → Odinstalovat program</b>.</li>
+      <li>Najděte <b>Jan</b> a zvolte <b>Odinstalovat</b>.</li>
+      <li>Pokud chcete smazat i všechna data, odstraňte složku <code class="inline">C:\Users\VašeJméno\AppData\Roaming\Jan</code>.</li>
+    </ul>
+    <div class="alert alert-danger">
+      <span class="alert-icon">⛔</span>
+      <span>Smazanou složku s daty <b>nelze obnovit</b> – přijdete o stažené modely i historii konverzací. Důležité věci si předem zálohujte.</span>
+    </div>
+  </section>
+
+  <!-- 04 PRVNÍ MODEL A CHAT -->
+  <section class="section" id="prvni-model">
+    <div class="section-header"><span class="section-num">04</span><h2>První model a první chat</h2></div>
+
+    <h3 class="sub-title">První spuštění</h3>
+    <p>Při prvním spuštění si Jan sám stáhne výchozí model. Po dokončení stahování už nic nastavovat nemusíte – stačí napsat zprávu a chatovat. Můžete zkusit například:</p>
+    <ul class="steps bullets">
+      <li>„Vysvětli mi jednoduše, jak funguje kvantová fyzika.“</li>
+      <li>„Pomoz mi napsat funkci v Pythonu, která seřadí seznam.“</li>
+      <li>„Jaké jsou výhody a nevýhody elektromobilů?“</li>
+    </ul>
+
+    <h3 class="sub-title">Kde je co v Janu</h3>
+    <ul class="steps bullets">
+      <li><b>Levý panel:</b> Hub (katalog modelů), Settings (nastavení) a tlačítko New Projects.</li>
+      <li><b>Spodní část chatu:</b> pole pro zprávu, vedle něj <b>+</b> (přílohy a asistent), ikona zeměkoule (web) a nabídka modelů.</li>
+      <li><b>Patička:</b> System Monitor s logy.</li>
+    </ul>
+    <div class="imgph"><b>OBRÁZEK: Hlavní okno Janu s popisky</b>Šipkami označte levý panel, pole pro zprávu, ikonu +, zeměkouli, nabídku modelů a System Monitor.</div>
+
+    <h3 class="sub-title">Co čekat od malých modelů <span class="gen">OBECNÁ RADA</span></h3>
+    <ul class="steps bullets">
+      <li>Na slabším počítači se odpověď objevuje pomalu, po částech. Po prvním načtení modelu to trvá déle.</li>
+      <li>Malé modely (kolem 4 miliard parametrů) se občas spletou nebo si vymyslí fakta. Důležité údaje si ověřte.</li>
+      <li>V češtině bývají slabší než v angličtině. Když odpověď nedává smysl, zkuste otázku přeformulovat, případně napsat anglicky.</li>
+    </ul>
+
+    <h3 class="sub-title">Stažení dalšího modelu v Hubu</h3>
+    <ul class="steps">
+      <li>V levém panelu otevřete <b>Hub</b>.</li>
+      <li>Vyhledejte nebo vyberte model a klikněte na <b>Download</b>.</li>
+      <li>Průběh stahování sledujete v horní liště. Stahování lze zrušit křížkem <b>×</b>. Pokud selže, klikněte na Download znovu.</li>
+      <li>Po stažení model vyberte v chatu v nabídce modelů.</li>
+    </ul>
+
+    <h3 class="sub-title">Jak číst štítky v Hubu</h3>
+    <table>
+      <tbody>
+        <tr><td><b>Fits</b></td><td>Model se na váš počítač vejde.</td></tr>
+        <tr><td><b>May be slow</b></td><td>Model poběží, ale může být pomalý.</td></tr>
+        <tr><td><b>Won't fit</b></td><td>Model se nevejde – nestahujte ho.</td></tr>
+        <tr><td><b>Small / Balanced / Large</b></td><td>Varianty téhož modelu podle velikosti (kvantizace). Menší je nenáročnější na paměť. Výchozí volba má označení <b>Recommended</b>.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Příliš velký model se nemusí načíst, nebo skončí chybou kvůli nedostatku paměti. Řiďte se štítkem v Hubu.</span>
+    </div>
+    <div class="imgph"><b>OBRÁZEK: Hub se štítky Fits / May be slow / Won't fit</b>Zvýrazněte štítek u modelu a tlačítko Download.</div>
+
+    <h3 class="sub-title">Vlastní modely od týmu Jan</h3>
+    <table>
+      <thead><tr><th>Model</th><th>K čemu slouží</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">Jan-v3-4B</code></td><td>Obecné povídání a plnění instrukcí</td></tr>
+        <tr><td><code class="inline">Jan-Code-4B</code></td><td>Psaní kódu a úvahy nad ním</td></tr>
+        <tr><td><code class="inline">Jan-v2-VL</code></td><td>Práce s obrázky (rozumí obrazu)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 05 CHAT, ASISTENTI, PROJEKTY -->
+  <section class="section" id="chat">
+    <div class="section-header"><span class="section-num">05</span><h2>Chat, asistenti a projekty</h2></div>
+
+    <h3 class="sub-title">Asistenti</h3>
+    <p>Asistent je model s vašimi předem uloženými instrukcemi. Nemusíte pak v každém chatu opakovat, jak má odpovídat. Různé úlohy (překlady, plánování cest, programování) si tak můžete rozdělit na různé asistenty.</p>
+    <ul class="steps">
+      <li>V levém panelu otevřete <b>Settings</b> a vyberte <b>Assistants</b>.</li>
+      <li>Klikněte na <b>+</b> a napište jméno a instrukce nového asistenta.</li>
+      <li>Existující asistenty upravíte tužkou (✏️) a smažete popelnicí (🗑️).</li>
+    </ul>
+    <div class="card">
+      <h4>PŘÍKLAD INSTRUKCÍ</h4>
+      <p>„Odpovídej uvolněným, přátelským tónem. Vysvětlení drž stručná a používej jednoduchý jazyk. U složitých témat přidej příklad.“</p>
+    </div>
+    <div class="alert alert-tip">
+      <span class="alert-icon">✔</span>
+      <span>Instrukce pište konkrétně: tón, formát odpovědi, případně příklad žádoucí odpovědi. Model je pak dodržuje spolehlivěji.</span>
+    </div>
+
+    <h3 class="sub-title">Přepnutí asistenta v chatu</h3>
+    <p>V chatovacím poli klikněte na ikonu <b>+</b> a vyberte <b>Use Assistant</b>. Aktuální asistent je označen zatržítkem.</p>
+
+    <h3 class="sub-title">Projekty</h3>
+    <p>Projekt seskupuje související konverzace, společné instrukce a soubory.</p>
+    <ul class="steps">
+      <li>V levém panelu klikněte na <b>New Projects</b> a zadejte název.</li>
+      <li>V rozbalovací nabídce vyberte asistenta (nebo <b>No assistant</b>). Nového můžete vytvořit rovnou přes <b>+ Add Assistant</b>.</li>
+      <li>Každá konverzace v projektu pak automaticky používá zvolenou persónu a instrukce.</li>
+    </ul>
+  </section>
+
+  <!-- 06 CO JAN UMÍ -->
+  <section class="section" id="umi">
+    <div class="section-header"><span class="section-num">06</span><h2>Co Jan umí</h2></div>
+
+    <h3 class="sub-title">Vyhledávání na webu</h3>
+    <p>Jan má vestavěné vyhledávání na internetu. Je <b>zapnuté ve výchozím stavu</b> a funguje bez API klíče. Model si díky němu sám najde aktuální informace a přečte webové stránky.</p>
+    <ul class="steps bullets">
+      <li>V chatu je u vstupního pole ikona zeměkoule. Při zapnutí ukazuje <b>Web Search (Active)</b>.</li>
+      <li>Funguje jen s modelem, který má schopnost <b>tools</b> (zobrazí se v nabídce modelů).</li>
+    </ul>
+
+    <h3 class="sub-title">Soubory, obrázky a zvuk</h3>
+    <ul class="steps bullets">
+      <li><b>Příloha jedné zprávy:</b> klikněte na <b>+</b> vlevo dole a vyberte <b>Add Images</b>, <b>Add Audio</b> nebo <b>Add documents or files</b>. Soubor můžete také přetáhnout do pole nebo vložit obrázek ze schránky.</li>
+      <li><b>Soubory v projektu:</b> v projektu klikněte v panelu Files na <b>Add</b>. Jan soubor rozdělí a zaindexuje a je pak k dispozici ve všech konverzacích projektu. Podporuje PDF, Markdown, Office dokumenty (DOCX, XLSX, PPTX), kód a další.</li>
+    </ul>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Volba <b>Add Images</b> se zobrazí jen u modelu se schopností <b>vision</b> (například Jan-v2-VL z Hubu). Zvuk (WAV, MP3) vyžaduje model, který zvuk umí zpracovat.</span>
+    </div>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>U lokálního modelu soubory váš počítač neopustí. U cloudového poskytovatele se odesílají jemu.</span>
+    </div>
+
+    <h3 class="sub-title">Přehled dalších funkcí</h3>
+    <table>
+      <thead><tr><th>Funkce</th><th>Stručně</th><th>Cena</th></tr></thead>
+      <tbody>
+        <tr><td>Lokální modely</td><td>Chat bez internetu, data zůstávají u vás</td><td><span class="free">ZDARMA</span></td></tr>
+        <tr><td>Asistenti a projekty</td><td>Vlastní instrukce a sdílené soubory (kapitola 05)</td><td><span class="free">ZDARMA</span></td></tr>
+        <tr><td>Webové vyhledávání</td><td>Výchozí poskytovatel Exa bez klíče</td><td><span class="free">ZDARMA</span></td></tr>
+        <tr><td>Lokální API server</td><td>Napojení vlastních aplikací na Jan (kapitola 07)</td><td><span class="free">ZDARMA</span></td></tr>
+        <tr><td>MCP nástroje</td><td>Napojení externích nástrojů (kapitola 07)</td><td><span class="free">ZDARMA</span> (některé nástroje třetích stran mohou mít vlastní podmínky)</td></tr>
+        <tr><td>Cloudové modely</td><td>OpenAI, Anthropic (Claude), Gemini a další</td><td><span class="paid">PLACENÉ</span></td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Jan nabízí i funkce <b>Cowork (Preview)</b> a <b>Jan Agent</b> a integrace s Claude Code a OpenClaw. Existují v oficiální dokumentaci, ale v tomto návodu je nepopisuji.</span>
+    </div>
+  </section>
+
+  <!-- 07 ROZŠÍŘENÍ -->
+  <section class="section" id="rozsireni">
+    <div class="section-header"><span class="section-num">07</span><h2>Jak Jan rozšířit</h2><span class="adv">PRO POKROČILÉ</span></div>
+    <div class="alert alert-info"><span class="alert-icon">ℹ</span><span>Tuto kapitolu pro běžné chatování <b>nepotřebujete</b>. Hodí se, až budete chtít další modely, nástroje nebo napojení vlastních programů.</span></div>
+
+    <h3 class="sub-title">Další lokální modely z Hugging Face <span class="free">ZDARMA</span></h3>
+    <p>Jan umí spouštět modely ve formátu <b>GGUF</b>. Dá se k nim dostat třemi způsoby:</p>
+    <ul class="steps bullets">
+      <li><b>Podle ID modelu:</b> na <a class="inline-link" href="https://huggingface.co/models" target="_blank" rel="noopener">huggingface.co/models</a> najděte GGUF model, který se vejde do vašeho počítače, zkopírujte jeho ID (například <code class="inline">TheBloke/Mistral-7B-v0.1-GGUF</code>), vložte ho do vyhledávání v Hubu a vyberte variantu ke stažení.</li>
+      <li><b>Tlačítkem na Hugging Face:</b> na stránce modelu klikněte na <b>Use this model</b> a pod <b>Local Apps</b> vyberte <b>Jan</b>.</li>
+      <li><b>Vlastní soubor:</b> už staženou GGUF si naimportujete v nastavení enginu Llama.cpp.</li>
+    </ul>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Některé modely vyžadují přístupový token Hugging Face. Vložíte ho v <b>Settings → General → Others → HuggingFace Token</b>.</span>
+    </div>
+
+    <h3 class="sub-title">Jiný poskytovatel webového vyhledávání</h3>
+    <p>V <b>Settings → Web Search</b> můžete změnit poskytovatele:</p>
+    <table>
+      <thead><tr><th>Poskytovatel</th><th>API klíč</th><th>Poznámka</th></tr></thead>
+      <tbody>
+        <tr><td>Exa (výchozí)</td><td>Volitelný</td><td>Funguje bez klíče. Klíč přidá vyšší limity.</td></tr>
+        <tr><td>Tavily</td><td>Povinný</td><td>Bez klíče nevrací výsledky.</td></tr>
+        <tr><td>SearXNG</td><td>Volitelný</td><td>Vlastní server, zadáváte jeho adresu.</td></tr>
+        <tr><td>You.com</td><td>Volitelný</td><td>Bez klíče funguje s denním limitem.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">MCP servery <span class="free">ZDARMA</span></h3>
+    <p>MCP (Model Context Protocol) je standard, který modelu umožní používat externí nástroje a data – například ovládat prohlížeč nebo prohledávat soubory. Jan funguje jako MCP hostitel.</p>
+    <div class="alert alert-danger">
+      <span class="alert-icon">⛔</span>
+      <span>Přístup modelu k nástrojům je bezpečnostní riziko (například podvržený pokyn v nahrané stránce). Jan ve výchozím stavu vyžaduje <b>schválení každého volání nástroje</b>. Přepínač <b>Allow All MCP Tool Permissions</b> proto zapínejte jen vědomě.</span>
+    </div>
+    <h4 style="font-family:'Rajdhani',sans-serif;font-size:16px;margin:14px 0 6px">Příprava: instalace Node.js od nuly <span class="gen">OBECNÁ RADA</span></h4>
+    <p>Node.js je program, který umí spouštět MCP servery. Příkaz <code class="inline">npx</code> je jeho součástí.</p>
+    <ul class="steps">
+      <li>Otevřete <a class="inline-link" href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> a stáhněte instalátor Windows (<code class="inline">.msi</code>) verze <b>LTS</b>.</li>
+      <li>Spusťte ho a klikejte na <b>Next</b>. Výchozí volby nechte, potvrďte licenci a dejte <b>Install</b>. Windows se může zeptat na potvrzení (UAC), zvolte Ano.</li>
+      <li>Otevřete nový příkazový řádek (viz kapitola 03) a ověřte instalaci. Každý příkaz vypíše číslo verze.</li>
+      <li>Jan restartujte, aby nové programy našel.</li>
+    </ul>
+    <div class="cmd"><span><span class="prompt">PS C:\&gt;</span> node --version</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div><div class="cmd"><span><span class="prompt">PS C:\&gt;</span> npx --version</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <p><b>Příklad: Browser MCP.</b> Potřebujete nainstalovaný <b>Node.js</b> nebo <b>Python</b> a prohlížeč na bázi Chromu.</p>
+    <ul class="steps">
+      <li>V Janu otevřete <b>Settings → MCP Servers</b> a klikněte na <b>+</b>.</li>
+      <li>Vyplňte: Server Name <code class="inline">browsermcp</code>, Command <code class="inline">npx</code>, Arguments <code class="inline">@browsermcp/mcp</code>. Proměnné prostředí nechte prázdné.</li>
+      <li>Ověřte, že se server aktivoval.</li>
+      <li>Do prohlížeče nainstalujte rozšíření Browser MCP, povolte ho v anonymních oknech a připojte se k serveru. Anonymní okno zajistí, že nástroj nemá přístup k stránkám, kam jste přihlášeni.</li>
+      <li>V Janu vyberte model s dobrou podporou nástrojů (schopnost <b>tools</b>).</li>
+    </ul>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Ne všechny modely umí nástroje používat. U lokálních modelů zapnete tool calling v nastavení modelu (Model Capabilities). Aktivní MCP nástroje navíc zabírají část kontextového okna.</span>
+    </div>
+
+    <h3 class="sub-title">Cloudové modely <span class="paid">PLACENÉ</span></h3>
+    <p>Cloudové modely běží na serverech poskytovatele. Potřebujete u něj účet, API klíč a placený kredit. Jan podporuje Anthropic, Gemini, Groq, Mistral, OpenAI, Azure OpenAI, OpenRouter, Hugging Face i vlastní endpointy.</p>
+    <ul class="steps">
+      <li>Na webu poskytovatele vytvořte API klíč a zajistěte, aby měl dostatek kreditu.</li>
+      <li>V Janu otevřete <b>Settings → Model Providers</b> a vyberte poskytovatele.</li>
+      <li>Vložte API klíč.</li>
+      <li>V chatu vyberte model poskytovatele v nabídce modelů.</li>
+    </ul>
+    <div class="card">
+      <h4>PŘÍKLAD: ANTHROPIC (CLAUDE)</h4>
+      <p>Klíč vytvoříte v <a class="inline-link" href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">Anthropic Console</a>. Po jeho vložení Jan modely Claude nabídne sám. Pokud chybí některý konkrétní, přidáte ho ručně a jeho <code class="inline">id</code> musí přesně odpovídat názvu v seznamu modelů Anthropicu.</p>
+    </div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span>Platba cloudových modelů je <b>zvlášť</b> u každého poskytovatele. Nehradí ji Jan a nepokrývá ji ani předplatné klasické chatovací aplikace dané firmy. Počítejte s odděleným API účtem.</span>
+    </div>
+    <p>Jiný server kompatibilní s OpenAI nebo Anthropic připojíte přes <b>Custom Endpoints</b>. Základní adresa musí obvykle končit <code class="inline">/v1</code>, jinak každý dotaz skončí chybou 404.</p>
+
+    <h3 class="sub-title">Lokální API server <span class="free">ZDARMA</span></h3>
+    <p>Jan umí vystavit modely lokálně přes rozhraní kompatibilní s OpenAI. Vlastní programy se tak mohou napojit na váš lokální model.</p>
+    <ul class="steps">
+      <li>Otevřete <b>Settings → Local API Server</b> a klikněte na <b>Start Server</b>.</li>
+      <li>Server je připraven, když se v logu objeví <code class="inline">JAN API listening at http://127.0.0.1:1337</code>.</li>
+      <li>Aplikace posílají požadavky na <code class="inline">http://127.0.0.1:1337/v1/chat/completions</code>. V poli <code class="inline">model</code> uvedou ID modelu z Janu.</li>
+    </ul>
+    <table>
+      <thead><tr><th>Nastavení</th><th>Výchozí hodnota a význam</th></tr></thead>
+      <tbody>
+        <tr><td>Server Host</td><td><code class="inline">127.0.0.1</code> – dostupné jen z tohoto počítače. <code class="inline">0.0.0.0</code> zpřístupní server ostatním zařízením v síti.</td></tr>
+        <tr><td>Server Port</td><td><code class="inline">1337</code>, lze změnit.</td></tr>
+        <tr><td>API Key</td><td>Libovolný řetězec. Pokud je nastaven, požadavky ho musí posílat v hlavičce <code class="inline">Authorization: Bearer ...</code>.</td></tr>
+        <tr><td>Request Timeout</td><td>Zvyšte u velkých modelů na pomalém počítači.</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-danger">
+      <span class="alert-icon">⛔</span>
+      <span>Pokud nastavíte host <code class="inline">0.0.0.0</code>, vždy nastavte i API klíč. Server bez klíče by byl otevřený všem v síti.</span>
+    </div>
+  </section>
+
+  <!-- 08 LIMITY A PROBLÉMY -->
+  <section class="section" id="limity">
+    <div class="section-header"><span class="section-num">08</span><h2>Limity a řešení problémů</h2></div>
+
+    <h3 class="sub-title">Když něco nejde</h3>
+    <p>Čtěte po řádcích: co se stalo, proč a co s tím. Zkoušejte shora, nejjednodušší řešení jsou první.</p>
+    <table>
+      <thead><tr><th>Co se stalo</th><th>Proč</th><th>Co s tím</th></tr></thead>
+      <tbody>
+        <tr><td>Jan se nespustí nebo spadne při startu</td><td>Nejspíš se poškodil soubor s nastavením.</td><td>Zcela ukončete Jan (i ikonu vedle hodin) a přejmenujte <code class="inline">%APPDATA%\Jan\data\store.json</code>. Jan ho vytvoří znovu. Přijdete o nastavení, ne o modely a konverzace.</td></tr>
+        <tr><td>Model se nenačte, dojde paměť</td><td>Model je na váš počítač příliš velký.</td><td>Vyberte menší nebo více zkomprimovaný model, snižte Context Size, snižte počet vrstev na GPU nebo přepněte na procesor.</td></tr>
+        <tr><td>Hlášení „out of context size“</td><td>Konverzace je delší, než model unese (kontext, viz <a class="inline-link" href="#slovnicek">slovníčku</a>).</td><td>V hlášení klikněte na <b>Increase Context Size</b> nebo zvyšte <b>Context Size</b> v nastavení modelu.</td></tr>
+        <tr><td>„Failed to fetch“ nebo „Something’s Amiss“</td><td>Model zabírá příliš paměti, nebo port 1337 používá jiný program.</td><td>Model nesmí zabírat víc než 80&nbsp;% RAM. Snižte počet vrstev na GPU (<code class="inline">ngl</code>) a zkontrolujte port příkazem níže.</td></tr>
+        <tr><td>Jan nepoužívá grafickou kartu</td><td>Chybí ovladače, je vypnutá GPU Acceleration, nebo má karta méně než 6 GB VRAM.</td><td>Zkontrolujte ovladače a v <b>Settings → Hardware</b> zapněte GPU Acceleration.</td></tr>
+        <tr><td>Cloud: chyba 401</td><td>Klíč je chybný, zrušený nebo patří jinému poskytovateli.</td><td>Vložte správný API klíč v <b>Settings → Model Providers</b>.</td></tr>
+        <tr><td>Cloud: chyba 403</td><td>Klíč nemá přístup k danému modelu.</td><td>Zvolte jiný model nebo upravte oprávnění klíče u poskytovatele.</td></tr>
+        <tr><td>Cloud: chyba 429</td><td>Příliš mnoho požadavků, nebo vám došel kredit.</td><td>Chvíli počkejte a zkontrolujte kredit u poskytovatele.</td></tr>
+        <tr><td>Vlastní endpoint: chyba 404</td><td>Základní adresa nekončí <code class="inline">/v1</code>.</td><td>Doplňte <code class="inline">/v1</code> na konec adresy.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">Kde najít logy</h3>
+    <p>Logy jsou záznam toho, co Jan dělal, a pomáhají najít příčinu chyby. V Janu otevřete <b>System Monitor</b> v patičce a zvolte <b>App Log</b>. Soubor je také v <code class="inline">%APPDATA%\Jan\data\logs\app.log</code>. Při chybě modelu hledejte řádky s předponou <code class="inline">[llamacpp-router]</code>.</p>
+    <div class="imgph"><b>OBRÁZEK: System Monitor a App Log</b>Označte System Monitor v patičce a řádek App Log.</div>
+
+    <h3 class="sub-title">Limity: co od Janu nečekat</h3>
+    <ul class="steps bullets">
+      <li><b>Hardware:</b> rychlost a kvalita lokálních modelů závisí na RAM a grafické kartě. Slabší počítač zvládne jen malé modely.</li>
+      <li><b>Kvalita:</b> malé lokální modely bývají slabší než největší cloudové. Je to cena za soukromí a nulovou cenu.</li>
+      <li><b>Nástroje:</b> web a MCP fungují jen s modely se schopností <b>tools</b>.</li>
+      <li><b>Obrázky a zvuk:</b> potřebují model se schopností <b>vision</b>, respektive model, který zvuk zpracuje.</li>
+      <li><b>Kontext:</b> výchozí okno má 8192 tokenů, lze zvýšit až na 131072, ale zabere víc paměti.</li>
+      <li><b>Soukromí:</b> platí jen u lokálních modelů. Cloud posílá data poskytovateli.</li>
+      <li><b>Funkce v přípravě:</b> paměť (zapamatování preferencí) je na webu Janu stále „Coming Soon“, Cowork je ve fázi Preview.</li>
+      <li><b>Jan CLI:</b> od verze 0.8.5 už není součástí aplikace a instaluje se zvlášť.</li>
+    </ul>
+
+    <p>Zjištění, co obsazuje port 1337:</p>
+    <div class="cmd"><span><span class="prompt">CMD&gt;</span> netstat -ano | find "1337"</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <p>Port můžete změnit v <b>Settings → Local API Server → Configuration → Server Port</b>.</p>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">⛔</span>
+      <span>Poslední možnost je <b>Settings → General → Reset To Factory Settings</b>. Smaže veškerou historii chatů, stažené modely i nastavení.</span>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>Když si nevíte rady, napište na Discord Janu do kanálu <b>#jan-help</b> a přiložte logy. Před odesláním z nich odstraňte osobní údaje. Logy se na straně Janu uchovávají jen 24 hodin, hlaste problém co nejdřív.</span>
+    </div>
+  </section>
+
+  <!-- 09 VIDEA A ODKAZY -->
+  <section class="section" id="videa">
+    <div class="section-header"><span class="section-num">09</span><h2>Videa a odkazy</h2></div>
+
+    <h3 class="sub-title">Oficiální zdroje</h3>
+    <ul class="steps bullets">
+      <li><a class="inline-link" href="https://www.jan.ai/" target="_blank" rel="noopener">jan.ai</a> – domovská stránka a stažení.</li>
+      <li><a class="inline-link" href="https://www.jan.ai/docs/desktop/quickstart" target="_blank" rel="noopener">jan.ai/docs</a> – oficiální dokumentace, ze které tento návod vychází.</li>
+      <li><a class="inline-link" href="https://github.com/janhq/jan" target="_blank" rel="noopener">github.com/janhq/jan</a> – zdrojový kód.</li>
+      <li><a class="inline-link" href="https://discord.com/invite/FTk2MvZwJH" target="_blank" rel="noopener">Discord Janu</a> – komunita a pomoc.</li>
+    </ul>
+
+    <h3 class="sub-title">Videa na YouTube</h3>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <span>České ani německé video přímo o Janu jsem nenašel. Níže jsou videa anglická a dvě v jiných jazycích. Podle titulků jsou správně zaměřená, ale neprošel jsem je. Starší videa mohou ukazovat zastaralé rozhraní.</span>
+    </div>
+    <table>
+      <thead><tr><th>Video</th><th>Jazyk</th><th>Téma</th></tr></thead>
+      <tbody>
+        <tr><td><a class="inline-link" href="https://www.youtube.com/watch?v=p9w7D2zLnP4" target="_blank" rel="noopener">Run Your Own FREE ChatGPT Alternative on Windows with Jan AI!</a></td><td>EN</td><td>Instalace na Windows</td></tr>
+        <tr><td><a class="inline-link" href="https://www.youtube.com/watch?v=xPhLXefM4g4" target="_blank" rel="noopener">The Best Free AI App Alternative You’ve Never Heard Of</a></td><td>EN</td><td>Představení Janu</td></tr>
+        <tr><td><a class="inline-link" href="https://www.youtube.com/watch?v=jgBbz3Fesoc" target="_blank" rel="noopener">Run AI Locally: How to Use Jan AI (No Subscription!)</a></td><td>EN</td><td>Použití bez předplatného</td></tr>
+        <tr><td><a class="inline-link" href="https://www.youtube.com/watch?v=iBi5SxnXVBo" target="_blank" rel="noopener">Stop Sharing Your Data! Run Your Own Private AI with Jan AI</a></td><td>EN</td><td>Soukromá lokální AI</td></tr>
+        <tr><td><a class="inline-link" href="https://www.youtube.com/watch?v=GmQQjmQRUI8" target="_blank" rel="noopener">Stop Sharing Your Data: Run a Private ChatGPT Alternative with Jan AI</a></td><td>EN</td><td>Soukromá alternativa ChatGPT</td></tr>
+        <tr><td><a class="inline-link" href="https://www.youtube.com/watch?v=VhK2CQkAuro" target="_blank" rel="noopener">How to Make Jan.ai Local AI Model ACCESS the Web</a></td><td>EN</td><td>MCP a přístup na web (starší)</td></tr>
+        <tr><td><a class="inline-link" href="https://www.youtube.com/watch?v=ozePNGUoXlI" target="_blank" rel="noopener">Corre IA Offline en tu Computadora — Jan Tutorial Completo 2026</a></td><td>ES</td><td>Kompletní tutoriál</td></tr>
+        <tr><td><a class="inline-link" href="https://www.youtube.com/watch?v=Ib5P0dvyDy0" target="_blank" rel="noopener">Jan AI: L’Alternativa Open Source a ChatGPT che Funziona Offline</a></td><td>IT</td><td>Offline alternativa ChatGPT</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">Německé články</h3>
+    <ul class="steps bullets">
+      <li><a class="inline-link" href="https://ki-spot.de/jan-ai/" target="_blank" rel="noopener">ki-spot.de – Jan AI Anleitung</a></li>
+      <li><a class="inline-link" href="https://digitaleprofis.de/jan-installieren-lokale-ki-nutzen/" target="_blank" rel="noopener">digitaleprofis.de – Jan installieren: Lokale KI einfach nutzen</a></li>
+    </ul>
+  </section>
+
+  <!-- SLOVNÍČEK -->
+  <section class="section" id="slovnicek">
+    <div class="section-header"><span class="section-num">A–Z</span><h2>Slovníček pojmů</h2></div>
+    <p>Stručná vysvětlení pro laiky. <span class="gen">OBECNÁ RADA</span> Nepocházejí z dokumentace Janu.</p>
+    <dl class="gloss">
+      <dt>Model</dt><dd>Soubor, který „umí odpovídat“. Jan ho stáhne a spustí na vašem počítači.</dd>
+      <dt>Parametry</dt><dd>Měřítko velikosti modelu. „4B“ znamená 4 miliardy. Víc parametrů obvykle znamená chytřejší, ale náročnější model.</dd>
+      <dt>GGUF</dt><dd>Formát souboru lokálních modelů, který Jan umí spustit.</dd>
+      <dt>Kvantizace</dt><dd>Zmenšení modelu, aby zabíral míň paměti za cenu mírně nižší kvality. V Hubu ji poznáte podle Small / Balanced / Large.</dd>
+      <dt>RAM</dt><dd>Hlavní paměť počítače. Model se do ní načítá při práci.</dd>
+      <dt>VRAM</dt><dd>Paměť grafické karty. Rychlejší než RAM, ale bývá menší.</dd>
+      <dt>CPU / GPU</dt><dd>CPU je procesor, GPU grafická karta. Model na GPU běží obvykle rychleji.</dd>
+      <dt>CUDA, Vulkan</dt><dd>Technologie, přes které Jan používá grafickou kartu (CUDA u NVIDIA, Vulkan u AMD a Intel Arc).</dd>
+      <dt>Kontext</dt><dd>Kolik textu si model „drží v hlavě“ během jednoho rozhovoru. Když se přeplní, hlásí chybu.</dd>
+      <dt>Token</dt><dd>Kousek textu (slovo nebo jeho část), ve kterém se kontext měří.</dd>
+      <dt>Hub</dt><dd>Katalog modelů přímo v Janu.</dd>
+      <dt>Hugging Face</dt><dd>Web s veřejnou sbírkou modelů, odkud si můžete stáhnout další.</dd>
+      <dt>Tools, vision</dt><dd>Schopnosti modelu: tools = umí používat nástroje (web, MCP), vision = rozumí obrázkům.</dd>
+      <dt>API</dt><dd>Způsob, jak se spolu domluví dva programy.</dd>
+      <dt>API klíč</dt><dd>Tajné heslo k cloudové službě. Nikomu ho neukazujte.</dd>
+      <dt>Endpoint, port</dt><dd>Endpoint je adresa, na které služba odpovídá. Port je číslo na konci adresy (u Janu 1337). Adresa 127.0.0.1 znamená „tento počítač“.</dd>
+      <dt>MCP</dt><dd>Standard, díky kterému model může používat externí nástroje.</dd>
+      <dt>Node.js, npx</dt><dd>Program potřebný ke spouštění MCP serverů. npx je jeho součást.</dd>
+      <dt>Příkazový řádek</dt><dd>Okno pro textové příkazy (PowerShell, CMD).</dd>
+      <dt>Logy</dt><dd>Záznam událostí v aplikaci, užitečný při hledání chyby.</dd>
+    </dl>
+  </section>
+
+</main>
+
+<footer>
+  <p>Jan AI · Lokální umělá inteligence na Windows</p>
+  <a href="../index.html" class="footer-back">← Zpět na rozcestník</a>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const bar = document.getElementById('progressBar');
+    const st = document.documentElement.scrollTop;
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (st / h * 100) + '%';
+  });
+
+  const sections = document.querySelectorAll('[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(l => l.classList.remove('active'));
+        const t = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (t) t.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  function copyCmd(btn) {
+    const line = btn.closest('.cmd');
+    const text = line.querySelector('.prompt').nextSibling.textContent.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.textContent;
+      btn.textContent = 'zkopírováno!';
+      setTimeout(() => btn.textContent = old, 1800);
+    });
+  }
+
+  function copyBlock(btn) {
+    const text = btn.closest('.cmd-block').querySelector('pre').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.textContent;
+      btn.textContent = 'zkopírováno!';
+      setTimeout(() => btn.textContent = old, 1800);
+    });
+  }
+
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebarEl = document.getElementById('sidebar');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function closeMobileMenu() {
+    sidebarEl.classList.remove('open');
+    sidebarBackdrop.classList.remove('open');
+  }
+
+  menuToggle.addEventListener('click', () => {
+    sidebarEl.classList.toggle('open');
+    sidebarBackdrop.classList.toggle('open');
+  });
+  sidebarBackdrop.addEventListener('click', closeMobileMenu);
+  document.querySelectorAll('.nav-item').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+</script>
+
+</body>
+</html>

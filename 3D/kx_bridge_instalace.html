@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instalace KX-Bridge (Windows)</title>
+<style>
+  :root {
+    --bg:#f4f8fe; --panel:#ffffff; --deep:#0a2a5c; --blue:#1456b8; --blue2:#0f4596;
+    --line:#c9d8ee; --text:#0f1f3a; --muted:#38506f;
+    --amber:#b36b00; --danger:#a81f1f; --green:#1a7f55;
+    --mono:Consolas,'Courier New',monospace;
+    --sans:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); font-size:15px; line-height:1.65; }
+
+  .progress-bar { position:fixed; top:0; left:0; height:3px; width:0%; background:var(--blue); z-index:999; transition:width .1s; }
+
+  .sidebar { position:fixed; left:0; top:0; width:273px; height:100vh; background:var(--panel); border-right:1px solid var(--line); overflow-y:auto; z-index:200; }
+  .sidebar-brand { padding:28px 22px 18px; border-bottom:1px solid var(--line); }
+  .sidebar-back { display:block; color:var(--blue); text-decoration:none; font-size:12px; margin-bottom:16px; }
+  .sidebar-back:hover { color:var(--deep); text-decoration:underline; }
+  .sidebar-name { font-size:17px; font-weight:700; color:var(--deep); }
+  .sidebar-name small { display:block; font-size:12px; font-weight:400; color:var(--muted); margin-top:2px; }
+  .nav-label { padding:16px 22px 6px; font-size:11px; letter-spacing:.08em; color:var(--muted); }
+  .nav-item { display:flex; align-items:center; gap:9px; padding:8px 22px; color:var(--text); text-decoration:none; font-size:13.5px; border-left:3px solid transparent; }
+  .nav-item:hover, .nav-item.active { background:#e6eefa; border-left-color:var(--deep); font-weight:600; }
+  .nav-num { font-family:var(--mono); font-size:11px; color:var(--blue); background:#e6eefa; border:1px solid var(--line); padding:1px 5px; min-width:26px; text-align:center; }
+
+  .main { margin-left:273px; max-width:1000px; padding:56px 56px 20px; }
+  footer { margin-left:273px; padding:24px 56px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); }
+
+  .hero { background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-bottom:48px; }
+  .hero-bar { background:var(--deep); height:14px; }
+  .hero-body { padding:30px 34px; }
+  .hero h1 { font-size:32px; color:var(--deep); line-height:1.2; }
+  .hero p { margin-top:10px; max-width:680px; }
+  .hero-dl { margin-top:18px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  .btn { display:inline-block; background:var(--blue); color:#fff; text-decoration:none; font-weight:600; padding:9px 18px; border-radius:6px; }
+  .btn:hover { background:var(--deep); }
+  .hero-dl span { font-size:13px; color:var(--muted); }
+
+  .section { margin-bottom:52px; scroll-margin-top:24px; }
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:20px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+  .section-num { font-family:var(--mono); font-size:12px; color:#fff; background:var(--deep); padding:3px 9px; border-radius:3px; }
+  .section h2 { font-size:22px; color:var(--deep); }
+  .section > p { margin-bottom:12px; }
+
+  .cmd { background:var(--deep); color:#fff; border-radius:6px; margin:10px 0; display:flex; justify-content:space-between; align-items:center; padding:10px 14px; font-family:var(--mono); font-size:13.5px; }
+  .copy-btn { font-family:var(--mono); font-size:11px; color:#fff; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.35); border-radius:4px; padding:3px 9px; cursor:pointer; flex-shrink:0; margin-left:14px; }
+  .copy-btn:hover { background:rgba(255,255,255,.24); }
+
+  .card { background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--blue); border-radius:4px; padding:16px 20px; margin-bottom:14px; }
+  .card h4 { font-size:14px; color:var(--deep); margin-bottom:4px; }
+  .card p { font-size:14px; }
+
+  .alert { display:flex; gap:12px; border:1px solid; border-radius:6px; padding:12px 16px; margin:16px 0; font-size:14px; }
+  .alert-info { border-color:#9db9e3; background:#e6eefa; }
+  .alert-warn { border-color:rgba(179,107,0,.45); background:rgba(179,107,0,.08); }
+  .alert-danger { border-color:rgba(168,31,31,.45); background:rgba(168,31,31,.07); }
+  .alert-icon { flex-shrink:0; font-weight:700; }
+  .alert b { color:var(--deep); }
+
+  .steps { list-style:none; counter-reset:step; }
+  .steps li { counter-increment:step; display:flex; gap:14px; align-items:flex-start; padding:11px 0; border-bottom:1px solid var(--line); }
+  .steps li:last-child { border-bottom:none; }
+  .steps li::before { content:counter(step); font-size:12px; font-weight:600; color:#fff; background:var(--blue); min-width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+  .steps b { color:var(--deep); }
+
+  ul.bullets { margin:6px 0 14px 22px; }
+  ul.bullets li { margin-bottom:5px; }
+  code.inline { font-family:var(--mono); color:var(--blue2); background:#e6eefa; padding:1px 6px; border-radius:3px; font-size:13px; }
+  a.inline-link { color:var(--blue); font-weight:600; }
+
+  .footer-back { display:inline-block; margin-top:8px; color:var(--blue); text-decoration:none; background:#e6eefa; border:1px solid var(--line); padding:6px 14px; border-radius:4px; font-size:12.5px; }
+  .footer-back:hover { background:#d4e2f6; }
+
+  .menu-toggle { display:none; position:fixed; top:14px; left:14px; z-index:300; width:42px; height:42px; align-items:center; justify-content:center; background:var(--panel); border:1px solid var(--line); border-radius:8px; font-size:20px; color:var(--deep); cursor:pointer; }
+  .sidebar-backdrop { display:none; position:fixed; inset:0; background:rgba(10,42,92,.45); z-index:190; }
+
+  @media (max-width:900px) {
+    .menu-toggle { display:flex; }
+    .sidebar { transform:translateX(-100%); transition:transform .25s ease; box-shadow:6px 0 24px rgba(0,0,0,.2); }
+    .sidebar.open { transform:translateX(0); }
+    .sidebar-backdrop.open { display:block; }
+    .main, footer { margin-left:0; padding:36px 24px 36px 72px; }
+    .hero h1 { font-size:26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<button class="menu-toggle" id="menuToggle" aria-label="Otevřít menu kapitol">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <a href="../index.html" class="sidebar-back">← Zpět na rozcestník</a>
+    <div class="sidebar-name">KX-Bridge<small>Instalace na Windows</small></div>
+  </div>
+  <div class="nav-label">Obsah</div>
+  <a href="#co-je" class="nav-item active"><span class="nav-num">01</span>Co to je</a>
+  <a href="#priprava" class="nav-item"><span class="nav-num">02</span>Příprava</a>
+  <a href="#spusteni" class="nav-item"><span class="nav-num">03</span>Stažení a spuštění</a>
+  <a href="#tiskarna" class="nav-item"><span class="nav-num">04</span>Přidání tiskárny</a>
+  <a href="#orca" class="nav-item"><span class="nav-num">05</span>Připojení OrcaSliceru</a>
+  <a href="#overeni" class="nav-item"><span class="nav-num">06</span>Ověření funkčnosti</a>
+  <a href="#problemy" class="nav-item"><span class="nav-num">07</span>Řešení problémů</a>
+  <a href="#bezpecnost" class="nav-item"><span class="nav-num">08</span>Bezpečnost</a>
+  <a href="#doplnky" class="nav-item"><span class="nav-num">09</span>Aktualizace a doplňky</a>
+  <a href="#videa" class="nav-item"><span class="nav-num">10</span>Video návody</a>
+</nav>
+
+<main class="main">
+
+  <div class="hero">
+    <div class="hero-bar"></div>
+    <div class="hero-body">
+      <h1>Instalace KX-Bridge</h1>
+      <p>KX-Bridge je komunitní program, díky kterému můžete tiskárnu Anycubic Kobra X ovládat z OrcaSliceru bez Klipperu a bez Raspberry Pi. Tento návod vás provede instalací na Windows krok za krokem.</p>
+      <div class="hero-dl">
+        <a class="btn" href="https://gitea.it-drui.de/viewit/KX-Bridge-Release/releases" target="_blank" rel="noopener">Stáhnout (Releases)</a>
+        <span>Oficiální stránka s hotovými verzemi programu.</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" id="co-je">
+    <div class="section-header"><span class="section-num">01</span><h2>Co to je</h2></div>
+    <p>KX-Bridge je „most“ mezi tiskárnou Anycubic Kobra X a OrcaSlicerem. Tváří se jako Moonraker server, takže OrcaSlicer ho bere jako běžnou tiskárnu, ale ve skutečnosti komunikuje přímo s Kobra X. Žádný Klipper ani Raspberry Pi není potřeba.</p>
+    <p>Bridge navíc nabízí webové rozhraní, kde uvidíte a ovládáte tisk. Mezi hlavní funkce patří:</p>
+    <ul class="bullets">
+      <li>spuštění, pozastavení, obnovení a zrušení tisku, teploty a rychlost tisku,</li>
+      <li>živý stav tisku (teploty, průběh, vrstvy, zbývající čas) a obraz z kamery,</li>
+      <li>AMS / vícebarevný tisk s výběrem profilu filamentu pro každý slot,</li>
+      <li>procházení G-code souborů a podpora více tiskáren v jedné instanci.</li>
+    </ul>
+    <div class="alert alert-info"><span class="alert-icon">i</span><span>Jde o komunitní projekt, který není spojený s firmou Anycubic. Je k dispozici zdarma pod licencí GPLv3.</span></div>
+  </section>
+
+  <section class="section" id="priprava">
+    <div class="section-header"><span class="section-num">02</span><h2>Příprava</h2></div>
+    <p>Než začnete, ujistěte se, že tiskárna a počítač jsou ve stejné síti. Dále je potřeba na tiskárně zapnout LAN režim.</p>
+    <ul class="steps">
+      <li><span>Na displeji tiskárny otevřete <b>Settings</b>.</span></li>
+      <li><span>Zvolte <b>Enable LAN mode</b> a zapněte ho.</span></li>
+      <li><span>Zjistěte <b>IP adresu tiskárny</b> (např. v nastavení sítě na tiskárně nebo v seznamu zařízení v administraci routeru). Budete ji potřebovat v kroku 04.</span></li>
+    </ul>
+  </section>
+
+  <section class="section" id="spusteni">
+    <div class="section-header"><span class="section-num">03</span><h2>Stažení a spuštění</h2></div>
+    <ul class="steps">
+      <li><span>Otevřete <a class="inline-link" href="https://gitea.it-drui.de/viewit/KX-Bridge-Release/releases" target="_blank" rel="noopener">stránku Releases</a> a stáhněte verzi pro Windows. Doporučená je poslední stabilní verze označená jako <b>Latest</b>.</span></li>
+      <li><span>Uložte ji do vlastní složky podle vašeho výběru.</span></li>
+      <li><span>Spusťte <code class="inline">kx-bridge.exe</code>.</span></li>
+    </ul>
+    <div class="card">
+      <h4>Přenosná aplikace</h4>
+      <p>Složky <code class="inline">config</code> a <code class="inline">data</code> (nastavení, databáze a uložené G-code soubory) se vytvoří vedle souboru <code class="inline">kx-bridge.exe</code>. Zkopírováním celé složky přenesete i celou instalaci na jiný počítač.</p>
+    </div>
+  </section>
+
+  <section class="section" id="tiskarna">
+    <div class="section-header"><span class="section-num">04</span><h2>Přidání tiskárny</h2></div>
+    <p>Ovládání bridge probíhá ve webovém prohlížeči na adrese:</p>
+    <div class="cmd"><span>http://IP-BRIDGE:7125</span><span class="copy-btn" onclick="copyCmd(this)">kopírovat</span></div>
+    <p><code class="inline">IP-BRIDGE</code> je IP adresa počítače, na kterém bridge běží. Na tomto počítači ji zjistíte příkazem <code class="inline">ipconfig</code> v příkazovém řádku (řádek IPv4).</p>
+    <ul class="steps">
+      <li><span>Při prvním spuštění se zobrazí záložka <b>Printers</b> s tlačítkem <b>+ Add printer</b>.</span></li>
+      <li><span>Klikněte na <b>+ Add printer</b> a zadejte pouze <b>IP adresu tiskárny</b>. Přihlašovací jméno, heslo i ID zařízení bridge stáhne a dešifruje sám.</span></li>
+    </ul>
+    <div class="alert alert-warn"><span class="alert-icon">!</span><span>Zadávejte jen IP adresu, <b>bez portu</b>. Správně je např. <code class="inline">192.168.1.102</code>, špatně <code class="inline">192.168.1.102:9883</code>.</span></div>
+    <div class="alert alert-info"><span class="alert-icon">i</span><span>Máte víc tiskáren? Znovu klikněte na <b>+ Add printer</b>. Každá dostane vlastní port (7125, 7126, …) a přepínáte je v rozbalovací nabídce v záhlaví.</span></div>
+  </section>
+
+  <section class="section" id="orca">
+    <div class="section-header"><span class="section-num">05</span><h2>Připojení OrcaSliceru</h2></div>
+    <p>V OrcaSliceru přidejte tiskárnu a nastavte připojení takto:</p>
+    <ul class="steps">
+      <li><span>Typ připojení (Connection type): <b>Moonraker</b>.</span></li>
+      <li><span>Host: <code class="inline">http://IP-BRIDGE:7125</code>. Zadejte celou adresu včetně <code class="inline">http://</code> a portu <code class="inline">:7125</code>.</span></li>
+    </ul>
+    <div class="alert alert-danger"><span class="alert-icon">!</span><span>Typ připojení musí být <b>Moonraker</b>. Volby <b>Bambu</b> ani <b>Klipper</b> nebudou fungovat.</span></div>
+  </section>
+
+  <section class="section" id="overeni">
+    <div class="section-header"><span class="section-num">06</span><h2>Ověření funkčnosti</h2></div>
+    <p>Po nastavení si ověřte, že vše funguje:</p>
+    <ul class="steps">
+      <li><span>Ve webovém rozhraní bridge (<code class="inline">http://IP-BRIDGE:7125</code>) vidíte přidanou tiskárnu a její aktuální stav, např. teploty.</span></li>
+      <li><span>V OrcaSliceru zkuste otestovat připojení (tlačítko testu v nastavení tiskárny) a poté odeslat testovací tisk.</span></li>
+    </ul>
+  </section>
+
+  <section class="section" id="problemy">
+    <div class="section-header"><span class="section-num">07</span><h2>Řešení problémů</h2></div>
+    <div class="card">
+      <h4>Tiskárna se nenašla</h4>
+      <p>Zkontrolujte, že je na tiskárně zapnutý LAN režim (Settings → Enable LAN mode) a že tiskárna i bridge jsou ve stejné síti.</p>
+    </div>
+    <div class="card">
+      <h4>Chyba „Wrong MQTT credentials“ při spuštění</h4>
+      <p>Přidejte tiskárnu znovu přes <b>+ Add printer</b> a restartujte bridge. Ověřte také, že jste zadali jen IP adresu, bez portu.</p>
+    </div>
+  </section>
+
+  <section class="section" id="bezpecnost">
+    <div class="section-header"><span class="section-num">08</span><h2>Bezpečnost</h2></div>
+    <ul class="bullets">
+      <li>Bridge je dostupný v místní síti na adrese <code class="inline">http://IP-BRIDGE:7125</code>. <b>Nevystavujte ho do internetu.</b></li>
+      <li>Soubor <code class="inline">config/config.ini</code> obsahuje přihlašovací údaje k tiskárně. Nesdílejte ho veřejně.</li>
+      <li>Tyto údaje nedávají přístup do cloudových služeb Anycubic.</li>
+      <li>Případné pluginy bridge běží s plnou důvěrou, bez izolace. Instalujte jen ty z důvěryhodných zdrojů.</li>
+    </ul>
+  </section>
+
+  <section class="section" id="doplnky">
+    <div class="section-header"><span class="section-num">09</span><h2>Aktualizace a doplňky</h2></div>
+    <div class="card">
+      <h4>Aktualizace</h4>
+      <p>Bridge umí instalovat nové verze přímo z prohlížeče. Používejte stabilní verze. Takzvané <b>nightly</b> buildy obsahují nejnovější funkce, ale mohou být nestabilní.</p>
+    </div>
+    <div class="card">
+      <h4>Volitelně: AMS a Spoolman</h4>
+      <p>Pokud používáte AMS, autor nabízí upravenou verzi <a class="inline-link" href="https://gitea.it-drui.de/viewit/OrcaSlicer-KX/releases/latest" target="_blank" rel="noopener">OrcaSlicer-KX</a> pro správné přiřazení filamentu ke slotům. Běžný OrcaSlicer na tisk stačí. Bridge se také umí propojit se Spoolmanem (evidence cívek a spotřeby filamentu). Obojí je jen možnost navíc, pro základní provoz nepotřebujete ani jedno.</p>
+    </div>
+  </section>
+
+  <section class="section" id="videa">
+    <div class="section-header"><span class="section-num">10</span><h2>Video návody</h2></div>
+    <p>Autor projektu natočil video s ukázkou nastavení a používání.</p>
+    <div class="card">
+      <h4>Německy</h4>
+      <p><a class="inline-link" href="https://www.youtube.com/watch?v=vGLw5rw3Bwk" target="_blank" rel="noopener">KX-Bridge um den Anycubic Kobra X in Orcaslicer zu bedienen und Drucke zu senden</a></p>
+    </div>
+    <div class="card">
+      <h4>Anglicky</h4>
+      <p><a class="inline-link" href="https://www.youtube.com/watch?v=E3sDigSeSdM" target="_blank" rel="noopener">KX-Bridge to use the Anycubic Kobra X in Orcaslicer and send prints as well as control the process</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Instalace KX-Bridge · Anycubic Kobra X a OrcaSlicer</p>
+  <a href="../index.html" class="footer-back">← Zpět na rozcestník</a>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const st = document.documentElement.scrollTop;
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progressBar').style.width = (h > 0 ? st / h * 100 : 0) + '%';
+  });
+
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(l => l.classList.remove('active'));
+        const t = document.querySelector('.nav-item[href="#' + e.target.id + '"]');
+        if (t) t.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+
+  function copyCmd(btn) {
+    const text = btn.previousElementSibling.textContent.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.textContent;
+      btn.textContent = 'zkopírováno!';
+      setTimeout(() => btn.textContent = old, 1800);
+    });
+  }
+
+  const sidebarEl = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  function closeMenu() { sidebarEl.classList.remove('open'); backdrop.classList.remove('open'); }
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    sidebarEl.classList.toggle('open'); backdrop.classList.toggle('open');
+  });
+  backdrop.addEventListener('click', closeMenu);
+  navItems.forEach(l => l.addEventListener('click', closeMenu));
+</script>
+
+</body>
+</html>
