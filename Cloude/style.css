@@ -7,13 +7,15 @@
   --border: #1e2530;
   --accent: #e8a020;
   --accent-dim: rgba(232, 160, 32, 0.1);
-  --text: #c9d1d9;
-  --muted: #6e7681;
-  --heading: #f0f6fc;
+  --text: #f0f6fc;
+  --muted: #b4bdc7;
+  --heading: var(--accent);
+  --white: #ffffff;
   --green: #3fb950;
   --blue: #79c0ff;
   --red: #f85149;
-  --sidebar-w: 270px;
+  --purple: #d2a8ff;
+  --sidebar-w: 297px;
 }
 
 * {
@@ -148,7 +150,7 @@ html, body {
 .main-content {
   flex: 1;
   padding: 56px 64px;
-  max-width: 880px;
+  max-width: 1170px;
   margin-left: var(--sidebar-w);
 }
 
@@ -257,7 +259,7 @@ html, body {
 .chapters {
   padding: 0 60px 60px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2px;
   background: var(--border);
 }
@@ -752,3 +754,730 @@ tbody tr:nth-child(even) {
     padding: 8px;
   }
 }
+
+/* ============================================================
+   ROZŠÍŘENÍ (úkol 1): pod díly a/b/c, lokální sekce, progress bar,
+   číslování h2, hlavička stránky, karty na indexu generované z configu
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+/* ----- Progress bar ----- */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 1002;
+  transition: width 0.1s;
+}
+
+/* ----- Lokální sekce stránky (podkapitoly) ----- */
+.sb-subchapters {
+  list-style: none;
+  margin: 0;
+  padding: 2px 0 6px;
+}
+
+.sb-subchapter {
+  display: block;
+  padding: 5px 20px 5px 36px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.sb-subchapter:hover {
+  color: var(--text);
+}
+
+.sb-subchapter.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+.sidebar a,
+.sidebar a:hover {
+  text-decoration: none;
+}
+
+/* ----- Číslo před nadpisem h2 ----- */
+.content h2 .h2-num {
+  color: var(--accent);
+  margin-right: 0.5em;
+}
+
+.content h2[id] {
+  scroll-margin-top: 24px;
+}
+
+/* ----- Hlavička stránky: odkaz na hlavní díl (u pod dílů) ----- */
+.page-parent {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 12px;
+  transition: color 0.2s;
+}
+
+.page-parent:hover {
+  color: var(--accent);
+}
+
+/* ----- Karty na indexu: pod díly ----- */
+.card-parts {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.part-chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  padding: 2px 7px;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+}
+
+@media (max-width: 899px) {
+  .content h2[id] {
+    scroll-margin-top: 72px;
+  }
+}
+
+/* ============================================================
+   ÚKOL 2: BARVY TEXTU, ČITELNOST, INDEX, STAVEBNÍ PRVKY OBSAHU
+   ============================================================ */
+
+/* ----- Barvy textu: text bílý, nadpisy oranžové (--heading = akcent) ----- */
+.hero h1 { color: var(--white); }
+.content strong,
+.tl strong { color: var(--white); }
+.pn a:hover { color: var(--white); }
+.callout-title { color: var(--accent); }
+.callout.gn .callout-title { color: var(--green); }
+.callout.bl .callout-title { color: var(--blue); }
+.callout.rd .callout-title { color: var(--red); }
+
+/* ----- Čitelnost: větší malá písma ----- */
+.sb-home { font-size: 0.8rem; }
+.sb-link { font-size: 0.82rem; }
+.sb-subchapter { font-size: 0.76rem; }
+.page-num { font-size: 0.75rem; }
+.hero-meta { font-size: 0.76rem; }
+.card-num { font-size: 0.7rem; }
+.card p { font-size: 0.9rem; }
+.tag, .part-chip { font-size: 0.68rem; }
+.cb-label { font-size: 0.74rem; }
+.callout-title { font-size: 0.82rem; }
+.content p, .tl li { font-size: 1rem; }
+.callout p, .step p { font-size: 0.95rem; }
+table { font-size: 0.95rem; }
+footer p { font-size: 0.72rem; }
+
+/* ----- Index a rámeček obsahu: odsazení řeší jen .main-content ----- */
+.hero { padding: 64px 0 48px; }
+.section-header { padding: 36px 0 16px; }
+.chapters { padding: 0 0 60px; }
+footer { padding: 24px 0; }
+.hero,
+.section-header,
+footer { padding-left: 0; padding-right: 0; }
+
+/* Index: 3 sloupce od 700 px výš, pod 700 px vše pod sebou na výšku */
+@media (min-width: 700px) {
+  .chapters { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 699px) {
+  .chapters { grid-template-columns: 1fr; }
+}
+@media (max-width: 599px) {
+  table { font-size: 0.85rem; }
+}
+
+/* ----- Seznamy v obsahu ----- */
+.content ul:not(.tl),
+.content ol { margin: 0 0 16px 1.4em; }
+.content ul:not(.tl) li,
+.content ol li { font-size: 1rem; line-height: 1.7; margin-bottom: 6px; }
+
+/* ----- Inline prvky: kód, klávesa, prvek rozhraní ----- */
+.content code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.88em;
+  color: var(--blue);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+kbd {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82em;
+  color: var(--white);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.ui {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.86em;
+  color: var(--white);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.ui .cz {
+  font-family: 'Lora', Georgia, serif;
+  color: var(--muted);
+}
+
+/* ----- Značka úrovně (Základ / Podrobně) v hlavičce ----- */
+.level {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 2px 8px;
+  border: 1px solid;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  vertical-align: middle;
+}
+.level.basic { color: var(--green); border-color: rgba(63, 185, 80, 0.5); background: rgba(63, 185, 80, 0.08); }
+.level.detail { color: var(--blue); border-color: rgba(121, 192, 255, 0.5); background: rgba(121, 192, 255, 0.08); }
+
+/* ----- Ukázka promptu (tlačítko Kopírovat doplní sidebar-init.js) ----- */
+.prompt {
+  margin: 24px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.prompt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.prompt-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.74rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.prompt pre,
+.cb pre {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text);
+}
+
+.prompt pre {
+  margin: 0;
+  padding: 16px;
+  font-size: 0.86rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ph {
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.copy-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid rgba(232, 160, 32, 0.5);
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+.copy-btn:hover { background: var(--accent-dim); }
+.copy-btn.done { color: var(--green); border-color: rgba(63, 185, 80, 0.55); }
+
+.cb.copyable .cb-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ----- Ukázka odpovědi Claudea ----- */
+.reply {
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  border-radius: 4px;
+}
+
+.reply-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.74rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.reply > :last-child { margin-bottom: 0; }
+
+/* ----- Příklad (scénář: situace → prompt → výsledek), i pro Skills a agenty ----- */
+.example {
+  margin: 32px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 4px;
+}
+
+.example-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.example-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--accent);
+  border: 1px solid rgba(232, 160, 32, 0.5);
+  padding: 2px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.example-head h4 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.example-body { padding: 4px 20px 12px; }
+
+.content .ex-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.74rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 18px 0 8px;
+}
+
+.example .prompt,
+.example .reply { margin: 8px 0 16px; }
+
+/* ----- Kdy použít / kdy ne ----- */
+.when {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.when > div {
+  padding: 16px 20px;
+  background: var(--surface);
+  border-radius: 4px;
+  border-top: 3px solid;
+}
+
+.when-yes { border-top-color: var(--green) !important; }
+.when-no { border-top-color: var(--red) !important; }
+
+.when h4 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+.when-yes h4 { color: var(--green); }
+.when-no h4 { color: var(--red); }
+
+.content .when ul { list-style: none; margin: 0; padding: 0; }
+.content .when li { position: relative; padding-left: 22px; margin-bottom: 8px; font-size: 0.95rem; }
+.when-yes li::before { content: '✓'; position: absolute; left: 0; color: var(--green); }
+.when-no li::before { content: '✗'; position: absolute; left: 0; color: var(--red); }
+
+@media (max-width: 700px) {
+  .when { grid-template-columns: 1fr; }
+}
+
+/* ----- Tabulka: posuvný obal pro mobil, stavy ----- */
+.table-wrap { overflow-x: auto; margin: 24px 0; }
+.table-wrap table { margin: 0; min-width: 520px; }
+.yes { color: var(--green); }
+.no { color: var(--red); }
+.mid { color: var(--accent); }
+
+/* ----- Rámeček "Chceš víc?" / další díly (generuje sidebar-init.js) ----- */
+.more-box {
+  margin: 48px 0 0;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  border-radius: 4px;
+}
+
+.more-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.more-box ul,
+.content .more-box ul { list-style: none; margin: 0; padding: 0; }
+.more-box li,
+.content .more-box li { margin: 0; border-top: 1px solid var(--border); }
+.more-box li:first-child,
+.content .more-box li:first-child { border-top: none; }
+
+.more-box a,
+.content .more-box a {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 4px;
+  color: var(--text);
+  text-decoration: none;
+}
+.more-box a:hover,
+.content .more-box a:hover { text-decoration: none; background: rgba(121, 192, 255, 0.06); }
+
+.more-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--accent);
+  min-width: 42px;
+}
+.more-text { flex: 1; }
+.more-name { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 0.92rem; color: var(--white); }
+.more-desc { display: block; font-size: 0.88rem; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+.more-arrow { color: var(--accent); }
+
+/* ----- Ukázky v mobilu ----- */
+@media (max-width: 600px) {
+  .example-body { padding: 4px 14px 12px; }
+  .example-head { padding: 12px 14px; }
+  .more-box { padding: 16px; }
+}
+
+/* ----- Ochrana proti přetékání na mobilu (široké tabulky, kód) ----- */
+.main-content { min-width: 0; }
+
+/* ----- Mřížka karet: bez šedých výplní prázdných buněk (poslední řádek) ----- */
+.chapters {
+  background: transparent;
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+.card {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.card.hl { border-left: 2px solid var(--accent); }
+
+/* ============================================================
+   INDEX: skupiny dílů s pod díly a odkazy na konci
+   ============================================================ */
+
+/* Skupina = díl s pod díly: hlavička přes 3 sloupce (poloviční výška) + rámeček se 3 pod díly */
+.group {
+  grid-column: 1 / -1;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+
+.group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 18px 26px 14px;
+  text-decoration: none;
+  color: var(--text);
+  transition: background 0.18s;
+}
+
+.group-head:hover { background: var(--surface); }
+.group-head .card-num { margin: 0; }
+
+.group-head h3 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--heading);
+  margin: 0;
+}
+
+.group-head .level { margin-left: auto; }
+
+.group-head p {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.group-frame {
+  margin: 0 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--border);
+}
+
+.group-frame .card {
+  padding: 20px 22px;
+  border: none;
+  border-right: 1px solid var(--border);
+}
+
+.group-frame .card:last-child { border-right: none; }
+
+/* Mobil: pod díly pod sebou, oddělené čarou */
+@media (max-width: 699px) {
+  .group-head { padding: 16px 18px 12px; }
+  .group-frame { grid-template-columns: 1fr; margin: 0 12px; }
+  .group-frame .card { border-right: none; border-bottom: 1px solid var(--border); }
+  .group-frame .card:last-child { border-bottom: none; }
+}
+
+/* Odkazy & zdroje na konci indexu (generuje sidebar-init.js z config) */
+.resources {
+  margin-top: 56px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+
+.resources-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.resources h3 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--heading);
+  margin-bottom: 12px;
+}
+
+.resources ul { list-style: none; }
+.resources li { margin-bottom: 10px; font-size: 0.95rem; line-height: 1.5; }
+.resources a { color: var(--accent); text-decoration: none; }
+.resources a:hover { text-decoration: underline; }
+.resources .note { color: var(--muted); font-size: 0.85rem; margin-left: 8px; }
+
+@media (max-width: 899px) {
+  .resources-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ============================================================
+   HLEDÁNÍ: pole v sidebaru a výsledky
+   ============================================================ */
+.sb-search { padding: 12px 16px 6px; margin-bottom: 4px; }
+
+.sb-search input {
+  width: 100%;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color 0.18s;
+}
+.sb-search input:focus { border-color: var(--accent); }
+.sb-search input::placeholder { color: var(--muted); }
+
+.search-head {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 12px 0 20px;
+}
+.search-head strong { color: var(--white); }
+
+.search-item {
+  display: block;
+  padding: 18px 22px;
+  margin-bottom: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.18s, background 0.18s;
+}
+.search-item:hover { border-color: var(--accent); background: var(--surface); }
+
+.si-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.si-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  color: var(--heading);
+  margin-bottom: 10px;
+}
+
+.si-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.si-tags span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.si-tags span.hit { border-color: rgba(232, 160, 32, 0.6); color: var(--accent); }
+
+/* ============================================================
+   SIDEBAR: odlišení pod dílů a roztažení tažením (jen desktop)
+   ============================================================ */
+
+/* Kapitoly bílé, pod díly (a, b, c) menší a tlumenější. Aktivní vždy oranžová. */
+.sb-link:not(.is-part) { color: var(--text); }
+.sb-link.is-part {
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.sb-link:hover,
+.sb-link.is-part:hover { color: var(--text); }
+.sb-link.active,
+.sb-link.is-part.active { color: var(--accent); }
+
+/* Úchyt pro změnu šířky: tenký pruh na pravém okraji sidebaru (generuje sidebar-init.js) */
+.sb-resizer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--sidebar-w) - 3px);
+  width: 7px;
+  cursor: col-resize;
+  z-index: 1000;
+  background: transparent;
+  transition: background 0.15s;
+  touch-action: none;
+}
+.sb-resizer:hover,
+.sb-resizer:focus-visible,
+body.resizing .sb-resizer { background: rgba(232, 160, 32, 0.35); outline: none; }
+
+body.resizing { user-select: none; cursor: col-resize; }
+
+@media (max-width: 899px) {
+  .sb-resizer { display: none; }
+}
+
+/* ============================================================
+   ŠTÍTKY PLATFORMY: kde položka existuje (web / aplikace / mobil)
+   Použití viz style.md, kapitola 3.12
+   ============================================================ */
+.plat {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border: 1px solid;
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.plat + .plat { margin-left: 4px; }
+
+.plat-web {
+  color: var(--blue);
+  border-color: rgba(121, 192, 255, 0.5);
+  background: rgba(121, 192, 255, 0.08);
+}
+
+.plat-app {
+  color: var(--green);
+  border-color: rgba(63, 185, 80, 0.5);
+  background: rgba(63, 185, 80, 0.08);
+}
+
+.plat-mob {
+  color: var(--purple);
+  border-color: rgba(210, 168, 255, 0.5);
+  background: rgba(210, 168, 255, 0.08);
+}
+
+/* Štítek v tabulce: bez levého odsazení, ať se zarovná s textem buňky */
+td .plat:first-child,
+th .plat:first-child { margin-left: 0; }

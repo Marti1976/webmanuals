@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLDE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="02">
+
+<div id="sidebar"></div>
+
+<div class="container">
+  <div class="main-content">
+
+    <div id="page-header"></div>
+
+    <div class="content">
+
+      <p>Tento díl je o tom, <strong>co dostaneš za jaký plán</strong> a <strong>jak funguje spotřeba</strong> (limity). Průvodce počítá s plánem <strong>Pro</strong> (nejnižší placený plán). Všude, kde se Pro liší od Free, najdeš značku <span class="ui">Pro</span>. Konkrétní ceny tu <strong>nenajdeš</strong>, protože se mění podle země, měny a způsobu nákupu. Odkazy na oficiální ceník jsou hned v <a href="#prehled-planu">sekci 2.1 Přehled plánů</a>.</p>
+
+      <h2 id="prehled-planu">Přehled plánů</h2>
+      <p>Claude má pět plánů. <strong>Free, Pro a Max</strong> jsou plány pro jednotlivce. <strong>Team a Enterprise</strong> jsou plány pro organizace: účet ti pak platí a spravuje zaměstnavatel (viz <a href="#pracovni-ucet">sekce 2.8 Pracovní účet vs. vlastní Pro</a>).</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Plán</th><th>Pro koho</th><th>Kolik můžeš použít</th><th>Hlavní rozdíl</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Free</strong></td><td>Vyzkoušení, příležitostné použití</td><td>Jen limit na pětihodinové okno, počet zpráv se mění podle vytížení služeb</td><td>Chat, web search, tvorba souborů, paměť. Bez Claude Code.</td></tr>
+            <tr><td><strong>Pro</strong> <span class="ui">Pro</span></td><td>Jednotlivci, kteří Claude používají pravidelně</td><td>Podle oficiálních údajů alespoň pětinásobek Free na jedno okno, plus týdenní limit</td><td>Claude Code, Cowork, Opus, Research, usage credits</td></tr>
+            <tr><td><strong>Max</strong> (5x a 20x)</td><td>Intenzivní každodenní práce</td><td>5× nebo 20× tolik co Pro na jedno okno, plus týdenní limity</td><td>Víc kapacity, Fable v rámci plánu (do poloviny týdenního limitu), měsíční API kredity</td></tr>
+            <tr><td><strong>Team</strong></td><td>Týmy (2 až 150 míst)</td><td>Standard seat (místo) 1,25× Pro, Premium seat 6,25× Pro; limity má každý člen zvlášť</td><td>Správa a fakturace, přihlášení SSO, konektory na pracovní nástroje</td></tr>
+            <tr><td><strong>Enterprise</strong></td><td>Velké organizace, bezpečnost a soulad s předpisy</td><td>V současném modelu bez limitu na místo, spotřeba se účtuje podle API sazeb</td><td>Audit logy, SCIM, vlastní uchování dat, API pro dohled</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout bl">
+        <div class="callout-title">Kde najít aktuální ceny</div>
+        <p>Ceny se liší podle země, měny, daní a toho, zda platíš přes web, nebo přes obchod s aplikacemi. Proto je tu nepíšu. Dohledáš je takto:</p>
+        <ul>
+          <li><a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a>: oficiální ceník a srovnání plánů.</li>
+          <li><a href="https://claude.ai/upgrade" target="_blank" rel="noopener">claude.ai/upgrade</a>: cena pro tvou zemi a měnu (po přihlášení).</li>
+          <li><a href="https://support.claude.com/en/articles/8325606-what-is-the-pro-plan" target="_blank" rel="noopener">What is the Pro plan?</a>: popis plánu Pro v oficiální nápovědě.</li>
+        </ul>
+      </div>
+
+      <h3 id="poznamky-k-planum">2.1.1 Důležité poznámky k přehledu</h3>
+      <ul>
+        <li><strong>Násobky jsou relativní.</strong> Anthropic nezveřejňuje počet zpráv ani tokenů. Uvádí jen poměry (Pro oproti Free, Max oproti Pro). Kolik práce to znamená, závisí na tom, co děláš (viz <a href="#jak-funguji-limity">sekce 2.3 Jak fungují limity</a>).</li>
+        <li><strong>Max se platí jen měsíčně</strong>, u Pro je k dispozici i roční předplatné se slevou.</li>
+        <li><strong>Předplatné přes aplikaci:</strong> pokud Pro koupíš přes obchod s aplikacemi, usage credits (viz <a href="#usage-credits">sekce 2.5 Usage credits</a>) zapneš jen na webu. Ceny přes obchody se mohou lišit od webových.</li>
+        <li><strong>Pro nezahrnuje API.</strong> Přístup k API (pro vývojáře) je samostatný a platí se zvlášť.</li>
+      </ul>
+
+      <h2 id="co-ma-pro">Co přidává Pro oproti Free</h2>
+      <p>Pro dává víc kapacity a víc funkcí. Rozdíly, které ti opravdu změní používání, jsou v tabulce. U hlasového režimu (<a href="01_CLDE_uvod.html">díl 01</a>) platí rozdíly z dílu 01.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Funkce</th><th>Free</th><th>Pro</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Spotřeba na pětihodinové okno</strong></td><td>základní</td><td class="yes">alespoň pětinásobek Free <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Týdenní limit</strong></td><td class="no">ne, jen limit okna</td><td class="yes">ano, společný pro všechny modely <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Claude Code</strong></td><td class="no">ne</td><td class="yes">ano, čerpá ze stejného limitu <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Cowork</strong> (delší úkoly na pozadí, plánované úlohy)</td><td class="no">ne</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Usage credits</strong> (pokračování po limitu)</td><td class="no">ne</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Modely</strong></td><td>Sonnet a Haiku, bez Opus</td><td class="yes">Sonnet, Haiku a Opus <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Fable</strong> (nejvýkonnější model)</td><td class="no">ne</td><td class="mid">jen přes usage credits <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Paměť napříč konverzacemi</strong> (Memory)</td><td class="yes">ano (přehled plánu Free v nastavení ji uvádí)</td><td class="yes">ano</td></tr>
+            <tr><td><strong>Hledání v minulých konverzacích</strong></td><td>nápověda ho popisuje u placených plánů</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Přehled spotřeby</strong> (ukazatele v nastavení)</td><td>nápověda popisuje jen pro placené plány</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Research</strong> (hloubkové vyhledávání)</td><td class="no">ne</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Zadávání a plánování úloh</strong> (delegování a opakování)</td><td class="no">ne</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Claude Science</strong> (beta)</td><td class="no">ne</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Projekty</strong></td><td>nejvýše 5 projektů</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Desktopová rozšíření, hlasový režim, web search, tvorba souborů a spouštění kódu, Skills a konektory</strong></td><td class="yes">ano</td><td class="yes">ano</td></tr>
+            <tr><td><strong>Claude v Chrome a v Microsoft 365</strong> (Excel, PowerPoint, Word, Outlook)</td><td class="no">ne</td><td class="yes">ano <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Hlasový režim</strong></td><td>Haiku, jeden nástroj</td><td class="yes">Opus, Sonnet, Haiku, všechny nástroje <span class="ui">Pro</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout bl">
+        <div class="callout-title">Info — prioritní a časný přístup</div>
+        <p>Prioritní přístup při velkém vytížení a časný přístup k novým funkcím uvádí ceník u plánu Max. Nápověda k plánu Pro je zmiňuje i u Pro. Zdroje se rozcházejí, proto je v tabulce neuvádím jako jistou výhodu Pro. Aktuální stav ověř na <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a>.</p>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Pozor — Fable na Pro</div>
+        <p>Fable (nejvýkonnější model) je v nabídce modelů vidět i na Pro, ale <strong>neběží z limitů plánu</strong>. Od první zprávy se platí z usage credits (viz <a href="#usage-credits">sekce 2.5 Usage credits</a>). Na Max se Fable do poloviny týdenního limitu počítá do plánu. Než Fable na Pro vybereš, ujisti se, že máš usage credits zapnuté a nastavený strop.</p>
+      </div>
+
+      <div class="when">
+        <div class="when-yes"><h4>Kdy se Pro vyplatí</h4><ul><li>používáš Claude téměř denně</li><li>narážíš na limit víc než párkrát za měsíc</li><li>chceš Cowork nebo Claude Code</li><li>potřebuješ výkonnější modely i v hlasu</li><li>pracuješ s Projekty a dlouhými dokumenty</li></ul></div>
+        <div class="when-no"><h4>Kdy zůstat u Free</h4><ul><li>používáš Claude jen občas</li><li>limit téměř nikdy nenarazíš</li><li>stačí ti běžný Chat bez souborů a automatizace</li></ul></div>
+      </div>
+
+      <div class="callout gn">
+        <div class="callout-title">Tip</div>
+        <p>Po upgradu se nové limity použijí hned, i uprostřed práce. Nemusíš čekat na další okno.</p>
+      </div>
+
+      <h2 id="jak-funguji-limity">Jak fungují limity</h2>
+      <p>Limit <strong>není počet zpráv</strong>. Je to rozpočet práce, který se spotřebovává podle toho, co a jak děláš. Na placených plánech jsou dvě vrstvy, které platí zároveň.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Vrstva</th><th>Co to je</th><th>Kdy se obnoví</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Limit okna</strong> (session limit)</td><td>Rozpočet na krátké intenzivní období, pětihodinové okno</td><td>každých pět hodin</td></tr>
+            <tr><td><strong>Týdenní limit</strong> (weekly limit) <span class="ui">Pro</span></td><td>Strop pro souvislou práci během týdne, společný pro všechny modely</td><td>jednou týdně, v pevný čas přiřazený tvému účtu</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Obě vrstvy se sčítají: když ti v okně ještě zbývá kapacita, ale týdenní limit je vyčerpaný, dál nepokračuješ. Čas týdenního obnovení se nemění podle toho, kdy začneš pracovat nebo kdy ti začalo předplatné. Přesný čas najdeš v nastavení (viz <a href="#kde-videt-spotrebu">sekce 2.4 Kde vidět spotřebu</a>).</p>
+
+      <h3 id="co-spotrebuje-limit">2.3.1 Co spotřebovává limit</h3>
+      <ul>
+        <li>délka a složitost konverzace (každá zpráva znovu „nese“ celou dosavadní historii),</li>
+        <li>délka zpráv a velikost přiložených souborů,</li>
+        <li>použitý model a nastavený Effort (úroveň úsilí),</li>
+        <li>nástroje: Research, vyhledávání na webu, konektory,</li>
+        <li>tvorba Artifacts a souborů,</li>
+        <li>vícekrokové úlohy: spouštění kódu, tvorba souborů, procházení webu,</li>
+        <li>hlasové konverzace (počítají se do stejných limitů).</li>
+      </ul>
+
+      <h3 id="sdileny-rozpocet">2.3.2 Jedno společné konto</h3>
+      <p>Všechna místa, kde Claude používáš (web, desktop, mobil, Claude Code), čerpají z <strong>jednoho společného limitu</strong>. Cowork nemá vlastní rozpočet, čerpá z plánu stejně jako chat. Dlouhý úkol v Coworku ráno proto může omezit, co zvládneš odpoledne v chatu. Nápověda uvádí, že Cowork spotřebovává víc než běžný chat, protože vícekrokové úlohy potřebují víc výpočtů.</p>
+
+      <h3 id="limit-delky">2.3.3 Limit využití vs. limit délky</h3>
+      <p>Jsou to dvě různé věci, které se často pletou:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>Limit využití (usage limit)</th><th>Limit délky (length limit)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Co omezuje</strong></td><td>Kolik práce zvládneš za čas, napříč všemi konverzacemi</td><td>Jak dlouhá může být jedna konverzace (kontextové okno)</td></tr>
+            <tr><td><strong>Řešení</strong></td><td>Počkat, usage credits, vyšší plán</td><td>Nová konverzace, Projekty</td></tr>
+            <tr><td><strong>Pomůže nová konverzace?</strong></td><td class="no">limit se tím neobnoví, ale příště se spotřebuje méně</td><td class="yes">ano</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Velikost kontextového okna závisí na modelu. Ceník uvádí u všech plánů hodnotu „až 1 milion tokenů, podle modelu“. Když se konverzace blíží limitu délky, Claude starší zprávy automaticky shrne (musí být zapnuté spouštění kódu). Celá historie zůstává uložená, ale takto dlouhé konverzace spotřebují víc z limitu využití.</p>
+
+      <div class="callout">
+        <div class="callout-title">Pozor — Anthropic si vyhrazuje další omezení</div>
+        <p>Nápověda uvádí, že kromě popsaných limitů může využití omezit i jinak, třeba týdenními a měsíčními stropy nebo omezením u modelů a funkcí, podle vytížení a podle vlastního uvážení. Neber čísla z internetu jako jistotu, zdrojem pravdy je tvůj účet.</p>
+      </div>
+
+      <h2 id="kde-videt-spotrebu">Kde vidět spotřebu</h2>
+      <p>Spotřebu najdeš v nastavení na webu nebo v desktopové aplikaci. V mobilní aplikaci se přehled spotřeby nemusí zobrazovat, použij web.</p>
+
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h4>Otevři přehled spotřeby</h4><p>Přejdi na <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> (na webu claude.ai nebo v desktopové aplikaci).</p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h4>Najdi <span class="ui">Plan usage limits <span class="cz">(limity plánu)</span></span></h4><p>Nahoře uvidíš <strong>Current session</strong>: kolik z pětihodinového okna jsi využil a kolik času zbývá. Pod ním <strong>Weekly limits</strong>: kdy se obnoví týdenní limit pro všechny modely (a pro Fable, pokud ho plán zahrnuje). <span class="ui">Pro</span></p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h4>Zkontroluj <span class="ui">Usage credits <span class="cz">(kredity)</span></span></h4><p>Najdeš tam zůstatek, útratu od začátku měsíce a měsíční strop. Viz <a href="#usage-credits">sekce 2.5 Usage credits</a>. <span class="ui">Pro</span></p></div></div>
+        <div class="step"><div class="step-n">4</div><div><h4>V Claude Code použij <code>/usage</code></h4><p>V terminálu zobrazí stejné ukazatele (limit okna a týdenní limit). Hodí se před dlouhou prací.</p></div></div>
+      </div>
+
+      <p>Claude tě také upozorní zprávou, když se blížíš limitu, a po dosažení uvidíš čas, kdy můžeš pokračovat.</p>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Postup</span>
+          <h4>Zjisti, co ti limit opravdu spotřebovává</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Limit tě zastavuje a nevíš proč. Než začneš cokoli měnit, změř to.</p>
+          <p class="ex-label">Postup</p>
+          <ol>
+            <li>Ráno před prací se podívej na <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> a zapiš si hodnotu Current session.</li>
+            <li>V poledne se podívej znovu a odečti. Zapiš si, co jsi mezitím dělal (dlouhé konverzace, soubory, Research, Cowork).</li>
+            <li>Jedna nebo dvě dlouhé konverzace nebo velké nahrání souborů obvykle spotřebují nejvíc. Ty pak řeš podle <a href="#jak-limity-setrit">sekce 2.6 Jak s limity vydržet déle</a>.</li>
+          </ol>
+        </div>
+      </div>
+
+      <h2 id="usage-credits">Usage credits (kredity na pokračování)</h2>
+      <p><span class="ui">Usage credits <span class="cz">(kredity)</span></span> <span class="ui">Pro</span> ti dovolí pokračovat v práci, když vyčerpáš limit plánu. Místo zastavení se požadavky přepnou na platbu podle spotřeby ve standardních sazbách API. Je to jen pojistka, nezvyšuje ti limit ani nemění čas jeho obnovení.</p>
+
+      <h3 id="credits-jak-funguji">2.5.1 Jak to funguje</h3>
+      <ul>
+        <li>Po vyčerpání limitu okna nebo týdenního limitu se další požadavky účtují z kreditů. Můžeš ještě chvíli vidět upozornění, že se blížíš limitu. Jakmile požadavek projde z kreditů, změní se na „Now using credits“ (nyní používáš kredity), nejsi odříznutý.</li>
+        <li>Platí se předem: koupíš si zůstatek („Add funds“). Volitelně zapneš automatické dobíjení („auto-reload“).</li>
+        <li>Kredity se účtují zvlášť od předplatného a objeví se jako samostatná položka na účtu.</li>
+        <li>Pokračuješ, dokud nedosáhneš měsíčního stropu útraty nebo dokud ti nedojde zůstatek (při vypnutém dobíjení).</li>
+        <li>Fungují v chatu i v Claude Code a při Research. U Coworku si na stránce nastavení ověř, zda se kredity uplatní (nápověda pro jednotlivce jmenuje chat, Claude Code a Research).</li>
+        <li>Kredity ve většině zemí nevyprší. Výjimky existují (například Japonsko), proto sleduj datum na stránce spotřeby.</li>
+      </ul>
+
+      <h3 id="credits-zapnuti">2.5.2 Jak je zapnout bezpečně</h3>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h4>Otevři <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span></h4><p>Najdi sekci <strong>Usage credits</strong>.</p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h4>Klikni na <span class="ui">Enable <span class="cz">(zapnout)</span></span></h4><p>Přidej platební metodu, pokud ji ještě nemáš.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h4>Nastav strop <span class="ui">Adjust limit <span class="cz">(upravit limit)</span></span></h4><p>Zadej měsíční maximum. <strong>Nevolej „Set to unlimited“</strong>, dokud přesně nevíš, kolik tě takové používání stojí.</p></div></div>
+        <div class="step"><div class="step-n">4</div><div><h4>Přidej zůstatek <span class="ui">Add funds <span class="cz">(přidat prostředky)</span></span></h4><p>Začni malou částkou. Auto-reload zapni až později, až budeš spotřebu znát.</p></div></div>
+      </div>
+
+      <div class="callout rd">
+        <div class="callout-title">Nebezpečí — neomezená útrata</div>
+        <p>Kredity se účtují podle API sazeb a dlouhé úlohy (Cowork, Claude Code, Research, Fable) mohou spotřebovat hodně. Vždy nastav měsíční strop. Pokud jsi předplatné koupil přes obchod s aplikacemi, kredity nastavíš jen na webu.</p>
+      </div>
+
+      <h3 id="limit-reset">2.5.3 Limit reset (bonus od Anthropic)</h3>
+      <p><strong>Limit reset</strong> je jednorázový „bonus“, který Anthropic občas přidělí oprávněným plánům. Když ho použiješ, vrátí se ti <strong>na plno limit okna nebo týdenní limit</strong>, a to hned. Je to nejlevnější způsob, jak pokračovat po dosažení limitu: nic neplatíš a nečekáš. Nemůžeš si ho sám vyžádat ani koupit, proto je dobré vědět, kde zjistíš, jestli ho máš, a jak s ním zacházet.</p>
+
+      <p><strong>Jak limit reset funguje</strong></p>
+      <ul>
+        <li><strong>Který limit se vrátí, určuje nabídka.</strong> Podle toho, jaký reset ti Claude ukazuje, se vrátí buď pětihodinový limit okna, nebo týdenní limit. Přečti si text nabídky, než klikneš.</li>
+        <li><strong>Účinek je okamžitý.</strong> Limit se vrátí na plno ve chvíli, kdy reset potvrdíš.</li>
+        <li><strong>Nemusíš čekat na dosažení limitu.</strong> Reset můžeš použít kdykoli, i když ještě máš zbývající kapacitu (viz „Kdy ho použít“ níže).</li>
+        <li><strong>Nelze ho vzít zpět.</strong> Po potvrzení je spotřebovaný.</li>
+        <li><strong>Pravidelné týdenní obnovení se nemění.</strong> Týdenní limit se dál obnoví v obvyklý den a čas, reset je navíc.</li>
+        <li><strong>Může mít datum platnosti.</strong> Nepoužitý reset po uvedeném dni a čase propadne. Datum vidíš v <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span>.</li>
+        <li><strong>Nevrací peníze ani kredity.</strong> Už zaplacenou útratu z usage credits ani zůstatek kreditů reset nezmění.</li>
+        <li><strong>Při zrušení nebo snížení plánu propadne.</strong> Pokud předplatné zrušíš nebo přejdeš na nižší plán dřív, než reset použiješ, už ho mít nebudeš.</li>
+      </ul>
+
+      <p><strong>Jak ho použít</strong></p>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h4>Otevři přehled spotřeby</h4><p>Přejdi na <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> na webu claude.ai nebo v desktopové aplikaci Claude.</p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h4>Najdi sekci <span class="ui">Resets <span class="cz">(resety)</span></span></h4><p>Pokud nějaký reset máš, uvidíš ho tam i s datem platnosti. Když sekci nevidíš, žádný reset teď nemáš.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h4>Klikni na <span class="ui">Reset for free <span class="cz">(obnovit zdarma)</span></span></h4><p>Přečti si, který limit se obnoví, a potvrď druhým kliknutím na stejné tlačítko.</p></div></div>
+      </div>
+      <p>Stejné tlačítko <span class="ui">Reset for free</span> se ti zobrazí i přímo ve zprávě, kterou vidíš po dosažení limitu.</p>
+
+      <div class="callout">
+        <div class="callout-title">Pozor — kde tlačítko nenajdeš</div>
+        <p>V mobilní aplikaci Claude a v Claude Code (terminál nebo editor) tlačítko <span class="ui">Reset for free</span> aktuálně není. Otevři Claude v prohlížeči nebo v aplikaci pro počítač. Limity máš společné pro celý účet, takže po resetu jsou limity vrácené na plno i v mobilu a v Claude Code.</p>
+      </div>
+
+      <p><strong>Kdy ho použít</strong></p>
+      <p>Nápověda popisuje, jak reset funguje, ne kdy se ho vyplatí použít. Následující doporučení jsou <strong>odvozená z toho, jak reset funguje</strong>, ne oficiální rada.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Situace</th><th>Doporučení</th><th>Proč</th></tr></thead>
+          <tbody>
+            <tr><td>Dosáhl jsi limitu a potřebuješ pokračovat hned</td><td class="yes">Použij reset</td><td>Je to zdarma a okamžité, dřív než usage credits</td></tr>
+            <tr><td>Reset brzy propadne</td><td class="yes">Použij ho před koncem platnosti, nejlépe při vysoké spotřebě</td><td>Nepoužitý propadne. Čím víc limitu máš spotřebované, tím víc ti reset „dá“.</td></tr>
+            <tr><td>Limit okna máš téměř nevyužitý</td><td class="mid">Zatím počkej</td><td>Reset vrací na plno, ale nemáš co doplňovat</td></tr>
+            <tr><td>Týdenní obnovení je za pár hodin</td><td class="mid">Nepoužívej týdenní reset</td><td>Za chvíli se limit obnoví sám, reset bys využil jen málo</td></tr>
+            <tr><td>Plánuješ zrušit nebo snížit plán</td><td class="yes">Použij ho dřív</td><td>Po zrušení nebo snížení plánu propadne</td></tr>
+            <tr><td>Používáš usage credits a reset máš k dispozici</td><td class="yes">Nejdřív reset, potom kredity</td><td>Reset nic nestojí, kredity ano. Už utracené kredity se nevrací.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Postup</span>
+          <h4>Práce se zablokuje uprostřed úkolu</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Uprostřed důležitého úkolu se zobrazí zpráva o dosažení limitu okna. Ví se, že do obnovení zbývá několik hodin, ale úkol musíš dokončit teď.</p>
+          <p class="ex-label">Postup</p>
+          <ol>
+            <li>Podívej se na zprávu o limitu. Pokud je v ní tlačítko <span class="ui">Reset for free</span>, máš reset k dispozici.</li>
+            <li>Přečti si, který limit se resetuje (okno, nebo týden). Pokud jsi zablokovaný týdenním limitem, potřebuješ týdenní reset. Reset limitu okna by ti nepomohl.</li>
+            <li>Potvrď reset a pokračuj ve stejné konverzaci. Konverzace zůstane, jen se ti vrátí kapacita.</li>
+            <li>Pokud tlačítko nevidíš, zkontroluj <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span>, sekci Resets. Když tam nic není, použij jinou možnost ze <a href="#pri-dosazeni-limitu">sekce 2.7 Co dělat při dosažení limitu</a>.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="callout bl">
+        <div class="callout-title">Časté omyly kolem resetu</div>
+        <ul>
+          <li><strong>„Reset je nový týden.“</strong> Ne. Týdenní obnovení běží dál podle svého času a reset je navíc.</li>
+          <li><strong>„Reset mi vrátí kredity.“</strong> Ne. Zůstatek ani zaplacená útrata se nemění.</li>
+          <li><strong>„Reset mám vždycky.“</strong> Ne. Přiděluje se příležitostně a jen oprávněným plánům. Pravidelně kontroluj sekci Resets.</li>
+          <li><strong>„Reset funguje jen v prohlížeči.“</strong> Použít ho můžeš jen na webu nebo v desktopové aplikaci, ale účinek platí všude.</li>
+        </ul>
+      </div>
+
+      <h2 id="jak-limity-setrit">Jak s limity vydržet déle</h2>
+      <p>Tato sekce je nejdůležitější. Většina lidí neomezuje limit tím, že by „moc psala“, ale tím, že <strong>zbytečně táhne velký kontext, špatné nastavení a nástroje, které nepotřebuje</strong>. Postupy níže jsou seřazené podle toho, kolik obvykle ušetří. U každého je uvedené, odkud vychází: z oficiální nápovědy, nebo z odvození (logický důsledek, jak limit funguje).</p>
+
+      <div class="callout bl">
+        <div class="callout-title">Základní princip</div>
+        <p>Při každé odpovědi Claude „čte“ celou dosavadní konverzaci, včetně souborů, instrukcí a výsledků nástrojů. Čím víc kontextu, tím víc spotřebuješ za každou další zprávu. Proto úspora = <strong>méně a lehčího kontextu</strong>, ne méně otázek.</p>
+      </div>
+
+      <h3 id="uspora-konverzace">2.6.1 Konverzace: nové téma, nová konverzace</h3>
+      <ul>
+        <li><strong>Pro nové téma začni novou konverzaci.</strong> Dlouhé konverzace, ve kterých Claude automaticky shrnuje starší část, spotřebují víc limitu (oficiální nápověda).</li>
+        <li><strong>Neprodlužuj „věčné“ konverzace.</strong> Když se konverzace natáhne, požádej Claude o předávací shrnutí a pokračuj v nové (prompt níže).</li>
+        <li><strong>Neopravuj chyby řetězem korektur.</strong> Když Claude odpoví špatně, uprav zadání a pošli ho znovu místo řady dílčích oprav (odvození: každá oprava přidá další kontext).</li>
+        <li><strong>Nezapomeň, že nová konverzace limit neobnoví.</strong> Ušetří jen příští spotřebu.</li>
+      </ul>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Předávací shrnutí do nové konverzace</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Konverzace je dlouhá a pomalu ti žere limit. Chceš pokračovat v nové, ale nechceš ztratit rozhodnutí.</p>
+          <p class="ex-label">Prompt (do staré konverzace)</p>
+          <div class="prompt" data-label="Prompt — předávací shrnutí"><pre>Připrav mi předávací shrnutí této konverzace pro pokračování v nové konverzaci.
+Obsah: cíl, co už je rozhodnuto, otevřené otázky, důležitá čísla a názvy, další krok.
+Formát: stručné odrážky, maximálně <span class="ph">[300]</span> slov. Nic nevymýšlej a nic nepřidávej.</pre></div>
+          <p class="ex-label">Další krok</p>
+          <p>Shrnutí zkopíruj, otevři novou konverzaci a vlož ho jako první zprávu spolu s tím, co chceš udělat dál.</p>
+        </div>
+      </div>
+
+      <h3 id="uspora-psani">2.6.2 Piš zadání tak, aby šla odpověď napoprvé</h3>
+      <ul>
+        <li><strong>Plánuj konverzaci předem.</strong> Než začneš, ujasni si, co přesně potřebuješ (oficiální nápověda).</li>
+        <li><strong>Dej všechen kontext hned.</strong> Cíl, publikum, formát a omezení v první zprávě ušetří doplňující kolo.</li>
+        <li><strong>Seskup související dotazy do jedné zprávy.</strong> Místo deseti krátkých zpráv jedna s deseti body (oficiální nápověda).</li>
+        <li><strong>Před odesláním zprávu přečti.</strong> Zkontroluj srozumitelnost a úplnost, aby nebyla potřeba následná zpráva.</li>
+        <li><strong>Posílej celé texty najednou.</strong> Při úpravě textu pošli celý text v jedné zprávě, ne po kouscích.</li>
+        <li><strong>Odkazuj zpět místo opakování.</strong> Stačí „jak jsem psal výše“, nevkládej totéž znovu.</li>
+      </ul>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Několik úkolů v jedné zprávě</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Potřebuješ tři věci k jednomu tématu a nechceš plýtvat zprávami.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — dávkové zadání"><pre>Téma: <span class="ph">[téma]</span>. Moje situace: <span class="ph">[2 až 3 věty kontextu]</span>.
+Udělej prosím všechny tři věci najednou a odděl je nadpisy:
+1. <span class="ph">[první úkol]</span>
+2. <span class="ph">[druhý úkol]</span>
+3. <span class="ph">[třetí úkol]</span>
+Pokud ti něco chybí, napiš to na konec jako seznam otázek. Nezačínej ptát se dřív, než odpovíš na to, co víš.</pre></div>
+        </div>
+      </div>
+
+      <h3 id="uspora-model-effort">2.6.3 Model, Effort a thinking</h3>
+      <p>Model a úroveň úsilí ovlivňují spotřebu víc, než čekáš. Podrobně je to v <a href="04a_CLDE_modely_a_effort.html">dílu 04a</a>, tady jen to, co se týká limitů.</p>
+      <ul>
+        <li><strong>Nižší Effort pro rutinní úkoly.</strong> Low a Medium podle nápovědy zvládají běžné úkoly a „natáhnou“ limit. Vyšší Effort znamená důkladnější, ale delší odpověď s větší spotřebou tokenů, takže limit dosáhneš dřív.</li>
+        <li><strong>Nejdřív sniž Effort, až potom přecházej na menší model.</strong> Menší model je horší v obtížných úkolech, nižší Effort jen méně „přemýšlí“.</li>
+        <li><strong>Vypni thinking tam, kde ho nepotřebuješ.</strong> Nápověda doporučuje u jednoduchých úloh. U některých modelů ho vypnout nejde, tam pomáhá jen nižší Effort.</li>
+        <li><strong>Používej Haiku a nejnovější Sonnet pro většinu práce.</strong> Opus a Fable si nech na úlohy, které mají výhodu z hlubšího uvažování (tip z nápovědy o usage credits).</li>
+        <li><strong>Fable na Pro vždy stojí kredity.</strong> Používej ho jen cíleně.</li>
+        <li>Změna modelu i Effort platí od další odpovědi a lze ji měnit i uprostřed konverzace.</li>
+      </ul>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Úkol</th><th>Doporučené nastavení</th><th>Důvod</th></tr></thead>
+          <tbody>
+            <tr><td>Krátká otázka, překlad, vysvětlení</td><td>Haiku nebo Sonnet, nižší až střední Effort</td><td>Stačí a šetří limit</td></tr>
+            <tr><td>E-mail, shrnutí, úprava textu</td><td>Sonnet, střední Effort</td><td>Dobrá kvalita bez zbytečné spotřeby</td></tr>
+            <tr><td>Analýza dokumentu, plán, rozhodování</td><td>Sonnet nebo Opus, vyšší Effort</td><td>Hlubší uvažování se vyplatí</td></tr>
+            <tr><td>Složité vícekrokové nebo technické úlohy</td><td>Opus, vysoký až velmi vysoký Effort</td><td>Kvalita je důležitější než spotřeba</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="uspora-projekty">2.6.4 Projekty a cache</h3>
+      <ul>
+        <li><strong>Opakovaně používané dokumenty vlož do Projektu</strong> místo opakovaného nahrávání. Obsah projektu se ukládá do cache a při opakovaném použití se počítá do limitu méně (oficiální nápověda).</li>
+        <li><strong>Cache vyprší po nečinnosti.</strong> Když se k projektu vrátíš po delší pauze, první zpráva spočítá obsah znovu naplno.</li>
+        <li><strong>Projekty využívají RAG</strong> (retrieval-augmented generation, vyhledávání relevantní části): Claude do kontextu načte jen potřebné části, ne všechno.</li>
+        <li><strong>Drž instrukce projektu krátké.</strong> Obecný kontext patří do instrukcí, úkolově specifické věci do konverzace.</li>
+        <li><strong>Pravidelně odstraňuj soubory, které nepoužíváš.</strong> Každý soubor zbytečně zatěžuje projekt.</li>
+      </ul>
+      <p>Projekty podrobně: <a href="06_CLDE_projekty.html">díl 06</a> a pod díly.</p>
+
+      <h3 id="uspora-nastroje">2.6.5 Nástroje, konektory a soubory</h3>
+      <ul>
+        <li><strong>Vypni, co nepoužíváš.</strong> Nápověda výslovně uvádí, že nástroje a konektory jsou náročné na tokeny. Připojené aplikace vypni v konverzacích, kde je nepotřebuješ.</li>
+        <li><strong>Řekni Claude, aby nehledal na webu</strong>, pokud nepotřebuješ aktuální informace.</li>
+        <li><strong>Research používej jen na otázky, které ho potřebují.</strong> Hluboké vyhledávání spotřebuje víc než běžná odpověď.</li>
+        <li><strong>Velké soubory nahrávej jen když je potřebuješ.</strong> Raději vlož vybranou část textu než celý dokument.</li>
+        <li><strong>Tvorba souborů a Artifacts spotřebuje víc než běžná odpověď.</strong> Nejdřív si domluv obsah v chatu a soubor nech vytvořit až na konci (odvození).</li>
+      </ul>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Dej Claude najevo, že chceš lehkou odpověď</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Chceš krátkou radu, žádné hledání, žádný soubor.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — rychlá odpověď"><pre>Odpověz mi rychle a stručně, maximálně <span class="ph">[5]</span> vět. Nehledej na webu, nevytvářej soubor ani dokument, použij jen to, co víš.
+Otázka: <span class="ph">[otázka]</span></pre></div>
+        </div>
+      </div>
+
+      <h3 id="uspora-cowork">2.6.6 Cowork a Claude Code</h3>
+      <ul>
+        <li><strong>Cowork a Code čerpají ze stejného limitu jako chat.</strong> Dlouhý úkol může spotřebovat větší díl okna než celý den psaní v chatu.</li>
+        <li><strong>Zadávej Coworku konkrétní úkoly.</strong> Jasný cíl, vstupní soubory a výstup. Vágní zadání vede ke zbytečným krokům.</li>
+        <li><strong>Říkej, když stačí rychlá odpověď.</strong> Nápověda doporučuje u Coworku napsat, že nechceš soubor ani hotový výstup, jen odpověď.</li>
+        <li><strong>Plánuj v chatu, provádět nech Cowork.</strong> Nejdřív si v chatu ujasni, co chceš (levnější), a teprve potom spusť úkol (odvození).</li>
+        <li><strong>Před dlouhým úkolem zkontroluj spotřebu</strong> v <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> (v Code <code>/usage</code>), ať se neocitneš v půlce úkolu na limitu.</li>
+        <li>Pokud Claude Code uprostřed odpovědi narazí na limit okna, může krátce dokončit rozpracovaný krok. Toto „dokončení“ je malé a započítá se do týdenního limitu. <span class="ui">Pro</span></li>
+      </ul>
+      <p>Podrobně: <a href="11_CLDE_cowork_agenty.html">díl 11</a> a <a href="13_CLDE_claude_code.html">díl 13</a>.</p>
+
+      <h3 id="uspora-hlas">2.6.7 Hlas a diktování</h3>
+      <ul>
+        <li>Hlasové konverzace se <strong>počítají do běžných limitů</strong> (oficiální oznámení).</li>
+        <li>Diktování (dictation) vloží přepis do textového pole, takže ho před odesláním můžeš zkrátit. Dlouhá nadiktovaná zpráva může spotřebovat víc vstupu, než kdybys ji napsal stručně (odvození).</li>
+        <li>Delší hlasovou konverzaci rozděl na kratší úseky, stejně jako textovou.</li>
+      </ul>
+
+      <h3 id="uspora-pamet">2.6.8 Paměť a hledání v minulých konverzacích</h3>
+      <ul>
+        <li><strong>Řekni Claude, ať si kontext najde.</strong> Paměť napříč konverzacemi je k dispozici i ve Free. Hledání v dřívějších konverzacích a souhrny projektů popisuje nápověda u placených plánů <span class="ui">Pro</span>. Díky tomu nemusíš vkládat tentýž kontext znovu (oficiální nápověda).</li>
+        <li>Uložit trvalé preference do paměti nebo vlastních instrukcí je levnější než je opakovat v každé konverzaci. Viz <a href="09_CLDE_pamet_a_instrukce.html">díl 09</a>.</li>
+      </ul>
+
+      <h3 id="uspora-casovani">2.6.9 Načasování práce</h3>
+      <ul>
+        <li><strong>Plánuj náročné úkoly na začátek okna.</strong> Anthropic doporučuje plánovat intenzivní práci podle pětihodinových oken.</li>
+        <li><strong>Rozlož práci.</strong> Pokud vyčerpáš okno hned ráno, zbytek dne ti zůstane k ničemu. Rozděl velké úkoly do více bloků.</li>
+        <li><strong>Znej čas týdenního obnovení.</strong> Najdeš ho v nastavení. Přizpůsob podle něj velké projekty.</li>
+        <li><strong>Pracuj mimo Claude, když limit dosáhneš:</strong> příprava podkladů, čtení, kontrola výstupů.</li>
+      </ul>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Rozvrh týdne podle limitů</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Víš, kolik práce tě čeká, a chceš si ji rozložit tak, abys nenarazil na limit uprostřed důležitého úkolu.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — plán práce s Claude"><pre>Mám tento týden tyto úkoly pro práci s Claude: <span class="ph">[seznam úkolů]</span>.
+Pro každý úkol odhadni, jestli je lehký (krátká odpověď), střední (dokument nebo analýza), nebo těžký (vícekrokový, hodně souborů, Cowork).
+Navrhni pořadí tak, aby těžké úkoly byly na začátku pracovních bloků a lehké mezi nimi. K těžkým úkolům doporuč model a úroveň Effort.
+Upozorni, co by šlo spojit do jedné zprávy. Nehádej přesnou spotřebu limitu, tu neznáš.</pre></div>
+        </div>
+      </div>
+
+      <h3 id="uspora-prompty">2.6.10 Prompty, které šetří limit</h3>
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Posouzení, jak náročný úkol je</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Chceš zjistit, jestli se úkol vyplatí dělat jako velký, nebo jej rozdělit.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — rozdělení úkolu"><pre>Chci udělat tento úkol: <span class="ph">[popis]</span>.
+Nejdřív mi bez provádění úkolu napiš, jak bys ho rozdělil na lehčí kroky tak, abych spotřeboval co nejméně limitu: co udělat v chatu, co vyžaduje soubory a co můžu udělat sám.
+Potom počkej na můj souhlas s prvním krokem.</pre></div>
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Úklid souborů v projektu</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Projekt má hodně souborů a nevíš, které jsou zbytečné.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — audit projektu"><pre>Projdi soubory a instrukce tohoto projektu a napiš mi tabulku: název souboru, k čemu slouží, zda ho v poslední době pravděpodobně používám (podle našich konverzací), a doporučení (ponechat, zkrátit, odstranit).
+U instrukcí navrhni zkrácenou verzi. Nic nemaž ani neměň, jen navrhni.</pre></div>
+        </div>
+      </div>
+
+      <h3 id="uspora-nastroje-sledovani">2.6.11 Nástroje pro sledování spotřeby</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nástroj</th><th>K čemu</th><th>Kde</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Usage (využití)</strong> v nastavení</td><td>Okno, týdenní limity, kredity, resety</td><td><span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span>, web a desktop</td></tr>
+            <tr><td><strong>Upozornění v chatu</strong></td><td>Blížíš se limitu, čas obnovení</td><td>přímo v konverzaci</td></tr>
+            <tr><td><strong>/usage</strong> v Claude Code</td><td>Ukazatele před dlouhou prací</td><td>terminál, Claude Code</td></tr>
+            <tr><td><strong>Strop útraty kreditů</strong></td><td>Ochrana před nečekanou útratou</td><td><span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> &gt; Usage credits</td></tr>
+            <tr><td><strong>Efektivní prompty</strong> z této sekce</td><td>Předávací shrnutí, dávkové zadání, plán práce</td><td>Chat</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Pozor — neoficiální doplňky</div>
+        <p>Existují doplňky do prohlížeče a aplikace třetích stran, které „sledují spotřebu“. Nejsou oficiální a obvykle potřebují přístup k tvému účtu nebo relaci. Zvaž, jestli ti stojí za to riziko pro soukromí. Zdroj pravdy je vždy <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span>. Také nespoléhej na to, že ti Claude v konverzaci řekne přesný zbytek limitu, zjistíš ho v nastavení.</p>
+      </div>
+
+      <h3 id="uspora-shrnuti">2.6.12 Shrnutí: co dělat nejdřív</h3>
+      <ol>
+        <li>Změř, co limit spotřebovává (<span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> ráno a v poledne).</li>
+        <li>Nová konverzace pro nové téma, předávací shrnutí pro dlouhé.</li>
+        <li>Nižší Effort a vhodný model pro rutinní práci.</li>
+        <li>Opakované dokumenty do Projektu, krátké instrukce, úklid souborů.</li>
+        <li>Vypni nástroje a konektory, které nepotřebuješ.</li>
+        <li>U Coworku a Code zadávej konkrétně a sleduj spotřebu.</li>
+        <li>Pokud i po tomto narážíš na limit pravidelně, zvaž usage credits se stropem, nebo vyšší plán.</li>
+      </ol>
+
+      <h2 id="pri-dosazeni-limitu">Co dělat při dosažení limitu</h2>
+      <p>Když limit dosáhneš, vidíš zprávu s časem, kdy můžeš pokračovat. Máš několik možností.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Možnost</th><th>Kdy se hodí</th><th>Poznámka</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Počkat na obnovení</strong></td><td>Práce není urgentní</td><td>Okno se obnoví za pět hodin, týdenní limit v pevný čas. Čas vidíš v nastavení.</td></tr>
+            <tr><td><strong>Použít limit reset</strong></td><td>V sekci Resets v <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> vidíš nabídku, nebo ji vidíš ve zprávě o limitu</td><td>Zdarma a hned vrátí na plno limit okna, nebo týdenní limit (podle nabídky). Podrobně v <a href="#limit-reset">sekci 2.5.3</a>.</td></tr>
+            <tr><td><strong>Zapnout usage credits</strong> <span class="ui">Pro</span></td><td>Urgentní práce</td><td>Nastav strop. Platí se podle API sazeb.</td></tr>
+            <tr><td><strong>Přepnout model nebo snížit Effort</strong></td><td>Okno je vyčerpané jen částečně</td><td>Zpomalí spotřebu, ale týdenní limit na Pro platí pro všechny modely společně, takže ho nepřeskočíš.</td></tr>
+            <tr><td><strong>Přejít na vyšší plán</strong></td><td>Limit narážíš pravidelně i po úsporách</td><td>Nové limity platí okamžitě. Nápověda doporučuje u Claude Code zvážit vyšší plán, když limit narážíš stále.</td></tr>
+            <tr><td><strong>API kredity přes konzoli</strong></td><td>Intenzivní programování</td><td>Jen pro Claude Code, platí se zvlášť. Podle nápovědy lze přejít na účet Claude Console.</td></tr>
+            <tr><td><strong>Dělat jinou práci</strong></td><td>Čekáš na obnovení</td><td>Příprava podkladů, kontrola výsledků, plánování dalších promptů.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout gn">
+        <div class="callout-title">Tip — nejdřív zkontroluj limit reset</div>
+        <p>Dřív než začneš čekat, platit z usage credits nebo přecházet na vyšší plán, otevři <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> a podívej se do sekce <strong>Resets</strong>. Pokud tam reset máš, <span class="ui">Reset for free</span> ti vrátí limit okna nebo týdenní limit zdarma a okamžitě. Nejdřív si přečti, který limit se obnoví, protože reset nejde vzít zpět, a hlídej datum platnosti, nepoužitý reset propadne. Tlačítko funguje jen na webu a v desktopové aplikaci (ne v mobilu a Claude Code), účinek ale platí všude. Podrobný návod je v <a href="#limit-reset">sekci 2.5.3 Limit reset</a>.</p>
+      </div>
+
+      <div class="callout gn">
+        <div class="callout-title">Tip</div>
+        <p>Než přejdeš na vyšší plán, vyzkoušej alespoň týden postupy ze <a href="#jak-limity-setrit">sekce 2.6 Jak s limity vydržet déle</a>. Mnoho lidí zjistí, že plán nepotřebuje větší, jen jinak používaný.</p>
+      </div>
+
+      <h2 id="pracovni-ucet">Pracovní účet vs. vlastní Pro</h2>
+      <p>Pokud dostaneš Claude v práci, nejspíš půjde o <strong>Team</strong> nebo <strong>Enterprise</strong>. Funguje podobně jako Pro, ale jinak se spravuje, platí a hlídá. Tady je srovnání.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Téma</th><th>Vlastní Pro</th><th>Pracovní účet (Team, Enterprise)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Kdo platí a spravuje</strong></td><td>Ty</td><td>Zaměstnavatel (administrátor)</td></tr>
+            <tr><td><strong>Limity</strong></td><td>Okno plus týdenní limit</td><td>Team: Standard seat 1,25× Pro, Premium seat 6,25× Pro, limity na člena. Enterprise: v současném modelu bez limitu na místo, spotřeba se účtuje organizaci.</td></tr>
+            <tr><td><strong>Usage credits</strong></td><td>Zapínáš a platíš si sám</td><td>Nakupuje organizace, správce může nastavit stropy za organizaci i uživatele</td></tr>
+            <tr><td><strong>Fable</strong></td><td>Jen přes kredity</td><td>Team Standard: kredity, Premium: do poloviny týdenního limitu. Enterprise: podle smlouvy.</td></tr>
+            <tr><td><strong>Přihlášení a správa</strong></td><td>E-mail, Google, Apple</td><td>Často SSO, správa rolí, provisioning</td></tr>
+            <tr><td><strong>Konektory</strong></td><td>Podle tvého výběru</td><td>Konektory na pracovní nástroje (Drive, Gmail, Kalendář, GitHub, Microsoft 365, Slack), může je ovlivnit správce</td></tr>
+            <tr><td><strong>Dohled a soukromí</strong></td><td>Jen ty</td><td>Enterprise nabízí audit logy a API pro přístup k aktivitě a historii konverzací. Počítej s tím, že organizace vidí víc.</td></tr>
+            <tr><td><strong>Funkce a modely</strong></td><td>Podle plánu</td><td>Správce může část modelů nebo funkcí vypnout</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout rd">
+        <div class="callout-title">Nebezpečí — nemíchej osobní a pracovní data</div>
+        <p>Na pracovní účet nedávej soukromé věci (zdravotní, finanční, osobní dokumenty): organizace může mít přístup k aktivitě a historii. A naopak: firemní důvěrná data nevkládej do vlastního Pro, pokud ti to nepovoluje firemní pravidlo. Řiď se pravidly zaměstnavatele a ptej se IT.</p>
+      </div>
+
+      <h3 id="uc-doporuceni">2.8.1 Jak s tím naložit</h3>
+      <ul>
+        <li><strong>Pracovní účet používej na práci</strong>, vlastní Pro na osobní věci a učení. Průvodce počítá s Pro, ale všechny postupy (limity, Projekty, Skills, konektory, Cowork) fungují na pracovním účtu stejně, jen s omezeními od správce.</li>
+        <li><strong>Zeptej se správce</strong> na to, co ti omezuje používání (viz prompt níže).</li>
+        <li><strong>Nejde jen o limit.</strong> Rozhoduje, které modely, konektory a funkce ti správce povolil.</li>
+        <li>Dva účty (osobní a pracovní) mohou existovat vedle sebe, ale s různým přihlášením. Zda můžeš mít oba na stejný e-mail, si ověř u správce nebo v nápovědě.</li>
+      </ul>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Příprava otázek pro správce pracovního účtu</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Dostal jsi pracovní účet a nevíš, co ti správce povolil.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — otázky pro IT"><pre>Dostal jsem pracovní účet Claude (plán: <span class="ph">[Team / Enterprise / nevím]</span>). Připrav mi stručný e-mail pro správce s otázkami:
+- jaký je můj plán a typ místa, jaké mám limity nebo stropy útraty,
+- které modely a funkce jsou povolené (Cowork, Claude Code, konektory, hlas),
+- jaká pravidla platí pro vkládání firemních dat a kdo má přístup k historii konverzací,
+- jestli smím používat i vlastní účet na osobní věci.
+Tón: zdvořilý a věcný.</pre></div>
+        </div>
+      </div>
+
+      <h2 id="caste-chyby">Časté chyby</h2>
+      <p>U každé chyby najdeš, <strong>proč se stává</strong>, <strong>jak se jí vyhnout</strong> a <strong>jak ji opravit</strong>, pokud už k ní došlo.</p>
+
+      <h3 id="chyba-pocet-zprav">2.9.1 Hledání „počtu zpráv“</h3>
+      <p><strong>Proč se to stává:</strong> Limit se neměří ve zprávách, ale v práci, kterou Claude odvede. Krátká otázka je levná, jedna zpráva s velkým souborem, Researchem nebo dlouhou historií může spotřebovat víc než dvacet krátkých.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Nesrovnávej se s ostatními: stejný plán dá každému jiný počet zpráv podle toho, co dělá.</li><li>Sleduj spotřebu v <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> a změř si, co ti ubírá nejvíc (postup v <a href="#kde-videt-spotrebu">sekci 2.4</a>).</li><li>Neplánuj práci podle „kolik zpráv mi zbývá“, ale podle toho, jak náročné úkoly děláš.</li></ul>
+      <p><strong>Jak to opravit:</strong> Zjisti, co ti limit spotřebovává (dlouhá konverzace, soubory, nástroje, Cowork), a použij postupy ze <a href="#jak-limity-setrit">sekce 2.6</a> na tu část, která spotřebu zvedá nejvíc.</p>
+
+      <h3 id="chyba-vecna-konverzace">2.9.2 Věčná konverzace</h3>
+      <p><strong>Proč se to stává:</strong> Při každé odpovědi Claude znovu zpracuje celou dosavadní konverzaci. Čím je delší, tím víc stojí každá další zpráva. U velmi dlouhých konverzací navíc Claude starší část automaticky shrnuje, a to spotřebuje ještě víc.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Pravidlo „jedno téma, jedna konverzace“: pro nové téma začni novou.</li><li>Po dokončení milníku (hotový text, vyřešený problém) konverzaci ukonči.</li><li>Opakující se téma řeš v Projektu, ne v jedné nekonečné konverzaci (viz <a href="06_CLDE_projekty.html">díl 06</a>).</li></ul>
+      <p><strong>Jak to opravit:</strong> Požádej Claude o předávací shrnutí podle <a href="#uspora-konverzace">sekce 2.6.1</a> a pokračuj v nové konverzaci. Nová konverzace limit neobnoví, ale ušetří další spotřebu.</p>
+
+      <h3 id="chyba-nejvyssi-effort">2.9.3 Vždy nejvyšší Effort a nejsilnější model</h3>
+      <p><strong>Proč se to stává:</strong> Vyšší Effort a silnější model dávají důkladnější odpovědi, ale spotřebují víc tokenů a odpovídají déle. Pro rutinní úkoly (překlad, e-mail, krátké vysvětlení) tahle důkladnost nepřináší nic navíc.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Nech výchozí nastavení a zvyšuj jen u úkolů, kde ti to opravdu pomůže (analýza, složitý plán).</li><li>Drž se tabulky v <a href="#uspora-model-effort">sekci 2.6.3</a>.</li><li>Než přejdeš na menší model, zkus nejdřív snížit Effort.</li></ul>
+      <p><strong>Jak to opravit:</strong> Změň model nebo Effort v nabídce vedle tlačítka odeslat. Změna platí od další odpovědi, i uprostřed konverzace. Podrobnosti viz <a href="04a_CLDE_modely_a_effort.html">díl 04a</a>.</p>
+
+      <h3 id="chyba-zapomenuty-konektor">2.9.4 Zapomenutý konektor nebo vyhledávání na webu</h3>
+      <p><strong>Proč se to stává:</strong> Nástroje a konektory jsou náročné na tokeny, protože jejich výsledky se přidávají do kontextu. Pokud je máš zapnuté i v konverzaci, kde je nepotřebuješ, limit se spotřebovává zbytečně.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Před začátkem práce se podívej, jaké nástroje a konektory jsou zapnuté, a vypni, co nepotřebuješ.</li><li>Do zadání napiš „nehledej na webu“, pokud nepotřebuješ aktuální informace.</li><li>Research používej jen na otázky, které ho opravdu potřebují.</li></ul>
+      <p><strong>Jak to opravit:</strong> Vypni nástroj v nabídce a pokračuj. Výsledky, které už se do konverzace dostaly, v ní zůstávají a dál zvyšují spotřebu, proto pro další práci raději začni novou konverzaci s předávacím shrnutím.</p>
+
+      <h3 id="chyba-neomezene-kredity">2.9.5 Neomezené usage credits</h3>
+      <p><strong>Proč se to stává:</strong> Usage credits se účtují podle API sazeb. Při dlouhých úlohách (Cowork, Claude Code, Research, Fable) může útrata rychle narůst. Bez stropu nemáš nad částkou kontrolu.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Vždy nastav měsíční strop (<span class="ui">Adjust limit</span>) a nevolej „Set to unlimited“.</li><li>Začni malým zůstatkem a automatické dobíjení zapni, až budeš znát svou běžnou spotřebu.</li><li>Pravidelně kontroluj útratu v sekci Usage credits.</li></ul>
+      <p><strong>Jak to opravit:</strong> Otevři <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span>, sekci Usage credits, a sniž strop nebo kredity vypni (název volby se může lišit podle verze). Už provedená útrata se nevrací.</p>
+
+      <h3 id="chyba-fable-bez-kreditu">2.9.6 Fable na Pro bez zapnutých kreditů</h3>
+      <p><strong>Proč se to stává:</strong> Fable je na Pro dostupný jen přes usage credits, takže neběží z limitů plánu. Pokud ho vybereš bez zapnutých kreditů nebo bez zůstatku, nezačne pracovat tak, jak čekáš.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Fable používej cíleně, jen na úlohy, které ho opravdu potřebují.</li><li>Než ho vybereš, zkontroluj, že máš kredity zapnuté, zůstatek a strop.</li><li>Pro běžnou práci používej Opus nebo Sonnet.</li></ul>
+      <p><strong>Jak to opravit:</strong> Přepni model v nabídce zpět na model, který je součástí plánu, nebo zapni a nastav kredity podle <a href="#credits-zapnuti">sekce 2.5.2</a>. Přesné chování při chybějících kreditech si ověř v aplikaci.</p>
+
+      <h3 id="chyba-nova-konverzace-neobnovi">2.9.7 Očekávání, že nová konverzace limit obnoví</h3>
+      <p><strong>Proč se to stává:</strong> Nová konverzace začne s prázdným kontextem, takže příští zprávy stojí méně. Limit ale ukazuje, kolik jsi už spotřeboval, a ten se tím nemění.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Pamatuj si, že limit se obnovuje jen časem (okno po pěti hodinách, týden v pevný čas), limit resetem nebo vyšším plánem.</li><li>Novou konverzaci zakládej kvůli úspoře, ne kvůli „obejití“ limitu.</li></ul>
+      <p><strong>Jak to opravit:</strong> Pokud limit dosáhneš, použij možnosti ze <a href="#pri-dosazeni-limitu">sekce 2.7</a>: počkat, limit reset, usage credits nebo vyšší plán.</p>
+
+      <h3 id="chyba-ceny-z-internetu">2.9.8 Ceny a čísla limitů z internetu</h3>
+      <p><strong>Proč se to stává:</strong> Ceny se liší podle země, měny, daní a toho, zda platíš přes web, nebo přes obchod s aplikacemi. Čísla limitů z blogů a diskuzí jsou často zastaralá nebo odhadnutá, Anthropic počet zpráv nezveřejňuje.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Ceny hledej na <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a> a po přihlášení na <a href="https://claude.ai/upgrade" target="_blank" rel="noopener">claude.ai/upgrade</a>.</li><li>U každého čísla z internetu si ověř datum a zdroj.</li><li>Skutečný stav svého účtu najdeš jen v <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span>.</li></ul>
+      <p><strong>Jak to opravit:</strong> Pokud sis podle cizího čísla něco naplánoval, přepočítej si to podle svého přehledu spotřeby.</p>
+
+      <h3 id="chyba-osobni-a-pracovni">2.9.9 Míchání osobních a pracovních dat</h3>
+      <p><strong>Proč se to stává:</strong> Pracovní účet spravuje zaměstnavatel a organizace může mít přístup k aktivitě a historii konverzací. Naopak ve vlastním Pro nemusíš smět zpracovávat firemní důvěrná data.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Drž osobní věci ve vlastním účtu a pracovní v pracovním.</li><li>Zjisti si firemní pravidla pro vkládání dat a zeptej se IT (prompt s otázkami je v <a href="#pracovni-ucet">sekci 2.8</a>).</li><li>Nevkládej do žádného účtu to, co by nemělo opustit tvou hlavu nebo firmu.</li></ul>
+      <p><strong>Jak to opravit:</strong> Pokud jsi data vložil omylem, informuj správce nebo IT. Smazání konverzace na tvé straně nemusí stačit, pokud organizace uchovává záznamy.</p>
+
+      <h3 id="chyba-cowork-na-vse">2.9.10 Cowork na jednoduché úkoly</h3>
+      <p><strong>Proč se to stává:</strong> Cowork spotřebovává víc než běžný chat, protože vícekrokové úlohy potřebují víc výpočtů. Pro jednoduchý dotaz je zbytečně drahý.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Krátké otázky, překlady a úpravy textu řeš v Chatu.</li><li>Cowork používej na úlohy s více kroky, soubory a nástroji.</li><li>Nejdřív si úkol ujasni v chatu a až potom ho zadej Coworku.</li></ul>
+      <p><strong>Jak to opravit:</strong> Rozběhnutý zbytečný úkol zastav (pokud ještě běží) a zadej ho znovu v chatu. Podrobnosti v <a href="11_CLDE_cowork_agenty.html">dílu 11</a>.</p>
+
+      <h3 id="chyba-opakovane-nahravani">2.9.11 Opakované nahrávání týchž souborů</h3>
+      <p><strong>Proč se to stává:</strong> Soubor vložený do konverzace se zpracovává znovu při každé další zprávě. V Projektu se obsah ukládá do cache, a při opakovaném použití spotřebuje méně.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Dokumenty, které používáš opakovaně, vlož do Projektu.</li><li>Nahrávej jen to, co potřebuješ. Raději vlož vybranou část textu než celý dokument.</li><li>Pravidelně odstraňuj soubory, které už nepoužíváš.</li></ul>
+      <p><strong>Jak to opravit:</strong> Založ Projekt, přesuň do něj opakovaně používané soubory a práci vedi tam. Viz <a href="#uspora-projekty">sekce 2.6.4</a>.</p>
+
+      <h3 id="chyba-jen-okno">2.9.12 Hlídání jen okna a ignorování týdenního limitu</h3>
+      <p><strong>Proč se to stává:</strong> Pětihodinové okno se obnovuje často, takže se lehce zapomene na týdenní limit. Ten se obnoví jen jednou týdně a vyčerpaný způsobí delší pauzu.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Kontroluj oba ukazatele v <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span>: Current session i Weekly limits.</li><li>Rozlož náročné úkoly do celého týdne, ne do jednoho dne.</li><li>Znej čas týdenního obnovení a podle něj plánuj velké projekty.</li></ul>
+      <p><strong>Jak to opravit:</strong> Když je týdenní limit téměř vyčerpaný, přesuň náročnou práci na dobu po obnovení a mezitím dělej lehké úkoly s nižším Effortem. Přepnutí modelu týdenní limit na Pro neobejde, protože platí společně pro všechny modely.</p>
+
+      <h3 id="chyba-predplatne-pres-aplikaci">2.9.13 Předplatné přes obchod s aplikacemi a usage credits</h3>
+      <p><strong>Proč se to stává:</strong> Pokud Pro koupíš přes obchod s aplikacemi, usage credits nastavíš jen na webu. V mobilní aplikaci je nenajdeš a můžeš si myslet, že tuto možnost nemáš.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Kredity nastavuj na webu claude.ai.</li><li>Při nákupu srovnej cenu přes web a přes obchod, mohou se lišit.</li></ul>
+      <p><strong>Jak to opravit:</strong> Otevři claude.ai v prohlížeči, přejdi na <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span> a nastav kredity tam.</p>
+
+      <h3 id="chyba-propadly-reset">2.9.14 Propadlý nebo promarněný limit reset</h3>
+      <p><strong>Proč se to stává:</strong> Reset může mít datum platnosti a po zrušení nebo snížení plánu propadne. Pokud ho nesleduješ, přijdeš o bonus zdarma.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul><li>Čas od času se podívej do sekce Resets v <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Usage <span class="cz">(využití)</span></span>.</li><li>Použij reset před datem platnosti a před případným zrušením plánu.</li><li>Přečti si, který limit se resetuje, než potvrdíš (nejde vzít zpět).</li></ul>
+      <p><strong>Jak to opravit:</strong> Propadlý reset nejde obnovit. Pro příští nabídku si nastav připomínku a řiď se tabulkou „Kdy ho použít“ v <a href="#limit-reset">sekci 2.5.3</a>.</p>
+
+      <p><em>Ověřeno podle: <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a>, <a href="https://support.claude.com/en/articles/8325606-what-is-the-pro-plan" target="_blank" rel="noopener">What is the Pro plan?</a>, <a href="https://support.claude.com/en/articles/11049741-what-is-the-max-plan" target="_blank" rel="noopener">What is the Max plan?</a>, <a href="https://support.claude.com/en/articles/9266767-what-is-the-team-plan" target="_blank" rel="noopener">What is the Team plan?</a>, <a href="https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan" target="_blank" rel="noopener">What is the Enterprise plan?</a>, <a href="https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work" target="_blank" rel="noopener">How do usage and length limits work?</a>, <a href="https://support.claude.com/en/articles/9797557-usage-limit-best-practices" target="_blank" rel="noopener">Usage limit best practices</a>, <a href="https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans" target="_blank" rel="noopener">Manage usage credits for paid Claude plans</a>, <a href="https://support.claude.com/en/articles/15424964-claude-fable-models-on-your-plan" target="_blank" rel="noopener">Claude Fable models on your plan</a>, <a href="https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan" target="_blank" rel="noopener">Use Claude Code with your Pro or Max plan</a>, <a href="https://support.claude.com/en/articles/8664678-change-the-model-effort-and-thinking-settings" target="_blank" rel="noopener">Change the model, effort, and thinking settings</a>, <a href="https://support.claude.com/en/articles/17007452-what-is-a-limit-reset" target="_blank" rel="noopener">What is a limit reset?</a>, <a href="https://claude.com/blog/think-through-hard-problems-in-voice-mode" target="_blank" rel="noopener">Think through hard problems in voice mode</a>, 27. 10. 2026.</em></p>
+
+    </div>
+
+
+    <div id="pn"></div>
+    <div id="site-footer"></div>
+
+  </div>
+</div>
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    {
+      "id": "prehled-planu",
+      "name": "Přehled plánů"
+    },
+    {
+      "id": "co-ma-pro",
+      "name": "Co přidává Pro oproti Free"
+    },
+    {
+      "id": "jak-funguji-limity",
+      "name": "Jak fungují limity"
+    },
+    {
+      "id": "kde-videt-spotrebu",
+      "name": "Kde vidět spotřebu"
+    },
+    {
+      "id": "usage-credits",
+      "name": "Usage credits (kredity na pokračování)"
+    },
+    {
+      "id": "jak-limity-setrit",
+      "name": "Jak s limity vydržet déle"
+    },
+    {
+      "id": "pri-dosazeni-limitu",
+      "name": "Co dělat při dosažení limitu"
+    },
+    {
+      "id": "pracovni-ucet",
+      "name": "Pracovní účet vs. vlastní Pro"
+    },
+    {
+      "id": "caste-chyby",
+      "name": "Časté chyby"
+    }
+  ]
+}
+</script>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

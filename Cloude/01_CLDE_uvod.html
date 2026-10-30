@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLDE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="01">
+
+<div id="sidebar"></div>
+
+<div class="container">
+  <div class="main-content">
+
+    <div id="page-header"></div>
+
+    <div class="content">
+
+      <h2 id="co-je-claude">Co je Claude</h2>
+      <p>Claude je AI asistent od firmy Anthropic. Napíšeš mu zadání běžnou češtinou (prompt, česky zadání) a on odpoví textem, vysvětlením, tabulkou nebo hotovým souborem. Umí psát a upravovat texty, překládat, shrnovat dokumenty, analyzovat data, vysvětlovat a pomáhat s programováním.</p>
+      <p>Tento průvodce je určený pro běžné uživatele. Vede tě od prvního spuštění přes psaní dobrých promptů až po pokročilejší věci: <strong>Projekty</strong>, <strong>Skills</strong>, <strong>konektory</strong> a <strong>Cowork</strong>. Claude Code (nástroj pro programátory) tu najdeš jen v základech.</p>
+
+      <div class="callout bl">
+        <div class="callout-title">Info</div>
+        <p>Claude se rychle vyvíjí. Názvy modelů, plány a funkce se mění, proto tento díl popisuje hlavně principy. Konkrétní nabídky a podmínky najdeš v dílech <a href="02_CLDE_plany_a_limity.html">02 Plány a limity</a> a <a href="04a_CLDE_modely_a_effort.html">04a Modely a Effort</a>.</p>
+      </div>
+
+      <div class="callout gn">
+        <div class="callout-title">Označení Pro</div>
+        <p>Průvodce počítá s placeným plánem <strong>Pro</strong> (nejnižší placený plán). Funkce, které tento plán odemyká nebo rozšiřuje oproti Free, jsou označené <span class="ui">Pro</span>. Podrobnosti o plánech viz díl <a href="02_CLDE_plany_a_limity.html">02</a>.</p>
+      </div>
+
+      <h2 id="kde-pouzivat">Kde Claude používat</h2>
+      <p>Claude běží na více místech. Všechna sdílejí tvůj účet, takže konverzace, projekty, paměť a nastavení tě následují mezi zařízeními.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Kde</th><th>Co to je</th><th>Kdy se hodí</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Web</strong> (claude.ai)</td><td>Claude v prohlížeči, bez instalace</td><td>Nejrychlejší start, psaní, analýza, dokumenty</td></tr>
+            <tr><td><strong>Desktop</strong> (macOS, Windows)</td><td>Aplikace s Chatem, Cowork a Code v jednom okně</td><td>Práce se soubory na počítači, rozšíření (extensions), plné možnosti Cowork</td></tr>
+            <tr><td><strong>Mobil</strong> (iOS, Android)</td><td>Aplikace pro telefon a tablet</td><td>Rychlé dotazy na cestách, <a href="#hlasove-ovladani">hlasový režim</a>, zadání úkolu pro desktop</td></tr>
+            <tr><td><strong>Rozšíření a doplňky</strong></td><td>Claude v Chrome, Slacku, Excelu, PowerPointu a Wordu</td><td>Pomoc přímo uvnitř nástroje, ve kterém už pracuješ</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Aplikace Claude jsou dostupné ve všech plánech včetně Free, některé funkce jsou ale jen pro placené plány. Instalaci a nastavení najdeš v dílu <a href="03_CLDE_instalace.html">03 Instalace a nastavení</a>.</p>
+
+      <div class="callout gn">
+        <div class="callout-title">Tip</div>
+        <p>Začni na webu. Pokryje většinu běžných úkolů a nic neinstaluješ. Desktop a ostatní místa přidej, až je skutečně potřebuješ.</p>
+      </div>
+
+      <h2 id="hlasove-ovladani">Hlasové ovládání</h2>
+      <p>Claude umí dvě věci s hlasem, které se liší:</p>
+      <ul>
+        <li><strong>Dictation (diktování)</strong>: mluvíš a Claude tvůj hlas přepíše do textového pole, odesíláš pak jako běžný prompt.</li>
+        <li><strong>Voice mode (hlasový režim)</strong>: plná hlasová konverzace. Mluvíš ty i Claude, střídáte se. Funguje v aplikaci pro mobil, v desktopové aplikaci i na webu, nejlépe ale na telefonu. Je to beta funkce.</li>
+      </ul>
+      <p>Hlasový režim spustíš v mobilní aplikaci klepnutím na ikonu zvukové vlny vedle mikrofonu v poli pro zprávu. Pak si vybereš hlas a začneš mluvit.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Možnost</th><th>Free</th><th>Pro</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Model v hlasovém režimu</strong></td><td>Haiku</td><td class="yes">Opus, Sonnet i Haiku, přepínání uprostřed konverzace <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Připojené nástroje</strong> (Gmail, Slack, kalendář)</td><td>jeden nástroj</td><td class="yes">všechny připojené nástroje <span class="ui">Pro</span></td></tr>
+            <tr><td><strong>Spotřeba</strong></td><td colspan="2">hlasové konverzace se počítají do běžných limitů</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Při práci s nástroji se Claude před použitím zeptá na povolení. Nový nástroj připojíš v <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Connectors <span class="cz">(konektory)</span></span>. K čemu je hlas dobrý: nácvik důležitého rozhovoru, hlasité přemýšlení nad rozhodnutím, brainstorming nebo rychlé úkoly typu „přesuň schůzku o půl hodiny“.</p>
+
+      <div class="callout">
+        <div class="callout-title">Pozor — jazyk</div>
+        <p>V oficiálním seznamu jazyků hlasového režimu (stav k 23. 7. 2026) <strong>čeština není</strong>. Je tam angličtina, francouzština, němčina, hindština, indonéština, italština, japonština, korejština, portugalština (Brazílie) a španělština. Claude jazyk sám nerozpozná: jazyk nastavíš ve <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">General <span class="cz">(obecné)</span></span> &gt; <span class="ui">Voice <span class="cz">(hlas)</span></span> nebo ho přepneš hlasem.</p>
+        <p><strong>Neověřeno oficiálním zdrojem (zkušenost autora):</strong> čeština v hlasovém režimu přesto funguje, Claude odpovídá česky, ale s cizím, „anglickým“ přízvukem. Použít se dá, zní to ale nepřirozeně. Diktování (dictation) v češtině funguje bez problémů. Oficiální podpora se může změnit, vždy si ověř aktuální seznam.</p>
+      </div>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Nácvik důležitého rozhovoru hlasem</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Zítra vyjednáváš a chceš si to nahlas vyzkoušet. Spustíš hlasový režim a řekneš zadání.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — nácvik hlasem"><pre>Budeš hrát <span class="ph">[role protistrany, např. dodavatel]</span>. Já se pokusím vyjednat <span class="ph">[cíl]</span>.
+Reaguj realisticky, klaď mi doplňující otázky a po pěti výměnách mi řekni, kde byly mé argumenty slabé.</pre></div>
+        </div>
+      </div>
+
+      <h2 id="mapa-produktu">Mapa produktů: Chat, Cowork, Code</h2>
+      <p>V aplikaci Claude jsou tři režimy práce. Liší se tím, <strong>kdo úkol dělá a kolik toho Claude smí</strong>.</p>
+
+      <h3>Chat (konverzace)</h3>
+      <p>Pokládáš otázky a zadáváš úkoly, Claude odpovídá. Ty řídíš každý krok. Hodí se na psaní, vysvětlování, shrnutí a rozbor textu nebo přiložených souborů. Chat je základ celého průvodce (díly 04 až 09).</p>
+
+      <h3>Cowork (práce na úkolech)</h3>
+      <p>Zadáš cíl a Claude ho zpracuje po částech, pracuje se soubory a připojenými nástroji a nakonec ti předá výsledek. Úkol může běžet na pozadí. Podrobně viz díl <a href="11_CLDE_cowork_agenty.html">11 Cowork a agenti</a>. <span class="ui">Pro</span></p>
+
+      <div class="callout bl">
+        <div class="callout-title">Info — Cowork a chat se slučují</div>
+        <p>Podle oznámení Anthropic z 16. 9. 2026 se Cowork a chat slučují do jednoho Claude. Nasazuje se postupně: nejdřív na plánech Pro a Max, plány Team a Free mají následovat a pro Enterprise je sloučení od 23. 10. 2026 obecně dostupné. Na účtu, kam sloučení zatím nedorazilo, může být v okně pro zprávy stále přepínač <span class="ui">Cowork</span> a <span class="ui">Chat</span>. Po sloučení nemusíš vybírat, kam úkol patří: větší úkol zadáš ve stejné konverzaci a Claude sám pozná, co potřebuje. Pokud se ti rozhraní liší od popisu v průvodci, vysvětluje to právě toto postupné nasazení.</p>
+      </div>
+
+      <h3>Code (Claude Code)</h3>
+      <p>Nástroj pro programátory: Claude čte a mění kód v projektu a spouští příkazy. Běží v terminálu, v desktopové aplikaci (záložka <span class="ui">Code</span>), na webu a v editorech. Vyžaduje placený plán, nejnižší je Pro. <span class="ui">Pro</span> V tomto průvodci jen základy v dílu <a href="13_CLDE_claude_code.html">13 Claude Code</a>, podrobnosti jsou v samostatném manuálu.</p>
+
+      <h3>Doplňky a rozšíření</h3>
+      <p>Mimo tyto tři režimy existují doplňky, které přinášejí Claude do jiných programů (Chrome, Slack, Excel, PowerPoint, Word, Google Workspace). Přehled je v dílu <a href="12_CLDE_aplikace.html">12 Aplikace a 3D tisk</a>.</p>
+
+      <h3>Funkce, které se kombinují</h3>
+      <ul>
+        <li><strong>Projekty</strong> (Projects): složka s tvými instrukcemi a soubory, aby Claude znal kontext (díl 06).</li>
+        <li><strong>Paměť a instrukce</strong> (Memory): Claude si pamatuje preference napříč konverzacemi (díl 09).</li>
+        <li><strong>Skills a konektory</strong> (Connectors): hotové postupy a připojení k Gmailu, Disku nebo kalendáři (díl 10).</li>
+        <li><strong>Web search a Deep Research</strong>: vyhledávání aktuálních informací (díl 08).</li>
+      </ul>
+
+      <h2 id="dalsi-produkty">Další produkty a doplňky</h2>
+      <p>Kromě hlavní aplikace (Chat, Cowork, Code) existují další produkty. Některé se instalují zvlášť, některé jsou v omezeném přístupu nebo jen pro firmy. Tady je přehled s odkazy na oficiální stránky, kde najdeš aktuální stav. Podrobnosti k aplikacím a doplňkům jsou v dílu <a href="12_CLDE_aplikace.html">12 Aplikace a 3D tisk</a>, ke Claude Code v dílu <a href="13_CLDE_claude_code.html">13</a>.</p>
+
+      <div class="callout bl">
+        <div class="callout-title">Info — stav k 28. 10. 2026</div>
+        <p>Tyto produkty se rychle mění, některé jsou v beta verzi nebo v náhledu (research preview). Dostupnost a podmínky vždy ověř na oficiální stránce produktu.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Produkt</th><th>Co to je</th><th>Instalace</th><th>Dostupnost (stav k 28. 10. 2026)</th><th>Oficiální stránka</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Claude Duet</strong></td><td>Proaktivní agent. Pracuje v aplikacích, které ti připojíš, upozorní tě, když něco potřebuje pozornost, a před odesláním zprávy, platbou, podpisem nebo smazáním se zeptá. Ráno ti shrne e-maily a kalendář a běží na vlastním počítači v cloudu, takže pracuje i po zavření aplikace.</td><td>Mobilní aplikace pro iPhone a Android. Přístup přes pozvánku z čekací listiny.</td><td>Research preview. Potřebuješ plán Pro nebo Max, účet v USA a pozvánku z čekací listiny. Zatím není ve Team ani Enterprise. Spotřebovává limity tvého plánu. <span class="ui">Pro</span></td><td><a href="https://claude.com/product/claude-duet" target="_blank" rel="noopener">claude.com/product/claude-duet</a>, <a href="https://support.claude.com/en/articles/17631495" target="_blank" rel="noopener">nápověda</a></td></tr>
+            <tr><td><strong>Claude in Chrome</strong></td><td>Rozšíření prohlížeče: Claude v prohlížeči čte stránky, klikne a vyplňuje formuláře.</td><td>Rozšíření z Chrome Web Store. V desktopové aplikaci je k dispozici jako konektor.</td><td>Placené plány (Pro, Max, Team, Enterprise), ve Free ne. V prohlížeči je v betě. <span class="ui">Pro</span></td><td><a href="https://claude.com/claude-in-chrome" target="_blank" rel="noopener">claude.com/claude-in-chrome</a></td></tr>
+            <tr><td><strong>Claude pro Microsoft 365</strong> (Excel, PowerPoint, Word, Outlook)</td><td>Pomoc přímo v dokumentech, tabulkách, prezentacích a poště.</td><td>Doplněk z Microsoft marketplace. Outlook je na stránce stahování označený jako beta.</td><td>Ceník: ve Free ne, od Pro ano (u Excelu, PowerPointu, Wordu i Outlooku). <span class="ui">Pro</span></td><td><a href="https://claude.com/claude-for-microsoft-365" target="_blank" rel="noopener">claude.com/claude-for-microsoft-365</a></td></tr>
+            <tr><td><strong>Claude pro Google Workspace</strong> (beta)</td><td>Claude v produktech Google Workspace.</td><td>Doplněk z Google Workspace Marketplace.</td><td>V ceníku není uveden. Podmínky ověř na stránce produktu.</td><td><a href="https://claude.com/claude-for-google-workspace" target="_blank" rel="noopener">claude.com/claude-for-google-workspace</a></td></tr>
+            <tr><td><strong>Claude Tag</strong> (@Claude ve Slacku)</td><td>Označíš <code>@Claude</code> ve vlákně ve Slacku a Claude přečte kontext a odpoví. Umí pracovat podle stálých instrukcí a zvládne úkoly na několik dní. Administrátor nastavuje, k čemu má přístup.</td><td>Tlačítko <span class="ui">Add to Slack</span> na stránce produktu, nastavuje administrátor.</td><td>Pro zákazníky Claude Enterprise a Team. Verze pro Microsoft Teams je zatím jen na čekací listině.</td><td><a href="https://claude.com/product/tag" target="_blank" rel="noopener">claude.com/product/tag</a></td></tr>
+            <tr><td><strong>Claude Code v prostředích</strong></td><td>Claude Code v desktopové aplikaci, terminálu, VS Code, JetBrains (beta) a ve Slacku.</td><td>Podle prostředí (aplikace, příkaz v terminálu, rozšíření editoru).</td><td>Všechny placené plány. <span class="ui">Pro</span></td><td><a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a>, <a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">dokumentace</a></td></tr>
+            <tr><td><strong>Claude Science</strong> (beta)</td><td>Samostatná aplikace pro vědeckou práci: spouští analýzy, prohledává databáze a ke každému výsledku uchovává postup.</td><td>Samostatné stažení pro macOS, Windows a Linux.</td><td>Beta na plánech Pro, Max, Team a Enterprise. U Team a Enterprise ji musí zapnout administrátor. <span class="ui">Pro</span></td><td><a href="https://claude.com/product/claude-science" target="_blank" rel="noopener">claude.com/product/claude-science</a></td></tr>
+            <tr><td><strong>Claude Security</strong> (beta)</td><td>Skenuje zdrojový kód, ověřuje nálezy a navrhuje opravy ke schválení.</td><td>Zapíná administrátor v administrátorské konzoli. Plugin pro Claude Code je v betě pro všechny uživatele Claude Code.</td><td>Veřejná beta pro Claude Enterprise.</td><td><a href="https://claude.com/product/claude-security" target="_blank" rel="noopener">claude.com/product/claude-security</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Pozor — Claude Duet z Česka</div>
+        <p>Podle oficiální nápovědy vyžaduje Claude Duet účet v USA, plán Pro nebo Max a pozvánku z čekací listiny. Z Česka ho proto zřejmě nezapneš. Sleduj stránku produktu, dostupnost se může rozšířit.</p>
+      </div>
+
+      <p><strong>Duet vs. Cowork.</strong> Cowork dělá úkoly, které mu zadáš ty. Duet pracuje i bez zadání: ráno projde e-maily a kalendář, vybere, co potřebuje pozornost, a může udělat první kroky, třeba připravit odpovědi ke kontrole. Před odesláním, platbou, podpisem nebo smazáním ale vždy žádá o schválení. Je to jiný způsob práce, ne náhrada Coworku.</p>
+      <p><strong>Nejde o samostatnou instalaci:</strong> Claude Design a Artifacts (návrhy, dokumenty, aplikace přímo v chatu) jsou součástí běžné aplikace, viz <a href="07_CLDE_soubory_a_artifacts.html">díl 07</a>.</p>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Který doplněk se mi hodí</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Pracuješ hodně v tabulkách a ve Wordu a nevíš, jestli ti stačí běžný Chat, nebo má smysl doplněk.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — výběr doplňku"><pre>Většinu času pracuji v <span class="ph">[Excel / Word / PowerPoint / prohlížeč]</span> a dělám <span class="ph">[typ práce, např. čištění dat, psaní zpráv]</span>.
+Poraď mi, jestli mi stačí běžný Chat s nahráním souboru, nebo mi pomůže doplněk přímo v programu. Uveď dvě výhody a dvě nevýhody každé varianty a řekni, co si mám ověřit na oficiální stránce.</pre></div>
+        </div>
+      </div>
+
+      <h2 id="co-kdy-pouzit">Co kdy použít</h2>
+
+      <div class="when">
+        <div class="when-yes"><h4>Kdy použít Chat</h4><ul><li>potřebuješ odpověď, text nebo vysvětlení</li><li>chceš úkol řídit a upravovat po krocích</li><li>jde o rychlou věc na pár minut</li></ul></div>
+        <div class="when-no"><h4>Kdy nepoužít Chat</h4><ul><li>úkol má mnoho kroků nebo souborů (použij Cowork)</li><li>má se pracovat s tvými složkami a nástroji (Cowork)</li><li>jde o změny v programovém kódu (Code)</li></ul></div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Úkol</th><th>Kde</th></tr></thead>
+          <tbody>
+            <tr><td>Napsat e-mail, přeložit text, vysvětlit pojem</td><td>Chat (web, desktop, mobil)</td></tr>
+            <tr><td>Shrnout jeden přiložený dokument</td><td>Chat</td></tr>
+            <tr><td>Zpracovat větší sadu souborů ve složce a vytvořit z nich zprávu</td><td>Cowork (desktop)</td></tr>
+            <tr><td>Opakovaný úkol, který má běžet sám</td><td>Cowork (plánované úlohy)</td></tr>
+            <tr><td>Pomoct s tabulkou přímo v Excelu</td><td>Doplněk pro Excel</td></tr>
+            <tr><td>Opravit chybu v programu</td><td>Claude Code</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example">
+        <div class="example-head">
+          <span class="example-tag">Příklad · Prompt</span>
+          <h4>Výběr správného místa pro úkol</h4>
+        </div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Máš úkol a nevíš, jestli stačí běžná konverzace, nebo potřebuješ Cowork.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — kde úkol řešit"><pre>Mám tento úkol: <span class="ph">[popis úkolu]</span>.
+Pracuji na <span class="ph">[web / desktop / mobil]</span> a mám <span class="ph">[plán, např. Free nebo Pro]</span>.
+Poraď mi, jestli stačí běžná konverzace, nebo mám použít Cowork. Zdůvodni to ve dvou větách a napiš první krok.</pre></div>
+        </div>
+      </div>
+
+      <h2 id="jak-zacit">Jak začít</h2>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h4>Otevři Claude na webu</h4><p>Přejdi na claude.ai a přihlas se nebo si vytvoř účet. Účet je společný pro web, desktop i mobil.</p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h4>Napiš první zadání</h4><p>Začni jednoduše, třeba shrnutím textu nebo návrhem e-mailu. Jak psát lepší prompty, ukazuje díl <a href="04_CLDE_zaklady.html">04 Základy</a>.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h4>Podívej se na plán a limity</h4><p>Zjisti, co tvůj plán obsahuje a jak funguje spotřeba. Viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>.</p></div></div>
+        <div class="step"><div class="step-n">4</div><div><h4>Přidej aplikaci podle potřeby</h4><p>Desktop a mobil si nainstaluj podle <a href="03_CLDE_instalace.html">dílu 03</a>.</p></div></div>
+      </div>
+
+      <h2 id="caste-chyby">Časté chyby</h2>
+      <ul class="tl">
+        <li><strong>Cowork na všechno</strong> — jednoduchý dotaz zvládne běžný Chat bez zbytečné složitosti.</li>
+        <li><strong>Žádný kontext</strong> — Claude nezná tvou situaci, dopiš cíl, publikum a požadovaný formát.</li>
+        <li><strong>Slepá důvěra</strong> — důležitá fakta, čísla a citace si ověř, Claude se může mýlit.</li>
+        <li><strong>Zastaralé informace z internetu</strong> — nabídky, ceny a limity se mění, vždy ověř v oficiální nápovědě.</li>
+      </ul>
+
+      <p><em>Ověřeno podle: <a href="https://support.claude.com/en/articles/15520349-use-cowork-on-web-desktop-and-mobile" target="_blank" rel="noopener">Use Cowork on web, desktop, and mobile</a>, <a href="https://support.claude.com/en/articles/13345190-get-started-with-cowork" target="_blank" rel="noopener">Get started with Cowork</a>, <a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a>, <a href="https://claude.com/blog/think-through-hard-problems-in-voice-mode" target="_blank" rel="noopener">Think through hard problems in voice mode</a>, <a href="https://support.claude.com/en/articles/11101966" target="_blank" rel="noopener">Voice mode</a>, <a href="https://support.claude.com/en/articles/17631495" target="_blank" rel="noopener">Get started with Claude Duet</a>, <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a>, <a href="https://claude.com/resources/articles/cowork-is-now-claude" target="_blank" rel="noopener">Claude Cowork and chat are now one Claude</a>, <a href="https://claude.com/product/tag" target="_blank" rel="noopener">Claude Tag</a>, <a href="https://claude.com/product/claude-science" target="_blank" rel="noopener">Claude Science</a>, <a href="https://claude.com/product/claude-security" target="_blank" rel="noopener">Claude Security</a>, <a href="https://support.claude.com/en/articles/12902405" target="_blank" rel="noopener">Claude in Chrome</a>, <a href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener">Claude Code desktop quickstart</a>, 28. 10. 2026.</em></p>
+
+    </div>
+
+
+    <div id="pn"></div>
+    <div id="site-footer"></div>
+
+  </div>
+</div>
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    { "id": "co-je-claude", "name": "Co je Claude" },
+    { "id": "kde-pouzivat", "name": "Kde Claude používat" },
+    { "id": "hlasove-ovladani", "name": "Hlasové ovládání" },
+    { "id": "mapa-produktu", "name": "Mapa produktů: Chat, Cowork, Code" },
+    { "id": "dalsi-produkty", "name": "Další produkty a doplňky" },
+    { "id": "co-kdy-pouzit", "name": "Co kdy použít" },
+    { "id": "jak-zacit", "name": "Jak začít" },
+    { "id": "caste-chyby", "name": "Časté chyby" }
+  ]
+}
+</script>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLDE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="03">
+
+<div id="sidebar"></div>
+
+<div class="container">
+  <div class="main-content">
+
+    <div id="page-header"></div>
+
+    <div class="content">
+
+      <p>Tento díl popisuje, <strong>kde Claude běží</strong>, jak ho nainstalovat a jak funguje <strong>menu Settings (nastavení)</strong> na třech místech: na webu, v desktopové aplikaci pro Windows a v mobilní aplikaci pro Android. Pro každou položku nastavení najdeš, <strong>kde je, co nastavuje a co ovlivní</strong>. Průvodce počítá s plánem <strong>Pro</strong>, funkce, které se od Free liší, jsou označené <span class="ui">Pro</span>.</p>
+      <p>Příklady a snímky vycházejí z reálných účtů autora (Windows aplikace verze 4.29.0, Android, web). U položek, které se v nápovědě nepodařilo ověřit, je to výslovně napsané. Názvy v nastavení jsou vždy anglicky, český popis je v závorce.</p>
+
+      <div class="callout bl">
+        <div class="callout-title">Štítky platformy</div>
+        <p>U položek nastavení uvidíš štítky <span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span>, které říkají, kde položka existuje. Štítek <strong>„Jen“</strong> (<span class="plat plat-web">Jen web</span> <span class="plat plat-app">Jen aplikace</span> <span class="plat plat-mob">Jen mobil</span>) znamená, že existuje pouze tam. Dva nebo tři štítky vedle sebe znamenají, že položka je na všech uvedených místech. V části 3.10 mají štítky <strong>všechny</strong> položky, jinde se označují jen rozdíly.</p>
+      </div>
+
+      <h2 id="kde-bezi">Kde Claude běží a v čem se liší</h2>
+      <p>Claude běží na webu, v desktopové aplikaci a v mobilní aplikaci. Všechna místa sdílejí tvůj účet: konverzace, projekty, paměť a preference se synchronizují, když jsi přihlášený. Výjimkou jsou lokální relace v Coworku, které zůstávají na zařízení, kde běží. Tento průvodce popisuje <strong>web, Windows a Android</strong>. macOS, iOS a Linux jsou jen stručně níže.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Co</th><th>Kde to je</th><th>Poznámka</th></tr></thead>
+          <tbody>
+<tr><td><strong>Chat</strong> (konverzace), Projekty, paměť, Artifacts</td><td><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Základ je všude stejný.</td></tr>
+<tr><td><strong>Instalace</strong></td><td><span class="plat plat-web">Jen web</span> bez instalace<br><span class="plat plat-app">Jen aplikace</span> instalátor nebo Microsoft Store<br><span class="plat plat-mob">Jen mobil</span> aplikace z obchodu</td><td>Web stačí na většinu úkolů.</td></tr>
+<tr><td><strong>Hlasový režim a diktování</strong></td><td><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Hlasový režim funguje nejlépe na telefonu. Zkratku pro diktování nastavuješ jen v aplikaci (viz <a href="#hlas">3.7</a>).</td></tr>
+<tr><td><strong>Quick Entry</strong> (rychlé otevření odkudkoli zkratkou)</td><td><span class="plat plat-app">Jen aplikace</span></td><td>U tebe výchozí zkratka <code>Ctrl+Alt+Space</code>. Nápověda z března 2026 uvádí Quick Entry jen pro macOS, tvoje verze Windows aplikace ho ale má v nastavení. Údaj z nápovědy je zřejmě zastaralý.</td></tr>
+<tr><td><strong>Desktopová rozšíření</strong> a lokální MCP servery</td><td><span class="plat plat-app">Jen aplikace</span></td><td>Doplňky běžící na tvém počítači, viz <a href="#nastaveni">3.10</a> (skupina This computer).</td></tr>
+<tr><td><strong>Computer use</strong> (Claude ovládá obrazovku, myš a klávesnici, beta)</td><td><span class="plat plat-app">Jen aplikace</span></td><td>Jen ve skupině This computer → System. Rizikové nastavení.</td></tr>
+<tr><td><strong>Claude Code</strong></td><td><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Běží v terminálu, v desktopové aplikaci, na webu a v editorech. Z telefonu se dají posílat úkoly do Claude Code (Remote Control).</td></tr>
+<tr><td><strong>Cowork</strong></td><td><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Na webu a mobilu zatím beta. Cowork a chat se slučují do jednoho Claude, viz <a href="01_CLDE_uvod.html">díl 01</a>.</td></tr>
+<tr><td><strong>Konektory</strong> (Gmail, Drive, Slack…)</td><td><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Napojení na internetové služby. Po připojení fungují na všech platformách.</td></tr>
+<tr><td><strong>Přístup k zařízení</strong> (Location, Calendar)</td><td><span class="plat plat-mob">Jen mobil</span></td><td>Oprávnění v systému telefonu, viz <a href="#nastaveni">3.10</a>.</td></tr>
+<tr><td><strong>API keys</strong></td><td><span class="plat plat-web">Jen web</span></td><td>Odkaz na Claude Platform pro vývojáře. Samostatný účet, API se účtuje zvlášť.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Ostatní systémy (jen stručně):</strong> aplikace pro <strong>macOS</strong> a <strong>iOS</strong> jsou obdobné jako pro Windows a Android. Aplikace pro <strong>Linux</strong> je v betě (Ubuntu a Debian). Chat je dostupný ve všech plánech, Claude Code a Cowork od plánu Pro, ale bez diktování.</p>
+      <h2 id="ucet">Účet a přihlášení</h2>
+      <p>Tuhle část máš za sebou, takže jen stručně. Účet je společný pro web, desktop i mobil, přihlašuješ se vždy stejným způsobem a údaji.</p>
+      <ul>
+        <li><strong>Metody přihlášení:</strong> Google, Apple nebo e-mail s odkazem. Podrobnosti v nápovědě <a href="https://support.claude.com/en/articles/13189465-log-in-to-your-claude-account" target="_blank" rel="noopener">Log in to your Claude account</a>.</li>
+        <li><strong>Ověření telefonem (SMS):</strong> při registraci se vyžaduje ověření telefonním číslem z podporované země.</li>
+        <li><strong>Apple „Hide My Email“:</strong> pokud se přihlašuješ přes Apple se skrytým e-mailem, použij stejnou metodu přihlášení na všech zařízeních.</li>
+        <li><strong>Pracovní účet (Team, Enterprise):</strong> často přes SSO, viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>.</li>
+        <li><strong>Kontrola, kde jsi přihlášený:</strong> <span class="ui">Settings <span class="cz">(nastavení)</span></span> &gt; <span class="ui">Account <span class="cz">(účet)</span></span> &gt; <span class="ui">Active sessions <span class="cz">(aktivní relace)</span></span> <span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span>. Podrobně v <a href="#nastaveni">3.10</a>.</li>
+      </ul>
+      <h2 id="web">Web (claude.ai)</h2>
+      <p>Web je nejrychlejší start: otevřeš <code>claude.ai</code>, přihlásíš se a pracuješ. Nic neinstaluješ a aktualizace jsou okamžité.</p>
+      <ul>
+        <li><strong>Co umí jen web:</strong> v menu Settings je skupina <span class="ui">Platform <span class="cz">(platforma)</span></span> s položkou <span class="ui">API keys <span class="cz">(API klíče)</span></span> <span class="plat plat-web">Jen web</span>. Je to jen odkaz na Claude Platform, kde se vytvářejí klíče pro vývojáře. Vyžaduje jiný účet a API se účtuje zvlášť.</li>
+        <li><strong>Co na webu chybí oproti aplikaci:</strong> skupina <span class="ui">This computer <span class="cz">(tento počítač)</span></span> (System, Extensions, Developer), tedy zkratky, spouštění při startu, desktopová rozšíření, lokální MCP servery a Computer use.</li>
+        <li><strong>Kdy ho použít:</strong> na počítači, kde nechceš nic instalovat, a na rychlé práce.</li>
+      </ul>
+      <div class="callout gn">
+        <div class="callout-title">Tip</div>
+        <p>Pokud pracuješ hlavně na jednom počítači, nainstaluj si desktopovou aplikaci. Web pak používej jako zálohu, když jsi u cizího zařízení.</p>
+      </div>
+      <h2 id="windows">Desktopová aplikace pro Windows</h2>
+      <p>Desktopová aplikace spojuje Chat, Cowork a Claude Code v jednom okně a přidává funkce, které web nemá. Instalace je zdarma, stejný účet.</p>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h4>Stáhni instalátor</h4><p>Otevři <a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a></p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h4>Vyber verzi</h4><p>Na Windows je k dispozici instalátor pro x64 i ARM64 a aplikace v Microsoft Store.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h4>Přihlas se</h4><p>Použij stejný účet jako na webu. Konverzace a nastavení účtu se načtou.</p></div></div>
+        <div class="step"><div class="step-n">4</div><div><h4>Zkontroluj nastavení</h4><p>Otevři <span class="ui">Settings <span class="cz">(nastavení)</span></span>, skupina <span class="ui">This computer <span class="cz">(tento počítač)</span></span> (viz <a href="#nastaveni">3.10</a>).</p></div></div>
+      </div>
+      <h3 id="windows-navic">3.4.1 Co aplikace umí navíc oproti webu</h3>
+      <ul>
+        <li><strong>Quick Entry</strong> <span class="plat plat-app">Jen aplikace</span>: rychlé otevření Claude odkudkoli zkratkou. U tebe výchozí <code>Ctrl+Alt+Space</code>.</li>
+        <li><strong>Zkratka pro diktování</strong> <span class="plat plat-app">Jen aplikace</span>: u tebe <code>Ctrl+D</code> (spuštění a zastavení diktování v chatu, do kterého píšeš).</li>
+        <li><strong>Spuštění při startu a ikona v oznamovací oblasti</strong> <span class="plat plat-app">Jen aplikace</span>: Claude běží na pozadí.</li>
+        <li><strong>Udržení počítače vzhůru</strong> <span class="plat plat-app">Jen aplikace</span>: aby běžely plánované úlohy (viz <a href="11b_CLDE_planovane_ulohy.html">díl 11b</a>).</li>
+        <li><strong>Desktopová rozšíření a lokální MCP servery</strong> <span class="plat plat-app">Jen aplikace</span>: doplňky, které dávají Claude přístup k tvému počítači (viz <a href="10_CLDE_skills_konektory.html">díl 10</a>).</li>
+        <li><strong>Computer use (beta)</strong> <span class="plat plat-app">Jen aplikace</span>: Claude může ovládat obrazovku, myš a klávesnici v povolených aplikacích. Je to rizikové, viz <a href="#computer-use">3.10.6.8</a>.</li>
+        <li><strong>Claude Code v aplikaci:</strong> Code běží i v desktopové aplikaci, viz <a href="13_CLDE_claude_code.html">díl 13</a>.</li>
+        <li><strong>Konektor Chrome:</strong> v desktopové aplikaci jde Claude in Chrome používat jako konektor.</li>
+      </ul>
+      <div class="callout">
+        <div class="callout-title">Pozor — nápověda a aplikace se rozcházejí</div>
+        <p>Oficiální nápověda k Quick Entry (z března 2026) uvádí, že je jen pro macOS. Tvoje Windows aplikace (verze 4.29.0) ale zkratku Quick Entry v nastavení má. Údaje v nápovědě mohou být zastaralé. Co vidíš v aplikaci, je pro tebe směrodatné.</p>
+      </div>
+      <h2 id="android">Mobilní aplikace pro Android</h2>
+      <p>Mobilní aplikace je pohodlná na rychlé dotazy, hlas a zadání úkolu na cestách. Stahuje se přes <code>claude.ai/mobile</code>, případně přímo z obchodu s aplikacemi.</p>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h4>Nainstaluj aplikaci</h4><p>Otevři <a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a> a naskenuj QR kód, nebo vyhledej Claude v obchodě.</p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h4>Přihlas se</h4><p>Stejný účet jako na webu a v desktopové aplikaci.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h4>Projdi Settings</h4><p>Menu <span class="ui">Settings <span class="cz">(nastavení)</span></span> je v mobilu jedna seznamová obrazovka. Popis položek je v <a href="#nastaveni">3.10</a>.</p></div></div>
+      </div>
+      <h3 id="android-navic">3.5.1 Co je jen na mobilu</h3>
+      <ul>
+        <li><span class="ui">Permissions <span class="cz">(oprávnění)</span></span> <span class="plat plat-mob">Jen mobil</span>: přístup ke <span class="ui">Location <span class="cz">(poloha)</span></span> a <span class="ui">Calendar <span class="cz">(kalendář)</span></span>. Oprávnění se zapínají v systémovém nastavení telefonu (v aplikaci je odkaz <span class="ui">Settings</span>).</li>
+        <li><span class="ui">Haptic feedback <span class="cz">(haptická odezva)</span></span> <span class="plat plat-mob">Jen mobil</span>: vibrace při ovládání.</li>
+        <li><span class="ui">Sharing <span class="cz">(sdílení)</span></span> <span class="plat plat-mob">Jen mobil</span>: správa sdílených odkazů a volba, zda se obsah sdílený z jiných aplikací vždy otevře v novém chatu.</li>
+        <li><strong>Karusel hlasů</strong> v <span class="ui">Voice settings <span class="cz">(nastavení hlasu)</span></span> <span class="plat plat-mob">Jen mobil</span>.</li>
+        <li><strong>Párování s desktopem:</strong> z telefonu můžeš zadat úkol, který se rozběhne v Coworku na počítači (viz <a href="#propojeni">3.6</a>).</li>
+      </ul>
+      <h2 id="propojeni">Propojení zařízení a přenos práce</h2>
+      <p>Nejlepší je používat <strong>všechna tři místa dohromady</strong>: každé je lepší na něco jiného a práce se dá přenášet. Tady je, co se přenáší samo, co ne, a jak práci předat.</p>
+      <h3 id="propojeni-sync">3.6.1 Co se synchronizuje</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Co</th><th>Přenáší se?</th><th>Poznámka</th></tr></thead>
+          <tbody>
+<tr><td>Konverzace, Projekty</td><td><span class="yes">ano</span></td><td>Po přihlášení stejným účtem je najdeš na webu, v aplikaci i v mobilu.</td></tr>
+<tr><td>Paměť a preference</td><td><span class="yes">ano</span></td><td>Nastavení účtu (Capabilities, Memory, Privacy) se zdá být společné: hodnoty na webu a v mobilu se na tvých snímcích shodují.</td></tr>
+<tr><td>Konektory (Gmail, Drive, Slack…)</td><td><span class="yes">ano</span></td><td>Po připojení fungují všude, kde jsi přihlášený.</td></tr>
+<tr><td><strong>Vzhled</strong> (písma, zmenšení pohybu, téma)</td><td><span class="no">zřejmě ne, je na každém zařízení zvlášť</span></td><td>Web a aplikace mají na tvých snímcích jiné výchozí hodnoty (Interface font, Response font, Motion).</td></tr>
+<tr><td><strong>Lokální relace v Coworku</strong></td><td><span class="no">ne</span></td><td>Zůstávají na zařízení, kde běží.</td></tr>
+<tr><td><strong>Desktopová rozšíření</strong> a lokální MCP servery</td><td><span class="no">ne</span></td><td>Existují jen v desktopové aplikaci.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 id="propojeni-predani">3.6.2 Jak práci předat mezi zařízeními</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Chci udělat…</th><th>Začni na…</th><th>Pokračuj na…</th><th>Co se děje</th></tr></thead>
+          <tbody>
+<tr><td>Krátká otázka na cestě, pak ji dopracovat</td><td>Android <span class="plat plat-mob">Mobil</span></td><td>Windows <span class="plat plat-app">Aplikace</span> nebo web <span class="plat plat-web">Web</span></td><td>Konverzace se synchronizuje, najdeš ji v seznamu konverzací na druhém zařízení.</td></tr>
+<tr><td>Velký úkol se soubory z počítače</td><td>Windows aplikace (Cowork) <span class="plat plat-app">Aplikace</span></td><td>Android <span class="plat plat-mob">Mobil</span> (kontrola průběhu)</td><td>Soubory zůstávají na počítači, ty sleduješ výsledek z telefonu.</td></tr>
+<tr><td>Zadat úkol z telefonu, ať se udělá na počítači</td><td>Android <span class="plat plat-mob">Mobil</span></td><td>Windows aplikace <span class="plat plat-app">Aplikace</span></td><td>Spárovaná aplikace předá úkol do Coworku na počítači (podle stránky stažení).</td></tr>
+<tr><td>Kódovat z telefonu</td><td>Android <span class="plat plat-mob">Mobil</span></td><td>Terminál s Claude Code</td><td>Remote Control: úkol z telefonu se pošle do Claude Code v terminálu. Související nastavení: <span class="ui">Trusted devices <span class="cz">(důvěryhodná zařízení)</span></span> <span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span>.</td></tr>
+<tr><td>Hlasová konzultace při chůzi, pak psaný výstup</td><td>Android <span class="plat plat-mob">Mobil</span></td><td>Web nebo Windows</td><td>Konverzace se synchronizuje jako každá jiná. Jak přesně se hlasová konverzace zobrazí, ověř ve své aplikaci.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div class="callout-title">Pozor — co si hlídat při předávání</div>
+        <p>1) Úkol na počítači potřebuje, aby počítač nespal a aplikace běžela (viz <span class="ui">Keep computer awake <span class="cz">(udržet počítač vzhůru)</span></span> v <a href="#nastaveni">3.10</a>). 2) Všechna místa čerpají z jednoho limitu (viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>). 3) Lokální relace v Coworku nejdou otevřít na jiném zařízení. 4) V tvé mobilní aplikaci je seznam konektorů menší než na webu.</p>
+      </div>
+      <div class="example">
+        <div class="example-head"><span class="example-tag">Příklad · Prompt</span><h4>Předání rozdělané práce na jiné zařízení</h4></div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Na telefonu jsi rozjel důležitý text a chceš ho dokončit na počítači, aniž bys ztratil rozhodnutí.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — předání mezi zařízeními"><pre>Připrav mi předávací shrnutí této konverzace pro pokračování na jiném zařízení.
+Obsah: cíl, co už je rozhodnuto, otevřené otázky, další krok.
+Formát: stručné odrážky, maximálně <span class="ph">[200]</span> slov.</pre></div>
+        </div>
+      </div>
+      <p>Podrobnosti o Remote Control a párování popisují nápověda a <a href="13_CLDE_claude_code.html">díl 13</a> (Claude Code) a <a href="11_CLDE_cowork_agenty.html">díl 11</a> (Cowork). Přesné kroky párování ověř ve své aplikaci, protože se mění.</p>
+      <h2 id="hlas">Hlas a diktování do detailu</h2>
+      <p>Claude umí dvě věci s hlasem: <strong>diktování</strong> (přepis tvého hlasu do textového pole) a <strong>hlasový režim</strong> (plná hlasová konverzace). Základ je v <a href="01_CLDE_uvod.html">dílu 01</a>. Tady jsou nastavení a rozdíly mezi platformami.</p>
+      <h3 id="hlas-nastaveni">3.7.1 Kde se hlas nastavuje</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nastavení</th><th>Kde</th><th>Co to je</th></tr></thead>
+          <tbody>
+<tr><td><span class="ui">Language <span class="cz">(jazyk)</span></span> <span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Web a aplikace: <code>Settings → General → Voice</code>. Mobil: <code>Settings → Voice → Voice settings</code> (označeno BETA).</td><td>Jazyk hlasové konverzace. U tebe „English“. Claude jazyk nepozná sám.</td></tr>
+<tr><td><span class="ui">Style <span class="cz">(styl hlasu)</span></span> <span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span><br>karusel hlasů <span class="plat plat-mob">Jen mobil</span></td><td>Web a aplikace: u tebe „Buttery“. Mobil: posouváš karty (Buttery, Airy a další, celkem 5 hlasů).</td><td>Výběr znění hlasu.</td></tr>
+<tr><td><span class="ui">Speed <span class="cz">(rychlost)</span></span> <span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span><br><span class="ui">Pace <span class="cz">(tempo)</span></span> <span class="plat plat-mob">Jen mobil</span></td><td>Web a aplikace: Speed. Mobil: Pace. U tebe „Normal“.</td><td>Rychlost řeči Claude.</td></tr>
+<tr><td><span class="ui">Dictation shortcut <span class="cz">(zkratka diktování)</span></span> <span class="plat plat-app">Jen aplikace</span></td><td><code>Settings → This computer → System</code>. U tebe <code>Ctrl+D</code>.</td><td>Spustí nebo zastaví diktování v chatu, do kterého píšeš.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 id="hlas-cestina">3.7.2 Čeština</h3>
+      <div class="callout">
+        <div class="callout-title">Pozor — jazyk</div>
+        <p>V oficiálním seznamu jazyků hlasového režimu (stav k 23. 7. 2026) <strong>čeština není</strong>. Je tam angličtina, francouzština, němčina, hindština, indonéština, italština, japonština, korejština, portugalština (Brazílie) a španělština.</p>
+      </div>
+      <p><strong>Neověřeno oficiálním zdrojem (zkušenost autora):</strong> čeština v hlasovém režimu přesto funguje, Claude odpovídá česky, ale s cizím, „anglickým“ přízvukem. Použít se dá, zní to ale nepřirozeně. Diktování v češtině funguje bez problémů. Seznam jazyků v nastavení (<span class="ui">Voice → Language</span>) si před použitím zkontroluj, může se rozšířit.</p>
+      <h3 id="hlas-rozdily">3.7.3 Free a Pro</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Možnost</th><th>Free</th><th>Pro</th></tr></thead>
+          <tbody>
+<tr><td>Model v hlasovém režimu</td><td>Haiku</td><td><span class="yes">Opus, Sonnet i Haiku, přepínání uprostřed konverzace</span> <span class="ui">Pro</span></td></tr>
+<tr><td>Připojené nástroje (Gmail, Slack, kalendář)</td><td>jeden nástroj</td><td><span class="yes">všechny připojené nástroje</span> <span class="ui">Pro</span></td></tr>
+<tr><td>Spotřeba</td><td>hlasové konverzace se počítají do běžných limitů</td><td>stejně</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="example">
+        <div class="example-head"><span class="example-tag">Příklad · Prompt</span><h4>Nácvik rozhovoru hlasem na telefonu</h4></div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Zítra vyjednáváš a chceš si to nahlas vyzkoušet. Spustíš hlasový režim na Androidu.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — nácvik hlasem"><pre>Budeš hrát <span class="ph">[role protistrany, např. dodavatel]</span>. Já se pokusím vyjednat <span class="ph">[cíl]</span>.
+Reaguj realisticky, klaď mi doplňující otázky a po pěti výměnách mi řekni, kde byly mé argumenty slabé.</pre></div>
+        </div>
+      </div>
+      <div class="example">
+        <div class="example-head"><span class="example-tag">Příklad · Prompt</span><h4>Diktování zadání na Windows</h4></div>
+        <div class="example-body">
+          <p class="ex-label">Situace</p>
+          <p>Chceš nadiktovat delší zadání do chatu místo psaní.</p>
+          <p class="ex-label">Prompt</p>
+          <div class="prompt" data-label="Prompt — nadiktovaný text"><pre>Stiskni <code>Ctrl+D</code> v chatu a nadiktuj:
+„Shrň mi hlavní body z dokumentu níže do pěti odrážek a napiš, co ještě musím doplnit.“
+Potom stiskni <code>Ctrl+D</code> znovu a odešli.</pre></div>
+        </div>
+      </div>
+      <h2 id="rozdily">Rozdíly web vs. aplikace vs. mobil</h2>
+      <p>Stručný přehled menu <code>Settings</code> (podrobnosti jsou v <a href="#nastaveni">3.10</a>):</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Oblast</th><th>Web</th><th>Windows aplikace</th><th>Android</th></tr></thead>
+          <tbody>
+<tr><td>Uspořádání menu</td><td>postranní menu se skupinami Preferences, Customize, Platform</td><td>stejné jako web, místo Platform je navíc skupina This computer</td><td>jeden seznam položek</td></tr>
+<tr><td>Vzhled</td><td>Theme, Interface font, Response font, Transcript text size, Transcript width, Motion</td><td>stejné jako web (jiné výchozí hodnoty)</td><td>Color mode, Font style</td></tr>
+<tr><td>Upozornění</td><td>čtyři položky (odpovědi, zmínky, komentáře, sdílení)</td><td>čtyři položky</td><td>dvě položky (Replies, Product updates)</td></tr>
+<tr><td>Účet</td><td>stránka Account (Instructions for Claude, Trusted devices, Active sessions…)</td><td>stejné</td><td>Profile a Log out</td></tr>
+<tr><td>Soukromí</td><td>rozšířené (Export data, Shared chats…)</td><td>rozšířené</td><td>jen Help improve our AI models</td></tr>
+<tr><td>Paměť</td><td>samostatná stránka Memory</td><td>samostatná stránka</td><td>součást Capabilities</td></tr>
+<tr><td>Skills, Plugins, Claude Code, Reflect</td><td>ano</td><td>ano</td><td>v menu nejsou</td></tr>
+<tr><td>Skupina This computer</td><td>ne</td><td>ano</td><td>ne</td></tr>
+<tr><td>Skupina Platform (API keys)</td><td>ano</td><td>ne (místo toho Developer)</td><td>ne</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Kombinace „aplikace + mobil“ (bez webu) se v nastavení momentálně nevyskytuje. Štítky <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span> ji ale umí vyjádřit, kdyby se objevila.</p>
+      <h2 id="rychle-nastaveni">Rychlé nastavení po instalaci</h2>
+      <p>Minimální konfigurace, kterou ti doporučuji projít po instalaci. Každý bod odkazuje do podrobného popisu v <a href="#nastaveni">3.10</a>.</p>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h4>Soukromí</h4><p>Zkontroluj <span class="ui">Privacy → Help improve our AI models</span> (výchozí je vypnuto) a <span class="ui">Location metadata</span> <span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span>.</p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h4>Paměť</h4><p>Rozhodni se, zda zapnout <span class="ui">Memory → Generate memory from chats</span>. Reflect vyžaduje zapnutou paměť.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h4>Capabilities</h4><p>Nech zapnuté <span class="ui">Code execution and file creation</span> (potřeba pro Skills). <span class="ui">Allow network egress</span> nech vypnuté, pokud to nepotřebuješ.</p></div></div>
+        <div class="step"><div class="step-n">4</div><div><h4>Konektory</h4><p>Připoj jen to, co používáš. Pro lepší spotřebu zvaž <span class="ui">Tool access</span> (viz <a href="#toolaccess">3.10.2.15</a>).</p></div></div>
+        <div class="step"><div class="step-n">5</div><div><h4>Hlas</h4><p>Nastav <span class="ui">Voice → Language</span>, styl a rychlost. Čeština viz <a href="#hlas-cestina">3.7.2</a>.</p></div></div>
+        <div class="step"><div class="step-n">6</div><div><h4>Windows aplikace</h4><p>Nastav <span class="ui">Run on startup</span>, <span class="ui">System tray</span> a zkratky <span class="ui">Quick Entry</span> a <span class="ui">Dictation shortcut</span>. Pokud používáš plánované úlohy, zapni <span class="ui">Keep computer awake</span>.</p></div></div>
+        <div class="step"><div class="step-n">7</div><div><h4>Zabezpečení účtu</h4><p>V <span class="ui">Account → Active sessions</span> zkontroluj přihlášená zařízení.</p></div></div>
+      </div>
+      <h2 id="nastaveni">Kompletní průvodce nastavením</h2>
+      <p>Tato sekce prochází <strong>všechna nastavení</strong>, která jsi poslal v snímcích: web, desktopovou aplikaci pro Windows a mobil (Android). Každá položka má štítky platformy, přesný název (EN s českým popisem v závorce), vysvětlení, co nastavuje a co ovlivní, a doporučení pro tebe. U položek, které mají vlastní díl průvodce, je jen popis nastavení a odkaz na <strong>hlavičku dílu</strong>, kde se téma rozebírá.</p>
+      <h3 id="nastaveni-jak-cist">3.10.1 Jak číst tento přehled</h3>
+      <ul>
+        <li><strong>Pořadí:</strong> nejdřív to, co je ve všech třech (<span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span>), potom web a aplikace společně, potom jen web, jen mobil a nakonec jen aplikace.</li>
+        <li><strong>Názvy:</strong> v nastavení se stejná věc může jmenovat různě. U položky proto najdeš názvy na všech platformách, kde existuje.</li>
+        <li><strong>Popis</strong> vychází z textu, který je přímo v nastavení (je to nejspolehlivější zdroj), a z oficiální nápovědy. Doporučení jsou moje rada, ne oficiální pravidlo.</li>
+        <li><strong>Hodnoty z tvých snímků</strong> (například „Buttery“, „Medium“) jsou jen příklad aktuálního nastavení, nejsou to výchozí hodnoty.</li>
+        <li><strong>Uložení nastavení:</strong> většina nastavení účtu (Capabilities, Memory, Privacy) se zdá být společná na všech zařízeních. Vzhled se zřejmě ukládá zvlášť pro každé zařízení (web a aplikace mají na snímcích jiné výchozí hodnoty).</li>
+      </ul>
+      <div class="callout bl">
+        <div class="callout-title">Info — Skills, Connectors, Plugins a Claude Code</div>
+        <p>V menu <span class="ui">Customize <span class="cz">(přizpůsobení)</span></span> a <span class="ui">Claude Code</span> najdeš věci, které mají vlastní díl průvodce. Tady je popsané jen to, <strong>jak vypadá stránka nastavení a co se na ní zapíná</strong>. Fungování a příklady jsou v <a href="10_CLDE_skills_konektory.html">díl 10</a> (Skills, Connectors, Plugins) a v <a href="13_CLDE_claude_code.html">díl 13</a> (Claude Code).</p>
+      </div>
+      <h3 id="nastaveni-vsude">3.10.2 Společné pro web, aplikaci i mobil</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Položka</th><th>Co nastavuje a co ovlivní</th><th>Doporučení</th><th>Podrobně</th></tr></thead>
+          <tbody>
+            <tr><td><strong>3.10.2.1</strong> <span class="ui">Profile <span class="cz">(profil)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Web a aplikace: <code>Settings → Account → Profile</code>. Mobil: <code>Settings → Profile</code>. Obsahuje <span class="ui">Profile photo <span class="cz">(profilová fotka)</span></span> (PNG, JPEG nebo WebP do 10 MB), <span class="ui">Full name <span class="cz">(celé jméno)</span></span>, <span class="ui">What should Claude call you? <span class="cz">(jak tě má Claude oslovovat)</span></span> a <span class="ui">What best describes your work? <span class="cz">(co nejlépe popisuje tvou práci)</span></span> (rozbalovací výběr, u tebe „Software engineer“). Mobilní stránka může mít jiný rozsah polí, snímek nebyl zachycen.</td><td>Vyplň oslovení tak, jak chceš, aby tě Claude oslovoval. Výběr oboru práce zvol podle reality. Nastavení nepopisuje, jak přesně obor ovlivní odpovědi.</td><td>—</td></tr>
+            <tr><td><strong>3.10.2.2</strong> <span class="ui">Billing <span class="cz">(fakturace)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Zobrazí tvůj plán a tlačítko <span class="ui">Upgrade plan <span class="cz">(upgradovat plán)</span></span> (u Free) a seznam toho, co plán obsahuje. U Free je v seznamu například chat na webu, iOS, Android a desktopu, tvorba kódu a vizualizace dat, web search, paměť napříč konverzacemi, tvorba souborů a spouštění kódu, desktopová rozšíření, konektory a rozšířené přemýšlení. Na mobilu je navíc nahoře karta „Want more Claude?“ s tlačítkem Upgrade.</td><td>Po přechodu na Pro tu zkontroluj plán a správu předplatného. Usage credits nastavíš v <span class="ui">Settings → Usage</span> (jen placené plány, viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>).</td><td><a href="02_CLDE_plany_a_limity.html">díl 02</a></td></tr>
+            <tr><td><strong>3.10.2.3</strong> <span class="ui">Theme <span class="cz">(téma)</span></span> / <span class="ui">Color mode <span class="cz">(barevný režim)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Web a aplikace: <code>General → Appearance → Theme</code> (tři ikony: podle systému, světlé, tmavé). Mobil: <code>Color mode</code>. Mění jen vzhled aplikace.</td><td>Nech „System“ (podle zařízení), pokud nemáš důvod jinak.</td><td>—</td></tr>
+            <tr><td><strong>3.10.2.4</strong> <span class="ui">Interface font <span class="cz">(písmo rozhraní)</span></span> a <span class="ui">Response font <span class="cz">(písmo odpovědí)</span></span> / <span class="ui">Font style <span class="cz">(styl písma)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Web a aplikace: dvě samostatná nastavení v <code>General → Appearance</code>. Mobil: jediná položka <span class="ui">Font style</span>. Mění písmo rozhraní a písmo odpovědí Claude. Výchozí hodnoty se na webu a v aplikaci liší (web: Anthropic Sans a Anthropic Serif, aplikace: System a Match interface).</td><td>Vyber písmo, které se ti dobře čte. Nemá vliv na kvalitu odpovědí.</td><td>—</td></tr>
+            <tr><td><strong>3.10.2.5</strong> <span class="ui">Voice <span class="cz">(hlas)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Web a aplikace: <code>General → Voice</code> s položkami Language, Style, Speed. Mobil: <code>Voice → Voice settings</code> s karuselem hlasů, Language (BETA) a Pace. Podrobně v <a href="#hlas">sekci 3.7</a>.</td><td>Čeština není v oficiálním seznamu, viz <a href="#hlas-cestina">3.7.2</a>.</td><td><a href="01_CLDE_uvod.html">díl 01</a></td></tr>
+            <tr><td><strong>3.10.2.6</strong> <span class="ui">Response completions <span class="cz">(dokončení odpovědi)</span></span> / <span class="ui">Replies <span class="cz">(odpovědi)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Upozornění, když Claude dokončí odpověď. Web a aplikace: <code>General → Notifications</code>, popis „Get notified when Claude has finished a response. Useful for long-running tasks.“ Mobil: <code>Notifications → Replies</code>.</td><td>Nech zapnuté, pokud zadáváš dlouhé úkoly a pracuješ mezitím jinde.</td><td>—</td></tr>
+            <tr><td><strong>3.10.2.7</strong> <span class="ui">Time and focus <span class="cz">(čas a soustředění)</span></span> / <span class="ui">Time &amp; focus</span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Dvě sekce: <span class="ui">Break reminders <span class="cz">(připomínky pauzy)</span></span> („Get a nudge to take a break from Claude. You can snooze or adjust anytime.“, dvě rozbalovací nabídky) a <span class="ui">Quiet hours <span class="cz">(tiché hodiny)</span></span> („Set time limits for Claude. You can dismiss or adjust anytime.“, výběr dnů v týdnu S M T W T F S). Podle autora je mobilní stránka stejná jako web. Obě hodnoty mají na snímku zatím prázdné výchozí hodnoty.</td><td>Hodí se, pokud chceš omezit čas s Claude. Nastavení si vyzkoušej, popis hodnot v nabídkách se v aplikaci zobrazí až po rozbalení.</td><td>—</td></tr>
+            <tr><td><strong>3.10.2.8</strong> <span class="ui">Artifacts <span class="cz">(artefakty)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td><code>Capabilities</code>. „Generate code, documents, and designs in a dedicated window alongside your conversation.“ Přepínač je zamčený (zapnutý), protože je potřeba pro spouštění kódu a tvorbu souborů. Na mobilu: „Required by code execution“.</td><td>Nech beze změny. Zamčený přepínač znamená, že ho nejde vypnout, dokud je zapnuté spouštění kódu.</td><td><a href="07_CLDE_soubory_a_artifacts.html">díl 07</a></td></tr>
+            <tr><td><strong>3.10.2.9</strong> <span class="ui">Inline visualizations <span class="cz">(vložené vizualizace)</span></span> <span class="plat plat-mob">Mobil: BETA</span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td><code>Capabilities → Visuals</code> (web a aplikace). „Allow Claude to generate interactive visualizations, charts, and diagrams directly in the conversation.“</td><td>Nech zapnuté, pokud chceš grafy a diagramy přímo v konverzaci. Vypni, když ti překážejí nebo když chceš čistě textové odpovědi.</td><td><a href="07_CLDE_soubory_a_artifacts.html">díl 07</a></td></tr>
+            <tr><td><strong>3.10.2.10</strong> <span class="ui">Code execution and file creation <span class="cz">(spouštění kódu a tvorba souborů)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td><code>Capabilities</code>. „Claude can execute code and create and edit docs, spreadsheets, presentations, PDFs, and data reports. Required for skills.“ Je potřeba pro Skills. Podle ceníku je dostupné i ve Free.</td><td>Nech zapnuté, jinak nebudou fungovat tvorba souborů a Skills.</td><td><a href="07_CLDE_soubory_a_artifacts.html">díl 07</a>, <a href="10_CLDE_skills_konektory.html">díl 10</a></td></tr>
+            <tr><td><strong>3.10.2.11</strong> <span class="ui">Switch models when a message is flagged <span class="cz">(přepnout model při označené zprávě)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td><code>Capabilities</code>. „When safeguards flag a message, automatically switch to a different model to keep chatting. When off, your chat will pause instead.“ Pokud je zapnuté, konverzace pokračuje s jiným modelem, pokud vypnuté, pozastaví se.</td><td>Nech zapnuté, aby se konverzace nezastavovala.</td><td><a href="04a_CLDE_modely_a_effort.html">díl 04a</a></td></tr>
+            <tr><td><strong>3.10.2.12</strong> <span class="ui">Generate memory from chats <span class="cz">(vytvářet paměť z konverzací)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Web a aplikace: samostatná stránka <code>Memory</code>. Mobil: sekce Memory uvnitř <code>Capabilities</code>. „Allow Claude to generate memory from your chats.“ U tebe vypnuto. Pokud je zapnuté, Claude si z konverzací ukládá poznatky pro další konverzace. <strong>Reflect</strong> vyžaduje zapnutou paměť.</td><td>Zapni, pokud chceš kontinuitu mezi konverzacemi. Pro citlivá témata ověř v <a href="09_CLDE_pamet_a_instrukce.html">díl 09</a>, jak se chová incognito chat.</td><td><a href="09_CLDE_pamet_a_instrukce.html">díl 09</a></td></tr>
+            <tr><td><strong>3.10.2.13</strong> <span class="ui">Connectors <span class="cz">(konektory)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Web a aplikace: <code>Customize → Connectors</code> (katalog se záložkami Yours a Discover, tlačítko Add). Mobil: <code>Connectors</code> (seznam Gmail, Google Calendar, Google Drive s tlačítkem Connect a tlačítko + vpravo nahoře). Popis stránky viz <a href="#nastaveni-katalogy">3.10.3.12</a>.</td><td>Připojuj jen to, co používáš. Každý zapnutý nástroj může zvýšit spotřebu limitu (viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>).</td><td><a href="10_CLDE_skills_konektory.html">díl 10</a> (10c)</td></tr>
+            <tr><td><strong>3.10.2.14</strong> <span class="ui">Connector search <span class="cz">(vyhledávání konektorů)</span></span> / <span class="ui">Connector discovery <span class="cz">(objevování konektorů)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Web a aplikace: <code>Capabilities</code>, „Let Claude search the connector directory and surface ones relevant to your conversation.“ Mobil: <code>Connectors → Connector discovery</code>, „Claude will help you find available connectors in your directory.“ Claude ti sám navrhne vhodný konektor z katalogu.</td><td>Nech zapnuté. Vypni, pokud nechceš, aby Claude navrhoval konektory.</td><td><a href="10_CLDE_skills_konektory.html">díl 10</a></td></tr>
+            <tr id="toolaccess"><td><strong>3.10.2.15</strong> <span class="ui">Tool access mode <span class="cz">(režim přístupu k nástrojům)</span></span> / <span class="ui">Tool access <span class="cz">(přístup k nástrojům)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Určuje, <strong>jak se nástroje konektorů načítají do nových konverzací</strong>. Web a aplikace: <code>Capabilities</code>, rozbalovací nabídka (u tebe „Load tools when needed“). Mobil: <code>Capabilities → Tool access</code> se třemi volbami: <span class="ui">Auto <span class="cz">(automaticky)</span></span> („Claude chooses for you“), <span class="ui">On demand <span class="cz">(na vyžádání)</span></span> („Load when needed. More messages, lower accuracy“) a <span class="ui">Always available <span class="cz">(vždy dostupné)</span></span> („Ready from start. Fewer messages…“, text na snímku je useknutý).</td><td>Nech „Auto“. Pokud máš připojeno hodně konektorů a limit se ti rychle vyčerpává, zkus „On demand“ (načítá se jen potřebné), ale počítej s nižší přesností. Nástroje jsou náročné na tokeny (viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>).</td><td><a href="10_CLDE_skills_konektory.html">díl 10</a>, <a href="02_CLDE_plany_a_limity.html">díl 02</a></td></tr>
+            <tr><td><strong>3.10.2.16</strong> <span class="ui">Help improve our AI models <span class="cz">(pomoci zlepšit modely AI)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td><code>Privacy</code>. „Allow the use of your chats and coding sessions to train and improve Anthropic AI models.“ U tebe vypnuto.</td><td>Nech vypnuté, pokud nechceš, aby se tvoje konverzace používaly k trénování. Rozhodnutí je na tobě.</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.2.17</strong> <span class="ui">Log out <span class="cz">(odhlásit)</span></span> / <span class="ui">Log out of all devices <span class="cz">(odhlásit na všech zařízeních)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="plat plat-mob">Mobil</span></td><td>Mobil: <code>Log out</code> na konci seznamu. Web a aplikace: <code>Account → Log out of all devices</code> (tlačítko Log out). Podle názvu se tím odhlásíš na všech zařízeních.</td><td>Použij, když ztratíš zařízení nebo uvidíš v <span class="ui">Active sessions</span> neznámou relaci.</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout gn">
+        <div class="callout-title">Tip — kde co najít</div>
+        <p>Na webu a v aplikaci jsou skupiny Preferences (General, Account, Privacy, Billing, Capabilities, Memory, Reflect, Time and focus, Claude Code) a Customize (Skills, Connectors, Plugins). Na mobilu je vše v jednom seznamu. Rychle najdeš položku v poli <span class="ui">Search <span class="cz">(hledat)</span></span> nahoře v menu Settings na webu a v aplikaci.</p>
+      </div>
+      <h3 id="nastaveni-webapp">3.10.3 Web a aplikace (bez mobilu)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Položka</th><th>Co nastavuje a co ovlivní</th><th>Doporučení</th><th>Podrobně</th></tr></thead>
+          <tbody>
+            <tr><td><strong>3.10.3.1</strong> <span class="ui">Transcript text size <span class="cz">(velikost textu přepisu)</span></span>, <span class="ui">Transcript width <span class="cz">(šířka přepisu)</span></span>, <span class="ui">Motion <span class="cz">(pohyb)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>General → Appearance</code>. Velikost textu v konverzaci (u tebe Medium), šířka sloupce s konverzací (Narrow) a míra animací (web: System, aplikace: Reduced). Mění jen vzhled.</td><td>Zvětši text a šířku podle čitelnosti. „Reduced“ motion se hodí, pokud tě animace ruší.</td><td>—</td></tr>
+            <tr><td><strong>3.10.3.2</strong> <span class="ui">Mentions and replies <span class="cz">(zmínky a odpovědi)</span></span>, <span class="ui">Comments on your artifacts <span class="cz">(komentáře k tvým artifacts)</span></span>, <span class="ui">Artifacts shared with you <span class="cz">(artifacts sdílené s tebou)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>General → Notifications</code>. Tři e-mailová upozornění: když tě někdo označí (@) v artifactu nebo odpoví ve vlákně, kde jsi; když někdo okomentuje artifact, který vlastníš (i bez označení, sleduje „Mentions and replies“, dokud to nezměníš); když ti někdo sdílí artifact.</td><td>Zapni, pokud s Artifacts pracuješ s ostatními. Jinak můžeš vypnout, ať nechodí e-maily.</td><td><a href="07_CLDE_soubory_a_artifacts.html">díl 07</a></td></tr>
+            <tr><td><strong>3.10.3.3</strong> <span class="ui">Instructions for Claude <span class="cz">(instrukce pro Claude)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Account → Profile</code>. Pole pro text, který si Claude pamatuje „for this and any of your associated accounts across chats and Cowork“ v rámci pravidel Anthropic. Příklad v poli: „keep explanations brief and to the point“.</td><td>Napiš tam stálé preference (jazyk odpovědí, styl, forma). Podrobně v <a href="09_CLDE_pamet_a_instrukce.html">díl 09</a>. Na mobilu toto pole na snímcích není.</td><td><a href="09_CLDE_pamet_a_instrukce.html">díl 09</a></td></tr>
+            <tr><td><strong>3.10.3.4</strong> <span class="ui">Delete your account <span class="cz">(smazat účet)</span></span>, <span class="ui">Organization ID <span class="cz">(ID organizace)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Account</code>. <span class="ui">Delete account <span class="cz">(smazat účet)</span></span> je tlačítko pro smazání účtu. <span class="ui">Organization ID</span> je identifikátor tvé organizace (účtu), který se hodí při komunikaci s podporou (odvození).</td><td>Před smazáním účtu si stáhni data (<span class="ui">Export data</span>, viz níže). ID nikde nezveřejňuj.</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.3.5</strong> <span class="ui">Trusted devices <span class="cz">(důvěryhodná zařízení)</span></span> a <span class="ui">Passkey <span class="cz">(přístupový klíč)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Account</code>. <span class="ui">Trusted devices</span>: „Devices that can control your local machine through remote sessions.“ U tebe zatím žádné. <span class="ui">Passkey</span>: „For trusted devices: Add a passkey to confirm it's you instead of signing in again.“ (tlačítko <span class="ui">Add a passkey <span class="cz">(přidat passkey)</span></span>). Souvisí se vzdálenou prací (viz <a href="#propojeni">3.6</a>).</td><td>Přidávej jen svá zařízení. Passkey ověří, že jsi to ty, bez nového přihlášení.</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a>, <a href="13_CLDE_claude_code.html">díl 13</a></td></tr>
+            <tr><td><strong>3.10.3.6</strong> <span class="ui">Active sessions <span class="cz">(aktivní relace)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Account</code>. Tabulka přihlášených relací: zařízení, místo, kdy vznikla a kdy byla naposledy aktualizovaná. Aktuální relace je označená „Current“.</td><td>Pravidelně zkontroluj. Neznámou relaci odhlas přes <span class="ui">Log out of all devices</span>.</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.3.7</strong> <span class="ui">How we protect your data <span class="cz">(jak chráníme tvoje data)</span></span>, <span class="ui">How we use your data <span class="cz">(jak používáme tvoje data)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Privacy</code>. Rozbalovací informační stránky a odkazy na Privacy Center a Privacy Policy.</td><td>Přečti si, než změníš nastavení soukromí.</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.3.8</strong> <span class="ui">Location metadata <span class="cz">(metadata o poloze)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Privacy → Preferences</code>. „Allow Claude to use coarse location metadata (city/region) to improve product experiences.“ U tebe zapnuto.</td><td>Vypni, pokud nechceš sdílet ani hrubou polohu (město, region). Neovlivní to polohu v mobilu, ta se řídí oprávněním v systému (viz <a href="#nastaveni-mobil">3.10.5</a>).</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.3.9</strong> <span class="ui">Your data <span class="cz">(tvoje data)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Privacy</code>. Šest položek: <span class="ui">Export data <span class="cz">(exportovat data)</span></span> (stažení dat), <span class="ui">Shared chats <span class="cz">(sdílené konverzace)</span></span>, <span class="ui">Shared artifacts <span class="cz">(sdílené artifacts)</span></span>, <span class="ui">Uploaded files <span class="cz">(nahrané soubory)</span></span>, <span class="ui">Your feedback <span class="cz">(tvoje zpětná vazba)</span></span> (každá s tlačítkem Manage), a <span class="ui">Memory preferences <span class="cz">(předvolby paměti)</span></span> (otevře se externí stránka).</td><td>Zkontroluj <span class="ui">Shared chats</span> a <span class="ui">Shared artifacts</span>, komu jsi dal přístup. Před smazáním účtu použij <span class="ui">Export data</span>.</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.3.10</strong> <span class="ui">AI-powered artifacts <span class="cz">(artifacts s AI)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Capabilities → Visuals</code>. „Build apps and interactive documents that use Claude inside the artifact.“ U tebe vypnuto.</td><td>Zapni, pokud chceš vytvářet aplikace, které uvnitř samy volají Claude. Jinak nech vypnuté.</td><td><a href="07_CLDE_soubory_a_artifacts.html">díl 07</a></td></tr>
+            <tr><td><strong>3.10.3.11</strong> <span class="ui">Allow network egress <span class="cz">(povolit síťový přístup)</span></span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Capabilities → Code execution and file creation</code>. „Allow Claude to access common package managers to install packages and libraries for data analysis, visualizations, and file processing. Monitor chats closely as this comes with security risks.“ U tebe vypnuto. Claude může stahovat balíčky ze správců balíčků.</td><td>Nech vypnuté, pokud to nepotřebuješ. Zapnutí přináší bezpečnostní riziko, sleduj konverzace.</td><td><a href="07_CLDE_soubory_a_artifacts.html">díl 07</a>, <a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr id="nastaveni-katalogy"><td><strong>3.10.3.12</strong> <span class="ui">Skills <span class="cz">(dovednosti)</span></span>, <span class="ui">Connectors <span class="cz">(konektory)</span></span>, <span class="ui">Plugins <span class="cz">(pluginy)</span></span> (stránky v <span class="ui">Customize</span>)<br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><strong>Popis stránek nastavení</strong> (fungování viz <a href="10_CLDE_skills_konektory.html">díl 10</a>). Všechny tři mají záložky <span class="ui">Yours <span class="cz">(tvoje)</span></span> a <span class="ui">Discover <span class="cz">(objevit)</span></span>, hledání, filtr a tlačítko <span class="ui">Add <span class="cz">(přidat)</span></span>. <strong>Skills:</strong> „Skills teach Claude how you work.“ V Yours je sekce „From Anthropic &amp; Partners“ (u tebe skill-creator, google-workspace, import-memory, morning, každá s datem a nabídkou ⋯). V Discover jsou doporučené, nové a nejinstalovanější Skills, kategorie a tlačítka <span class="ui">Try</span> a +. <strong>Connectors:</strong> katalog „Top connectors“ (Google Drive, Gmail, Google Calendar, Microsoft 365, Slack, Notion a další), u každého tlačítko +. <strong>Plugins:</strong> stejné rozvržení jako Skills (doporučený plugin, „For you“, „New plugins“, Try a +). Nabídka se na stránkách Skills a Plugins podobá, rozdíl vysvětluje <a href="10_CLDE_skills_konektory.html">díl 10</a>.</td><td>Začni v záložce Discover, vyzkoušej tlačítko Try u Skills a až potom přidávej (+). Přidávej jen to, co skutečně používáš.</td><td><a href="10_CLDE_skills_konektory.html">díl 10</a> (10, 10a, 10b, 10c)</td></tr>
+            <tr id="reflect"><td><strong>3.10.3.13</strong> <span class="ui">Reflect <span class="cz">(zpětný pohled)</span></span> <span class="plat plat-web">Beta</span><br><span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span></td><td><code>Preferences → Reflect</code>. Podtitul „Based on your conversations in Claude chat“. Pokud nemáš zapnutou paměť, stránka ukáže výzvu „you'll need to enable memory in memory settings“. Podle zpravodajských zdrojů je to přehled tvého používání Claude, který se vytváří z paměti, mimo konverzace v režimu incognito, Cowork a Code. Na mobilu v menu není.</td><td>Zapni paměť, chceš-li Reflect používat. Přesný popis funkce ověř v <a href="09_CLDE_pamet_a_instrukce.html">díl 09</a>.</td><td><a href="09_CLDE_pamet_a_instrukce.html">díl 09</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 id="nastaveni-claudecode">3.10.3.14 Claude Code <span class="plat plat-web">Web</span> <span class="plat plat-app">Aplikace</span> <span class="ui">Pro</span></h3>
+      <p>Stránka <code>Preferences → Claude Code</code> je určená pro použití Claude Code přímo v aplikaci Claude. U účtu Free se místo nastavení zobrazí výzva <strong>„Upgrade to Max or Pro“</strong>, protože Claude Code vyžaduje placený plán. Fungování a první úkol jsou v <a href="13_CLDE_claude_code.html">díl 13</a>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Položka</th><th>Sekce na stránce</th><th>Co dělá</th><th>Doporučení</th></tr></thead>
+          <tbody>
+<tr><td><span class="ui">Classify session states <span class="cz">(třídit stavy relací)</span></span></td><td>General</td><td>Claude automaticky třídí relace jako blocked, ready for review, done. <strong>Počítá se do limitu plánu</strong>. Platí pro nové relace.</td><td>Vypni, pokud šetříš limit (viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>).</td></tr>
+<tr><td><span class="ui">Switch models when a message is flagged</span></td><td>General</td><td>Totéž jako v Capabilities, ale platí pro relace v cloudu. Při vypnutí se relace pozastaví.</td><td>Nech zapnuté.</td></tr>
+<tr><td><span class="ui">Code appearance <span class="cz">(vzhled kódu)</span></span></td><td>Code appearance</td><td>Dva výběry témat kódu: Claude Light a Claude Dark (náhled s rozdílem v kódu). <span class="ui">Code font <span class="cz">(písmo kódu)</span></span> (vlastní písmo se stejnou šířkou znaků, např. JetBrains Mono) a <span class="ui">Code font size <span class="cz">(velikost písma kódu)</span></span> (u tebe Default · 13 px). Platí pro otevřené soubory, rozdíly, bloky kódu, výstup příkazů a terminál.</td><td>Nastav podle čitelnosti.</td></tr>
+<tr><td><span class="ui">Default transcript view <span class="cz">(výchozí pohled na přepis)</span></span></td><td>Appearance</td><td>Pohled, ve kterém se relace otevřou: Normal, Thinking, Verbose. Změna z nabídky u relace platí jen pro tu relaci.</td><td>Normal pro běžnou práci, Verbose při ladění.</td></tr>
+<tr><td><span class="ui">Branch prefix <span class="cz">(předpona větve)</span></span></td><td>Pull requests</td><td>Předpona názvů větví v místních i cloudových relacích (u tebe „claude“).</td><td>Nech výchozí.</td></tr>
+<tr><td><span class="ui">Create pull requests automatically <span class="cz">(vytvářet pull requesty automaticky)</span></span></td><td>Pull requests</td><td>Když Claude pushne změny do větve, sám otevře pull request bez ptaní. Jen cloudové relace. U tebe vypnuto.</td><td>Zapni jen pokud výsledky kontroluješ až v pull requestu.</td></tr>
+<tr><td><span class="ui">Auto-fix pull requests <span class="cz">(automaticky opravovat pull requesty)</span></span></td><td>Pull requests</td><td>Po vytvoření pull requestu Claude sleduje chyby CI a komentáře při kontrole a proaktivně reaguje. <strong>Může psát komentáře tvým jménem.</strong> U tebe vypnuto.</td><td>Zapni jen s vědomím, že Claude píše za tebe.</td></tr>
+<tr><td><span class="ui">Authorization tokens <span class="cz">(autorizační tokeny)</span></span></td><td>Authorization tokens</td><td>Vytvářejí se při přihlášení do Claude Code. Zrušení tokenu odhlásí dané zařízení. U tebe „No connected Claude Code instances“.</td><td>Zruš token u zařízení, které už nepoužíváš.</td></tr>
+<tr><td><span class="ui">Delete sessions stored by Anthropic <span class="cz">(smazat relace uložené u Anthropic)</span></span></td><td>Claude Code (CLI, Desktop, IDE)</td><td>Trvale smaže kopie relací na serverech Anthropic. Relace uložené lokálně na tvém počítači zůstanou. Cloudové relace se spravují zvlášť.</td><td>Používej, pokud chceš odstranit historii Claude Code ze serverů.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Fungování a příklady: <a href="13_CLDE_claude_code.html">díl 13</a>.</p>
+      <h3 id="nastaveni-web">3.10.4 Jen web</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Položka</th><th>Co nastavuje a co ovlivní</th><th>Doporučení</th><th>Podrobně</th></tr></thead>
+          <tbody>
+            <tr><td><strong>3.10.4.1</strong> <span class="ui">API keys <span class="cz">(API klíče)</span></span> (skupina <span class="ui">Platform <span class="cz">(platforma)</span></span>)<br><span class="plat plat-web">Jen web</span></td><td>V levém menu pod Customize. Šipka ↗ znamená, že se otevře <strong>Claude Platform</strong> (jiný web pro vývojáře). Vyžaduje samostatný účet a API se účtuje zvlášť. V desktopové aplikaci tuto položku nahrazuje box „Want an API key?“ v <span class="ui">Developer</span>.</td><td>Pokud nejsi vývojář, nepotřebuješ. Klíče nikomu nesdílej.</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 id="nastaveni-mobil">3.10.5 Jen mobil (Android)</h3>
+<p>Mobilní menu je jedna seznamová obrazovka. Nahoře je účet se štítkem plánu a pod ním karta „Want more Claude? Upgrade for more usage and capabilities.“ s tlačítkem Upgrade (u Free). V pořadí následují Profile, Billing, Capabilities (podtitul „5 enabled“), Connectors, Permissions, Color mode, Font style, Voice, Haptic feedback, Notifications, Time &amp; focus, Privacy, Sharing a Log out. Položky společné s webem jsou popsané výše.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Položka</th><th>Co nastavuje a co ovlivní</th><th>Doporučení</th><th>Podrobně</th></tr></thead>
+          <tbody>
+            <tr><td><strong>3.10.5.1</strong> <span class="ui">Web search <span class="cz">(vyhledávání na webu)</span></span><br><span class="plat plat-mob">Jen mobil</span></td><td><code>Capabilities</code>. „Claude will automatically search the web when it determines it needs current information.“ Přepínač. Na webu a v aplikaci jsem toto nastavení v menu Settings na snímcích nenašel, vyhledávání se tam zřejmě zapíná jinde (ověřit).</td><td>Nech zapnuté, pokud potřebuješ aktuální informace. Hledání na webu zvyšuje spotřebu (viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>).</td><td><a href="02_CLDE_plany_a_limity.html">díl 02</a></td></tr>
+            <tr><td><strong>3.10.5.2</strong> <span class="ui">Permissions <span class="cz">(oprávnění)</span></span><br><span class="plat plat-mob">Jen mobil</span></td><td>Dvě položky: <span class="ui">Location <span class="cz">(poloha)</span></span> a <span class="ui">Calendar <span class="cz">(kalendář)</span></span>. „To allow access to your location/calendar, turn on the permission in your system settings.“ Tlačítko <span class="ui">Settings</span> otevře systémové nastavení telefonu, kde oprávnění zapneš.</td><td>Zapni jen to, co potřebuješ. Poloha a kalendář umožní lepší odpovědi v konverzacích o místě a času.</td><td><a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.5.3</strong> <span class="ui">Haptic feedback <span class="cz">(haptická odezva)</span></span><br><span class="plat plat-mob">Jen mobil</span></td><td>Přepínač vibrační odezvy při ovládání aplikace.</td><td>Vypni, pokud ti vibrace vadí.</td><td>—</td></tr>
+            <tr><td><strong>3.10.5.4</strong> <span class="ui">Notifications → Product updates <span class="cz">(novinky)</span></span><br><span class="plat plat-mob">Jen mobil</span></td><td>„Get notified about new features, tips, and occasional promotions.“ Druhá položka na stránce Notifications (první je Replies, viz výše).</td><td>Vypni, pokud nechceš upozornění na novinky a propagace.</td><td>—</td></tr>
+            <tr><td><strong>3.10.5.5</strong> <span class="ui">Sharing <span class="cz">(sdílení)</span></span><br><span class="plat plat-mob">Jen mobil</span></td><td>Dvě části: <span class="ui">Shared links <span class="cz">(sdílené odkazy)</span></span> (správa sdílených konverzací) a „Share from other apps“ s přepínačem <span class="ui">Always share to a new chat <span class="cz">(vždy sdílet do nového chatu)</span></span> (u tebe vypnuto). Pokud je zapnutý, obsah sdílený z jiných aplikací se vždy otevře v nové konverzaci.</td><td>Zapni, pokud často sdílíš odkazy a texty z jiných aplikací do Claude a nechceš je míchat se stávající konverzací.</td><td><a href="07_CLDE_soubory_a_artifacts.html">díl 07</a>, <a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.5.6</strong> <span class="ui">Voice settings <span class="cz">(nastavení hlasu)</span></span> – karusel<br><span class="plat plat-mob">Jen mobil</span></td><td>Hlas se vybírá posouváním karet (u tebe první „Buttery“, další „Airy“ atd., pět hlasů). <span class="ui">Language <span class="cz">(jazyk)</span></span> je označený BETA, <span class="ui">Pace <span class="cz">(tempo)</span></span> nastavuje rychlost. Viz <a href="#hlas">3.7</a>.</td><td>Vyzkoušej všechny hlasy a nech ten, který se ti poslouchá nejlépe.</td><td><a href="01_CLDE_uvod.html">díl 01</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 id="nastaveni-aplikace">3.10.6 Jen aplikace (Windows)</h3>
+<p>Desktopová aplikace má vlastní skupinu <strong>This computer (tento počítač)</strong> se třemi stránkami: <code>System</code>, <code>Extensions</code>, <code>Developer</code>. Zbytek menu je stejný jako na webu.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Položka</th><th>Co nastavuje a co ovlivní</th><th>Doporučení</th><th>Podrobně</th></tr></thead>
+          <tbody>
+            <tr><td><strong>3.10.6.1</strong> <span class="ui">System <span class="cz">(systém)</span></span> – <span class="ui">Desktop app version <span class="cz">(verze aplikace)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td>Zobrazí číslo verze aplikace (u tebe 4.29.0).</td><td>Uvádět při hlášení chyb.</td><td><a href="15_CLDE_troubleshooting.html">díl 15</a></td></tr>
+            <tr><td><strong>3.10.6.2</strong> <span class="ui">Run on startup <span class="cz">(spustit při startu)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td>„Automatically start Claude when you log in to your computer.“ U tebe zapnuto.</td><td>Zapni, pokud Claude používáš denně. Vypni, pokud ho chceš spouštět ručně.</td><td>—</td></tr>
+            <tr><td><strong>3.10.6.3</strong> <span class="ui">Quick Entry keyboard shortcut <span class="cz">(zkratka pro rychlé zadání)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td>„Quickly open Claude from anywhere.“ Zkratka je u tebe <code>Ctrl+Alt+Space</code> (křížkem ji zrušíš). Otevře malé okno pro rychlé zadání odkudkoli.</td><td>Nastav zkratku, která není v konfliktu s jinými aplikacemi.</td><td>—</td></tr>
+            <tr><td><strong>3.10.6.4</strong> <span class="ui">Dictation shortcut <span class="cz">(zkratka diktování)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td>„Start or stop dictation in the chat you're typing in.“ U tebe <code>Ctrl+D</code> (rozbalovací nabídka). Spustí nebo zastaví diktování. Na Linuxu diktování není.</td><td>Nech výchozí, pokud nekoliduje s jinou aplikací.</td><td><a href="#hlas">3.7</a></td></tr>
+            <tr><td><strong>3.10.6.5</strong> <span class="ui">System tray <span class="cz">(oznamovací oblast)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td>„Keep Claude running in the system tray.“ U tebe zapnuto. Claude zůstane v oznamovací oblasti, i když zavřeš okno.</td><td>Zapni, pokud používáš Quick Entry nebo plánované úlohy.</td><td>—</td></tr>
+            <tr><td><strong>3.10.6.6</strong> <span class="ui">Keep computer awake <span class="cz">(udržet počítač vzhůru)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td>„Prevent your computer from idle-sleeping while Claude is open so scheduled tasks can run. Your display can still turn off. Closing the laptop lid will still put it to sleep.“ U tebe vypnuto. Počítač neusne při nečinnosti, aby běžely plánované úlohy. Zavření víka notebooku ho stále uspí.</td><td>Zapni, pokud používáš plánované úlohy (viz <a href="11b_CLDE_planovane_ulohy.html">díl 11b</a>). Zvyšuje spotřebu energie.</td><td><a href="11b_CLDE_planovane_ulohy.html">díl 11b</a></td></tr>
+            <tr><td><strong>3.10.6.7</strong> <span class="ui">Storage <span class="cz">(úložiště)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td>„See how much space Claude uses on this computer.“ Tlačítko <span class="ui">Manage <span class="cz">(spravovat)</span></span> otevře přehled využitého místa.</td><td>Občas zkontroluj, pokud máš málo místa na disku.</td><td>—</td></tr>
+            <tr id="computer-use"><td><strong>3.10.6.8</strong> <span class="ui">Computer use <span class="cz">(ovládání počítače)</span></span> <span class="plat plat-app">Beta</span><br><span class="plat plat-app">Jen aplikace</span></td><td>Sekce v <code>System</code>. „Not available in cloud Code sessions, which don't run on this computer.“ Přepínač <span class="ui">Enable computer use <span class="cz">(povolit ovládání počítače)</span></span>: „Let Claude take control of your screen, mouse, and keyboard to work in the apps you allow.“ U tebe vypnuto. Claude pak může pracovat v aplikacích, které mu povolíš.</td><td>Zapínej jen na konkrétní úkol a sleduj, co Claude dělá. Nepovoluj aplikace s citlivými údaji (banka, e-mail). Bezpečnost viz <a href="14_CLDE_bezpecnost.html">díl 14</a>.</td><td><a href="11_CLDE_cowork_agenty.html">díl 11</a>, <a href="14_CLDE_bezpecnost.html">díl 14</a></td></tr>
+            <tr><td><strong>3.10.6.9</strong> <span class="ui">Extensions <span class="cz">(rozšíření)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td><code>This computer → Extensions</code>. „Allow Claude to directly interact with apps, data, and tools on your computer.“ Tlačítko <span class="ui">Browse extensions <span class="cz">(procházet rozšíření)</span></span>, <span class="ui">Advanced settings <span class="cz">(pokročilá nastavení)</span></span> a možnost přetáhnout soubor <code>.MCPB</code> nebo <code>.DXT</code> pro instalaci. U tebe „No extensions installed“. Desktopová rozšíření jsou lokální doplňky; liší se od Connectors (internetové služby).</td><td>Instaluj jen rozšíření od důvěryhodných zdrojů, běží na tvém počítači. Podle ceníku jsou dostupná i ve Free.</td><td><a href="10_CLDE_skills_konektory.html">díl 10</a> (10c), <a href="12_CLDE_aplikace.html">díl 12</a></td></tr>
+            <tr><td><strong>3.10.6.10</strong> <span class="ui">Developer <span class="cz">(vývojář)</span></span><br><span class="plat plat-app">Jen aplikace</span></td><td><code>This computer → Developer</code>. <span class="ui">Local MCP servers <span class="cz">(lokální MCP servery)</span></span>: „Add and manage MCP servers that you're working on.“ Tlačítka <span class="ui">Edit config <span class="cz">(upravit konfiguraci)</span></span> a <span class="ui">Developer docs <span class="cz">(dokumentace pro vývojáře)</span></span>. Pod tím box „Want an API key?“ s tlačítkem <span class="ui">Go to Claude Platform <span class="cz">(přejít na Claude Platform)</span></span> (vyžaduje další účet, API se účtuje zvlášť).</td><td>Jen pro pokročilé. Lokální MCP server spouští kód na tvém počítači, přidávej jen důvěryhodné.</td><td><a href="10_CLDE_skills_konektory.html">díl 10</a> (10c)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout rd">
+        <div class="callout-title">Nebezpečí — nastavení, která ti dávají Claude moc nad počítačem</div>
+        <p><strong>Computer use</strong>, <strong>Extensions</strong>, <strong>Local MCP servers</strong> a <strong>Allow network egress</strong> dávají Claude přístup k tvému počítači nebo k instalaci balíčků. Zapínej je jen na konkrétní účel, jen z důvěryhodných zdrojů a sleduj, co Claude dělá. Podrobně <a href="14_CLDE_bezpecnost.html">díl 14</a>.</p>
+      </div>
+      <p>Pokud se v nastavení objeví nová položka, která tu není, vyhledej ji v poli <span class="ui">Search <span class="cz">(hledat)</span></span> v menu Settings a použij stejný postup: název, co nastavuje, co ovlivní, kde existuje.</p>
+      <h2 id="caste-chyby">Časté chyby</h2>
+      <p>U každé chyby najdeš, <strong>proč se stává</strong>, <strong>jak se jí vyhnout</strong> a <strong>jak ji opravit</strong>.</p>
+
+      <h3 id="hlas-cestina-chyba">3.11.1 Hlas mluví anglicky nebo nerozumí česky</h3>
+      <p><strong>Proč se to stává:</strong> Nastavení <span class="ui">Voice → Language</span> je na „English“ a čeština není v oficiálním seznamu jazyků hlasového režimu.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Před použitím nastav jazyk v <span class="ui">Voice settings</span> (web a aplikace: General → Voice, mobil: Voice → Voice settings).</li>
+        <li>Pro delší české zadání použij diktování, to v češtině funguje.</li>
+        <li>Počítej s tím, že česká hlasová konverzace může mít cizí přízvuk (zkušenost autora, neověřeno oficiálně).</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Změň <span class="ui">Language</span> ve <a href="#hlas">3.7</a> nebo přejdi na diktování.</p>
+
+      <h3 id="planovane-neberi">3.11.2 Plánované úlohy se nespustí</h3>
+      <p><strong>Proč se to stává:</strong> Počítač přešel do spánku nebo aplikace není spuštěná. Podle textu v nastavení musí být Claude otevřený a počítač nesmí idle-spát.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Zapni <span class="ui">Keep computer awake</span> <span class="plat plat-app">Jen aplikace</span> (display může zhasnout, zavření víka notebooku ale počítač uspí).</li>
+        <li>Zapni <span class="ui">Run on startup</span> a <span class="ui">System tray</span>, ať aplikace po restartu běží.</li>
+        <li>Neukládej důležité plánované úlohy na zařízení, které bývá vypnuté.</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Zkontroluj, zda aplikace běží a počítač nespí. Podrobně <a href="11b_CLDE_planovane_ulohy.html">díl 11b</a>.</p>
+
+      <h3 id="vzhled-nesdileny">3.11.3 Vzhled na telefonu je jiný než v počítači</h3>
+      <p><strong>Proč se to stává:</strong> Vzhled (písma, pohyb, téma) se zřejmě ukládá zvlášť pro každé zařízení. Web a aplikace mají na tvých snímcích různé výchozí hodnoty.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Nastav vzhled na každém zařízení zvlášť.</li>
+        <li>Nečekej, že změna v <span class="ui">Appearance</span> na webu se projeví v mobilu.</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Otevři <span class="ui">Settings <span class="cz">(nastavení)</span></span> na daném zařízení a nastav ho znovu.</p>
+
+      <h3 id="computer-use-chyba">3.11.4 Zapnuté Computer use nebo rozšíření bez rozmyslu</h3>
+      <p><strong>Proč se to stává:</strong> Computer use dává Claude kontrolu nad obrazovkou, myší a klávesnicí. Desktopová rozšíření a lokální MCP servery běží na tvém počítači.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Zapínej <span class="ui">Enable computer use</span> jen na konkrétní úkol.</li>
+        <li>Povoluj jen aplikace, které nejsou citlivé (žádná banka, e-mail).</li>
+        <li>Instaluj rozšíření a MCP servery jen od důvěryhodných zdrojů.</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Vypni <span class="ui">Enable computer use</span> v <span class="ui">This computer → System</span> a odstraň nepotřebná rozšíření v <span class="ui">Extensions</span>. Viz <a href="14_CLDE_bezpecnost.html">díl 14</a>.</p>
+
+      <h3 id="tool-access-chyba">3.11.5 Konektory a nástroje žerou limit</h3>
+      <p><strong>Proč se to stává:</strong> Nástroje a konektory jsou náročné na tokeny. Při režimu načítání, který nehodí k tvému použití, se spotřeba zvyšuje.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Připojuj jen potřebné konektory.</li>
+        <li>Zvaž <span class="ui">Tool access</span> „On demand“ (viz <a href="#toolaccess">3.10.2.15</a>).</li>
+        <li>Sleduj spotřebu v <span class="ui">Settings → Usage</span> (placené plány).</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Změň režim, vypni nepoužívané konektory a podívej se na <a href="02_CLDE_plany_a_limity.html">díl 02</a>.</p>
+
+      <h3 id="mobil-chybi-polozka">3.11.6 Na mobilu nenajdu nastavení, které je na webu</h3>
+      <p><strong>Proč se to stává:</strong> Mobilní menu je menší. Reflect, Skills, Plugins, Claude Code a pole Instructions for Claude v něm nejsou, jsou jen na webu a v aplikaci. Některé položky jsou naopak jen na mobilu (Permissions, Sharing, Haptic feedback).</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Pro rozšířená nastavení použij web nebo desktopovou aplikaci.</li>
+        <li>Podívej se do tabulky ve <a href="#rozdily">3.8</a>.</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Otevři claude.ai v prohlížeči a nastav to tam.</p>
+
+      <h3 id="reflect-prazdny">3.11.7 Reflect nic neukazuje</h3>
+      <p><strong>Proč se to stává:</strong> Reflect se vytváří z paměti. Pokud je <span class="ui">Generate memory from chats</span> vypnuté, stránka zobrazí výzvu k zapnutí.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Zapni paměť v <span class="ui">Memory</span> (na mobilu v Capabilities).</li>
+        <li>Pamatuj, že Reflect není na mobilu.</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Zapni paměť a vrať se na stránku Reflect za pár dní používání. Podrobně <a href="09_CLDE_pamet_a_instrukce.html">díl 09</a>.</p>
+
+      <h3 id="nezname-relace">3.11.8 Zapomenutá nebo neznámá přihlášená zařízení</h3>
+      <p><strong>Proč se to stává:</strong> Relace na starých zařízeních zůstávají přihlášené, dokud se neodhlásí.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Pravidelně kontroluj <span class="ui">Account → Active sessions</span>.</li>
+        <li>Odhlašuj se na cizích zařízeních po použití.</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Použij <span class="ui">Log out of all devices</span> a přihlas se znovu jen na svých zařízeních.</p>
+
+      <h3 id="egress-chyba">3.11.9 Zapnuté Allow network egress zbytečně</h3>
+      <p><strong>Proč se to stává:</strong> Povoluje Claude stahovat balíčky ze správců balíčků. Podle textu v nastavení to přináší bezpečnostní riziko.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Zapni jen když potřebuješ analýzu dat nebo vizualizace s dalšími knihovnami.</li>
+        <li>Při zapnutí sleduj konverzaci.</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Vypni <span class="ui">Allow network egress</span> v <span class="ui">Capabilities</span>.</p>
+
+      <h3 id="predplatne-kredity">3.11.10 Kredity nastavuji z mobilu a nejdou</h3>
+      <p><strong>Proč se to stává:</strong> Pokud je předplatné koupené přes obchod s aplikacemi, usage credits se zapínají jen na webu.</p>
+      <p><strong>Jak se tomu vyhnout:</strong></p>
+      <ul>
+        <li>Kredity nastavuj na claude.ai v prohlížeči.</li>
+        <li>Viz <a href="02_CLDE_plany_a_limity.html">díl 02</a>.</li>
+      </ul>
+      <p><strong>Jak to opravit:</strong> Otevři web, přejdi do <span class="ui">Settings → Usage</span> a nastav kredity tam.</p>
+
+      <p><em>Ověřeno podle: <a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a>, <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a>, <a href="https://support.claude.com/en/articles/13730515-manage-claude-s-tool-access" target="_blank" rel="noopener">Manage Claude's tool access</a>, <a href="https://support.claude.com/articles/11817273-how-does-claude-s-memory-work" target="_blank" rel="noopener">How does Claude's memory work?</a>, <a href="https://support.claude.com/en/articles/12626668-use-quick-entry-with-claude-desktop-on-mac" target="_blank" rel="noopener">Use Quick Entry with Claude Desktop on Mac</a>, <a href="https://support.claude.com/en/articles/13189465-log-in-to-your-claude-account" target="_blank" rel="noopener">Log in to your Claude account</a>, <a href="https://www.eweek.com/news/anthropic-reflect-claude-memory/" target="_blank" rel="noopener">eWeek: Reflect</a>, <a href="https://claude.com/blog/think-through-hard-problems-in-voice-mode" target="_blank" rel="noopener">Voice mode</a>, a snímky nastavení z vlastních zařízení autora (web, Windows aplikace verze 4.29.0, Android), 30. 10. 2026.</em></p>
+
+    </div>
+
+
+    <div id="pn"></div>
+    <div id="site-footer"></div>
+
+  </div>
+</div>
+
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    {
+      "id": "kde-bezi",
+      "name": "Kde Claude běží a v čem se liší"
+    },
+    {
+      "id": "ucet",
+      "name": "Účet a přihlášení"
+    },
+    {
+      "id": "web",
+      "name": "Web (claude.ai)"
+    },
+    {
+      "id": "windows",
+      "name": "Desktopová aplikace pro Windows"
+    },
+    {
+      "id": "android",
+      "name": "Mobilní aplikace pro Android"
+    },
+    {
+      "id": "propojeni",
+      "name": "Propojení zařízení a přenos práce"
+    },
+    {
+      "id": "hlas",
+      "name": "Hlas a diktování do detailu"
+    },
+    {
+      "id": "rozdily",
+      "name": "Rozdíly web vs. aplikace vs. mobil"
+    },
+    {
+      "id": "rychle-nastaveni",
+      "name": "Rychlé nastavení po instalaci"
+    },
+    {
+      "id": "nastaveni",
+      "name": "Kompletní průvodce nastavením"
+    },
+    {
+      "id": "caste-chyby",
+      "name": "Časté chyby"
+    }
+  ]
+}
+</script>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
+
+</body>
+</html>
