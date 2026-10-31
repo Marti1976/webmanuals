@@ -12,7 +12,7 @@
 {
   "chapters": [
     { "id": "co-potrebujes", "num": "4.1", "name": "Co potřebuješ" },
-    { "id": "usb-boot", "num": "4.2", "name": "Povolení USB bootu" },
+    { "id": "usb-boot", "num": "4.2", "name": "Boot z USB" },
     { "id": "haos-image", "num": "4.3", "name": "Nahrání Home Assistant OS" },
     { "id": "win-situace", "num": "4.4", "name": "Časté situace ve Windows" },
     { "id": "oddily", "num": "4.5", "name": "Velikost oddílů" },
@@ -31,7 +31,7 @@
 <header>
   <div class="h-num">// kapitola 04</div>
   <h1>Příprava <em>USB mSATA SSD</em></h1>
-  <p class="h-desc">Jak nastavit RPi 3 B+ pro bootování z USB, nahrát image Home Assistant OS na SSD disk pod Windows a připravit vše pro první spuštění.</p>
+  <p class="h-desc">Jak nahrát obraz (image) Home Assistant OS na SSD disk pod Windows a připravit vše pro první spuštění. RPi 3 B+ umí bootovat z USB bez úprav a SD kartu nepotřebuje.</p>
 </header>
 
 <!-- CO BUDEŠ POTŘEBOVAT -->
@@ -45,101 +45,45 @@
       <span class="status-item"><span class="status-dot ok"></span>mSATA SSD v USB pouzdře</span>
       <span class="status-item"><span class="status-dot ok"></span>Raspberry Pi 3 B+</span>
       <span class="status-item"><span class="status-dot ok"></span>Internetové připojení</span>
-      <span class="status-item"><span class="status-dot info"></span>Volitelně: malá SD karta pro USB boot aktivaci</span>
+      <span class="status-item"><span class="status-dot info"></span>SD karta není potřeba (RPi 3 B+ bootuje z USB)</span>
     </div>
   </div>
 
-  <p>Software který stáhneš/nainstaluješ:</p>
+  <p>Software, který stáhneš nebo nainstaluješ:</p>
   <ul>
-    <li><strong>Raspberry Pi Imager</strong> – zdarma, z <a href="https://www.raspberrypi.com/software/" target="_blank">raspberrypi.com/software</a></li>
-    <li>Volitelně: Raspberry Pi OS Lite pro aktivaci USB bootu (pokud ještě není povolený)</li>
+    <li><strong>Raspberry Pi Imager</strong> – zdarma, z <a href="https://www.raspberrypi.com/software/" target="_blank" rel="noopener noreferrer">raspberrypi.com/software</a>. Na stránce klikni <strong>„Download for Windows“</strong>, spusť instalátor (Next → Install → Finish) a aplikaci spusť.</li>
   </ul>
 </section>
 
-<!-- KROK 1: USB BOOT -->
+<!-- BOOT Z USB -->
 <section class="sec">
-  <h2 id="usb-boot">Povolení USB bootu</h2>
-  <p>RPi 3 B+ ve výchozím nastavení bootuje ze SD karty. Aby bootoval z USB SSD, musíme toto nastavení jednou změnit – zapsat OTP (One-Time Programmable) bit do procesoru.</p>
+  <h2 id="usb-boot">Boot z USB</h2>
+  <p>Raspberry Pi 3 B+ umí bootovat z USB disku (USB boot) bez jakýchkoli úprav. Nemusíš nic povolovat ani programovat. Stačí nahrát Home Assistant OS na SSD (viz <a href="#haos-image">sekce 4.3</a>) a RPi spustit bez SD karty.</p>
 
   <div class="callout callout-info">
-    <div class="callout-title">ℹ️ Je USB boot možná už povolen?</div>
-    <p>Novější kusy RPi 3 B+ mají USB boot povolený z výroby. Jednoduše to otestuj: zapoj USB SSD s HA image (viz 4.3) <strong>bez SD karty</strong> a zkus nastartovat. Pokud RPi naběhne → přeskoč tuto část a jdi rovnou na část 2.</p>
+    <div class="callout-title">ℹ️ Proč se jinde píše o povolení USB bootu?</div>
+    <p>Starší modely (Raspberry Pi 3 B, 3 A+ a 2 B v1.2) mají USB boot z výroby vypnutý a vyžadují jednorázový zápis nastavení do procesoru (OTP). U modelu 3 B+ podle dokumentace Home Assistant OS není potřeba. Pokud tedy narazíš na návody se SD kartou a Raspberry Pi OS, týkají se starších modelů.</p>
   </div>
 
-  <h3>Jak aktivovat USB boot (pokud ještě není)</h3>
-  <p>Potřebuješ malou SD kartu (stačí i 2–4 GB). Na ni nahrajeme Raspberry Pi OS Lite, bootujeme z ní jednou, systém automaticky aktivuje USB boot a pak ji vyjmeme.</p>
-
-  <div class="steps">
-
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Stáhni a nainstaluj Raspberry Pi Imager</div>
-        <div class="step-desc">
-          <p>Přejdi na <a href="https://www.raspberrypi.com/software/" target="_blank">raspberrypi.com/software</a>, klikni <strong>"Download for Windows"</strong> a spusť instalátor. Průvodce: Next → Install → Finish. Spusť aplikaci.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Vyber zařízení a OS pro aktivaci USB bootu</div>
-        <div class="step-desc">
-          <ul>
-            <li>Klikni <strong>CHOOSE DEVICE</strong> → Raspberry Pi 3</li>
-            <li>Klikni <strong>CHOOSE OS</strong> → Raspberry Pi OS (other) → <strong>Raspberry Pi OS Lite (32-bit)</strong></li>
-            <li>Klikni <strong>CHOOSE STORAGE</strong> → vyber svoji <strong>SD kartu</strong> (NE USB SSD!)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Zapiš OS na SD kartu a nastartuj</div>
-        <div class="step-desc">
-          <p>Klikni <strong>NEXT</strong> → <strong>NO</strong> (bez customizace) → <strong>YES</strong> (potvrď smazání). Čekej na dokončení (5–10 minut).</p>
-          <p>Po zápisu vlož SD kartu do RPi, zapoj Ethernet a napájení. <strong>Nechej RPi nastartovat – čekej 30–60 sekund.</strong> Zelená LED bude rychle blikat při bootování a pak se uklidní.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <div class="step-title">USB boot je aktivován – zelená LED 4× zabliká</div>
-        <div class="step-desc">
-          <p>Raspberry Pi OS Lite při prvním bootu automaticky nastaví OTP bit pro USB boot. Poznáš to tak, že po cca 30 sekundách zelená LED <strong>rychle 4× zabliká</strong> – to znamená "USB boot enabled".</p>
-          <p><strong>Odpoj napájení a vyjmi SD kartu.</strong> Od teď bude RPi hledat bootovací zařízení na USB portech, pokud není vložena SD karta.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="callout callout-tip">
-    <div class="callout-title">💡 OTP bit je trvalý</div>
-    <p>Změna je nevratná – jednou aktivovaný USB boot nelze deaktivovat. Ale to je v pořádku: RPi bude bootovat z SD karty pokud je vložena, jinak z USB. Logika zůstane zachována.</p>
-  </div>
-
-  <h3>Co dělat pokud nemáš SD kartu</h3>
-  <p>Nemáš po ruce SD kartu? Dvě alternativy:</p>
+  <h3>Na co si dát pozor</h3>
   <ul>
-    <li><strong>Možnost 1 – Rovnou zkus USB boot:</strong> Novější kusy RPi 3 B+ (výroba 2019 a novější) mají USB boot povolený z výroby. Nahraj HAOS přímo na USB SSD (4.3) a zkus nastartovat bez SD karty. Pokud to funguje – máš hotovo, SD kartu nepotřebuješ.</li>
-    <li><strong>Možnost 2 – Půjčit SD kartu:</strong> Stačí libovolná microSD karta od 2 GB. Zapůjč od kolegy, z fotoaparátu nebo stará karta z telefonu.</li>
+    <li>Do slotu pro SD kartu <strong>nic nevkládej</strong>. Podle dokumentace Home Assistant OS musí být všechny bootovací SD karty vyjmuty.</li>
+    <li>První start z USB může trvat výrazně déle, protože RPi nejdřív zkouší SD kartu a teprve pak USB.</li>
+    <li>Některé USB disky pro boot nefungují. Pokud se RPi nespustí, zkus jiné pouzdro nebo jinou značku disku.</li>
+    <li>Některé SSD potřebují parametr „quirks“ (viz <a href="02_raspberry_hardware.html#ssd-pouzdro">sekce 2.3</a>).</li>
   </ul>
-  <div class="callout callout-info">
-    <div class="callout-title">ℹ️ Jak poznám rok výroby RPi?</div>
-    <p>Na spodní straně desky RPi je vytištěn text ve formátu <code>Raspberry Pi 3 Model B+ V1.3</code> a datum výroby (např. <code>2019</code>). Výroba od roku 2019 = USB boot pravděpodobně povolený z výroby. Zkus prostě přímo nastartovat z USB SSD.</p>
+
+  <h3>Novější modely</h3>
+  <div class="callout callout-tip">
+    <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
+    <p>U Raspberry Pi 4 aktualizuj bootloader na stabilní verzi s podporou USB bootu. Pokud nepoužíváš SD kartu, přidej do <code>config.txt</code> k <code>dtparam</code> hodnotu <code>sd_poll_once=on</code> (oddělenou čárkou). Raspberry Pi 5 je v Home Assistant OS zatím označen jako beta.</p>
   </div>
 </section>
 
 <!-- KROK 2: HAOS NA SSD -->
 <section class="sec">
   <h2 id="haos-image">Nahrání Home Assistant OS</h2>
-  <p>Teď nahrajeme samotný Home Assistant OS na mSATA USB SSD. Toto je skutečný bootovací disk systému.</p>
+  <p>Teď nahrajeme (flash) samotný Home Assistant OS na mSATA USB SSD. Toto je bootovací disk systému.</p>
 
   <div class="callout callout-danger">
     <div class="callout-title">🔴 Důležité upozornění</div>
@@ -163,7 +107,7 @@
       <div class="step-body">
         <div class="step-title">Otevři Raspberry Pi Imager a zvol zařízení</div>
         <div class="step-desc">
-          <p>Spusť Raspberry Pi Imager. Klikni <strong>CHOOSE DEVICE</strong> → vyber <strong>Raspberry Pi 3</strong>.</p>
+          <p>Spusť Raspberry Pi Imager. Klikni <strong>CHOOSE DEVICE</strong> → vyber <strong>Raspberry Pi 3</strong>. Názvy tlačítek se mohou podle verze Imageru mírně lišit.</p>
         </div>
       </div>
     </div>
@@ -178,9 +122,10 @@
             <li>→ <strong>Other specific-purpose OS</strong></li>
             <li>→ <strong>Home assistants and home automation</strong></li>
             <li>→ <strong>Home Assistant</strong></li>
-            <li>→ <strong>Home Assistant OS X.X (RPi 3/3+/3B+)</strong> – vyber <em>nejnovější verzi</em></li>
+            <li>→ <strong>Home Assistant OS</strong> – vyber <em>nejnovější verzi</em> určenou pro Raspberry Pi 3</li>
           </ul>
-          <p>Image se automaticky stáhne z internetu (cca 300–500 MB). Nebo si ho stáhni ručně z <a href="https://github.com/home-assistant/operating-system/releases" target="_blank">github.com/home-assistant/operating-system/releases</a> (hledej <code>haos_rpi3-X.XX.img.xz</code>) a použij "Use custom".</p>
+          <p>Obraz (image) se automaticky stáhne z internetu (stovky MB). Nebo si ho stáhni ručně z <a href="https://github.com/home-assistant/operating-system/releases" target="_blank" rel="noopener noreferrer">github.com/home-assistant/operating-system/releases</a> (hledej <code>haos_rpi3-64-X.Y.img.xz</code>) a použij „Use custom“.</p>
+          <p><strong>Pozor na správný obraz:</strong> obraz pro Raspberry Pi 4 na RPi 3 nenabootuje.</p>
         </div>
       </div>
     </div>
@@ -217,13 +162,27 @@
       <div class="step-body">
         <div class="step-title">Bezpečně odstraň USB SSD</div>
         <div class="step-desc">
-          <p>Pravé tlačítko na ikoně USB v System Tray (u hodin) → <strong>"Safely Remove Hardware"</strong> → vyber SSD → Eject.</p>
+          <p>Pravé tlačítko na ikoně USB v oznamovací oblasti (u hodin) → <strong>„Bezpečně odebrat hardware a vysunout médium“ (Safely Remove Hardware)</strong> → vyber SSD → Vysunout (Eject).</p>
           <p>Počkej na potvrzení "Safe to Remove" a teprve pak fyzicky odpoj USB SSD od PC.</p>
         </div>
       </div>
     </div>
 
   </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
+    <p>V Imageru zvol zařízení Raspberry Pi 4 nebo 5 a nabídne se odpovídající obraz (<code>rpi4_64</code>, <code>rpi5_64</code>). Obraz pro jiný model nebootuje.</p>
+  </div>
+
+  <h3>Varianta B: ruční stažení obrazu a zápis v balenaEtcher</h3>
+  <p>Pokud nechceš použít Raspberry Pi Imager, můžeš obraz stáhnout ručně a zapsat ho jiným programem:</p>
+  <ol>
+    <li>Stáhni <code>haos_rpi3-64-X.Y.img.xz</code> z <a href="https://github.com/home-assistant/operating-system/releases" target="_blank" rel="noopener noreferrer">github.com/home-assistant/operating-system/releases</a>. Rozbalovat ho nemusíš.</li>
+    <li>V programu balenaEtcher zvol <strong>Flash from file</strong> a vyber stažený soubor <code>.img.xz</code>.</li>
+    <li>Jako cíl (target) vyber USB SSD, pečlivě zkontroluj název a velikost a klikni <strong>Flash</strong>.</li>
+    <li>Po dokončení disk bezpečně odpoj stejně jako v kroku 6.</li>
+  </ol>
 </section>
 
 <!-- CO DĚLAT S WINDOWS DIALOGY -->
@@ -231,7 +190,7 @@
   <h2 id="win-situace">Časté situace ve Windows</h2>
 
   <h3>Windows chce naformátovat disk po dokončení</h3>
-  <p>Po úspěšném zápisu HAOS image Windows zobrazí dialog "Je nutné naformátovat disk... před použitím". <strong>Klikni na CANCEL / Zrušit!</strong> Disk obsahuje Linux oddíly které Windows nerozezná, ale jsou správně zapsány. Neformátuj ho!</p>
+  <p>Po úspěšném zápisu obrazu HAOS Windows zobrazí dialog "Je nutné naformátovat disk... před použitím". <strong>Klikni na Zrušit (Cancel)!</strong> Disk obsahuje Linux oddíly které Windows nerozezná, ale jsou správně zapsány. Neformátuj ho!</p>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Proč Windows nabízí formátování?</div>
     <p>HAOS používá Linux souborové systémy (ext4, FAT32 pro boot oddíl). Windows umí číst pouze FAT32 a NTFS – ostatní oddíly mu připadají "poškozené". Je to normální. Disk je správně zapsán a RPi ho bez problémů přečte.</p>
@@ -246,7 +205,7 @@
   </ul>
   <p>Zkus znovu – Imager sám nabídne opakování.</p>
 
-  <h3>SSD se v Imager nezobrazuje</h3>
+  <h3>SSD se v Imageru nezobrazuje</h3>
   <ul>
     <li>Odpoj a znovu zapoj USB kabel</li>
     <li>Zkus jiný USB port (přímo na PC, ne přes hub)</li>
@@ -259,16 +218,18 @@
   <h2 id="oddily">Velikost oddílů</h2>
   <p>HAOS při <strong>prvním bootu automaticky rozšíří datový oddíl</strong> na celou dostupnou kapacitu SSD. Nemusíš nic dělat ručně.</p>
   <ul>
-    <li><strong>32 GB SSD:</strong> cca 28 GB využitelných pro data HA po instalaci</li>
-    <li><strong>64 GB SSD:</strong> cca 60 GB – doporučeno pokud plánuješ ukládat záznamy kamer nebo necháš databázi růst déle</li>
+    <li><strong>32 GB SSD:</strong> pro základní provoz stačí, po instalaci zůstává téměř celá kapacita pro data</li>
+    <li><strong>64 GB SSD:</strong> doporučeno, pokud plánuješ ukládat záznamy kamer nebo necháš databázi růst déle</li>
     <li><strong>128 GB SSD:</strong> výrazný nadbytek pro základní HA, ale levné mSATA disky tuto kapacitu nabízejí</li>
   </ul>
-  <p>Struktura oddílů po instalaci (viditelná přes SSH příkazem <code>lsblk</code>):</p>
+  <p>Struktura oddílů (partitions) po instalaci podle dokumentace HAOS (číslování <code>sdaN</code> se může lišit):</p>
   <ul>
-    <li><code>/dev/sda1</code> – Boot oddíl (FAT32, ~100 MB) – jediný čitelný z Windows</li>
-    <li><code>/dev/sda2</code> – HAOS systémový oddíl A (ext4)</li>
-    <li><code>/dev/sda3</code> – HAOS systémový oddíl B (záloha pro rollback)</li>
-    <li><code>/dev/sda8</code> – Datový oddíl (ext4, zbytek disku) – zde jsou konfigurace, zálohy, databáze</li>
+    <li><strong>Boot</strong> (FAT32, malý oddíl) – jediný čitelný z Windows</li>
+    <li><strong>Kernel A</strong> a <strong>System A</strong> – aktuální jádro a systém HAOS</li>
+    <li><strong>Kernel B</strong> a <strong>System B</strong> – druhá sada pro aktualizace a návrat ke starší verzi (rollback)</li>
+    <li><strong>Bootstate</strong> – stav bootování</li>
+    <li><strong>Overlay</strong> – úpravy systému</li>
+    <li><strong>Data</strong> (zbytek disku, <code>/mnt/data</code>) – zde jsou konfigurace, zálohy a databáze</li>
   </ul>
 </section>
 
@@ -276,8 +237,8 @@
 <section class="sec">
   <h2 id="shrnuti">Shrnutí</h2>
   <ul>
-    <li>✅ RPi 3 B+ s aktivovaným USB boot (OTP bit)</li>
-    <li>✅ mSATA USB SSD s nahraným Home Assistant OS image</li>
+    <li>✅ RPi 3 B+ připravené k bootu z USB (bez SD karty, bez nastavování OTP)</li>
+    <li>✅ mSATA USB SSD s nahraným obrazem (image) Home Assistant OS</li>
     <li>✅ Vše připravené pro fyzické zapojení a první boot</li>
   </ul>
   <p>Pokračuj na <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html">Kapitolu 05 – První spuštění a nastavení Home Assistant</a>.</p>
@@ -286,7 +247,7 @@
 <div id="pn"></div>
 
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

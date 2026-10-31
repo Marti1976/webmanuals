@@ -12,16 +12,17 @@
 {
   "chapters": [
     { "id": "zakladni-pravidlo", "num": "11.1", "name": "Základní pravidlo" },
-    { "id": "firewall", "num": "11.2", "name": "Firewall na routeru" },
-    { "id": "dvfa", "num": "11.3", "name": "2FA autentizace" },
+    { "id": "firewall", "num": "11.2", "name": "Porty a UPnP na routeru" },
+    { "id": "dvfa", "num": "11.3", "name": "Dvoufaktorové ověření (2FA)" },
     { "id": "silne-heslo", "num": "11.4", "name": "Silné heslo" },
-    { "id": "trusted-nets", "num": "11.5", "name": "Trusted Networks" },
+    { "id": "trusted-nets", "num": "11.5", "name": "Přihlášení bez hesla v síti" },
     { "id": "mqtt-bezpecnost", "num": "11.6", "name": "Zabezpečení MQTT" },
     { "id": "vzdaleny-pristup", "num": "11.7", "name": "Vzdálený přístup" },
     { "id": "logovani", "num": "11.8", "name": "Logování přihlášení" },
     { "id": "sdilet-config", "num": "11.9", "name": "Sdílení konfigurace" },
     { "id": "guest-wifi", "num": "11.10", "name": "Guest WiFi pro IoT" },
-    { "id": "bezp-checklist", "num": "11.11", "name": "Bezpečnostní checklist" }
+    { "id": "z2m-bezpecnost", "num": "11.11", "name": "Zabezpečení Zigbee2MQTT" },
+    { "id": "bezp-checklist", "num": "11.12", "name": "Bezpečnostní checklist" }
   ]
 }
 </script>
@@ -35,7 +36,7 @@
 <header>
   <div class="h-num">// kapitola 11</div>
   <h1><em>Bezpečnost</em></h1>
-  <p class="h-desc">Ochrana Home Assistant před přístupem z internetu, silná autentizace, 2FA, zabezpečení MQTT a možnosti bezpečného vzdáleného přístupu přes VPN.</p>
+  <p class="h-desc">Ochrana Home Assistantu před přístupem z internetu, silná autentizace, dvoufaktorové ověření (2FA), zabezpečení MQTT a Zigbee2MQTT a možnosti bezpečného vzdáleného přístupu.</p>
 </header>
 
 <!-- ZAKLADNI PRAVIDLO -->
@@ -43,35 +44,35 @@
   <h2 id="zakladni-pravidlo">Základní pravidlo</h2>
   <div class="callout callout-danger">
     <div class="callout-title">🔴 Nikdy přímo nevystavuj HA do internetu!</div>
-    <p>Home Assistant by měl být dostupný <strong>pouze z lokální sítě</strong>, pokud nevíš přesně co děláš. Nikdy neotvírej port 8123 (ani žádný jiný HA port) z internetu. Pro vzdálený přístup existují bezpečné alternativy popsané níže.</p>
+    <p>Home Assistant by měl být dostupný <strong>pouze z lokální sítě</strong>, pokud nevíš přesně, co děláš. Nikdy neotvírej port Home Assistantu (80, u starších instalací 8123, ani žádný jiný HA port) z internetu. Pro vzdálený přístup existují bezpečné alternativy popsané níže.</p>
   </div>
 </section>
 
 <!-- FIREWALL ROUTER -->
 <section class="sec">
-  <h2 id="firewall">Firewall na routeru</h2>
+  <h2 id="firewall">Porty a UPnP na routeru</h2>
   <p>Router je první linie obrany. Standardně blokuje příchozí spojení z internetu – je důležité toto nastavení neporušit.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Zkontroluj Port Forwarding</div>
+        <div class="step-title">Zkontroluj přesměrování portů (Port Forwarding)</div>
         <div class="step-desc">
-          <p>Přihlaš se do routeru (obvykle <code>192.168.1.1</code> nebo <code>192.168.0.1</code>). Najdi sekci:</p>
+          <p>Přihlaš se do routeru (obvykle <code>192.168.0.1</code>). Najdi sekci:</p>
           <ul>
             <li><strong>Port Forwarding</strong> / <strong>NAT</strong> / <strong>Virtual Server</strong></li>
           </ul>
-          <p>Zkontroluj, že <strong>neexistuje</strong> žádné pravidlo forwardující port <code>8123</code> na IP adresu RPi. Pokud ano – smaž ho ihned.</p>
+          <p>Zkontroluj, že <strong>neexistuje</strong> žádné pravidlo forwardující port <code>80</code> nebo <code>8123</code> na IP adresu RPi. Pokud ano – smaž ho ihned.</p>
         </div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <div class="step-title">Zkontroluj a zvažuj vypnutí UPnP</div>
+        <div class="step-title">Zkontroluj a zvaž vypnutí UPnP</div>
         <div class="step-desc">
           <p>UPnP (Universal Plug and Play) umožňuje aplikacím automaticky otevírat porty v routeru bez tvého vědomí. Najdi v routeru sekci <strong>UPnP</strong> a zvažuj jeho vypnutí.</p>
-          <p>Vypnutí UPnP může rozbít některé funkce (online hry, video hovory) – posluď dle potřeby. Pro bezpečnostní paranoidní nastavení ho vypni a přidávej port forwarding ručně jen pro to co skutečně potřebuješ.</p>
+          <p>Vypnutí UPnP může rozbít některé funkce (online hry, video hovory) – posuď dle potřeby. Pro maximálně přísné nastavení ho vypni a přidávej přesměrování portů ručně jen pro to, co skutečně potřebuješ.</p>
         </div>
       </div>
     </div>
@@ -80,31 +81,32 @@
 
 <!-- 2FA -->
 <section class="sec">
-  <h2 id="dvfa">2FA autentizace</h2>
-  <p>I kdyby někdo znal tvoje heslo, bez 2FA kódu se do HA nepřihlásí. <strong>Doporučuji aktivovat vždy.</strong></p>
+  <h2 id="dvfa">Dvoufaktorové ověření (2FA)</h2>
+  <p>I kdyby někdo znal tvoje heslo, bez kódu z druhého faktoru se do HA nepřihlásí. <strong>Doporučuji aktivovat vždy.</strong></p>
+  <div class="callout callout-danger">
+    <div class="callout-title">🔴 Home Assistant nevydává záložní kódy</div>
+    <p>Na rozdíl od mnoha služeb HA při zapnutí 2FA žádné záložní (obnovovací) kódy nevytvoří. Pokud ztratíš telefon a nemáš kód v jiném zařízení, dostaneš se do HA jen ruční úpravou souboru v systému (viz <a href="14_raspberry_reseni_problemu_troubleshooting.html#pristup-2fa">sekce 14.7</a>). Prevenci proto nepodceňuj.</p>
+  </div>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Aktivuj TOTP (Time-based One-Time Password)</div>
         <div class="step-desc">
-          <p>Klikni vlevo dole na své <strong>uživatelské jméno</strong>. Najdi sekci <strong>"Zabezpečení"</strong> nebo <strong>"Multi-factor Authentication"</strong>.</p>
-          <p>Klikni <strong>Aktivovat</strong> u položky <strong>TOTP</strong>.</p>
+          <p>Klikni vlevo dole na své <strong>uživatelské jméno</strong> a otevři záložku <strong>Zabezpečení (Security)</strong>. U vícefaktorového ověřování (Multi-factor authentication) zapni <strong>TOTP</strong>.</p>
           <ul>
-            <li>Otevři aplikaci <strong>Google Authenticator</strong> nebo <strong>Authy</strong> na mobilu</li>
-            <li>Naskenuj zobrazený QR kód</li>
-            <li><strong>Zapiš si záložní kódy</strong> na bezpečné místo (papír, password manager) – bez nich se při ztrátě telefonu nedostaneš dovnitř!</li>
+            <li>Otevři ověřovací aplikaci na mobilu (např. Google Authenticator, Authy nebo správce hesel, který umí TOTP)</li>
+            <li>Naskenuj zobrazený QR kód. <strong>Naskenuj ho ve dvou zařízeních nebo aplikacích současně</strong> (např. telefon a správce hesel). To je tvoje pojistka místo záložních kódů.</li>
             <li>Zadej první vygenerovaný kód pro potvrzení</li>
-            <li>Klikni <strong>Aktivovat</strong></li>
           </ul>
-          <p>Od teď při přihlášení zadáš heslo + 6místný kód z aplikace.</p>
+          <p>Od teď při přihlášení zadáš heslo a 6místný kód z aplikace.</p>
         </div>
       </div>
     </div>
   </div>
   <div class="callout callout-warn">
-    <div class="callout-title">⚠️ Záložní kódy jsou kritické</div>
-    <p>Pokud ztratíš telefon s Google Authenticator a nemáš záložní kódy, ztratíš přístup do HA. Záložní kódy ulož na <strong>dvě různá místa</strong> – např. vytiskni a ulož fyzicky + do password manageru.</p>
+    <div class="callout-title">⚠️ Jak se nezamknout</div>
+    <p>Mít kód ve dvou nezávislých zařízeních je nejjednodušší ochrana. Druhá možnost je <strong>mít v HA druhý účet správce</strong> uložený v správci hesel, přes který se dostaneš dovnitř a 2FA prvního účtu vypneš. Přihlášení přes Trusted Networks (sekce 11.5) 2FA obchází.</p>
   </div>
 </section>
 
@@ -115,20 +117,29 @@
   <ul>
     <li>Heslo HA admina: <strong>min. 16 znaků</strong>, kombinace písmen, čísel a symbolů</li>
     <li>MQTT heslo: jiné než HA heslo, min. 16 znaků</li>
-    <li>Samba heslo: opět jiné, min. 12 znaků</li>
+    <li>Samba heslo: opět jiné, min. 16 znaků</li>
     <li>Používej <strong>password manager</strong> (Bitwarden – zdarma a open source, KeePass, 1Password)</li>
     <li>Nikdy nepoužívej stejné heslo na více místech</li>
   </ul>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Bitwarden – doporučený password manager</div>
-    <p>Bitwarden je open source, zdarma, dostupný jako browser extension i mobilní app. Synchronizuje hesla přes všechna zařízení. <a href="https://bitwarden.com" target="_blank">bitwarden.com</a></p>
+    <p>Bitwarden je open source, zdarma, dostupný jako rozšíření prohlížeče (browser extension) i mobilní aplikace. Synchronizuje hesla přes všechna zařízení. <a href="https://bitwarden.com" target="_blank" rel="noopener noreferrer">bitwarden.com</a></p>
   </div>
 </section>
 
 <!-- TRUSTED NETWORKS -->
 <section class="sec">
-  <h2 id="trusted-nets">Trusted Networks</h2>
-  <p>Pokud chceš, aby zařízení v lokální síti (tablety na zdi, domácí PC) nemusela zadávat heslo, lze nakonfigurovat Trusted Networks.</p>
+  <h2 id="trusted-nets">Přihlášení bez hesla v síti</h2>
+  <p>Pokud chceš, aby zařízení v lokální síti (tablety na zdi, domácí PC) nemusela zadávat heslo, máš dvě varianty.</p>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Zastaralá metoda a 2FA</div>
+    <p>Metoda Trusted Networks (varianta B) <strong>obchází dvoufaktorové ověření</strong>. HA navíc od verze 2026.8 hlásí, že nastavení <code>allow_bypass_login</code> a <code>trusted_users</code> v YAML přestane fungovat ve verzi 2027.2.0 (zdroj: hlášení uživatelů, <strong>nutné prověřit u tebe</strong>). Proto je varianta A lepší.</p>
+  </div>
+
+  <h3>Varianta A: samostatný uživatel pro nástěnný tablet (doporučeno)</h3>
+  <p>Vytvoř v HA uživatele jen pro tablet (Nastavení → Osoby → Uživatelé → Přidat uživatele, bez práv správce, jen z lokální sítě). Na tabletu se jednou přihlas, tablet zůstane přihlášený a heslo nezadává. Tablet nemá práva správce, takže případné zneužití je omezené.</p>
+
+  <h3>Varianta B: Trusted Networks v configuration.yaml (zastaralé)</h3>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -140,11 +151,12 @@
   auth_providers:
     - type: trusted_networks
       trusted_networks:
-        - 192.168.1.0/24   # tvoje lokální síť
+        - 192.168.0.0/24   # tvoje lokální síť
         - 127.0.0.1
       allow_bypass_login: true
     - type: homeassistant  # záloha – standardní přihlášení</code></pre>
-          <p>Ulož soubor. Jdi do <strong>Nastavení → Systém → Restartovat → Restartovat Home Assistant</strong>.</p>
+          <p>Pokud máš víc uživatelů, doplň <code>trusted_users</code> s ID uživatele (ne s uživatelským jménem).</p>
+          <p>Ulož soubor. Jdi do <strong>Nastavení → Systém → Restartovat → Restartovat Home Assistanta</strong>.</p>
         </div>
       </div>
     </div>
@@ -158,49 +170,49 @@
 <!-- ZABEZPECENI MQTT -->
 <section class="sec">
   <h2 id="mqtt-bezpecnost">Zabezpečení MQTT</h2>
-  <p>Mosquitto v HAOS je ve výchozím nastavení dostupný <strong>pouze uvnitř sítě add-onů</strong> – port 1883 není přístupný z internetu ani z lokální sítě jiných zařízení. To je správné chování.</p>
+  <p>Mosquitto v HAOS naslouchá na portu 1883 i v tvé místní síti, ale připojit se k němu jde <strong>jen po přihlášení</strong> uživatelem Home Assistantu, anonymní přístup je zakázán. Z internetu není dostupný (pokud sám neotevřeš port na routeru).</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Ověř konfiguraci Mosquitto</div>
+        <div class="step-title">Ověř uživatele pro MQTT</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Doplňky → Mosquitto broker → KONFIGURACE</strong>. Ujisti se, že konfigurace obsahuje přihlašovací údaje a <strong>není prázdná</strong> (prázdná = bez autentizace):</p>
-          <pre><code>logins:
-  - username: mqtt_user
-    password: "tvoje_heslo"</code></pre>
-          <p>Klikni <strong>Uložit</strong> a restartuj Mosquitto add-on pokud jsi dělal změny.</p>
+          <p>Jdi do <strong>Nastavení → Osoby → Uživatelé</strong> a ověř, že <code>mqtt_user</code> <strong>není správce</strong> a je povolen jen z lokální sítě (viz <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html#mqtt-uzivatel">sekce 7.3</a>). Konfigurace aplikace Mosquitto může zůstat prázdná.</p>
         </div>
       </div>
     </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Zvaž zavření portů (volitelné)</div>
+        <div class="step-desc">
+          <p>Pokud k brokeru <strong>nepřipojuješ žádné další zařízení</strong> z místní sítě (např. WiFi zásuvky s Tasmota, MQTT Explorer), smaž porty v kartě <strong>Síť (Network)</strong> aplikace Mosquitto. Zigbee2MQTT i Home Assistant se připojují vnitřní adresou <code>core-mosquitto</code> a poběží dál.</p>
+          <p>Pokud porty zavřeš a pak nefunguje zařízení v síti, které se k brokeru připojovalo, porty vrať.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Lokální uživatelé v konfiguraci</div>
+    <p>Blok <code>logins:</code> v konfiguraci Mosquitto není pro zabezpečení nutný. Je to jen volitelná varianta B z <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html#mqtt-uzivatel">sekce 7.3</a>. Prázdná konfigurace <strong>neznamená</strong> přístup bez přihlášení.</p>
   </div>
 </section>
 
 <!-- VZDALENY PRISTUP -->
 <section class="sec">
   <h2 id="vzdaleny-pristup">Vzdálený přístup</h2>
-  <p>Pokud chceš přistupovat k HA z internetu (mimo domov), nikdy neotvírej porty přímo. Místo toho použi jednu z těchto bezpečných metod:</p>
+  <p>Pokud chceš přistupovat k HA z internetu (mimo domov), nikdy neotvírej porty přímo. Místo toho použij jednu z těchto bezpečných bezplatných metod:</p>
 
   <div class="remote-grid">
     <div class="remote-card recommended">
-      <div class="remote-card-title">Nabu Casa (HA Cloud)</div>
-      <div class="remote-card-sub">★ Nejjednodušší · ~65 Kč/měsíc</div>
-      <p>Placená služba od tvůrců HA. Žádná konfigurace – jen aktivovat. Vše šifrováno, bez portforwardingu. Podporuje také Alexa a Google Assistant. <a href="https://www.nabucasa.com" target="_blank">nabucasa.com</a></p>
-    </div>
-    <div class="remote-card recommended">
       <div class="remote-card-title">Tailscale VPN</div>
-      <div class="remote-card-sub">★ Nejlepší zdarma · 0 Kč</div>
-      <p>WireGuard-based VPN mesh. Telefon a RPi jsou ve virtuální síti – přistupuješ jako bys byl doma. Instalace přes add-on v minutách. <a href="https://tailscale.com" target="_blank">tailscale.com</a></p>
+      <div class="remote-card-sub">★ Nejlepší zdarma</div>
+      <p>VPN postavená na WireGuardu (mesh VPN). Telefon a RPi jsou ve virtuální síti, přistupuješ jako bys byl doma. Bezplatný plán Personal od dubna 2026 pokrývá až 6 uživatelů a neomezený počet jejich zařízení. Instalace přes aplikaci (add-on) v minutách. <a href="https://tailscale.com" target="_blank" rel="noopener noreferrer">tailscale.com</a></p>
     </div>
     <div class="remote-card">
       <div class="remote-card-title">WireGuard na routeru</div>
       <div class="remote-card-sub">Pokročilé · Zdarma</div>
       <p>Nejbezpečnější varianta, veškerý provoz přes VPN. Vyžaduje podporu routeru (Turris, Mikrotik, Asus Merlin). Složitější nastavení.</p>
-    </div>
-    <div class="remote-card">
-      <div class="remote-card-title">Cloudflare Tunnel</div>
-      <div class="remote-card-sub">Pokročilé · Zdarma</div>
-      <p>Tunelování přes Cloudflare CDN. Veřejná URL bez otevírání portů. Vyžaduje doménu a pokročilejší konfiguraci. Zdarma pro základní použití.</p>
     </div>
   </div>
 
@@ -211,19 +223,18 @@
       <div class="step-body">
         <div class="step-title">Zaregistruj se na Tailscale</div>
         <div class="step-desc">
-          <p>Přejdi na <a href="https://tailscale.com" target="_blank">tailscale.com</a> → <strong>Get Started</strong>. Registruj se přes Google nebo GitHub účet. Free plán stačí pro domácí použití (max. 3 uživatelé, 100 zařízení).</p>
+          <p>Přejdi na <a href="https://tailscale.com" target="_blank" rel="noopener noreferrer">tailscale.com</a> → <strong>Get Started</strong>. Registruj se přes Google nebo GitHub účet. Plán Personal je zdarma a pro domácí použití stačí (od 8. dubna 2026 až 6 uživatelů, zařízení uživatelů jsou neomezená).</p>
         </div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <div class="step-title">Nainstaluj Tailscale add-on v HA</div>
+        <div class="step-title">Nainstaluj aplikaci Tailscale v HA</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Doplňky → ADD-ON STORE</strong>. Hledej <strong>"Tailscale"</strong>. Nainstaluj. V záložce KONFIGURACE nastav:</p>
-          <pre><code>tags:
-  - tag:homeassistant</code></pre>
-          <p>Spusť add-on. V záložce <strong>PROTOKOL</strong> najdeš autorizační URL – zkopíruj ji a otevři v prohlížeči. Přihlaš se Tailscale účtem a autorizuj zařízení.</p>
+          <p>Jdi do <strong>Nastavení → Doplňky/Aplikace → Obchod (Settings → Add-ons/Apps → Add-on store)</strong>. Hledej <strong>„Tailscale“</strong> (komunitní aplikace). Nainstaluj a spusť ji.</p>
+          <p>V záložce <strong>PROTOKOL</strong> najdeš autorizační URL – zkopíruj ji a otevři v prohlížeči. Přihlas se účtem Tailscale a autorizuj zařízení.</p>
+          <p>Výchozí konfiguraci nech beze změny. Volbu <code>tags</code> nepoužívej, pokud nevíš proč: označená zařízení se v Tailscale počítají jako „tagged resources“ (v plánu Personal jich je 50) a vyžadují nastavit vlastnictví značek v pravidlech sítě.</p>
         </div>
       </div>
     </div>
@@ -232,13 +243,14 @@
       <div class="step-body">
         <div class="step-title">Nainstaluj Tailscale na telefon / PC</div>
         <div class="step-desc">
-          <p>Stáhni Tailscale app na všechna zařízení ze kterých chceš přistupovat k HA. Přihlaš se stejným účtem.</p>
-          <p>Po připojení uvidíš v Tailscale admin konzoli (<a href="https://login.tailscale.com/admin" target="_blank">login.tailscale.com/admin</a>) RPi s přiřazenou IP ve formátu <code>100.x.x.x</code>.</p>
-          <p>Přistup k HA z internetu: <code>http://100.x.x.x:8123</code> (Tailscale IP adresa RPi).</p>
+          <p>Stáhni aplikaci Tailscale na všechna zařízení, ze kterých chceš přistupovat k HA. Přihlas se stejným účtem.</p>
+          <p>Po připojení uvidíš v administraci Tailscale (<a href="https://login.tailscale.com/admin" target="_blank" rel="noopener noreferrer">login.tailscale.com/admin</a>) RPi s přiřazenou IP ve formátu <code>100.x.x.x</code>.</p>
+          <p>Přístup k HA z internetu přes Tailscale: <code>http://100.x.x.x</code> (u starších instalací <code>http://100.x.x.x:8123</code>), kde <code>100.x.x.x</code> je Tailscale IP adresa RPi.</p>
         </div>
       </div>
     </div>
   </div>
+
 </section>
 
 <!-- LOGOVANI -->
@@ -250,8 +262,8 @@
       <div class="step-body">
         <div class="step-title">Sleduj logy v Home Assistant</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Protokoly</strong>. Filtruj výraz <code>login</code> nebo <code>failed</code> pro hledání neúspěšných pokusů.</p>
-          <p>Každé neúspěšné přihlášení se loguje – pokud vidíš opakované pokusy z neznámé IP, je to signál že někdo zkouší proniknout.</p>
+          <p>Jdi do <strong>Nastavení → Systém → Logy (Settings → System → Logs)</strong>. Filtruj výraz <code>login</code> nebo <code>failed</code> pro hledání neúspěšných pokusů.</p>
+          <p>Každé neúspěšné přihlášení se loguje a Home Assistant při něm vytvoří také trvalé oznámení „Login attempt failed“. Pokud vidíš opakované pokusy z neznámé IP, je to signál, že někdo zkouší proniknout.</p>
         </div>
       </div>
     </div>
@@ -260,25 +272,39 @@
       <div class="step-body">
         <div class="step-title">Nastav notifikaci při neúspěšném přihlášení (volitelné)</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Automatizace → + Vytvořit automatizaci</strong>:</p>
+          <p>Jdi do <strong>Nastavení → Automatizace → + Vytvořit automatizaci</strong> a použij trvalé oznámení, které HA při neúspěšném přihlášení vytvoří:</p>
           <ul>
-            <li><strong>Spouštěč:</strong> Událost → <code>homeassistant_start</code> nebo Log entry s klíčovým slovem <code>Login attempt</code></li>
+            <li><strong>Spouštěč:</strong> Trvalé oznámení (Persistent notification) → typ změny <strong>přidáno (added)</strong> → ID upozornění <code>http-login</code></li>
             <li><strong>Akce:</strong> Odeslat upozornění na mobilní aplikaci</li>
           </ul>
+          <p>Zápis v YAML (<strong>nutné prověřit u tebe</strong>, názvy se mohou lišit podle verze):</p>
+          <pre><code>triggers:
+  - trigger: persistent_notification
+    update_type: added
+    notification_id: http-login
+actions:
+  - action: notify.mobile_app_telefon   # nahraď názvem svého telefonu
+    data:
+      title: "HA: neúspěšné přihlášení"
+      message: "{{ trigger.notification.message }}"</code></pre>
         </div>
       </div>
     </div>
   </div>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Spouštěč homeassistant_start</div>
+    <p>Dříve uváděný spouštěč <code>homeassistant_start</code> se aktivuje při startu systému a s přihlášením nesouvisí. Správným spouštěčem je trvalé oznámení výše.</p>
+  </div>
 </section>
 
-<!-- BEZPECNOSTNI CHECKLIST -->
+<!-- SDÍLENÍ KONFIGURACE -->
 <section class="sec">
   <h2 id="sdilet-config">Sdílení konfigurace</h2>
   <p>Komunita HA je přátelská a lidé rádi sdílejí své konfigurace. Před sdílením (fórum, GitHub, Slack) vždy zkontroluj, že neobsahuje citlivé informace.</p>
   <ul>
     <li><strong>Nikdy nezveřejňuj:</strong> hesla, API tokeny, long-lived access tokeny, IP adresy zařízení</li>
     <li><strong>Nikdy nezveřejňuj:</strong> Zigbee Network Key (coordinator_backup.json nebo configuration.yaml Z2M)</li>
-    <li><strong>Bezpečné sdílení:</strong> používej <code>!secret</code> direktivu (viz Kapitola 06) – pak sdílej <code>configuration.yaml</code> bez <code>secrets.yaml</code></li>
+    <li><strong>Bezpečné sdílení:</strong> používej <code>!secret</code> (viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#secrets-yaml">sekce 6.8</a>) – pak sdílej <code>configuration.yaml</code> bez <code>secrets.yaml</code>. Zigbee2MQTT má vlastní <code>secret.yaml</code>.</li>
     <li><strong>Long-lived tokeny:</strong> Nastavení → Profil → Long-lived access tokens – pravidelně kontroluj, nepoužívané smaž okamžitě</li>
   </ul>
   <div class="callout callout-warn">
@@ -295,13 +321,50 @@
     <li><strong>Proč izolace?</strong> Kompromitované IoT zařízení (hacknutá kamera, zranitelná chytrá TV) může v nechráněné síti napadat ostatní zařízení – tvůj PC, NAS, telefony</li>
     <li><strong>Řešení:</strong> Vytvoř izolovanou <strong>Guest WiFi síť</strong> v routeru pro IoT zařízení</li>
     <li><strong>Jak nastavit:</strong> Hledej v routeru "Guest network", "IoT network" nebo "VLAN" – většina moderních routerů (Turris, Asus, TP-Link) tuto funkci podporuje</li>
-    <li><strong>Klíčové nastavení:</strong> zapni <strong>"Client isolation"</strong> – zařízení na Guest WiFi nemohou komunikovat s hlavní sítí</li>
-    <li><strong>HA komunikace:</strong> Home Assistant na Ethernetu může stále komunikovat s IoT zařízeními na Guest WiFi, ale IoT zařízení nemohou navazovat spojení s PC/NAS</li>
+    <li><strong>Klíčové nastavení:</strong> zapni <strong>„Client isolation“</strong> – zařízení na Guest WiFi nemohou komunikovat mezi sebou ani s hlavní sítí</li>
+    <li><strong>Pozor na komunikaci s HA:</strong> izolovaná síť obvykle blokuje spojení v obou směrech a může rozbít automatické nalezení zařízení (mDNS). Zařízení, která se hlásí k MQTT brokeru v HA (např. Tasmota), musí na HA (port 1883) dosáhnout. Proto potřebuješ v routeru pravidlo, které z IoT sítě povolí jen spojení na HA, nebo HA a IoT zařízení dej do stejné sítě.</li>
+    <li><strong>Dvě varianty:</strong> A) jednoduchá Guest WiFi (méně práce, omezená komunikace), B) vlastní síť (VLAN) s pravidly firewallu (pokročilé, plná kontrola)</li>
   </ul>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Jednoduché pravidlo</div>
     <p>Hlavní WiFi: počítače, telefony, tablety, RPi/NAS.<br>
     Guest/IoT WiFi: chytré televize, IP kamery, WiFi žárovky, WiFi zásuvky, robotické vysavače a vše ostatní "smart".</p>
+  </div>
+</section>
+
+<!-- ZABEZPECENI Z2M -->
+<section class="sec">
+  <h2 id="z2m-bezpecnost">Zabezpečení Zigbee2MQTT</h2>
+  <p>Oficiální dokumentace Zigbee2MQTT přirovnává program k softwaru síťového routeru: ovládá celou Zigbee síť. Je proto ve výchozím stavu dostupný jen lokálně. Platí tato pravidla:</p>
+  <ul>
+    <li><strong>Webové rozhraní nevystavuj do internetu.</strong> Kdokoli, kdo se k němu dostane, má plnou kontrolu nad Zigbee2MQTT, stejně jako přes MQTT. V HA se otevírá přes přihlášený Home Assistant (Show in sidebar), čímž je chráněno přihlášením a případným 2FA.</li>
+    <li><strong>Síťový klíč (network key)</strong> je tajný, nikdy ho nesdílej (viz sekce 11.9). Nepoužívej veřejně známý výchozí klíč. Změna klíče vyžaduje spárovat všechna zařízení znovu.</li>
+    <li><strong>Párování</strong> (Permit Join) se samo zavře za 254 sekund. Po spárování ho zavři dřív (viz <a href="10_raspberry_pridavani_zigbee_zarizeni.html">kapitola 10</a>).</li>
+    <li><strong>Neinstaluj externí rozšíření a konvertory</strong> z nedůvěryhodných zdrojů. Spouštějí libovolný kód uvnitř Zigbee2MQTT.</li>
+    <li><strong>Aktualizace firmwaru zařízení (OTA):</strong> před spuštěním si přečti poznámky k vydání a nepoužívej cizí zdroje firmwaru.</li>
+    <li><strong>Zařízení s trvale zapnutým Touchlink</strong> se vyhýbej, zejména na místech, kam se snadno dostane cizí osoba. Touchlink používá nezabezpečené zprávy v těsné blízkosti.</li>
+  </ul>
+
+  <h3>Seznam povolených zařízení (passlist) – doporučeno</h3>
+  <p><strong>O co jde:</strong> každé Zigbee zařízení má unikátní adresu IEEE (jako sériové číslo, např. <code>0x00158d0001234567</code>). Passlist je seznam těchto adres, které se smějí do tvé sítě připojit. Zařízení, které v seznamu není, Zigbee2MQTT nepřijme.</p>
+  <p><strong>Proč ho použít:</strong> bez passlistu se může do sítě přidat každé Zigbee zařízení, které je zrovna v párovacím režimu a v dosahu, i cizí (například sousedovo nebo omylem spárované). Passlist tomu předchází a chrání i před přidáním zařízení někým, kdo by získal přístup k otevřenému párování (Permit Join). Nejvíc se hodí v bytových domech. Doporučuji ho zapnout <strong>až po spárování všech svých zařízení</strong>.</p>
+  <ol>
+    <li><strong>Zjisti IEEE adresy</strong> všech zařízení. Najdeš je v rozhraní Zigbee2MQTT u každého zařízení (záložka Devices).</li>
+    <li><strong>Zapiš je do souboru</strong> <code>/config/zigbee2mqtt/configuration.yaml</code> (File editor, viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#file-editor">sekce 6.5</a>):
+<pre><code>passlist:
+  - '0x00158d0001234567'
+  - '0x00158d0007654321'</code></pre>
+    </li>
+    <li><strong>Restartuj aplikaci</strong> Zigbee2MQTT a v Logu zkontroluj, že všechna zařízení zůstala.</li>
+    <li><strong>Při přidání nového zařízení</strong> nejdřív doplň jeho IEEE adresu do passlistu (adresu najdeš na štítku zařízení nebo v logu při pokusu o párování), nebo passlist před párováním dočasně odstraň.</li>
+  </ol>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Pozor na odpojení stávajících zařízení</div>
+    <p>Zařízení, která nejsou v passlistu, se při startu odstraní ze sítě. Před zapnutím passlistu proto vlož do seznamu <strong>všechna</strong> spárovaná zařízení. Pokud to uděláš špatně, musíš chybějící zařízení spárovat znovu. Před úpravou si zálohuj <code>configuration.yaml</code>. Přesnou syntaxi ověř v <a href="https://www.zigbee2mqtt.io/guide/configuration/block-pass-list.html" target="_blank" rel="noopener noreferrer">dokumentaci Zigbee2MQTT</a>.</p>
+  </div>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Instalační kódy (install codes)</div>
+    <p>Pokud zařízení instalační kód má (obvykle vytištěný na zařízení, často jako QR kód), párování s ním je bezpečnější, protože se šifruje i přenos síťového klíče. Kód lze zadat v rozhraní Zigbee2MQTT.</p>
   </div>
 </section>
 
@@ -313,7 +376,7 @@
     <div class="sec-item">
       <span class="sec-icon">🔒</span>
       <div class="sec-item-body">
-        <div class="sec-item-title">Port forwarding na port 8123 NEEXISTUJE</div>
+        <div class="sec-item-title">Port forwarding na port 80 / 8123 NEEXISTUJE</div>
         <div class="sec-item-desc">Ověřit v routeru → Port Forwarding sekce</div>
       </div>
     </div>
@@ -328,35 +391,42 @@
       <span class="sec-icon">🔒</span>
       <div class="sec-item-body">
         <div class="sec-item-title">2FA aktivováno na HA účtu</div>
-        <div class="sec-item-desc">Google Authenticator nebo Authy, záložní kódy uloženy</div>
+        <div class="sec-item-desc">QR kód naskenován ve dvou zařízeních (záložní kódy HA nevydává)</div>
       </div>
     </div>
     <div class="sec-item">
       <span class="sec-icon">🔒</span>
       <div class="sec-item-body">
-        <div class="sec-item-title">MQTT má přihlašovací údaje</div>
-        <div class="sec-item-desc">Mosquitto konfigurace obsahuje username/password</div>
+        <div class="sec-item-title">MQTT vyžaduje přihlášení</div>
+        <div class="sec-item-desc">Používá se uživatel HA bez práv správce (<code>mqtt_user</code>)</div>
       </div>
     </div>
     <div class="sec-item">
       <span class="sec-icon">🔒</span>
       <div class="sec-item-body">
-        <div class="sec-item-title">Vzdálený přístup pouze přes VPN (Tailscale / Nabu Casa)</div>
-        <div class="sec-item-desc">Nikdy přímý portforwarding bez HTTPS a silného hesla</div>
+        <div class="sec-item-title">Vzdálený přístup pouze přes VPN (Tailscale nebo WireGuard)</div>
+        <div class="sec-item-desc">Nikdy přímé přesměrování portů do internetu</div>
       </div>
     </div>
     <div class="sec-item">
       <span class="sec-icon">🔒</span>
       <div class="sec-item-body">
         <div class="sec-item-title">Systém je aktuální</div>
-        <div class="sec-item-desc">Pravidelné aktualizace HAOS, Core a add-onů</div>
+        <div class="sec-item-desc">Pravidelné aktualizace HAOS, Core a aplikací (add-ons/apps)</div>
       </div>
     </div>
     <div class="sec-item">
       <span class="sec-icon">🔒</span>
       <div class="sec-item-body">
-        <div class="sec-item-title">secrets.yaml neobsahuje sdílené konfigurace</div>
-        <div class="sec-item-desc">Hesla jsou oddělena přes !secret, nikdy nezveřejňovat secrets.yaml</div>
+        <div class="sec-item-title">secrets.yaml nikdy nesdílím</div>
+        <div class="sec-item-desc">Hesla jsou oddělena přes !secret, soubor <code>secrets.yaml</code> ani <code>secret.yaml</code> Zigbee2MQTT se nezveřejňuje</div>
+      </div>
+    </div>
+    <div class="sec-item">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-item-body">
+        <div class="sec-item-title">Webové rozhraní Zigbee2MQTT není vystaveno do internetu</div>
+        <div class="sec-item-desc">Otevírá se jen přes přihlášený Home Assistant, případně je zapnutý <code>auth_token</code></div>
       </div>
     </div>
     <div class="sec-item">
@@ -371,7 +441,7 @@
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

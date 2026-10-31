@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Základní Nastavení Home Assistant – Raspberry Pi Průvodce</title>
+<title>Základní nastavení HA – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -11,15 +11,15 @@
 <script type="application/json" id="page-chapters">
 {
   "chapters": [
-    { "id": "advanced-mode", "num": "6.1", "name": "Pokročilý režim" },
+    { "id": "advanced-mode", "num": "6.1", "name": "Pokročilý režim už není" },
     { "id": "jazyk", "num": "6.2", "name": "Nastavení češtiny" },
     { "id": "aktualizace", "num": "6.3", "name": "Aktualizace systému" },
     { "id": "auto-zalohy", "num": "6.4", "name": "Zálohy před aktualizací" },
     { "id": "file-editor", "num": "6.5", "name": "Souborový editor" },
     { "id": "samba-share", "num": "6.6", "name": "Samba Share" },
-    { "id": "ssh-terminal", "num": "6.7", "name": "SSH &amp; Web Terminal" },
+    { "id": "ssh-terminal", "num": "6.7", "name": "Terminal &amp; SSH" },
     { "id": "secrets-yaml", "num": "6.8", "name": "secrets.yaml" },
-    { "id": "addon-prehled", "num": "6.9", "name": "Přehled add-onů" },
+    { "id": "addon-prehled", "num": "6.9", "name": "Přehled doplňků/aplikací" },
     { "id": "mobil-app", "num": "6.10", "name": "Mobilní aplikace" }
   ]
 }
@@ -34,24 +34,17 @@
 <header>
   <div class="h-num">// kapitola 06</div>
   <h1>Základní nastavení <em>Home Assistant</em></h1>
-  <p class="h-desc">Klíčové kroky hned po přihlášení – pokročilý režim, aktualizace, zálohy před update, souborový editor a přehled add-onů které budeme instalovat.</p>
+  <p class="h-desc">Klíčové kroky hned po přihlášení – jazyk, aktualizace, zálohy, souborový editor, Samba, SSH a přehled doplňků/aplikací (add-ons/apps), které budeme instalovat.</p>
 </header>
 
 <!-- POKROCILY REZIM -->
 <section class="sec">
-  <h2 id="advanced-mode">Pokročilý režim</h2>
-  <p>Home Assistant ve výchozím stavu skrývá pokročilé funkce a add-ony. Aktivace Advanced Mode zpřístupní celý obsah – je to <strong>první věc</strong> po přihlášení.</p>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Aktivuj Advanced Mode</div>
-        <div class="step-desc">
-          <p>Klikni vlevo dole na své <strong>uživatelské jméno / avatar</strong> (ikona osoby). Otevře se profil. Najdi přepínač <strong>"Advanced mode"</strong> a přepni na <strong>ON</strong>.</p>
-          <p>Stránku nemusíš obnovovat – pokročilé funkce se zpřístupní okamžitě. Nyní uvidíš více možností v nastavení i v add-on storu.</p>
-        </div>
-      </div>
-    </div>
+  <h2 id="advanced-mode">Pokročilý režim už není</h2>
+  <p>Starší návody říkají, že máš hned po přihlášení zapnout pokročilý režim (Advanced mode). V Home Assistantu 2026.6 a novějším tento přepínač zmizel a všechny funkce, které skrýval, jsou ve výchozím stavu dostupné správcům. <strong>Nic zapínat nemusíš.</strong> Pokud v návodu najdeš „zapni Advanced mode“, tento krok přeskoč.</p>
+  <p>V Home Assistantu 2026.8 navíc zmizel štítek „Advanced“ z desítek míst v rozhraní a Developer tools se podle poznámek k vydání jmenují jen „Tools“.</p>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Varianta B: starší verze Home Assistantu</div>
+    <p>Pokud máš verzi starší než 2026.6 a v profilu přepínač Advanced mode vidíš, zapni ho: klikni vlevo dole na své <strong>uživatelské jméno / avatar</strong> a přepni <strong>Advanced mode</strong> na ON. Bez něj nemusí být vidět některé aplikace (např. Terminal &amp; SSH) a část nastavení.</p>
   </div>
 </section>
 
@@ -66,7 +59,7 @@
         <div class="step-title">Změň jazyk HA na češtinu</div>
         <div class="step-desc">
           <p>Klikni na své <strong>uživatelské jméno / avatar</strong> vlevo dole → sekce <strong>Language</strong> → vyber <strong>Čeština</strong>.</p>
-          <p>Nebo: <strong>Nastavení → Systém → Obecné → Jazyk systému</strong> pro globální nastavení pro všechny uživatele.</p>
+          <p>Nebo: <strong>Nastavení → Systém → Obecné (Settings → System → General)</strong> pro výchozí nastavení systému.</p>
           <p>Překlad je komunitní – některé odborné výrazy a nové funkce zůstávají anglicky. Pokud najdeš nepřeložené části, je to normální.</p>
         </div>
       </div>
@@ -77,14 +70,14 @@
 <!-- AKTUALIZACE -->
 <section class="sec">
   <h2 id="aktualizace">Aktualizace systému</h2>
-  <p>Před instalací čehokoliv aktualizuj celý systém. HAOS, Core a Supervisor mívají různé verze – vždy aktualizuj vše.</p>
+  <p>Před instalací čehokoli aktualizuj celý systém (updates). HAOS, Core a Supervisor mívají různé verze – vždy aktualizuj vše.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Spusť dostupné aktualizace</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Aktualizace</strong>. Červený číslový odznak v levém menu signalizuje čekající aktualizace. Aktualizuj v tomto pořadí:</p>
+          <p>Jdi do <strong>Nastavení → Systém → Aktualizace (Settings → System → Updates)</strong>. Červený číslový odznak v levém menu signalizuje čekající aktualizace. Aktualizuj v tomto pořadí:</p>
           <ul>
             <li><strong>Home Assistant OS</strong> (operační systém)</li>
             <li><strong>Home Assistant Supervisor</strong></li>
@@ -97,45 +90,50 @@
   </div>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Strategie aktualizací do budoucna</div>
-    <p>Aktualizace sleduj přibližně 1× týdně. U major verzí (např. 2025.1.0) počkej vždy aspoň týden – komunita HA rychle reportuje chyby a patch 2025.1.1 přichází za pár dní. <strong>Vždy před aktualizací proveď ruční zálohu.</strong></p>
+    <p>Aktualizace sleduj přibližně 1× týdně. U major verzí (např. 2026.1.0) počkej vždy aspoň týden – komunita HA rychle reportuje chyby a patch 2026.1.1 přichází za pár dní. <strong>Vždy před aktualizací proveď zálohu.</strong> Home Assistant ti ji při aktualizaci nabídne, nabídku přijmi (viz <a href="#auto-zalohy">sekce 6.4</a>).</p>
   </div>
 </section>
 
 <!-- AUTOMATICKE ZALOHY -->
 <section class="sec">
   <h2 id="auto-zalohy">Zálohy před aktualizací</h2>
-  <p>HAOS umí automaticky vytvořit zálohu <strong>vždy před každou aktualizací</strong>. Ideální pojistka – pokud update něco rozbije, vrátíš se jedním klikem.</p>
+  <p>Od Home Assistantu 2025.1 má HA vlastní zálohování s plánem, uchováváním a <strong>šifrováním</strong>. Zálohu umí vytvořit i <strong>vždy před každou aktualizací</strong>. Ideální pojistka – pokud update něco rozbije, vrátíš se jedním klikem. Podrobnosti o umístěních záloh (NAS, Google Drive a další) jsou v <a href="12_raspberry_zalohovani.html">kapitole 12</a>.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Zapni automatické zálohy</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Zálohy</strong>. V sekci konfigurace nastav:</p>
+          <p>Jdi do <strong>Nastavení → Systém → Zálohy (Settings → System → Backups)</strong>. Máš dvě varianty:</p>
+          <p><strong>Varianta A – doporučené nastavení:</strong> klikni <strong>Nastavit zálohy (Set up backups)</strong>. Home Assistant vytvoří šifrovací klíč (encryption key), vyber <strong>doporučené nastavení (Recommended settings)</strong> a první záloha se vytvoří automaticky.</p>
+          <p><strong>Varianta B – ruční nastavení:</strong> v části nastavení záloh otevři <strong>Nastavit automatické zálohování (Set up automatic backups)</strong> a nastav:</p>
           <ul>
-            <li>Automatické zálohy = <strong>ON</strong></li>
-            <li>Záloha před aktualizací = <strong>ON</strong></li>
-            <li>Frekvence: <strong>Denně</strong></li>
-            <li>Čas: <strong>03:00</strong> (v noci kdy systém málo pracuje)</li>
-            <li>Uchovávat posledních: <strong>5–7 záloh</strong> (starší se mažou)</li>
-            <li>Heslo zálohy: <strong>doporučeno nastavit</strong> – šifruje zálohy, ochrana při odcizení</li>
+            <li>Frekvence: <strong>denně</strong></li>
+            <li>Čas: v noci, kdy systém málo pracuje (např. <strong>03:00</strong>). Výchozí čas bývá mezi 4:45 a 5:45.</li>
+            <li>Záloha před aktualizací (Back up before updates) = <strong>ON</strong></li>
+            <li>Počet uchovávaných záloh: např. <strong>5–7</strong>, starší se mažou</li>
+            <li>Co zálohovat: nastavení, historie a aplikace (add-ons/apps) výchozí. Média a složku Share přidej jen pokud je potřebuješ.</li>
           </ul>
-          <p>Klikni <strong>Uložit</strong>.</p>
         </div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
+        <div class="step-title">Ulož šifrovací klíč</div>
+        <div class="step-desc">
+          <p>Zálohy jsou šifrované. <strong>Bez šifrovacího klíče zálohu nelze obnovit.</strong> Stáhni si „nouzovou sadu“ (emergency kit) a ulož klíč do správce hesel. Najdeš ho v Nastavení → Systém → Zálohy v nastavení záloh.</p>
+          <p>Šifrovací klíč není heslo k Home Assistantu. Je to samostatná hodnota.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
         <div class="step-title">Proveď první ruční zálohu</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Zálohy → + VYTVOŘIT ZÁLOHU</strong>.</p>
-          <ul>
-            <li>Název: např. <code>prvni_instalace_2026</code></li>
-            <li>Typ: <strong>Plná záloha</strong></li>
-            <li>Heslo: (volitelně – stejné jako výše)</li>
-          </ul>
-          <p>Klikni <strong>ZÁLOHOVAT</strong>. Trvá 1–3 minuty. Záloha je uložena v <code>/backup/</code> na SSD.</p>
+          <p>Jdi do <strong>Nastavení → Systém → Zálohy</strong> a klikni <strong>Zálohovat nyní (Backup now)</strong>. Trvá 1–3 minuty. Záloha je uložena lokálně na SSD.</p>
+          <p>Stáhnout ji na PC můžeš přes <strong>Zobrazit všechny zálohy (Show all backups)</strong> → ikona ⋮ u zálohy → <strong>Stáhnout zálohu (Download backup)</strong>. Při stažení se záloha dešifruje.</p>
         </div>
       </div>
     </div>
@@ -145,14 +143,14 @@
 <!-- FILE EDITOR -->
 <section class="sec">
   <h2 id="file-editor">Souborový editor</h2>
-  <p>File Editor umožňuje editovat konfigurační soubory HA přímo v prohlížeči – bez SSH. Budeme ho potřebovat pro úpravy <code>configuration.yaml</code>.</p>
+  <p>File Editor (souborový editor) umožňuje editovat konfigurační soubory HA přímo v prohlížeči – bez SSH. Budeme ho potřebovat pro úpravy <code>configuration.yaml</code>.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Nainstaluj File Editor</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Doplňky → ADD-ON STORE</strong>. Napiš <strong>"File editor"</strong> do hledání. Klikni na <strong>"File editor"</strong> (official, od Nabu Casa).</p>
+          <p>Jdi do <strong>Nastavení → Doplňky/Aplikace → Obchod (Settings → Add-ons/Apps → Add-on store)</strong>. Napiš <strong>"File editor"</strong> do hledání a klikni na <strong>"File editor"</strong> (oficiální, official).</p>
           <p>Klikni <strong>NAINSTALOVAT</strong>. Po instalaci:</p>
           <ul>
             <li>Záložka Informace → <strong>Show in sidebar = ON</strong></li>
@@ -166,21 +164,21 @@
   </div>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Alternativa: Studio Code Server</div>
-    <p>Pro pokročilejší práci existuje add-on <strong>"Studio Code Server"</strong> – plnohodnotný VS Code v prohlížeči se zvýrazňováním syntaxe YAML a detekcí chyb. Výrazně pohodlnější, ale spotřebuje ~200 MB RAM navíc – na RPi 3 s 1 GB RAM to může být znát. Pokud ti zbývá paměť, určitě stojí za instalaci.</p>
+    <p>Pro pokročilejší práci existuje komunitní aplikace <strong>"Studio Code Server"</strong> – plnohodnotný VS Code v prohlížeči se zvýrazňováním syntaxe YAML a detekcí chyb. Je pohodlnější, ale zabere znatelně více paměti, což je na RPi 3 s 1 GB RAM citelné. Instaluj ho jen tehdy, když ti paměť zbývá (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#vykon">sekce 13.4</a>).</p>
   </div>
 </section>
 
 <!-- SAMBA -->
 <section class="sec">
   <h2 id="samba-share">Samba Share</h2>
-  <p>Samba Share zpřístupní konfigurační složku HA jako síťový disk na Windows. Umožňuje procházet soubory přímo z Průzkumníku – velmi užitečné pro přístup k zálohám a konfiguraci.</p>
+  <p>Samba Share zpřístupní konfigurační složku HA jako síťový disk (network drive) na Windows. Umožňuje procházet soubory přímo z Průzkumníku – velmi užitečné pro přístup k zálohám a konfiguraci.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Nainstaluj a nastav Samba Share</div>
         <div class="step-desc">
-          <p>V ADD-ON STORE hledej <strong>"Samba share"</strong>. Nainstaluj. Přejdi na záložku <strong>KONFIGURACE</strong> a vyplň přihlašovací údaje:</p>
+          <p>V obchodě s aplikacemi hledej <strong>"Samba share"</strong> (oficiální). Nainstaluj. Přejdi na záložku <strong>KONFIGURACE</strong> a vyplň přihlašovací údaje:</p>
           <pre>username: "samba_user"
 password: "tvoje_silne_heslo"</pre>
           <p>Klikni <strong>Uložit</strong> → záložka Informace → <strong>Start on boot = ON</strong>, <strong>Watchdog = ON</strong> → klikni <strong>SPUSTIT</strong>.</p>
@@ -195,7 +193,7 @@ password: "tvoje_silne_heslo"</pre>
           <p>Otevři Průzkumník souborů. Do adresního řádku (nahoře) napiš:</p>
           <pre>\\homeassistant.local</pre>
           <p>nebo pokud hostname nefunguje:</p>
-          <pre>\\192.168.1.50</pre>
+          <pre>\\192.168.0.11</pre>
           <p>Přihlaš se jménem a heslem z kroku výše. Uvidíš sdílené složky: <code>backup</code>, <code>config</code>, <code>addons</code>, <code>media</code> a další.</p>
           <p>Pro trvalý přístup: pravé tlačítko na <strong>Tento počítač</strong> → <strong>Připojit síťový disk</strong> → zadej cestu <code>\\homeassistant.local\config</code>.</p>
         </div>
@@ -206,18 +204,24 @@ password: "tvoje_silne_heslo"</pre>
 
 <!-- SSH TERMINAL -->
 <section class="sec">
-  <h2 id="ssh-terminal">SSH &amp; Web Terminal</h2>
-  <p>SSH přístup je nezbytný pro pokročilou diagnostiku – SMART kontrolu SSD, zobrazení logů, opravu problémů a ruční úpravy souborů. Doporučuji nainstalovat hned ze začátku.</p>
+  <h2 id="ssh-terminal">Terminal &amp; SSH</h2>
+  <p>SSH přístup (Secure Shell) je nezbytný pro pokročilou diagnostiku – zobrazení logů, opravu problémů a ruční úpravy souborů. Doporučuji nainstalovat hned ze začátku. Aplikace obsahuje SSH server i webový terminál v prohlížeči.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Nainstaluj SSH &amp; Web Terminal</div>
+        <div class="step-title">Nainstaluj Terminal &amp; SSH</div>
         <div class="step-desc">
-          <p>V ADD-ON STORE hledej <strong>"SSH &amp; Web Terminal"</strong> (official, od hassio-addons). Nainstaluj. Přejdi na záložku <strong>KONFIGURACE</strong> a nastav heslo:</p>
+          <p>V obchodě s aplikacemi hledej <strong>"Terminal &amp; SSH"</strong> (oficiální, první výsledek). Nainstaluj. Komunitní varianta se jmenuje „Advanced SSH &amp; Web Terminal“, pro začátek ji nepotřebuješ.</p>
+          <p>Zvol způsob přihlášení na záložce <strong>KONFIGURACE</strong>:</p>
+          <p><strong>Varianta A – heslo (jednodušší):</strong></p>
           <pre><code>authorized_keys: []
 password: "tvoje_silne_ssh_heslo"</code></pre>
-          <p>Klikni <strong>Uložit</strong> → záložka Informace → <strong>Show in sidebar = ON</strong>, <strong>Start on boot = ON</strong> → klikni <strong>SPUSTIT</strong>.</p>
+          <p><strong>Varianta B – klíč (bezpečnější, doporučeno):</strong> na Windows v PowerShellu vytvoř klíč <code>ssh-keygen -t ed25519 -C "homeassistant"</code> a obsah veřejného klíče (soubor <code>.pub</code>) vlož do <code>authorized_keys</code>:</p>
+          <pre><code>authorized_keys:
+  - "ssh-ed25519 AAAA... homeassistant"
+password: ""</code></pre>
+          <p>Klikni <strong>Uložit</strong> → záložka Informace → <strong>Show in sidebar = ON</strong>, <strong>Start on boot = ON</strong>. Pro přístup z Windows zadej v části <strong>Síť (Network)</strong> port <code>22</code> a klikni <strong>SPUSTIT</strong>.</p>
         </div>
       </div>
     </div>
@@ -228,11 +232,12 @@ password: "tvoje_silne_ssh_heslo"</code></pre>
         <div class="step-desc">
           <p>Na Windows použij:</p>
           <ul>
-            <li><strong>Windows Terminal</strong> (vestavěný od Win 10/11): příkaz <code>ssh root@192.168.1.50</code></li>
-            <li><strong>PuTTY</strong> (zdarma ke stažení na putty.org): zadej IP a port 22</li>
+            <li><strong>Windows Terminal</strong> (vestavěný od Win 10/11): příkaz <code>ssh root@192.168.0.11</code></li>
+            <li><strong>PuTTY</strong> (zdarma, oficiální stránka <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/" target="_blank" rel="noopener noreferrer">chiark.greenend.org.uk/~sgtatham/putty</a>): zadej IP a port 22</li>
           </ul>
-          <p>Heslo: to které jsi zadal v konfiguraci výše.<br>
-          Alternativně: v levém menu HA klikni na <strong>Terminal</strong> ikonu pro webový přístup přímo v prohlížeči.</p>
+          <p>Heslo: to, které jsi zadal v konfiguraci výše (u varianty B se přihlásíš klíčem).<br>
+          Alternativně: v levém menu HA klikni na ikonu <strong>Terminal</strong> pro webový přístup přímo v prohlížeči.</p>
+          <p><strong>Port 22 a port 22222:</strong> SSH přes tuto aplikaci (port 22) má omezená práva. Samostatný přístup k hostiteli Home Assistant OS (port 22222, plná práva) se zapíná klíčem na USB disku. Potřebuješ ho jen výjimečně, postup je v <a href="https://developers.home-assistant.io/docs/operating-system/debugging/" target="_blank" rel="noopener noreferrer">dokumentaci HAOS</a>.</p>
         </div>
       </div>
     </div>
@@ -245,10 +250,13 @@ password: "tvoje_silne_ssh_heslo"</code></pre>
   <p>Home Assistant podporuje soubor <code>/config/secrets.yaml</code> pro bezpečné uchovávání hesel mimo hlavní konfiguraci. Je to dobrý zvyk – zvlášť pokud sdílíš konfiguraci s někým nebo na GitHubu.</p>
   <p>Vytvoř soubor <code>/config/secrets.yaml</code> (přes File Editor) a přidej:</p>
   <pre><code>mqtt_password: "tvoje_mqtt_heslo"
-samba_password: "tvoje_samba_heslo"
-backup_password: "heslo_pro_sifrovani_zaloh"</code></pre>
-  <p>Pak v <code>configuration.yaml</code> nebo jiných konfiguracích místo přímého hesla použij:</p>
+smtp_password: "tvoje_heslo_k_emailu"</code></pre>
+  <p>Pak v <code>configuration.yaml</code> a dalších YAML souborech Home Assistantu místo přímého hesla použij:</p>
   <pre><code>password: !secret mqtt_password</code></pre>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Zigbee2MQTT má vlastní tajemství</div>
+    <p>Soubor <code>secrets.yaml</code> Home Assistantu se Zigbee2MQTT netýká. Zigbee2MQTT používá vlastní soubor <code>secret.yaml</code> ve své složce <code>/config/zigbee2mqtt/</code>. U hesel v konfiguraci aplikací (apps) se řiď dokumentací dané aplikace.</p>
+  </div>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Co nikdy nesdílet</div>
     <p>Pokud zveřejňuješ svou konfiguraci na fóru nebo GitHubu, vždy sdílej pouze <code>configuration.yaml</code> s direktivami <code>!secret</code> – nikdy samotný <code>secrets.yaml</code>. Soubor secrets.yaml přidej do <code>.gitignore</code> pokud používáš Git.</p>
@@ -257,50 +265,60 @@ backup_password: "heslo_pro_sifrovani_zaloh"</code></pre>
 
 <!-- PREHLED ADD-ONS -->
 <section class="sec">
-  <h2 id="addon-prehled">Přehled add-onů</h2>
-  <p>Celkový přehled add-onů pro orientaci. Instalujeme postupně v dalších kapitolách:</p>
+  <h2 id="addon-prehled">Přehled doplňků/aplikací</h2>
+  <p>Celkový přehled doplňků/aplikací (add-ons/apps) pro orientaci. Instalujeme je postupně v dalších kapitolách:</p>
   <div class="addon-grid">
     <div class="addon-card required">
       <div class="addon-card-name">Mosquitto Broker</div>
-      <div class="addon-card-type">📦 Povinné · Official · Kapitola 07</div>
+      <div class="addon-card-type">📦 Povinné · oficiální · Kapitola 07</div>
       <p>MQTT komunikační broker. Základ pro Zigbee2MQTT i další integrace.</p>
     </div>
     <div class="addon-card required">
       <div class="addon-card-name">Zigbee2MQTT</div>
-      <div class="addon-card-type">📦 Povinné · Community · Kapitola 08–09</div>
-      <p>Zigbee koordinátor → MQTT bridge. Srdce celého Zigbee stacku.</p>
+      <div class="addon-card-type">📦 Povinné · komunitní · Kapitola 08–09</div>
+      <p>Most (bridge) mezi Zigbee koordinátorem a MQTT. Srdce celé Zigbee sítě.</p>
     </div>
     <div class="addon-card">
       <div class="addon-card-name">Samba Backup</div>
-      <div class="addon-card-type">💾 Zálohy · Community · Kapitola 12</div>
+      <div class="addon-card-type">💾 Zálohy · komunitní · volitelné · Kapitola 12</div>
       <p>Automatické kopírování záloh na Synology NAS přes SMB.</p>
     </div>
     <div class="addon-card">
       <div class="addon-card-name">Google Drive Backup</div>
-      <div class="addon-card-type">☁️ Zálohy · Community · Kapitola 12</div>
+      <div class="addon-card-type">☁️ Zálohy · komunitní · volitelné · Kapitola 12</div>
       <p>Automatické nahrávání záloh na Google Drive.</p>
     </div>
     <div class="addon-card">
       <div class="addon-card-name">Tailscale</div>
-      <div class="addon-card-type">🔒 Bezpečnost · Community · Kapitola 11</div>
+      <div class="addon-card-type">🔒 Bezpečnost · komunitní · Kapitola 11</div>
       <p>VPN pro bezpečný vzdálený přístup. Zdarma, bez otevírání portů.</p>
     </div>
     <div class="addon-card">
-      <div class="addon-card-name">SSH &amp; Web Terminal</div>
-      <div class="addon-card-type">🖥️ Volitelné · Official</div>
+      <div class="addon-card-name">Terminal &amp; SSH</div>
+      <div class="addon-card-type">🖥️ Volitelné · oficiální · sekce 6.7</div>
       <p>Přístup přes SSH terminál pro pokročilou diagnostiku a správu.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-card-name">File editor</div>
+      <div class="addon-card-type">📝 Volitelné · oficiální · sekce 6.5</div>
+      <p>Úprava konfiguračních souborů přímo v prohlížeči.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-card-name">Samba share</div>
+      <div class="addon-card-type">📁 Volitelné · oficiální · sekce 6.6</div>
+      <p>Konfigurační složka a zálohy jako síťový disk ve Windows.</p>
     </div>
   </div>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ RPi 3 má 1 GB RAM – sleduj spotřebu</div>
-    <p>Každý add-on zabírá paměť. Orientační spotřeba: Mosquitto ~30 MB, Zigbee2MQTT ~100 MB, Google Drive Backup ~50 MB, Samba ~20 MB. Pro stabilní provoz doporučuji max. 10–15 aktivních add-onů. Aktuální spotřebu sleduj v <strong>Nastavení → Systém → Hardware</strong>.</p>
+    <p>Každá aplikace zabírá paměť. Oficiální dokumentace Zigbee2MQTT upozorňuje, že na Raspberry Pi 3 může být provoz kvůli omezeným zdrojům nestabilní. Drž počet aplikací nízký: základ je Mosquitto a Zigbee2MQTT, další přidávej postupně a sleduj paměť (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#vykon">sekce 13.4</a>). Orientační čísla spotřeby neuvádím, liší se podle verze a zátěže.</p>
   </div>
 </section>
 
 <!-- MOBIL APP -->
 <section class="sec">
   <h2 id="mobil-app">Mobilní aplikace</h2>
-  <p>Mobilní app je klíčová pro push notifikace, sledování přítomnosti doma (geofencing) a pohodlné ovládání z telefonu.</p>
+  <p>Mobilní aplikace (Companion app) je klíčová pro push notifikace, sledování přítomnosti doma (geofencing) a pohodlné ovládání z telefonu.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -309,12 +327,12 @@ backup_password: "heslo_pro_sifrovani_zaloh"</code></pre>
         <div class="step-desc">
           <p>Stáhni aplikaci <strong>"Home Assistant"</strong> z App Store (iOS) nebo Google Play (Android). Je zdarma.</p>
           <ul>
-            <li>Otevři app → zadej adresu: <code>http://192.168.1.50:8123</code></li>
+            <li>Otevři app → zadej adresu: <code>http://192.168.0.11</code> (u starších instalací <code>http://192.168.0.11:8123</code>)</li>
             <li>Přihlaš se svými HA přihlašovacími údaji</li>
             <li>Povol push notifikace a přístup k poloze</li>
             <li>Aplikace se automaticky zaregistruje jako <strong>notifikační cíl</strong> v HA</li>
           </ul>
-          <p>Po registraci můžeš v automatizacích posílat zprávy přímo do telefonu přes akci <strong>"Odeslat upozornění na mobilní aplikaci"</strong>.</p>
+          <p>Po registraci můžeš v automatizacích posílat zprávy přímo do telefonu přes akci <strong>„Odeslat upozornění na mobilní aplikaci“ (Send a notification via mobile_app_…)</strong>.</p>
         </div>
       </div>
     </div>
@@ -323,7 +341,7 @@ backup_password: "heslo_pro_sifrovani_zaloh"</code></pre>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

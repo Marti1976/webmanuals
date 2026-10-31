@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Poznámka K Zigbee Modulu – Raspberry Pi Průvodce</title>
+<title>Poznámka k modulu Zigbee – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +12,7 @@
 {
   "chapters": [
     { "id": "dva-produkty", "num": "3.1", "name": "Dva různé produkty" },
-    { "id": "jak-zjistit", "num": "3.2", "name": "Jak zjistit co přesně máš" },
+    { "id": "jak-zjistit", "num": "3.2", "name": "Jak zjistit, co přesně máš" },
     { "id": "konfig-z2m", "num": "3.3", "name": "Vliv na konfiguraci Z2M" },
     { "id": "koordinatory", "num": "3.4", "name": "Přehled koordinátorů" },
     { "id": "fw-aktualizace", "num": "3.5", "name": "Aktualizace firmware" },
@@ -30,14 +30,14 @@
 
 <header>
   <div class="h-num">// kapitola 03</div>
-  <h1>Poznámka k <em>Zigbee Modulu</em></h1>
-  <p class="h-desc">Z odkazů které jsi uvedl existují dva zcela různé produkty. Tato kapitola vysvětluje rozdíl, pomůže s výběrem a ukáže jak ovlivní konfiguraci Zigbee2MQTT.</p>
+  <h1>Poznámka k <em>Zigbee modulu</em></h1>
+  <p class="h-desc">Pod pojmem „Zigbee modul“ se nabízejí dva zcela různé produkty. Tato kapitola vysvětluje rozdíl, pomůže s výběrem a ukáže, jak ovlivní konfiguraci Zigbee2MQTT.</p>
 </header>
 
 <!-- POZOR - DVA PRODUKTY -->
 <section class="sec">
   <h2 id="dva-produkty">Dva různé produkty</h2>
-  <p>Při prohledání odkazů z tvého dotazu jsem zjistil, že odkazuješ na dva technicky zcela odlišné výrobky. Jeden je hotový USB dongle, druhý je holý elektronický modul pro výrobce. Konfiguraci pro Zigbee2MQTT to ovlivní jinak.</p>
+  <p>Pod označením „Zigbee modul“ se v obchodech nabízejí dva technicky zcela odlišné výrobky. Jeden je hotový USB dongle, druhý je holý elektronický modul pro výrobce. Konfiguraci pro Zigbee2MQTT každý ovlivňuje jinak.</p>
 
   <div class="product-grid">
 
@@ -54,23 +54,23 @@
       </div>
       <div class="spec-row">
         <span class="spec-key">Anténa</span>
-        <span class="spec-val">Externí SMA, +20 dBm zesilovač</span>
+        <span class="spec-val">Externí SMA +3 dB (otočná), zesilovač na desce (+20 dB)</span>
       </div>
       <div class="spec-row">
-        <span class="spec-key">Dosah</span>
-        <span class="spec-val good">Až 270 m (volný prostor)</span>
+        <span class="spec-key">USB převodník</span>
+        <span class="spec-val">CP210x (Silicon Labs)</span>
       </div>
       <div class="spec-row">
         <span class="spec-key">Firmware</span>
-        <span class="spec-val good">Přednahrán, Z2M + ZHA</span>
+        <span class="spec-val good">Přednahrán (EmberZNet NCP), Z2M + ZHA</span>
       </div>
       <div class="spec-row">
-        <span class="spec-key">Z2M adapter</span>
-        <span class="spec-val"><code>ezsp</code></span>
+        <span class="spec-key">Adaptér v Z2M (adapter)</span>
+        <span class="spec-val"><code>ember</code></span>
       </div>
       <div class="spec-row">
-        <span class="spec-key">Cena</span>
-        <span class="spec-val">cca 600–900 Kč</span>
+        <span class="spec-key">Aktuální cena</span>
+        <span class="spec-val"><a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-07" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-07" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></span>
       </div>
       <div class="spec-row">
         <span class="spec-key">Instalace</span>
@@ -91,7 +91,7 @@
       </div>
       <div class="spec-row">
         <span class="spec-key">Napájení</span>
-        <span class="spec-val warn">1.9–3.8V DC (nutný stabilizátor)</span>
+        <span class="spec-val warn">1,9–3,8 V DC (nutný stabilizátor)</span>
       </div>
       <div class="spec-row">
         <span class="spec-key">Připojení</span>
@@ -102,12 +102,12 @@
         <span class="spec-val warn">Nutno nahrát manuálně (Z-Stack)</span>
       </div>
       <div class="spec-row">
-        <span class="spec-key">Z2M adapter</span>
-        <span class="spec-val"><code>znp</code></span>
+        <span class="spec-key">Adaptér v Z2M (adapter)</span>
+        <span class="spec-val"><code>zstack</code></span>
       </div>
       <div class="spec-row">
-        <span class="spec-key">Cena modulu</span>
-        <span class="spec-val">cca 200–400 Kč (+ cena adaptéru)</span>
+        <span class="spec-key">Aktuální cena modulu</span>
+        <span class="spec-val"><a href="https://www.heureka.cz/?h%5Bfraze%5D=Ebyte+E72-2G4M20S1E" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Ebyte+E72-2G4M20S1E" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a> (+ převodník)</span>
       </div>
       <div class="spec-row">
         <span class="spec-key">Instalace</span>
@@ -119,102 +119,217 @@
 
   <div class="callout callout-danger">
     <div class="callout-title">⚠️ Ebyte E72 – holý modul pro výrobce</div>
-    <p>Modul E72-2G4M20S1E je určen pro <strong>výrobce elektroniky</strong>, ne pro přímé připojení do RPi. Nemá USB konektor, potřebuje napájení 1.9–3.8V (nikoliv 5V), a pro připojení k počítači vyžaduje nosnou desku s USB-UART převodníkem (CP2102 nebo CH340).<br><br>
-    Pokud máš <strong>E72 zabudovaný v hotové USB základně</strong>, pak je situace jiná – funguje jako dongle. Pokud máš holý modul, zvažuj radši koupit SLZB-07.</p>
+    <p>Modul E72-2G4M20S1E je určen pro <strong>výrobce elektroniky</strong>, ne pro přímé připojení do RPi. Nemá USB konektor, potřebuje napájení 1,9–3,8 V (nikoli 5 V), a pro připojení k počítači vyžaduje nosnou desku s USB-UART převodníkem (CP2102 nebo CH340).<br><br>
+    Pokud máš <strong>E72 zabudovaný v hotové USB základně</strong>, pak je situace jiná – funguje jako dongle. Pokud máš holý modul, zvaž raději koupi SLZB-07.</p>
   </div>
 </section>
 
 <!-- JAK ZJISTIT CO MÁŠ -->
 <section class="sec">
-  <h2 id="jak-zjistit">Jak zjistit co přesně máš</h2>
+  <h2 id="jak-zjistit">Jak zjistit, co přesně máš</h2>
   <p>Pokud si nejsi jistý, co přesně máš v ruce, zde je jednoduchý test:</p>
   <ol>
-    <li>Má zařízení <strong>USB konektor</strong> (typ A nebo micro-B)? → Jedná se pravděpodobně o USB dongle (SLZB-07 nebo podobný)</li>
-    <li>Má zařízení pouze <strong>pájecí pady nebo pin header</strong> a žádný USB? → Jedná se o holý modul (E72 nebo podobný)</li>
-    <li>Zapoj do Windows PC – ve Správci zařízení (Device Manager) hledej:
+    <li>Má zařízení <strong>USB konektor</strong> (typ A nebo micro-B)? → Jde pravděpodobně o USB dongle (SLZB-07 nebo podobný)</li>
+    <li>Má zařízení pouze <strong>pájecí pady nebo pin header</strong> a žádný USB? → Jde o holý modul (E72 nebo podobný)</li>
+    <li>Zapoj do Windows PC – ve Správci zařízení (Device Manager) uvidíš typ USB-UART převodníku (USB-to-UART bridge):
       <ul>
-        <li><strong>CP210x</strong> nebo <strong>CP2102N USB to UART</strong> → SLZB-07 nebo jiný EFR32 dongle</li>
-        <li><strong>CH340</strong> nebo <strong>CH341</strong> → dongle s CH340 převodníkem</li>
+        <li><strong>CP210x</strong> nebo <strong>CP2102N USB to UART</strong> → např. SLZB-07 (EFR32MG21), ale i Sonoff ZBDongle-P (CC2652P)</li>
+        <li><strong>CH340</strong>, <strong>CH341</strong> nebo <strong>CH9102</strong> → např. Sonoff ZBDongle-E (EFR32MG21) a jiné dongly</li>
         <li>Nic nového? → modul bez USB rozhraní</li>
       </ul>
     </li>
+    <li>Z převodníku <strong>nepoznáš čip koordinátoru</strong>, jen typ USB převodníku. Přesný model a čip najdeš na štítku, obalu nebo v dokumentaci výrobce (viz sekce 3.4). Podle čipu se pak volí adaptér v Z2M (viz sekce 3.3).</li>
   </ol>
 </section>
 
 <!-- KONFIGURACE PRO Z2M -->
 <section class="sec">
   <h2 id="konfig-z2m">Vliv na konfiguraci Z2M</h2>
-  <p>Typ čipu a způsob připojení určuje, jaký <strong>adapter</strong> zadáš v konfiguraci Z2M. Toto je jedna z nejčastějších chyb při nastavení – špatný adapter = Z2M nenaběhne.</p>
+  <p>Typ čipu určuje, jaký <strong>adaptér (adapter)</strong> používá Zigbee2MQTT. Špatný adaptér je častá chyba při nastavení – Z2M pak nenaběhne. Při prvním nastavení Z2M adaptér často najde a nabídne sám (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#yaml-konfig">sekce 9.1</a>), ruční zadání se hodí jako záložní varianta.</p>
 
-  <h3>Pro SLZB-07 (EFR32MG21) – Silicon Labs EZSP</h3>
+  <h3>Pro SLZB-07 (EFR32MG21) – Silicon Labs EmberZNet</h3>
   <pre><code>serial:
   port: /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_XXXX-if00-port0
-  adapter: ezsp     # ← SPRÁVNĚ pro EFR32MG21</code></pre>
+  adapter: ember    # ← SPRÁVNĚ pro EFR32MG21 (EmberZNet firmware)
+  rtscts: true      # hardwarové řízení toku (SLZB-07); u Sonoff ZBDongle-E ho nenastavuj</code></pre>
 
   <h3>Pro Ebyte E72 (CC2652P) – Texas Instruments Z-Stack</h3>
   <pre><code>serial:
   port: /dev/serial/by-id/usb-XXXXXX...
-  adapter: znp      # ← SPRÁVNĚ pro CC2652P / CC1352 / CC2530</code></pre>
+  adapter: zstack   # ← SPRÁVNĚ pro CC2652P / CC1352 / CC2530</code></pre>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Jednoduché pravidlo</div>
+    <p>Čip Silicon Labs (EFR32) → <code>ember</code>. Čip Texas Instruments (CC26xx, CC13xx) → <code>zstack</code>. ConBee / RaspBee → <code>deconz</code>. Starší názvy <code>ezsp</code> a <code>znp</code> aktuální Zigbee2MQTT už nepoužívá.</p>
+  </div>
 
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Jak zjistit přesnou adresu portu</div>
-    <p>Po zapojení donglu do RPi jdi v Home Assistant na: <strong>Nastavení → Systém → Hardware → Veškerý hardware</strong>. Hledej záznam s názvem "CP210x" nebo "CH340". Přesná adresa ve formátu <code>/dev/serial/by-id/...</code> se zobrazí vedle záznamu. Tuto adresu vždy preferuj před <code>/dev/ttyUSB0</code> – je stabilní i po restartu.</p>
+    <p>Po zapojení donglu do RPi jdi v Home Assistant na: <strong>Nastavení → Systém → Hardware → Veškerý hardware (Settings → System → Hardware → All hardware)</strong>. Hledej záznam s názvem USB-UART převodníku (např. „CP210x“, „CH340“ nebo „CH9102“). Přesná adresa ve formátu <code>/dev/serial/by-id/...</code> se zobrazí vedle záznamu. Tuto adresu vždy preferuj před <code>/dev/ttyUSB0</code> – je stabilní i po restartu. Podrobný postup je v <a href="08_raspberry_instalace_zigbee2mqtt.html#zjisteni-portu">sekci 8.5</a>.</p>
   </div>
+
+  <h3>Síťový koordinátor (Ethernet / PoE) – příklady</h3>
+  <p>Síťový koordinátor se v Zigbee2MQTT nepřipojuje přes <code>/dev/serial/by-id/…</code>, ale přes IP adresu a port. Adresu najdeš ve webovém rozhraní koordinátoru. Nastav mu v routeru pevnou IP adresu (rezervaci), stejně jako Home Assistantu (viz <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html#staticka-ip">sekce 5.5</a>). V ukázkách je jako příklad adresa <code>192.168.0.12</code>.</p>
+
+  <h3>Příklad: SMLIGHT SLZB-06M</h3>
+  <p>Čip EFR32MG21, adaptér <code>ember</code>.</p>
+  <pre><code>serial:
+  port: tcp://192.168.0.12:6638
+  adapter: ember
+  baudrate: 115200
+  rtscts: false</code></pre>
+  <ul>
+    <li>Port <code>6638</code> je výchozí a lze ho změnit ve firmwaru koordinátoru.</li>
+    <li>Místo IP adresy lze použít mDNS název: <code>port: mdns://slzb-06</code>.</li>
+    <li>Koordinátor musí mít Zigbee firmware nejméně verze 20240510 (core firmware 2.2.0 a vyšší).</li>
+    <li>Připoj ho kabelem (Ethernet). Přes WiFi je spojení méně stabilní.</li>
+    <li>Rozhraní SLZB-OS má stránku „Z2M and ZHA“, která vygeneruje konfiguraci pro tvoje zařízení. Doporučuji s ní ukázku porovnat.</li>
+  </ul>
+
+  <h3>Příklad: SMLIGHT SLZB-MR1</h3>
+  <p>Víceradiový koordinátor: Zigbee na čipu Texas Instruments CC2652P7, adaptér <code>zstack</code>.</p>
+  <pre><code>serial:
+  port: tcp://192.168.0.12:7638
+  adapter: zstack
+  baudrate: 115200
+  rtscts: false</code></pre>
+  <ul>
+    <li>MR1 má dvě radiové části. Port <code>7638</code> pro Zigbee radio uvádí nezávislá recenze. Správný port a adaptér pro svoje zařízení zkontroluj na stránce „Z2M and ZHA“ v rozhraní SLZB-OS.</li>
+    <li>Pokud pro Zigbee použiješ čip Silicon Labs, adaptér je <code>ember</code>.</li>
+    <li>Aktualizace SLZB-OS data Zigbee sítě nemění, ta jsou uložena v Zigbee2MQTT.</li>
+  </ul>
 </section>
 
 <!-- ALTERNATIVY -->
 <section class="sec">
   <h2 id="koordinatory">Přehled koordinátorů</h2>
-  <p>Pro informaci – celý trh dostupných koordinátorů pro domácí použití s Zigbee2MQTT:</p>
+  <p>Přehled běžných koordinátorů pro domácí použití se Zigbee2MQTT. Úplný a aktuální seznam podporovaných adaptérů najdeš na <a href="https://www.zigbee2mqtt.io/guide/adapters/" target="_blank" rel="noopener noreferrer">zigbee2mqtt.io</a>. Z2M doporučuje rodiny adaptérů <code>ember</code> (Silicon Labs), <code>zstack</code> (Texas Instruments) a <code>deconz</code> (Dresden Elektronik).</p>
 
+<p>Označení <span class="tag-good">NOVÉ</span> znamená, že koordinátor byl doplněn v této revizi z oficiálního přehledu adaptérů Zigbee2MQTT (stav září 2026). Slovní popis vychází z tohoto přehledu, výrobců a nezávislých srovnání. Pro tuto příručku zůstává základem SLZB-07.</p>
+
+  <h3>USB koordinátory</h3>
   <table class="alt-table">
     <thead>
       <tr>
         <th>Model</th>
-        <th>Čip / Adapter</th>
-        <th>Popis</th>
-        <th>Hodnocení</th>
+        <th>Čip / adaptér</th>
+        <th>Popis a zkušenosti</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>SMLIGHT SLZB-07</td>
-        <td>EFR32MG21 / <code>ezsp</code></td>
-        <td>Nejlepší plug-and-play USB dongle. Silný signál, externí anténa, výborná podpora.</td>
-        <td><span class="star">★★★★★</span></td>
+        <td>SMLIGHT SLZB-07<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-07" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-07" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>EFR32MG21 / <code>ember</code></td>
+        <td>Hlavní doporučení této příručky. Oficiální dokumentace Z2M ho uvádí (s hardwarovým řízením toku, <code>rtscts: true</code>). Dodává se předinstalovaný (EmberZNet), má externí otočnou anténu a start je plug-and-play. Čip je o generaci starší než MG24, pro domácí síť to ale nevadí.</td>
       </tr>
       <tr>
-        <td>Sonoff Dongle Plus-E<br><small>(ZBDongle-E)</small></td>
-        <td>EFR32MG21 / <code>ezsp</code></td>
-        <td>Levnější alternativa ke SLZB-07. Stejný čip, menší anténa. Velmi oblíbený v komunitě.</td>
-        <td><span class="star">★★★★</span>☆</td>
+        <td>Sonoff ZBDongle-E (V2)<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Sonoff+ZBDongle-E" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Sonoff+ZBDongle-E" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>EFR32MG21 / <code>ember</code></td>
+        <td>Nejlevnější cesta ke koordinátoru s čipem EFR32, v přehledech z roku 2026 stále uváděný jako velmi dobrý poměr cena/výkon. Má externí anténu. Pro Z2M potřebuje firmware NCP 7.4.4 nebo novější (starší návod výrobce odkazuje na starou verzi). Podporuje jen softwarové řízení toku, <code>rtscts: true</code> nenastavuj.</td>
       </tr>
       <tr>
-        <td>Sonoff Dongle Plus-P<br><small>(ZBDongle-P)</small></td>
-        <td>CC2652P / <code>znp</code></td>
-        <td>Starší verze se stejným jménem, jiný čip. Nutné rozlišit model! Stále dobrý koordinátor.</td>
-        <td><span class="star">★★★★</span>☆</td>
+        <td>Sonoff ZBDongle-P<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Sonoff+ZBDongle-P" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Sonoff+ZBDongle-P" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>CC2652P / <code>zstack</code></td>
+        <td>Osvědčený veterán komunity Z2M s čipem Texas Instruments, dodává se předprogramovaný v pouzdře. Je to nejstarší čip z přehledu. Dobrá a stabilní volba, pokud ho už máš nebo ho chceš koupit levně.</td>
       </tr>
       <tr>
-        <td>ConBee III</td>
+        <td>ConBee III<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=ConBee+III" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=ConBee+III" target="_blank" rel="noopener noreferrer">Google</a></small></td>
         <td>EFR32MG21 / <code>deconz</code></td>
-        <td>Prémiová volba od Dresden Elektronik. Vlastní software deCONZ/Phoscon. Vyšší cena.</td>
-        <td><span class="star">★★★★</span>☆</td>
+        <td>Prémiová volba od Dresden Elektronik. Rodina deCONZ patří mezi doporučené adaptéry Z2M. Pro ConBee ale Z2M nepodporuje zálohu koordinátoru (viz sekce 3.5), takže je obnova sítě při výměně složitější.</td>
       </tr>
       <tr>
-        <td>Tube's Zigbee</td>
-        <td>CC2652P2 / <code>znp</code></td>
-        <td>Komunitní projekt s vestavěnou anténou a Ethernet/PoE variantou. Pro pokročilé.</td>
-        <td><span class="star">★★★★</span>☆</td>
+        <td>Tube's CC2652P2 USB Coordinator</td>
+        <td>CC2652P2 / <code>zstack</code></td>
+        <td>Open source hardware s externí anténou, v balení s USB prodlužovacím kabelem. Komunitní projekt pro pokročilejší uživatele, oficiální dokumentace Z2M ho uvádí.</td>
       </tr>
       <tr>
-        <td>Ebyte E72 (holý)</td>
-        <td>CC2652P / <code>znp</code></td>
-        <td>Pouze pro výrobce nebo pokročilé uživatele kteří si sami postaví nosnou desku.</td>
-        <td><span class="star">★★</span>☆☆☆</td>
+        <td>Ebyte E72 (holý modul)</td>
+        <td>CC2652P / <code>zstack</code></td>
+        <td>Holý modul je jen pro výrobce a kutily (viz sekce 3.1). Hotový USB dongle s tímto modulem je například Egony Stick V4, který Z2M uvádí. Pro začátečníky nedoporučeno.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> Home Assistant Connect ZBT-2<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Home+Assistant+Connect+ZBT-2" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Home+Assistant+Connect+ZBT-2" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>EFR32MG24 / <code>ember</code></td>
+        <td>Oficiální koordinátor Home Assistantu a nástupce SkyConnect (ZBT-1). Externí anténa. V Z2M vyžaduje <code>baudrate: 460800</code> a <code>rtscts: true</code>. Může pracovat jako Zigbee nebo Thread adaptér, ne obojí zároveň. Dostupnost v ČR před koupí ověř.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SMLIGHT SLZB-07mg24<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-07mg24" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-07mg24" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>EFR32MG24 / <code>ember</code></td>
+        <td>Novější čip MG24 v tělese SLZB-07 (stejná anténa +3 dB a zesilovač +20 dB). Je v prodeji u výrobce i v evropských e-shopech. Oficiální přehled Z2M ho uvádí s <code>rtscts: true</code>.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SONOFF Dongle-PMG24 (Dongle Plus MG24)<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Sonoff+Dongle+Plus+MG24" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Sonoff+Dongle+Plus+MG24" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>EFR32MG24 / <code>ember</code></td>
+        <td>Čip MG24 s externí anténou 3 dBi. Podporuje jen softwarové řízení toku, <code>rtscts: true</code> nenastavuj.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SONOFF Dongle-PP10<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Sonoff+Dongle+Plus+CC2674P10" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Sonoff+Dongle+Plus+CC2674P10" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>CC2674P10 / <code>zstack</code></td>
+        <td>Výkonný čip Texas Instruments s externí anténou 3 dBi. Dodává se s předinstalovaným firmwarem a je připravený pro Home Assistant, Zigbee2MQTT i ZHA.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SMLIGHT SLZB-07p7<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-07p7" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-07p7" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>CC2652P7 / <code>zstack</code></td>
+        <td>Varianta SLZB-07 s čipem Texas Instruments CC2652P7. Předprogramovaný, anténa 3 dB, vzdálená aktualizace firmwaru.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SMLIGHT SLZB-07p10 a SLZB-07Mg26<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-07p10" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-07p10" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>CC2674P10 / <code>zstack</code><br>EFR32MG26 / <code>ember</code></td>
+        <td>Další varianty řady SLZB-07 s nejnovějšími čipy (podle výrobce jde o nejnovější generaci). Oficiální přehled Z2M je zatím neuvádí (stav září 2026), před koupí proto ověř podporu a doporučený firmware.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-warn">starší</span> Home Assistant Connect ZBT-1 (SkyConnect)</td>
+        <td>EFR32MG21 / <code>ember</code></td>
+        <td>Starší oficiální koordinátor Home Assistantu s anténou na desce, jeho výroba skončila. Pokud ho už máš, funguje. Nový už nekupuj.</td>
       </tr>
     </tbody>
   </table>
+
+  <h3>Síťové (Ethernet / PoE) koordinátory</h3>
+  <p>Připojují se kabelem, ne přes USB. Pro RPi 3 B+ to má dvě výhody: odpadá napájení donglu z USB (viz problémy s podpětím v sekci 2.2) a koordinátor může stát na lepším místě v bytě. Oficiální dokumentace Z2M doporučuje kabelový Ethernet, připojení přes WiFi má horší stabilitu. Nastavení se liší (adresa <code>tcp://…</code>). Konkrétní příklady jsou v sekci 3.3, podrobný postup v kapitole 09.</p>
+  <table class="alt-table">
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>Čip / adaptér</th>
+        <th>Popis a zkušenosti</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SMLIGHT SLZB-06M<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-06M" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-06M" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>EFR32MG21 / <code>ember</code></td>
+        <td>Ethernet, PoE, USB a WiFi, externí anténa. Pro dobrý výkon potřebuje firmware nejméně 20240510 (core 2.2.0 a vyšší). Nehodí se pro WiFi ani jiná spojení s vysokou latencí.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SMLIGHT SLZB-06Mg24 / SLZB-06Mg26<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-06Mg24" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-06Mg24" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>EFR32MG24 / EFR32MG26, <code>ember</code></td>
+        <td>Novější čipy ve stejné řadě. Externí anténa, připojení přes Ethernet.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SMLIGHT SLZB-MR1 až MR4 (multiradio)<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-MR1" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-MR1" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>MR1: CC2652P7 + EFR32MG21<br>MR2: CC2652P + EFR32MG21<br>MR3: CC2674P10 + EFR32MG24<br>MR4: CC2674P10 + EFR32MG26</td>
+        <td>Dvě radiové části (Zigbee a Thread) a ESP32: Zigbee 3.0 a Matter-over-Thread běží současně na různých čipech. Ethernet, WiFi, USB a PoE. Podle výrobce zhruba 500 (MR1), 400 (MR2), 750 (MR3) a 800 (MR4) Zigbee zařízení. Adaptér v Z2M se řídí tím, který čip pro Zigbee použiješ (<code>ember</code> nebo <code>zstack</code>), viz příklad v sekci 3.3.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SONOFF Dongle-M<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Sonoff+Dongle-M" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Sonoff+Dongle-M" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>EFR32MG24 / <code>ember</code></td>
+        <td>Dva čipy (ESP32 a MG24), dvě externí antény, PoE, webová konzole. Připojení přes Ethernet, WiFi nebo USB.</td>
+      </tr>
+      <tr>
+        <td><span class="tag-good">NOVÉ</span> SMLIGHT SLZB-Ultima<br><small>cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-Ultima" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-Ultima" target="_blank" rel="noopener noreferrer">Google</a></small></td>
+        <td>CC2674P10 + EFR32MG24</td>
+        <td>Víceradiová brána (Zigbee, Thread, volitelně Z-Wave, 4G a infračervené ovládání). Podle Z2M určená pro pokročilá nasazení.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Nedoporučené</h3>
+  <ul>
+    <li><strong>Čipy Texas Instruments CC2531, CC2530, CC2538:</strong> slabší, vyžadují další hardware k flashování a nemusí zvládnout sítě s 20 a více zařízeními. CC2531 má navíc špatný dosah.</li>
+    <li><strong>ZiGate:</strong> podle Z2M se nevyvíjí. <strong>ZBOSS (Nordic):</strong> experimentální.</li>
+    <li><strong>EFR32 řady Series 0/1:</strong> starší čipy bez podpory v novém firmwaru (8.0.0 a vyšší). K tomu SparkFun MGM240P (potíže s UART) a Easyiot ZB-GW04 (málo prostředků).</li>
+  </ul>
 </section>
 
 <!-- FIRMWARE AKTUALIZACE -->
@@ -222,54 +337,56 @@
   <h2 id="fw-aktualizace">Aktualizace firmware</h2>
   <p>Pro SLZB-07 existuje jednoduchý webový flasher – firmware lze aktualizovat bez demontáže nebo speciálních nástrojů:</p>
   <ul>
-    <li>Nástroj: <a href="https://smlight.tech/flasher" target="_blank">smlight.tech/flasher</a></li>
-    <li>Firmware pro Z2M: <strong>NCP (Network Co-Processor)</strong> verze pro EFR32MG21</li>
-    <li>Aktualizaci firmware doporučuji provést <strong>před prvním připojením k RPi</strong></li>
-    <li>Po aktualizaci je nutné znovu spárovat všechna Zigbee zařízení? <strong>NE</strong> – síťová konfigurace zůstane zachována při OTA aktualizaci přes Z2M</li>
+    <li>Nástroj: <a href="https://smlight.tech/flasher" target="_blank" rel="noopener noreferrer">smlight.tech/flasher</a></li>
+    <li>SLZB-07 se dodává s předinstalovaným firmwarem EmberZNet, takže funguje hned. Firmware lze později aktualizovat i vzdáleně (remote update).</li>
+    <li>Firmware pro Z2M: <strong>NCP (Network Co-Processor)</strong>, ne RCP ani MultiPAN (multiprotokolový firmware Z2M nepodporuje). Podporované verze EmberZNet: 7.4.x, 8.0.x až 8.2.x a 9.0.x až 9.1.x. Pro Sonoff ZBDongle-E zvol NCP 7.4.4 nebo novější.</li>
+    <li>Pokud výrobce vydá novější firmware, aktualizaci nejlépe proveď <strong>před prvním připojením k RPi</strong>, dokud ještě nemáš spárovaná zařízení (pairing).</li>
+    <li>Před aktualizací firmwaru si zálohuj soubory ze sekce níže. U adaptérů <code>ember</code> a <code>zstack</code> umí Z2M síť z <code>coordinator_backup.json</code> obnovit, pokud by ji aktualizace vymazala.</li>
   </ul>
 
   <div class="callout callout-tip">
     <div class="callout-title">💡 OTA aktualizace přes Zigbee2MQTT</div>
-    <p>Zigbee2MQTT umí aktualizovat firmware <strong>Zigbee zařízení</strong> (senzory, žárovky) over-the-air přímo ze svého rozhraní (Settings → OTA updates). Koordinátor (USB dongle) se takto aktualizovat nedá – ten vyžaduje přímý flash přes webový nástroj nebo CLI.</p>
+    <p>Zigbee2MQTT umí aktualizovat firmware <strong>Zigbee zařízení</strong> (senzory, žárovky) bezdrátově (over-the-air, OTA) přímo ze svého rozhraní (Settings → OTA updates). Koordinátor (USB dongle) se takto aktualizovat nedá – ten vyžaduje přímý flash přes webový nástroj nebo CLI.</p>
   </div>
 
-  <h3>coordinator_backup.json – kritická záloha Zigbee sítě</h3>
-  <p>Zigbee2MQTT automaticky vytváří soubor <strong>coordinator_backup.json</strong> v adresáři <code>/config/zigbee2mqtt/</code>. Tento soubor je <strong>kriticky důležitý</strong> – obsahuje:</p>
+  <h3>coordinator_backup.json – záloha identity Zigbee sítě</h3>
+  <p>Zigbee2MQTT automaticky vytváří soubor <strong>coordinator_backup.json</strong> ve své datové složce (v Home Assistant <code>/config/zigbee2mqtt/</code>). Je <strong>velmi důležitý</strong> – obsahuje identitu tvé sítě:</p>
   <ul>
     <li>Síťový šifrovací klíč (Network Key) – bez něj zařízení nerozumí nové síti</li>
-    <li>Extended PAN ID – identifikátor tvé Zigbee sítě</li>
-    <li>Seznam spárovaných zařízení a jejich adresy</li>
+    <li>PAN ID a Extended PAN ID – identifikátory tvé Zigbee sítě</li>
+    <li>Zigbee kanál (channel) a IEEE adresa koordinátoru</li>
   </ul>
-  <p>Díky tomuto souboru při výměně nebo selhání koordinátoru <strong>nemusíš znovu párovat všechna zařízení</strong>. Stačí soubor obnovit na nový koordinátor.</p>
+  <p>Seznam spárovaných zařízení a jejich názvy jsou v samostatných souborech <code>database.db</code> a <code>configuration.yaml</code> ve stejné složce.</p>
+  <p>Při výměně nebo selhání koordinátoru lze s těmito třemi soubory síť obnovit (restore) <strong>bez nového párování</strong>. Obnova ze zálohy je oficiálně podporovaná jen u adaptérů <code>zstack</code> a <code>ember</code>. U <code>deconz</code> (ConBee), <code>zigate</code> a <code>zboss</code> podporovaná není. Postup záleží na kombinaci starého a nového čipu a některá zařízení může být nutné spárovat znovu. Podrobný postup je v oficiálním <a href="https://www.zigbee2mqtt.io/guide/faq/#how-do-i-migrate-from-one-adapter-to-another" target="_blank" rel="noopener noreferrer">FAQ Zigbee2MQTT</a>.</p>
   <div class="callout callout-warn">
-    <div class="callout-title">⚠️ Záloha HA tento soubor obsahuje – ale ověř to</div>
-    <p>Automatická záloha Home Assistant obsahuje celý adresář <code>/config/zigbee2mqtt/</code> včetně <code>coordinator_backup.json</code>. Pro jistotu doporučuji zkopírovat soubor <strong>také ručně na Synology NAS</strong> po každé větší změně sítě (přidání nových zařízení). Uložení: <code>\\homeassistant.local\config\zigbee2mqtt\coordinator_backup.json</code></p>
+    <div class="callout-title">⚠️ Zálohuj všechny tři soubory</div>
+    <p>Automatická záloha Home Assistant obsahuje i složku <code>/config/zigbee2mqtt/</code>. Pro jistotu zkopíruj <code>coordinator_backup.json</code>, <code>database.db</code> a <code>configuration.yaml</code> také mimo RPi (např. na Synology NAS, Google Drive nebo USB flash disk) po každé větší změně sítě, například po přidání nových zařízení. Přes sdílenou složku (viz kapitola 06) je najdeš na <code>\\192.168.0.11\config\zigbee2mqtt\</code> (nebo <code>\\homeassistant.local\config\zigbee2mqtt\</code>).</p>
   </div>
 </section>
 
 <!-- ANTENA UMISTENI -->
 <section class="sec">
   <h2 id="antena">Umístění antény</h2>
-  <p>Fyzické umístění Zigbee koordinátoru (donglu) má přímý vliv na kvalitu a dosah celé Zigbee sítě. Pár pravidel pro optimální výkon:</p>
+  <p>Fyzické umístění Zigbee koordinátoru (donglu) má přímý vliv na kvalitu a dosah celé Zigbee sítě. Několik pravidel pro optimální výkon:</p>
 
   <ul>
-    <li><strong>Anténa svisle nahoru</strong> – pokud má dongle externí anténu (SLZB-07), nasměruj ji vertikálně. Záření je silnější v horizontální rovině kolem antény.</li>
-    <li><strong>USB prodlužovací kabel povinně</strong> – dongle přímo v RPi je obklopen kovovými komponenty desky. Kabel 15–30 cm dongle vystrčí do volného prostoru.</li>
-    <li><strong>Výška v místnosti: 1–1.5 m</strong> – příliš nízko (u podlahy) nebo příliš vysoko (u stropu) snižuje pokrytí.</li>
+    <li><strong>Anténa svisle nahoru</strong> – pokud má dongle externí anténu (SLZB-07 má otočnou), nasměruj ji vertikálně. Záření je silnější v horizontální rovině kolem antény.</li>
+    <li><strong>USB prodlužovací kabel (extension cable) důrazně doporučen</strong> – dongle přímo v RPi je obklopen kovovými komponenty desky a rušením z elektroniky. Kabel 15–30 cm dongle vystrčí do volného prostoru.</li>
+    <li><strong>Výška v místnosti: 1–1,5 m</strong> – příliš nízko (u podlahy) nebo příliš vysoko (u stropu) snižuje pokrytí.</li>
     <li><strong>Centrální umístění v bytě/domě</strong> – dongle uprostřed dispozice pokryje všechny místnosti rovnoměrně.</li>
-    <li><strong>Min. 1 metr od WiFi routeru</strong> – WiFi 2.4 GHz a Zigbee sdílejí pásmo. Blízkost routeru způsobuje rušení.</li>
-    <li><strong>Vyhni se:</strong> blízkosti mikrovlnné trouby (2.45 GHz = přímé rušení), DECT telefonů, kovových skříní a betonových pilířů.</li>
+    <li><strong>Min. 1 metr od WiFi routeru</strong> – WiFi 2,4 GHz a Zigbee sdílejí pásmo. Blízkost routeru způsobuje rušení.</li>
+    <li><strong>Vyhni se:</strong> blízkosti mikrovlnné trouby (2,45 GHz = přímé rušení), DECT telefonů, kovových skříní a betonových pilířů.</li>
   </ul>
 
   <div class="callout callout-tip">
     <div class="callout-title">💡 Sonoff Dongle-E vs Dongle-P – pozor na záměnu!</div>
-    <p>Sonoff prodává dva modely se skoro stejným názvem: <strong>ZBDongle-E</strong> (EFR32MG21, adapter: <code>ezsp</code>) a <strong>ZBDongle-P</strong> (CC2652P, adapter: <code>znp</code>). Liší se pouze jedním písmenem v názvu! Vždy zkontroluj přesné označení modelu před koupí – jinak použiješ špatný typ adaptéru v Z2M konfiguraci a Z2M nepůjde spustit.</p>
+    <p>Sonoff prodává dva modely se skoro stejným názvem: <strong>ZBDongle-E</strong> (EFR32MG21, adaptér: <code>ember</code>) a <strong>ZBDongle-P</strong> (CC2652P, adaptér: <code>zstack</code>). Liší se pouze jedním písmenem v názvu! Rozlišit je můžeš i podle USB převodníku ve Správci zařízení: ZBDongle-P má CP210x, ZBDongle-E CH9102. Vždy zkontroluj přesné označení modelu před koupí – jinak použiješ špatný typ adaptéru v Z2M a Z2M nepůjde spustit.</p>
   </div>
 </section>
   <div id="pn"></div>
 
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

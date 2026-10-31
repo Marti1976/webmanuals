@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Řešení Problémů (Troubleshooting) – Raspberry Pi Průvodce</title>
+<title>Řešení problémů – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -17,8 +17,9 @@
     { "id": "mqtt-problemy", "num": "14.4", "name": "Problémy s MQTT (Mosquitto)" },
     { "id": "zalohy-probl", "num": "14.5", "name": "Problémy se zálohami" },
     { "id": "ssd-problemy", "num": "14.6", "name": "Problémy s USB SSD" },
-    { "id": "prikazy-ssh", "num": "14.7", "name": "Diagnostické příkazy (SSH)" },
-    { "id": "kde-pomoc", "num": "14.8", "name": "Kde hledat pomoc" }
+    { "id": "pristup-2fa", "num": "14.7", "name": "Ztráta přístupu (2FA)" },
+    { "id": "prikazy-ssh", "num": "14.8", "name": "Diagnostické příkazy (SSH)" },
+    { "id": "kde-pomoc", "num": "14.9", "name": "Kde hledat pomoc" }
   ]
 }
 </script>
@@ -32,7 +33,7 @@
 <header>
   <div class="h-num">// kapitola 14</div>
   <h1>Řešení <em>problémů</em></h1>
-  <p class="h-desc">Systematický průvodce nejčastějšími problémy – od nedostupného webového rozhraní přes problémy se Zigbee2MQTT až po zálohovací chyby. Každý problém má konkrétní postup řešení.</p>
+  <p class="h-desc">Systematický průvodce nejčastějšími problémy (troubleshooting) – od nedostupného webového rozhraní přes problémy se Zigbee2MQTT až po zálohovací chyby a ztrátu přístupu. Každý problém má konkrétní postup řešení.</p>
 </header>
 
 <!-- LOGIKA DEBUGOVANI -->
@@ -40,12 +41,16 @@
   <h2 id="debug-logika">Jak řešit problémy</h2>
   <p>Před zkoumáním konkrétního problému – vždy začni od základů:</p>
   <ol>
-    <li>Zkontroluj <strong>záložku PROTOKOL</strong> problematického add-onu – chybová zpráva obvykle řekne přesně co je špatně</li>
-    <li>Zkontroluj <strong>Nastavení → Systém → Protokoly</strong> v HA – systémový log</li>
-    <li>Ověř zda jsou všechny závislé služby spuštěny (Mosquitto před Z2M, HA Core před add-ony)</li>
-    <li>Zkus <strong>restart add-onu</strong> – někdy stačí</li>
-    <li>Zkus <strong>restart celého HA</strong> (Nastavení → Systém → Restartovat)</li>
+    <li>Zkontroluj záložku <strong>Log (PROTOKOL)</strong> problematické aplikace – chybová zpráva obvykle řekne přesně, co je špatně</li>
+    <li>Zkontroluj <strong>Nastavení → Systém → Logy (Settings → System → Logs)</strong> v HA – systémový log</li>
+    <li>Ověř, zda jsou všechny závislé služby spuštěny (Mosquitto před Z2M, Home Assistant Core před aplikacemi)</li>
+    <li>Zkus <strong>restart aplikace</strong> – někdy stačí</li>
+    <li>Zkus <strong>restart celého HA</strong> (Nastavení → Systém → Restartovat → Restartovat Home Assistanta)</li>
   </ol>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Když nejde otevřít ani webové rozhraní</div>
+    <p>Zapoj k RPi monitor přes HDMI a klávesnici. Na konzoli Home Assistant OS uvidíš stav systému. Přihlas se jako <code>root</code> (bez hesla) a příkazy <code>ha …</code> by měly fungovat rovnou. <strong>Nutné prověřit na tvém RPi.</strong></p>
+  </div>
 </section>
 
 <!-- HA NEDOSTUPNE -->
@@ -53,14 +58,15 @@
   <h2 id="ha-nedostupne">Home Assistant nedostupný</h2>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">HA</span> http://homeassistant.local:8123 se nenačte</div>
+    <div class="issue-title"><span class="issue-tag">HA</span> http://homeassistant.local (nebo :8123) se nenačte</div>
     <h4>Možné příčiny a řešení:</h4>
     <ul>
-      <li><strong>Systém ještě startuje</strong> – první boot trvá 10–25 minut. Počkej a zkus znovu.</li>
-      <li><strong>mDNS nefunguje</strong> – zkus přímou IP adresu místo hostname: <code>http://192.168.1.50:8123</code></li>
-      <li><strong>RPi nemá síť</strong> – zkontroluj Ethernet kabel, bliká LED na portu routeru?</li>
-      <li><strong>RPi se nespustil z USB SSD</strong> – ověř, že USB boot byl aktivován (Kapitola 04). Zkus odpojit a znovu zapojit SSD.</li>
-      <li><strong>Špatné napájení</strong> – používáš zdroj min. 3A? Zkus jiný napájecí zdroj.</li>
+      <li><strong>Systém ještě startuje</strong> – první boot trvá orientačně 10–25 minut. Počkej a zkus znovu.</li>
+      <li><strong>mDNS nefunguje</strong> – zkus přímou IP adresu místo hostname: <code>http://192.168.0.11</code> (u starších instalací <code>http://192.168.0.11:8123</code>)</li>
+      <li><strong>Špatný port</strong> – nové instalace (HA 2026.8 a novější) běží na portu 80, starší na 8123. Zkus obě adresy.</li>
+      <li><strong>RPi nemá síť</strong> – zkontroluj Ethernet kabel, svítí kontrolky u konektoru? Ověř v routeru, zda je zařízení „homeassistant“ v seznamu (viz <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html#prvni-boot">sekce 5.2</a>).</li>
+      <li><strong>RPi se nespustil z USB SSD</strong> – ověř, že ve slotu není SD karta, a viz <a href="#ssd-problemy">sekce 14.6</a>.</li>
+      <li><strong>Špatné napájení</strong> – zdroj musí mít min. 5 V / 2,5 A, ideálně 3 A (viz <a href="02_raspberry_hardware.html#napajeni">sekce 2.2</a>). Zkus jiný zdroj a kabel.</li>
       <li><strong>SSD se nezobrazuje</strong> – zkus jiný USB port na RPi nebo jiný USB kabel</li>
     </ul>
   </div>
@@ -69,32 +75,31 @@
     <div class="issue-title"><span class="issue-tag">HA</span> HA se nespouští po aktualizaci / bílá obrazovka</div>
     <h4>Možné příčiny a řešení:</h4>
     <ul>
-      <li><strong>Aktualizace stále probíhá</strong> – velké aktualizace Core trvají 5–15 minut. Počkej a obnovuj stránku každé 2 minuty.</li>
-      <li><strong>UI nefunguje ale systém běží</strong> – zkus přímé URL: <code>http://IP:8123/lovelace/0</code> nebo <code>http://IP:8123/config</code></li>
-      <li><strong>Chyba v konfiguraci</strong> – přes SSH spusť <code>ha core logs</code> pro zobrazení přesné chyby která brání startu</li>
-      <li><strong>Breaking change v aktualizaci</strong> – přečti release notes na home-assistant.io/blog pro danou verzi. Chyba může být způsobena změnou syntaxe v configuration.yaml.</li>
-      <li><strong>Nejrychlejší řešení</strong> – obnov zálohu z před aktualizace (Kapitola 12). Nastavení → Zálohy → vybrat zálohu z předešlého dne → Obnovit.</li>
+      <li><strong>Aktualizace stále probíhá</strong> – velké aktualizace Core trvají minuty až desítky minut. Počkej a obnovuj stránku každé 2 minuty.</li>
+      <li><strong>UI nefunguje, ale systém běží</strong> – zkus přímé URL: <code>http://192.168.0.11/lovelace/0</code> nebo <code>http://192.168.0.11/config</code> (u starších instalací s <code>:8123</code>)</li>
+      <li><strong>Chyba v konfiguraci</strong> – přes SSH spusť <code>ha core logs</code> pro zobrazení přesné chyby, která brání startu</li>
+      <li><strong>Breaking change v aktualizaci</strong> – přečti poznámky k vydání (release notes) na home-assistant.io/blog pro danou verzi. Chyba může být způsobena změnou syntaxe v configuration.yaml.</li>
+      <li><strong>Nejrychlejší řešení</strong> – obnov zálohu vytvořenou před aktualizací (viz <a href="12_raspberry_zalohovani.html#obnova">sekce 12.8</a>): Nastavení → Systém → Zálohy → záloha před aktualizací → Obnovit.</li>
     </ul>
   </div>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">HA</span> HA běží ale je extrémně pomalé</div>
+    <div class="issue-title"><span class="issue-tag">HA</span> HA běží, ale je extrémně pomalé</div>
     <ul>
-      <li>Zkontroluj spotřebu RAM: <strong>Nastavení → Systém → Hardware</strong></li>
-      <li>Vypni nebo zastav nepoužívané add-ony</li>
-      <li>Zkontroluj logy – může být infinite loop v automatizaci</li>
-      <li>Spusť čištění databáze: Developer Tools → Services → <code>recorder.purge</code></li>
-      <li>Zkontroluj UAS problém USB pouzdra – problémy s I/O mohou zpomalit celý systém</li>
+      <li>Zkontroluj spotřebu paměti a teplotu integrací System Monitor (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#vykon">sekce 13.4</a>)</li>
+      <li>Vypni nebo zastav nepoužívané aplikace</li>
+      <li>Zkontroluj logy – může být nekonečná smyčka v automatizaci</li>
+      <li>Spusť čištění databáze: Nástroje pro vývojáře → Akce (Developer tools → Actions) → <code>recorder.purge</code> (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#recorder">sekce 13.5</a>)</li>
+      <li>Zkontroluj UAS problém USB pouzdra – problémy s I/O mohou zpomalit celý systém (viz <a href="#ssd-problemy">sekce 14.6</a>)</li>
     </ul>
   </div>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">HA</span> Ikonka blesku / varování o podpětí</div>
+    <div class="issue-title"><span class="issue-tag">HA</span> Varování o podpětí (slabé napájení)</div>
     <ul>
-      <li>Vyměň napájecí zdroj za kvalitní 5V/3A zdroj (originální RPi nebo Meanwell)</li>
-      <li>Zkontroluj délku a kvalitu Micro-USB kabelu – dlouhý nebo tenký kabel zvyšuje odpor</li>
-      <li>Odpoj nepotřebná USB zařízení z RPi (snižuje odběr)</li>
-      <li>Varování v HA logu: <code>Under-voltage detected</code></li>
+      <li>Kompletní postup krok za krokem (kabel, zdroj, USB, měření) je v <a href="02_raspberry_hardware.html#napajeni">sekci 2.2</a></li>
+      <li>V logu hledej hlášku <code>Under-voltage detected</code></li>
+      <li>V HA ho zobrazí integrace Raspberry Pi Power Supply Checker (viz sekce 2.2)</li>
     </ul>
   </div>
 
@@ -102,9 +107,9 @@
     <div class="issue-title"><span class="issue-tag">SSD</span> Disk je plný – HA odmítá zálohu nebo aktualizaci</div>
     <h4>Příznaky: chyba "No space left on device", záloha selhává, aktualizace se nestáhne</h4>
     <ul>
-      <li>Zkontroluj místo přes SSH: <code>df -h</code> – sleduj oddíl <code>/data</code></li>
-      <li><strong>Největší spotřebitelé:</strong> zálohy v <code>/backup/</code> a HA databáze v <code>/data/</code></li>
-      <li><strong>Rychlá úleva:</strong> smaž staré zálohy: Nastavení → Zálohy → vybrat staré → ikona koše</li>
+      <li>Zkontroluj místo přes SSH: <code>df -h</code> – sleduj oddíl s daty</li>
+      <li><strong>Největší spotřebitelé:</strong> zálohy v <code>/backup/</code> a HA databáze</li>
+      <li><strong>Rychlá úleva:</strong> smaž staré zálohy: Nastavení → Systém → Zálohy → vybrat staré → ikona koše</li>
       <li><strong>Databáze:</strong> spusť <code>recorder.purge</code> s <code>keep_days: 3</code> pro agresivní vyčištění</li>
       <li><strong>Dočasné řešení:</strong> přes SSH: <code>ha backups remove BACKUP_SLUG</code></li>
       <li><strong>Trvalé řešení:</strong> přejdi na větší SSD (64 GB) nebo nastav agresivnější rotaci záloh (max. 3 lokální zálohy)</li>
@@ -117,19 +122,21 @@
   <h2 id="z2m-problemy">Problémy se Zigbee2MQTT</h2>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">Z2M</span> Z2M nejde spustit – "Failed to start"</div>
+    <div class="issue-title"><span class="issue-tag">Z2M</span> Z2M nejde spustit – „Failed to start“</div>
     <h4>Postup diagnostiky:</h4>
     <ul>
-      <li>Zkontroluj záložku <strong>PROTOKOL</strong> v Z2M add-onu – co říká přesně?</li>
-      <li><strong>"Failed to connect to the adapter"</strong> → špatná adresa portu nebo dongle není zapojen</li>
-      <li><strong>"Cannot connect to MQTT"</strong> → Mosquitto neběží nebo špatné heslo</li>
-      <li><strong>"Invalid YAML"</strong> → chyba v konfiguraci (odsazení, uvozovky)</li>
+      <li>Zkontroluj záložku <strong>Log (PROTOKOL)</strong> aplikace Zigbee2MQTT – co říká přesně?</li>
+      <li><strong>„USB adapter discovery error“</strong> → Zigbee2MQTT nenašlo adaptér. Vyplň sekci <code>serial</code> ručně (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#yaml-konfig">sekce 9.1</a>)</li>
+      <li><strong>„Failed to connect to the adapter“</strong> → špatná adresa portu nebo dongle není zapojen, případně špatně nastavené <code>rtscts</code> a <code>baudrate</code></li>
+      <li><strong>„Cannot connect to MQTT“</strong> → Mosquitto neběží nebo špatné heslo</li>
+      <li><strong>„Invalid YAML“</strong> → chyba v konfiguraci (odsazení, uvozovky)</li>
+      <li><strong>„502: Bad Gateway“</strong> po spuštění → počkej a obnov stránku, pokud to trvá déle než asi 2 minuty, zkontroluj Log</li>
     </ul>
     <h4>Kontrolní seznam:</h4>
     <ul>
       <li>USB Zigbee dongle je fyzicky zapojen do RPi</li>
-      <li>Adresa portu v konfiguraci odpovídá výstupu z Nastavení → Hardware</li>
-      <li>Typ adaptéru je správný: <code>ezsp</code> pro EFR32, <code>znp</code> pro CC2652</li>
+      <li>Adresa portu v konfiguraci odpovídá výstupu z Nastavení → Systém → Hardware</li>
+      <li>Typ adaptéru je správný: <code>ember</code> pro EFR32 (Silicon Labs), <code>zstack</code> pro CC26xx (Texas Instruments), <code>deconz</code> pro ConBee</li>
       <li>MQTT heslo v konfiguraci Z2M odpovídá heslu uživatele <code>mqtt_user</code></li>
       <li>Mosquitto broker běží (zelený stav)</li>
     </ul>
@@ -138,32 +145,35 @@
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">Z2M</span> Zigbee zařízení nejde spárovat</div>
     <ul>
-      <li>Ověř, že <strong>Permit Join je zapnutý</strong> v Z2M (modrý přepínač v rozhraní)</li>
+      <li>Ověř, že je <strong>zapnuté „Permit join (All)“</strong> v Z2M (otevře se na 254 s a pak se samo zavře)</li>
       <li>Přines zařízení <strong>do 1–2 metrů</strong> od koordinátoru při párování</li>
-      <li>Zkus jiný párovací postup – hledej na <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank">zigbee2mqtt.io/supported-devices</a></li>
+      <li>Zkus jiný párovací postup – hledej na <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank" rel="noopener noreferrer">zigbee2mqtt.io/supported-devices</a></li>
       <li>Zkontroluj, že zařízení <strong>není spárováno s jiným systémem</strong> – proveď factory reset</li>
-      <li>Zkus změnit Zigbee kanál (Settings → Settings → Zigbee → Channel) a párovat znovu</li>
-      <li>Zkontroluj zda zařízení je na <strong>seznamu podporovaných</strong> – ne každé Zigbee zařízení funguje s Z2M</li>
+      <li>Zkontroluj, že zařízení je <strong>Zigbee</strong>. Některá novější zařízení (např. IKEA) používají Thread (viz <a href="10_raspberry_pridavani_zigbee_zarizeni.html#znacky">sekce 10.8</a>) a spárovat se nedají.</li>
+      <li>Pokud máš zapnutý <strong>passlist</strong>, přidej IEEE adresu zařízení do seznamu (viz <a href="11_raspberry_bezpecnost.html#z2m-bezpecnost">sekce 11.11</a>)</li>
+      <li>Zkontroluj rušení WiFi a Zigbee kanál (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#zigbee-kanal">sekce 9.3</a>). Kanál na hotové síti ale neměň, pokud to není nutné.</li>
+      <li>Zkontroluj, zda zařízení je na <strong>seznamu podporovaných</strong> – ne každé Zigbee zařízení funguje s Z2M</li>
     </ul>
   </div>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">Z2M</span> Zařízení bylo spárováno ale neobjevuje se v HA</div>
+    <div class="issue-title"><span class="issue-tag">Z2M</span> Zařízení bylo spárováno, ale neobjevuje se v HA</div>
     <ul>
-      <li>Ověř <code>homeassistant: true</code> v konfiguraci Z2M add-onu</li>
+      <li>Ověř, že je v Zigbee2MQTT zapnutá integrace s Home Assistantem (<code>homeassistant: enabled: true</code>, viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#dalsi-nast">sekce 9.4</a>)</li>
       <li>Zkontroluj MQTT integraci v HA: Nastavení → Zařízení a služby → MQTT musí být aktivní</li>
-      <li>Restartuj Z2M add-on – po restartu znovu publikuje zařízení přes MQTT Discovery</li>
-      <li>V HA: Nastavení → Zařízení a služby → MQTT → Konfigurovat → "Re-add discovered devices"</li>
+      <li>Restartuj aplikaci Zigbee2MQTT – po restartu znovu publikuje zařízení přes MQTT Discovery</li>
+      <li>V logu Zigbee2MQTT hledej chyby publikování do MQTT</li>
     </ul>
   </div>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">Z2M</span> Zařízení "mizí" nebo pravidelně odpojují</div>
+    <div class="issue-title"><span class="issue-tag">Z2M</span> Zařízení „mizí“ nebo se pravidelně odpojují</div>
     <ul>
       <li>Zkontroluj Zigbee mapu (Z2M → Map) – jak je zařízení připojeno k síti?</li>
       <li>Slabý signál – přidej Zigbee routery (napájené zásuvky) blíže k problematickému zařízení</li>
-      <li>WiFi rušení – zkontroluj Zigbee kanál vs WiFi kanál (Kapitola 09)</li>
-      <li>Dongle je příliš blízko WiFi routeru – zvětši vzdálenost na min. 1 metr</li>
+      <li>WiFi rušení – zkontroluj Zigbee kanál vs WiFi kanál (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#zigbee-kanal">sekce 9.3</a>)</li>
+      <li>Dongle je příliš blízko WiFi routeru – zvětši vzdálenost na min. 1 metr a použij prodlužovací kabel (viz <a href="03_raspberry_poznamka_k_zigbee_modulu.html#antena">sekce 3.6</a>)</li>
+      <li>Slabé napájení může rušit USB dongle (viz <a href="02_raspberry_hardware.html#napajeni">sekce 2.2</a>)</li>
       <li>Vadná baterie v senzoru – vyměň baterii i když ukazuje 40 %</li>
     </ul>
   </div>
@@ -174,12 +184,13 @@
   <h2 id="mqtt-problemy">Problémy s MQTT (Mosquitto)</h2>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">MQTT</span> MQTT integrace v HA hlásí "disconnected"</div>
+    <div class="issue-title"><span class="issue-tag">MQTT</span> MQTT integrace v HA hlásí „disconnected“</div>
     <ul>
-      <li>Zkontroluj stav Mosquitto add-onu – běží? (Nastavení → Doplňky → Mosquitto)</li>
-      <li>Ověř přihlašovací údaje v MQTT integraci HA (Nastavení → Zařízení a služby → MQTT → Konfigurovat)</li>
-      <li>Restartuj Mosquitto add-on</li>
+      <li>Zkontroluj stav aplikace Mosquitto – běží? (Nastavení → Doplňky/Aplikace → Mosquitto)</li>
+      <li>Restartuj aplikaci Mosquitto a pak případně MQTT integraci (Nastavení → Zařízení a služby → MQTT)</li>
       <li>Zkontroluj log Mosquitto – hledej <code>Connection refused</code> nebo <code>Authentication failed</code></li>
+      <li>Pro připojení Zigbee2MQTT ověř uživatele <code>mqtt_user</code> a jeho heslo (viz <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html#mqtt-uzivatel">sekce 7.3</a>)</li>
+      <li>Pokud jsi zavřel porty aplikace Mosquitto (karta Síť), zařízení v síti se nepřipojí, vnitřní spojení přes <code>core-mosquitto</code> ale funguje (viz <a href="11_raspberry_bezpecnost.html#mqtt-bezpecnost">sekce 11.6</a>)</li>
     </ul>
   </div>
 </section>
@@ -189,25 +200,24 @@
   <h2 id="zalohy-probl">Problémy se zálohami</h2>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">Zálohy</span> Google Drive záloha se nenahrává</div>
+    <div class="issue-title"><span class="issue-tag">Zálohy</span> Záloha selhává nebo není na NAS či v cloudu</div>
     <ul>
-      <li>Otevři webové rozhraní Google Drive Backup add-onu – zobrazuje chybu?</li>
-      <li>Zkus znovu autorizovat: v rozhraní klikni "Reauthenticate with Google"</li>
-      <li>Zkontroluj volné místo na Google Drive (<a href="https://drive.google.com" target="_blank">drive.google.com</a>) – max. 15 GB zdarma</li>
+      <li>Zkontroluj volné místo na SSD (viz „Disk je plný“ výše)</li>
+      <li><strong>Síťové úložiště:</strong> ověř IP adresu NAS (změnila se?), sdílenou složku a uživatele v DSM a SMB službu. Test: připoj se z Windows (<code>\\IP_NAS\homeassistant_backup</code>). SMB verze musí být 2 nebo 3.</li>
+      <li><strong>Google Drive (nativní integrace):</strong> znovu autorizuj integraci a zkontroluj, že redirect URI v přístupových údajích je <code>https://my.home-assistant.io/redirect/oauth</code></li>
+      <li><strong>Google Drive Backup (komunitní aplikace):</strong> otevři její webové rozhraní, zobrazuje chybu? Zkus znovu autorizovat („Reauthenticate with Google“) a zkontroluj volné místo na Google Drive (<a href="https://drive.google.com" target="_blank" rel="noopener noreferrer">drive.google.com</a>), zdarma je 15 GB.</li>
+      <li><strong>OneDrive:</strong> zkontroluj autorizaci a volné místo v účtu Microsoft</li>
       <li>Ověř internetové připojení RPi: <code>ping 8.8.8.8</code> přes SSH</li>
-      <li>Restartuj add-on</li>
+      <li>Restartuj aplikaci nebo integraci</li>
     </ul>
   </div>
 
   <div class="issue">
-    <div class="issue-title"><span class="issue-tag">Zálohy</span> Samba Backup se nekopíruje na Synology</div>
+    <div class="issue-title"><span class="issue-tag">Zálohy</span> Záloha nejde obnovit</div>
     <ul>
-      <li>Ověř IP adresu Synology v konfiguraci Samba Backup – změnila se?</li>
-      <li>Zkontroluj, že sdílená složka a uživatel existují v DSM</li>
-      <li>Test: připoj se na NAS z Windows (<code>\\IP_NAS\homeassistant_backup</code>) – funguje?</li>
-      <li>Ověř SMB službu v DSM: Control Panel → File Services → SMB musí být zapnuté</li>
-      <li>Zkontroluj, že SMB verze je 2 nebo 3 (SMB1 může být zakázán)</li>
-      <li>Zkus ping na NAS IP z RPi přes SSH</li>
+      <li>Zkontroluj, že máš správný <strong>šifrovací klíč</strong> (viz <a href="12_raspberry_zalohovani.html#zmensit">sekce 12.3</a>). Bez klíče zálohu obnovit nelze.</li>
+      <li>Při nahrání zálohy zkontroluj, že soubor <code>.tar</code> není poškozený (velikost odpovídá, stažení proběhlo celé)</li>
+      <li>Postup obnovy viz <a href="12_raspberry_zalohovani.html#obnova">sekce 12.8</a></li>
     </ul>
   </div>
 </section>
@@ -219,34 +229,65 @@
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">SSD</span> RPi se nespouští z USB SSD / pád systému</div>
     <ul>
-      <li>Ověř, že USB boot byl aktivován na RPi (Kapitola 04 – OTP bit)</li>
+      <li>Ve slotu nesmí být <strong>žádná SD karta</strong>. RPi 3 B+ bootuje z USB bez dalších úprav (viz <a href="04_raspberry_priprava_usb_msata_ssd_windows.html#usb-boot">sekce 4.2</a>).</li>
+      <li>První start z USB může trvat výrazně déle, než čekáš</li>
       <li>Zkontroluj USB kabel – zkus jiný kabel a jiný USB port na RPi</li>
-      <li>Podezřelý chipset JMS578 – přidej UAS quirks do cmdline.txt (Kapitola 02)</li>
-      <li>Zkus SSD připojit do PC a zkontrolovat SMART data</li>
-      <li>Zkontroluj napájení – SSD spotřebovává proud, zdroj musí dát 3A</li>
+      <li>Některé USB disky pro boot nefungují. Zkus jiné pouzdro nebo jinou značku disku.</li>
+      <li>Podezřelý chipset (např. JMS578) – přidej UAS quirks do <code>cmdline.txt</code> (viz <a href="02_raspberry_hardware.html#ssd-pouzdro">sekce 2.3</a>)</li>
+      <li>Zkontroluj napájení – SSD spotřebovává proud, viz <a href="02_raspberry_hardware.html#napajeni">sekce 2.2</a></li>
     </ul>
     <h4>Jak přidat UAS quirks:</h4>
-    <pre><code># Zjisti VendorID:ProductID (přes SSH nebo Windows Device Manager)
-lsusb | grep -i "your_device"
+    <pre><code># 1) Zjisti VendorID:ProductID pouzdra (Správce zařízení ve Windows, viz sekce 2.3)
+# 2) Vypni RPi, připoj SSD k PC s Windows a na bootovacím oddílu otevři cmdline.txt
+# 3) Přidej na KONEC jednoho řádku (za mezeru, NOVÝ ŘÁDEK NEVYTVÁŘEJ!):
+usb-storage.quirks=XXXX:YYYY:u
+# 4) Ulož, bezpečně odpoj disk a zapoj ho do RPi</code></pre>
+  </div>
+</section>
 
-# Přidej na KONEC jednoho řádku v /mnt/boot/cmdline.txt
-# (NOVÝ ŘÁDEK NEVYTVÁŘEJ!)
-usb-storage.quirks=XXXX:YYYY:u</code></pre>
+<!-- ZTRATA PRISTUPU -->
+<section class="sec">
+  <h2 id="pristup-2fa">Ztráta přístupu (2FA)</h2>
+  <p>Home Assistant nevydává záložní kódy k dvoufaktorovému ověření (viz <a href="11_raspberry_bezpecnost.html#dvfa">sekce 11.3</a>). Pokud ztratíš telefon s autentikátorem, dostaneš se dovnitř jen ručním zásahem v systému. Postup funguje, jen pokud máš přístup k SSH nebo k fyzické konzoli RPi.</p>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Příprava předem</div>
+    <p>Nainstaluj si aplikaci Terminal &amp; SSH a nastav přihlášení předem (viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#ssh-terminal">sekce 6.7</a>). Když jsi už zamčený, přihlásit se do HA kvůli instalaci nepůjde.</p>
+  </div>
+
+  <h3>Varianta A: přes SSH (aplikace Terminal &amp; SSH)</h3>
+  <ol>
+    <li>Připoj se: <code>ssh root@192.168.0.11</code></li>
+    <li>Zálohuj soubor s 2FA a odstraň ho z cesty (přejmenováním):
+<pre><code>mv /config/.storage/auth_module.totp /config/.storage/auth_module.totp.bak</code></pre>
+    </li>
+    <li>Restartuj Home Assistant: <code>ha core restart</code></li>
+    <li>Přihlas se jen heslem a hned znovu zapni 2FA (viz sekce 11.3), tentokrát s kódem ve dvou zařízeních</li>
+  </ol>
+
+  <h3>Varianta B: přes konzoli RPi (monitor a klávesnice)</h3>
+  <ol>
+    <li>Zapoj monitor a klávesnici, přihlas se jako <code>root</code></li>
+    <li>Přejmenuj soubor ve složce s konfigurací: <code>cd /mnt/data/supervisor/homeassistant/.storage</code> a <code>mv auth_module.totp auth_module.totp.bak</code></li>
+    <li>Restartuj Home Assistant (<code>ha core restart</code>) a pak postup jako v kroku 4 varianty A</li>
+  </ol>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Co se stane</div>
+    <p>Soubor <code>auth_module.totp</code> obsahuje 2FA <strong>všech uživatelů</strong>, takže se 2FA vypne všem a každý si ho musí zapnout znovu. Postup vychází z komunitních návodů, <strong>nutné prověřit na tvém RPi</strong>. Pokud jsi ztratil i heslo, existuje příkaz <code>ha auth reset</code> pro obnovu hesla (nutné prověřit).</p>
   </div>
 </section>
 
 <!-- UZITECNE PRIKAZY -->
 <section class="sec">
   <h2 id="prikazy-ssh">Diagnostické příkazy (SSH)</h2>
-  <p>Pokud máš nainstalovaný SSH add-on, tyto příkazy pomůžou s diagnostikou:</p>
-  <pre><code># Zobrazí seznam sériových zařízení (Zigbee dongle)
-ls -la /dev/serial/by-id/
+  <p>Pokud máš nainstalovanou aplikaci Terminal &amp; SSH, tyto příkazy pomůžou s diagnostikou. <strong>Nutné prověřit na tvém RPi</strong>, některé nemusí být v aplikaci dostupné:</p>
+  <pre><code># Zobrazí hardware vč. sériových zařízení (Zigbee dongle)
+ha hardware info
 
-# Zobrazí USB zařízení s VendorID:ProductID
+# Zobrazí USB zařízení s VendorID:ProductID (nemusí být dostupné)
 lsusb
 
-# Zobrazí SMART data SSD
-smartctl -a /dev/sda
+# Zobrazí SMART data SSD (viz sekce 13.1)
+smartctl -a -d sat /dev/sda
 
 # Zobrazí využití disků
 df -h
@@ -257,58 +298,60 @@ top
 # Zobrazí systémové logy HA
 ha core logs
 
-# Zobrazí logy konkrétního add-onu (např. Z2M)
+# Zobrazí logy konkrétní aplikace (např. Z2M)
 ha addons logs a0d7b954_zigbee2mqtt
 
 # Ping test (ověření sítě)
 ping -c 4 8.8.8.8</code></pre>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Přihlášení přes SSH</div>
-    <p>SSH add-on: Nastavení → Doplňky → "SSH &amp; Web Terminal". Po instalaci a spuštění: připoj se přes PuTTY nebo příkazový řádek: <code>ssh root@192.168.1.50</code> (port 22222 pokud je změněn).</p>
+    <p>Aplikace Terminal &amp; SSH: Nastavení → Doplňky/Aplikace → „Terminal &amp; SSH“. Po instalaci a spuštění se připoj přes příkazový řádek: <code>ssh root@192.168.0.11</code> (port 22). Samostatný přístup k hostiteli HAOS (port 22222) je popsán v <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#ssh-terminal">sekci 6.7</a>.</p>
+    <p>Příkaz <code>ha addons …</code> se po přejmenování na „aplikace“ může jmenovat také <code>ha apps …</code>. Nutné prověřit na tvém HA.</p>
   </div>
 </section>
 
 <!-- KDE HLEDAT POMOC -->
 <section class="sec">
   <h2 id="kde-pomoc">Kde hledat pomoc</h2>
-  <p>Pokud nic z výše uvedeného nezabralo, existuje velká komunita kde lidé rádi pomůžou. Doporučené zdroje v pořadí:</p>
+  <p>Pokud nic z výše uvedeného nezabralo, existuje velká komunita, kde lidé rádi pomůžou. Doporučené zdroje v pořadí:</p>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">Komunita</span> Home Assistant fórum (anglicky)</div>
-    <p><a href="https://community.home-assistant.io" target="_blank">community.home-assistant.io</a> – největší HA komunita, miliony řešených problémů. Před založením nového vlákna vždy nejprve prohledej – odpověď tam s velkou pravděpodobností je.</p>
+    <p><a href="https://community.home-assistant.io" target="_blank" rel="noopener noreferrer">community.home-assistant.io</a> – největší HA komunita, spousta řešených problémů. Před založením nového vlákna vždy nejprve prohledej – odpověď tam s velkou pravděpodobností je.</p>
   </div>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">Komunita</span> Home Assistant CZ – Facebook skupina (česky)</div>
-    <p><a href="https://www.facebook.com/groups/homeassistantcz" target="_blank">facebook.com/groups/homeassistantcz</a> – česká komunita, rychlé odpovědi. Ideální pro rychlý dotaz v češtině.</p>
+    <p><a href="https://www.facebook.com/groups/homeassistantcz" target="_blank" rel="noopener noreferrer">facebook.com/groups/homeassistantcz</a> – česká komunita, rychlé odpovědi. Ideální pro rychlý dotaz v češtině.</p>
   </div>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">Komunita</span> GitHub Issues – Zigbee2MQTT</div>
-    <p><a href="https://github.com/Koenkk/zigbee2mqtt/issues" target="_blank">github.com/Koenkk/zigbee2mqtt/issues</a> – pro problémy specificky se Z2M, párovacími problémy konkrétních zařízení nebo chybami add-onu.</p>
+    <p><a href="https://github.com/Koenkk/zigbee2mqtt/issues" target="_blank" rel="noopener noreferrer">github.com/Koenkk/zigbee2mqtt/issues</a> – pro problémy specificky se Z2M, párovací problémy konkrétních zařízení nebo chyby aplikace.</p>
   </div>
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">Komunita</span> Reddit r/homeassistant (anglicky)</div>
-    <p><a href="https://www.reddit.com/r/homeassistant/" target="_blank">reddit.com/r/homeassistant</a> – neformální komunita, dobré pro inspiraci, tipy a rychlé dotazy.</p>
+    <p><a href="https://www.reddit.com/r/homeassistant/" target="_blank" rel="noopener noreferrer">reddit.com/r/homeassistant</a> – neformální komunita, dobré pro inspiraci, tipy a rychlé dotazy.</p>
   </div>
 
   <div class="callout callout-tip">
     <div class="callout-title">💡 Jak správně položit otázku – ušetříš čas sobě i ostatním</div>
     <p>Při žádosti o pomoc vždy uveď:</p>
     <ul>
-      <li><strong>Verzi HA:</strong> Nastavení → Systém → O systému (např. 2025.12.3)</li>
-      <li><strong>Verzi Z2M add-onu</strong> pokud je problém se Zigbee</li>
-      <li><strong>Přesná chybová zpráva</strong> z protokolu (záložka PROTOKOL v add-onu nebo Nastavení → Protokoly)</li>
-      <li><strong>Co jsi dělal</strong> těsně před tím než problém nastal</li>
+      <li><strong>Verzi HA:</strong> Nastavení → Systém → O systému (např. 2026.10.1)</li>
+      <li><strong>Verzi aplikace Z2M</strong>, pokud je problém se Zigbee</li>
+      <li><strong>Přesnou chybovou zprávu</strong> z logu (záložka Log aplikace nebo Nastavení → Systém → Logy)</li>
+      <li><strong>Co jsi dělal</strong> těsně před tím, než problém nastal</li>
       <li><strong>Co jsi už zkoušel</strong> – ušetří opakování stejných rad</li>
     </ul>
   </div>
 </section>
 
+
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

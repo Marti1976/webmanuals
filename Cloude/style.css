@@ -1481,3 +1481,21 @@ body.resizing { user-select: none; cursor: col-resize; }
 /* Štítek v tabulce: bez levého odsazení, ať se zarovná s textem buňky */
 td .plat:first-child,
 th .plat:first-child { margin-left: 0; }
+
+/* ============================================================
+   NADPIS JEDNOTLIVÉHO NASTAVENÍ (h4 přímo v obsahu), díl 03 sekce 3.10
+   ============================================================ */
+.content > h4 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-top: 28px;
+  margin-bottom: 10px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+@media (max-width: 899px) {
+  .content > h4 { scroll-margin-top: 72px; }
+}

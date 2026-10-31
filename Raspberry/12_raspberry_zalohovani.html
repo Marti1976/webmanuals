@@ -11,12 +11,12 @@
 <script type="application/json" id="page-chapters">
 {
   "chapters": [
-    { "id": "obsah-zalohy", "num": "12.1", "name": "Co záloha obsahuje" },
-    { "id": "zmensit", "num": "12.2", "name": "Zmenšení zálohy" },
-    { "id": "proc-zalohovat", "num": "12.3", "name": "Proč zálohovat" },
+    { "id": "proc-zalohovat", "num": "12.1", "name": "Proč zálohovat" },
+    { "id": "obsah-zalohy", "num": "12.2", "name": "Co záloha obsahuje" },
+    { "id": "zmensit", "num": "12.3", "name": "Zmenšení zálohy" },
     { "id": "auto-zaloha", "num": "12.4", "name": "Automatické zálohy" },
-    { "id": "synology", "num": "12.5", "name": "Synology DiskStation" },
-    { "id": "gdrive", "num": "12.6", "name": "Google Drive" },
+    { "id": "nas", "num": "12.5", "name": "Síťové úložiště a NAS" },
+    { "id": "cloud", "num": "12.6", "name": "Cloud zdarma" },
     { "id": "strategie", "num": "12.7", "name": "Zálohovací strategie" },
     { "id": "obnova", "num": "12.8", "name": "Obnova ze zálohy" }
   ]
@@ -32,51 +32,10 @@
 <header>
   <div class="h-num">// kapitola 12</div>
   <h1><em>Zálohování</em></h1>
-  <p class="h-desc">Trojvrstvý zálohovací systém: automatické zálohy v HA, kopírování na Synology DiskStation přes Samba Backup a nahrávání na Google Drive. Plus postup obnovy ze zálohy.</p>
+  <p class="h-desc">Zálohování Home Assistantu ve více variantách, všechny zdarma: lokální zálohy, síťové úložiště a Synology NAS, Google Drive, OneDrive a komunitní aplikace. Plus postup obnovy ze zálohy.</p>
 </header>
 
-<!-- PROC ZALOHOVAT -->
-<section class="sec">
-  <h2 id="obsah-zalohy">Co záloha obsahuje</h2>
-  <p>Záloha Home Assistant je <code>.tar</code> archiv. Před spoléháním na zálohu je dobré vědět co v ní skutečně je.</p>
-
-  <h3>Co záloha OBSAHUJE ✅</h3>
-  <ul>
-    <li><code>configuration.yaml</code> a všechny konfigurační soubory</li>
-    <li>Databáze HA (history, logbook, energy) – může být velká!</li>
-    <li>Konfigurace všech add-onů (Mosquitto, Z2M, Samba...)</li>
-    <li><strong>Zigbee2MQTT data</strong> včetně <code>coordinator_backup.json</code> a databáze spárovaných zařízení</li>
-    <li>Automatizace, scény, skripty, dashboardy</li>
-    <li>Uživatelé a hashovaná hesla</li>
-    <li>Integrace a jejich konfigurace</li>
-  </ul>
-
-  <h3>Co záloha NEOBSAHUJE ❌</h3>
-  <ul>
-    <li>Samotný HAOS operační systém (stáhne se znovu při obnově)</li>
-    <li>Docker images add-onů (stáhnou se znovu – proto obnova trvá déle)</li>
-    <li>Mediální soubory pokud je z zálohy vyloučíš</li>
-  </ul>
-
-  <p><strong>Typická velikost zálohy:</strong> 50–500 MB závisí na velikosti databáze a délce uchovávaní historie.</p>
-</section>
-
-<!-- ZMENŠENÍ ZÁLOHY -->
-<section class="sec">
-  <h2 id="zmensit">Zmenšení zálohy</h2>
-  <p>Velká záloha = pomalé nahrávání na Google Drive a plnění disku. Tyto kroky výrazně sníží velikost:</p>
-  <ul>
-    <li><strong>Omez historii v recorder</strong> – nastav <code>purge_keep_days: 7</code> v <code>configuration.yaml</code> (viz Kapitola 13). Databáze bude menší → záloha menší.</li>
-    <li><strong>Vylučování media složky</strong> – při vytváření zálohy odškrtni sekci "Media" pokud tam nemáš důležitá data</li>
-    <li><strong>Výsledek:</strong> záloha se typicky zmenší z 200–500 MB na 30–100 MB</li>
-  </ul>
-  <div class="callout callout-tip">
-    <div class="callout-title">💡 Šifrování zálohy</div>
-    <p>Nastav heslo zálohy v nastavení automatického zálohování. Záloha bude šifrována AES-128 – nikdo bez hesla ji neotevře, i kdyby se dostal k souboru na Google Drive nebo NAS. Zapiš si heslo zálohy do šablony hesel v Kapitole 15!</p>
-  </div>
-</section>
-
-<!-- PROC ZALOHOVAT PŮVODNÍ -->
+<!-- PROČ ZÁLOHOVAT -->
 <section class="sec">
   <h2 id="proc-zalohovat">Proč zálohovat</h2>
   <p>SSD disky jsou spolehlivé, ale ne nesmrtelné. Výpadek napájení v nevhodnou chvíli, chybná aktualizace, omylem smazaná konfigurace – každý z těchto scénářů může zničit tvůj pečlivě nastavený systém. Záloha ti ušetří hodiny práce.</p>
@@ -85,73 +44,119 @@
       <span class="backup-layer-icon">💾</span>
       <div class="backup-layer-title">Lokálně v HA</div>
       <div class="backup-layer-sub">Primární · na SSD</div>
-      <p>Automatické denní zálohy přímo na bootovacím SSD. Rychlá obnova po chybné aktualizaci.</p>
+      <p>Automatické zálohy přímo na bootovacím SSD. Rychlá obnova po chybné aktualizaci, ale nechrání před selháním samotného SSD.</p>
     </div>
     <div class="backup-layer">
       <span class="backup-layer-icon">🖥️</span>
-      <div class="backup-layer-title">Synology NAS</div>
+      <div class="backup-layer-title">NAS v domácí síti</div>
       <div class="backup-layer-sub">Sekundární · lokální síť</div>
-      <p>Kopie na NAS přes SMB. Ochrana před selháním SSD. Dostupné v lokální síti bez internetu.</p>
+      <p>Kopie na Synology nebo jiný NAS přes SMB nebo NFS. Ochrana před selháním SSD, dostupné bez internetu.</p>
     </div>
     <div class="backup-layer">
       <span class="backup-layer-icon">☁️</span>
-      <div class="backup-layer-title">Google Drive</div>
-      <div class="backup-layer-sub">Terciální · mimo domov</div>
-      <p>Záloha mimo domov. Ochrana před fyzickou katastrofou (krádež, požár). 15 GB zdarma.</p>
+      <div class="backup-layer-title">Cloud zdarma</div>
+      <div class="backup-layer-sub">Terciární · mimo domov</div>
+      <p>Google Drive nebo OneDrive v bezplatném limitu. Ochrana před fyzickou katastrofou (krádež, požár).</p>
     </div>
   </div>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Pravidlo 3-2-1</div>
-    <p><strong>3</strong> kopie dat, na <strong>2</strong> různých médiích, <strong>1</strong> mimo domov. Tato konfigurace to splňuje: SSD + NAS + Google Drive.</p>
+    <p><strong>3</strong> kopie dat, na <strong>2</strong> různých médiích, <strong>1</strong> mimo domov. Splníš ho kombinací SSD + NAS + cloud zdarma. Nemusíš použít všechno, vyber si podle sekce 12.7.</p>
+  </div>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Jen bezplatné možnosti</div>
+    <p>Kapitola uvádí pouze služby, které lze použít zdarma. Placené cloudové služby jsou záměrně vynechány.</p>
+  </div>
+</section>
+
+<!-- CO ZÁLOHA OBSAHUJE -->
+<section class="sec">
+  <h2 id="obsah-zalohy">Co záloha obsahuje</h2>
+  <p>Záloha Home Assistantu je archiv <code>.tar</code>. Ve výchozím nastavení je <strong>šifrovaná</strong> (viz sekce 12.3). Před spoléháním na zálohu je dobré vědět, co v ní skutečně je.</p>
+
+  <h3>Co záloha OBSAHUJE ✅</h3>
+  <ul>
+    <li><code>configuration.yaml</code> a všechny konfigurační soubory</li>
+    <li>Databáze HA (historie, logbook, energie) – může být velká!</li>
+    <li>Konfigurace a data všech aplikací (Mosquitto, Z2M, Samba...)</li>
+    <li><strong>Zigbee2MQTT data</strong> ve složce <code>/config/zigbee2mqtt</code>: <code>coordinator_backup.json</code>, <code>database.db</code> a <code>configuration.yaml</code></li>
+    <li>Automatizace, scény, skripty, ovládací panely (dashboards)</li>
+    <li>Uživatelé a hashovaná hesla</li>
+    <li>Integrace a jejich konfigurace</li>
+  </ul>
+
+  <h3>Co záloha NEOBSAHUJE ❌</h3>
+  <ul>
+    <li>Samotný operační systém HAOS (stáhne se znovu při obnově)</li>
+    <li>Obrazy aplikací (stáhnou se znovu, proto obnova trvá déle)</li>
+    <li>Média (složka <code>media</code>) a složku <code>share</code>, pokud je do zálohy nezahrneš</li>
+  </ul>
+
+  <p><strong>Velikost zálohy:</strong> závisí na velikosti databáze a délce uchovávání historie, obvykle desítky až stovky MB.</p>
+</section>
+
+<!-- ZMENŠENÍ ZÁLOHY -->
+<section class="sec">
+  <h2 id="zmensit">Zmenšení zálohy</h2>
+  <p>Velká záloha = pomalé nahrávání do cloudu a plnění disku. Tyto kroky výrazně sníží velikost:</p>
+  <ul>
+    <li><strong>Omez historii v recorderu</strong> – nastav <code>purge_keep_days: 7</code> v <code>configuration.yaml</code> (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#recorder">sekce 13.5</a>). Databáze bude menší, záloha také.</li>
+    <li><strong>Nezahrnuj média</strong> – při vytváření zálohy odškrtni <strong>Média (Media)</strong>, pokud tam nemáš důležitá data</li>
+  </ul>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Šifrovací klíč</div>
+    <p>Zálohy šifruje Home Assistant (AES-128) <strong>šifrovacím klíčem</strong>, který vytvoří při nastavení záloh. Bez klíče zálohu nelze obnovit, ani když získáš soubor. Stáhni si <strong>nouzovou sadu (emergency kit)</strong> a ulož klíč do správce hesel i do šablony v Kapitole 15. Při stažení zálohy z HA se automaticky dešifruje.</p>
   </div>
 </section>
 
 <!-- AUTOMATICKE ZALOHY HA -->
 <section class="sec">
   <h2 id="auto-zaloha">Automatické zálohy</h2>
+  <p>Základní nastavení je popsáno v <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#auto-zalohy">sekci 6.4</a>. Tady jsou doplňky pro víc umístění.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Nastav automatické zálohy</div>
+        <div class="step-title">Nastav plán záloh</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Zálohy → Konfigurace automatického zálohování</strong>:</p>
+          <p>Jdi do <strong>Nastavení → Systém → Zálohy (Settings → System → Backups)</strong> a klikni <strong>Nastavit zálohy (Set up backups)</strong>. Zvol doporučené nastavení, nebo ručně <strong>Nastavit automatické zálohování</strong> a v části <strong>Automatický plán zálohování a uchovávání</strong> nastav:</p>
           <ul>
-            <li>Automatické zálohy = <strong>ON</strong></li>
-            <li>Záloha před aktualizací = <strong>ON</strong></li>
-            <li>Frekvence: <strong>Denně</strong></li>
+            <li>Frekvence: <strong>denně</strong></li>
             <li>Čas: <strong>03:00</strong> (noční klid)</li>
             <li>Uchovávat posledních: <strong>5–7 záloh</strong></li>
-            <li>Heslo zálohy: <strong>doporučeno</strong> (šifrování .tar souboru)</li>
+            <li>Záloha před aktualizací: <strong>zapnuto</strong></li>
           </ul>
-          <p>Klikni <strong>Uložit</strong>.</p>
         </div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
+        <div class="step-title">Vyber umístění záloh</div>
+        <div class="step-desc">
+          <p>Ve výchozím stavu se zálohuje lokálně na SSD. Další umístění (síťové úložiště, Google Drive, OneDrive) přidáš podle sekcí 12.5 a 12.6 a pak je zapneš v nastavení záloh (Umístění, Locations).</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
         <div class="step-title">Ruční záloha (vždy před velkou změnou)</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Zálohy → + VYTVOŘIT ZÁLOHU</strong>:</p>
-          <ul>
-            <li>Název: např. <code>pred_aktualizaci_2026_04</code></li>
-            <li>Typ: <strong>Plná záloha</strong></li>
-            <li>Heslo: (volitelně, stejné jako výše)</li>
-          </ul>
-          <p>Zálohy jsou uloženy v <code>/backup/</code> jako <code>.tar</code> soubory a dostupné přes Samba Share (<code>\\homeassistant.local\backup</code>).</p>
+          <p>Jdi do <strong>Nastavení → Systém → Zálohy → Zálohovat nyní (Backup now)</strong>. Zvol úplnou zálohu nebo vlastní výběr a umístění.</p>
+          <p>Lokální zálohy jsou uloženy v <code>/backup/</code> jako <code>.tar</code> soubory a dostupné přes Samba share (<code>\\192.168.0.11\backup</code>).</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SYNOLOGY -->
+<!-- SÍŤOVÉ ÚLOŽIŠTĚ A NAS -->
 <section class="sec">
-  <h2 id="synology">Synology DiskStation</h2>
-  <p>Synology NAS je ideální sekundární zálohovací cíl v lokální síti. Použijeme add-on Samba Backup který automaticky kopíruje zálohy na NAS.</p>
+  <h2 id="nas">Síťové úložiště a NAS</h2>
+  <p>Zálohy můžeš ukládat na Synology, jiný NAS nebo jakékoli úložiště se sdílením SMB či NFS. Společná příprava platí pro všechny varianty níže.</p>
 
-  <h3>Příprava na Synology</h3>
+  <h3>Příprava na Synology (společná)</h3>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -162,7 +167,7 @@
           <p><strong>Sdílená složka:</strong> Control Panel → Shared Folder → Create</p>
           <ul>
             <li>Název: <code>homeassistant_backup</code></li>
-            <li>Lokace: libovolný volume</li>
+            <li>Lokace: libovolný svazek (volume)</li>
             <li>Šifrování složky: volitelné</li>
           </ul>
           <p><strong>Uživatel pro zálohy:</strong> Control Panel → User → Create</p>
@@ -178,29 +183,26 @@
     </div>
   </div>
 
-  <h3>Instalace Samba Backup v HA</h3>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Přidej repozitář a nainstaluj Samba Backup</div>
-        <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Doplňky → ADD-ON STORE → ⋮ → Repozitáře</strong>. Přidej:</p>
-          <pre>https://github.com/thomasmauerer/hassio-addons</pre>
-          <p>Po obnovení storu nainstaluj <strong>"Samba Backup"</strong>.</p>
-        </div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Nakonfiguruj Samba Backup</div>
-        <div class="step-desc">
-          <p>Záložka <strong>KONFIGURACE</strong>:</p>
-          <pre><code>host: "192.168.1.X"              # IP adresa Synology NAS
+  <h3>Varianta A: nativní síťové úložiště v HA (doporučeno)</h3>
+  <p>Home Assistant umí zálohovat přímo na sdílenou složku, bez další aplikace. Šetří paměť RPi.</p>
+  <ol>
+    <li>Jdi do <strong>Nastavení → Systém → Úložiště (Settings → System → Storage)</strong> a klikni <strong>Přidat síťové úložiště (Add network storage)</strong>.</li>
+    <li>Vyplň: název (např. <code>synology_backup</code>), použití <strong>Záloha (Backup)</strong>, server (IP adresa NAS), protokol SMB (CIFS) nebo NFS, vzdálenou sdílenou složku <code>homeassistant_backup</code>, uživatele <code>ha_backup</code> a heslo.</li>
+    <li>V <strong>Nastavení → Systém → Zálohy</strong> zapni nové úložiště jako umístění záloh.</li>
+  </ol>
+
+  <h3>Varianta B: integrace Synology DSM</h3>
+  <p>Od Home Assistantu 2025.2 umí integrace Synology DSM ukládat zálohy přímo na Synology NAS. Přidej ji v <strong>Nastavení → Zařízení a služby → Přidat integraci</strong>, vyplň údaje NAS a pak ji zapni jako umístění záloh. Podrobnosti viz <a href="https://www.home-assistant.io/integrations/synology_dsm/" target="_blank" rel="noopener noreferrer">dokumentaci integrace</a>. <strong>Nutné prověřit na tvém HA</strong>, jak přesně se umístění zapíná.</p>
+
+  <h3>Varianta C: komunitní aplikace Samba Backup</h3>
+  <p>Aplikace zkopíruje zálohy HA na NAS podle vlastního plánu. Zabírá ale paměť navíc, takže na RPi 3 B+ je přednější varianta A.</p>
+  <ol>
+    <li>Přidej repozitář: <strong>Nastavení → Doplňky/Aplikace → Obchod → ⋮ → Repozitáře</strong>, vlož <code>https://github.com/thomasmauerer/hassio-addons</code> a nainstaluj <strong>„Samba Backup“</strong>.</li>
+    <li>Na záložce <strong>KONFIGURACE</strong> nastav:
+<pre><code>host: "192.168.0.X"              # IP adresa Synology NAS
 share: "homeassistant_backup"    # název sdílené složky
 target_dir: ""                   # podadresář (prázdné = kořen)
-username: "ha_backup"            # uživatel z kroku 3
+username: "ha_backup"            # uživatel z přípravy na NAS
 password: "tvoje_heslo_nas"
 keep_local: 3                    # počet záloh na SSD
 keep_remote: 14                  # počet záloh na NAS
@@ -213,131 +215,111 @@ trigger_days:
   - Fri
   - Sat
   - Sun</code></pre>
-          <p>Klikni <strong>Uložit</strong> → záložka Informace → <strong>Start on boot = ON</strong>, <strong>Watchdog = ON</strong> → <strong>SPUSTIT</strong>.</p>
-        </div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <div class="step-title">Ověř první zálohu na NAS</div>
-        <div class="step-desc">
-          <p>V záložce <strong>PROTOKOL</strong> Samba Backup sleduj výstup. Pro okamžitý test klikni tlačítko <strong>Spustit zálohu</strong>. Záloha by se měla zkopírovat na NAS.</p>
-          <p>Ověř na Synology: File Station → homeassistant_backup → uvidíš <code>.tar</code> soubory.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="callout callout-tip">
-    <div class="callout-title">💡 Hyper Backup jako alternativa</div>
-    <p>Synology má vlastní zálohovací aplikaci <strong>Hyper Backup</strong>. Ta umí SMB složku zálohovacího disku HA plánovaně kopírovat nebo verzovat. Jdi v DSM na: Hyper Backup → Create → SMB/CIFS → zadej adresu HA (<code>\\192.168.1.50\backup</code>) → nastav plán. Výhoda: verzování, deduplikace a šifrování na straně NAS.</p>
+    </li>
+    <li>Ulož, na záložce Informace zapni <strong>Start on boot</strong> a <strong>Watchdog</strong> a klikni <strong>Spustit</strong>. V záložce Log sleduj výstup. Ověř na Synology (File Station → homeassistant_backup), že se objevily soubory <code>.tar</code>.</li>
+  </ol>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Hyper Backup</div>
+    <p>Synology Hyper Backup zálohuje data z NAS ven. Na stahování záloh z Home Assistantu se nehodí, protože HA zálohy na NAS posílá sám (varianty A až C).</p>
   </div>
 </section>
 
-<!-- GOOGLE DRIVE -->
+<!-- CLOUD ZDARMA -->
 <section class="sec">
-  <h2 id="gdrive">Google Drive</h2>
-  <p>Google Drive Backup add-on automaticky nahrává zálohy do cloudu – ochrana i při fyzické ztrátě nebo poškození všech lokálních zařízení.</p>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Přidej repozitář a nainstaluj Google Drive Backup</div>
-        <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Doplňky → ADD-ON STORE → ⋮ → Repozitáře</strong>. Přidej:</p>
-          <pre>https://github.com/sabeechen/hassio-google-drive-backup</pre>
-          <p>Nainstaluj <strong>"Home Assistant Google Drive Backup"</strong>. Spusť add-on.</p>
-        </div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Autorizuj přístup ke Google Drive</div>
-        <div class="step-desc">
-          <p>Klikni <strong>OTEVŘÍT WEBOVÉ ROZHRANÍ</strong>. Zobrazí se průvodce.</p>
-          <ul>
-            <li>Klikni <strong>"Authenticate with Google Drive"</strong></li>
-            <li>Přihlaš se ke svému Google účtu</li>
-            <li>Povol přístup k Google Drive</li>
-            <li>Budeš přesměrován zpět do HA</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Nastav zálohovací parametry</div>
-        <div class="step-desc">
-          <p>V nastavení add-onu:</p>
-          <ul>
-            <li><strong>Max backups in HA:</strong> <code>3</code> (lokálně)</li>
-            <li><strong>Max backups in Drive:</strong> <code>10</code> (v cloudu)</li>
-            <li><strong>Backup Time:</strong> <code>02:30</code> (před Samba Backup)</li>
-            <li><strong>Backup Name:</strong> <code>{type} Backup {date}</code></li>
-            <li><strong>Backup Password:</strong> (volitelné – šifruje soubor před nahráním)</li>
-          </ul>
-          <p>Klikni <strong>"Save Settings"</strong>. Pro ověření klikni <strong>"Backup Now"</strong>.</p>
-          <p>Zálohy najdeš v Google Drive: <strong>drive.google.com</strong> → složka <code>Home Assistant Backups</code>.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="callout callout-info">
-    <div class="callout-title">ℹ️ Google Drive kapacita</div>
-    <p>Google One nabízí 15 GB zdarma. Záloha HA typicky zabírá 50–200 MB. Při 10 zálohách na Drive to je max. 2 GB – vejdeš se pohodlně.</p>
-  </div>
+  <h2 id="cloud">Cloud zdarma</h2>
+  <p>Záloha mimo domov chrání i při krádeži nebo požáru. Používej jen bezplatný limit služby. Záloha obvykle zabere desítky až stovky MB, takže při deseti zálohách se vejdeš do několika GB. Zálohy jsou šifrované, takže jsou v cloudu v bezpečí.</p>
+
+  <h3>Varianta A: Google Drive nativní integrací (zdarma, složitější nastavení)</h3>
+  <p>Google Drive dává zdarma 15 GB. Integrace vyžaduje vlastní přístupové údaje (OAuth) z Google Cloud Console. Je to jednorázová práce na pár minut.</p>
+  <ol>
+    <li>V <strong>Google Cloud Console</strong> vytvoř projekt, povol <strong>Google Drive API</strong> a nastav <strong>OAuth consent screen</strong>.</li>
+    <li>V <strong>Credentials</strong> vytvoř <strong>OAuth client ID</strong> typu <strong>Web application</strong> a do <strong>Authorized redirect URIs</strong> přidej <code>https://my.home-assistant.io/redirect/oauth</code>.</li>
+    <li>V HA jdi do <strong>Nastavení → Zařízení a služby → Přidat integraci</strong>, vyber <strong>Google Drive</strong>, zadej Client ID a Client Secret a autorizuj přístup.</li>
+    <li>V Google Drive vznikne složka <strong>Home Assistant</strong> pro zálohy. V <strong>Nastavení → Systém → Zálohy</strong> zapni Google Drive jako umístění záloh.</li>
+  </ol>
+
+  <h3>Varianta B: komunitní aplikace Google Drive Backup (jednodušší přihlášení)</h3>
+  <p>Aplikace sama vytváří zálohy podle vlastního plánu a nahrává je na Google Drive. Autorizace je jednodušší, ale aplikace zabírá paměť navíc.</p>
+  <ol>
+    <li>Přidej repozitář <code>https://github.com/sabeechen/hassio-google-drive-backup</code> (Obchod → ⋮ → Repozitáře) a nainstaluj <strong>„Home Assistant Google Drive Backup“</strong>. Spusť aplikaci.</li>
+    <li>Klikni <strong>Otevřít webové rozhraní (OPEN WEB UI)</strong>, vyber <strong>„Authenticate with Google Drive“</strong>, přihlaš se ke Google účtu, povol přístup a potvrď <strong>„Send Credentials“</strong>.</li>
+    <li>Nastav počet záloh v HA a na Drive (např. 3 a 10), čas zálohování (např. <code>02:30</code>, ať se nekříží s plánem HA) a ulož. Pro test klikni <strong>„Backup Now“</strong>. Zálohy najdeš na drive.google.com ve složce <code>Home Assistant Backups</code>.</li>
+  </ol>
+
+  <h3>Varianta C: OneDrive</h3>
+  <p>Integrace OneDrive (od HA 2025.2) uloží zálohy do tvého Microsoft OneDrive. Přidej ji v <strong>Nastavení → Zařízení a služby → Přidat integraci</strong>, přihlas se účtem Microsoft a povol přístup. Bezplatný limit OneDrive je zhruba 5 GB (ověř podle svého účtu).</p>
+
 </section>
 
 <!-- STRATEGIE ZALOHOVANI -->
 <section class="sec">
   <h2 id="strategie">Zálohovací strategie</h2>
-  <p>Shrnutí doporučeného časového harmonogramu:</p>
+  <p>Vyber si úroveň podle toho, co máš k dispozici:</p>
   <ul>
-    <li><strong>02:30</strong> – Google Drive Backup vytvoří zálohu a nahraje na Drive</li>
-    <li><strong>03:00</strong> – HA automatická záloha (lokálně na SSD)</li>
-    <li><strong>04:00</strong> – Samba Backup zkopíruje novou zálohu na Synology NAS</li>
+    <li><strong>Minimální:</strong> jen lokální zálohy na SSD a ruční stažení zálohy na PC (Zobrazit všechny zálohy → ⋮ → Stáhnout zálohu) před velkými změnami</li>
+    <li><strong>Doporučená:</strong> lokálně + NAS nativním síťovým úložištěm (12.5, varianta A)</li>
+    <li><strong>Maximální (3-2-1):</strong> lokálně + NAS + cloud zdarma (12.6)</li>
+  </ul>
+  <h3>Časování</h3>
+  <ul>
+    <li><strong>03:00</strong> – automatická záloha HA. Nativní umístění (síťové úložiště, Google Drive, OneDrive) ji nahrají samy, žádný další čas nenastavuješ.</li>
+    <li>Komunitní aplikace mají vlastní plán: <strong>02:30</strong> Google Drive Backup, <strong>04:00</strong> Samba Backup. Vytvářejí nebo kopírují zálohy zvlášť, takže je nepoužívej souběžně s nativním umístěním stejného cíle.</li>
   </ul>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Poznámka k lokálnímu SSD</div>
-    <p>Tvůj mSATA USB SSD je primární bootovací disk HA. Zálohy uložené přímo na něm (<code>/backup/</code>) jsou rychle dostupné, ale neopravují výpadek samotného SSD. Proto jsou kopie na NAS a Drive klíčové. Google Drive Backup add-on automaticky spravuje rotaci – staré zálohy maže sám.</p>
+    <p>Tvůj mSATA USB SSD je primární bootovací disk HA. Zálohy uložené přímo na něm (<code>/backup/</code>) jsou rychle dostupné, ale neopraví výpadek samotného SSD. Proto jsou kopie na NAS a v cloudu klíčové. Nativní umístění nezatěžují paměť RPi 3 B+ tak jako další aplikace.</p>
   </div>
 </section>
 
 <!-- OBNOVA -->
 <section class="sec">
   <h2 id="obnova">Obnova ze zálohy</h2>
-  <p>Postup při havárii – jak obnovit HA ze zálohy. Čas obnovy: cca 10–20 minut.</p>
+  <p>Postup při havárii – jak obnovit HA ze zálohy. Čas obnovy je orientačně 10–20 minut.</p>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Potřebuješ šifrovací klíč</div>
+    <p>Bez šifrovacího klíče zálohy (viz sekce 12.3) nelze zálohu obnovit. Měj ho uložený mimo Home Assistant.</p>
+  </div>
 
   <div class="restore-box">
     <div class="restore-box-title">Scénář: SSD selhal nebo je HAOS v nefunkčním stavu</div>
-    <ol style="padding-left:20px;margin:0">
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Nahraj nový HAOS image na SSD přes Raspberry Pi Imager (viz Kapitola 04)</li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Spusť RPi – proveď první boot, <strong>ale neprocházej průvodcem nastavením</strong></li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Otevři <code>http://homeassistant.local:8123</code> → na uvítací obrazovce klikni <strong>"Restore from backup"</strong></li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Nahraj <code>.tar</code> zálohu z PC (stáhnutou z Google Drive nebo Synology)</li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Vyber <strong>Plná obnova</strong> → zadej heslo zálohy (pokud bylo nastaveno)</li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Klikni <strong>Obnovit</strong> – HA se restartuje a po 5–10 minutách je systém ve stavu ze zálohy</li>
+    <ol>
+      <li>Nahraj nový HAOS image na SSD přes Raspberry Pi Imager (viz Kapitola 04)</li>
+      <li>Spusť RPi a počkej na první boot, <strong>ale neprocházej průvodcem nastavením</strong></li>
+      <li>Otevři <code>http://192.168.0.11</code> (nebo <code>http://homeassistant.local</code>; u starších instalací s <code>:8123</code>) → na uvítací obrazovce klikni <strong>Obnovit ze zálohy (Restore from backup)</strong>, v novějších verzích <strong>Nahrát zálohu (Upload backup)</strong></li>
+      <li>Nahraj <code>.tar</code> zálohu z PC (stažené z NAS nebo z cloudu)</li>
+      <li>Vyber, co obnovit, zadej šifrovací klíč a klikni <strong>Obnovit zálohu (Restore backup)</strong></li>
+      <li>HA se restartuje a po několika minutách je systém ve stavu ze zálohy</li>
+      <li>Zkontroluj Zigbee2MQTT: koordinátor musí být stejný a musí odpovídat cestě k USB portu (viz <a href="03_raspberry_poznamka_k_zigbee_modulu.html#fw-aktualizace">sekce 3.5</a>)</li>
     </ol>
   </div>
 
   <div class="restore-box">
     <div class="restore-box-title">Scénář: Vadná aktualizace – chceme vrátit HA do předchozího stavu</div>
-    <ol style="padding-left:20px;margin:0">
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Jdi do <strong>Nastavení → Systém → Zálohy</strong></li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Najdi zálohu vytvořenou <strong>před aktualizací</strong> (automaticky pojmenovaná s datem)</li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Klikni na zálohu → <strong>Obnovit</strong></li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Vyber co obnovit (vše, nebo jen konfiguraci bez add-onů)</li>
-      <li style="margin:8px 0;color:var(--t2);font-size:.9em">Po obnově se HA restartuje</li>
+    <ol>
+      <li>Jdi do <strong>Nastavení → Systém → Zálohy</strong></li>
+      <li>Najdi zálohu vytvořenou <strong>před aktualizací</strong> (automaticky pojmenovaná s datem)</li>
+      <li>Klikni na zálohu → <strong>Obnovit (Restore)</strong></li>
+      <li>Vyber, co obnovit (vše, nebo jen část)</li>
+      <li>Po obnově se HA restartuje</li>
     </ol>
+  </div>
+
+  <div class="restore-box">
+    <div class="restore-box-title">Scénář: nový HAOS a zálohy leží na NAS nebo v cloudu</div>
+    <ol>
+      <li>Nejdřív stáhni zálohu z NAS nebo z cloudu na PC a postupuj podle prvního scénáře</li>
+      <li>Případně po prvním nastavení přidej stejné umístění (síťové úložiště, Google Drive) a zálohu obnov z něj. <strong>Nutné prověřit na tvém HA.</strong></li>
+    </ol>
+  </div>
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Otestuj obnovu</div>
+    <p>Záloha, kterou jsi nikdy neobnovil, je jen předpoklad. Zkus obnovu aspoň jednou, než ji budeš opravdu potřebovat.</p>
   </div>
 </section>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>První Spuštění Home Assistant – Raspberry Pi Průvodce</title>
+<title>První spuštění Home Assistant – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -32,7 +32,7 @@
 <header>
   <div class="h-num">// kapitola 05</div>
   <h1>První spuštění <em>Home Assistant</em></h1>
-  <p class="h-desc">Fyzické zapojení všech komponent, první boot z USB SSD, nalezení HA v síti a kompletní průvodce prvním nastavením – od vytvoření účtu po statickou IP adresu.</p>
+  <p class="h-desc">Fyzické zapojení všech komponent, první boot z USB SSD, nalezení HA v síti a kompletní průvodce prvním nastavením (onboarding) – od vytvoření účtu po statickou IP adresu.</p>
 </header>
 
 <!-- FYZICKÉ ZAPOJENÍ -->
@@ -47,7 +47,7 @@
       <div class="cable-order-num">1</div>
       <div class="cable-detail">
         <div class="cable-name">💽 mSATA USB SSD</div>
-        <div class="cable-note">Zasuň do USB portu – doporučuji horní pravý port (USB 2.0, vhodný pro SSD). Bez SD karty v slotu.</div>
+        <div class="cable-note">Zasuň do libovolného USB portu. Všechny čtyři porty RPi 3 B+ jsou USB 2.0 a sdílejí jeden řadič s Ethernetem, takže rozdíl mezi nimi není. SD karta nesmí být ve slotu.</div>
       </div>
     </div>
 
@@ -55,7 +55,7 @@
       <div class="cable-order-num">2</div>
       <div class="cable-detail">
         <div class="cable-name">📶 Zigbee USB koordinátor (SLZB-07)</div>
-        <div class="cable-note">Přes USB prodlužovací kabel (15–30 cm) do druhého USB portu. Prodlužovák dongle vystrčí od kovové desky a zlepší Zigbee příjem.</div>
+        <div class="cable-note">Přes USB prodlužovací kabel (extension cable) 15–30 cm do druhého USB portu. Prodlužovák dongle vystrčí od kovové desky a zlepší Zigbee příjem.</div>
       </div>
     </div>
 
@@ -68,10 +68,10 @@
     </div>
 
     <div class="cable-item">
-      <div class="cable-order-num" style="color:var(--green2)">4</div>
+      <div class="cable-order-num good">4</div>
       <div class="cable-detail">
-        <div class="cable-name">⚡ Napájecí zdroj (Micro-USB)</div>
-        <div class="cable-note">Jako poslední – tím se systém spustí. Používej originální RPi napájecí zdroj 5V/3A.</div>
+        <div class="cable-name">⚡ Napájecí zdroj (power supply, Micro-USB)</div>
+        <div class="cable-note">Jako poslední – tím se systém spustí. Použij kvalitní zdroj: minimum 5 V / 2,5 A, ideál 5,1 V / 3 A (viz <a href="02_raspberry_hardware.html#napajeni">sekce 2.2</a>).</div>
       </div>
     </div>
 
@@ -79,7 +79,12 @@
 
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ Bez SD karty!</div>
-    <p>Do slotu pro SD kartu <strong>NIC nevkládej</strong>. RPi musí bootovat z USB SSD. Pokud by byla vložena SD karta (i prázdná nebo s jiným OS), RPi by se pokusil bootovat z ní a neúspěšně.</p>
+    <p>Do slotu pro SD kartu <strong>NIC nevkládej</strong>. RPi musí bootovat z USB SSD. Podle dokumentace Home Assistant OS musí být všechny bootovací SD karty vyjmuty, jinak se RPi může pokusit bootovat z nich místo z USB.</p>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
+    <p>SSD zapoj do modrého USB 3.0 portu (rychlejší než USB 2.0). Zigbee dongle nech v USB 2.0 portu, USB 3.0 může rušit pásmo 2,4 GHz. Napájení je přes USB-C.</p>
   </div>
 </section>
 
@@ -89,10 +94,9 @@
   <p>Po připojení napájení se spustí první boot. Tento proces trvá výrazně déle než normální start – systém se rozbaluje, konfiguruje a nastavuje. <strong>Buď trpělivý.</strong></p>
 
   <ul>
-    <li>🟡 <strong>0–2 minuty:</strong> RPi bootuje HAOS z USB SSD</li>
-    <li>🟡 <strong>2–10 minut:</strong> HAOS rozbaluje kontejnery, stahuje supervisor a core komponenty</li>
-    <li>🟡 <strong>10–20 minut:</strong> Supervisor iniciuje Home Assistant Core, stahuje aktuální verzi</li>
-    <li>🟢 <strong>Po 10–25 minutách:</strong> Systém je připraven</li>
+    <li>🟡 <strong>První minuty:</strong> RPi bootuje HAOS z USB SSD. Z USB to může trvat déle než ze SD karty.</li>
+    <li>🟡 <strong>Pak:</strong> systém se připraví a stáhne aktuální verzi Home Assistant Core (asi 700 MB, záleží na rychlosti internetu). Na webu uvidíš stránku „Preparing Home Assistant“.</li>
+    <li>🟢 <strong>Obvykle po 10–25 minutách:</strong> systém je připraven a objeví se průvodce prvním nastavením (orientační odhad).</li>
   </ul>
 
   <div class="callout callout-danger">
@@ -100,45 +104,54 @@
     <p><strong>NIKDY nepřerušuj napájení během prvního bootu!</strong> Systém zapisuje databázi, konfiguraci a soubory. Přerušení může způsobit poškození dat a budeš muset celý proces opakovat od začátku.</p>
   </div>
 
-  <h3>LED indikátory RPi 3 B+ při bootu</h3>
-  <p>Fyzické LED kontrolky na desce RPi prozradí co se děje i bez přístupu k monitoru:</p>
+  <h3>Kontrolky RPi 3 B+ při bootu</h3>
+  <p>Kontrolky na desce poznají jen základní stavy. Zelená kontrolka ACT souvisí hlavně s přístupem k SD kartě, takže při bootu z USB SSD nemusí svítit ani blikat a není to chyba.</p>
   <ul>
-    <li><strong>Červená LED (PWR):</strong> svítí trvale = napájení v pořádku. Nesvítí vůbec = napájecí problém, zkontroluj zdroj.</li>
-    <li><strong>Zelená LED (ACT):</strong> rychlé nepravidelné blikání = aktivita SSD, systém načítá data = normální</li>
-    <li><strong>Zelená LED bliká vzorem 4×:</strong> USB boot byl právě aktivován (jen při aktivaci z Kapitoly 04)</li>
-    <li><strong>Zelená LED nesvítí vůbec:</strong> systém se nespustil nebo SSD nelze přečíst – zkontroluj zapojení</li>
-    <li><strong>Po dokončení bootu:</strong> zelená LED bliká pomalu a nepravidelně – systém běží a zpracovává úlohy</li>
+    <li><strong>Červená kontrolka (PWR):</strong> svítí trvale = napájení v pořádku. Nesvítí nebo bliká = problém s napájením, zkontroluj zdroj a kabel (viz <a href="02_raspberry_hardware.html#napajeni">sekce 2.2</a>).</li>
+    <li><strong>Zelená kontrolka (ACT):</strong> ukazuje hlavně přístup k SD kartě. Při bootu z USB SSD proto její chování o stavu systému nic neříká.</li>
+    <li><strong>Ethernetový konektor:</strong> má dvě kontrolky, žlutá = připojený kabel (link), zelená = provoz (activity). Pokud nesvítí žádná, zkontroluj kabel a router.</li>
+    <li><strong>Spolehlivá kontrola:</strong> seznam zařízení v routeru (zařízení „homeassistant“) nebo monitor připojený přes HDMI. Na monitoru uvidíš průběh startu a konzoli Home Assistant OS.</li>
   </ul>
 </section>
 
 <!-- NALEZENÍ IP -->
 <section class="sec">
   <h2 id="ip-adresa">Nalezení IP adresy</h2>
-  <p>Adresa <code>homeassistant.local</code> funguje přes mDNS a nemusí fungovat na všech sítích (zejména starší routery). Jako zálohu si zjisti přímou IP adresu:</p>
+  <p>Adresa <code>homeassistant.local</code> funguje přes mDNS (multicast DNS) a nemusí fungovat na všech sítích (zejména starší routery). Jako zálohu si zjisti přímou IP adresu (IP address).</p>
+  <p>Od Home Assistantu 2026.8 běží <strong>nové instalace</strong> Home Assistant OS na portu 80, takže adresa nemá číslo portu. Starší instalace používají port 8123. Pokud jedna adresa nefunguje, zkus druhou.</p>
 
   <div class="ip-methods">
     <div class="ip-method">
       <div class="ip-method-title">🌐 Přes webové rozhraní routeru</div>
-      <p>Přihlaš se do routeru (obvykle <code>192.168.1.1</code> nebo <code>192.168.0.1</code>). Najdi seznam připojených zařízení (DHCP clients / Connected devices). Hledej zařízení s názvem <strong>"homeassistant"</strong> nebo <strong>"hassio"</strong>. Poznamenej si IP adresu.</p>
+      <p>Přihlaš se do routeru (obvykle <code>192.168.0.1</code>). Najdi seznam připojených zařízení (DHCP clients / Connected devices). Hledej zařízení s názvem <strong>"homeassistant"</strong> nebo <strong>"hassio"</strong>. Poznamenej si IP adresu.</p>
     </div>
     <div class="ip-method">
       <div class="ip-method-title">🔍 Přes network scanner</div>
-      <p>Na Windows: stáhni <strong>Advanced IP Scanner</strong> (zdarma) nebo použij <strong>nmap</strong>. Spusť sken lokální sítě (např. 192.168.1.0/24) a hledej zařízení s hostname "homeassistant".</p>
+      <p>Na Windows: stáhni <strong>Advanced IP Scanner</strong> (zdarma) nebo použij <strong>nmap</strong>. Spusť sken lokální sítě (např. 192.168.0.0/24) a hledej zařízení s hostname "homeassistant".</p>
+    </div>
+    <div class="ip-method">
+      <div class="ip-method-title">🖥️ Přes monitor (HDMI)</div>
+      <p>Zapoj monitor přes HDMI ještě před zapnutím RPi. Po startu se na obrazovce zobrazí konzole Home Assistant OS s IP adresou.</p>
+    </div>
+    <div class="ip-method">
+      <div class="ip-method-title">📡 Příkazem ping</div>
+      <p>V příkazovém řádku Windows spusť <code>ping homeassistant.local</code>. V odpovědi uvidíš IP adresu. Funguje jen tam, kde funguje mDNS.</p>
     </div>
   </div>
 
-  <p>Jakmile máš IP adresu (např. <code>192.168.1.50</code>), přistupuj přes:</p>
-  <pre><code>http://192.168.1.50:8123</code></pre>
+  <p>Jakmile máš IP adresu (např. <code>192.168.0.11</code>), přistupuj přes:</p>
+  <pre><code>http://192.168.0.11         (nové instalace od verze 2026.8)
+http://192.168.0.11:8123    (starší instalace)</code></pre>
 </section>
 
 <!-- PRVNÍ NASTAVENÍ -->
 <section class="sec">
   <h2 id="prvni-nastaveni">Průvodce prvním nastavením</h2>
-  <p>Po otevření <code>http://homeassistant.local:8123</code> nebo IP adresy se zobrazí průvodce. Projdeme ho krok za krokem:</p>
+  <p>Po otevření adresy z předchozí sekce se nejdřív zobrazí stránka „Preparing Home Assistant“, během které se stahuje aktuální verze Home Assistant Core (asi 700 MB). Pak se objeví průvodce. Projdeme ho krok za krokem:</p>
 
-  <div class="callout callout-warn">
-    <div class="callout-title">⚠️ Uživatelské jméno nelze po vytvoření změnit!</div>
-    <p>Zvol pečlivě – doporučuji jednoduché, <strong>bez diakritiky a bez mezer</strong> (např. <code>admin</code> nebo tvoje jméno bez háčků a čárek). Heslo změnit jde kdykoli, uživatelské jméno bohužel ne – bez kompletního resetu systému.</p>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Uživatelské jméno lze později změnit</div>
+    <p>Zvol ho přesto pečlivě. Musí být z <strong>malých písmen a bez mezer</strong> (doporučuji i bez diakritiky, např. <code>admin</code>). Později ho může změnit vlastník účtu (owner): Nastavení → Osoby → vybrat osobu → Upravit u uživatelského jména (Settings → People → Edit).</p>
   </div>
 
   <div class="steps">
@@ -148,7 +161,7 @@
       <div class="step-body">
         <div class="step-title">Uvítací obrazovka</div>
         <div class="step-desc">
-          <p>Zobrazí se "Welcome to Home Assistant". Klikni <strong>"Create my smart home"</strong>.</p>
+          <p>Zobrazí se "Welcome to Home Assistant". Klikni <strong>„Vytvořit můj chytrý domov“ (Create my smart home)</strong>.</p>
         </div>
       </div>
     </div>
@@ -160,12 +173,12 @@
         <div class="step-desc">
           <p>Toto je tvůj hlavní přihlašovací účet – <strong>uložit bezpečně!</strong></p>
           <ul>
-            <li><strong>Jméno:</strong> tvoje jméno (zobrazovací)</li>
-            <li><strong>Uživatelské jméno:</strong> přihlašovací jméno, bez mezer (např. <code>admin</code>)</li>
-            <li><strong>Heslo:</strong> min. 12 znaků, kombinace písmen, čísel a symbolů</li>
-            <li><strong>Potvrď heslo:</strong> zadej znovu</li>
+            <li><strong>Jméno (Name):</strong> tvoje jméno, zobrazuje se v rozhraní</li>
+            <li><strong>Uživatelské jméno (Username):</strong> přihlašovací jméno z malých písmen bez mezer (např. <code>admin</code>)</li>
+            <li><strong>Heslo (Password):</strong> min. 16 znaků, kombinace písmen, čísel a symbolů</li>
+            <li><strong>Potvrzení hesla:</strong> zadej znovu</li>
           </ul>
-          <p>Toto heslo nelze obnovit bez přístupu k systému. Zapiš si ho do bezpečného místa (password manager).</p>
+          <p>Klikni <strong>„Vytvořit účet“ (Create account)</strong>. Heslo si zapiš do bezpečného místa (správce hesel, password manager).</p>
         </div>
       </div>
     </div>
@@ -173,16 +186,15 @@
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
-        <div class="step-title">Nastavení domácnosti a polohy</div>
+        <div class="step-title">Poloha domácnosti</div>
         <div class="step-desc">
-          <p>Tato nastavení se používají pro astronomické automatizace (západ/východ slunce, přítomnost doma).</p>
+          <p>Home Assistant se pokusí určit polohu z IP adresy. Zkontroluj ji, případně klikni na mapu nebo zadej adresu (stačí přibližně, město nebo čtvrť). Z polohy se odvozuje časové pásmo, systém jednotek a měna a vytvoří se zóna Domov (Home) s poloměrem 100 m. Ta se používá například pro astronomické automatizace (západ a východ slunce) a přítomnost doma.</p>
           <ul>
-            <li><strong>Jméno domácnosti:</strong> libovolný název (např. "Moje Home")</li>
             <li><strong>Časové pásmo:</strong> Europe/Prague</li>
-            <li><strong>Poloha:</strong> klikni na mapu nebo zadej souřadnice – stačí přibližně, město nebo čtvrť</li>
-            <li><strong>Systém jednotek:</strong> Metrické</li>
+            <li><strong>Systém jednotek:</strong> metrický</li>
             <li><strong>Měna:</strong> CZK</li>
           </ul>
+          <p>Po nalezení polohy klikni <strong>Next</strong>. Hodnoty můžeš později změnit v nastavení.</p>
         </div>
       </div>
     </div>
@@ -190,9 +202,9 @@
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
-        <div class="step-title">Přeskočit automatickou detekci zařízení</div>
+        <div class="step-title">Anonymní analytika</div>
         <div class="step-desc">
-          <p>HA nabídne automaticky nalezená zařízení v síti (Philips Hue Bridge, Sonos, Chromecast...). Tato stránka je volitelná – klikni <strong>"Skip"</strong> (Přeskočit). Zařízení přidáme manuálně přes Zigbee2MQTT.</p>
+          <p>Home Assistant se zeptá, zda posílat anonymní data o používání (Analytics). Je to dobrovolné. Vše můžeš nechat vypnuté a systém funguje stejně. Nastavení lze později změnit.</p>
         </div>
       </div>
     </div>
@@ -200,64 +212,78 @@
     <div class="step">
       <div class="step-num">5</div>
       <div class="step-body">
+        <div class="step-title">Nalezená zařízení</div>
+        <div class="step-desc">
+          <p>HA může nabídnout automaticky nalezená zařízení v síti (Philips Hue Bridge, Sonos, Chromecast...). Přidávat je teď nemusíš. Zařízení přidáme později, Zigbee zařízení přes Zigbee2MQTT.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
         <div class="step-title">Dokončení průvodce</div>
         <div class="step-desc">
-          <p>Klikni <strong>"Finish"</strong>. Jsi přihlášen do Home Assistant! Uvidíš hlavní dashboard (Overview).</p>
+          <p>Klikni <strong>„Dokončit“ (Finish)</strong>. Jsi přihlášen do Home Assistant! Uvidíš hlavní ovládací panel (dashboard) s názvem Přehled (Overview).</p>
           <p>Výchozí dashboard je prázdný – to je v pořádku. Karty a widgety přidáme po nastavení Zigbee zařízení.</p>
         </div>
       </div>
     </div>
 
   </div>
+
+  <h3>Varianta B: obnovení ze zálohy (restore)</h3>
+  <p>Pokud už máš zálohu dřívější instalace (viz <a href="12_raspberry_zalohovani.html">kapitola 12</a>), můžeš místo vytváření nového účtu zvolit na úvodní obrazovce <strong>Obnovit ze zálohy (Restore from backup)</strong>, v novějších verzích <strong>Nahrát zálohu (Upload backup)</strong>. Nahraj soubor zálohy, vyber, co obnovit, zadej šifrovací klíč (encryption key) a klikni <strong>Obnovit zálohu (Restore backup)</strong>. Home Assistant obnoví účty, nastavení i doplňky/aplikace (add-ons/apps). Pak pokračuj od sekce 5.5.</p>
 </section>
 
 <!-- STATICKÁ IP -->
 <section class="sec">
   <h2 id="staticka-ip">Pevná IP adresa</h2>
-  <p>DHCP router přiděluje IP adresy dynamicky – po restartu se může IP RPi změnit. Pro server který běží 24/7 chceme <strong>pevnou IP</strong>, aby záložky v prohlížeči vždy fungovaly.</p>
+  <p>DHCP router přiděluje IP adresy dynamicky – po restartu se může IP RPi změnit. Pro server, který běží 24/7, chceme <strong>pevnou IP</strong> (static IP), aby záložky v prohlížeči vždy fungovaly.</p>
 
   <h3>Varianta A – Rezervace v routeru (nejlepší způsob)</h3>
   <p>Přidej do routeru DHCP rezervaci: Router vždy přidělí konkrétní IP konkrétní MAC adrese RPi. Výhoda: nakonfigurováno v jednom místě, funguje i po přeinstalaci HAOS.</p>
   <ol>
-    <li>Přihlaš se do routeru (obvykle <code>192.168.1.1</code>)</li>
+    <li>Přihlaš se do routeru (obvykle <code>192.168.0.1</code>)</li>
     <li>Najdi seznam DHCP klientů – hledej "homeassistant"</li>
     <li>Zkopíruj MAC adresu RPi (formát: <code>b8:27:eb:xx:xx:xx</code>)</li>
     <li>Najdi sekci <strong>DHCP Reservations</strong> / <strong>Static IP</strong> / <strong>IP Binding</strong> (název závisí na routeru)</li>
-    <li>Přidej rezervaci: MAC adresa → zvolená IP (např. <code>192.168.1.50</code>)</li>
-    <li>Ulož a restartuj router</li>
+    <li>Přidej rezervaci: MAC adresa → zvolená IP (např. <code>192.168.0.11</code>)</li>
+    <li>Ulož. RPi dostane novou adresu po restartu (nebo po obnovení přidělení adresy v routeru)</li>
   </ol>
 
   <div class="callout callout-tip">
     <div class="callout-title">💡 Jakou IP zvolit?</div>
-    <p>Zvol IP <strong>mimo DHCP rozsah</strong> routeru. Zjistíš ho v nastavení routeru (obvykle 192.168.1.100–192.168.1.254). Dobrá volba: <code>192.168.1.50</code> nebo <code>192.168.1.10</code> – tyto adresy DHCP obvykle nepřiděluje.</p>
+    <p>Zvol IP <strong>mimo DHCP rozsah</strong> routeru. Zjistíš ho v nastavení routeru (obvykle 192.168.0.100–192.168.0.254). Dobrá volba: <code>192.168.0.11</code> nebo <code>192.168.0.10</code> – tyto adresy DHCP obvykle nepřiděluje.</p>
   </div>
 
   <h3>Varianta B – Nastavení přímo v Home Assistant</h3>
   <p>Pokud nemáš přístup do routeru nebo chceš nastavit IP přímo v HAOS:</p>
   <ol>
-    <li>Jdi do <strong>Nastavení → Systém → Síť</strong></li>
+    <li>Jdi do <strong>Nastavení → Systém → Síť (Settings → System → Network)</strong></li>
     <li>Klikni na rozhraní <strong>eth0</strong> (Ethernet)</li>
     <li>Přepni z <strong>"Automatic (DHCP)"</strong> na <strong>"Static"</strong></li>
     <li>Vyplň:
       <ul>
-        <li>IP adresa: <code>192.168.1.50/24</code> (nebo dle tvé sítě)</li>
-        <li>Brána (Gateway): <code>192.168.1.1</code> (adresa routeru)</li>
-        <li>DNS: <code>192.168.1.1</code> (router) nebo <code>1.1.1.1</code> (Cloudflare)</li>
+        <li>IP adresa: <code>192.168.0.11/24</code> (nebo dle tvé sítě)</li>
+        <li>Brána (Gateway): <code>192.168.0.1</code> (adresa routeru)</li>
+        <li>DNS: <code>192.168.0.1</code> (router) nebo <code>1.1.1.1</code> (Cloudflare)</li>
       </ul>
     </li>
-    <li>Ulož – RPi se restartuje, od té doby má pevnou IP</li>
+    <li>Ulož. Spojení se na chvíli přeruší a RPi bude mít pevnou IP</li>
   </ol>
 
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Po nastavení statické IP</div>
-    <p>Aktualizuj záložku v prohlížeči na novou adresu (např. <code>http://192.168.1.50:8123</code>). Přístup přes hostname <code>homeassistant.local:8123</code> bude nadále fungovat.</p>
+    <p>Aktualizuj záložku v prohlížeči na novou adresu (např. <code>http://192.168.0.11</code>, u starších instalací <code>http://192.168.0.11:8123</code>). Přístup přes hostname <code>homeassistant.local</code> bude nadále fungovat.</p>
+    <p>Od verze 2026.8 jde port změnit v Nastavení → Systém → Síť. Pokud změnu do pěti minut nepotvrdíš, Home Assistant se automaticky vrátí k původnímu portu.</p>
   </div>
 </section>
 
 <!-- WIFI -->
 <section class="sec">
   <h2 id="wifi-setup">Nastavení WiFi</h2>
-  <p>Pokud nemůžeš přivést Ethernet kabel, Home Assistant OS podporuje WiFi připojení. Konfiguruje se po prvním spuštění přímo v rozhraní HA.</p>
+  <p>Pokud nemůžeš přivést Ethernet kabel, Home Assistant OS podporuje WiFi připojení. RPi 3 B+ zvládá WiFi 2,4 i 5 GHz. Konfiguruje se po prvním spuštění přímo v rozhraní HA.</p>
   <ol>
     <li>Jdi do <strong>Nastavení → Systém → Síť</strong></li>
     <li>Klikni na <strong>+ Přidat síť</strong> nebo na bezdrátové rozhraní <strong>wlan0</strong></li>
@@ -267,7 +293,7 @@
   </ol>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ Ethernet je vždy lepší volba</div>
-    <p>Pro server běžící 24/7 <strong>doporučuji Ethernet</strong>. WiFi může mít výpadky, vyšší latenci a problémy při rušení sítě. HA zapisuje data průběžně – nestabilní spojení způsobuje chyby v databázi. Ethernet kabel = žádné starosti.</p>
+    <p>Pro server běžící 24/7 <strong>doporučuji Ethernet</strong>. WiFi může mít výpadky, vyšší latenci a problémy při rušení. Pokud WiFi použiješ, zvol pásmo 5 GHz, aby nerušilo Zigbee v pásmu 2,4 GHz. Ethernet je stabilnější a pásmo 2,4 GHz nezatěžuje.</p>
   </div>
 </section>
 
@@ -276,18 +302,18 @@
   <h2 id="dokonceni">Co jsi právě dokončil</h2>
   <ul>
     <li>✅ RPi 3 B+ fyzicky zapojen a spuštěn z USB SSD</li>
-    <li>✅ Home Assistant OS nabooting a plně funkční</li>
+    <li>✅ Home Assistant OS nabootovaný a plně funkční</li>
     <li>✅ Vytvořen administrátorský účet</li>
     <li>✅ Nastavena poloha, časová zóna a jednotky</li>
     <li>✅ Pevná IP adresa v síti</li>
   </ul>
-  <p>Pokračuj na <a href="06_raspberry_zakladni_nastaveni_home_assistant.html">Kapitolu 06 – Základní nastavení Home Assistant</a> kde povolíme pokročilý režim, provedeme aktualizace a připravíme systém na instalaci add-onů.</p>
+  <p>Pokračuj na <a href="06_raspberry_zakladni_nastaveni_home_assistant.html">Kapitolu 06 – Základní nastavení Home Assistant</a>, kde projdeme základní nastavení a aktualizace a připravíme systém na instalaci doplňků/aplikací (add-ons/apps).</p>
 </section>
 
 <div id="pn"></div>
 
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tipy A Doporučení Pro Provoz – Raspberry Pi Průvodce</title>
+<title>Tipy pro provoz – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -40,31 +40,32 @@
   <h2 id="pece-ssd">Péče o SSD</h2>
   <p>Přechodem ze SD karty na SSD jsi výrazně zvýšil spolehlivost. I tak je dobré znát pár zásad:</p>
   <ul>
-    <li><strong>Náhlý výpadek napájení</strong> je stále největší riziko – SSD to zvládne lépe než SD karta, ale konzistence databáze může být narušena. Zvažuj UPS (záložní napájení) pro RPi.</li>
-    <li><strong>USB pouzdro s JMS578</strong> může způsobovat problémy – viz Kapitola 02. Pokud máš náhodné pády, přidej UAS quirks.</li>
-    <li><strong>SMART monitoring</strong>: přes SSH spusť <code>smartctl -a /dev/sda</code> – zobrazí zdravotní stav SSD. Doporučuji zkontrolovat 1× ročně.</li>
-    <li><strong>Teplota SSD</strong> v pouzdře je normálně 40–60°C při zátěži – to je v pořádku. Nad 70°C začíná být potenciálně problematické.</li>
+    <li><strong>Náhlý výpadek napájení</strong> je stále největší riziko – SSD to zvládne lépe než SD karta, ale konzistence databáze může být narušena. Zvažuj záložní napájení (UPS) pro RPi.</li>
+    <li><strong>USB pouzdro</strong> s některými řadiči (např. JMS578) může způsobovat pády kvůli UAS. Postup řešení je v <a href="02_raspberry_hardware.html#ssd-pouzdro">sekci 2.3</a> a v <a href="14_raspberry_reseni_problemu_troubleshooting.html">kapitole 14</a>.</li>
+    <li><strong>Kontrola zdraví SSD (SMART):</strong> příkaz bývá <code>smartctl -a -d sat /dev/sda</code> (přepínač <code>-d sat</code> je u USB pouzder většinou potřeba). Funguje jen tehdy, když pouzdro SMART data předává. V aplikaci Terminal &amp; SSH nemusí být <code>smartctl</code> ani zařízení <code>/dev/sda</code> dostupné. <strong>Nutné prověřit na tvém RPi.</strong> Zkontroluj 1× ročně.</li>
+    <li><strong>Teplota SSD</strong> v pouzdře je při zátěži orientačně 40–60 °C, což je v pořádku. Nad 70 °C je potenciálně problematická.</li>
   </ul>
   <div class="callout callout-tip">
     <div class="callout-title">💡 UPS pro RPi – skvělá investice</div>
-    <p>Malý UPS (záložní napájení) za 500–1500 Kč ochrání RPi před výpadky proudu a překlenutí neplánovaných odstávek. Hledej UPS s USB výstupem 5V/3A nebo použij napájecí powerbank s pass-through nabíjením.</p>
+    <p>Malý UPS (záložní napájení) ochrání RPi před výpadky proudu a překlene neplánované odstávky. Hledej UPS s USB výstupem 5 V s dostatečným proudem (viz <a href="02_raspberry_hardware.html#napajeni">sekce 2.2</a>). Powerbank s „pass-through“ nabíjením (nabíjení a výstup současně) nebývá vždy spolehlivý, proto si přečti recenze. Aktuální ceny: <a href="https://www.heureka.cz/?h%5Bfraze%5D=UPS+pro+Raspberry+Pi" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=UPS+pro+Raspberry+Pi" target="_blank" rel="noopener noreferrer">Google</a></p>
   </div>
 </section>
 
 <!-- AKTUALIZACE -->
 <section class="sec">
   <h2 id="aktualizace">Strategie aktualizací</h2>
-  <p>Pravidelné aktualizace přinášejí bezpečnostní záplaty, nové funkce a opravy chyb. Ale špatně načasovaná aktualizace může způsobit problémy.</p>
+  <p>Pravidelné aktualizace přinášejí bezpečnostní záplaty, nové funkce a opravy chyb. Ale špatně načasovaná aktualizace může způsobit problémy. Home Assistant vychází jednou měsíčně, k tomu vycházejí opravné (patch) verze.</p>
   <ul>
-    <li><strong>Major verze (2025.X.0)</strong> – počkej vždy 5–7 dní. Komunita rychle reportuje kritické chyby a patch přichází za pár dní.</li>
-    <li><strong>Patch verze (2025.X.Y)</strong> – aktualizuj bez obav, opravují problémy.</li>
+    <li><strong>Major verze (2026.X.0)</strong> – počkej vždy 5–7 dní. Komunita rychle reportuje kritické chyby a patch přichází za pár dní.</li>
+    <li><strong>Patch verze (2026.X.Y)</strong> – aktualizuj bez obav, opravují problémy.</li>
     <li><strong>Bezpečnostní aktualizace</strong> – instaluj okamžitě bez čekání.</li>
-    <li><strong>Vždy před aktualizací</strong>: vytvořit ruční zálohu (Nastavení → Zálohy → + Vytvořit).</li>
-    <li><strong>Release notes</strong>: čti přehled změn na <a href="https://www.home-assistant.io/blog/" target="_blank">home-assistant.io/blog</a> – upozorňují na breaking changes.</li>
+    <li><strong>Vždy před aktualizací</strong> měj čerstvou zálohu. Home Assistant ti ji při aktualizaci nabídne (viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#auto-zalohy">sekce 6.4</a>), případně klikni <strong>Nastavení → Systém → Zálohy → Zálohovat nyní</strong>.</li>
+    <li><strong>Poznámky k vydání (release notes):</strong> čti přehled změn na <a href="https://www.home-assistant.io/blog/" target="_blank" rel="noopener noreferrer">home-assistant.io/blog</a>, upozorňují na breaking changes.</li>
+    <li><strong>Aplikace (add-ons/apps)</strong> se aktualizují na stejném místě: Nastavení → Systém → Aktualizace.</li>
   </ul>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ Breaking changes</div>
-    <p>HA občas zavádí změny které rozbijí existující konfiguraci nebo automatizace (tzv. breaking changes). Vždy přečti release notes sekci "Breaking Changes" před aktualizací major verze.</p>
+    <p>HA občas zavádí změny, které rozbijí existující konfiguraci nebo automatizace (tzv. breaking changes). Vždy přečti sekci „Breaking changes“ v poznámkách k vydání před aktualizací major verze.</p>
   </div>
 </section>
 
@@ -73,98 +74,105 @@
   <h2 id="zigbee-optimalizace">Optimalizace Zigbee sítě</h2>
 
   <h3>Umístění USB koordinátoru</h3>
-  <ul>
-    <li>Používej <strong>USB prodlužovací kabel 15–30 cm</strong> – dongle mimo kovové tělo RPi</li>
-    <li>Vzdálenost od WiFi routeru: <strong>minimálně 1 metr</strong> (WiFi 2.4 GHz a Zigbee se překrývají)</li>
-    <li>Ideální výška: <strong>1–1.5 metru od země</strong>, centrálně v bytě/domě</li>
-    <li>Vyhni se umístění v kovových skříních nebo za kovovými příčkami</li>
-  </ul>
+  <p>Umístění koordinátoru (anténa, prodlužovací kabel, vzdálenost od WiFi routeru, výška) je popsáno v <a href="03_raspberry_poznamka_k_zigbee_modulu.html#antena">sekci 3.6</a>. Platí tam i varování před kovovými skříněmi a příčkami.</p>
 
   <h3>Budování stabilní mesh sítě</h3>
   <ul>
-    <li>Pro byt do 60 m²: stačí koordinátor + 2–4 napájené routery (zásuvky)</li>
-    <li>Pro větší prostory: přidávej routery rovnoměrně – každý pokrývá cca 10–15 metrů</li>
+    <li>Pro menší byt obvykle stačí koordinátor a několik napájených routerů (zásuvky, žárovky)</li>
+    <li>Pro větší prostory přidávej routery rovnoměrně po bytě, dosah v budově ovlivňují zdi a stropy</li>
     <li>Routery musí být <strong>vždy napájeny</strong> – tvoří páteř sítě</li>
     <li>Bateriové senzory (end devices) automaticky hledají nejbližší router</li>
   </ul>
 
   <h3>Zigbee vs WiFi rušení</h3>
   <ul>
-    <li>Zigbee kanál <strong>15 nebo 20</strong> – minimální překryv s WiFi kanály 1, 6, 11</li>
+    <li>Zigbee kanál <strong>15 nebo 20</strong> – minimální překryv s WiFi kanály 1, 6, 11 (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#zigbee-kanal">sekce 9.3</a>)</li>
     <li>Pokud máš WiFi na kanálu 13, vyhni se Zigbee kanálu 25</li>
-    <li>Bluetooth na RPi 3 sdílí anténu s WiFi – pokud Bluetooth nepotřebuješ, v HAOS ho nechej vypnutý</li>
+    <li>Bluetooth na RPi 3 B+ sdílí rádiovou část s WiFi. Pokud Bluetooth nepotřebuješ, vypni ho: v souboru <code>config.txt</code> na bootovacím oddílu přidej řádek <code>dtoverlay=pi3-disable-bt</code>. Úprava je nejjednodušší z Windows (bootovací oddíl je FAT32, viz <a href="04_raspberry_priprava_usb_msata_ssd_windows.html#oddily">sekce 4.5</a>) a projeví se po restartu. Přestanou ti fungovat integrace využívající Bluetooth.</li>
   </ul>
 
   <h3>Vizualizace Zigbee sítě</h3>
-  <p>V Z2M webovém rozhraní jdi na záložku <strong>Map</strong>. Zobrazí se grafická mapa sítě – vidíš jak zařízení komunikují, přes které routery a jak silné je spojení. Slabé spoje jsou zobrazeny přerušovanou čárou.</p>
+  <p>V Z2M webovém rozhraní jdi na záložku <strong>Map</strong>. Zobrazí se grafická mapa sítě – vidíš, jak zařízení komunikují a přes které routery. Podrobnosti najdeš v dokumentaci Zigbee2MQTT.</p>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Stabilizace sítě po přidání zařízení</div>
-    <p>Po přidání nových zařízení nebo routerů trvá Zigbee síti cca <strong>24–48 hodin</strong> než se plně stabilizuje. Zařízení hledají optimální routy a mesh se reorganizuje. Pokud senzory hned nefungují dokonale – počkej den.</p>
+    <p>Po přidání nových zařízení nebo routerů se Zigbee síť stabilizuje postupně, může to trvat den i déle. Zařízení hledají optimální cesty a mesh se reorganizuje. Pokud senzory hned nefungují dokonale, počkej.</p>
   </div>
 </section>
 
 <!-- VYKON -->
 <section class="sec">
   <h2 id="vykon">Sledování výkonu</h2>
-  <p>RPi 3 B+ má 1 GB RAM. Sledování pomáhá odhalit problémy dříve než způsobí nestabilitu.</p>
+  <p>RPi 3 B+ má 1 GB RAM. Sledování pomáhá odhalit problémy dříve, než způsobí nestabilitu.</p>
 
   <h3>Kde sledovat výkon</h3>
   <ul>
-    <li><strong>Nastavení → Systém → Hardware</strong> – CPU, RAM, teplota v reálném čase</li>
-    <li><strong>Glances add-on</strong> – podrobný systémový monitor, webové rozhraní</li>
-    <li><strong>SSH</strong> → <code>top</code> nebo <code>htop</code> – interaktivní přehled procesů</li>
+    <li><strong>Integrace System Monitor (Sledování systému):</strong> Nastavení → Zařízení a služby → Přidat integraci (Settings → Devices &amp; services → Add integration). Nabízí senzory využití procesoru, teploty procesoru a paměti.</li>
+    <li><strong>Glances:</strong> integrace vyžaduje běžící Glances server (existuje i komunitní aplikace). Sama zatěžuje paměť, proto ji na RPi 3 B+ nepoužívej, pokud nemusíš.</li>
+    <li><strong>SSH</strong> → <code>top</code> – přehled procesů</li>
   </ul>
 
   <div class="perf-bar">
     <div class="perf-row">
-      <span class="perf-name">RAM využití – v pořádku</span>
-      <span class="perf-val ok">pod 700 MB</span>
+      <span class="perf-name">Využití paměti – v pořádku</span>
+      <span class="perf-val ok">do cca 70 %</span>
     </div>
     <div class="perf-row">
-      <span class="perf-name">RAM využití – sleduj</span>
-      <span class="perf-val warn">700–900 MB</span>
+      <span class="perf-name">Využití paměti – sleduj</span>
+      <span class="perf-val warn">cca 70–90 %</span>
     </div>
     <div class="perf-row">
-      <span class="perf-name">RAM využití – problém</span>
-      <span class="perf-val bad">nad 900 MB</span>
+      <span class="perf-name">Využití paměti – problém</span>
+      <span class="perf-val bad">nad cca 90 %</span>
     </div>
     <div class="perf-row">
-      <span class="perf-name">CPU teplota – v pořádku</span>
-      <span class="perf-val ok">pod 70°C</span>
+      <span class="perf-name">Teplota procesoru – v pořádku</span>
+      <span class="perf-val ok">pod 60 °C</span>
     </div>
     <div class="perf-row">
-      <span class="perf-name">CPU teplota – throttling</span>
-      <span class="perf-val bad">nad 80°C (RPi throttluje CPU)</span>
+      <span class="perf-name">Teplota procesoru – mírné omezení</span>
+      <span class="perf-val warn">od 60 °C (měkký limit)</span>
+    </div>
+    <div class="perf-row">
+      <span class="perf-name">Teplota procesoru – výrazné omezení</span>
+      <span class="perf-val bad">80–85 °C a více (throttling)</span>
     </div>
   </div>
+  <p>Hodnoty paměti jsou orientační. Teplotní limity jsou údaje výrobce RPi 3 B+ (viz <a href="02_raspberry_hardware.html#chlazeni">sekce 2.4</a>).</p>
 
   <h3>Jak ušetřit RAM</h3>
   <ul>
-    <li>Vypni nebo odinstaluj nepoužívané add-ony</li>
-    <li>Omez historii v <code>configuration.yaml</code>: přidej <code>recorder: purge_keep_days: 7</code> (výchozí je 10 dní)</li>
-    <li>Studio Code Server spotřebuje ~200 MB extra – používej jen při editaci, jinak zastav</li>
-    <li>Pokud HA trvale vyžaduje 900+ MB RAM, zvažuj přechod na RPi 4 (2–4 GB RAM)</li>
+    <li>Vypni nebo odinstaluj nepoužívané aplikace</li>
+    <li>Omez historii v <code>configuration.yaml</code>, viz <a href="#recorder">sekce 13.5</a></li>
+    <li>Studio Code Server (je-li nainstalovaný) používej jen při editaci, jinak ho zastav</li>
+    <li>Pokud paměť trvale dochází, je čas na Raspberry Pi 4 nebo novější. Oficiální dokumentace Zigbee2MQTT doporučuje aspoň RPi 4.</li>
   </ul>
+  <div class="callout callout-tip">
+    <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
+    <p>Mají výrazně více paměti a výkonu, takže tyto limity řešit nemusíš. Sledování stejnou integrací ale doporučuji i tam.</p>
+  </div>
 </section>
 
 <!-- RECORDER OPTIMALIZACE -->
 <section class="sec">
   <h2 id="recorder">Databáze (Recorder)</h2>
-  <p>HA Recorder ukládá historii hodnot senzorů do SQLite databáze. Na RPi 3 může být databáze pomalá pokud neomezeně roste.</p>
-  <p>Přidej do <code>/config/configuration.yaml</code>:</p>
+  <p>HA Recorder ukládá historii hodnot senzorů do SQLite databáze. Na RPi 3 může být databáze pomalá, pokud neomezeně roste.</p>
+  <p>Přidej do <code>/config/configuration.yaml</code> a restartuj Home Assistant:</p>
   <pre><code>recorder:
   purge_keep_days: 7         # uchovávej historii 7 dní (výchozí 10)
+  commit_interval: 30        # volitelně: méně častý zápis na SSD (výchozí 5 s)
   exclude:
     domains:
-      - automation
-      - script
       - sun
       - weather
     entity_globs:
-      - sensor.zigbee2mqtt_*  # vyloučení diagnostických senzorů Z2M</code></pre>
+      - sensor.*_linkquality  # kvalita signálu Zigbee zařízení (pokud je máš zapnuté)</code></pre>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Co nevylučovat</div>
+    <p>Vyloučením domény <code>automation</code> by ses připravil o historii a logbook automatizací, proto ji v příkladu nenajdeš. Vylučuj jen to, co opravdu nepotřebuješ.</p>
+  </div>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Čištění databáze</div>
-    <p>Pokud databáze narostla a HA je pomalé: Developer Tools → Services → <code>recorder.purge</code> → nastavit <code>keep_days: 5</code> a spustit. Databáze se vyčistí. Může trvat i 30 minut, HA bude dočasně pomalejší.</p>
+    <p>Pokud databáze narostla a HA je pomalé: <strong>Nástroje pro vývojáře → Akce (Developer tools → Actions)</strong> → <code>recorder.purge</code> → nastavit <code>keep_days: 5</code> a spustit. Může to trvat i desítky minut a HA bude dočasně pomalejší.</p>
   </div>
 
   <h3>Pokročilá volba: databáze v RAM</h3>
@@ -173,52 +181,52 @@
   db_url: "sqlite:///:memory:"   # databáze v RAM – ztratí se po restartu!</code></pre>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ In-memory databáze – co ztratíš</div>
-    <p>S <code>sqlite:///:memory:</code> ztratíš veškerou historii senzorů při každém restartu HA. Grafy v dashboardu budou prázdné. Automatizace závislé na historii přestanou fungovat. Doporučuji místo toho zkrátit <code>purge_keep_days: 3</code> – ušetříš místo ale historii zachováš.</p>
+    <p>S <code>sqlite:///:memory:</code> ztratíš veškerou historii senzorů při každém restartu HA. Grafy v ovládacím panelu (dashboard) budou prázdné. Automatizace závislé na historii přestanou fungovat. Doporučuji místo toho zkrátit <code>purge_keep_days: 3</code> – ušetříš místo, ale historii zachováš.</p>
   </div>
 </section>
 
 <!-- HACS -->
 <section class="sec">
   <h2 id="hacs">HACS – rozšíření</h2>
-  <p><strong>HACS (Home Assistant Community Store)</strong> výrazně rozšiřuje možnosti HA – přidává tisíce komunitních integrací, karet dashboardu a témat které nejsou v oficiálním storu.</p>
+  <p><strong>HACS (Home Assistant Community Store)</strong> výrazně rozšiřuje možnosti HA – přidává komunitní integrace, karty ovládacího panelu a témata, které nejsou v oficiální nabídce. Není oficiální součástí Home Assistantu. Potřebuješ <strong>bezplatný účet GitHub</strong>.</p>
 
   <h3>Co HACS nabízí</h3>
   <ul>
     <li><strong>Integrace</strong> – zařízení a služby bez oficiální podpory (Local Tuya, better_thermostat, Xiaomi Home...)</li>
-    <li><strong>Frontend karty</strong> – Mushroom Cards (moderní UI), ApexCharts (pokročilé grafy), Mini Graph Card, Button Card a stovky dalších</li>
-    <li><strong>Témata</strong> – desítky vizuálních témat dashboardu</li>
-    <li><strong>Automatizace a skripty</strong> – ready-made blueprints pro common use cases</li>
+    <li><strong>Frontend karty</strong> – Mushroom Cards (moderní UI), ApexCharts (pokročilé grafy), Mini Graph Card, Button Card a další</li>
+    <li><strong>Témata</strong> – vizuální témata ovládacího panelu</li>
   </ul>
 
   <h3>Jak nainstalovat HACS</h3>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Přidej HACS repozitář a nainstaluj</div>
-        <div class="step-desc">
-          <p>Potřebuješ SSH nebo File Editor přístup. Jdi na <a href="https://hacs.xyz/docs/setup/download/" target="_blank">hacs.xyz/docs/setup/download</a> a postupuj dle aktuálního návodu – instalace se občas mění.</p>
-          <p>Zjednodušeně: přes SSH spusť instalační skript:</p>
-          <pre><code>wget -O - https://get.hacs.xyz | bash -</code></pre>
-          <p>Po dokončení restartuj HA. Pak jdi do <strong>Nastavení → Zařízení a služby → + Přidat integraci → HACS</strong> a proveď autorizaci přes GitHub účet.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <p>Postup závisí na verzi Home Assistantu:</p>
+  <ul>
+    <li><strong>Home Assistant 2026.10 a starší (Home Assistant OS) – aplikace Get HACS:</strong>
+      <ol>
+        <li>Nastavení → Doplňky/Aplikace → Obchod → ⋮ → Repozitáře a vlož <code>https://github.com/hacs/addons</code></li>
+        <li>Nainstaluj aplikaci <strong>Get HACS</strong>, spusť ji a postupuj podle pokynů v jejím logu</li>
+        <li>Po dokončení jdi do <strong>Nastavení → Zařízení a služby → + Přidat integraci → HACS</strong> a proveď autorizaci přes GitHub (zadáš osmimístný kód na stránce GitHubu)</li>
+      </ol>
+    </li>
+    <li><strong>Home Assistant Container a Core – instalační skript:</strong> <code>wget -O - https://get.hacs.xyz | bash -</code> spuštěný přímo v prostředí Home Assistantu. Na Home Assistant OS ho nepoužívej, tam je správná cesta aplikace Get HACS.</li>
+    <li><strong>Home Assistant 2026.11 a novější:</strong> podle oficiální dokumentace HACS je HACS součástí Home Assistantu jako <strong>Marketplace</strong>. Nic se nestahuje. <strong>Nutné prověřit na tvém HA</strong>, jak se Marketplace otevírá a zda je potřeba GitHub účet.</li>
+  </ul>
+  <p>Aktuální postup vždy ověř na <a href="https://hacs.xyz/docs/use/download/download/" target="_blank" rel="noopener noreferrer">hacs.xyz</a>.</p>
 
   <h3>Doporučené HACS karty pro začátek</h3>
   <ul>
-    <li><strong>Mushroom Cards</strong> – krásné moderní karty, náhrada výchozích karet. Instalace: HACS → Frontend → Mushroom</li>
+    <li><strong>Mushroom Cards</strong> – moderní karty, náhrada výchozích karet. Instalace: HACS → Frontend → Mushroom</li>
     <li><strong>ApexCharts Card</strong> – pokročilé grafy teploty, spotřeby, přítomnosti. Výrazně lepší než vestavěný History Graph</li>
-    <li><strong>Mini Graph Card</strong> – kompaktní mini grafy přímo na dashboardu</li>
-    <li><strong>Browser Mod</strong> – proměnit tablet na pevný kiosk s HA dashboardem</li>
+    <li><strong>Mini Graph Card</strong> – kompaktní mini grafy přímo na ovládacím panelu</li>
+    <li><strong>Browser Mod</strong> – proměnit tablet na pevný kiosk s ovládacím panelem HA</li>
   </ul>
 
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ HACS instaluj až po stabilizaci základu</div>
-    <p>HACS a komunitní karty/integrace přidávají závislosti navíc. Instaluj je až poté co základní systém (Zigbee2MQTT, zálohy, bezpečnost) běží stabilně alespoň týden. Rozšiřování systému dříve než je stabilní základ ztěžuje hledání příčin problémů.</p>
+    <p>HACS a komunitní karty či integrace přidávají závislosti navíc a na RPi 3 B+ zatěžují paměť. Instaluj je až poté, co základní systém (Zigbee2MQTT, zálohy, bezpečnost) běží stabilně alespoň týden. Rozšiřování dříve než je stabilní základ ztěžuje hledání příčin problémů.</p>
   </div>
 </section>
+
+<!-- PRAVIDELNA UDRZBA -->
 <section class="sec">
   <h2 id="udrzba">Pravidelná údržba</h2>
 
@@ -228,21 +236,21 @@
       <div class="check-box"></div>
       <div class="check-item-body">
         <div class="check-item-title">Zkontroluj zálohy</div>
-        <div class="check-item-desc">Google Drive Backup dashboard – poslední záloha proběhla úspěšně?</div>
+        <div class="check-item-desc">Nastavení → Systém → Zálohy – poslední záloha proběhla úspěšně a je i na NAS nebo v cloudu?</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box"></div>
       <div class="check-item-body">
         <div class="check-item-title">Zkontroluj logy na chyby</div>
-        <div class="check-item-desc">Nastavení → Systém → Protokoly – hledej WARNING a ERROR</div>
+        <div class="check-item-desc">Nastavení → Systém → Logy – hledej WARNING a ERROR</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box"></div>
       <div class="check-item-body">
         <div class="check-item-title">Zkontroluj dostupnost Zigbee zařízení</div>
-        <div class="check-item-desc">Z2M rozhraní → Devices – všechna zařízení dostupná (zelená)?</div>
+        <div class="check-item-desc">Z2M rozhraní → Devices – jsou všechna zařízení dostupná?</div>
       </div>
     </div>
   </div>
@@ -253,21 +261,21 @@
       <div class="check-box"></div>
       <div class="check-item-body">
         <div class="check-item-title">Aktualizace systému</div>
-        <div class="check-item-desc">Počkej na patch verzi, vytvoř zálohu, pak aktualizuj</div>
+        <div class="check-item-desc">Počkej na patch verzi, měj zálohu, pak aktualizuj</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box"></div>
       <div class="check-item-body">
         <div class="check-item-title">Stav baterií v senzorech</div>
-        <div class="check-item-desc">Nastavení → Zařízení → filtruj dle battery_level entity pod 20 %</div>
+        <div class="check-item-desc">Nastavení → Zařízení a služby → Entity – vyhledej „battery“ a zkontroluj hodnoty pod 20 % (nebo nastav upozornění v sekci 13.8)</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box"></div>
       <div class="check-item-body">
-        <div class="check-item-title">Vymaž staré zálohy</div>
-        <div class="check-item-desc">Ponechej max. 5–7 lokálních záloh, starší smaž</div>
+        <div class="check-item-title">Staré zálohy</div>
+        <div class="check-item-desc">Zkontroluj, že se staré zálohy mažou samy (počet uchovávaných záloh nastavený v sekci 6.4)</div>
       </div>
     </div>
     <div class="check-item">
@@ -285,21 +293,21 @@
       <div class="check-box"></div>
       <div class="check-item-body">
         <div class="check-item-title">SMART kontrola SSD</div>
-        <div class="check-item-desc">SSH → <code>smartctl -a /dev/sda</code> – zkontroluj reallocated sectors a pending sectors</div>
+        <div class="check-item-desc">SSH → <code>smartctl -a -d sat /dev/sda</code> – zkontroluj reallocated sectors a pending sectors (nutné prověřit, viz sekce 13.1)</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box"></div>
       <div class="check-item-body">
         <div class="check-item-title">Ověřit zálohu obnovou</div>
-        <div class="check-item-desc">Jednou ročně otestuj zda záloha je skutečně obnovitelná (test na druhém RPi nebo VM)</div>
+        <div class="check-item-desc">Jednou ročně otestuj, zda je záloha skutečně obnovitelná (test na druhém RPi nebo SSD, viz sekce 12.8)</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box"></div>
       <div class="check-item-body">
-        <div class="check-item-title">Aktualizace firmware Zigbee koordinátoru</div>
-        <div class="check-item-desc">smlight.tech/flasher – zkontroluj a nainstaluj nový firmware koordinátoru</div>
+        <div class="check-item-title">Aktualizace firmwaru Zigbee koordinátoru</div>
+        <div class="check-item-desc">Podle výrobce koordinátoru (u SLZB-07 smlight.tech/flasher) zkontroluj a nainstaluj nový firmware</div>
       </div>
     </div>
   </div>
@@ -308,28 +316,57 @@
 <!-- NOTIFIKACE BATERIT -->
 <section class="sec">
   <h2 id="notifikace-bat">Notifikace vybitých baterií</h2>
-  <p>Užitečná automatizace: HA tě upozorní když baterie v Zigbee senzoru klesne pod 20 %.</p>
+  <p>Užitečná automatizace: HA tě upozorní, když baterie v Zigbee senzoru klesne pod 20 %. Máš tři varianty.</p>
+
+  <h3>Varianta A: hotový blueprint (doporučeno)</h3>
+  <p>Komunitní blueprint <strong>„Low battery level detection &amp; notification for all battery sensors“</strong> pravidelně kontroluje všechny senzory s device class <code>battery</code> a pošle upozornění. Nemusíš vypisovat jednotlivé senzory.</p>
+  <ol>
+    <li>Jdi do <strong>Nastavení → Automatizace a scény → Blueprinty</strong> a zvol import blueprintu (Import blueprint)</li>
+    <li>Vlož adresu <code>https://gist.github.com/sbyx/1f6f434f0903b872b84c4302637d0890</code> (popis a diskuze je na <a href="https://community.home-assistant.io/t/low-battery-level-detection-notification-for-all-battery-sensors/258664" target="_blank" rel="noopener noreferrer">fóru Home Assistantu</a>)</li>
+    <li>Vytvoř z blueprintu automatizaci, nastav hranici 20 % a akci odeslání upozornění na mobil</li>
+  </ol>
+
+  <h3>Varianta B: seznam konkrétních senzorů</h3>
+  <p>Zástupný znak (<code>sensor.*_battery</code>) v <code>entity_id</code> nefunguje, proto vypiš senzory ručně. Přidej přes <strong>Nastavení → Automatizace a scény → + Vytvořit automatizaci → ⋮ → Upravit v YAML (Edit in YAML)</strong>:</p>
   <pre><code>alias: "Notifikace: Vybité baterie"
-description: "Upozornění při battery_level pod 20 %"
-trigger:
-  - platform: numeric_state
-    entity_id: sensor.*_battery
+description: "Upozornění, když baterie klesne pod 20 %"
+triggers:
+  - trigger: numeric_state
+    entity_id:
+      - sensor.teplomer_loznice_battery
+      - sensor.senzor_dveri_battery
     below: 20
-condition: []
-action:
-  - service: notify.mobile_app_tvuj_telefon
+actions:
+  - action: notify.mobile_app_tvuj_telefon
+    data:
+      title: "🔋 Vybité baterie"
+      message: "Zařízení {{ trigger.to_state.name }} má baterii {{ trigger.to_state.state }} %"
+mode: queued</code></pre>
+  <p>Zápis <code>triggers</code>, <code>trigger</code>, <code>actions</code> a <code>action</code> platí od Home Assistantu 2024.10. Starší zápis <code>trigger / platform / service</code> funguje dál.</p>
+
+  <h3>Varianta C: všechny baterie jednou šablonou</h3>
+  <p>Spouštěč sleduje všechny senzory s device class <code>battery</code> a ve zprávě vypíše, které jsou slabé. <strong>Nutné prověřit na tvém HA</strong>:</p>
+  <pre><code>triggers:
+  - trigger: template
+    value_template: >
+      {% set ns = namespace(low=0) %}
+      {% for s in states.sensor if s.attributes.device_class == 'battery' and s.state | is_number and s.state | float &lt; 20 %}
+        {% set ns.low = ns.low + 1 %}
+      {% endfor %}
+      {{ ns.low &gt; 0 }}
+actions:
+  - action: notify.mobile_app_tvuj_telefon
     data:
       title: "🔋 Vybité baterie"
       message: >
-        Zařízení {{ trigger.to_state.name }} má baterii
-        {{ trigger.to_state.state }} %
-mode: single</code></pre>
-  <p>Přidej přes <strong>Nastavení → Automatizace → + Vytvořit → Edit in YAML</strong>.</p>
+        {% for s in states.sensor if s.attributes.device_class == 'battery' and s.state | is_number and s.state | float &lt; 20 %}
+          {{ s.name }} ({{ s.state }} %)
+        {% endfor %}</code></pre>
 </section>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

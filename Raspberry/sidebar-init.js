@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
       const t = document.documentElement.scrollTop;
       const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      progressBar.style.width = (t / h * 100) + '%';
+      progressBar.style.width = (h > 0 ? t / h * 100 : 0) + '%';
     });
   }
 
@@ -16,7 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Lokální kapitoly z JSON (pokud existují)
   const pageChaptersScript = document.getElementById('page-chapters');
-  const pageChapters = pageChaptersScript ? JSON.parse(pageChaptersScript.textContent).chapters : null;
+  let pageChapters = null;
+  if (pageChaptersScript) {
+    try {
+      pageChapters = JSON.parse(pageChaptersScript.textContent).chapters;
+    } catch (error) {
+      // Chyba v JSONu jedné stránky nesmí shodit sidebar a navigaci
+      console.error('page-chapters: neplatný JSON', error);
+    }
+  }
 
   const sidebarContainer = document.getElementById('sidebar');
   if (sidebarContainer) {
@@ -43,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
 
     sidebarContainer.innerHTML = `<nav class="sidebar" aria-label="Navigace">
-      <a href="${chapters[0].file}" class="sb-home">← Zpět na index</a>
+      ${currentPage === chapters[0].num ? '' : `<a href="${chapters[0].file}" class="sb-home">← Zpět na Úvod</a>`}
       <ul class="sb-chapters">${links}</ul>
     </nav>`;
 
@@ -60,22 +68,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const backdrop = document.createElement('div');
     backdrop.className = 'sidebar-backdrop';
 
+    const setMenuLabel = (isOpen) => {
+      hamburger.textContent = isOpen ? '✕' : '☰';
+      hamburger.setAttribute('aria-label', isOpen ? 'Zavřít menu' : 'Otevřít menu');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+    };
+
     const closeSidebar = () => {
       sidebar.classList.remove('open');
       backdrop.classList.remove('visible');
       document.body.classList.remove('menu-open');
-      hamburger.setAttribute('aria-expanded', 'false');
+      setMenuLabel(false);
     };
 
     const toggleSidebar = () => {
       const isOpen = sidebar.classList.toggle('open');
       backdrop.classList.toggle('visible', isOpen);
       document.body.classList.toggle('menu-open', isOpen);
-      hamburger.setAttribute('aria-expanded', String(isOpen));
+      setMenuLabel(isOpen);
     };
 
     hamburger.addEventListener('click', toggleSidebar);
     backdrop.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeSidebar();
+    });
 
     // Zavřít sidebar při kliknutí na kterýkoli odkaz
     sidebar.querySelectorAll('a').forEach((link) => {

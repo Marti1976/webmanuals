@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raspberry Pi 3 B+ & Home Assistant</title>
+<title>Raspberry Pi 3 B+ &amp; Home Assistant</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -17,8 +17,8 @@
 <!-- HEADER -->
 <header>
   <a href="../index.html" class="header-back">← Zpět na rozcestník</a>
-  <h1 class="logo">Raspberry Pi & <span>Home Assistant</span></h1>
-  <p class="tagline">Kompletní manuál pro RPi 3 B+ se Zigbee2MQTT. Od hardware přes přípravu SSD, instalaci brokerů až po bezpečnost a zálohování.</p>
+  <h1 class="logo">Raspberry Pi &amp; <span>Home Assistant</span></h1>
+  <p class="tagline">Kompletní manuál pro RPi 3 B+ se Zigbee2MQTT. Od hardwaru přes přípravu SSD, instalaci MQTT brokeru až po bezpečnost a zálohování (backup).</p>
   <div class="badges-h">
     <span class="badge-h bh-rasp1">🍓 Raspberry Pi</span>
     <span class="badge-h bh-rasp2">🏠 Home Assistant OS</span>
@@ -33,19 +33,19 @@
     <span class="stat-label">Kapitol postupu</span>
   </div>
   <div class="stat">
-    <span class="stat-num">1.0</span>
+    <span class="stat-num">1.1</span>
     <span class="stat-label">Aktuální verze (2026)</span>
   </div>
   <div class="stat">
     <span class="stat-num">USB</span>
-    <span class="stat-label">mSATA SSD Boot</span>
+    <span class="stat-label">Boot z mSATA SSD</span>
   </div>
 </section>
 
 <!-- CALLOUT -->
 <div class="callout">
   <div class="callout-title">💡 O čem je tento manuál?</div>
-  <p>Slouží k vybudování stabilní chytré domácnosti postavené na Raspberry Pi 3 B+ bez SD karty (boot z SSD). Využívá výkonný systém Zigbee2MQTT s moduly SMLIGHT SLZB-07 nebo Ebyte E72.</p>
+  <p>Slouží k vybudování chytré domácnosti postavené na Raspberry Pi 3 B+ bez SD karty (boot z SSD, SSD boot). Využívá Zigbee2MQTT s USB koordinátorem (coordinator) SMLIGHT SLZB-07 (srovnání s alternativami včetně Ebyte E72 je v kapitole 03).<br><br><strong>Raspberry Pi 3 B+ (1 GB RAM)</strong> se hodí na vyzkoušení a menší domácí provoz. Oficiální dokumentace Zigbee2MQTT pro Home Assistant ale pro stabilní provoz 24/7 doporučuje Raspberry Pi 4 nebo novější. Postup je pro novější modely velmi podobný. Kde se liší, upozorňují rámečky „🔼 Pro Raspberry Pi 4/5“.</p>
 </div>
 
 <!-- OBSAH -->
@@ -53,7 +53,7 @@
   <h2 class="sec-title">📚 Obsah manuálu</h2>
   <div class="grid">
     <!-- 01 -->
-    <a href="01_raspberry_prehled_systemu.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="01_raspberry_prehled_systemu.html" class="card">
       <span class="card-num">01</span>
       <div class="card-title">Přehled systému</div>
       <div class="card-desc">Co budeš mít po dokončení. Souhrn všech běžících služeb a výsledného stavu.</div>
@@ -61,15 +61,15 @@
     </a>
 
     <!-- 02 -->
-    <a href="02_raspberry_hardware.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="02_raspberry_hardware.html" class="card">
       <span class="card-num">02</span>
       <div class="card-title">Hardware</div>
-      <div class="card-desc">Seznam součástek, které potřebuješ koupit. Napájení, doporučené SSD disky a tipy na nákup.</div>
+      <div class="card-desc">Seznam součástek, které potřebuješ koupit. Napájení (power supply), doporučené SSD disky a tipy na nákup.</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 03 -->
-    <a href="03_raspberry_poznamka_k_zigbee_modulu.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="03_raspberry_poznamka_k_zigbee_modulu.html" class="card">
       <span class="card-num">03</span>
       <div class="card-title">Poznámka k modulu Zigbee</div>
       <div class="card-desc">Detailní porovnání a rozdíl mezi moduly SLZB-07 a Ebyte E72.</div>
@@ -77,95 +77,95 @@
     </a>
 
     <!-- 04 -->
-    <a href="04_raspberry_priprava_usb_msata_ssd_windows.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="04_raspberry_priprava_usb_msata_ssd_windows.html" class="card">
       <span class="card-num">04</span>
       <div class="card-title">Příprava USB mSATA SSD</div>
-      <div class="card-desc">Jak nastavit RPi3 pro bootování z USB a nahrání obrazu Home Assistant OS pod Windows.</div>
+      <div class="card-desc">Nahrání obrazu (image) Home Assistant OS na USB mSATA SSD pod Windows a start bez SD karty.</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 05 -->
-    <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html" class="card">
       <span class="card-num">05</span>
       <div class="card-title">První spuštění Home Assistant</div>
-      <div class="card-desc">Postup po připojení napájení. Založení účtu, prvotní onboarding a základní interface.</div>
+      <div class="card-desc">Postup po připojení napájení. Založení účtu, prvotní nastavení (onboarding) a základní rozhraní.</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 06 -->
-    <a href="06_raspberry_zakladni_nastaveni_home_assistant.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="06_raspberry_zakladni_nastaveni_home_assistant.html" class="card">
       <span class="card-num">06</span>
       <div class="card-title">Základní nastavení HA</div>
-      <div class="card-desc">Základní kroky hned po instalaci, jako nastavení sítě, uživatelů a profilu.</div>
+      <div class="card-desc">Základní kroky po instalaci: jazyk, aktualizace (updates), zálohy (backups), souborový editor (File editor), Samba, SSH a mobilní aplikace (Companion app).</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 07 -->
-    <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html" class="card">
       <span class="card-num">07</span>
       <div class="card-title">Instalace MQTT (Mosquitto)</div>
-      <div class="card-desc">Jak nainstalovat a nakonfigurovat nezbytný Mosquitto broker pro komunikaci.</div>
+      <div class="card-desc">Jak nainstalovat a nakonfigurovat Mosquitto, MQTT broker (zprostředkovatel zpráv), který je nezbytný pro komunikaci.</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 08 -->
-    <a href="08_raspberry_instalace_zigbee2mqtt.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="08_raspberry_instalace_zigbee2mqtt.html" class="card">
       <span class="card-num">08</span>
       <div class="card-title">Instalace Zigbee2MQTT</div>
-      <div class="card-desc">Krok za krokem přidání repozitáře a instalace nejlepšího doplňku pro správu sítě Zigbee.</div>
+      <div class="card-desc">Krok za krokem přidání repozitáře (repository) a instalace doplňku/aplikace (add-on/app) Zigbee2MQTT pro správu sítě Zigbee.</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 09 -->
-    <a href="09_raspberry_konfigurace_zigbee2mqtt.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="09_raspberry_konfigurace_zigbee2mqtt.html" class="card">
       <span class="card-num">09</span>
       <div class="card-title">Konfigurace Zigbee2MQTT</div>
-      <div class="card-desc">Detailní nastavení serial portů, šifrování a komunikace s brokerem.</div>
+      <div class="card-desc">Nastavení Zigbee2MQTT: adaptér (adapter), MQTT broker, Zigbee kanál (channel) a síťový klíč (network key).</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 10 -->
-    <a href="10_raspberry_pridavani_zigbee_zarizeni.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="10_raspberry_pridavani_zigbee_zarizeni.html" class="card">
       <span class="card-num">10</span>
       <div class="card-title">Přidávání Zigbee zařízení</div>
-      <div class="card-desc">Jak párovat senzory, žárovky a spínače přímo do Zigbee2MQTT interface.</div>
+      <div class="card-desc">Jak párovat (pair) senzory, žárovky a spínače přímo v rozhraní Zigbee2MQTT.</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 11 -->
-    <a href="11_raspberry_bezpecnost.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="11_raspberry_bezpecnost.html" class="card">
       <span class="card-num">11</span>
       <div class="card-title">Bezpečnost</div>
-      <div class="card-desc">Ochrana přístupu z internetu, reverzní proxy a zajištění neprůstřelné vnitřní sítě.</div>
+      <div class="card-desc">Ochrana přístupu z internetu, dvoufaktorové ověření (2FA), zabezpečení MQTT a Zigbee2MQTT a bezpečný vzdálený přístup (remote access).</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 12 -->
-    <a href="12_raspberry_zalohovani.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="12_raspberry_zalohovani.html" class="card">
       <span class="card-num">12</span>
       <div class="card-title">Zálohování</div>
-      <div class="card-desc">Komplexní systém lokálních záloh, Synology DiskStation a cloudové zálohy Google Drive.</div>
+      <div class="card-desc">Zálohy (backups) ve více variantách: nativní zálohy Home Assistant, doplňky/aplikace Samba Backup a Google Drive Backup, Synology NAS a Google Drive. Vybereš si, co ti vyhovuje.</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 13 -->
-    <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html" class="card">
       <span class="card-num">13</span>
       <div class="card-title">Tipy pro provoz</div>
-      <div class="card-desc">Co dělat a nedělat pro stabilní běh, udržování zdravé Zigbee mesh sítě a aktualizace.</div>
+      <div class="card-desc">Co dělat a nedělat pro stabilní běh, udržování zdravé Zigbee sítě (mesh) a aktualizace.</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 14 -->
-    <a href="14_raspberry_reseni_problemu_troubleshooting.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="14_raspberry_reseni_problemu_troubleshooting.html" class="card">
       <span class="card-num">14</span>
       <div class="card-title">Řešení problémů</div>
-      <div class="card-desc">Co dělat, když HA nenabootuje, MQTT broker padá nebo se zařízení nedaří spárovat.</div>
+      <div class="card-desc">Řešení problémů (troubleshooting): HA nenabootuje, MQTT broker padá nebo se zařízení nedaří spárovat (pairing).</div>
       <span class="card-link">Otevřít kapitolu →</span>
     </a>
 
     <!-- 15 -->
-    <a href="15_raspberry_uzitecne_odkazy.html" class="card" style="text-decoration:none;color:inherit">
+    <a href="15_raspberry_uzitecne_odkazy.html" class="card">
       <span class="card-num">15</span>
       <div class="card-title">Užitečné odkazy</div>
       <div class="card-desc">Zdroje oficiální dokumentace, fóra a návody, ze kterých projekt čerpá.</div>
@@ -176,7 +176,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <span class="footer-copy">Raspberry Pi &amp; Home Assistant — Kompletní průvodce &nbsp;·&nbsp; Duben 2026</span>
+  <span class="footer-copy">Raspberry Pi &amp; Home Assistant — Kompletní průvodce &nbsp;·&nbsp; Říjen 2026</span>
   <a href="../index.html" class="footer-back">← Zpět na rozcestník</a>
 </footer>
 

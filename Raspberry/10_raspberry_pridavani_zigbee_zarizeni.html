@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Přidávání Zigbee Zařízení – Raspberry Pi Průvodce</title>
+<title>Přidávání Zigbee zařízení – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -17,7 +17,7 @@
     { "id": "interview", "num": "10.4", "name": "Interview process" },
     { "id": "odstraneni", "num": "10.5", "name": "Odstranění zařízení" },
     { "id": "oblasti", "num": "10.6", "name": "Oblasti (Areas)" },
-    { "id": "typy-zarizeni", "num": "10.7", "name": "Koordinátor, Router, End Device" },
+    { "id": "typy-zarizeni", "num": "10.7", "name": "Role zařízení v síti" },
     { "id": "znacky", "num": "10.8", "name": "Doporučené značky" },
     { "id": "kde-kupit", "num": "10.9", "name": "Kde koupit v ČR" }
   ]
@@ -32,14 +32,14 @@
 <div class="wrap">
 <header>
   <div class="h-num">// kapitola 10</div>
-  <h1>Přidávání <em>Zigbee Zařízení</em></h1>
-  <p class="h-desc">Jak zapnout párování, uvést zařízení do párovacího módu, správně pojmenovat entity a zobrazit vše v Home Assistant dashboardu. Plus přehled doporučených značek a obchodů.</p>
+  <h1>Přidávání <em>Zigbee zařízení</em></h1>
+  <p class="h-desc">Jak zapnout párování (pairing), uvést zařízení do párovacího módu, správně pojmenovat entity a zobrazit vše v Home Assistant dashboardu. Plus přehled doporučených značek a obchodů.</p>
 </header>
 
 <!-- PAROVANI -->
 <section class="sec">
   <h2 id="parovani">Postup párování</h2>
-  <p>Párování probíhá vždy ve dvou krocích: nejprve zapneš <strong>Permit Join</strong> na koordinátoru (otevře síť pro nové zařízení), pak dáš samotné zařízení do párovacího módu.</p>
+  <p>Párování probíhá vždy ve dvou krocích: nejprve zapneš <strong>povolení připojení (Permit Join)</strong> na koordinátoru (otevře síť pro nové zařízení), pak dáš samotné zařízení do párovacího módu.</p>
 
   <div class="steps">
     <div class="step">
@@ -47,8 +47,7 @@
       <div class="step-body">
         <div class="step-title">Otevři Z2M webové rozhraní</div>
         <div class="step-desc">
-          <p>V Home Assistant klikni na <strong>Zigbee2MQTT</strong> v levém menu (nebo přes Nastavení → Doplňky → Zigbee2MQTT → Otevřít webové rozhraní).</p>
-          <p>Nebo přímo v prohlížeči: <code>http://192.168.1.50:8099</code></p>
+          <p>V Home Assistant klikni na <strong>Zigbee2MQTT</strong> v levém menu (nebo přes Nastavení → Doplňky/Aplikace → Zigbee2MQTT → Otevřít webové rozhraní, OPEN WEB UI).</p>
         </div>
       </div>
     </div>
@@ -57,9 +56,9 @@
       <div class="step-body">
         <div class="step-title">Zapni Permit Join (povolení párování)</div>
         <div class="step-desc">
-          <p>Klikni na tlačítko <strong>"Permit join (All)"</strong> nebo přepínač <strong>"Allow joining"</strong> v horní liště Z2M rozhraní.</p>
-          <p>Nastav čas: <strong>254 sekund</strong> (maximum – přibližně 4 minuty). To je čas kdy je síť otevřená pro nová zařízení.</p>
-          <p>Odpočítávání se zobrazí v rozhraní.</p>
+          <p>Klikni na tlačítko <strong>„Permit join (All)“</strong> vpravo nahoře v liště Z2M rozhraní.</p>
+          <p>Síť se otevře na <strong>254 sekund</strong> (přibližně 4 minuty) a pak se sama zavře. Odpočítávání se zobrazí v rozhraní. Tlačítkem ji můžeš zavřít i dřív. V Zigbee2MQTT 2.0 už nejde nechat párování otevřené napořád.</p>
+          <p><strong>Varianta: párování přes konkrétní router.</strong> Vedle tlačítka je šipka dolů. Můžeš v ní vybrat koordinátor nebo konkrétní router, přes který se má zařízení připojit. Hodí se u zařízení, která si špatně vybírají router (např. Aqara), nebo když chceš zařízení spárovat blízko jiného routeru. Zaručeno to ale není.</p>
         </div>
       </div>
     </div>
@@ -68,12 +67,12 @@
       <div class="step-body">
         <div class="step-title">Uveď zařízení do párovacího módu</div>
         <div class="step-desc">
-          <p>Postup se liší dle výrobce a modelu zařízení. Obecná pravidla:</p>
+          <p>Postup se liší podle výrobce a modelu. <strong>Nejdřív najdi svůj model</strong> na <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank" rel="noopener noreferrer">zigbee2mqtt.io/supported-devices</a> (klikni na číslo modelu), stránka zařízení obsahuje přesný postup párování. Pokud tam žádný není, zařízení lze obvykle spárovat po továrním resetu.</p>
+          <p>Obecná pravidla, pokud stránku nemáš po ruce:</p>
           <ul>
-            <li><strong>Zigbee žárovky:</strong> 5× rychle vypni a zapni (cca 1 sec interval)</li>
-            <li><strong>Zásuvky a přepínače:</strong> drž tlačítko reset 5–10 sekund dokud nezabliká LED</li>
-            <li><strong>Bateriové senzory (teplota, pohyb, dveře):</strong> stiskni resetovací tlačítko (obvykle jehlou) nebo vyjmi a vlož baterii + 3× stiskni tlačítko</li>
-            <li><strong>IKEA zařízení:</strong> přilož programovací tlačítko (4 tlačítko) těsně k tlačítku ON/OFF a drž 10 sekund</li>
+            <li><strong>Zigbee žárovky:</strong> nové žárovky se obvykle samy nabízejí k párování. Reset se dělá opakovaným zapnutím a vypnutím, počet opakování se liší podle výrobce (viz sekce 10.2).</li>
+            <li><strong>Zásuvky a přepínače:</strong> drž tlačítko reset 5–10 sekund, dokud nezabliká LED</li>
+            <li><strong>Bateriové senzory (teplota, pohyb, dveře):</strong> stiskni resetovací tlačítko (obvykle jehlou) nebo vyjmi a vlož baterii a stiskni tlačítko</li>
           </ul>
           <p>Správný párovací mód zařízení obvykle signalizuje rychlé blikání LED.</p>
         </div>
@@ -84,12 +83,12 @@
       <div class="step-body">
         <div class="step-title">Zařízení se objeví v Z2M – přejmenuj ho</div>
         <div class="step-desc">
-          <p>V Z2M záložce <strong>Devices</strong> se zobrazí nové zařízení – obvykle s generickým názvem (<code>0x00158d0001234567</code>).</p>
+          <p>V Z2M záložce <strong>Devices</strong> se zobrazí nové zařízení – obvykle s generickým názvem (<code>0x00158d0001234567</code>). V záložce <strong>Log</strong> uvidíš hlášku <code>Successfully interviewed … device has successfully been paired</code>.</p>
           <p>Klikni na zařízení → ikona tužky → zadej <strong>"Friendly name"</strong> (přátelský název).</p>
           <ul>
             <li>Používej <strong>bez mezer</strong> a bez diakritiky: <code>svetlo_obyvak</code>, <code>teplomer_loznice</code>, <code>zasuvka_kuchyn</code></li>
             <li>Název se přenese do Home Assistant jako název entity</li>
-            <li>Lze změnit i později, ale HA vytvoří nové entity – lépe nastavit hned</li>
+            <li>Lze změnit i později, ale podle nastavení může HA vytvořit nové entity – lépe nastavit hned</li>
           </ul>
         </div>
       </div>
@@ -99,8 +98,8 @@
       <div class="step-body">
         <div class="step-title">Vypni Permit Join!</div>
         <div class="step-desc">
-          <p>Po spárování vždy <strong>okamžitě vypni</strong> Permit Join. Klikni znovu na "Allow joining" nebo počkej na vypršení časovače.</p>
-          <p>Otevřené párování je bezpečnostní riziko – kdokoliv v dosahu Zigbee signálu by mohl přidat vlastní zařízení do tvé sítě.</p>
+          <p>Po spárování <strong>okamžitě zavři</strong> povolení připojení (Permit Join). Klikni znovu na „Permit join“ nebo počkej na vypršení časovače (254 s).</p>
+          <p>Otevřené párování je bezpečnostní riziko – kdokoli v dosahu Zigbee signálu by mohl přidat vlastní zařízení do tvé sítě.</p>
         </div>
       </div>
     </div>
@@ -113,15 +112,15 @@
   <div class="reset-grid">
     <div class="reset-card">
       <div class="reset-card-title">💡 IKEA Tradfri žárovky</div>
-      <p>5× vypni/zapni v intervalu ~1 sekundu (např. vypínačem). Žárovka blikne na potvrzení. Pokud nefunguje: 6× za sebou.</p>
+      <p>Zapni žárovku, pak ji vypni a zapni celkem <strong>6×</strong> (poslední zapnutí nech svítit). Žárovka na potvrzení zabliká nebo pulsuje. Pokud to nezabere, zkus 7×, někdy je to potřeba. Přesný postup pro svůj model ověř na stránce zařízení.</p>
     </div>
     <div class="reset-card">
       <div class="reset-card-title">🔌 IKEA Tradfri zásuvka</div>
-      <p>Drž malé reset tlačítko na boku 5 sekund. LED rychle zabliká = párovací mód.</p>
+      <p>Drž malé reset tlačítko na boku zhruba 5 sekund. LED rychle zabliká = párovací mód. Přesný postup ověř na stránce modelu.</p>
     </div>
     <div class="reset-card">
       <div class="reset-card-title">🌡️ Xiaomi/Aqara senzory</div>
-      <p>Drž reset tlačítko (často jehlou na přední straně nebo u baterie) 5 sekund. LED blikne 3× = připraveno k párování.</p>
+      <p>Drž reset tlačítko (často jehlou na přední straně nebo u baterie) 5 sekund. LED blikne 3× = připraveno k párování (podle modelu).</p>
     </div>
     <div class="reset-card">
       <div class="reset-card-title">🚪 Aqara dveřní/okenní senzor</div>
@@ -129,11 +128,18 @@
     </div>
     <div class="reset-card">
       <div class="reset-card-title">🔌 Sonoff Zigbee zásuvky</div>
-      <p>Drž tlačítko 5 sekund dokud nezačne rychle blikat LED. Nebo v HA YAML: servisní výzva reset.</p>
+      <p>Drž tlačítko zhruba 5 sekund, dokud nezačne rychle blikat LED. Přesný postup ověř na stránce modelu.</p>
     </div>
     <div class="reset-card">
       <div class="reset-card-title">💡 Philips Hue žárovky</div>
-      <p>5× zapni/vypni v cyklu 2 sekundy ZAP + 2 sekundy VYP. Nebo přes Hue app: Factory reset → "Delete from bridge".</p>
+      <p>Nové žárovky Hue se k párování nabízejí samy. U už použité žárovky je továrních resetů víc:</p>
+      <ul>
+        <li><strong>5× vypni/zapni</strong>, začni se zapnutou žárovkou. Žárovka na potvrzení zapulsuje.</li>
+        <li><strong>Touchlink v Z2M:</strong> v rozhraní záložka Touchlink (u Hue také reset podle sériového čísla).</li>
+        <li><strong>Hue Bridge:</strong> odeber žárovku z můstku v aplikaci Hue.</li>
+        <li><strong>Hue Dimmer switch:</strong> přilož ovladač těsně k žárovce.</li>
+        <li><strong>Aplikace Hue Bluetooth:</strong> nemusí vždy fungovat.</li>
+      </ul>
     </div>
     <div class="reset-card">
       <div class="reset-card-title">🌡️ Tuya senzory teploty</div>
@@ -141,12 +147,12 @@
     </div>
     <div class="reset-card">
       <div class="reset-card-title">🔎 Nenašel jsem svůj model?</div>
-      <p>Vyhledej na <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank">zigbee2mqtt.io/supported-devices</a> – každé zařízení má stránku s přesným návodem na párování.</p>
+      <p>Vyhledej na <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank" rel="noopener noreferrer">zigbee2mqtt.io/supported-devices</a> – každé zařízení má stránku s přesným návodem na párování (sekce Pairing).</p>
     </div>
   </div>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Tip: páruj blízko koordinátoru</div>
-    <p>Při prvním párování přines zařízení <strong>do vzdálenosti 1–2 metrů</strong> od Zigbee koordinátoru (USB dongle). Po spárování ho přesuň na místo kde má být. Vzdálené párování přes mesh síť funguje až po ustálení sítě.</p>
+    <p>Při prvním párování přines zařízení <strong>do vzdálenosti 1–2 metrů</strong> od Zigbee koordinátoru (USB dongle). Po spárování ho přesuň na místo, kde má být. Vzdálené párování přes mesh síť (mesh network) funguje až po ustálení sítě.</p>
   </div>
 </section>
 
@@ -190,9 +196,9 @@
   <h2 id="interview">Interview process</h2>
   <p>Po úspěšném spárování Z2M automaticky provede tzv. <strong>interview</strong> – sérii dotazů na zařízení pro zjištění jeho schopností, dostupných entit a konfigurace.</p>
   <ul>
-    <li>Interview trvá <strong>10–60 sekund</strong> u napájených zařízení, déle u bateriových (čekají na zprávu)</li>
+    <li>Interview trvá u napájených zařízení obvykle sekundy až desítky sekund, déle u bateriových (čekají, až se zařízení ozve)</li>
     <li>Dokud interview neskončí, zařízení <strong>nemusí hlásit správné hodnoty</strong> nebo se neobjeví v HA</li>
-    <li>Stav interview vidíš v Z2M: záložka <strong>Devices</strong> → sloupec <strong>"Interview state"</strong></li>
+    <li>Stav interview vidíš v Z2M u zařízení (název sloupce a podoba se liší podle verze rozhraní). Úspěch potvrdí hláška <code>Successfully interviewed</code> v logu.</li>
     <li>Stavy: <code>pending</code> (čeká), <code>started</code> (probíhá), <code>successful</code> (hotovo ✅), <code>failed</code> (selhalo ❌)</li>
   </ul>
   <div class="callout callout-tip">
@@ -227,37 +233,45 @@
 <!-- HA AREAS -->
 <section class="sec">
   <h2 id="oblasti">Oblasti (Areas)</h2>
-  <p>Home Assistant umožňuje přiřadit každé zařízení do <strong>oblasti</strong> (místnosti). Díky tomu lze ovládat celé místnosti najednou a hlasové asistenty pochopí příkazy jako "zhasni v obýváku".</p>
+  <p>Home Assistant umožňuje přiřadit každé zařízení do <strong>oblasti</strong> (místnosti). Díky tomu lze ovládat celé místnosti najednou a po propojení hlasového asistenta pochopí příkazy jako "zhasni v obýváku".</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Vytvoř oblasti a přiřaď zařízení</div>
+        <div class="step-title">Vytvoř oblasti</div>
         <div class="step-desc">
-          <p><strong>Krok 1 – Vytvoř oblasti:</strong> Jdi do <strong>Nastavení → Oblasti &amp; zóny → + Přidat oblast</strong>.</p>
+          <p>Jdi do <strong>Nastavení → Oblasti, štítky a zóny → + Přidat oblast (Settings → Areas, labels &amp; zones → Create area)</strong>.</p>
           <ul>
             <li>Přidej každou místnost: Obývák, Ložnice, Kuchyň, Koupelna, Chodba...</li>
             <li>Každé oblasti lze přiřadit ikonu a obrázek podlaží</li>
           </ul>
-          <p><strong>Krok 2 – Přiřaď zařízení:</strong> Jdi do <strong>Nastavení → Zařízení a služby → MQTT</strong>. Klikni na zařízení → <strong>Přiřadit oblast</strong> → vyber místnost.</p>
-          <p><strong>Výhody oblastí:</strong></p>
-          <ul>
-            <li>Dashboard zobrazuje zařízení organizovaně podle místností</li>
-            <li>Hlasové příkazy ("Hej Google, zhasni v obýváku") fungují automaticky</li>
-            <li>Automatizace může cílit na celou oblast ("vypni vše v ložnici při usnutí")</li>
-          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Přiřaď zařízení do oblastí</div>
+        <div class="step-desc">
+          <p>Jdi do <strong>Nastavení → Zařízení a služby → MQTT</strong>. Klikni na zařízení → <strong>Přiřadit oblast</strong> → vyber místnost.</p>
         </div>
       </div>
     </div>
   </div>
+  <p><strong>Výhody oblastí:</strong></p>
+  <ul>
+    <li>Dashboard zobrazuje zařízení organizovaně podle místností</li>
+    <li>Hlasové příkazy ("Hej Google, zhasni v obýváku") fungují po propojení hlasového asistenta</li>
+    <li>Automatizace může cílit na celou oblast ("vypni vše v ložnici při usnutí")</li>
+  </ul>
 </section>
 
 <!-- TYPY ZARIZENI V SITI -->
 <section class="sec">
-  <h2 id="typy-zarizeni">Koordinátor, Router, End Device</h2>
+  <h2 id="typy-zarizeni">Role zařízení v síti</h2>
   <p>Zigbee síť je <strong>mesh</strong> – zařízení si mezi sebou předávají zprávy. Pro stabilní síť je důležité rozumět rolím:</p>
   <div class="mesh-diagram">
-<pre style="background:none;border:none;padding:0;margin:0;color:inherit">
+<pre>
   [Koordinátor = USB dongle]  ← pouze jeden, střed sítě
          |
   ┌──────┼──────┐
@@ -281,18 +295,18 @@
 <!-- DOPORUCENE ZNACKY -->
 <section class="sec">
   <h2 id="znacky">Doporučené značky</h2>
-  <p>Databáze kompatibilních zařízení: <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank">zigbee2mqtt.io/supported-devices</a> – přes 3 500 zařízení.</p>
+  <p>Databáze kompatibilních zařízení: <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank" rel="noopener noreferrer">zigbee2mqtt.io/supported-devices</a> – tisíce podporovaných zařízení.</p>
 
   <div class="brand-grid">
     <div class="brand-card">
-      <div class="brand-card-name">IKEA Tradfri / DIRIGERA</div>
+      <div class="brand-card-name">IKEA (starší řada Zigbee)</div>
       <div class="brand-card-tag">💡 Žárovky, zásuvky, dálkové ovladače</div>
-      <p>Levné, spolehlivé, výborná podpora v Z2M. Žárovky fungují jako routery. Ideální pro začátek.</p>
+      <p>Levné a spolehlivé, výborná podpora v Z2M, žárovky fungují jako routery. <strong>Pozor:</strong> nová zařízení IKEA od ledna 2026 používají Matter-over-Thread místo Zigbee a se Zigbee2MQTT je nespáruješ. Před koupí ověř, že jde o Zigbee zařízení. Hub DIRIGERA Zigbee2MQTT nepotřebuje.</p>
     </div>
     <div class="brand-card">
       <div class="brand-card-name">Xiaomi / Aqara</div>
       <div class="brand-card-tag">🌡️ Senzory teploty, pohybu, dveří</div>
-      <p>Malé, bateriové senzory za výbornou cenu. Aqara P1 Motion, Aqara Door Sensor – ověřené volby.</p>
+      <p>Malé bateriové senzory za výbornou cenu. Často používané jsou Aqara P1 Motion a Aqara Door Sensor, vždy ale ověř konkrétní model na stránce Z2M.</p>
     </div>
     <div class="brand-card">
       <div class="brand-card-name">Philips Hue</div>
@@ -312,8 +326,14 @@
     <div class="brand-card">
       <div class="brand-card-name">OSRAM / Ledvance</div>
       <div class="brand-card-tag">💡 Žárovky a svítidla</div>
-      <p>Dobrá alternativa k Hue. Smart+ série plně kompatibilní se Z2M. Dostupné v CZ obchodech.</p>
+      <p>Dobrá alternativa k Hue. Mnoho modelů řady Smart+ je podporováno, konkrétní model ověř na stránce Z2M.</p>
     </div>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Zigbee vs. Thread</div>
+    <p>Zigbee i Thread jsou bezdrátové sítě pro chytrá zařízení v pásmu 2,4 GHz (IEEE 802.15.4), ale jde o <strong>různé protokoly</strong>. Zigbee2MQTT umí jen Zigbee. Zařízení Matter-over-Thread (například novější IKEA) se do něj nepárují. Používají se přes integraci Matter v Home Assistantu a přes Thread border router (hraniční směrovač sítě Thread).</p>
+    <p>Zigbee a Thread v jednom koordinátoru (multiprotokolový firmware) Zigbee2MQTT nepodporuje. Pokud chceš oba, potřebuješ dva koordinátory nebo víceradiové zařízení (viz <a href="03_raspberry_poznamka_k_zigbee_modulu.html#koordinatory">sekce 3.4</a>, řada SLZB-MR).</p>
   </div>
 </section>
 
@@ -321,34 +341,41 @@
 <section class="sec">
   <h2 id="kde-kupit">Kde koupit v ČR</h2>
   <div class="shop-grid">
-    <a href="https://www.alza.cz" class="shop-link" target="_blank">
+    <a href="https://www.alza.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>Alza.cz</span>IKEA, Philips Hue
     </a>
-    <a href="https://www.mall.cz" class="shop-link" target="_blank">
+    <a href="https://www.mall.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>Mall.cz</span>Různé Zigbee značky
     </a>
-    <a href="https://dratek.cz" class="shop-link" target="_blank">
+    <a href="https://dratek.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>Dratek.cz</span>Aqara, Sonoff, moduly
     </a>
-    <a href="https://www.smartmania.cz" class="shop-link" target="_blank">
+    <a href="https://www.smartmania.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>Smartmania.cz</span>Smart home specializace
     </a>
-    <a href="https://www.aliexpress.com" class="shop-link" target="_blank">
+    <a href="https://www.aliexpress.com" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>AliExpress</span>Xiaomi, Aqara, Tuya (levněji)
     </a>
-    <a href="https://www.ismarthome.cz" class="shop-link" target="_blank">
+    <a href="https://www.ismarthome.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>iSmarthome.cz</span>Smart home vybavení
     </a>
   </div>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ AliExpress vs CZ obchody</div>
-    <p>Na AliExpress koupíš Xiaomi/Aqara senzory za 150–300 Kč oproti 400–600 Kč v ČR. Nevýhoda: dodání 2–4 týdny a záruka je složitější. Pro první zkušenosti doporučuji CZ obchod (rychlé vrácení pokud nefunguje). Pak kup hromadně přes Ali.</p>
+    <p>Na AliExpress bývají Xiaomi/Aqara senzory výrazně levnější než v ČR. Nevýhoda: dodání trvá týdny a záruka je složitější. Pro první zkušenosti doporučuji CZ obchod (rychlé vrácení, pokud zařízení nefunguje). Potom můžeš nakupovat hromadně přes AliExpress.</p>
+    <p>Aktuální ceny zjistíš vyhledáním:</p>
+    <ul>
+      <li>Aqara senzor teploty: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Aqara+senzor+teploty" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Aqara+senzor+teploty" target="_blank" rel="noopener noreferrer">Google</a></li>
+      <li>Sonoff ZBMINIL2: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Sonoff+ZBMINIL2" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Sonoff+ZBMINIL2" target="_blank" rel="noopener noreferrer">Google</a></li>
+      <li>IKEA TRÅDFRI žárovka: <a href="https://www.heureka.cz/?h%5Bfraze%5D=IKEA+TR%C3%85DFRI+%C5%BE%C3%A1rovka" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=IKEA+TR%C3%85DFRI+%C5%BE%C3%A1rovka" target="_blank" rel="noopener noreferrer">Google</a></li>
+      <li>Philips Hue žárovka: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Philips+Hue+%C5%BE%C3%A1rovka" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Philips+Hue+%C5%BE%C3%A1rovka" target="_blank" rel="noopener noreferrer">Google</a></li>
+    </ul>
   </div>
 </section>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

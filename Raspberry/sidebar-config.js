@@ -1,6 +1,6 @@
 // Jediný zdroj pravdy pro pořadí, názvy a odkazy kapitol.
 const chapters = [
-  { num: '00', name: 'Obsah', file: '00_raspberry_index.html' },
+  { num: '00', name: 'Úvod', file: '00_raspberry_index.html' },
   { num: '01', name: 'Přehled systému', file: '01_raspberry_prehled_systemu.html' },
   { num: '02', name: 'Hardware', file: '02_raspberry_hardware.html' },
   { num: '03', name: 'Poznámka k modulu Zigbee', file: '03_raspberry_poznamka_k_zigbee_modulu.html' },

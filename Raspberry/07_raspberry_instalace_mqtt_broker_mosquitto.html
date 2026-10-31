@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instalace MQTT Broker (Mosquitto) – Raspberry Pi Průvodce</title>
+<title>Instalace MQTT (Mosquitto) – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -28,8 +28,8 @@
 <div class="wrap">
 <header>
   <div class="h-num">// kapitola 07</div>
-  <h1>Instalace <em>MQTT Broker</em> (Mosquitto)</h1>
-  <p class="h-desc">Mosquitto je lokální komunikační sběrnice celého systému. Musí být nainstalován a spuštěn <strong>před</strong> Zigbee2MQTT. Tato kapitola pokryje instalaci, vytvoření MQTT uživatele a propojení s Home Assistant.</p>
+  <h1>Instalace <em>MQTT broker</em> (Mosquitto)</h1>
+  <p class="h-desc">Mosquitto je lokální komunikační sběrnice celého systému (MQTT broker, zprostředkovatel zpráv). Musí být nainstalován a spuštěn <strong>před</strong> Zigbee2MQTT. Tato kapitola pokryje instalaci, přihlašování (uživatele) a propojení s Home Assistant ve více variantách.</p>
 </header>
 
 <!-- CO JE MQTT -->
@@ -40,13 +40,14 @@
     <div class="mqtt-flow-row">
       <div class="mqtt-box">Zigbee2MQTT</div>
       <div class="mqtt-arrow">→ publish →</div>
-      <div class="mqtt-box active">Mosquitto Broker<br><small style="color:var(--t3)">port 1883</small></div>
+      <div class="mqtt-box active">Mosquitto Broker<br><small>port 1883</small></div>
       <div class="mqtt-arrow">→ subscribe →</div>
       <div class="mqtt-box">Home Assistant Core</div>
     </div>
-    <div style="margin-top:14px;font-size:.82em;color:var(--t3)">Všechny zprávy prochází Mosquitto – funguje i bez internetu, čistě lokálně</div>
+    <div class="mqtt-flow-note">Všechny zprávy prochází Mosquitto – funguje i bez internetu, čistě lokálně</div>
   </div>
-  <p>Mosquitto v HAOS je <strong>pouze lokální</strong> – port 1883 je dostupný jen uvnitř sítě add-onů. Z internetu ho nelze dosáhnout, což je přesně to co chceme.</p>
+  <p>Mosquitto v HAOS naslouchá na portu 1883 i v tvé <strong>místní síti (LAN)</strong>, takže se k němu mohou připojit i zařízení mimo RPi. Připojení je ale možné <strong>jen po přihlášení</strong> uživatelem Home Assistantu, anonymní přístup je zakázán. Z internetu je broker nedostupný, pokud sám neotevřeš port na routeru (viz <a href="11_raspberry_bezpecnost.html">kapitola 11</a>).</p>
+  <p>Pokud broker z místní sítě nepotřebuješ, můžeš porty zavřít: v kartě <strong>Síť (Network)</strong> aplikace je smaž. Zigbee2MQTT i Home Assistant se připojují vnitřní adresou <code>core-mosquitto</code> a poběží dál.</p>
 
   <h3>Struktura MQTT topics (témat)</h3>
   <p>MQTT komunikace je organizovaná do <strong>topics</strong> – hierarchických textových cest. Zigbee2MQTT automaticky vytváří topics pro každé zařízení:</p>
@@ -54,9 +55,9 @@
     <li><code>zigbee2mqtt/teplomer_loznice</code> → JSON data ze senzoru (teplota, vlhkost, baterie)</li>
     <li><code>zigbee2mqtt/svetlo_obyvak/set</code> → příkaz k žárovce (zapnout, jas, barva)</li>
     <li><code>zigbee2mqtt/bridge/state</code> → stav Z2M mostu (<code>online</code> / <code>offline</code>)</li>
-    <li><code>zigbee2mqtt/bridge/devices</code> → seznam zařízení (MQTT Discovery pro HA)</li>
+    <li><code>zigbee2mqtt/bridge/devices</code> → seznam zařízení v Zigbee síti</li>
   </ul>
-  <p>Home Assistant poslouchá topics automaticky přes MQTT Discovery – entit nevytváříš ručně.</p>
+  <p>Home Assistant si entity vytváří automaticky přes MQTT Discovery: Zigbee2MQTT posílá popis každého zařízení do témat <code>homeassistant/…</code> a HA z nich entity složí. Entity ručně nevytváříš.</p>
 </section>
 
 <!-- INSTALACE -->
@@ -66,10 +67,10 @@
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Otevři Add-on Store a najdi Mosquitto</div>
+        <div class="step-title">Otevři obchod s aplikacemi a najdi Mosquitto</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Doplňky → ADD-ON STORE</strong> (tlačítko vpravo dole nebo <strong>+ Přidat doplněk</strong>).</p>
-          <p>Do vyhledávacího pole napiš <strong>"Mosquitto"</strong>. Klikni na <strong>"Mosquitto broker"</strong> – official add-on od Nabu Casa (modrý štítek).</p>
+          <p>Jdi do <strong>Nastavení → Doplňky/Aplikace → Obchod (Settings → Add-ons/Apps → Add-on store)</strong> (tlačítko vpravo dole nebo <strong>+ Přidat doplněk</strong>).</p>
+          <p>Do vyhledávacího pole napiš <strong>"Mosquitto"</strong>. Klikni na <strong>"Mosquitto broker"</strong> – oficiální aplikace (official), kterou spravuje Home Assistant.</p>
         </div>
       </div>
     </div>
@@ -81,10 +82,10 @@
           <p>Klikni <strong>NAINSTALOVAT</strong>. Instalace trvá 1–3 minuty.</p>
           <p>Po dokončení klikni na záložku <strong>INFORMACE</strong> a nastav:</p>
           <ul>
-            <li><strong>Start on boot = ON</strong> (automatický start při zapnutí RPi)</li>
-            <li><strong>Watchdog = ON</strong> (automatický restart pokud broker spadne)</li>
+            <li><strong>Start on boot = ON</strong> (spuštění při startu systému, tedy automatický start při zapnutí RPi)</li>
+            <li><strong>Watchdog = ON</strong> (automatický restart, pokud broker spadne)</li>
           </ul>
-          <p>Zatím <strong>NESPOUŠTĚJ</strong> – nejprve vytvoříme MQTT uživatele.</p>
+          <p>Spustíš ho až po vytvoření MQTT uživatele v další sekci (uživatele by šlo přidat i později, ale takhle máš vše připravené).</p>
         </div>
       </div>
     </div>
@@ -93,8 +94,8 @@
       <div class="step-body">
         <div class="step-title">Konfigurace Mosquitto</div>
         <div class="step-desc">
-          <p>Klikni na záložku <strong>KONFIGURACE</strong>. Výchozí konfigurace je prázdná – Mosquitto automaticky použije HA uživatele. Ponech prázdné (nebo přidej dedikovaného uživatele níže).</p>
-          <p>Klikni <strong>ULOŽIT</strong>.</p>
+          <p>Klikni na záložku <strong>KONFIGURACE</strong>. Výchozí konfigurace je prázdná (<code>logins: []</code>) – Mosquitto automaticky použije uživatele Home Assistantu a žádné další nastavení nepotřebuje. <strong>Ponech ji beze změny</strong>, ukládat nemusíš.</p>
+          <p>Lokální uživatele přímo v konfiguraci aplikace použiješ jen u varianty B v další sekci.</p>
         </div>
       </div>
     </div>
@@ -104,20 +105,20 @@
 <!-- MQTT UZIVATEL -->
 <section class="sec">
   <h2 id="mqtt-uzivatel">MQTT uživatel</h2>
-  <p>Mosquitto může využívat standardní HA uživatele. Pro čistotu a bezpečnost doporučuji vytvořit <strong>samostatného uživatele pouze pro MQTT</strong> – nebude mít práva správce ani přístup do UI.</p>
+  <p>Mosquitto využívá uživatele Home Assistantu. Pro čistotu a bezpečnost doporučuji vytvořit <strong>samostatného uživatele pouze pro MQTT</strong> (varianta A). Nebude mít práva správce a půjde přihlásit jen z místní sítě. Jména <code>homeassistant</code> a <code>addons</code> jsou rezervovaná a použít je nelze.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Vytvoř MQTT uživatele v Home Assistant</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Lidé → záložka "Uživatelé"</strong>. Klikni <strong>+ Přidat uživatele</strong>.</p>
+          <p>Jdi do <strong>Nastavení → Osoby → záložka „Uživatelé“ (Settings → People → Users)</strong>. Klikni <strong>+ Přidat uživatele (Add user)</strong>.</p>
           <ul>
             <li><strong>Jméno:</strong> MQTT User (zobrazovací)</li>
             <li><strong>Uživatelské jméno:</strong> <code>mqtt_user</code></li>
             <li><strong>Heslo:</strong> silné heslo – min. 16 znaků, zapiš si ho!</li>
-            <li><strong>Správce:</strong> <strong>OFF</strong> (není admin)</li>
-            <li><strong>Může se přihlásit:</strong> ON (jen lokální přihlášení)</li>
+            <li><strong>Správce (Administrator):</strong> <strong>OFF</strong> (není admin)</li>
+            <li><strong>Může se přihlásit jen z místní sítě (Can only log in from the local network):</strong> <strong>ON</strong></li>
           </ul>
           <p>Klikni <strong>VYTVOŘIT</strong>.</p>
         </div>
@@ -128,7 +129,7 @@
       <div class="step-body">
         <div class="step-title">Spusť Mosquitto broker</div>
         <div class="step-desc">
-          <p>Vrať se do <strong>Nastavení → Doplňky → Mosquitto broker → záložka INFORMACE</strong>. Klikni <strong>SPUSTIT</strong>.</p>
+          <p>Vrať se do <strong>Nastavení → Doplňky/Aplikace → Mosquitto broker → záložka INFORMACE</strong>. Klikni <strong>SPUSTIT</strong>.</p>
           <p>Po několika sekundách by se stav měl změnit na zelený <strong>"Running"</strong>. Pokud ne, zkontroluj záložku <strong>PROTOKOL</strong> pro chybové hlášky.</p>
         </div>
       </div>
@@ -142,35 +143,52 @@
     <div class="cred-row"><span class="cred-key">Broker host</span><span class="cred-val">core-mosquitto</span></div>
     <div class="cred-row"><span class="cred-key">Port</span><span class="cred-val">1883</span></div>
   </div>
+
+  <h3>Varianta B: lokální uživatel přímo v konfiguraci aplikace</h3>
+  <p>Pokud nechceš zakládat uživatele v Home Assistantu, můžeš ho vytvořit přímo v konfiguraci aplikace Mosquitto. Na záložce <strong>KONFIGURACE</strong> přidej:</p>
+  <pre><code>logins:
+  - username: mqtt_user
+    password: "silne_heslo_min_16_znaku"</code></pre>
+  <p>Ulož a aplikaci restartuj. Heslo je v konfiguraci uložené čitelně, proto je varianta A (uživatel v HA) praktičtější a bezpečnější. Údaje se pak zadávají do Zigbee2MQTT stejně jako u varianty A.</p>
+
 </section>
 
 <!-- MQTT INTEGRACE -->
 <section class="sec">
   <h2 id="mqtt-integrace">MQTT integrace v HA</h2>
-  <p>Aby HA věděl o Mosquitto brokerovi a uměl přijímat zprávy od Zigbee2MQTT, musíme přidat MQTT integraci.</p>
+  <p>Aby HA věděl o Mosquitto brokerovi a uměl přijímat zprávy od Zigbee2MQTT, musí být nastavená MQTT integrace. Home Assistant ji po spuštění Mosquitto obvykle nabídne sám.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Přidej MQTT integraci</div>
+        <div class="step-title">Varianta A – automaticky jedním klikem (doporučeno)</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Zařízení a služby → + Přidat integraci</strong>. Vyhledej <strong>"MQTT"</strong> a klikni na <strong>MQTT</strong>.</p>
-          <p>HA by měl automaticky detekovat lokální Mosquitto a nabídnout předvyplněné hodnoty:</p>
-          <ul>
-            <li><strong>Broker:</strong> <code>core-mosquitto</code> (nebo <code>localhost</code>)</li>
-            <li><strong>Port:</strong> <code>1883</code></li>
-            <li><strong>Uživatelské jméno:</strong> <code>mqtt_user</code></li>
-            <li><strong>Heslo:</strong> heslo z kroku 4</li>
-          </ul>
-          <p>Klikni <strong>ODESLAT</strong> a pak <strong>DOKONČIT</strong>.</p>
-          <p>Pokud vše proběhlo správně, MQTT integrace bude zobrazena jako aktivní v sekci Zařízení a služby.</p>
+          <p>Jdi do <strong>Nastavení → Zařízení a služby (Settings → Devices &amp; services)</strong>. Po spuštění Mosquitto se tam zobrazí nalezená integrace <strong>MQTT</strong> (Discovered). Klikni <strong>Nastavit (Configure)</strong> a potvrď <strong>Odeslat (Submit)</strong>.</p>
+          <p>Home Assistant se k brokeru připojí sám pod interním účtem, údaje nezadáváš. Uživatele <code>mqtt_user</code> z předchozí sekce budeš potřebovat až u Zigbee2MQTT.</p>
         </div>
       </div>
     </div>
   </div>
+
+  <h3>Varianta B: ruční přidání integrace</h3>
+  <p>Pokud se integrace nenabídla sama, přidej ji ručně:</p>
+  <ol>
+    <li>Jdi do <strong>Nastavení → Zařízení a služby → + Přidat integraci (Add integration)</strong>, vyhledej <strong>„MQTT“</strong> a vyber ji.</li>
+    <li>Vyplň:
+      <ul>
+        <li><strong>Broker:</strong> <code>core-mosquitto</code>. Nepoužívej <code>localhost</code>, protože funguje jen dokud jsou porty aplikace zveřejněné.</li>
+        <li><strong>Port:</strong> <code>1883</code></li>
+        <li><strong>Uživatelské jméno:</strong> <code>mqtt_user</code></li>
+        <li><strong>Heslo:</strong> heslo vytvořené v <a href="#mqtt-uzivatel">sekci 7.3</a></li>
+      </ul>
+    </li>
+    <li>Klikni <strong>Odeslat (Submit)</strong> a pak <strong>Dokončit (Finish)</strong>.</li>
+  </ol>
+  <p>Pokud vše proběhlo správně, MQTT integrace je v sekci Zařízení a služby zobrazena jako aktivní.</p>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Ověření připojení</div>
-    <p>V Nastavení → Zařízení a služby → MQTT → klikni <strong>Konfigurovat</strong>. Uvidíš tlačítko <strong>"Naslouchat tématu"</strong>. Zadej <code>#</code> (zachycuje vše) a klikni Začít naslouchat. Pokud se zobrazují zprávy po připojení prvního Zigbee zařízení, vše funguje správně.</p>
+    <p>V Nastavení → Zařízení a služby → MQTT klikni <strong>Konfigurovat (Configure)</strong>. Uvidíš možnost <strong>„Naslouchat tématu“ (Listen to a topic)</strong>. Zadej <code>zigbee2mqtt/#</code> a klikni <strong>Začít naslouchat (Start listening)</strong>. Pokud se zobrazují zprávy po připojení prvního Zigbee zařízení, vše funguje správně.</p>
+    <p>Téma <code>#</code> zachytí úplně všechno a při velkém provozu může zahltit prohlížeč. Proto je lepší zadat konkrétní předponu, jako je <code>zigbee2mqtt/#</code>.</p>
   </div>
 </section>
 
@@ -178,17 +196,17 @@
 <section class="sec">
   <h2 id="overeni">Ověření funkce</h2>
   <ul>
-    <li>✅ Mosquitto broker běží (zelený stav "Running" v add-onu)</li>
-    <li>✅ MQTT uživatel vytvořen v HA (Nastavení → Lidé → Uživatelé)</li>
+    <li>✅ Mosquitto broker běží (zelený stav „Running“ v aplikaci)</li>
+    <li>✅ MQTT uživatel vytvořen v HA (Nastavení → Osoby → Uživatelé)</li>
     <li>✅ MQTT integrace aktivní v HA (Nastavení → Zařízení a služby)</li>
-    <li>✅ Zapamatované přihlašovací údaje pro MQTT (broker, port, user, heslo)</li>
+    <li>✅ Zapamatované přihlašovací údaje pro MQTT (broker, port, uživatel, heslo)</li>
   </ul>
   <p>Pokud vše zelené, můžeš pokračovat na <a href="08_raspberry_instalace_zigbee2mqtt.html">Kapitolu 08 – Instalace Zigbee2MQTT</a>.</p>
 </section>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

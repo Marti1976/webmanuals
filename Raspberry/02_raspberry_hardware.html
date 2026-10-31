@@ -30,7 +30,7 @@
 <header>
   <div class="h-num">// kapitola 02</div>
   <h1><em>Hardware</em></h1>
-  <p class="h-desc">Kompletní seznam všeho co potřebuješ koupit – od RPi přes napájení po Zigbee koordinátor. Včetně doporučených obchodů v ČR a konkrétních tipů na nákup.</p>
+  <p class="h-desc">Kompletní seznam všeho, co potřebuješ koupit – od RPi přes napájení (power supply) po Zigbee koordinátor (coordinator). Včetně obchodů v ČR a obecných tipů na nákup.</p>
 </header>
 
 <!-- SEZNAM HARDWARE -->
@@ -44,12 +44,16 @@
         <div class="hw-card-title">🍓 Raspberry Pi 3 Model B+</div>
         <span class="hw-badge hw-badge-required">povinné</span>
       </div>
-      <p>Hlavní výpočetní jednotka. RPi 3 B+ má čtyřjádrový CPU 1.4 GHz, 1 GB RAM, Ethernet, WiFi a Bluetooth. Pro Home Assistant se základní konfigurací (do cca 15 add-onů) naprosto dostačuje.</p>
+      <p>Hlavní výpočetní jednotka. RPi 3 B+ má čtyřjádrový 64bitový CPU 1,4 GHz, 1 GB RAM, gigabitový Ethernet (přes USB 2.0, reálně max. cca 300 Mbit/s), WiFi (2,4 i 5 GHz) a Bluetooth 4.2. Pro Home Assistant s několika doplňky/aplikacemi (add-ons/apps) obvykle stačí, 1 GB RAM je ale limit (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#vykon">sekce 13.4</a>).</p>
       <ul>
-        <li>Doporučuji koupit <strong>jako kit</strong> – obsahuje pouzdro a někdy i napájecí zdroj</li>
-        <li>Alternativa: RPi 4 (2 GB) je výkonnější, ale dražší a má USB-C napájení</li>
-        <li>Cena: cca <strong>1 300–1 800 Kč</strong> (samotná deska), kit cca 2 000–2 500 Kč</li>
+        <li>Zvaž koupi <strong>jako sadu (kit)</strong> – obsahuje pouzdro (case) a někdy i napájecí zdroj</li>
+        <li>Aktuální cena desky: hledat na <a href="https://www.heureka.cz/?h%5Bfraze%5D=raspberry+pi+3+b%2B" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=raspberry+pi+3+b%2B" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
+        <li>Aktuální cena sady (kit): hledat na <a href="https://www.heureka.cz/?h%5Bfraze%5D=raspberry+pi+3+b%2B+kit" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=raspberry+pi+3+b%2B+kit" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
       </ul>
+      <div class="callout callout-tip">
+        <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
+        <p>Jsou výkonnější a pro stabilní provoz 24/7 vhodnější. Mají napájení USB-C (ne Micro-USB), jiný obraz systému a USB 3.0 pro rychlejší SSD. Ostatní kroky v průvodci jsou velmi podobné.</p>
+      </div>
     </div>
 
     <div class="hw-card">
@@ -57,16 +61,17 @@
         <div class="hw-card-title">💽 mSATA SSD v USB pouzdře</div>
         <span class="hw-badge hw-badge-required">povinné</span>
       </div>
-      <p>Bootovací disk – náhrada za SD kartu. Výrazně rychlejší (10–50×) a trvanlivější (100× více zápisových cyklů). Home Assistant databáze a logy zapisují intenzivně – SSD to zvládá bez problémů roky.</p>
+      <p>Bootovací disk – náhrada za SD kartu. Home Assistant průběžně zapisuje databázi a logy a SSD to zvládá lépe než SD karta. RPi 3 B+ ale připojuje USB přes USB 2.0 (sdílené s Ethernetem), takže rychlost disku omezuje právě ono.</p>
       <ul>
         <li><strong>Velikost SSD:</strong> min. 32 GB, doporučeno 64 GB (pro zálohy a budoucí rozšíření)</li>
-        <li><strong>Doporučené mSATA disky:</strong> Kingston SMS200S3, SanDisk X110, Crucial M500</li>
-        <li><strong>USB pouzdro:</strong> chipset JMicron JMS567/JMS578 je problematický – doporučuji pouzdra s <strong>ASMedia ASM1153</strong> nebo JMicron JMS561</li>
-        <li><strong>Ověřená pouzdra:</strong> Inateck FE2009, ORICO MSA-UC3, Plugable USBC-SATA-V</li>
-        <li>Cena SSD + pouzdro: cca <strong>400–900 Kč</strong> celkem</li>
+        <li><strong>Disk:</strong> běžný mSATA SSD od známé značky, rychlost nehraje roli (viz sekce 2.3)</li>
+        <li><strong>USB pouzdro (enclosure):</strong> vyber pouzdro s dobrými recenzemi pro Raspberry Pi. Některá mají potíže s UAS (USB Attached Storage), viz sekce 2.3</li>
+        <li>Aktuální cena mSATA SSD: hledat na <a href="https://www.heureka.cz/?h%5Bfraze%5D=msata+ssd+64gb" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=msata+ssd+64gb" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
+        <li>Aktuální cena USB pouzdra: hledat na <a href="https://www.heureka.cz/?h%5Bfraze%5D=usb+pouzdro+msata" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=usb+pouzdro+msata" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
       </ul>
-      <div style="margin-top:12px;padding:10px 14px;background:rgba(245,197,66,.06);border-left:2px solid var(--yellow);border-radius:6px;font-size:.83em;color:var(--t2)">
-        ⚠️ <strong style="color:var(--yellow)">UAS problém:</strong> Pouzdra s JMS578 chipsetem mohou způsobovat náhodné pády RPi. Pokud se ti to stane, přidej do <code>cmdline.txt</code> parametr <code>usb-storage.quirks=XXXX:YYYY:u</code> (kde XXXX:YYYY je VendorID:ProductID tvého pouzdra z <code>lsusb</code>).
+      <div class="callout callout-warn">
+        <div class="callout-title">⚠️ UAS problém</div>
+        <p>Pokud RPi s pouzdrem náhodně padá nebo nenabootuje, může jít o potíže s UAS. Postup řešení je v <a href="#ssd-pouzdro">sekci 2.3</a> a v kapitole 14.</p>
       </div>
     </div>
 
@@ -75,37 +80,37 @@
         <div class="hw-card-title">⚡ Napájecí zdroj Micro-USB</div>
         <span class="hw-badge hw-badge-required">povinné – čti pozorně</span>
       </div>
-      <p>Nejpodceňovanější součástka. Špatný napájecí zdroj je nejčastější příčina nestability. S mSATA USB SSD odebírá RPi 3 B+ více proudu než se samotnou SD kartou – potřebuješ <strong>min. 3A</strong>.</p>
+      <p>Nejpodceňovanější součástka. Špatný napájecí zdroj (power supply) je nejčastější příčina nestability. Výrobce uvádí pro RPi 3 B+ zdroj 5 V / 2,5 A. S mSATA USB SSD a Zigbee dongle se hodí rezerva navíc.</p>
       <ul>
-        <li><strong>Nejlepší volba:</strong> Originální Raspberry Pi Official PSU – 5.1V / 2.5A (designováno pro RPi, regulovaný výstup – prakticky nikdy neklesne pod 5V)</li>
-        <li><strong>Nebo:</strong> Meanwell GST25B05, CanaKit 3A Micro-USB, každý kvalitní zdroj 5V/3A s pevným kabelem</li>
+        <li><strong>Minimum:</strong> kvalitní zdroj 5 V / 2,5 A (originální Raspberry Pi Micro-USB zdroj 5,1 V / 2,5 A)</li>
+        <li><strong>Ideál:</strong> kvalitní zdroj 5,1 V / 3 A s krátkým silným kabelem (nejlépe pevně připojeným ke zdroji)</li>
         <li><strong>Vyhni se:</strong> generickým nabíječkám telefonů, nabíječkám bez udané ampéráže, odpojitelným USB kabelům (přidávají odpor)</li>
       </ul>
     </div>
 
     <div class="hw-card">
       <div class="hw-card-header">
-        <div class="hw-card-title">📶 USB Zigbee koordinátor</div>
+        <div class="hw-card-title">📶 USB Zigbee koordinátor (coordinator)</div>
         <span class="hw-badge hw-badge-required">povinné</span>
       </div>
       <p>Fyzická brána Zigbee sítě. Vše o výběru modulu je v <a href="03_raspberry_poznamka_k_zigbee_modulu.html">Kapitole 03</a>. Stručně:</p>
       <ul>
-        <li><strong>SMLIGHT SLZB-07</strong> (EFR32MG21) – doporučeno, plug-and-play, cca 600–900 Kč</li>
-        <li><strong>Sonoff Zigbee Dongle Plus-E</strong> (EFR32MG21) – levnější alternativa, cca 400–600 Kč</li>
-        <li><strong>ConBee III</strong> – prémiová volba s extra software podporou</li>
+        <li><strong>SMLIGHT SLZB-07</strong> (EFR32MG21) – doporučeno, plug-and-play. Cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=SMLIGHT+SLZB-07" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=SMLIGHT+SLZB-07" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
+        <li><strong>Sonoff Zigbee Dongle Plus-E</strong> (EFR32MG21) – levnější alternativa. Cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=Sonoff+Zigbee+3.0+USB+Dongle+Plus-E" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=Sonoff+Zigbee+3.0+USB+Dongle+Plus-E" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
+        <li><strong>ConBee III</strong> – prémiová volba; ve Zigbee2MQTT funguje přes adaptér <code>deconz</code> (viz kapitola 03). Cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=ConBee+III" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=ConBee+III" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
       </ul>
     </div>
 
     <div class="hw-card">
       <div class="hw-card-header">
-        <div class="hw-card-title">🔌 USB prodlužovací kabel</div>
+        <div class="hw-card-title">🔌 USB prodlužovací kabel (extension cable)</div>
         <span class="hw-badge hw-badge-recommended">doporučeno</span>
       </div>
       <p>Pro Zigbee koordinátor. Dongle přímo v RPi je obklopen kovovými součástkami a tělem desky, které tlumí signál. Prodlužovák 15–30 cm dongle vystrčí do prostoru a výrazně zlepší dosah.</p>
       <ul>
         <li>Délka: <strong>15–30 cm</strong> (delší kabely mohou přidávat zpoždění)</li>
         <li>Typ: USB-A samec → USB-A samice</li>
-        <li>Cena: cca 50–150 Kč, dostupné v každém elektru</li>
+        <li>Aktuální cena: hledat na <a href="https://www.heureka.cz/?h%5Bfraze%5D=usb+prodlu%C5%BEovac%C3%AD+kabel+20+cm" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=usb+prodlu%C5%BEovac%C3%AD+kabel+20+cm" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
       </ul>
     </div>
 
@@ -116,9 +121,9 @@
       </div>
       <p>RPi 3 B+ má WiFi, ale <strong>Ethernet = stabilita</strong>. HA zapisuje data průběžně a WiFi výpadky mohou způsobit problémy. Pro server který běží 24/7 preferuj drát.</p>
       <ul>
-        <li>Kategorie: Cat 5e nebo Cat 6 (100 Mbit/s na RPi 3 je maximum)</li>
+        <li>Kategorie: Cat 5e nebo Cat 6 (RPi 3 B+ zvládne reálně max. cca 300 Mbit/s – gigabitový port je zapojený přes USB 2.0)</li>
         <li>Délka: dle potřeby – měříme od RPi k routeru/switchi</li>
-        <li>Cena: 50–200 Kč dle délky</li>
+        <li>Aktuální cena: hledat na <a href="https://www.heureka.cz/?h%5Bfraze%5D=ethernet+kabel+cat6" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=ethernet+kabel+cat6" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
       </ul>
     </div>
 
@@ -127,25 +132,26 @@
         <div class="hw-card-title">💾 Malý USB flash disk (pro zálohy)</div>
         <span class="hw-badge hw-badge-optional">volitelné</span>
       </div>
-      <p>Lokální zálohovací médium – zapojí se do druhého USB portu RPi. Zálohy HA (50–200 MB každá) se automaticky kopírují sem pro rychlou obnovu bez NAS nebo internetu.</p>
+      <p>Volitelná lokální kopie záloh (backups) mimo hlavní SSD. Zálohy HA mají orientačně desítky až stovky MB. Jak je na flash disk dostat, záleží na zvolené variantě zálohování (viz kapitola 12).</p>
       <ul>
         <li>Velikost: min. 16 GB, doporučeno 32 GB</li>
-        <li>Důležité: kvalitní flash disk (SanDisk Ultra), ne nejlevnější generická značka</li>
-        <li>Cena: 150–300 Kč</li>
+        <li>Důležité: kvalitní flash disk od známé značky, ne nejlevnější generický</li>
+        <li>Aktuální cena: hledat na <a href="https://www.heureka.cz/?h%5Bfraze%5D=usb+flash+disk+32gb" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=usb+flash+disk+32gb" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
       </ul>
     </div>
 
     <div class="hw-card">
       <div class="hw-card-header">
-        <div class="hw-card-title">📦 Pouzdro pro Raspberry Pi</div>
+        <div class="hw-card-title">📦 Pouzdro (case) pro Raspberry Pi</div>
         <span class="hw-badge hw-badge-recommended">doporučeno</span>
       </div>
       <p>Bez pouzdra je RPi nechráněná deska vystavená prachu, zkratům a mechanickému poškození. Pro 24/7 provoz se pouzdro opravdu vyplatí.</p>
       <ul>
-        <li>Doporučuj pouzdra s <strong>pasivním chlazením</strong> – hliníkové tělo nebo heatsink integrovaný v víčku</li>
+        <li>Vybírej pouzdra s <strong>pasivním chlazením</strong> – hliníkové tělo nebo chladič (heatsink) integrovaný ve víčku</li>
         <li>Vyhni se uzavřeným plastovým krabičkám bez ventilace – RPi se v nich přehřívá při trvalém provozu</li>
-        <li>Nejlepší volba: hliníkové pouzdro s žebry (slouží zároveň jako heatsink) – cca 250–400 Kč</li>
-        <li>Alternativa: plastové pouzdro s otvory + samolepicí heatsink na CPU čip – cca 100–200 Kč celkem</li>
+        <li>Nejlepší volba: hliníkové pouzdro s žebry (slouží zároveň jako chladič, heatsink)</li>
+        <li>Alternativa: plastové pouzdro s otvory + samolepicí chladič (heatsink) na CPU čip</li>
+        <li>Aktuální cena pouzder: hledat na <a href="https://www.heureka.cz/?h%5Bfraze%5D=raspberry+pi+3+b%2B+hlin%C3%ADkov%C3%A9+pouzdro" target="_blank" rel="noopener noreferrer">Heureka.cz</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=raspberry+pi+3+b%2B+hlin%C3%ADkov%C3%A9+pouzdro" target="_blank" rel="noopener noreferrer">Google Nákupy (Shopping)</a></li>
         <li>Součástí většiny RPi kitů – zkontroluj obsah kitu před dokoupením zvlášť</li>
       </ul>
     </div>
@@ -174,23 +180,30 @@
     <div class="power-row">
       <div>
         <div class="power-label">Minimální proud</div>
-        <div class="power-note">Bez USB SSD – dnes už nedostačující pro stabilní provoz</div>
+        <div class="power-note">Doporučení výrobce pro RPi 3 B+</div>
       </div>
-      <div class="power-value">2.5A</div>
+      <div class="power-value">2,5 A</div>
     </div>
     <div class="power-row">
       <div>
-        <div class="power-label">Doporučený proud</div>
-        <div class="power-note">S mSATA USB SSD + Zigbee dongle + Ethernet</div>
+        <div class="power-label">Ideální proud</div>
+        <div class="power-note">Rezerva pro mSATA USB SSD + Zigbee dongle</div>
       </div>
-      <div class="power-value" style="color:var(--green2)">3A nebo více</div>
+      <div class="power-value good">3 A nebo více</div>
+    </div>
+    <div class="power-row">
+      <div>
+        <div class="power-label">Odběr USB zařízení</div>
+        <div class="power-note">Všechny 4 USB porty dohromady (SSD v pouzdře + Zigbee dongle)</div>
+      </div>
+      <div class="power-value">max. 1,2 A</div>
     </div>
   </div>
 
   <div class="callout callout-danger">
     <div class="callout-title">🔴 Co se stane při špatném napájení?</div>
     <ul>
-      <li>V HA se zobrazí <strong>žlutá ikonka blesku</strong> (undervoltage warning)</li>
+      <li>Home Assistant může hlásit <strong>podpětí (undervoltage)</strong>, viz integrace Raspberry Pi Power Supply Checker níže</li>
       <li>RPi omezí výkon CPU (throttling) – systém je pomalý</li>
       <li>Náhodné restarty, ztráta dat na SSD</li>
       <li>Nestabilita Zigbee komunikace – zařízení "mizí"</li>
@@ -198,30 +211,109 @@
     </ul>
   </div>
 
+  <h3>Hlášení o slabém napájení i při silnějším zdroji</h3>
+  <p>Varování o podpětí (undervoltage) se často objevuje, i když máš zdroj s dostatečným proudem. Proud totiž není jediná příčina – rozhoduje napětí přímo na desce RPi. Postupuj podle kroků a po každém zkontroluj, jestli varování zmizelo:</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Potvrď, že jde o napájení</div>
+        <div class="step-desc">
+          <p>V Home Assistant přidej integraci Raspberry Pi Power Supply Checker (Nastavení → Zařízení a služby → Přidat integraci, Settings → Devices &amp; services → Add integration). Vytvoří binární senzor, který hlásí problém s napájením.</p>
+          <p>Sleduj ho při běžném provozu i při zátěži (aktualizace, záloha). Pokud hlásí problém jen krátce při startu nebo při zátěži, je napájení hraniční.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Vyměň napájecí kabel</div>
+        <div class="step-desc">
+          <p>Nejčastější příčina. Použij co nejkratší a nejsilnější kabel (čím nižší číslo AWG u vodičů napájení, tím silnější vodič). Nejlepší je zdroj s pevně připojeným kabelem. Nepoužívej prodlužovací kabely ani rozdvojky mezi zdrojem a RPi.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Vyzkoušej jiný zdroj</div>
+        <div class="step-desc">
+          <p>Použij zdroj od známého výrobce, ideálně originální Raspberry Pi 5,1 V / 2,5 A. Řiď se údaji na štítku zdroje, ne reklamou v e-shopu. Pro test ho zapoj přímo do zásuvky.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Odlehči USB</div>
+        <div class="step-desc">
+          <p>Odpojuj USB zařízení po jednom (Zigbee dongle, prodlužovací kabel) a sleduj, kdy varování zmizí. Všechny porty dohromady dají max. 1,2 A.</p>
+          <p>Pokud je příčinou dongle, zapoj ho přes USB hub s vlastním napájením (powered hub). Bootovací SSD nech zapojené přímo v RPi.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Změř napětí</div>
+        <div class="step-desc">
+          <p>Mezi zdroj a RPi zapoj USB měřič (USB tester) a sleduj napětí při zátěži. Orientačně by mělo zůstat nad cca 4,75 V. Když klesne pod tuto hodnotu, zdroj nebo kabel nevyhovuje.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-title">Ověř výsledek</div>
+        <div class="step-desc">
+          <p>Po výměně RPi restartuj. Příznak „podpětí se vyskytlo" se tím vynuluje. Pak sleduj senzor z kroku 1 alespoň 24 hodin, včetně záloh a aktualizací.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Příkaz vcgencmd get_throttled</div>
+    <p>Pokud ho máš k dispozici (např. přes SSH do hostitele), vypíše stavovou hodnotu: <code>0x0</code> = vše v pořádku, <code>0x50005</code> = podpětí a omezení výkonu právě teď i v minulosti, <code>0x50000</code> = stalo se v minulosti, teď ne. Pokud není dostupný, stačí senzor z kroku 1.</p>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Když nepomůže nic</div>
+    <p>Pokud varování zůstává i s originálním zdrojem a krátkým kabelem, zkus jiné pouzdro SSD (některá berou víc proudu) nebo jiný kus Zigbee donglu. Odpojením zařízení po jednom zjistíš, které přetěžuje napájení.</p>
+  </div>
+
   <h3>Kde koupit napájecí zdroj v ČR</h3>
 
   <div class="shop-grid">
-    <a href="https://www.alza.cz/raspberry-pi-2-5a-d4191252.htm" class="shop-link" target="_blank">
+    <a href="https://www.alza.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>Alza.cz</span>
-      RPi Official PSU 2.5A
+      Elektronika a příslušenství
     </a>
-    <a href="https://rpishop.cz" class="shop-link" target="_blank">
+    <a href="https://rpishop.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>RPishop.cz</span>
       Kompletní RPi příslušenství
     </a>
-    <a href="https://botland.cz" class="shop-link" target="_blank">
+    <a href="https://botland.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>Botland.cz</span>
       RPi napájení a kity
     </a>
-    <a href="https://dratek.cz" class="shop-link" target="_blank">
+    <a href="https://dratek.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>Dratek.cz</span>
       Elektronika + Zigbee
     </a>
-    <a href="https://www.mironet.cz" class="shop-link" target="_blank">
+    <a href="https://www.mironet.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>Mironet.cz</span>
       Počítačové komponenty
     </a>
-    <a href="https://www.hw-shop.cz" class="shop-link" target="_blank">
+    <a href="https://www.hw-shop.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
       <span>HW-shop.cz</span>
       Hardware a elektronika
     </a>
@@ -229,55 +321,58 @@
 
   <div class="callout callout-tip">
     <div class="callout-title">💡 Tip: koupit jako kit</div>
-    <p>Na RPishop.cz nebo Alza.cz jsou dostupné starter kity s RPi 3 B+, napájecím zdrojem a pouzdrem. Cena je lepší než koupit vše zvlášť a máš jistotu že napájení je správné.</p>
+    <p>U specializovaných e-shopů bývají sady (kity) s RPi, napájecím zdrojem a pouzdrem. Cena bývá lepší než nákup po částech, vždy ale zkontroluj parametry zdroje (5 V / 2,5 A a více).</p>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
+    <p>Mají konektor USB-C. Raspberry Pi 4 používá zdroj 5,1 V / 3 A, Raspberry Pi 5 originální zdroj 27 W (5 V / 5 A). Slabší zdroj může u novějších modelů omezit výkon USB zařízení.</p>
   </div>
 </section>
 
 <!-- VÝBĚR SSD POUZDRA -->
 <section class="sec">
   <h2 id="ssd-pouzdro">USB pouzdro pro mSATA</h2>
-  <p>Ne každé pouzdro pro mSATA SSD funguje s RPi bez problémů. Problémový chipset <strong>JMS578</strong> způsobuje náhodné pády kvůli chybám v UAS (USB Attached Storage) protokolu.</p>
+  <p>Ne každé pouzdro (enclosure) pro mSATA SSD funguje s RPi bez problémů. Některé řadiče (známý příklad: <strong>JMS578</strong>) způsobují náhodné pády kvůli chybám v protokolu UAS (USB Attached Storage).</p>
 
   <h3>Jak zjistit chipset svého pouzdra</h3>
   <ol>
-    <li>Připoj pouzdro k PC nebo RPi</li>
-    <li>Na Windows: Device Manager → pohled na USB zařízení → vlastnosti → Hardware IDs</li>
-    <li>Na RPi přes SSH: spusť <code>lsusb -v</code> a hledej VendorID:ProductID</li>
-    <li>Pokud vidíš <code>152d:0578</code> = JMS578 = může být problém</li>
+    <li>Připoj pouzdro k PC s Windows</li>
+    <li>Otevři Správce zařízení (Device Manager) → najdi USB úložiště → Vlastnosti (Properties) → Podrobnosti (Details) → ID hardwaru (Hardware Ids)</li>
+    <li>Hledej řádek ve tvaru <code>VID_152D&amp;PID_0578</code>. To je VendorID:ProductID zapsané jako <code>152d:0578</code></li>
+    <li>Pokud vidíš <code>152d:0578</code> = JMS578, může být problém s UAS</li>
   </ol>
 
   <h3>Pokud máš problémové pouzdro – řešení</h3>
-  <p>Přidej quirks parametr do bootovacího konfiguračního souboru. Po přístupu přes SSH do HAOS:</p>
-  <pre><code># Zjisti VendorID:ProductID svého pouzdra
-lsusb
-
-# Příklad výstupu: Bus 001 Device 002: ID 152d:0578 JMicron Technology Corp.
-
-# Přidej do /mnt/boot/cmdline.txt (parametr na KONEC stávajícího řádku, ne nový řádek!):
-usb-storage.quirks=152d:0578:u</code></pre>
+  <p>Přidej parametr quirks do souboru <code>cmdline.txt</code> na bootovacím oddílu. Nejjednodušší je to udělat z Windows – bootovací oddíl je FAT32 a Windows ho přečte (viz sekce 4.5):</p>
+  <pre><code># 1) Zjisti VendorID:ProductID pouzdra (postup výše), např. 152d:0578
+# 2) Otevři soubor cmdline.txt na bootovacím oddílu (např. v Poznámkovém bloku)
+# 3) Přidej parametr na KONEC stávajícího řádku (za mezeru, ne jako nový řádek!):
+usb-storage.quirks=152d:0578:u
+# 4) Ulož, bezpečně odpoj disk a zapoj ho do RPi</code></pre>
 
   <div class="callout callout-info">
-    <div class="callout-title">ℹ️ Ověřená doporučení komunity HA</div>
-    <p>Nejlépe hodnocená pouzdra v komunitě Home Assistant pro mSATA/SATA: <strong>Inateck FE2009</strong> (ASMedia ASM1153E), <strong>UGREEN USB 3.0 SATA</strong>, a pouzdra s JMicron JMS561. Vyhledej recenze na <a href="https://community.home-assistant.io" target="_blank">community.home-assistant.io</a> při výběru.</p>
+    <div class="callout-title">ℹ️ Recenze komunity HA</div>
+    <p>Před koupí zkontroluj recenze konkrétního pouzdra v komunitě Home Assistant a Raspberry Pi. Hledej zmínky o UAS, pádech nebo nutnosti quirks. Recenze najdeš na <a href="https://community.home-assistant.io" target="_blank" rel="noopener noreferrer">community.home-assistant.io</a>.</p>
   </div>
 
-  <h3>Konkrétní doporučené mSATA SSD dostupné v ČR</h3>
+  <h3>Jak vybrat mSATA SSD</h3>
   <ul>
-    <li><strong>Kingston SMS200S3/32G nebo /64G</strong> – dostupný na Alza.cz, cca 250–400 Kč. Ověřená kompatibilita, spolehlivý výkon pro HA.</li>
-    <li><strong>SanDisk X110 SD6SF1M</strong> – starší model, levnější na bazarech (Aukro, Bazoš). Výborná kvalita SanDisk, dlouhá životnost.</li>
-    <li><strong>Crucial M500 mSATA</strong> – dostupný na Alza nebo Mall, cca 300–450 Kč za 32/64 GB verze.</li>
+    <li><strong>Konektor:</strong> pozor na rozdíl mezi mSATA, M.2 SATA a M.2 NVMe. Nejsou zaměnitelné a pouzdro musí odpovídat typu disku.</li>
+    <li><strong>Kapacita:</strong> min. 32 GB, lépe 64 GB.</li>
+    <li><strong>Značka:</strong> běžný disk od známé značky. Na rychlosti nezáleží, limitem je USB 2.0 na RPi 3 B+.</li>
+    <li><strong>Použité disky:</strong> u bazarových kusů zkontroluj opotřebení (SMART) před použitím.</li>
   </ul>
 </section>
 
 <!-- CHLAZENÍ -->
 <section class="sec">
   <h2 id="chlazeni">Chlazení a teplota</h2>
-  <p>RPi 3 B+ automaticky omezuje výkon CPU (throttling) při teplotě nad 80°C. Při trvalém provozu 24/7 je správné chlazení důležité pro stabilitu.</p>
+  <p>RPi 3 B+ omezuje výkon CPU (throttling) ve dvou stupních: při <strong>60 °C</strong> (měkký limit, soft limit) sníží takt z 1,4 na 1,2 GHz a při 80–85 °C (tvrdý limit 85 °C) výkon omezí výrazněji. Chladič (heatsink) není nutný k ochraně čipu, ale omezování výkonu snižuje. Při trvalém provozu 24/7 je správné chlazení důležité pro stabilitu. Uvedené teploty vycházejí z veřejných měření a jsou orientační.</p>
   <ul>
-    <li><strong>Bez pouzdra / heatsink:</strong> běžná provozní teplota 50–65°C – na hranici doporučeného rozsahu</li>
-    <li><strong>S hliníkovým heatsink na CPU:</strong> cca 40–55°C – ideální pro 24/7 provoz</li>
-    <li><strong>S hliníkovým pouzdrem (passive cooling):</strong> cca 38–50°C – nejlepší bez ventilátoru</li>
-    <li><strong>Aktivní chlazení (ventilátor):</strong> pod 40°C – nutné jen při extrémní zátěži nebo v teplém prostředí</li>
+    <li><strong>Bez chlazení (pouzdro bez chladiče):</strong> v klidu cca 40–52 °C, při trvalé zátěži cca 65–75 °C, při plné zátěži až kolem 80 °C. Měkký limit 60 °C tedy občas překročíš.</li>
+    <li><strong>S chladičem (heatsink) nebo hliníkovým pouzdrem:</strong> o několik až deset stupňů nižší. Pro provoz 24/7 rozumná pojistka.</li>
+    <li><strong>Aktivní chlazení (ventilátor):</strong> teplotu výrazně sníží. Pro Home Assistant se Zigbee2MQTT obvykle není nutné.</li>
   </ul>
 
   <h3>Jak nainstalovat heatsink</h3>
@@ -291,13 +386,13 @@ usb-storage.quirks=152d:0578:u</code></pre>
   <h3>Jak zkontrolovat teplotu</h3>
   <p>Aktuální teplotu CPU zjistíš dvěma způsoby:</p>
   <ul>
-    <li><strong>V Home Assistant:</strong> Nastavení → Systém → Hardware → karta s teplotou procesoru</li>
+    <li><strong>V Home Assistant:</strong> přidej integraci System Monitor (Sledování systému) – Nastavení → Zařízení a služby → Přidat integraci (Settings → Devices &amp; services → Add integration). Nabízí senzor teploty procesoru (Processor temperature).</li>
     <li><strong>Přes SSH:</strong> příkaz <code>vcgencmd measure_temp</code> zobrazí aktuální teplotu (např. <code>temp=52.1'C</code>)</li>
   </ul>
 
   <div class="callout callout-warn">
-    <div class="callout-title">⚠️ Throttling a jeho projev</div>
-    <p>Při teplotě nad 80°C RPi začne automaticky snižovat takt CPU. V HA se to projeví pomalou odezvou, zpomaleným načítáním dashboardu a opožděnými automatizacemi. Pokud to vidíš pravidelně – doplň chlazení nebo zkontroluj větrání v místnosti.</p>
+    <div class="callout-title">⚠️ Omezení výkonu (throttling) a jeho projev</div>
+    <p>Už při 60 °C RPi mírně sníží takt CPU a při 80–85 °C ho snižuje výrazně. V HA se to projeví pomalou odezvou, zpomaleným načítáním dashboardu a opožděnými automatizacemi. Pokud to vidíš pravidelně – doplň chlazení nebo zkontroluj větrání v místnosti.</p>
   </div>
 </section>
 
@@ -305,23 +400,69 @@ usb-storage.quirks=152d:0578:u</code></pre>
 <section class="sec">
   <h2 id="checklist">Nákupní checklist</h2>
   <p>Než půjdeš nakupovat, projdi tento seznam:</p>
-  <ul>
-    <li>☐ Raspberry Pi 3 Model B+ (nebo kit)</li>
-    <li>☐ mSATA SSD disk (min. 32 GB) – doporučeno Kingston SMS200S3/32G nebo /64G</li>
-    <li>☐ USB pouzdro pro mSATA (s ASMedia nebo JMS561 chipsetem)</li>
-    <li>☐ Napájecí zdroj Micro-USB <strong>5V / 3A</strong> (originální RPi nebo Meanwell)</li>
-    <li>☐ Ethernet kabel (délka dle potřeby)</li>
-    <li>☐ USB Zigbee koordinátor (SLZB-07 nebo Sonoff)</li>
-    <li>☐ USB prodlužovací kabel 15–30 cm (pro Zigbee dongle)</li>
-    <li>☐ Pouzdro pro RPi s pasivním chlazením nebo heatsink – <strong>doporučeno</strong></li>
-    <li>☐ [VOLITELNÉ] Malý USB flash disk 32 GB pro lokální zálohy</li>
-  </ul>
+  <div class="checklist">
+    <div class="checklist-title">Před nákupem zkontroluj</div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Raspberry Pi 3 Model B+ (nebo kit)</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">mSATA SSD disk (min. 32 GB, lépe 64 GB), pozor na rozdíl mSATA / M.2</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">USB pouzdro (enclosure) pro mSATA s dobrými recenzemi pro RPi (viz sekce 2.3)</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Napájecí zdroj (power supply) Micro-USB – minimum <strong>5 V / 2,5 A</strong>, ideál <strong>5,1 V / 3 A</strong></div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Ethernet kabel (délka dle potřeby)</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">USB Zigbee koordinátor (coordinator), např. SLZB-07 nebo Sonoff</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">USB prodlužovací kabel (extension cable) 15–30 cm pro Zigbee dongle</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">Pouzdro (case) pro RPi s pasivním chlazením nebo chladič (heatsink) – <strong>doporučeno</strong></div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-item-body">
+        <div class="check-item-title">[VOLITELNÉ] Malý USB flash disk 32 GB pro lokální zálohy</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <div id="pn"></div>
 
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

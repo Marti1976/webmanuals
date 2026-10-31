@@ -14,7 +14,7 @@
     { "id": "predpoklady", "num": "8.1", "name": "Předpoklady" },
     { "id": "overeni-donglu", "num": "8.2", "name": "Ověření USB donglu" },
     { "id": "repozitar", "num": "8.3", "name": "Přidání repozitáře" },
-    { "id": "instalace-z2m", "num": "8.4", "name": "Instalace add-onu" },
+    { "id": "instalace-z2m", "num": "8.4", "name": "Instalace aplikace" },
     { "id": "zjisteni-portu", "num": "8.5", "name": "Adresa koordinátoru" },
     { "id": "pripraveno", "num": "8.6", "name": "Co máš připraveno" }
   ]
@@ -30,7 +30,7 @@
 <header>
   <div class="h-num">// kapitola 08</div>
   <h1>Instalace <em>Zigbee2MQTT</em></h1>
-  <p class="h-desc">Přidání community repozitáře, instalace add-onu, zjištění adresy USB Zigbee donglu a příprava před konfigurací. Zigbee2MQTT není v oficiálním storu – musíme ho přidat ručně.</p>
+  <p class="h-desc">Přidání komunitního repozitáře (repository), instalace aplikace (add-on/app), ověření USB Zigbee donglu a příprava před nastavením. Zigbee2MQTT není v oficiálním obchodě s aplikacemi, repozitář musíme přidat.</p>
 </header>
 
 <!-- PREDPOKLADY -->
@@ -47,22 +47,44 @@
     <div class="callout-title">🔴 Nepřeskakuj Mosquitto!</div>
     <p>Zigbee2MQTT potřebuje funkční MQTT broker. Pokud by Mosquitto nefungoval, Z2M se spustí, ale nebude moci posílat data do Home Assistant – zařízení se neobjeví.</p>
   </div>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Raspberry Pi 3 má omezené zdroje</div>
+    <p>Oficiální dokumentace Zigbee2MQTT upozorňuje, že na Raspberry Pi 3 může být provoz kvůli omezeným zdrojům (1 GB RAM) nestabilní, a doporučuje alespoň Raspberry Pi 4. Pro vyzkoušení to stačí. Počet aplikací drž nízký a sleduj paměť (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#vykon">sekce 13.4</a>).</p>
+  </div>
+  <div class="callout callout-tip">
+    <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
+    <p>Postup je stejný. Novější modely mají výrazně více paměti i výkonu, takže Zigbee2MQTT běží stabilněji.</p>
+  </div>
 </section>
 
 <!-- OVERENI DONGLU -->
 <section class="sec">
   <h2 id="overeni-donglu">Ověření USB donglu</h2>
-  <p>Ještě <strong>před instalací Z2M</strong> si ověř, že HAOS tvůj Zigbee dongle skutečně vidí. Ušetříš si ladění problémů s portem později.</p>
+  <p>Ještě <strong>před instalací Z2M</strong> si ověř, že HAOS tvůj Zigbee dongle skutečně vidí. Ušetříš si ladění problémů později. Máš dvě varianty:</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Ověř detekci donglu v Hardware sekci</div>
+        <div class="step-title">Varianta A – v rozhraní Home Assistant</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Hardware → Veškerý hardware</strong>. Hledej záznam s názvem <code>CP210x</code>, <code>CP2102N</code> nebo <code>CH340</code> – to je tvůj Zigbee dongle.</p>
-          <p>Nebo přes SSH (pokud máš nainstalovaný SSH add-on):</p>
-          <pre><code>ls /dev/serial/by-id/</code></pre>
-          <p>Musíš vidět alespoň jeden záznam. Pokud je seznam prázdný:</p>
+          <p>Jdi do <strong>Nastavení → Systém → Hardware → Veškerý hardware (Settings → System → Hardware → All hardware)</strong>. Hledej záznam s názvem USB-UART převodníku (USB-to-UART bridge). Podle modelu to bývá:</p>
+          <ul>
+            <li><code>CP210x</code> nebo <code>CP2102N</code> – SLZB-07, Sonoff ZBDongle-P</li>
+            <li><code>CH9102</code> nebo <code>CH340</code> – Sonoff ZBDongle-E</li>
+          </ul>
+          <p>Z názvu převodníku nepoznáš čip koordinátoru (viz <a href="03_raspberry_poznamka_k_zigbee_modulu.html#jak-zjistit">sekce 3.2</a>), slouží jen k potvrzení, že HAOS dongle vidí.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Varianta B – příkazem v terminálu</div>
+        <div class="step-desc">
+          <p>V aplikaci Terminal &amp; SSH (viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#ssh-terminal">sekce 6.7</a>) spusť:</p>
+          <pre><code>ha hardware info</code></pre>
+          <p><strong>Nutné prověřit:</strong> tento příkaz je převzatý z dokumentace aplikace Zigbee2MQTT. Na tvém RPi ho po instalaci vyzkoušej, výstup se může lišit podle verze Home Assistantu.</p>
+          <p>Ve výpisu musíš vidět alespoň jedno sériové zařízení (např. <code>/dev/ttyUSB0</code> nebo <code>/dev/ttyACM0</code>). Pokud je seznam prázdný:</p>
           <ul>
             <li>Zkontroluj fyzické zapojení donglu</li>
             <li>Zkus jiný USB port na RPi</li>
@@ -75,39 +97,49 @@
   </div>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Datový vs nabíjecí USB kabel</div>
-    <p>Toto je překvapivě časté úskalí. Spousta USB kabelů v domácnosti jsou <strong>nabíjecí kabely</strong> – mají pouze 2 vodiče (napájení) a přenášejí nulová data. Pro Zigbee dongle potřebuješ kabel se 4 vodiči (data + napájení). Jak to poznat: datový kabel je na dotek tužší a těžší. Nebo zkus jiný kabel – pokud dongle najednou funguje, předchozí byl nabíjecí.</p>
+    <p>Toto je překvapivě časté úskalí. Spousta USB kabelů v domácnosti jsou <strong>nabíjecí kabely</strong> – mají pouze 2 vodiče (napájení) a přenášejí nulová data. Pro Zigbee dongle potřebuješ kabel se 4 vodiči (data + napájení). Od pohledu to spolehlivě nepoznáš. Zkus jiný kabel – pokud dongle najednou funguje, předchozí byl nabíjecí.</p>
   </div>
 </section>
 
 <!-- PRIDANI REPOZITARE -->
 <section class="sec">
   <h2 id="repozitar">Přidání repozitáře</h2>
-  <p>Zigbee2MQTT není v oficiálním add-on storu Home Assistant. Je to komunitní projekt dostupný přes vlastní GitHub repozitář, který musíme přidat ručně.</p>
+  <p>Zigbee2MQTT není v oficiálním obchodě s aplikacemi Home Assistantu. Je to komunitní projekt dostupný přes vlastní GitHub repozitář, který musíme přidat. Máš dvě varianty:</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Přidej Zigbee2MQTT repozitář</div>
+        <div class="step-title">Varianta A – ručně v obchodě s aplikacemi</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Doplňky → ADD-ON STORE</strong>.</p>
-          <p>Klikni na <strong>tři tečky (⋮)</strong> vpravo nahoře → <strong>Repozitáře</strong> (Repositories).</p>
-          <p>Do pole vlož tuto URL a klikni <strong>PŘIDAT</strong>:</p>
+          <p>Jdi do <strong>Nastavení → Doplňky/Aplikace → Obchod (Settings → Add-ons/Apps → App store)</strong>.</p>
+          <p>Klikni na <strong>tři tečky (⋮)</strong> vpravo nahoře → <strong>Repozitáře (Repositories)</strong>.</p>
+          <p>Do pole vlož tuto URL a klikni <strong>Přidat (Add)</strong>, potom <strong>Zavřít (Close)</strong>:</p>
           <pre>https://github.com/zigbee2mqtt/hassio-zigbee2mqtt</pre>
-          <p>Klikni <strong>ZAVŘÍT</strong>. Stránka add-on storu se automaticky obnoví.</p>
+          <p>Stránka obchodu se obnoví.</p>
         </div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
+        <div class="step-title">Varianta B – jedním klikem přes My Home Assistant</div>
+        <div class="step-desc">
+          <p>Otevři <a href="https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fzigbee2mqtt%2Fhassio-zigbee2mqtt" target="_blank" rel="noopener noreferrer">odkaz na přidání repozitáře</a>. Stránka se může zeptat na adresu tvého Home Assistantu, zadej <code>http://192.168.0.11</code> (u starších instalací <code>http://192.168.0.11:8123</code>). Pak potvrď <strong>Přidat (Add)</strong> a <strong>Zavřít (Close)</strong>.</p>
+          <p><strong>Co je My Home Assistant:</strong> oficiální přesměrovací služba Home Assistantu. Odkaz otevře tvoji instalaci přímo na správné stránce a předvyplní adresu repozitáře, takže ji nemusíš opisovat. Adresa tvé instalace se podle dokumentace ukládá jen v tvém prohlížeči. Odkaz funguje, jen pokud se z prohlížeče dostaneš k Home Assistantu (tedy z domácí sítě).</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
         <div class="step-title">Ověř, že se repozitář načetl</div>
         <div class="step-desc">
-          <p>Po obnovení stránky by se v add-on storu měly zobrazit nové položky:</p>
+          <p>Po obnovení stránky by se v obchodě měly zobrazit dvě nové položky:</p>
           <ul>
-            <li><strong>Zigbee2MQTT</strong> – stabilní verze ✅ <em>tuto použij</em></li>
-            <li><strong>Zigbee2MQTT Edge</strong> – vývojová verze ❌ <em>nepoužívej pro produkci</em></li>
+            <li><strong>Zigbee2MQTT</strong> – stabilní verze sledující vydané verze ✅ <em>doporučeno pro většinu uživatelů</em></li>
+            <li><strong>Zigbee2MQTT Edge</strong> – vývojová verze (větev <code>dev</code>) ❌ <em>nepoužívej pro běžný provoz</em></li>
           </ul>
-          <p>Pokud se nezobrazily: obnovit stránku (F5), nebo zkontroluj URL repozitáře.</p>
+          <p>Pokud se nezobrazily: obnov stránku (F5), nebo zkontroluj URL repozitáře.</p>
         </div>
       </div>
     </div>
@@ -116,15 +148,15 @@
 
 <!-- INSTALACE Z2M -->
 <section class="sec">
-  <h2 id="instalace-z2m">Instalace add-onu</h2>
+  <h2 id="instalace-z2m">Instalace aplikace</h2>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Nainstaluj Zigbee2MQTT (stabilní verze)</div>
         <div class="step-desc">
-          <p>Klikni na <strong>Zigbee2MQTT</strong> (bez přívlastku "Edge"). Klikni <strong>NAINSTALOVAT</strong>.</p>
-          <p>Instalace stahuje Docker image a závislosti – trvá <strong>3–8 minut</strong> dle rychlosti internetu a SD/SSD.</p>
+          <p>Klikni na <strong>Zigbee2MQTT</strong> (bez přívlastku „Edge“). Klikni <strong>Nainstalovat (Install)</strong> a počkej na dokončení.</p>
+          <p>Instalace stahuje a rozbaluje aplikaci. Orientačně trvá několik minut podle rychlosti internetu a disku.</p>
           <p>Po dokončení se zobrazí záložky Informace, Dokumentace, Konfigurace, Protokol.</p>
         </div>
       </div>
@@ -132,41 +164,52 @@
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <div class="step-title">Nastav Start on boot a Watchdog</div>
+        <div class="step-title">Nastav spouštění a postranní panel</div>
         <div class="step-desc">
           <p>Na záložce <strong>INFORMACE</strong> nastav:</p>
           <ul>
-            <li><strong>Start on boot = ON</strong></li>
-            <li><strong>Watchdog = ON</strong></li>
+            <li><strong>Start on boot = ON</strong> (spuštění při startu systému)</li>
+            <li><strong>Watchdog = ON</strong> (automatický restart aplikace Home Assistantem)</li>
+            <li><strong>Show in sidebar = ON</strong> (ikona Zigbee2MQTT v levém menu)</li>
           </ul>
-          <p><strong>Zatím NESPOUŠTĚJ!</strong> Nejprve musíme zjistit adresu USB donglu a nakonfigurovat připojení. Konfigurace je v Kapitole 09.</p>
+          <p>Spuštění aplikace a první nastavení jsou v <a href="09_raspberry_konfigurace_zigbee2mqtt.html">kapitole 09</a>. Podle zvolené varianty ji spustíš buď hned (onboarding), nebo až po zadání konfigurace.</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="callout callout-warn">
-    <div class="callout-title">⚠️ Nespouštěj Z2M bez konfigurace</div>
-    <p>Pokud spustíš Zigbee2MQTT bez správné konfigurace (špatná adresa portu, špatný typ adaptéru, chybné MQTT heslo), add-on okamžitě spadne a bude se opakovaně restartovat. To komplikuje ladění. Nejprve nakonfiguruj, pak spusť.</p>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Kdy aplikaci spustit</div>
+    <p><strong>Varianta A (onboarding):</strong> aplikaci spustíš bez konfigurace a údaje (adaptér, Zigbee kanál) vyplníš ve webovém rozhraní. To je v pořádku a je to doporučený postup výrobce.</p>
+    <p><strong>Varianta B (ruční konfigurace):</strong> nejdřív vyplň konfiguraci aplikace (adaptér, port, MQTT) a až potom ji spusť. Při chybné konfiguraci (špatný port nebo adaptér, chybné MQTT heslo) se aplikace opakovaně restartuje, což komplikuje ladění.</p>
   </div>
+
+  <h3>Webové rozhraní Zigbee2MQTT</h3>
+  <p>Webové rozhraní otevřeš po spuštění aplikace dvěma způsoby:</p>
+  <ul>
+    <li>Ikonou <strong>Zigbee2MQTT</strong> v levém menu HA (pokud máš zapnuto <strong>Show in sidebar</strong>)</li>
+    <li>Tlačítkem <strong>„Otevřít webové rozhraní“ (OPEN WEB UI)</strong> na záložce Informace aplikace</li>
+  </ul>
 </section>
 
 <!-- ZJISTENI PORTU -->
 <section class="sec">
   <h2 id="zjisteni-portu">Adresa koordinátoru</h2>
-  <p>Musíme zjistit, na jakou systémovou adresu HAOS přiřadil tvůj USB dongle. Tato adresa půjde do konfigurace Z2M.</p>
+  <p>Zigbee2MQTT potřebuje vědět, kde koordinátor najde. Podle zvolené varianty nastavení v kapitole 09 máš tyto možnosti:</p>
+  <ul>
+    <li><strong>Varianta A – automaticky:</strong> v onboardingu vybereš svůj adaptér v části <em>Found Devices</em> a adresu i typ adaptéru Zigbee2MQTT vyplní samo. Nic nezjišťuješ.</li>
+    <li><strong>Varianta B – ručně (USB dongle):</strong> adresu zjistíš podle postupu níže a zadáš ji do konfigurace.</li>
+    <li><strong>Varianta C – síťový koordinátor:</strong> místo cesty k portu zadáš adresu <code>tcp://IP:port</code> (viz příklady v <a href="03_raspberry_poznamka_k_zigbee_modulu.html#konfig-z2m">sekci 3.3</a>).</li>
+  </ul>
+
+  <h3>Zjištění adresy USB donglu (varianta B)</h3>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Zkontroluj Hardware v Home Assistant</div>
+        <div class="step-title">Zjisti adresu v Home Assistant nebo v terminálu</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Hardware</strong>. Klikni na <strong>"VEŠKERÝ HARDWARE"</strong> nebo vyhledej "serial" v seznamu.</p>
-          <p>Hledej záznamy podle svého donglu:</p>
-          <ul>
-            <li><strong>SLZB-07 (EFR32MG21 + CP2102N):</strong> hledej <code>CP210x UART Bridge</code> nebo <code>CP2102N</code></li>
-            <li><strong>Sonoff Dongle-E:</strong> hledej <code>CP210x</code></li>
-            <li><strong>Dongle s CH340:</strong> hledej <code>CH340</code> nebo <code>CH341</code></li>
-          </ul>
+          <p><strong>V rozhraní:</strong> Nastavení → Systém → Hardware → Veškerý hardware (Settings → System → Hardware → All hardware). Najdi záznam svého donglu (viz sekce 8.2). Vedle něj je adresa ve tvaru <code>/dev/serial/by-id/...</code>.</p>
+          <p><strong>V terminálu</strong> (Terminal &amp; SSH): spusť <code>ha hardware info</code> a v seznamu najdi cestu <code>/dev/serial/by-id/...</code> svého donglu.</p>
         </div>
       </div>
     </div>
@@ -186,45 +229,27 @@
 
   <div class="callout callout-tip">
     <div class="callout-title">💡 Vždy používej /dev/serial/by-id/...</div>
-    <p>Adresa <code>/dev/ttyUSB0</code> se může po restartu změnit pokud máš více USB zařízení. Cesta <code>/dev/serial/by-id/...</code> obsahuje unikátní sériové číslo donglu a je vždy stejná. Zkopíruj ji přesně – i kapitálky záleží.</p>
+    <p>Adresa <code>/dev/ttyUSB0</code> se může po restartu změnit, pokud máš více USB zařízení. Cesta <code>/dev/serial/by-id/...</code> obsahuje unikátní sériové číslo donglu a je vždy stejná. Zkopíruj ji přesně – i kapitálky záleží. Když nic jiného nenajdeš a máš připojený jen jeden USB dongle, zkus <code>/dev/ttyACM0</code>, <code>/dev/ttyUSB0</code> nebo <code>/dev/ttyAMA0</code>.</p>
   </div>
-
-  <h3>Zjištění adresy přes SSH (alternativa)</h3>
-  <p>Pokud máš nainstalovaný SSH add-on, připoj se a spusť:</p>
-  <pre><code># Zobrazí seznam sériových zařízení s ID
-ls -la /dev/serial/by-id/
-
-# Výstup bude vypadat nějak takto:
-# usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_XXXX-if00-port0 -> ../../ttyUSB0</code></pre>
-  <p>Celá cesta kterou chceš je: <code>/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_XXXX-if00-port0</code></p>
 </section>
 
 <!-- SHRNUTÍ -->
 <section class="sec">
   <h2 id="pripraveno">Co máš připraveno</h2>
   <ul>
-    <li>✅ Zigbee2MQTT nainstalován (stabilní verze)</li>
-    <li>✅ Start on boot a Watchdog zapnuty</li>
+    <li>✅ Zigbee2MQTT nainstalováno (stabilní verze)</li>
+    <li>✅ Start on boot, Watchdog a Show in sidebar zapnuty</li>
     <li>✅ Ověřena detekce USB donglu v Hardware sekci</li>
-    <li>✅ Znáš přesnou adresu USB Zigbee koordinátoru</li>
+    <li>✅ Víš, jak adresu koordinátoru zadat (onboarding, ručně, nebo síťově)</li>
     <li>✅ Máš MQTT uživatele a heslo z Kapitoly 07</li>
   </ul>
 
-  <h3>Zobrazení Z2M panelu v postranním menu HA</h3>
-  <p>Po úspěšném spuštění Z2M (v Kapitole 09) je dobré ho mít přístupný přímo z HA menu:</p>
-  <ul>
-    <li>Jdi do <strong>Nastavení → Doplňky → Zigbee2MQTT → záložka INFORMACE</strong></li>
-    <li>Přepni <strong>"Show in sidebar" = ON</strong></li>
-    <li>V levém menu HA se zobrazí ikona Zigbee2MQTT pro rychlý přístup k webovému rozhraní</li>
-    <li>Alternativně: vždy dostupné přes tlačítko <strong>"Otevřít webové rozhraní"</strong> na záložce Informace add-onu</li>
-  </ul>
-
-  <p>Pokračuj na <a href="09_raspberry_konfigurace_zigbee2mqtt.html">Kapitolu 09 – Konfigurace Zigbee2MQTT</a> kde propojíme Z2M s MQTT brokerem, nastavíme typ adaptéru a spustíme celý stack.</p>
+  <p>Pokračuj na <a href="09_raspberry_konfigurace_zigbee2mqtt.html">Kapitolu 09 – Konfigurace Zigbee2MQTT</a>, kde propojíme Z2M s MQTT brokerem, nastavíme adaptér a spustíme celý systém.</p>
 </section>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

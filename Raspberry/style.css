@@ -13,7 +13,7 @@
   --r:12px;
   --sidebar-width:260px;
 }
-html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 ::-webkit-scrollbar{width:6px;background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px}
@@ -81,17 +81,7 @@ pre code{background:none;border:none;padding:0;color:inherit;font-size:1em}
 .arch{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
   padding:28px 24px;margin:20px 0;font-family:'DM Mono',monospace;font-size:.83em;
   line-height:1.8;color:var(--t2);overflow-x:auto}
-.arch-layer{display:flex;align-items:center;gap:0;margin:6px 0}
-.arch-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;
-  padding:10px 16px;color:var(--white);font-size:.85em;white-space:nowrap}
-.arch-box.primary{border-color:var(--rasp1);color:var(--rasp1-light);
-  background:rgba(227,11,92,.08)}
-.arch-box.secondary{border-color:rgba(0,217,255,.3);color:var(--cyan2);
-  background:rgba(0,217,255,.06)}
-.arch-box.tertiary{border-color:rgba(0,229,160,.3);color:var(--green2);
-  background:rgba(0,229,160,.06)}
-.arch-arrow{color:var(--t3);padding:0 10px;font-size:1.1em}
-.arch-label{color:var(--t3);font-size:.78em;padding:0 8px}
+.arch pre{background:none;border:none;padding:0;margin:0;color:inherit}
 
 /* STACK TABLE */
 .stack-table{width:100%;border-collapse:collapse;margin:18px 0}
@@ -120,9 +110,10 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .sidebar{position:fixed;left:0;top:0;width:var(--sidebar-width);height:100vh;
   background:rgba(10,8,16,.98);border-right:1px solid var(--border);
   display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+@supports(height:100dvh){.sidebar{height:100dvh}}
 .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
   background:linear-gradient(90deg,var(--rasp1),var(--rasp2),transparent)}
-.sb-home{color:var(--t2);text-decoration:none;font-size:11px;
+.sb-home{color:var(--t2);text-decoration:none;font-size:.6875rem;
   text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;
   display:flex;align-items:center;gap:6px;padding:24px 20px 18px;
   border-bottom:1px solid var(--border);transition:color .2s}
@@ -130,11 +121,11 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .sb-chapters{list-style:none;padding:8px 0 24px;margin:0}
 .sb-chapters li{margin:0}
 .sb-link{display:flex;align-items:center;gap:10px;padding:9px 20px;
-  color:var(--t2);text-decoration:none;font-size:12.5px;
+  color:var(--t2);text-decoration:none;font-size:.78125rem;
   border-left:2px solid transparent;transition:all .2s;font-family:'Inter',sans-serif;line-height:1.3}
 .sb-link:hover,.sb-link.active{color:var(--white);
   background:rgba(227,11,92,.06);border-left-color:var(--rasp1)}
-.sb-link span{font-family:'DM Mono',monospace;font-size:10px;min-width:22px;
+.sb-link span{font-family:'DM Mono',monospace;font-size:.625rem;min-width:22px;
   color:var(--rasp1-light);background:rgba(227,11,92,.1);
   border:1px solid rgba(227,11,92,.25);padding:2px 4px;
   border-radius:4px;text-align:center;flex-shrink:0}
@@ -143,7 +134,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .sb-subchapters{list-style:none;padding:2px 0 6px;margin:0}
 .sb-subchapters li{margin:0}
 .sb-subchapter{display:block;padding:6px 20px 6px 52px;color:var(--t2);
-  text-decoration:none;font-size:12px;font-family:'Inter',sans-serif;line-height:1.4;
+  text-decoration:none;font-size:.75rem;font-family:'Inter',sans-serif;line-height:1.4;
   border-left:2px solid transparent;transition:all .2s}
 .sb-subchapter:hover{color:var(--white)}
 .sb-subchapter.active{color:var(--rasp1-light);border-left-color:var(--rasp1)}
@@ -174,7 +165,43 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
     background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .24s ease}
   .sidebar-backdrop.visible{opacity:1;pointer-events:auto}
   .main-content{margin-left:0;padding-top:64px}
+  /* hamburger je fixní – kotva se nesmí schovat pod něj */
+  h2[id]{scroll-margin-top:72px}
+  /* po otevření se hamburger přesune vedle sidebaru a slouží jako zavírací tlačítko */
+  body.menu-open .hamburger{left:calc(var(--sidebar-width) + 14px);z-index:101}
 }
+@media(prefers-reduced-motion:reduce){
+  .sidebar,.sidebar-backdrop,.progress-bar{transition:none}
+}
+
+/* ── SDÍLENÉ KOMPONENTY (používá víc dílů) ── */
+/* Kroky – díly 04–13 */
+.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
+.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
+.step{display:flex;gap:20px;padding:16px 0}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);
+  border:2px solid var(--rasp1);display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.9em;color:var(--rasp1-light);
+  flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
+.step-desc ul{padding-left:18px;margin:8px 0 4px}
+.step-desc li{margin:5px 0;font-size:1em}
+.step-desc code{font-size:.9em}
+.step-desc strong{color:var(--white)}
+.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
+/* Nákupní odkazy – díly 02, 10 */
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:16px 0}
+.shop-link{display:block;background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;font-family:'DM Mono',monospace;font-size:.8em;color:var(--t2);
+  text-decoration:none;transition:all .2s;letter-spacing:.04em}
+.shop-link:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
+.shop-link span{display:block;color:var(--white);font-size:1.05em;margin-bottom:2px;font-family:'Inter',sans-serif;font-weight:600}
+/* Titulky boxů – díly 04, 07, 08, 11, 13 */
+.status-bar-title,.cred-box-title,.port-box-title,.sec-check-title,.checklist-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
 
 /* ── DÍL 02 – Hardware ── */
 .hw-grid{display:grid;gap:14px;margin:20px 0}
@@ -198,13 +225,8 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .power-row:last-child{border-bottom:none}
 .power-label{font-family:'DM Mono',monospace;font-size:.83em;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
 .power-value{font-family:'Syne',sans-serif;font-size:1.1em;font-weight:700;color:var(--rasp1-light)}
+.power-value.good{color:var(--green2)}
 .power-note{font-size:.8em;color:var(--t3);margin-top:2px}
-.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:16px 0}
-.shop-link{display:block;background:var(--bg2);border:1px solid var(--border);border-radius:8px;
-  padding:12px 16px;font-family:'DM Mono',monospace;font-size:.8em;color:var(--t2);
-  text-decoration:none;transition:all .2s;letter-spacing:.04em}
-.shop-link:hover{border-color:var(--rasp1);color:var(--rasp1-light);text-decoration:none}
-.shop-link span{display:block;color:var(--white);font-size:1.05em;margin-bottom:2px;font-family:'Inter',sans-serif;font-weight:600}
 
 /* ── DÍL 03 – Poznámka k modulu Zigbee ── */
 .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
@@ -241,26 +263,8 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 @media(max-width:640px){.product-grid{grid-template-columns:1fr}}
 
 /* ── DÍL 04 – Příprava USB mSATA SSD ── */
-.steps{display:flex;flex-direction:column;gap:0;margin:24px 0;position:relative}
-.steps::before{content:'';position:absolute;left:20px;top:28px;bottom:28px;width:2px;
-  background:linear-gradient(180deg,var(--rasp1) 0%,var(--rasp2) 100%);opacity:.4}
-.step{display:flex;gap:20px;padding:16px 0}
-.step-num{width:40px;height:40px;border-radius:50%;background:var(--bg2);
-  border:2px solid var(--rasp1);display:flex;align-items:center;justify-content:center;
-  font-family:'Syne',sans-serif;font-weight:800;font-size:.9em;color:var(--rasp1-light);
-  flex-shrink:0;position:relative;z-index:1}
-.step-body{flex:1;padding-top:8px}
-.step-title{font-family:'Syne',sans-serif;font-size:.95em;font-weight:700;color:var(--white);margin-bottom:6px}
-.step-desc{font-size:.88em;color:var(--t2);line-height:1.7}
-.step-desc ul{padding-left:18px;margin:8px 0 4px}
-.step-desc li{margin:5px 0;font-size:1em}
-.step-desc code{font-size:.9em}
-.step-desc strong{color:var(--white)}
-.step-desc p{margin-bottom:8px;font-size:1em;color:var(--t2)}
 .status-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
   padding:18px 22px;margin:20px 0}
-.status-bar-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
-  text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
 .status-items{display:flex;flex-wrap:wrap;gap:12px}
 .status-item{display:flex;align-items:center;gap:8px;font-size:.85em;color:var(--t2)}
 .status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -278,17 +282,10 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .cable-item:last-child{border-bottom:none;padding-bottom:0}
 .cable-order-num{font-family:'Syne',sans-serif;font-size:1.3em;font-weight:800;
   color:var(--rasp1);width:32px;flex-shrink:0;text-align:center}
+.cable-order-num.good{color:var(--green2)}
 .cable-detail{flex:1}
 .cable-name{font-size:.9em;color:var(--white);font-weight:600;margin-bottom:2px}
 .cable-note{font-size:.82em;color:var(--t2)}
-.form-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
-  padding:22px;margin:20px 0}
-.form-row{margin-bottom:16px}
-.form-label{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);
-  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:block}
-.form-hint{font-size:.82em;color:var(--t2);margin-top:5px;line-height:1.5}
-.form-field{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;
-  padding:10px 14px;font-size:.9em;color:var(--text);width:100%;font-family:'Inter',sans-serif}
 .ip-methods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
 .ip-method{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px}
 .ip-method-title{font-family:'Syne',sans-serif;font-size:.9em;font-weight:700;color:var(--white);margin-bottom:8px}
@@ -308,11 +305,12 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 /* ── DÍL 07 – Instalace MQTT (Mosquitto) ── */
 .mqtt-flow{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin:20px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);text-align:center}
 .mqtt-flow-row{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0}
+.mqtt-box small{color:var(--t3)}
+.mqtt-flow-note{margin-top:14px;font-size:.82em;color:var(--t3)}
 .mqtt-box{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 18px;font-size:.88em}
 .mqtt-box.active{border-color:var(--rasp1);color:var(--rasp1-light);background:rgba(227,11,92,.07)}
 .mqtt-arrow{color:var(--t3);font-size:1.2em}
 .cred-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:20px 22px;margin:18px 0}
-.cred-box-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
 .cred-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
 .cred-row:last-child{border-bottom:none}
 .cred-key{font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
@@ -320,20 +318,11 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 
 /* ── DÍL 08 – Instalace Zigbee2MQTT ── */
 .port-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:20px 22px;margin:18px 0}
-.port-box-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
 .port-example{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:10px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2);line-height:1.7}
 .port-example .label{font-size:.75em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
 .port-example .value{color:var(--rasp1-light)}
 
 /* ── DÍL 09 – Konfigurace Zigbee2MQTT ── */
-.tab-group{margin:20px 0}
-.tab-btns{display:flex;gap:8px;margin-bottom:0;flex-wrap:wrap}
-.tab-btn{font-family:'DM Mono',monospace;font-size:.78em;padding:8px 16px;border-radius:8px 8px 0 0;
-  border:1px solid var(--border);border-bottom:none;color:var(--t2);background:var(--bg3);
-  cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:all .2s}
-.tab-btn.active{color:var(--rasp1-light);background:var(--bg2);border-color:var(--rasp1)}
-.tab-content{display:none;background:var(--bg2);border:1px solid var(--border);border-radius:0 8px 8px 8px;padding:20px}
-.tab-content.active{display:block}
 .channel-table{width:100%;border-collapse:collapse;margin:14px 0}
 .channel-table th{font-family:'Syne',sans-serif;font-size:.78em;font-weight:700;color:var(--t3);
   text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;border-bottom:2px solid var(--border);text-align:left}
@@ -356,6 +345,7 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .brand-card-tag{font-family:'DM Mono',monospace;font-size:.72em;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
 .brand-card p{font-size:.84em;color:var(--t2);margin-bottom:0;line-height:1.6}
 .mesh-diagram{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin:18px 0;font-family:'DM Mono',monospace;font-size:.82em;color:var(--t2)}
+.mesh-diagram pre{background:none;border:none;padding:0;margin:0;color:inherit}
 
 /* ── DÍL 11 – Bezpečnost ── */
 .remote-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:20px 0}
@@ -366,7 +356,6 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .remote-card.recommended .remote-card-sub{color:var(--green2)}
 .remote-card p{font-size:.85em;color:var(--t2);margin-bottom:0;line-height:1.6}
 .sec-check{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:18px 0}
-.sec-check-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
 .sec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
 .sec-item:last-child{border-bottom:none}
 .sec-icon{font-size:1.1em;flex-shrink:0;margin-top:1px}
@@ -383,11 +372,12 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .backup-layer p{font-size:.83em;color:var(--t2);margin-bottom:0;line-height:1.55}
 .restore-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:20px 22px;margin:18px 0}
 .restore-box-title{font-family:'Syne',sans-serif;font-size:.88em;font-weight:700;color:var(--white);margin-bottom:14px}
+.restore-box ol{padding-left:20px;margin:0}
+.restore-box li{margin:8px 0;color:var(--t2);font-size:.9em}
 @media(max-width:640px){.backup-strategy{grid-template-columns:1fr}}
 
 /* ── DÍL 13 – Tipy pro provoz ── */
 .checklist{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin:18px 0}
-.checklist-title{font-family:'DM Mono',monospace;font-size:.78em;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
 .check-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
 .check-item:last-child{border-bottom:none}
 .check-box{width:18px;height:18px;border:1px solid var(--border2);border-radius:4px;flex-shrink:0;margin-top:2px;background:var(--bg3)}
@@ -414,7 +404,6 @@ footer{margin-top:60px;padding:24px 0;border-top:1px solid var(--border);
 .issue p{font-size:.88em;margin-bottom:8px}
 
 /* ── DÍL 15 – Užitečné odkazy ── */
-ul{padding-left:22px;margin-bottom:14px}
 .link-group{display:flex;flex-direction:column;gap:10px;margin:18px 0}
 .link-card{display:flex;align-items:flex-start;gap:16px;background:var(--bg2);border:1px solid var(--border);
   border-radius:var(--r);padding:16px 18px;text-decoration:none;transition:border-color .2s,background .2s}
@@ -486,6 +475,7 @@ body[data-page="00"] .card::before{content:'';position:absolute;top:-50px;right:
   transition:opacity .3s}
 body[data-page="00"] .card:hover{border-color:var(--border2);transform:translateY(-4px)}
 body[data-page="00"] .card:hover::before{opacity:1}
+body[data-page="00"] a.card{text-decoration:none;color:inherit}
 body[data-page="00"] .card-num{font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;color:var(--rasp1);
   margin-bottom:10px;display:block}
 body[data-page="00"] .card-title{font-family:'Syne',sans-serif;font-size:1.1em;font-weight:700;color:var(--white);
@@ -533,3 +523,15 @@ body[data-page="00"] .header-back{display:inline-flex;align-items:center;gap:7px
   margin-bottom:24px;transition:all .2s}
 body[data-page="00"] .header-back:hover{color:var(--rasp1-light);border-color:rgba(227,11,92,.4);
   background:rgba(227,11,92,.06)}
+
+/* ── TISK ── */
+@media print{
+  :root{--bg:#fff;--bg2:#f6f6f6;--bg3:#f0f0f0;--bg4:#eee;--border:#ccc;--border2:#bbb;
+    --text:#111;--t2:#333;--t3:#555;--white:#000}
+  body{background:#fff;color:#111;font-size:12pt}
+  #sidebar,.hamburger,.sidebar-backdrop,.progress-bar,#pn{display:none!important}
+  .main-content{margin-left:0;padding-top:0}
+  .wrap{max-width:none;padding:0}
+  .sec,.callout,.step,.issue,.creds-table,.restore-box{break-inside:avoid}
+  a{color:inherit;text-decoration:underline}
+}

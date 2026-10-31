@@ -11,13 +11,14 @@
 <script type="application/json" id="page-chapters">
 {
   "chapters": [
-    { "id": "yaml-konfig", "num": "9.1", "name": "Konfigurace add-onu" },
+    { "id": "yaml-konfig", "num": "9.1", "name": "První nastavení a start" },
     { "id": "web-ui", "num": "9.2", "name": "Webové rozhraní" },
     { "id": "zigbee-kanal", "num": "9.3", "name": "Výběr Zigbee kanálu" },
     { "id": "dalsi-nast", "num": "9.4", "name": "Další nastavení" },
     { "id": "network-key", "num": "9.5", "name": "Network Key" },
     { "id": "skupiny", "num": "9.6", "name": "Skupiny (Groups)" },
-    { "id": "troubleshoot", "num": "9.7", "name": "Z2M nejde spustit" }
+    { "id": "troubleshoot", "num": "9.7", "name": "Z2M nejde spustit" },
+    { "id": "migrace", "num": "9.8", "name": "Migrace ze starší instalace" }
   ]
 }
 </script>
@@ -31,112 +32,150 @@
 <header>
   <div class="h-num">// kapitola 09</div>
   <h1>Konfigurace <em>Zigbee2MQTT</em></h1>
-  <p class="h-desc">Detailní nastavení YAML konfigurace pro oba typy koordinátorů, správný výběr Zigbee kanálu, propojení s MQTT brokerem a první úspěšné spuštění celého stacku.</p>
+  <p class="h-desc">První nastavení Zigbee2MQTT ve více variantách (onboarding, ruční konfigurace, síťový koordinátor), výběr Zigbee kanálu, síťový klíč a první úspěšné spuštění. Na konci je postup migrace ze starší instalace.</p>
 </header>
 
 <!-- YAML KONFIGURACE -->
 <section class="sec">
-  <h2 id="yaml-konfig">Konfigurace add-onu</h2>
-  <p>Veškerá konfigurace Zigbee2MQTT se zadává v záložce <strong>KONFIGURACE</strong> add-onu. Jde o YAML formát – odsazení mezerami je klíčové, nesmíš použít tabulátor.</p>
+  <h2 id="yaml-konfig">První nastavení a start</h2>
+  <p>Zigbee2MQTT potřebuje při prvním spuštění vědět, kde najde koordinátor a jaký použít Zigbee kanál. Nastavit to můžeš třemi způsoby. Vyber jednu variantu:</p>
+  <ul>
+    <li><strong>Varianta A – onboarding (doporučeno):</strong> aplikaci spustíš a údaje vyplníš ve webovém rozhraní. Adaptér i kanál se nabídnou automaticky.</li>
+    <li><strong>Varianta B – ruční konfigurace (USB dongle):</strong> údaje zapíšeš do konfigurace aplikace před spuštěním.</li>
+    <li><strong>Varianta C – síťový koordinátor:</strong> jako B, ale místo cesty k USB portu zadáš síťovou adresu.</li>
+  </ul>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Kdy se onboarding spustí</div>
+    <p>Onboarding se zobrazí jen tehdy, když ještě neexistuje soubor <code>configuration.yaml</code>. Pokud se aplikaci po odeslání nepodaří spustit (např. kvůli špatné cestě k adaptéru), onboarding se při dalším startu spustí znovu.</p>
+  </div>
 
+  <h3>Varianta A: onboarding</h3>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Otevři záložku KONFIGURACE v Z2M add-onu</div>
+        <div class="step-title">Spusť aplikaci</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Doplňky → Zigbee2MQTT → KONFIGURACE</strong>.</p>
-          <p>Zobrazí se YAML editor. Smaž výchozí obsah a vlož konfiguraci odpovídající tvému koordinátoru (viz níže).</p>
+          <p>Jdi do <strong>Nastavení → Doplňky/Aplikace → Zigbee2MQTT → INFORMACE</strong> a klikni <strong>Spustit (Start)</strong>. Počkej několik sekund.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Otevři webové rozhraní</div>
+        <div class="step-desc">
+          <p>Klikni na <strong>„Otevřít webové rozhraní“ (OPEN WEB UI)</strong> nebo na ikonu Zigbee2MQTT v levém menu. Zobrazí se stránka onboardingu.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Vyplň nastavení</div>
+        <div class="step-desc">
+          <p>Pro většinu instalací stačí tyto dvě položky:</p>
+          <ul>
+            <li><strong>Found Devices:</strong> vyber svůj adaptér. Tím se vyplní cesta k portu (Coordinator/Adapter Port/Path) i typ adaptéru (Type/Stack/Driver).</li>
+            <li><strong>Closest WiFi Channel:</strong> zadej nejbližší kanál tvé WiFi. Zigbee2MQTT podle něj vybere nejvhodnější Zigbee kanál.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Odešli a ověř</div>
+        <div class="step-desc">
+          <p>Klikni <strong>Odeslat (Submit)</strong>, počkej několik sekund a obnov stránku. Měl by se zobrazit rozhraní Zigbee2MQTT.</p>
+          <ul>
+            <li>Zobrazí-li se <code>502: Bad Gateway</code>, počkej ještě chvíli a stránku obnov.</li>
+            <li>Trvá-li to déle než asi 2 minuty, otevři záložku <strong>Protokol (Log)</strong> aplikace a zjisti, co se pokazilo.</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Přihlášení k MQTT</div>
+    <p>Pokud sekci <code>mqtt</code> v konfiguraci aplikace nevyplníš, aplikace by měla použít údaje Mosquitto sama. <strong>Nutné prověřit na tvém RPi.</strong> Pokud se Zigbee2MQTT k MQTT nepřipojí, vyplň sekci <code>mqtt</code> jako ve variantě B.</p>
+  </div>
 
-  <h3>Konfigurace pro SLZB-07 (EFR32MG21) – doporučený dongle</h3>
-  <p>Adaptér je <code>ezsp</code> – pro Silicon Labs čipy (EFR32MG21, EFR32MG24).</p>
-  <pre><code>data_path: /config/zigbee2mqtt
-socat:
-  enabled: false
-  master: pty,raw,echo=0
-  slave: tcp-listen:8485,keepalive,nodelay,reuseaddr,waitlock
-  options: "-S5"
-  log: false
-
-mqtt:
+  <h3>Varianta B: ruční konfigurace (USB dongle)</h3>
+  <ol>
+    <li><strong>Zjisti adresu koordinátoru</strong> podle <a href="08_raspberry_instalace_zigbee2mqtt.html#zjisteni-portu">sekce 8.5</a>.</li>
+    <li><strong>Otevři konfiguraci aplikace:</strong> Nastavení → Doplňky/Aplikace → Zigbee2MQTT → záložka <strong>KONFIGURACE</strong>. Přepni na úpravu v YAML (⋮ → Edit in YAML) a nastav sekce <code>mqtt</code> a <code>serial</code>. Ostatní položky, které tam už jsou (např. <code>socat</code>), nech beze změny.</li>
+  </ol>
+  <pre><code>mqtt:
   server: mqtt://core-mosquitto:1883
   user: mqtt_user
   password: TVOJE_MQTT_HESLO    # heslo z Kapitoly 07
 
 serial:
   port: /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_XXXX-if00-port0
-  # ↑ NAHRAĎ přesnou adresou z Kapitoly 08 (kroku 5)!
-  adapter: ezsp
-
-homeassistant: true</code></pre>
-
-  <h3>Konfigurace pro Ebyte E72 / Sonoff Dongle-P (CC2652P)</h3>
-  <p>Adaptér je <code>znp</code> – pro Texas Instruments čipy (CC2652P, CC2652R, CC1352).</p>
-  <pre><code>data_path: /config/zigbee2mqtt
-socat:
-  enabled: false
-  master: pty,raw,echo=0
-  slave: tcp-listen:8485,keepalive,nodelay,reuseaddr,waitlock
-  options: "-S5"
-  log: false
-
-mqtt:
-  server: mqtt://core-mosquitto:1883
-  user: mqtt_user
-  password: TVOJE_MQTT_HESLO    # heslo z Kapitoly 07
-
-serial:
-  port: /dev/serial/by-id/usb-XXXXXX-if00-port0
-  # ↑ NAHRAĎ přesnou adresou z Kapitoly 08!
-  adapter: znp
-
-homeassistant: true</code></pre>
-
+  # ↑ NAHRAĎ přesnou adresou z Kapitoly 08 (sekce 8.5)!
+  adapter: ember
+  rtscts: true      # jen u zařízení, která ho vyžadují (viz tabulka)</code></pre>
+  <p>Adaptér a řízení toku (rtscts) závisí na zařízení:</p>
+  <table class="alt-table">
+    <thead>
+      <tr><th>Zařízení</th><th>adapter</th><th>Další nastavení</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>SMLIGHT SLZB-07</td><td><code>ember</code></td><td><code>rtscts: true</code></td></tr>
+      <tr><td>Sonoff ZBDongle-E (V2)</td><td><code>ember</code></td><td>bez <code>rtscts</code></td></tr>
+      <tr><td>Home Assistant Connect ZBT-2</td><td><code>ember</code></td><td><code>baudrate: 460800</code>, <code>rtscts: true</code></td></tr>
+      <tr><td>Sonoff ZBDongle-P, Ebyte E72 (CC2652P)</td><td><code>zstack</code></td><td>bez dalšího nastavení</td></tr>
+      <tr><td>ConBee III</td><td><code>deconz</code></td><td>bez dalšího nastavení</td></tr>
+      <tr><td>SMLIGHT SLZB-06M (síťový)</td><td><code>ember</code></td><td><code>port: tcp://IP:6638</code>, <code>baudrate: 115200</code>, <code>rtscts: false</code></td></tr>
+      <tr><td>SMLIGHT SLZB-MR1 (síťový, Zigbee na CC2652P7)</td><td><code>zstack</code></td><td><code>port: tcp://IP:7638</code>, <code>baudrate: 115200</code>, <code>rtscts: false</code>. Port ověř na stránce „Z2M and ZHA“ v rozhraní SLZB-OS.</td></tr>
+    </tbody>
+  </table>
+  <ol start="3">
+    <li><strong>Volitelně nastav kanál před prvním startem:</strong> vytvoř soubor <code>/config/zigbee2mqtt/configuration.yaml</code> (v File editoru, viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#file-editor">sekce 6.5</a>, nebo přes sdílenou složku) s obsahem:
+<pre><code>homeassistant:
+  enabled: true
+advanced:
+  channel: 15</code></pre>
+    </li>
+    <li><strong>Ulož a spusť:</strong> klikni <strong>Uložit (Save)</strong> v dolní části záložky KONFIGURACE, pak záložka <strong>INFORMACE → Spustit (Start)</strong> a sleduj <strong>Protokol (Log)</strong>. Úspěšný start poznáš podle hlášek <code>Zigbee2MQTT started!</code> a <code>Connected to MQTT server</code>.</li>
+  </ol>
   <div class="callout callout-danger">
     <div class="callout-title">🔴 Nejčastější chyby v konfiguraci</div>
     <ul>
-      <li><strong>Špatný adapter:</strong> <code>ezsp</code> pro EFR32, <code>znp</code> pro CC2652 – neplést!</li>
+      <li><strong>Špatný adaptér:</strong> <code>ember</code> pro čipy Silicon Labs (EFR32), <code>zstack</code> pro Texas Instruments (CC26xx), <code>deconz</code> pro ConBee. Starší názvy <code>ezsp</code> a <code>znp</code> už neplatí.</li>
       <li><strong>Špatná adresa portu:</strong> zkopíruj přesně z Kapitoly 08, nevypisuj ručně</li>
       <li><strong>Špatné MQTT heslo:</strong> musí odpovídat heslu uživatele z Kapitoly 07</li>
       <li><strong>Odsazení v YAML:</strong> používej pouze 2 mezery, nikdy tabulátor</li>
+      <li><strong>Nastavení z karty aplikace má přednost</strong> před souborem <code>configuration.yaml</code>. Chceš-li něco řídit v souboru, nenastavuj to v kartě.</li>
     </ul>
   </div>
 
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Ulož konfiguraci a spusť Z2M</div>
-        <div class="step-desc">
-          <p>Klikni <strong>ULOŽIT</strong> v dolní části záložky KONFIGURACE.</p>
-          <p>Přejdi na záložku <strong>INFORMACE</strong> → klikni <strong>SPUSTIT</strong>.</p>
-          <p>Přejdi na záložku <strong>PROTOKOL</strong> – sleduj výstupy. Úspěšné spuštění vypadá takto:</p>
-          <pre>Starting Zigbee2MQTT...
-Zigbee2MQTT started!
-Connected to MQTT server</pre>
-          <p>Pokud vidíš chyby, přejdi na sekci troubleshooting níže.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <h3>Varianta C: síťový koordinátor</h3>
+  <p>Postup je stejný jako ve variantě B, jen sekce <code>serial</code> obsahuje síťovou adresu (příklad pro SLZB-06M):</p>
+  <pre><code>serial:
+  port: tcp://192.168.0.12:6638
+  adapter: ember
+  baudrate: 115200
+  rtscts: false</code></pre>
+  <p>Další příklady (SLZB-MR1, mDNS název) jsou v <a href="03_raspberry_poznamka_k_zigbee_modulu.html#konfig-z2m">sekci 3.3</a>. Koordinátoru nastav v routeru pevnou IP adresu (viz <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html#staticka-ip">sekce 5.5</a>).</p>
 </section>
 
 <!-- WEBOVE ROZHRANI -->
 <section class="sec">
   <h2 id="web-ui">Webové rozhraní</h2>
-  <p>Po úspěšném spuštění je dostupné webové rozhraní Z2M – přes tlačítko <strong>"OTEVŘÍT WEBOVÉ ROZHRANÍ"</strong> v add-onu, nebo přímo přes URL:</p>
-  <pre><code>http://192.168.1.50:8099</code></pre>
+  <p>Po spuštění otevřeš webové rozhraní Zigbee2MQTT ikonou <strong>Zigbee2MQTT</strong> v levém menu HA (pokud máš zapnuto <strong>Show in sidebar</strong>) nebo tlačítkem <strong>„Otevřít webové rozhraní“ (OPEN WEB UI)</strong> v aplikaci.</p>
   <p>Zde budeš spravovat Zigbee síť: přidávat zařízení, přejmenovávat, sledovat stav sítě a konfigurovat pokročilá nastavení.</p>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Přímý přístup přes IP a port</div>
+    <p>Přímý přístup na adrese <code>http://192.168.0.11:8099</code> není ve výchozím stavu zapnutý, rozhraní se otevírá přes Home Assistant. Pokud ho chceš, musí se port zveřejnit v části <strong>Síť (Network)</strong> aplikace. <strong>Nutné prověřit na tvém RPi.</strong></p>
+  </div>
 </section>
 
 <!-- ZIGBEE KANAL -->
 <section class="sec">
   <h2 id="zigbee-kanal">Výběr Zigbee kanálu</h2>
-  <p>Zigbee 2.4 GHz pásmo se překrývá s WiFi. Špatný výběr kanálu způsobuje rušení a nestabilní spojení se zařízeními. <strong>Nastav kanál PŘED přidáváním prvního zařízení</strong> – po změně je nutné spárovat vše znovu.</p>
+  <p>Zigbee pásmo 2,4 GHz se překrývá s WiFi. Špatný výběr kanálu způsobuje rušení a nestabilní spojení se zařízeními. Nejlepší je zvolit kanál <strong>hned při prvním nastavení</strong>. Výchozí kanál Zigbee2MQTT je 11, kterému se tabulka níže doporučuje vyhnout.</p>
 
   <table class="channel-table">
     <thead>
@@ -150,12 +189,12 @@ Connected to MQTT server</pre>
       </tr>
       <tr>
         <td>15</td><td>2425 MHz</td>
-        <td>Žádný konflikt s 1,6,11</td>
+        <td>Žádný konflikt s 1, 6, 11</td>
         <td><span class="tag-good">doporučeno</span></td>
       </tr>
       <tr>
         <td>20</td><td>2450 MHz</td>
-        <td>Žádný konflikt s 1,6,11</td>
+        <td>Žádný konflikt s 1, 6, 11</td>
         <td><span class="tag-good">doporučeno</span></td>
       </tr>
       <tr>
@@ -165,28 +204,18 @@ Connected to MQTT server</pre>
       </tr>
     </tbody>
   </table>
+  <p>Doporučené jsou kanály 11, 15, 20 a 25 (ZLL kanály), proto jiné hodnoty nevolit.</p>
 
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Nastav Zigbee kanál ve webovém UI</div>
-        <div class="step-desc">
-          <p>V Z2M webovém rozhraní jdi do <strong>Settings → Settings → Zigbee</strong>.</p>
-          <ul>
-            <li><strong>Channel:</strong> nastav na <code>15</code> nebo <code>20</code></li>
-            <li><strong>Pan ID:</strong> nechej výchozí nebo nastav vlastní 16-bitové číslo</li>
-            <li><strong>Extended Pan ID:</strong> nechej výchozí (generováno automaticky)</li>
-          </ul>
-          <p>Klikni <strong>Submit</strong>. Z2M se restartuje s novým kanálem.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <h3>Jak kanál nastavit</h3>
+  <ul>
+    <li><strong>Varianta A – onboarding:</strong> kanál zvolí Zigbee2MQTT podle políčka <em>Closest WiFi Channel</em> (viz sekce 9.1).</li>
+    <li><strong>Varianta B – ruční:</strong> v souboru <code>/config/zigbee2mqtt/configuration.yaml</code> nastav <code>advanced: channel: 15</code> před prvním spuštěním (viz sekce 9.1).</li>
+    <li><strong>Varianta C – později ve webovém rozhraní:</strong> v Z2M webovém rozhraní otevři <strong>Settings</strong> a v nastavení Zigbee sítě změň položku <strong>Channel</strong> na <code>15</code> nebo <code>20</code>. Název záložky se může podle verze lišit. Klikni <strong>Submit</strong>, Z2M se restartuje s novým kanálem. <strong>Pan ID</strong> a <strong>Extended Pan ID</strong> nech výchozí.</li>
+  </ul>
 
   <div class="callout callout-warn">
-    <div class="callout-title">⚠️ Změna kanálu smaže párování!</div>
-    <p>Pokud změníš Zigbee kanál po tom co už máš spárovaná zařízení, musíš je všechna znovu spárovat od začátku. Koordinátor změní frekvenci, ale zařízení zůstanou na starém kanálu. Vždy nastav kanál <strong>před prvním párováním</strong>.</p>
+    <div class="callout-title">⚠️ Změna kanálu u hotové sítě</div>
+    <p>Změna kanálu u existující sítě <strong>je možná</strong>. Zařízení napájená ze sítě se přepnou hned, bateriová zařízení, která spí, se přepnou až při příštím probuzení (probuď je). U některých zařízení může být nutné je znovu spárovat. Mnohem větší zásah je změna <strong>síťového klíče (network_key)</strong>: ta vyžaduje spárovat <strong>všechna</strong> zařízení znovu. Proto kanál volíme předem.</p>
   </div>
 </section>
 
@@ -194,20 +223,20 @@ Connected to MQTT server</pre>
 <section class="sec">
   <h2 id="dalsi-nast">Další nastavení</h2>
 
-  <h3>Log Level</h3>
-  <p>Jdi do <strong>Settings → Settings → Advanced → Log level</strong>.</p>
+  <h3>Úroveň protokolu (Log level)</h3>
+  <p>V Z2M webovém rozhraní otevři <strong>Settings</strong> a v pokročilém nastavení najdi <strong>Log level</strong> (název záložky se může podle verze lišit).</p>
   <ul>
     <li><code>info</code> – výchozí, pro běžný provoz</li>
     <li><code>debug</code> – detailní výpis, jen při hledání problémů (výrazně více zápisů na disk)</li>
-    <li><code>warn</code> – pouze varování a chyby (nejméně zápisů)</li>
+    <li><code>warning</code> – pouze varování a chyby (nejméně zápisů)</li>
   </ul>
   <p>Pro denní provoz nastav <code>info</code>.</p>
 
   <h3>OTA aktualizace zařízení</h3>
-  <p>Zigbee2MQTT umí aktualizovat firmware Zigbee zařízení over-the-air (IKEA, Philips Hue, Aqara...). Jdi do <strong>Settings → OTA Updates</strong> a zapni automatické kontroly. Samotná aktualizace se spustí vždy ručně – Z2M tě upozorní na dostupnost.</p>
+  <p>Zigbee2MQTT umí aktualizovat firmware Zigbee zařízení bezdrátově (over-the-air, OTA), např. IKEA nebo Philips Hue. Jdi do <strong>Settings → OTA updates</strong> a zapni kontrolu aktualizací. Samotná aktualizace se spustí vždy ručně – Z2M tě upozorní na dostupnost.</p>
 
   <h3>Propojení s Home Assistant – MQTT Discovery</h3>
-  <p>Díky parametru <code>homeassistant: true</code> v konfiguraci Z2M automaticky posílá popis entit do HA přes MQTT Discovery. Každé spárované Zigbee zařízení se <strong>automaticky objeví</strong> v HA jako nová integrace. Nemusíš nic ručně přidávat.</p>
+  <p>Zigbee2MQTT musí mít zapnutou integraci s Home Assistantem (v souboru <code>homeassistant: enabled: true</code>). Díky ní posílá popis entit do HA přes MQTT Discovery a každé spárované Zigbee zařízení se <strong>automaticky objeví</strong> v HA jako nové zařízení v integraci MQTT. Nemusíš nic ručně přidávat. Při onboardingu bývá integrace zapnutá, <strong>nutné prověřit na tvém RPi</strong>.</p>
   <p>Ověř v HA: <strong>Nastavení → Zařízení a služby → MQTT</strong> – po spárování prvního zařízení se zde zobrazí.</p>
 </section>
 
@@ -216,21 +245,26 @@ Connected to MQTT server</pre>
   <h2 id="network-key">Network Key</h2>
   <p>Zigbee komunikace je šifrována síťovým klíčem (Network Key). Zigbee2MQTT ho generuje automaticky při první instalaci – to je správné a bezpečné chování.</p>
   <ul>
-    <li><strong>Výchozí chování:</strong> Z2M vygeneruje náhodný 128-bit klíč při prvním spuštění → <strong>bezpečné</strong></li>
-    <li><strong>Zobrazení klíče:</strong> Settings → Settings → Security → Network key (nebo v souboru <code>/config/zigbee2mqtt/configuration.yaml</code>)</li>
-    <li><strong>NIKDY</strong> nepoužívej výchozí klíč <code>[1,3,5,7,9,11,13,15,0,2,4,6,8,10,12,13]</code> pokud ho vidíš – to je veřejně známý testovací klíč!</li>
+    <li><strong>Výchozí chování:</strong> hodnota <code>network_key: GENERATE</code> znamená, že Z2M vygeneruje náhodný 128bitový klíč při prvním spuštění → <strong>bezpečné</strong></li>
+    <li><strong>Kde ho najdeš:</strong> v souboru <code>/config/zigbee2mqtt/configuration.yaml</code> nebo v nastavení ve webovém rozhraní Z2M</li>
+    <li><strong>NIKDY</strong> nepoužívej výchozí klíč <code>[1,3,5,7,9,11,13,15,0,2,4,6,8,10,12,13]</code>, pokud ho vidíš – to je veřejně známý testovací klíč!</li>
+    <li><strong>Změna klíče vyžaduje spárovat všechna zařízení znovu.</strong> Klíč proto neměň.</li>
   </ul>
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Klíč mimo konfigurační soubor</div>
+    <p>Zigbee2MQTT umí uložit hodnoty do vlastního souboru <code>secret.yaml</code> ve své složce a v konfiguraci na ně odkazovat (<code>network_key: '!secret network_key'</code>). Je to nepovinné. Soubor <code>secrets.yaml</code> Home Assistantu se Z2M netýká (viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#secrets-yaml">sekce 6.8</a>).</p>
+  </div>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ Network key patří do zálohy</div>
-    <p>Síťový klíč je uložen v souboru <code>/config/zigbee2mqtt/coordinator_backup.json</code>. Automatická záloha HA ho obsahuje. Bez správného síťového klíče při výměně koordinátoru všechna Zigbee zařízení přestanou komunikovat – musíš je znovu spárovat. Proto je <code>coordinator_backup.json</code> tak důležitý.</p>
+    <p>Síťový klíč a identita sítě jsou v souboru <code>/config/zigbee2mqtt/coordinator_backup.json</code>. Zálohu a postup obnovy při výměně koordinátoru najdeš v <a href="03_raspberry_poznamka_k_zigbee_modulu.html#fw-aktualizace">sekci 3.5</a>. Aplikace navíc při změnách ukládá kopii konfigurace jako <code>configuration.yaml.bk</code>.</p>
   </div>
 </section>
 
 <!-- SKUPINY ZARIZENI -->
 <section class="sec">
   <h2 id="skupiny">Skupiny (Groups)</h2>
-  <p>Zigbee2MQTT umí seskupit více Zigbee zařízení do jedné <strong>skupiny</strong>. Příkaz poslaný skupině se dostane ke všem členům najednou – je to rychlejší a spolehlivější než HA scény pro Zigbee žárovky.</p>
-  <p><strong>Příklad použití:</strong> Skupina "obyvak_svetla" obsahuje 3 žárovky. Jeden příkaz "vypnout" zhasne všechny najednou přes Zigbee mesh – bez zpoždění.</p>
+  <p>Zigbee2MQTT umí seskupit více Zigbee zařízení do jedné <strong>skupiny</strong>. Příkaz poslaný skupině se dostane ke všem členům najednou, takže bývá rychlejší než HA scéna, která posílá příkazy zařízením postupně.</p>
+  <p><strong>Příklad použití:</strong> Skupina "obyvak_svetla" obsahuje 3 žárovky. Jeden příkaz „vypnout“ zhasne všechny najednou přes Zigbee síť (mesh).</p>
 
   <div class="steps">
     <div class="step">
@@ -238,7 +272,7 @@ Connected to MQTT server</pre>
       <div class="step-body">
         <div class="step-title">Vytvoř skupinu v Z2M webovém rozhraní</div>
         <div class="step-desc">
-          <p>V Z2M webovém rozhraní jdi do <strong>Groups</strong> (záložka v horní liště).</p>
+          <p>V Z2M webovém rozhraní jdi do <strong>Groups</strong> (záložka v horní liště, názvy v rozhraní ověř podle své verze).</p>
           <ul>
             <li>Klikni <strong>"Add group"</strong></li>
             <li>Zadej název skupiny – bez mezer, bez diakritiky: např. <code>obyvak_svetla</code></li>
@@ -260,33 +294,108 @@ Connected to MQTT server</pre>
 <!-- TROUBLESHOOTING -->
 <section class="sec">
   <h2 id="troubleshoot">Z2M nejde spustit</h2>
+  <p>Podrobnější postupy najdeš v kapitole 14. Tady jsou nejčastější případy:</p>
 
-  <h3>Chyba: "Failed to connect to the adapter"</h3>
+  <h3>Chyba: „USB adapter discovery error (No valid USB adapter found)“</h3>
   <ul>
-    <li>Zkontroluj fyzické zapojení USB donglu</li>
-    <li>Ověř adresu portu v konfiguraci (přesná shoda s <code>/dev/serial/by-id/...</code>)</li>
-    <li>Zkus odpojit a znovu zapojit USB dongle, pak restartuj Z2M add-on</li>
-    <li>Ověř typ adaptéru: <code>ezsp</code> pro EFR32, <code>znp</code> pro CC2652</li>
+    <li>Zigbee2MQTT nenašlo adaptér. V konfiguraci aplikace vyplň sekci <code>serial</code> ručně: <code>adapter</code> a <code>port</code> (viz varianta B v sekci 9.1).</li>
+    <li>Ověř adresu portu (přesná shoda s <code>/dev/serial/by-id/...</code>) a typ adaptéru: <code>ember</code> pro čipy Silicon Labs, <code>zstack</code> pro Texas Instruments.</li>
+    <li>Zkus odpojit a znovu zapojit USB dongle, pak aplikaci restartuj</li>
+    <li>U SLZB-07 a ZBT-2 zkontroluj nastavení <code>rtscts</code> a <code>baudrate</code> (viz tabulka v sekci 9.1)</li>
   </ul>
 
-  <h3>Chyba: "Cannot connect to MQTT broker"</h3>
+  <h3>Chyba: „Cannot connect to MQTT broker“</h3>
   <ul>
-    <li>Zkontroluj zda běží Mosquitto (Nastavení → Doplňky → Mosquitto → stav)</li>
-    <li>Ověř MQTT heslo v konfiguraci Z2M – musí odpovídat heslu <code>mqtt_user</code></li>
-    <li>Ověř MQTT server adresu: <code>mqtt://core-mosquitto:1883</code></li>
+    <li>Zkontroluj, zda běží Mosquitto (Nastavení → Doplňky/Aplikace → Mosquitto → stav)</li>
+    <li>Ověř uživatele a heslo v konfiguraci Z2M – musí odpovídat uživateli <code>mqtt_user</code></li>
+    <li>Ověř adresu MQTT serveru: <code>mqtt://core-mosquitto:1883</code></li>
   </ul>
 
-  <h3>Z2M se spustí ale zařízení se neobjevují v HA</h3>
+  <h3>Po spuštění se zobrazí „502: Bad Gateway“</h3>
   <ul>
-    <li>Zkontroluj <code>homeassistant: true</code> v konfiguraci Z2M</li>
+    <li>Počkej ještě chvíli a stránku obnov</li>
+    <li>Trvá-li to déle než asi 2 minuty, zkontroluj záložku <strong>Protokol (Log)</strong> aplikace</li>
+  </ul>
+
+  <h3>Z2M se spustí, ale zařízení se neobjevují v HA</h3>
+  <ul>
+    <li>Zkontroluj, že je v Z2M zapnutá integrace s Home Assistantem (<code>homeassistant: enabled: true</code>)</li>
     <li>Ověř MQTT integraci v HA (Nastavení → Zařízení a služby → MQTT)</li>
     <li>Zkontroluj log Z2M pro chybové zprávy při párování</li>
   </ul>
 </section>
 
+<!-- MIGRACE -->
+<section class="sec">
+  <h2 id="migrace">Migrace ze starší instalace</h2>
+  <p>Pokud už máš Zigbee2MQTT spuštěné jinde (např. samostatně na jiném počítači) a chceš zařízení převést bez nového párování, přenes jeho složku <code>data</code> do aplikace. Postup vychází z oficiálního README aplikace.</p>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Než začneš</div>
+    <ul>
+      <li>Obě instalace musí mít <strong>stejnou verzi</strong> Zigbee2MQTT</li>
+      <li>Před kopírováním zálohuj původní složku <code>data</code> (složku <code>logs/</code> můžeš vynechat)</li>
+      <li>Koordinátor (dongle) musí zůstat stejný, jinak viz <a href="03_raspberry_poznamka_k_zigbee_modulu.html#fw-aktualizace">sekce 3.5</a></li>
+    </ul>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Vytvoř datovou složku aplikace</div>
+        <div class="step-desc">
+          <p>Spusť aplikaci Zigbee2MQTT s neexistujícím zařízením (v konfiguraci aplikace nastav v <code>serial</code> neexistující port, např. <code>/dev/ttyUSB99</code>). Aplikace se nespustí, ale vytvoří svou datovou složku. Potom ji zastav.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Zkopíruj obsah původní složky data</div>
+        <div class="step-desc">
+          <p>Cílová složka je <code>/config/zigbee2mqtt</code> (na hostiteli <code>/mnt/data/supervisor/homeassistant/zigbee2mqtt</code>). Zvol jednu variantu:</p>
+          <p><strong>Varianta A – přes sdílenou složku (jednodušší):</strong> otevři ve Windows <code>\\192.168.0.11\config\zigbee2mqtt\</code> (Samba share, viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#samba-share">sekce 6.6</a>) a zkopíruj do ní <strong>obsah</strong> původní složky <code>data</code>. Složka <code>config</code> je přímo sdílenou složkou aplikace Samba share a Zigbee2MQTT v ní má svou datovou složku <code>zigbee2mqtt</code> (ověřeno v dokumentaci Samba share a v komunitě). Samotný postup je odvozený od README, proto ho po prvním nasazení prověř.</p>
+          <p><strong>Varianta B – přes SSH na hostitele (podle README):</strong> potřebuješ přístup k samotnému systému Home Assistant OS na portu 22222 s klíčem, <strong>ne</strong> k aplikaci Terminal &amp; SSH (viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#ssh-terminal">sekce 6.7</a>). Pak ze složky s původní složkou data spusť:</p>
+          <pre><code>scp -O -P 22222 -i CESTA_K_KLICI ./data/* root@192.168.0.11:/mnt/data/supervisor/homeassistant/zigbee2mqtt/</code></pre>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Nastav koordinátor a MQTT v konfiguraci aplikace</div>
+        <div class="step-desc">
+          <p>V záložce <strong>KONFIGURACE</strong> aplikace nastav správný <code>serial</code> (adresu a adaptér koordinátoru, viz sekce 9.1) a <code>mqtt</code>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Uprav zkopírovaný configuration.yaml</div>
+        <div class="step-desc">
+          <p>Otevři <code>/config/zigbee2mqtt/configuration.yaml</code> (na hostiteli <code>/usr/share/hassio/homeassistant/zigbee2mqtt/configuration.yaml</code>) a:</p>
+          <ul>
+            <li>Zkontroluj, že sekce <code>serial</code> odpovídá té, kterou jsi nastavil v konfiguraci aplikace</li>
+            <li>Odstraň sekce, které nepotřebuješ nebo které řídí aplikace: <code>mqtt</code> (pokud ho nepotřebuješ), <code>advanced/log_syslog</code> a <code>frontend</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Spusť aplikaci</div>
+        <div class="step-desc">
+          <p>Spusť aplikaci a v Protokolu (Log) ověř, že naběhla a že jsou zařízení na místě.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

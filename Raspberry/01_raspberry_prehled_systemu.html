@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Přehled Systému – Raspberry Pi Průvodce</title>
+<title>Přehled systému – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -13,7 +13,7 @@
   "chapters": [
     { "id": "co-mas", "num": "1.1", "name": "Co budeš mít" },
     { "id": "architektura", "num": "1.2", "name": "Architektura systému" },
-    { "id": "stack", "num": "1.3", "name": "Softwarový stack" },
+    { "id": "stack", "num": "1.3", "name": "Použitý software" },
     { "id": "hw-prehled", "num": "1.4", "name": "Přehled hardware" },
     { "id": "cas-narocnost", "num": "1.5", "name": "Časová náročnost" },
     { "id": "spotreba", "num": "1.6", "name": "Spotřeba a náklady" },
@@ -31,8 +31,8 @@
 
 <header>
   <div class="h-num">// kapitola 01</div>
-  <h1>Přehled <em>Systému</em></h1>
-  <p class="h-desc">Co přesně budeš mít po dokončení tohoto průvodce – všechny vrstvy stacku, jak spolu mluví a proč je tato architektura pro domácí automatizaci ideální.</p>
+  <h1>Přehled <em>systému</em></h1>
+  <p class="h-desc">Co přesně budeš mít po dokončení tohoto průvodce – všechny vrstvy systému (software stack), jak spolu mluví a proč je tato architektura pro domácí automatizaci ideální.</p>
 </header>
 
 <!-- CO BUDEŠ MÍT -->
@@ -44,17 +44,17 @@
     <li>
       <span class="icon">🍓</span>
       <div><strong>Raspberry Pi 3 B+ s Home Assistant OS</strong>
-        Bootuje z mSATA USB SSD – rychlejší, spolehlivější, bez rizika korupce dat. Systém běží nepřetržitě 24/7.</div>
+        Bootuje z mSATA USB SSD – rychlejší a odolnější než SD karta, s nižším rizikem poškození dat. Systém je navržený pro nepřetržitý provoz; na Raspberry Pi 3 B+ ale platí upozornění pod seznamem.</div>
     </li>
     <li>
       <span class="icon">🌐</span>
-      <div><strong>Webové rozhraní dostupné z lokální sítě</strong>
-        Home Assistant na adrese <code>http://homeassistant.local:8123</code>. Přistupuješ z jakéhokoli prohlížeče, telefonu nebo tabletu v domácí síti.</div>
+      <div><strong>Webové rozhraní (web UI) dostupné z lokální sítě</strong>
+        Home Assistant na adrese <code>http://192.168.0.11</code> (případně <code>http://homeassistant.local</code>; starší instalace používají port <code>:8123</code>). Přistupuješ z jakéhokoli prohlížeče, telefonu nebo tabletu v domácí síti.</div>
     </li>
     <li>
       <span class="icon">📶</span>
-      <div><strong>Zigbee2MQTT – most pro Zigbee zařízení</strong>
-        Zprostředkovává komunikaci mezi Zigbee senzory/zásuvkami a Home Assistantem. Funguje s tisíci různých Zigbee zařízení – bez proprietárních hub.</div>
+      <div><strong>Zigbee2MQTT – most (bridge) pro Zigbee zařízení</strong>
+        Zprostředkovává komunikaci mezi Zigbee senzory/zásuvkami a Home Assistantem. Funguje s tisíci různých Zigbee zařízení – bez proprietárních hubů (hubs).</div>
     </li>
     <li>
       <span class="icon">📨</span>
@@ -64,23 +64,33 @@
     <li>
       <span class="icon">🔒</span>
       <div><strong>Zabezpečený přístup</strong>
-        Firewall, 2FA autentizace, žádné otevřené porty do internetu. Vzdálený přístup volitelně přes Tailscale VPN nebo Nabu Casa.</div>
+        Firewall, dvoufaktorové ověření (2FA, two-factor authentication), žádné otevřené porty do internetu. Vzdálený přístup (remote access) volitelně přes Tailscale VPN.</div>
     </li>
     <li>
       <span class="icon">💾</span>
-      <div><strong>Trojitý zálohovací systém</strong>
-        Automatické zálohy lokálně, na Synology DiskStation (NAS) a na Google Drive. Pravidlo 3-2-1 splněno.</div>
+      <div><strong>Zálohování (backup) ve více variantách</strong>
+        Automatické zálohy lokálně, na Synology DiskStation (NAS) a na Google Drive. Zvolíš si nativní zálohy Home Assistant, nebo komunitní doplňky/aplikace (Samba Backup, Google Drive Backup). Kombinací SSD + NAS + cloud splníš pravidlo 3-2-1 (3 kopie, 2 různá média, 1 mimo domov).</div>
     </li>
   </ul>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Raspberry Pi 3 B+ má jen 1 GB RAM</div>
+    <p>Oficiální dokumentace Zigbee2MQTT pro Home Assistant upozorňuje, že na Raspberry Pi 3 může být provoz kvůli omezeným zdrojům nestabilní. Na vyzkoušení a menší domácnost to stačí. Drž počet aplikací nízký a sleduj paměť (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#vykon">sekce 13.4</a>). Pro trvalý provoz 24/7 počítej s Raspberry Pi 4 nebo novějším.</p>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
+    <p>Většina kroků v průvodci je stejná. Liší se hlavně napájení (USB-C), obraz systému (<code>rpi4_64</code> / <code>rpi5_64</code>), USB 3.0 pro rychlejší SSD a nastavení bootu z USB. Raspberry Pi 5 je v Home Assistant OS zatím označen jako beta. Rozdíly jsou v průvodci vždy označeny stejným rámečkem.</p>
+  </div>
 </section>
 
 <!-- ARCHITEKTURA -->
 <section class="sec">
   <h2 id="architektura">Architektura systému</h2>
-  <p>Celý systém je postaven do vrstev. Každá vrstva komunikuje pouze s bezprostředně sousední – to zaručuje jednoduchost, přehlednost a snadné ladění.</p>
+  <p>Celý systém je postaven do vrstev (layers). Každá vrstva komunikuje pouze s bezprostředně sousední – to zaručuje jednoduchost, přehlednost a snadné ladění.</p>
 
   <div class="arch">
-<pre style="background:none;border:none;padding:0;margin:0;color:inherit">
+<pre>
   ┌─────────────────────────────────────────────────────┐
   │           ZIGBEE ZAŘÍZENÍ (senzory, spínače)        │
   │    🌡️ teplota  💡 žárovky  🚪 dveřní kontakty ...  │
@@ -88,24 +98,24 @@
                      │  2.4 GHz Zigbee (mesh síť)
                      ▼
   ┌─────────────────────────────────────────────────────┐
-  │         USB Zigbee koordinátor (SLZB-07)            │
+  │     USB Zigbee koordinátor (coordinator) SLZB-07    │
   │              zapojený do RPi 3 B+                   │
   └──────────────────┬──────────────────────────────────┘
                      │  USB / sériový port
                      ▼
   ┌─────────────────────────────────────────────────────┐
-  │              ZIGBEE2MQTT (addon)                    │
+  │            ZIGBEE2MQTT (doplněk/aplikace)           │
   │   převádí Zigbee zprávy → MQTT formát               │
   │   spravuje síť, párování, OTA aktualizace           │
   └──────────────────┬──────────────────────────────────┘
                      │  MQTT protokol (port 1883)
                      ▼
   ┌─────────────────────────────────────────────────────┐
-  │           MOSQUITTO MQTT BROKER (addon)             │
+  │       MOSQUITTO MQTT BROKER (doplněk/aplikace)      │
   │   centrální komunikační sběrnice                    │
   │   publish / subscribe model zpráv                   │
   └──────────────────┬──────────────────────────────────┘
-                     │  interní HA API
+                     │  MQTT integrace (HA je klient brokeru)
                      ▼
   ┌─────────────────────────────────────────────────────┐
   │         HOME ASSISTANT CORE (HAOS)                  │
@@ -116,7 +126,8 @@
                      ▼
   ┌─────────────────────────────────────────────────────┐
   │        PROHLÍŽEČ / MOBILNÍ APLIKACE                 │
-  │   http://homeassistant.local:8123                   │
+  │   http://192.168.0.11   (starší instalace :8123)    │
+  │   nebo http://homeassistant.local                   │
   │   z jakéhokoli zařízení v lokální síti              │
   └─────────────────────────────────────────────────────┘
 </pre>
@@ -130,7 +141,7 @@
 
 <!-- SOFTWAROVÝ STACK -->
 <section class="sec">
-  <h2 id="stack">Softwarový stack</h2>
+  <h2 id="stack">Použitý software</h2>
   <table class="stack-table">
     <thead>
       <tr>
@@ -142,38 +153,43 @@
     <tbody>
       <tr>
         <td>Home Assistant OS</td>
-        <td>HAOS (nejnovější)</td>
-        <td>Operační systém + platforma pro chytrou domácnost. Spravuje add-ony jako kontejnery.</td>
+        <td>HAOS 64bit (nejnovější)</td>
+        <td>Operační systém + platforma pro chytrou domácnost. Spravuje doplňky/aplikace (add-ons/apps) jako kontejnery (containers).</td>
       </tr>
       <tr>
         <td>Home Assistant Core</td>
         <td>součást HAOS</td>
-        <td>Jádro systému – automatizace, entity, integrace, UI dashboardy.</td>
+        <td>Jádro systému – automatizace, entity, integrace, UI (ovládací panely, dashboardy).</td>
       </tr>
       <tr>
         <td>Supervisor</td>
         <td>součást HAOS</td>
-        <td>Správce add-onů, aktualizací a snapshots (záloh).</td>
+        <td>Správce doplňků/aplikací, aktualizací a záloh (backups).</td>
       </tr>
       <tr>
         <td>Mosquitto Broker</td>
-        <td>add-on (official)</td>
+        <td>doplněk/aplikace (oficiální)</td>
         <td>MQTT broker – lokální zprávy mezi Z2M a HA.</td>
       </tr>
       <tr>
         <td>Zigbee2MQTT</td>
-        <td>add-on (community)</td>
+        <td>doplněk/aplikace (komunitní, community)</td>
         <td>Zigbee koordinátor → MQTT bridge. Tisíce zařízení bez proprietárních hub.</td>
       </tr>
       <tr>
+        <td>Nativní zálohy HA (Backups)</td>
+        <td>součást HA</td>
+        <td>Volitelně: zálohy na síťové úložiště (SMB/NFS), Google Drive nebo Synology NAS přímo z Home Assistant. Alternativa k doplňkům/aplikacím níže.</td>
+      </tr>
+      <tr>
         <td>Samba Backup</td>
-        <td>add-on (community)</td>
-        <td>Automatické kopírování záloh na Synology NAS.</td>
+        <td>doplněk/aplikace (komunitní, community)</td>
+        <td>Volitelně: automatické kopírování záloh na Synology NAS.</td>
       </tr>
       <tr>
         <td>Google Drive Backup</td>
-        <td>add-on (community)</td>
-        <td>Automatické nahrávání záloh na Google Drive.</td>
+        <td>doplněk/aplikace (komunitní, community)</td>
+        <td>Volitelně: automatické nahrávání záloh na Google Drive.</td>
       </tr>
     </tbody>
   </table>
@@ -186,22 +202,22 @@
   <ul>
     <li><strong>Raspberry Pi 3 Model B+</strong> – hlavní výpočetní jednotka</li>
     <li><strong>mSATA SSD v USB pouzdře</strong> – bootovací disk (namísto SD karty) – rychlejší, trvanlivější</li>
-    <li><strong>USB Zigbee koordinátor</strong> – SMLIGHT SLZB-07 nebo Ebyte E72 (viz <a href="03_raspberry_poznamka_k_zigbee_modulu.html">Kapitola 03</a>)</li>
-    <li><strong>Napájecí zdroj Micro-USB 5V/3A</strong> – ideálně originální RPi adaptér</li>
+    <li><strong>USB Zigbee koordinátor (coordinator)</strong> – doporučený SMLIGHT SLZB-07 (srovnání s alternativami včetně Ebyte E72 viz <a href="03_raspberry_poznamka_k_zigbee_modulu.html">Kapitola 03</a>)</li>
+    <li><strong>Napájecí zdroj (power supply) Micro-USB</strong> – minimum 5 V / 2,5 A, ideálně kvalitní 5,1 V / 3 A (podrobnosti v <a href="02_raspberry_hardware.html#napajeni">sekci 2.2</a>)</li>
     <li><strong>Ethernet kabel</strong> – pro stabilní připojení (WiFi lze, ale Ethernet preferován)</li>
     <li><strong>USB prodlužovací kabel (15–30 cm)</strong> – pro Zigbee dongle (zlepší příjem)</li>
   </ul>
 
   <div class="callout callout-warn">
-    <div class="callout-title">⚠️ Poznámka k napájení</div>
-    <p>S mSATA USB SSD odebírá RPi více proudu než se samotnou SD kartou. Doporučuji zdroj <strong>minimálně 3A</strong>, ne 2.5A. Slabý zdroj způsobuje nestabilitu, náhodné restarty a poškození dat.</p>
+    <div class="callout-title">⚠️ Napájení – minimum a ideál</div>
+    <p><strong>Minimum:</strong> kvalitní zdroj 5 V / 2,5 A (originální Raspberry Pi 5,1 V / 2,5 A). <strong>Ideál:</strong> kvalitní zdroj 5,1 V / 3 A a krátký silný kabel. S mSATA USB SSD a Zigbee dongle odebírá RPi více proudu než se samotnou SD kartou. Slabý zdroj způsobuje nestabilitu, náhodné restarty a poškození dat.<br><br>Varování o slabém zdroji (podpětí, undervoltage) se často objevuje i u silnějšího zdroje. Příčinou bývá pokles napětí na tenkém nebo dlouhém kabelu, nekvalitní zdroj, který nedrží 5 V pod zátěží, nebo odběr připojených USB zařízení. Postup řešení je v <a href="02_raspberry_hardware.html#napajeni">sekci 2.2</a> a v <a href="14_raspberry_reseni_problemu_troubleshooting.html">kapitole 14</a>.</p>
   </div>
 </section>
 
 <!-- ČASOVÁ NÁROČNOST -->
 <section class="sec">
   <h2 id="cas-narocnost">Časová náročnost</h2>
-  <p>Odhadem si připrav tento čas – záleží na tvých zkušenostech a rychlosti internetu:</p>
+  <p>Orientační odhad času – záleží na tvých zkušenostech a rychlosti internetu:</p>
   <ul>
     <li><strong>Příprava SSD a první boot:</strong> 30–60 minut</li>
     <li><strong>Základní nastavení HA + účet:</strong> 15–20 minut</li>
@@ -224,12 +240,12 @@
   <ul>
     <li><strong>Spotřeba v klidu:</strong> cca 3–5 W (HA běží, žádná velká zátěž)</li>
     <li><strong>Spotřeba při zátěži:</strong> cca 7–8 W (aktualizace, záloha, zpracování dat)</li>
-    <li><strong>Roční spotřeba při 24/7:</strong> cca 35–70 kWh → přibližně <strong>200–400 Kč/rok</strong> (při ceně 6 Kč/kWh)</li>
-    <li><strong>Srovnání:</strong> plnohodnotný PC server spotřebuje 50–150 W = 10–20× více</li>
+    <li><strong>Roční spotřeba při 24/7:</strong> cca 30–45 kWh → přibližně <strong>200–300 Kč/rok</strong> (při ceně 6 Kč/kWh, orientační odhad – přesnou hodnotu ukáže wattmetr)</li>
+    <li><strong>Srovnání:</strong> plnohodnotný PC server spotřebuje 50–150 W = řádově 10–30× více</li>
   </ul>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Přepěťová ochrana</div>
-    <p>Zapojen RPi do prodlužovacího kabelu s přepěťovou ochranou a vypínačem. Přepěťová ochrana chrání RPi i USB SSD před špičkami napětí při bouřce. Vypínač se hodí při servisním zásahu – abys nemusel tahat kabely ze zásuvky za skříní.</p>
+    <p>Zapoj RPi do prodlužovacího kabelu s přepěťovou ochranou a vypínačem. Přepěťová ochrana chrání RPi i USB SSD před špičkami napětí při bouřce. Vypínač se hodí při servisním zásahu – abys nemusel tahat kabely ze zásuvky za skříní.</p>
   </div>
 </section>
 
@@ -251,16 +267,16 @@
     <li><strong>Spotify / Chromecast / Apple TV</strong> – ovládání médií přímo z HA dashboardu</li>
     <li><strong>Google Calendar / Outlook</strong> – automatizace na základě událostí v kalendáři</li>
     <li><strong>Počasí a předpovědi</strong> – OpenWeatherMap, Yr.no – pro automatizace závislé na počasí</li>
-    <li><strong>IP kamery</strong> – integrace kamerového systému přes RTSP stream nebo Frigate NVR add-on</li>
-    <li><strong>Hlasové asistenty</strong> – propojení s Google Assistant nebo Amazon Alexa přes Nabu Casa</li>
+    <li><strong>IP kamery (IP cameras)</strong> – integrace kamer přes RTSP stream. Zpracování obrazu (např. Frigate NVR) je pro Raspberry Pi 3 B+ příliš náročné.</li>
+    <li><strong>Hlasové asistenty (voice assistants)</strong> – hlasové ovládání, například lokální asistent Assist v Home Assistantu. Propojení s Google Assistant nebo Alexou vyžaduje cloudovou službu a tato příručka se jím nezabývá</li>
   </ul>
 
   <h3>HACS – tisíce dalších rozšíření</h3>
-  <p><strong>HACS (Home Assistant Community Store)</strong> je správce komunitních rozšíření. Po instalaci (add-on repozitář na <a href="https://hacs.xyz" target="_blank">hacs.xyz</a>) získáš přístup k:</p>
+  <p><strong>HACS (Home Assistant Community Store)</strong> je správce komunitních rozšíření. Po instalaci (postup na <a href="https://hacs.xyz" target="_blank" rel="noopener noreferrer">hacs.xyz</a>, viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#hacs">Kapitola 13</a>) získáš přístup k:</p>
   <ul>
-    <li><strong>Integracím</strong> – stovky zařízení a služeb které nejsou v oficiálním storu</li>
-    <li><strong>Frontend kartám</strong> – Mushroom Cards, ApexCharts, Mini Graph Card a další vizualizace</li>
-    <li><strong>Tématům</strong> – desítky vzhledů dashboardu</li>
+    <li><strong>Integracím (integrations)</strong> – stovky zařízení a služeb které nejsou v oficiálním storu</li>
+    <li><strong>Kartám pro dashboard (custom cards)</strong> – Mushroom Cards, ApexCharts, Mini Graph Card a další vizualizace</li>
+    <li><strong>Tématům (themes)</strong> – desítky vzhledů dashboardu</li>
   </ul>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Nejprve stabilizuj základ</div>
@@ -271,7 +287,7 @@
 <div id="pn"></div>
 
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>

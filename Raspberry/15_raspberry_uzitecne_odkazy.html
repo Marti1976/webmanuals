@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Užitečné Odkazy – Raspberry Pi Průvodce</title>
+<title>Užitečné odkazy – Raspberry Pi Průvodce</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -15,7 +15,7 @@
     { "id": "z2m-odkazy", "num": "15.2", "name": "Zigbee2MQTT" },
     { "id": "slzb07-odkazy", "num": "15.3", "name": "SMLIGHT SLZB-07" },
     { "id": "rpi-odkazy", "num": "15.4", "name": "Raspberry Pi" },
-    { "id": "zalohy-odkazy", "num": "15.5", "name": "Zálohovací add-ony" },
+    { "id": "zalohy-odkazy", "num": "15.5", "name": "Zálohování" },
     { "id": "bezp-odkazy", "num": "15.6", "name": "Bezpečnost / VPN" },
     { "id": "monitoring", "num": "15.7", "name": "Monitoring a nástroje" },
     { "id": "youtube", "num": "15.8", "name": "YouTube kanály" },
@@ -34,15 +34,15 @@
 <div class="wrap">
 <header>
   <div class="h-num">// kapitola 15</div>
-  <h1>Užitečné <em>Odkazy</em></h1>
-  <p class="h-desc">Vše co budeš potřebovat na jednom místě – oficiální dokumentace, komunitní fóra, add-on repozitáře, české obchody, YouTube kanály a šablona pro zapsání hesel.</p>
+  <h1>Užitečné <em>odkazy</em></h1>
+  <p class="h-desc">Vše, co budeš potřebovat, na jednom místě – oficiální dokumentace, komunitní fóra, repozitáře aplikací (add-ons/apps), české obchody, YouTube kanály a šablona pro zapsání hesel.</p>
 </header>
 
 <!-- HOME ASSISTANT -->
 <section class="sec">
   <h2 id="ha-odkazy">Home Assistant</h2>
   <div class="link-group">
-    <a href="https://www.home-assistant.io" target="_blank" class="link-card">
+    <a href="https://www.home-assistant.io" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🏠</span>
       <div class="link-body">
         <div class="link-title">Home Assistant – hlavní web</div>
@@ -51,7 +51,7 @@
         <div class="link-desc">Hlavní stránka projektu, novinky, přehled funkcí a odkaz na download.</div>
       </div>
     </a>
-    <a href="https://www.home-assistant.io/docs/" target="_blank" class="link-card">
+    <a href="https://www.home-assistant.io/docs/" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">📖</span>
       <div class="link-body">
         <div class="link-title">Dokumentace</div>
@@ -60,16 +60,16 @@
         <div class="link-desc">Kompletní dokumentace – instalace, konfigurace, integrace, automatizace. Vždy aktuální.</div>
       </div>
     </a>
-    <a href="https://community.home-assistant.io" target="_blank" class="link-card">
+    <a href="https://community.home-assistant.io" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">💬</span>
       <div class="link-body">
         <div class="link-title">Komunitní fórum</div>
         <span class="link-url">https://community.home-assistant.io</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Největší HA komunita. Hledej řešení problémů, sdílej konfiguraci, ptej se. Přes 500 000 členů, velmi vstřícná komunita.</div>
+        <div class="link-desc">Největší HA komunita. Hledej řešení problémů, sdílej konfiguraci, ptej se.</div>
       </div>
     </a>
-    <a href="https://www.home-assistant.io/blog/" target="_blank" class="link-card">
+    <a href="https://www.home-assistant.io/blog/" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">📰</span>
       <div class="link-body">
         <div class="link-title">Release Notes &amp; Blog</div>
@@ -78,22 +78,22 @@
         <div class="link-desc">Měsíční přehled novinek v každé verzi HA. Vždy přečti před aktualizací major verze – obsahuje seznam Breaking Changes.</div>
       </div>
     </a>
-    <a href="https://github.com/home-assistant/operating-system/releases" target="_blank" class="link-card">
+    <a href="https://github.com/home-assistant/operating-system/releases" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">💾</span>
       <div class="link-body">
         <div class="link-title">HAOS image ke stažení</div>
         <span class="link-url">https://github.com/home-assistant/operating-system/releases</span>
         <span class="link-tag tag-official">Official</span>
-        <div class="link-desc">Přímé stažení HAOS image pro RPi. Hledej soubor <code>haos_rpi3-X.XX.img.xz</code> pro Raspberry Pi 3.</div>
+        <div class="link-desc">Přímé stažení obrazu (image) HAOS. Pro Raspberry Pi 3 B+ hledej soubor <code>haos_rpi3-64-X.Y.img.xz</code>.</div>
       </div>
     </a>
-    <a href="https://www.youtube.com/@HomeAssistant" target="_blank" class="link-card">
-      <span class="link-icon">▶️</span>
+    <a href="https://developers.home-assistant.io/docs/operating-system/boards/raspberrypi" target="_blank" rel="noopener noreferrer" class="link-card">
+      <span class="link-icon">🍓</span>
       <div class="link-body">
-        <div class="link-title">Oficiální YouTube kanál</div>
-        <span class="link-url">https://www.youtube.com/@HomeAssistant</span>
+        <div class="link-title">HAOS na Raspberry Pi – dokumentace</div>
+        <span class="link-url">developers.home-assistant.io/docs/operating-system/boards/raspberrypi</span>
         <span class="link-tag tag-official">Official</span>
-        <div class="link-desc">Videonávody, ukázky nových funkcí a komunitní obsah. Ideální pro vizuální učení.</div>
+        <div class="link-desc">Podporované modely, boot z USB, quirks pro USB disky a úpravy bootu. Ověřený zdroj pro RPi 3 B+.</div>
       </div>
     </a>
   </div>
@@ -103,7 +103,7 @@
 <section class="sec">
   <h2 id="z2m-odkazy">Zigbee2MQTT</h2>
   <div class="link-group">
-    <a href="https://www.zigbee2mqtt.io" target="_blank" class="link-card">
+    <a href="https://www.zigbee2mqtt.io" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">📶</span>
       <div class="link-body">
         <div class="link-title">Zigbee2MQTT – hlavní web</div>
@@ -112,7 +112,7 @@
         <div class="link-desc">Domovská stránka projektu, přehled funkcí a aktualit.</div>
       </div>
     </a>
-    <a href="https://www.zigbee2mqtt.io/guide/getting-started/" target="_blank" class="link-card">
+    <a href="https://www.zigbee2mqtt.io/guide/getting-started/" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🚀</span>
       <div class="link-body">
         <div class="link-title">Getting Started – dokumentace</div>
@@ -121,16 +121,16 @@
         <div class="link-desc">Oficiální průvodce instalací a konfigurací Z2M. Doplňuje tento manuál o detaily specifické pro každou platformu.</div>
       </div>
     </a>
-    <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank" class="link-card">
+    <a href="https://www.zigbee2mqtt.io/supported-devices/" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🔍</span>
       <div class="link-body">
         <div class="link-title">Databáze podporovaných zařízení</div>
         <span class="link-url">https://www.zigbee2mqtt.io/supported-devices/</span>
         <span class="link-tag tag-official">Official</span>
-        <div class="link-desc">Přes 3 500 podporovaných Zigbee zařízení s návodem na párování, přehledem expozovaných entit a hodnocením kompatibility. Vždy ověř před koupí!</div>
+        <div class="link-desc">Tisíce podporovaných Zigbee zařízení s návodem na párování a přehledem entit. Vždy ověř před koupí!</div>
       </div>
     </a>
-    <a href="https://github.com/Koenkk/zigbee2mqtt/issues" target="_blank" class="link-card">
+    <a href="https://github.com/Koenkk/zigbee2mqtt/issues" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🐛</span>
       <div class="link-body">
         <div class="link-title">GitHub Issues – hlášení chyb</div>
@@ -139,13 +139,40 @@
         <div class="link-desc">Nahlášené chyby a diskuze. Před hlášením nového problému prohledej existující issues – odpověď tam pravděpodobně je.</div>
       </div>
     </a>
-    <a href="https://github.com/zigbee2mqtt/hassio-zigbee2mqtt" target="_blank" class="link-card">
+    <a href="https://github.com/zigbee2mqtt/hassio-zigbee2mqtt" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">📦</span>
       <div class="link-body">
-        <div class="link-title">HA add-on repozitář (hassio-zigbee2mqtt)</div>
+        <div class="link-title">Repozitář aplikace Zigbee2MQTT (hassio-zigbee2mqtt)</div>
         <span class="link-url">https://github.com/zigbee2mqtt/hassio-zigbee2mqtt</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Repozitář Z2M add-onu pro Home Assistant. URL pro přidání do HA Store: <code>https://github.com/zigbee2mqtt/hassio-zigbee2mqtt</code></div>
+        <div class="link-desc">Repozitář aplikace Z2M pro Home Assistant. URL pro přidání do obchodu s aplikacemi: <code>https://github.com/zigbee2mqtt/hassio-zigbee2mqtt</code></div>
+      </div>
+    </a>
+    <a href="https://www.zigbee2mqtt.io/guide/adapters/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <span class="link-icon">🔌</span>
+      <div class="link-body">
+        <div class="link-title">Podporované koordinátory (adaptéry)</div>
+        <span class="link-url">zigbee2mqtt.io/guide/adapters/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Aktuální seznam doporučených a nedoporučených koordinátorů a jejich nastavení (<code>ember</code>, <code>zstack</code>, <code>deconz</code>).</div>
+      </div>
+    </a>
+    <a href="https://www.zigbee2mqtt.io/guide/installation/03_ha_addon.html" target="_blank" rel="noopener noreferrer" class="link-card">
+      <span class="link-icon">📦</span>
+      <div class="link-body">
+        <div class="link-title">Zigbee2MQTT jako aplikace v Home Assistantu</div>
+        <span class="link-url">zigbee2mqtt.io/guide/installation/03_ha_addon.html</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Oficiální návod instalace v Home Assistantu včetně upozornění na Raspberry Pi 3.</div>
+      </div>
+    </a>
+    <a href="https://www.zigbee2mqtt.io/guide/installation/14_securing.html" target="_blank" rel="noopener noreferrer" class="link-card">
+      <span class="link-icon">🔒</span>
+      <div class="link-body">
+        <div class="link-title">Zabezpečení Zigbee2MQTT</div>
+        <span class="link-url">zigbee2mqtt.io/guide/installation/14_securing.html</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Doporučení pro zabezpečení webového rozhraní, síťového klíče, párování a seznamu povolených zařízení (passlist).</div>
       </div>
     </a>
   </div>
@@ -155,16 +182,16 @@
 <section class="sec">
   <h2 id="slzb07-odkazy">SMLIGHT SLZB-07</h2>
   <div class="link-group">
-    <a href="https://smlight.tech/product/slzb-07" target="_blank" class="link-card">
+    <a href="https://smlight.tech/product/slzb-07" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🔌</span>
       <div class="link-body">
-        <div class="link-title">Oficální stránka SLZB-07</div>
+        <div class="link-title">Oficiální stránka SLZB-07</div>
         <span class="link-url">https://smlight.tech/product/slzb-07</span>
         <span class="link-tag tag-official">Official</span>
         <div class="link-desc">Specifikace, dokumentace a firmware pro SMLIGHT SLZB-07 (EFR32MG21). Doporučený koordinátor pro tento průvodce.</div>
       </div>
     </a>
-    <a href="https://smlight.tech/flasher" target="_blank" class="link-card">
+    <a href="https://smlight.tech/flasher" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">⚡</span>
       <div class="link-body">
         <div class="link-title">SMLIGHT Web Flasher</div>
@@ -173,7 +200,7 @@
         <div class="link-desc">Webový nástroj pro aktualizaci firmware koordinátoru SLZB-07 přímo z prohlížeče (Chrome/Edge). Bez instalace softwaru, bez driverů.</div>
       </div>
     </a>
-    <a href="https://dratek.cz" target="_blank" class="link-card">
+    <a href="https://dratek.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🛒</span>
       <div class="link-body">
         <div class="link-title">Dratek.cz – CZ prodejce SLZB-07</div>
@@ -189,7 +216,7 @@
 <section class="sec">
   <h2 id="rpi-odkazy">Raspberry Pi</h2>
   <div class="link-group">
-    <a href="https://www.raspberrypi.com/software/" target="_blank" class="link-card">
+    <a href="https://www.raspberrypi.com/software/" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🍓</span>
       <div class="link-body">
         <div class="link-title">Raspberry Pi Imager – stažení</div>
@@ -198,7 +225,7 @@
         <div class="link-desc">Nástroj pro nahrání HAOS image na USB SSD. Stáhni pro Windows, macOS nebo Linux.</div>
       </div>
     </a>
-    <a href="https://www.raspberrypi.com/documentation/" target="_blank" class="link-card">
+    <a href="https://www.raspberrypi.com/documentation/" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">📖</span>
       <div class="link-body">
         <div class="link-title">Raspberry Pi dokumentace</div>
@@ -207,7 +234,7 @@
         <div class="link-desc">Kompletní dokumentace k RPi hardware, bootování, GPIO, USB boot a dalšímu.</div>
       </div>
     </a>
-    <a href="https://forums.raspberrypi.com" target="_blank" class="link-card">
+    <a href="https://forums.raspberrypi.com" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">💬</span>
       <div class="link-body">
         <div class="link-title">Raspberry Pi fórum</div>
@@ -221,24 +248,51 @@
 
 <!-- ZALOHOVACI ADDONY -->
 <section class="sec">
-  <h2 id="zalohy-odkazy">Zálohovací add-ony</h2>
+  <h2 id="zalohy-odkazy">Zálohování</h2>
   <div class="link-group">
-    <a href="https://github.com/sabeechen/hassio-google-drive-backup" target="_blank" class="link-card">
+    <a href="https://www.home-assistant.io/blog/2025/01/03/3-2-1-backup/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <span class="link-icon">📖</span>
+      <div class="link-body">
+        <div class="link-title">Zálohy v Home Assistantu (blog 3-2-1)</div>
+        <span class="link-url">home-assistant.io/blog/2025/01/03/3-2-1-backup/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Oficiální popis nového zálohování od verze 2025.1: šifrování, plán, uchovávání a umístění záloh.</div>
+      </div>
+    </a>
+    <a href="https://www.home-assistant.io/integrations/google_drive/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <span class="link-icon">☁️</span>
+      <div class="link-body">
+        <div class="link-title">Google Drive – integrace</div>
+        <span class="link-url">home-assistant.io/integrations/google_drive/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Oficiální návod nativní integrace Google Drive pro zálohy (vlastní přístupové údaje OAuth).</div>
+      </div>
+    </a>
+    <a href="https://www.home-assistant.io/integrations/synology_dsm/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <span class="link-icon">🖥️</span>
+      <div class="link-body">
+        <div class="link-title">Synology DSM – integrace</div>
+        <span class="link-url">home-assistant.io/integrations/synology_dsm/</span>
+        <span class="link-tag tag-official">Official</span>
+        <div class="link-desc">Integrace pro Synology NAS včetně ukládání záloh.</div>
+      </div>
+    </a>
+    <a href="https://github.com/sabeechen/hassio-google-drive-backup" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">☁️</span>
       <div class="link-body">
         <div class="link-title">Home Assistant Google Drive Backup</div>
         <span class="link-url">https://github.com/sabeechen/hassio-google-drive-backup</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Add-on pro automatické zálohy na Google Drive. Repozitář pro přidání do HA Store. Aktivně udržovaný, výborné hodnocení.</div>
+        <div class="link-desc">Komunitní aplikace pro automatické zálohy na Google Drive. Repozitář pro přidání do obchodu s aplikacemi.</div>
       </div>
     </a>
-    <a href="https://github.com/thomasmauerer/hassio-addons" target="_blank" class="link-card">
+    <a href="https://github.com/thomasmauerer/hassio-addons" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🖥️</span>
       <div class="link-body">
         <div class="link-title">Samba Backup (hassio-addons)</div>
         <span class="link-url">https://github.com/thomasmauerer/hassio-addons</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Repozitář obsahující Samba Backup add-on pro kopírování záloh na Synology nebo jiný NAS přes SMB.</div>
+        <div class="link-desc">Repozitář obsahující komunitní aplikaci Samba Backup pro kopírování záloh na Synology nebo jiný NAS přes SMB.</div>
       </div>
     </a>
   </div>
@@ -248,40 +302,31 @@
 <section class="sec">
   <h2 id="bezp-odkazy">Bezpečnost / VPN</h2>
   <div class="link-group">
-    <a href="https://www.nabucasa.com" target="_blank" class="link-card">
-      <span class="link-icon">🔐</span>
-      <div class="link-body">
-        <div class="link-title">Nabu Casa – Home Assistant Cloud</div>
-        <span class="link-url">https://www.nabucasa.com</span>
-        <span class="link-tag tag-official">Official</span>
-        <div class="link-desc">Placená cloudová služba (~65 Kč/měsíc) od tvůrců HA. Nejjednodušší vzdálený přístup, Alexa/Google integrace, příjmy podporují vývoj HA.</div>
-      </div>
-    </a>
-    <a href="https://tailscale.com" target="_blank" class="link-card">
+    <a href="https://tailscale.com" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🌐</span>
       <div class="link-body">
         <div class="link-title">Tailscale VPN</div>
         <span class="link-url">https://tailscale.com</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">WireGuard-based VPN mesh. Zdarma pro domácí použití (do 100 zařízení). Instalace jako HA add-on, telefon a RPi propojí do privátní sítě.</div>
+        <div class="link-desc">VPN postavená na WireGuardu. Zdarma pro domácí použití (plán Personal od dubna 2026: až 6 uživatelů, neomezený počet jejich zařízení). Instalace jako aplikace v HA, telefon a RPi propojí do privátní sítě.</div>
       </div>
     </a>
-    <a href="https://github.com/hassio-addons/addon-tailscale" target="_blank" class="link-card">
+    <a href="https://github.com/hassio-addons/addon-tailscale" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">📦</span>
       <div class="link-body">
-        <div class="link-title">Tailscale – HA add-on repozitář</div>
+        <div class="link-title">Tailscale – repozitář aplikace pro HA</div>
         <span class="link-url">https://github.com/hassio-addons/addon-tailscale</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Repozitář Tailscale add-onu pro Home Assistant. Součást hassio-addons kolekce.</div>
+        <div class="link-desc">Repozitář aplikace Tailscale pro Home Assistant. Součást kolekce hassio-addons.</div>
       </div>
     </a>
-    <a href="https://bitwarden.com" target="_blank" class="link-card">
+    <a href="https://bitwarden.com" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🔑</span>
       <div class="link-body">
         <div class="link-title">Bitwarden – password manager</div>
         <span class="link-url">https://bitwarden.com</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Open source password manager zdarma. Browser extension + mobilní app. Doporučeno pro správu hesel HA, MQTT, Samba a NAS.</div>
+        <div class="link-desc">Open source správce hesel (password manager) zdarma. Rozšíření prohlížeče a mobilní aplikace. Doporučeno pro správu hesel HA, MQTT, Samba a NAS.</div>
       </div>
     </a>
   </div>
@@ -291,40 +336,40 @@
 <section class="sec">
   <h2 id="monitoring">Monitoring a nástroje</h2>
   <div class="link-group">
-    <a href="https://community.home-assistant.io/t/community-hacs/213713" target="_blank" class="link-card">
+    <a href="https://hacs.xyz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🧩</span>
       <div class="link-body">
         <div class="link-title">HACS – Home Assistant Community Store</div>
         <span class="link-url">hacs.xyz</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Správce komunitních integrací, témat a lovelace pluginů. Nainstaluj HACS pro přístup k tisícům dalších add-onů a karet. Instalace přes add-on repozitář.</div>
+        <div class="link-desc">Správce komunitních integrací, témat a karet ovládacího panelu. Instalace podle návodu na hacs.xyz (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#hacs">sekce 13.6</a>). Od HA 2026.11 je HACS podle oficiální dokumentace součástí Home Assistantu jako Marketplace.</div>
       </div>
     </a>
-    <a href="https://www.home-assistant.io/integrations/glances/" target="_blank" class="link-card">
+    <a href="https://www.home-assistant.io/integrations/systemmonitor/" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">📊</span>
       <div class="link-body">
-        <div class="link-title">Glances – systémový monitor</div>
-        <span class="link-url">https://www.home-assistant.io/integrations/glances/</span>
+        <div class="link-title">System Monitor – sledování systému</div>
+        <span class="link-url">https://www.home-assistant.io/integrations/systemmonitor/</span>
         <span class="link-tag tag-official">Official</span>
-        <div class="link-desc">Add-on pro sledování CPU, RAM, teploty a disků přes webové rozhraní. Lehký, doporučený pro RPi 3.</div>
+        <div class="link-desc">Integrace pro sledování využití procesoru, paměti, teploty a disků. Lehčí volba pro RPi 3 B+ (viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#vykon">sekce 13.4</a>).</div>
       </div>
     </a>
-    <a href="https://mqtt-explorer.com" target="_blank" class="link-card">
+    <a href="https://mqtt-explorer.com" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🔬</span>
       <div class="link-body">
         <div class="link-title">MQTT Explorer</div>
         <span class="link-url">https://mqtt-explorer.com</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Zdarma, Windows/Mac/Linux. Vizuální prohlížeč MQTT topics v reálném čase – neocenitelný nástroj pro diagnostiku Z2M komunikace a ověření že zařízení posílají data. Připoj se na <code>192.168.1.50:1883</code> s MQTT přihlašovacími údaji.</div>
+        <div class="link-desc">Zdarma, Windows/Mac/Linux. Vizuální prohlížeč MQTT topics v reálném čase – neocenitelný nástroj pro diagnostiku Z2M komunikace a ověření že zařízení posílají data. Připoj se na <code>192.168.0.11:1883</code> s MQTT přihlašovacími údaji. Port 1883 musí být v kartě Síť aplikace Mosquitto zveřejněný (viz <a href="11_raspberry_bezpecnost.html#mqtt-bezpecnost">sekce 11.6</a>).</div>
       </div>
     </a>
-    <a href="https://www.putty.org" target="_blank" class="link-card">
+    <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🖥️</span>
       <div class="link-body">
         <div class="link-title">PuTTY – SSH klient pro Windows</div>
-        <span class="link-url">https://www.putty.org</span>
+        <span class="link-url">chiark.greenend.org.uk/~sgtatham/putty</span>
         <span class="link-tag tag-community">Community</span>
-        <div class="link-desc">Zdarma. Nejpoužívanější SSH klient pro Windows. Alternativně Windows Terminal (vestavěný) – příkaz <code>ssh root@192.168.1.50</code>.</div>
+        <div class="link-desc">Zdarma. Oblíbený SSH klient pro Windows. Pozor, putty.org oficiální stránka autorů není. Alternativně vestavěný příkaz <code>ssh root@192.168.0.11</code> v PowerShellu nebo Terminálu Windows.</div>
       </div>
     </a>
   </div>
@@ -334,16 +379,16 @@
 <section class="sec">
   <h2 id="youtube">YouTube kanály</h2>
   <div class="link-group">
-    <a href="https://www.youtube.com/@HomeAssistant" target="_blank" class="link-card">
+    <a href="https://www.youtube.com/@HomeAssistant" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">▶️</span>
       <div class="link-body">
         <div class="link-title">Home Assistant – Official YouTube</div>
         <span class="link-url">youtube.com/@HomeAssistant</span>
         <span class="link-tag tag-official">Official</span>
-        <div class="link-desc">Officiální kanál – ukázky nových funkcí, tutoriály, komunitní showcase. Výborný pro sledování novinek.</div>
+        <div class="link-desc">Oficiální kanál – ukázky nových funkcí, tutoriály, komunitní showcase. Výborný pro sledování novinek.</div>
       </div>
     </a>
-    <a href="https://www.youtube.com/@EverythingSmartHome" target="_blank" class="link-card">
+    <a href="https://www.youtube.com/@EverythingSmartHome" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">▶️</span>
       <div class="link-body">
         <div class="link-title">Everything Smart Home</div>
@@ -352,7 +397,7 @@
         <div class="link-desc">Jeden z nejlepších anglických kanálů věnovaných Home Assistant. Podrobné návody, srovnání zařízení, Zigbee tipy. Doporučeno pro začátečníky.</div>
       </div>
     </a>
-    <a href="https://www.youtube.com/@SmartHomeSolver" target="_blank" class="link-card">
+    <a href="https://www.youtube.com/@SmartHomeSolver" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">▶️</span>
       <div class="link-body">
         <div class="link-title">Smart Home Solver</div>
@@ -361,7 +406,7 @@
         <div class="link-desc">Praktické návody pro Home Assistant – automatizace, dashboardy, integrace. Srozumitelný výklad i pro začátečníky.</div>
       </div>
     </a>
-    <a href="https://www.youtube.com/@KPeyanski" target="_blank" class="link-card">
+    <a href="https://www.youtube.com/@KPeyanski" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">▶️</span>
       <div class="link-body">
         <div class="link-title">Kiril Peyanski</div>
@@ -377,16 +422,16 @@
 <section class="sec">
   <h2 id="cz-komunita">Česká komunita</h2>
   <div class="link-group">
-    <a href="https://www.facebook.com/groups/homeassistantcz" target="_blank" class="link-card">
+    <a href="https://www.facebook.com/groups/homeassistantcz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">👥</span>
       <div class="link-body">
         <div class="link-title">Home Assistant CZ – Facebook skupina</div>
         <span class="link-url">https://www.facebook.com/groups/homeassistantcz</span>
         <span class="link-tag tag-czech">CZ komunita</span>
-        <div class="link-desc">Česká Facebook skupina s tisíci členy. Sdílení konfigurací, řešení problémů v češtině, novinky. Vstřícná komunita pro začátečníky.</div>
+        <div class="link-desc">Česká Facebook skupina. Sdílení konfigurací, řešení problémů v češtině, novinky. Komunita pro začátečníky.</div>
       </div>
     </a>
-    <a href="https://forum.smarthome.cz" target="_blank" class="link-card">
+    <a href="https://forum.smarthome.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">💡</span>
       <div class="link-body">
         <div class="link-title">Smarthome.cz fórum</div>
@@ -402,16 +447,16 @@
 <section class="sec">
   <h2 id="cz-obchody">České obchody</h2>
   <div class="link-grid">
-    <a href="https://www.alza.cz/raspberry-pi/18859158.htm" target="_blank" class="link-card">
+    <a href="https://www.alza.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🛒</span>
       <div class="link-body">
         <div class="link-title">Alza.cz</div>
-        <span class="link-url">alza.cz/raspberry-pi</span>
+        <span class="link-url">alza.cz</span>
         <span class="link-tag tag-shop">Obchod</span>
-        <div class="link-desc">RPi kity, napájení, IKEA Tradfri, Philips Hue. Rychlé doručení.</div>
+        <div class="link-desc">Elektronika, příslušenství a smarthome zařízení. Rychlé doručení.</div>
       </div>
     </a>
-    <a href="https://rpishop.cz" target="_blank" class="link-card">
+    <a href="https://rpishop.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🍓</span>
       <div class="link-body">
         <div class="link-title">RPishop.cz</div>
@@ -420,7 +465,7 @@
         <div class="link-desc">Specializovaný RPi obchod. Originální napájecí zdroje, pouzdra, příslušenství.</div>
       </div>
     </a>
-    <a href="https://botland.cz" target="_blank" class="link-card">
+    <a href="https://botland.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🤖</span>
       <div class="link-body">
         <div class="link-title">Botland.cz</div>
@@ -429,7 +474,7 @@
         <div class="link-desc">RPi, elektronika, kabely, pouzdra. Polský obchod s CZ pobočkou.</div>
       </div>
     </a>
-    <a href="https://dratek.cz" target="_blank" class="link-card">
+    <a href="https://dratek.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">⚡</span>
       <div class="link-body">
         <div class="link-title">Dratek.cz</div>
@@ -438,7 +483,7 @@
         <div class="link-desc">Elektronika, moduly, Zigbee koordinátory (SLZB-07). Dobrý výběr.</div>
       </div>
     </a>
-    <a href="https://www.mironet.cz" target="_blank" class="link-card">
+    <a href="https://www.mironet.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">💻</span>
       <div class="link-body">
         <div class="link-title">Mironet.cz</div>
@@ -447,7 +492,7 @@
         <div class="link-desc">Počítačové komponenty, RPi napájení, SSD disky a USB příslušenství.</div>
       </div>
     </a>
-    <a href="https://www.hw-shop.cz" target="_blank" class="link-card">
+    <a href="https://www.hw-shop.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🔧</span>
       <div class="link-body">
         <div class="link-title">HW-shop.cz</div>
@@ -456,7 +501,7 @@
         <div class="link-desc">Hardware, elektronika, mikroelektronika. Dobrý pro kabely a konektory.</div>
       </div>
     </a>
-    <a href="https://www.smartmania.cz" target="_blank" class="link-card">
+    <a href="https://www.smartmania.cz" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">🏠</span>
       <div class="link-body">
         <div class="link-title">Smartmania.cz</div>
@@ -465,7 +510,7 @@
         <div class="link-desc">Specializovaný smarthome obchod. Zigbee zařízení, Aqara, senzory.</div>
       </div>
     </a>
-    <a href="https://www.aliexpress.com" target="_blank" class="link-card">
+    <a href="https://www.aliexpress.com" target="_blank" rel="noopener noreferrer" class="link-card">
       <span class="link-icon">📦</span>
       <div class="link-body">
         <div class="link-title">AliExpress</div>
@@ -477,11 +522,8 @@
   </div>
 
   <div class="callout callout-tip">
-    <div class="callout-title">💡 Konkrétní produkty – napájení</div>
-    <ul>
-      <li>Originální RPi napájecí zdroj 2.5A (Alza): <a href="https://www.alza.cz/raspberry-pi-2-5a-d4191252.htm" target="_blank">alza.cz/raspberry-pi-2-5a</a></li>
-      <li>Originální RPi napájecí zdroj 2.5A (Mironet): <a href="https://www.mironet.cz/raspberry-pi-napajeci-adapter-25a-pro-rpi-3+dp376066/" target="_blank">mironet.cz/raspberry-pi-napajeci-adapter</a></li>
-    </ul>
+    <div class="callout-title">💡 Napájení – aktuální nabídka</div>
+    <p>Hledej originální napájecí zdroj pro Raspberry Pi 3 B+ (5,1 V / 2,5 A, Micro-USB), případně kvalitní zdroj 5,1 V / 3 A. Aktuální nabídku a ceny najdeš zde: <a href="https://www.heureka.cz/?h%5Bfraze%5D=origin%C3%A1ln%C3%AD+nap%C3%A1jec%C3%AD+zdroj+Raspberry+Pi+3+B%2B+5.1V+2.5A" target="_blank" rel="noopener noreferrer">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;q=origin%C3%A1ln%C3%AD+nap%C3%A1jec%C3%AD+zdroj+Raspberry+Pi+3+B%2B+5.1V+2.5A" target="_blank" rel="noopener noreferrer">Google</a>. Podrobnosti jsou v <a href="02_raspberry_hardware.html#napajeni">sekci 2.2</a>.</p>
   </div>
 </section>
 
@@ -509,11 +551,11 @@
       <span class="creds-val">&nbsp;</span>
     </div>
     <div class="creds-row">
-      <span class="creds-key">Samba Backup uživatel</span>
+      <span class="creds-key">Samba Share uživatel</span>
       <span class="creds-val">samba_user</span>
     </div>
     <div class="creds-row">
-      <span class="creds-key">Samba Backup heslo</span>
+      <span class="creds-key">Samba Share heslo</span>
       <span class="creds-val">&nbsp;</span>
     </div>
     <div class="creds-row">
@@ -525,7 +567,7 @@
       <span class="creds-val">&nbsp;</span>
     </div>
     <div class="creds-row">
-      <span class="creds-key">Záloha šifrování heslo</span>
+      <span class="creds-key">Šifrovací klíč záloh (encryption key)</span>
       <span class="creds-val">&nbsp;</span>
     </div>
   </div>
@@ -534,15 +576,15 @@
     <div class="creds-table-title">🌐 Síťové adresy</div>
     <div class="creds-row">
       <span class="creds-key">IP adresa Home Assistant</span>
-      <span class="creds-val">192.168.1.____</span>
+      <span class="creds-val">192.168.0.11</span>
     </div>
     <div class="creds-row">
       <span class="creds-key">IP adresa Synology NAS</span>
-      <span class="creds-val">192.168.1.____</span>
+      <span class="creds-val">192.168.0.____</span>
     </div>
     <div class="creds-row">
       <span class="creds-key">IP adresa routeru</span>
-      <span class="creds-val">192.168.1.____</span>
+      <span class="creds-val">192.168.0.1</span>
     </div>
     <div class="creds-row">
       <span class="creds-key">Zigbee kanál</span>
@@ -559,22 +601,22 @@
   </div>
 
   <div class="callout callout-info">
-    <div class="callout-title">ℹ️ 2FA záložní kódy</div>
-    <p>Záložní kódy pro dvoufaktorovou autentizaci HA účtu – ulož fyzicky (vytiskni) NEBO do Bitwarden password manageru. Bez záložních kódů se při ztrátě telefonu nedostaneš do HA.</p>
+    <div class="callout-title">ℹ️ 2FA – kde máš kód</div>
+    <p>Home Assistant záložní kódy k dvoufaktorovému ověření nevydává (viz <a href="11_raspberry_bezpecnost.html#dvfa">sekce 11.3</a>). Zapiš si, ve kterých dvou zařízeních nebo aplikacích máš kód (QR) uložený, a případně také přihlašovací údaje druhého účtu správce. Bez toho by ses při ztrátě telefonu do HA dostal jen ruční úpravou systému.</p>
   </div>
 </section>
 
 <!-- DOKONCENI -->
 <div class="finish-banner">
   <h2>🎉 Instalace dokončena!</h2>
-  <p>Pokud jsi prošel všemi kapitolami, máš plně funkční chytrou domácnost postavenou na Raspberry Pi 3 B+ s Home Assistant OS, Zigbee2MQTT a trojvrstvým zálohovacím systémem. Gratulace!</p>
+  <p>Pokud jsi prošel všemi kapitolami, máš funkční chytrou domácnost postavenou na Raspberry Pi 3 B+ s Home Assistant OS, Zigbee2MQTT a zálohováním podle zvolených variant. Gratulace!</p>
   <p>Pokud narazíš na problém, komunita HA je přátelská a ochotná pomoci.</p>
-  <a href="https://community.home-assistant.io" target="_blank" class="finish-btn">Přejít na HA komunitu →</a>
+  <a href="https://community.home-assistant.io" target="_blank" rel="noopener noreferrer" class="finish-btn">Přejít na HA komunitu →</a>
 </div>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Duben 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
 </footer>
 
 </div>
