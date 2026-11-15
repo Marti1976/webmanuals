@@ -236,12 +236,7 @@
       <li>Podezřelý chipset (např. JMS578) – přidej UAS quirks do <code>cmdline.txt</code> (viz <a href="02_raspberry_hardware.html#ssd-pouzdro">sekce 2.3</a>)</li>
       <li>Zkontroluj napájení – SSD spotřebovává proud, viz <a href="02_raspberry_hardware.html#napajeni">sekce 2.2</a></li>
     </ul>
-    <h4>Jak přidat UAS quirks:</h4>
-    <pre><code># 1) Zjisti VendorID:ProductID pouzdra (Správce zařízení ve Windows, viz sekce 2.3)
-# 2) Vypni RPi, připoj SSD k PC s Windows a na bootovacím oddílu otevři cmdline.txt
-# 3) Přidej na KONEC jednoho řádku (za mezeru, NOVÝ ŘÁDEK NEVYTVÁŘEJ!):
-usb-storage.quirks=XXXX:YYYY:u
-# 4) Ulož, bezpečně odpoj disk a zapoj ho do RPi</code></pre>
+    <p>Postup přidání quirks (zjištění VendorID:ProductID a úprava <code>cmdline.txt</code> z Windows) je v <a href="02_raspberry_hardware.html#ssd-pouzdro">sekci 2.3</a>.</p>
   </div>
 </section>
 
@@ -272,7 +267,7 @@ usb-storage.quirks=XXXX:YYYY:u
   </ol>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Co se stane</div>
-    <p>Soubor <code>auth_module.totp</code> obsahuje 2FA <strong>všech uživatelů</strong>, takže se 2FA vypne všem a každý si ho musí zapnout znovu. Postup vychází z komunitních návodů, <strong>nutné prověřit na tvém RPi</strong>. Pokud jsi ztratil i heslo, existuje příkaz <code>ha auth reset</code> pro obnovu hesla (nutné prověřit).</p>
+    <p>Soubor <code>auth_module.totp</code> obsahuje 2FA <strong>všech uživatelů</strong>, takže se 2FA vypne všem a každý si ho musí zapnout znovu. Postup vychází z komunitních návodů, <strong>nutné prověřit na tvém RPi</strong>. Pokud jsi ztratil i heslo, obnovíš ho příkazem <code>ha auth reset --username TVOJE_JMENO --password NOVE_HESLO</code> (příkaz existuje v Home Assistant CLI, mění heslo, ne 2FA).</p>
   </div>
 </section>
 
@@ -299,14 +294,14 @@ top
 ha core logs
 
 # Zobrazí logy konkrétní aplikace (např. Z2M)
-ha addons logs a0d7b954_zigbee2mqtt
+ha apps logs a0d7b954_zigbee2mqtt
 
 # Ping test (ověření sítě)
 ping -c 4 8.8.8.8</code></pre>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Přihlášení přes SSH</div>
     <p>Aplikace Terminal &amp; SSH: Nastavení → Doplňky/Aplikace → „Terminal &amp; SSH“. Po instalaci a spuštění se připoj přes příkazový řádek: <code>ssh root@192.168.0.11</code> (port 22). Samostatný přístup k hostiteli HAOS (port 22222) je popsán v <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#ssh-terminal">sekci 6.7</a>.</p>
-    <p>Příkaz <code>ha addons …</code> se po přejmenování na „aplikace“ může jmenovat také <code>ha apps …</code>. Nutné prověřit na tvém HA.</p>
+    <p>Příkaz se po přejmenování na „aplikace“ jmenuje <code>ha apps …</code>, starý název <code>ha addons …</code> funguje jako zkratka (alias). Přesný název aplikace (slug) zjistíš příkazem <code>ha apps</code>.</p>
   </div>
 </section>
 
@@ -339,7 +334,7 @@ ping -c 4 8.8.8.8</code></pre>
     <div class="callout-title">💡 Jak správně položit otázku – ušetříš čas sobě i ostatním</div>
     <p>Při žádosti o pomoc vždy uveď:</p>
     <ul>
-      <li><strong>Verzi HA:</strong> Nastavení → Systém → O systému (např. 2026.10.1)</li>
+      <li><strong>Verzi HA:</strong> Nastavení → O aplikaci (Settings → About), např. 2026.10.1</li>
       <li><strong>Verzi aplikace Z2M</strong>, pokud je problém se Zigbee</li>
       <li><strong>Přesnou chybovou zprávu</strong> z logu (záložka Log aplikace nebo Nastavení → Systém → Logy)</li>
       <li><strong>Co jsi dělal</strong> těsně před tím, než problém nastal</li>
@@ -351,7 +346,7 @@ ping -c 4 8.8.8.8</code></pre>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Listopad 2026
 </footer>
 
 </div>

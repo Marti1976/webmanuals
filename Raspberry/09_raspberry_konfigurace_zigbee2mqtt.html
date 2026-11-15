@@ -46,7 +46,7 @@
   </ul>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Kdy se onboarding spustí</div>
-    <p>Onboarding se zobrazí jen tehdy, když ještě neexistuje soubor <code>configuration.yaml</code>. Pokud se aplikaci po odeslání nepodaří spustit (např. kvůli špatné cestě k adaptéru), onboarding se při dalším startu spustí znovu.</p>
+    <p>Onboarding se zobrazí jen tehdy, když ještě neexistuje soubor <code>configuration.yaml</code>. Pokud se aplikaci po odeslání nepodaří spustit (např. kvůli špatné cestě k adaptéru), onboarding se při dalším startu spustí znovu. Onboarding lze spustit znovu i přepínačem v konfiguraci aplikace (zobrazí se po zaškrtnutí „Show unused optional configuration options“). Po dokončení ho zase vypni.</p>
   </div>
 
   <h3>Varianta A: onboarding</h3>
@@ -144,8 +144,8 @@ advanced:
     <div class="callout-title">🔴 Nejčastější chyby v konfiguraci</div>
     <ul>
       <li><strong>Špatný adaptér:</strong> <code>ember</code> pro čipy Silicon Labs (EFR32), <code>zstack</code> pro Texas Instruments (CC26xx), <code>deconz</code> pro ConBee. Starší názvy <code>ezsp</code> a <code>znp</code> už neplatí.</li>
-      <li><strong>Špatná adresa portu:</strong> zkopíruj přesně z Kapitoly 08, nevypisuj ručně</li>
-      <li><strong>Špatné MQTT heslo:</strong> musí odpovídat heslu uživatele z Kapitoly 07</li>
+      <li><strong>Špatná adresa portu:</strong> zkopíruj přesně z <a href="08_raspberry_instalace_zigbee2mqtt.html">Kapitoly 08</a>, nevypisuj ručně</li>
+      <li><strong>Špatné MQTT heslo:</strong> musí odpovídat heslu uživatele z <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html">Kapitoly 07</a></li>
       <li><strong>Odsazení v YAML:</strong> používej pouze 2 mezery, nikdy tabulátor</li>
       <li><strong>Nastavení z karty aplikace má přednost</strong> před souborem <code>configuration.yaml</code>. Chceš-li něco řídit v souboru, nenastavuj to v kartě.</li>
     </ul>
@@ -395,7 +395,7 @@ advanced:
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Listopad 2026
 </footer>
 
 </div>

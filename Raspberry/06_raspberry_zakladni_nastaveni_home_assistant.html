@@ -90,7 +90,7 @@
   </div>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Strategie aktualizací do budoucna</div>
-    <p>Aktualizace sleduj přibližně 1× týdně. U major verzí (např. 2026.1.0) počkej vždy aspoň týden – komunita HA rychle reportuje chyby a patch 2026.1.1 přichází za pár dní. <strong>Vždy před aktualizací proveď zálohu.</strong> Home Assistant ti ji při aktualizaci nabídne, nabídku přijmi (viz <a href="#auto-zalohy">sekce 6.4</a>).</p>
+    <p>Zásady, kdy aktualizovat (major a patch verze, poznámky k vydání), jsou v <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#aktualizace">sekci 13.2</a>. <strong>Vždy před aktualizací měj zálohu.</strong> Home Assistant ti ji při aktualizaci nabídne, nabídku přijmi (viz <a href="#auto-zalohy">sekce 6.4</a>).</p>
   </div>
 </section>
 
@@ -194,7 +194,7 @@ password: "tvoje_silne_heslo"</pre>
           <pre>\\homeassistant.local</pre>
           <p>nebo pokud hostname nefunguje:</p>
           <pre>\\192.168.0.11</pre>
-          <p>Přihlaš se jménem a heslem z kroku výše. Uvidíš sdílené složky: <code>backup</code>, <code>config</code>, <code>addons</code>, <code>media</code> a další.</p>
+          <p>Přihlaš se jménem a heslem z kroku výše. Uvidíš sdílené složky: <code>backup</code>, <code>config</code>, <code>media</code>, <code>share</code>, <code>ssl</code> a další. Složky aplikací se jmenují <code>local_apps</code> a <code>app_configs</code> (dříve <code>addons</code> a <code>addon_configs</code>).</p>
           <p>Pro trvalý přístup: pravé tlačítko na <strong>Tento počítač</strong> → <strong>Připojit síťový disk</strong> → zadej cestu <code>\\homeassistant.local\config</code>.</p>
         </div>
       </div>
@@ -217,10 +217,11 @@ password: "tvoje_silne_heslo"</pre>
           <p><strong>Varianta A – heslo (jednodušší):</strong></p>
           <pre><code>authorized_keys: []
 password: "tvoje_silne_ssh_heslo"</code></pre>
-          <p><strong>Varianta B – klíč (bezpečnější, doporučeno):</strong> na Windows v PowerShellu vytvoř klíč <code>ssh-keygen -t ed25519 -C "homeassistant"</code> a obsah veřejného klíče (soubor <code>.pub</code>) vlož do <code>authorized_keys</code>:</p>
+          <p><strong>Varianta B – klíč (bezpečnější, doporučeno):</strong> na Windows v PowerShellu vytvoř klíč <code>ssh-keygen -t ecdsa -b 521 -C "homeassistant"</code> (podle dokumentace aplikace zvol typ ECDSA, RSA už není podporované) a obsah veřejného klíče (soubor <code>.pub</code>) vlož do <code>authorized_keys</code>:</p>
           <pre><code>authorized_keys:
-  - "ssh-ed25519 AAAA... homeassistant"
+  - "ecdsa-sha2-nistp521 AAAA... homeassistant"
 password: ""</code></pre>
+          <p>Přihlášení heslem a klíčem nejde používat současně: zapnutím hesla se přihlášení klíčem vypne.</p>
           <p>Klikni <strong>Uložit</strong> → záložka Informace → <strong>Show in sidebar = ON</strong>, <strong>Start on boot = ON</strong>. Pro přístup z Windows zadej v části <strong>Síť (Network)</strong> port <code>22</code> a klikni <strong>SPUSTIT</strong>.</p>
         </div>
       </div>
@@ -270,27 +271,27 @@ smtp_password: "tvoje_heslo_k_emailu"</code></pre>
   <div class="addon-grid">
     <div class="addon-card required">
       <div class="addon-card-name">Mosquitto Broker</div>
-      <div class="addon-card-type">📦 Povinné · oficiální · Kapitola 07</div>
+      <div class="addon-card-type">📦 Povinné · oficiální · <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html">Kapitola 07</a></div>
       <p>MQTT komunikační broker. Základ pro Zigbee2MQTT i další integrace.</p>
     </div>
     <div class="addon-card required">
       <div class="addon-card-name">Zigbee2MQTT</div>
-      <div class="addon-card-type">📦 Povinné · komunitní · Kapitola 08–09</div>
+      <div class="addon-card-type">📦 Povinné · komunitní · <a href="08_raspberry_instalace_zigbee2mqtt.html">Kapitola 08–09</a></div>
       <p>Most (bridge) mezi Zigbee koordinátorem a MQTT. Srdce celé Zigbee sítě.</p>
     </div>
     <div class="addon-card">
       <div class="addon-card-name">Samba Backup</div>
-      <div class="addon-card-type">💾 Zálohy · komunitní · volitelné · Kapitola 12</div>
+      <div class="addon-card-type">💾 Zálohy · komunitní · volitelné · <a href="12_raspberry_zalohovani.html">Kapitola 12</a></div>
       <p>Automatické kopírování záloh na Synology NAS přes SMB.</p>
     </div>
     <div class="addon-card">
       <div class="addon-card-name">Google Drive Backup</div>
-      <div class="addon-card-type">☁️ Zálohy · komunitní · volitelné · Kapitola 12</div>
+      <div class="addon-card-type">☁️ Zálohy · komunitní · volitelné · <a href="12_raspberry_zalohovani.html">Kapitola 12</a></div>
       <p>Automatické nahrávání záloh na Google Drive.</p>
     </div>
     <div class="addon-card">
       <div class="addon-card-name">Tailscale</div>
-      <div class="addon-card-type">🔒 Bezpečnost · komunitní · Kapitola 11</div>
+      <div class="addon-card-type">🔒 Bezpečnost · komunitní · <a href="11_raspberry_bezpecnost.html">Kapitola 11</a></div>
       <p>VPN pro bezpečný vzdálený přístup. Zdarma, bez otevírání portů.</p>
     </div>
     <div class="addon-card">
@@ -341,7 +342,7 @@ smtp_password: "tvoje_heslo_k_emailu"</code></pre>
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Listopad 2026
 </footer>
 
 </div>

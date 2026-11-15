@@ -38,10 +38,10 @@
   <h2 id="predpoklady">Předpoklady</h2>
   <p>Před pokračováním ověř:</p>
   <ul>
-    <li>✅ <strong>Mosquitto Broker</strong> je nainstalován a běží (Kapitola 07)</li>
+    <li>✅ <strong>Mosquitto Broker</strong> je nainstalován a běží (<a href="07_raspberry_instalace_mqtt_broker_mosquitto.html">Kapitola 07</a>)</li>
     <li>✅ <strong>MQTT integrace</strong> je přidána v HA (Nastavení → Zařízení a služby)</li>
     <li>✅ <strong>USB Zigbee koordinátor</strong> je fyzicky zapojen do RPi</li>
-    <li>✅ Máš po ruce <strong>MQTT uživatele a heslo</strong> z Kapitoly 07</li>
+    <li>✅ Máš po ruce <strong>MQTT uživatele a heslo</strong> z <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html">Kapitoly 07</a></li>
   </ul>
   <div class="callout callout-danger">
     <div class="callout-title">🔴 Nepřeskakuj Mosquitto!</div>
@@ -67,7 +67,7 @@
       <div class="step-body">
         <div class="step-title">Varianta A – v rozhraní Home Assistant</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Hardware → Veškerý hardware (Settings → System → Hardware → All hardware)</strong>. Hledej záznam s názvem USB-UART převodníku (USB-to-UART bridge). Podle modelu to bývá:</p>
+          <p>Jdi do <strong>Nastavení → Systém → Hardware → ⋮ → Veškerý hardware (Settings → System → Hardware → ⋮ → All hardware, v novějších verzích System hardware)</strong>. Hledej záznam s názvem USB-UART převodníku (USB-to-UART bridge). Podle modelu to bývá:</p>
           <ul>
             <li><code>CP210x</code> nebo <code>CP2102N</code> – SLZB-07, Sonoff ZBDongle-P</li>
             <li><code>CH9102</code> nebo <code>CH340</code> – Sonoff ZBDongle-E</li>
@@ -83,7 +83,7 @@
         <div class="step-desc">
           <p>V aplikaci Terminal &amp; SSH (viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#ssh-terminal">sekce 6.7</a>) spusť:</p>
           <pre><code>ha hardware info</code></pre>
-          <p><strong>Nutné prověřit:</strong> tento příkaz je převzatý z dokumentace aplikace Zigbee2MQTT. Na tvém RPi ho po instalaci vyzkoušej, výstup se může lišit podle verze Home Assistantu.</p>
+          <p>Příkaz patří do Home Assistant CLI, které je součástí aplikace Terminal &amp; SSH (podle dokumentace aplikace), a uvádí ho i dokumentace Zigbee2MQTT. <strong>Nutné prověřit:</strong> po instalaci ho vyzkoušej, výstup se může lišit podle verze Home Assistantu.</p>
           <p>Ve výpisu musíš vidět alespoň jedno sériové zařízení (např. <code>/dev/ttyUSB0</code> nebo <code>/dev/ttyACM0</code>). Pokud je seznam prázdný:</p>
           <ul>
             <li>Zkontroluj fyzické zapojení donglu</li>
@@ -208,7 +208,7 @@
       <div class="step-body">
         <div class="step-title">Zjisti adresu v Home Assistant nebo v terminálu</div>
         <div class="step-desc">
-          <p><strong>V rozhraní:</strong> Nastavení → Systém → Hardware → Veškerý hardware (Settings → System → Hardware → All hardware). Najdi záznam svého donglu (viz sekce 8.2). Vedle něj je adresa ve tvaru <code>/dev/serial/by-id/...</code>.</p>
+          <p><strong>V rozhraní:</strong> Nastavení → Systém → Hardware → ⋮ → Veškerý hardware (Settings → System → Hardware → ⋮ → All hardware, v novějších verzích System hardware). Najdi záznam svého donglu (viz sekce 8.2). Vedle něj je adresa ve tvaru <code>/dev/serial/by-id/...</code>.</p>
           <p><strong>V terminálu</strong> (Terminal &amp; SSH): spusť <code>ha hardware info</code> a v seznamu najdi cestu <code>/dev/serial/by-id/...</code> svého donglu.</p>
         </div>
       </div>
@@ -241,7 +241,7 @@
     <li>✅ Start on boot, Watchdog a Show in sidebar zapnuty</li>
     <li>✅ Ověřena detekce USB donglu v Hardware sekci</li>
     <li>✅ Víš, jak adresu koordinátoru zadat (onboarding, ručně, nebo síťově)</li>
-    <li>✅ Máš MQTT uživatele a heslo z Kapitoly 07</li>
+    <li>✅ Máš MQTT uživatele a heslo z <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html">Kapitoly 07</a></li>
   </ul>
 
   <p>Pokračuj na <a href="09_raspberry_konfigurace_zigbee2mqtt.html">Kapitolu 09 – Konfigurace Zigbee2MQTT</a>, kde propojíme Z2M s MQTT brokerem, nastavíme adaptér a spustíme celý systém.</p>
@@ -249,7 +249,7 @@
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Listopad 2026
 </footer>
 
 </div>

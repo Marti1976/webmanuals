@@ -233,8 +233,8 @@
         <div class="step-title">Nainstaluj aplikaci Tailscale v HA</div>
         <div class="step-desc">
           <p>Jdi do <strong>Nastavení → Doplňky/Aplikace → Obchod (Settings → Add-ons/Apps → Add-on store)</strong>. Hledej <strong>„Tailscale“</strong> (komunitní aplikace). Nainstaluj a spusť ji.</p>
-          <p>V záložce <strong>PROTOKOL</strong> najdeš autorizační URL – zkopíruj ji a otevři v prohlížeči. Přihlas se účtem Tailscale a autorizuj zařízení.</p>
-          <p>Výchozí konfiguraci nech beze změny. Volbu <code>tags</code> nepoužívej, pokud nevíš proč: označená zařízení se v Tailscale počítají jako „tagged resources“ (v plánu Personal jich je 50) a vyžadují nastavit vlastnictví značek v pravidlech sítě.</p>
+          <p>Klikni na <strong>Otevřít webové rozhraní (OPEN WEB UI)</strong> a dokonči přihlášení do Tailscale (podle dokumentace aplikace je nejspolehlivější počítač s prohlížečem). Přihlas se účtem Tailscale a autorizuj zařízení.</p>
+          <p>Výchozí konfiguraci nech beze změny. Volbu <code>advertise_tags</code> nepoužívej, pokud nevíš proč: označená zařízení se v Tailscale počítají jako „tagged resources“ (v plánu Personal jich je 50) a vyžadují nastavit vlastnictví značek v pravidlech sítě. U RPi zvaž v administraci Tailscale vypnutí vypršení klíče (key expiry), jinak by se po čase přestalo připojovat.</p>
         </div>
       </div>
     </div>
@@ -441,7 +441,7 @@ actions:
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Listopad 2026
 </footer>
 
 </div>

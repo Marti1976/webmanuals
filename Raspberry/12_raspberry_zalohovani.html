@@ -105,7 +105,7 @@
   </ul>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Šifrovací klíč</div>
-    <p>Zálohy šifruje Home Assistant (AES-128) <strong>šifrovacím klíčem</strong>, který vytvoří při nastavení záloh. Bez klíče zálohu nelze obnovit, ani když získáš soubor. Stáhni si <strong>nouzovou sadu (emergency kit)</strong> a ulož klíč do správce hesel i do šablony v Kapitole 15. Při stažení zálohy z HA se automaticky dešifruje.</p>
+    <p>Zálohy šifruje Home Assistant (AES-128) <strong>šifrovacím klíčem</strong>, který vytvoří při nastavení záloh. Bez klíče zálohu nelze obnovit, ani když získáš soubor. Stáhni si <strong>nouzovou sadu (emergency kit)</strong> a ulož klíč do správce hesel i do šablony v <a href="15_raspberry_uzitecne_odkazy.html">Kapitole 15</a>. Při stažení zálohy z HA se automaticky dešifruje.</p>
   </div>
 </section>
 
@@ -119,13 +119,7 @@
       <div class="step-body">
         <div class="step-title">Nastav plán záloh</div>
         <div class="step-desc">
-          <p>Jdi do <strong>Nastavení → Systém → Zálohy (Settings → System → Backups)</strong> a klikni <strong>Nastavit zálohy (Set up backups)</strong>. Zvol doporučené nastavení, nebo ručně <strong>Nastavit automatické zálohování</strong> a v části <strong>Automatický plán zálohování a uchovávání</strong> nastav:</p>
-          <ul>
-            <li>Frekvence: <strong>denně</strong></li>
-            <li>Čas: <strong>03:00</strong> (noční klid)</li>
-            <li>Uchovávat posledních: <strong>5–7 záloh</strong></li>
-            <li>Záloha před aktualizací: <strong>zapnuto</strong></li>
-          </ul>
+          <p>Postup nastavení plánu (varianta A doporučené nastavení, varianta B ruční) je v <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#auto-zalohy">sekci 6.4</a>. Doporučené hodnoty: denně, 03:00, uchovávat 5–7 záloh a záloha před aktualizací zapnutá.</p>
         </div>
       </div>
     </div>
@@ -196,6 +190,10 @@
 
   <h3>Varianta C: komunitní aplikace Samba Backup</h3>
   <p>Aplikace zkopíruje zálohy HA na NAS podle vlastního plánu. Zabírá ale paměť navíc, takže na RPi 3 B+ je přednější varianta A.</p>
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Neudržovaná aplikace</div>
+    <p>Repozitář aplikace Samba Backup byl naposledy aktualizován v dubnu 2023 (podle GitHubu). Může stále fungovat, ale doporučuji variantu A nebo B, které jsou součástí Home Assistantu.</p>
+  </div>
   <ol>
     <li>Přidej repozitář: <strong>Nastavení → Doplňky/Aplikace → Obchod → ⋮ → Repozitáře</strong>, vlož <code>https://github.com/thomasmauerer/hassio-addons</code> a nainstaluj <strong>„Samba Backup“</strong>.</li>
     <li>Na záložce <strong>KONFIGURACE</strong> nastav:
@@ -239,7 +237,7 @@ trigger_days:
   </ol>
 
   <h3>Varianta B: komunitní aplikace Google Drive Backup (jednodušší přihlášení)</h3>
-  <p>Aplikace sama vytváří zálohy podle vlastního plánu a nahrává je na Google Drive. Autorizace je jednodušší, ale aplikace zabírá paměť navíc.</p>
+  <p>Aplikace sama vytváří zálohy podle vlastního plánu a nahrává je na Google Drive. Autorizace je jednodušší, ale aplikace zabírá paměť navíc. Repozitář byl naposledy aktualizován v lednu 2025 (podle GitHubu), proto je vhodnější varianta A, pokud ti nevadí složitější nastavení.</p>
   <ol>
     <li>Přidej repozitář <code>https://github.com/sabeechen/hassio-google-drive-backup</code> (Obchod → ⋮ → Repozitáře) a nainstaluj <strong>„Home Assistant Google Drive Backup“</strong>. Spusť aplikaci.</li>
     <li>Klikni <strong>Otevřít webové rozhraní (OPEN WEB UI)</strong>, vyber <strong>„Authenticate with Google Drive“</strong>, přihlaš se ke Google účtu, povol přístup a potvrď <strong>„Send Credentials“</strong>.</li>
@@ -283,7 +281,7 @@ trigger_days:
   <div class="restore-box">
     <div class="restore-box-title">Scénář: SSD selhal nebo je HAOS v nefunkčním stavu</div>
     <ol>
-      <li>Nahraj nový HAOS image na SSD přes Raspberry Pi Imager (viz Kapitola 04)</li>
+      <li>Nahraj nový HAOS image na SSD přes Raspberry Pi Imager (viz <a href="04_raspberry_priprava_usb_msata_ssd_windows.html">Kapitola 04</a>)</li>
       <li>Spusť RPi a počkej na první boot, <strong>ale neprocházej průvodcem nastavením</strong></li>
       <li>Otevři <code>http://192.168.0.11</code> (nebo <code>http://homeassistant.local</code>; u starších instalací s <code>:8123</code>) → na uvítací obrazovce klikni <strong>Obnovit ze zálohy (Restore from backup)</strong>, v novějších verzích <strong>Nahrát zálohu (Upload backup)</strong></li>
       <li>Nahraj <code>.tar</code> zálohu z PC (stažené z NAS nebo z cloudu)</li>
@@ -319,7 +317,7 @@ trigger_days:
 
 <div id="pn"></div>
 <footer>
-  Raspberry Pi Průvodce &nbsp;·&nbsp; Říjen 2026
+  Raspberry Pi Průvodce &nbsp;·&nbsp; Listopad 2026
 </footer>
 
 </div>
