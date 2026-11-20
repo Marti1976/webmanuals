@@ -177,14 +177,22 @@ body.menu-open {
 }
 
 /* MAIN CONTENT */
+/* Celý web o něco větší – všechny velikosti v rem se zvětší úměrně */
+html {
+  font-size: 112.5%;
+}
+
+/* Obsah vycentrovaný v prostoru vpravo od sidebaru */
 .container {
   min-height: 100vh;
+  flex: 1;
+  min-width: 0;
+  padding-left: var(--sidebar-width);
 }
 
 .main-content {
-  margin-left: var(--sidebar-width);
-  flex: 1;
-  max-width: 880px;
+  max-width: 1100px;
+  margin: 0 auto;
   padding: 56px 64px;
 }
 
@@ -728,6 +736,10 @@ body.sb-resizing {
   .sidebar-backdrop.visible {
     opacity: 1;
     pointer-events: auto;
+  }
+
+  .container {
+    padding-left: 0;
   }
 
   .main-content {
