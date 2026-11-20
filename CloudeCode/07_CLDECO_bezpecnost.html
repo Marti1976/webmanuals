@@ -38,18 +38,18 @@
 
 <h2 id="rizika">Rizika a hrozby — co se může pokazit</h2>
 
-<p>Claude Code není nebezpečný nástroj, ale má reálný vliv na váš systém. Než pochopíte rizika, těžko je budete řešit. Zde jsou nejčastější problémy, ke kterým dochází:</p>
+<p>Claude Code není nebezpečný nástroj, ale má reálný vliv na váš systém. Dokud nepochopíte rizika, těžko je budete řešit. Zde jsou nejčastější problémy, ke kterým dochází:</p>
 
-<h3>1. Neúmyslné smazání nebo přepsání souborů</h3>
+<h3 id="neumyslne-smazani-nebo-prepsani-souboru">1. Neúmyslné smazání nebo přepsání souborů</h3>
 <p>Agent při refaktoringu "vyčistí" soubory, které považuje za zastaralé — ale vy jste je stále potřebovali. Nebo přepíše konfiguraci produkčního serveru, protože jste spustili Claude Code ve špatném adresáři.</p>
 
-<h3>2. Odhalení citlivých dat v kontextu</h3>
+<h3 id="odhaleni-citlivych-dat-v-kontextu">2. Odhalení citlivých dat v kontextu</h3>
 <p>Claude Code čte soubory v projektu — včetně <code>.env</code> souborů s hesly, AWS klíčů v konfiguracích nebo databázových connection stringů. Tyto hodnoty se pak nacházejí v kontextovém okně a mohou být zahrnuty do promptů odesílaných Anthropic API.</p>
 
-<h3>3. Nežádoucí Git operace</h3>
+<h3 id="nezadouci-git-operace">3. Nežádoucí Git operace</h3>
 <p>Agenti mohou pushovat přímo do main větve, mazat větve nebo vytvářet commity s citlivými daty (pokud je náhodou zahrnete do kontextu).</p>
 
-<h3>4. Eskalace oprávnění přes shellové příkazy</h3>
+<h3 id="eskalace-opravneni-pres-shellove-prikazy">4. Eskalace oprávnění přes shellové příkazy</h3>
 <p>Pokud povolíte volné spouštění bash příkazů, může Claude (v teorii, zejména při prompt injection útocích přes načtená data) provést operace, které jste nezamýšleli. Toto riziko je nízké při normálním použití, ale při práci s nedůvěryhodným kódem nebo daty roste.</p>
 
 <div class="callout rd">
@@ -61,7 +61,7 @@
 
 <p>Systém oprávnění v Claude Code funguje na principu <strong>allowlist a denylist</strong>. Vše, co není explicitně povoleno, Claude Code před provedením potvrdí s uživatelem. Denylist blokuje příkazy úplně — Claude nemůže ani navrhnout jejich použití.</p>
 
-<h3>Doporučená základní konfigurace</h3>
+<h3 id="doporucena-zakladni-konfigurace">Doporučená základní konfigurace</h3>
 <div class="cb"><div class="cb-label">.claude/settings.json — bezpečná konfigurace</div><pre>
 {
   "permissions": {
@@ -93,19 +93,19 @@
 }
 </pre></div>
 
-<h3>Jak fungují wildcards v deny pravidlech</h3>
+<h3 id="jak-funguji-wildcards-v-deny-pravidlech">Jak fungují wildcards v deny pravidlech</h3>
 <p>Hvězdička <code>*</code> na konci pravidla matchuje cokoli za ní. <code>Bash(git push --force*)</code> zablokuje jak <code>git push --force</code> tak <code>git push --force-with-lease origin main</code>. Pravidla jsou porovnávána s celým příkazem, ne jen začátkem.</p>
 
 <div class="callout">
   <div class="callout-title">Zlaté pravidlo</div>
-  <p>Deny list je vaše pojistka. Do allowlistu patří jen příkazy, které jsou <strong>bezpečně reverzibilní</strong> nebo <strong>pouze čtou data</strong>. Vše, co mění produkční data nebo repo bez možnosti vrácení, patří do denylists.</p>
+  <p>Deny list je vaše pojistka. Do allowlistu patří jen příkazy, které jsou <strong>bezpečně reverzibilní</strong> nebo <strong>pouze čtou data</strong>. Vše, co mění produkční data nebo repo bez možnosti vrácení, patří do denylistu.</p>
 </div>
 
 <h2 id="secrets">Ochrana citlivých dat a API klíčů</h2>
 
 <p>Claude Code čte soubory v pracovním adresáři. Pokud váš projekt obsahuje <code>.env</code> soubory, konfigurační soubory s hesly nebo certifikáty, jsou tyto hodnoty součástí kontextu posílaného do API.</p>
 
-<h3>Co nikdy nemá být v kontextu Clauda</h3>
+<h3 id="co-nikdy-nema-byt-v-kontextu-clauda">Co nikdy nemá být v kontextu Clauda</h3>
 <ul class="tl">
   <li><strong>.env soubory s produkčními hodnotami</strong> — databázová hesla, API klíče třetích stran, JWT secret</li>
   <li><strong>AWS / GCP / Azure credentials</strong> — soubory <code>~/.aws/credentials</code> nebo service account JSON</li>
@@ -114,7 +114,7 @@
   <li><strong>Databázové dumps</strong> s reálnými uživatelskými daty (GDPR)</li>
 </ul>
 
-<h3>Praktické opatření — .claudeignore</h3>
+<h3 id="prakticke-opatreni-claudeignore">Praktické opatření — .claudeignore</h3>
 <p>Stejně jako <code>.gitignore</code> říká Gitu co ignorovat, soubor <code>.claudeignore</code> říká Claude Code co nečíst. Vytvořte ho v kořeni projektu:</p>
 <div class="cb"><div class="cb-label">.claudeignore</div><pre>
 <span class="c"># Citlivé konfigurace</span>
@@ -190,7 +190,7 @@ cat ~/.claude/logs/*.json | grep '"type":"write"' | jq '.path'
   <li><strong>Nikdy <code>--dangerously-skip-permissions</code> na produkci</strong> — Tento přepínač deaktivuje veškerá bezpečnostní potvrzení. Použitelný jen v izolovaném testovacím prostředí.</li>
   <li><strong>Separátní API klíče pro Claude Code</strong> — Pokud platíte přes API, vytvořte dedikovaný klíč s monthly budget limitem v Anthropic Console. Nekompromituje ostatní systémy.</li>
   <li><strong>Sandbox pro neznámý kód</strong> — Při práci s externím kódem (open source contributions, code review) spouštějte Claude Code ve virtuálním prostředí nebo kontejneru.</li>
-  <li><strong>Review agentních PR</strong> — Nikdy neautomaticky mergujte PR vytvořené agentem bez lidské kontroly. Agenti mohou udělat správné věci špatným způsobem.</li>
+  <li><strong>Review agentních PR</strong> — Nikdy automaticky nemergujte PR vytvořené agentem bez lidské kontroly. Agenti mohou udělat správné věci špatným způsobem.</li>
   <li><strong>Rotace API klíčů po incidentu</strong> — Pokud byl API klíč potenciálně odhalený (commit do public repo), okamžitě ho deaktivujte v Anthropic Console a vytvořte nový.</li>
 </ul>
 

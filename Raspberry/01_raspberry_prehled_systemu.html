@@ -254,7 +254,7 @@
   <h2 id="rozsireni">Budoucí rozšíření</h2>
   <p>Tento průvodce pokrývá Zigbee zařízení jako základ. Home Assistant ale umí mnohem více – jakmile bude základní systém stabilní, lze ho rozšířit o:</p>
 
-  <h3>Další bezdrátové protokoly</h3>
+  <h3 id="dalsi-bezdratove-protokoly">Další bezdrátové protokoly</h3>
   <ul>
     <li><strong>WiFi zařízení s Tasmota firmware</strong> – obyčejné levné WiFi zásuvky a spínače přeflashované open-source firmware Tasmota. Fungují lokálně bez cloudu, plná integrace do HA.</li>
     <li><strong>ESPHome</strong> – framework pro vlastní ESP8266/ESP32 senzory. Postav si vlastní teplotní senzor, detektor pohybu nebo ovládání garáže za stovky korun.</li>
@@ -262,25 +262,25 @@
     <li><strong>Bluetooth Low Energy (BLE)</strong> – pasivní sledování přítomnosti osob, teplotní senzory (Govee, Xiaomi MiFlora).</li>
   </ul>
 
-  <h3>Cloudové a lokální integrace</h3>
+  <h3 id="cloudove-a-lokalni-integrace">Cloudové a lokální integrace</h3>
   <ul>
     <li><strong>Spotify / Chromecast / Apple TV</strong> – ovládání médií přímo z HA dashboardu</li>
     <li><strong>Google Calendar / Outlook</strong> – automatizace na základě událostí v kalendáři</li>
     <li><strong>Počasí a předpovědi</strong> – OpenWeatherMap, Yr.no – pro automatizace závislé na počasí</li>
     <li><strong>IP kamery (IP cameras)</strong> – integrace kamer přes RTSP stream. Zpracování obrazu (např. Frigate NVR) je pro Raspberry Pi 3 B+ příliš náročné.</li>
-    <li><strong>Hlasové asistenty (voice assistants)</strong> – hlasové ovládání, například lokální asistent Assist v Home Assistantu. Propojení s Google Assistant nebo Alexou vyžaduje cloudovou službu a tato příručka se jím nezabývá</li>
+    <li><strong>Hlasové asistenty (voice assistants)</strong> – hlasové ovládání, například lokální asistent Assist v Home Assistantu. Propojení s Google Assistant nebo Alexou vyžaduje cloudovou službu a tato příručka se jím nezabývá.</li>
   </ul>
 
-  <h3>HACS – tisíce dalších rozšíření</h3>
+  <h3 id="hacs-tisice-dalsich-rozsireni">HACS – tisíce dalších rozšíření</h3>
   <p><strong>HACS (Home Assistant Community Store)</strong> je správce komunitních rozšíření. Po instalaci (postup na <a href="https://hacs.xyz" target="_blank" rel="noopener noreferrer">hacs.xyz</a>, viz <a href="13_raspberry_tipy_a_doporuceni_pro_provoz.html#hacs">Kapitola 13</a>) získáš přístup k:</p>
   <ul>
-    <li><strong>Integracím (integrations)</strong> – stovky zařízení a služeb které nejsou v oficiálním storu</li>
+    <li><strong>Integracím (integrations)</strong> – stovky zařízení a služeb, které nejsou v oficiálním storu</li>
     <li><strong>Kartám pro dashboard (custom cards)</strong> – Mushroom Cards, ApexCharts, Mini Graph Card a další vizualizace</li>
     <li><strong>Tématům (themes)</strong> – desítky vzhledů dashboardu</li>
   </ul>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Nejprve stabilizuj základ</div>
-    <p>HACS a pokročilé integrace instaluj až po stabilizaci základního systému z tohoto průvodce. Rozšiřování systému dříve než je stabilní základ vede k obtížnému hledání příčin problémů.</p>
+    <p>HACS a pokročilé integrace instaluj až po stabilizaci základního systému z tohoto průvodce. Rozšiřování systému dříve, než je stabilní základ vede k obtížnému hledání příčin problémů.</p>
   </div>
 </section>
 

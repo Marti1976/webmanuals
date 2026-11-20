@@ -183,7 +183,7 @@
     <p><strong>Varianta B (ruční konfigurace):</strong> nejdřív vyplň konfiguraci aplikace (adaptér, port, MQTT) a až potom ji spusť. Při chybné konfiguraci (špatný port nebo adaptér, chybné MQTT heslo) se aplikace opakovaně restartuje, což komplikuje ladění.</p>
   </div>
 
-  <h3>Webové rozhraní Zigbee2MQTT</h3>
+  <h3 id="webove-rozhrani-zigbee2mqtt">Webové rozhraní Zigbee2MQTT</h3>
   <p>Webové rozhraní otevřeš po spuštění aplikace dvěma způsoby:</p>
   <ul>
     <li>Ikonou <strong>Zigbee2MQTT</strong> v levém menu HA (pokud máš zapnuto <strong>Show in sidebar</strong>)</li>
@@ -201,7 +201,7 @@
     <li><strong>Varianta C – síťový koordinátor:</strong> místo cesty k portu zadáš adresu <code>tcp://IP:port</code> (viz příklady v <a href="03_raspberry_poznamka_k_zigbee_modulu.html#konfig-z2m">sekci 3.3</a>).</li>
   </ul>
 
-  <h3>Zjištění adresy USB donglu (varianta B)</h3>
+  <h3 id="zjisteni-adresy-usb-donglu-varianta-b">Zjištění adresy USB donglu (varianta B)</h3>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -229,7 +229,7 @@
 
   <div class="callout callout-tip">
     <div class="callout-title">💡 Vždy používej /dev/serial/by-id/...</div>
-    <p>Adresa <code>/dev/ttyUSB0</code> se může po restartu změnit, pokud máš více USB zařízení. Cesta <code>/dev/serial/by-id/...</code> obsahuje unikátní sériové číslo donglu a je vždy stejná. Zkopíruj ji přesně – i kapitálky záleží. Když nic jiného nenajdeš a máš připojený jen jeden USB dongle, zkus <code>/dev/ttyACM0</code>, <code>/dev/ttyUSB0</code> nebo <code>/dev/ttyAMA0</code>.</p>
+    <p>Adresa <code>/dev/ttyUSB0</code> se může po restartu změnit, pokud máš více USB zařízení. Cesta <code>/dev/serial/by-id/...</code> obsahuje unikátní sériové číslo donglu a je vždy stejná. Zkopíruj ji přesně – záleží i na velikosti písmen. Když nic jiného nenajdeš a máš připojený jen jeden USB dongle, zkus <code>/dev/ttyACM0</code>, <code>/dev/ttyUSB0</code> nebo <code>/dev/ttyAMA0</code>.</p>
   </div>
 </section>
 

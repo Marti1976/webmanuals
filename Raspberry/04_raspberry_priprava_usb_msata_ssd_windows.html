@@ -65,7 +65,7 @@
     <p>Starší modely (Raspberry Pi 3 B, 3 A+ a 2 B v1.2) mají USB boot z výroby vypnutý a vyžadují jednorázový zápis nastavení do procesoru (OTP). U modelu 3 B+ podle dokumentace Home Assistant OS není potřeba. Pokud tedy narazíš na návody se SD kartou a Raspberry Pi OS, týkají se starších modelů.</p>
   </div>
 
-  <h3>Na co si dát pozor</h3>
+  <h3 id="na-co-si-dat-pozor">Na co si dát pozor</h3>
   <ul>
     <li>Do slotu pro SD kartu <strong>nic nevkládej</strong>. Podle dokumentace Home Assistant OS musí být všechny bootovací SD karty vyjmuty.</li>
     <li>První start z USB může trvat výrazně déle, protože RPi nejdřív zkouší SD kartu a teprve pak USB.</li>
@@ -73,7 +73,7 @@
     <li>Některé SSD potřebují parametr „quirks“ (viz <a href="02_raspberry_hardware.html#ssd-pouzdro">sekce 2.3</a>).</li>
   </ul>
 
-  <h3>Novější modely</h3>
+  <h3 id="novejsi-modely">Novější modely</h3>
   <div class="callout callout-tip">
     <div class="callout-title">🔼 Pro Raspberry Pi 4/5</div>
     <p>U Raspberry Pi 4 aktualizuj bootloader na stabilní verzi s podporou USB bootu. Pokud nepoužíváš SD kartu, přidej do <code>config.txt</code> k <code>dtparam</code> hodnotu <code>sd_poll_once=on</code> (oddělenou čárkou). Raspberry Pi 5 je v Home Assistant OS zatím označen jako beta.</p>
@@ -175,7 +175,7 @@
     <p>V Imageru zvol zařízení Raspberry Pi 4 nebo 5 a nabídne se odpovídající obraz (<code>rpi4_64</code>, <code>rpi5_64</code>). Obraz pro jiný model nebootuje.</p>
   </div>
 
-  <h3>Varianta B: ruční stažení obrazu a zápis v balenaEtcher</h3>
+  <h3 id="varianta-b-rucni-stazeni-obrazu-a-zapis-v-balenaetcher">Varianta B: ruční stažení obrazu a zápis v balenaEtcher</h3>
   <p>Pokud nechceš použít Raspberry Pi Imager, můžeš obraz stáhnout ručně a zapsat ho jiným programem:</p>
   <ol>
     <li>Stáhni <code>haos_rpi3-64-X.Y.img.xz</code> z <a href="https://github.com/home-assistant/operating-system/releases" target="_blank" rel="noopener noreferrer">github.com/home-assistant/operating-system/releases</a>. Rozbalovat ho nemusíš.</li>
@@ -189,14 +189,14 @@
 <section class="sec">
   <h2 id="win-situace">Časté situace ve Windows</h2>
 
-  <h3>Windows chce naformátovat disk po dokončení</h3>
-  <p>Po úspěšném zápisu obrazu HAOS Windows zobrazí dialog "Je nutné naformátovat disk... před použitím". <strong>Klikni na Zrušit (Cancel)!</strong> Disk obsahuje Linux oddíly které Windows nerozezná, ale jsou správně zapsány. Neformátuj ho!</p>
+  <h3 id="windows-chce-naformatovat-disk-po-dokonceni">Windows chce naformátovat disk po dokončení</h3>
+  <p>Po úspěšném zápisu obrazu HAOS Windows zobrazí dialog "Je nutné naformátovat disk... před použitím". <strong>Klikni na Zrušit (Cancel)!</strong> Disk obsahuje Linux oddíly, které Windows nerozezná, ale jsou správně zapsány. Neformátuj ho!</p>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Proč Windows nabízí formátování?</div>
     <p>HAOS používá Linux souborové systémy (ext4, FAT32 pro boot oddíl). Windows umí číst pouze FAT32 a NTFS – ostatní oddíly mu připadají "poškozené". Je to normální. Disk je správně zapsán a RPi ho bez problémů přečte.</p>
   </div>
 
-  <h3>Imager hlásí chybu při ověřování</h3>
+  <h3 id="imager-hlasi-chybu-pri-overovani">Imager hlásí chybu při ověřování</h3>
   <p>Pokud se ověřování nezdaří, pravděpodobně:</p>
   <ul>
     <li>Problémový USB kabel nebo port – zkus jiný USB port (preferuj USB 3.0, modrý)</li>
@@ -205,7 +205,7 @@
   </ul>
   <p>Zkus znovu – Imager sám nabídne opakování.</p>
 
-  <h3>SSD se v Imageru nezobrazuje</h3>
+  <h3 id="ssd-se-v-imageru-nezobrazuje">SSD se v Imageru nezobrazuje</h3>
   <ul>
     <li>Odpoj a znovu zapoj USB kabel</li>
     <li>Zkus jiný USB port (přímo na PC, ne přes hub)</li>

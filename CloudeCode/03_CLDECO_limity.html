@@ -44,39 +44,39 @@
 <thead><tr><th>Operace</th><th>Cena</th><th>Kdy se stane?</th></tr></thead>
 <tbody>
 <tr><td><strong>Vstup (input token)</strong></td><td>Základní sazba</td><td>Každá vaše zpráva, soubory, kontext, paměť, instrukce</td></tr>
-<tr><td><strong>Výstup (output token)</strong></td><td>2× vstup</td><td>Odpověď Claudea, jakákoli generovaná délka</td></tr>
+<tr><td><strong>Výstup (output token)</strong></td><td>2–5× vstup</td><td>Odpověď Claudea, jakákoli generovaná délka</td></tr>
 <tr><td><strong>Cache reads</strong></td><td>0,1× vstup</td><td>Když přečte znovu stejný obsah ze cache</td></tr>
 <tr><td><strong>Cache writes</strong></td><td>1,25× vstup</td><td>Když poprvé vloží soubor do cache (jednou)</td></tr>
 <tr><td><strong>Paměť (Memory)</strong></td><td>0,5× vstup</td><td>Automatické shrnutí cross-session (jednou za session)</td></tr>
-<tr><td><strong>Batching</strong></td><td>0,05-0,5× vstup</td><td>Pouze v Batch API s povoleným discountem</td></tr>
+<tr><td><strong>Batching</strong></td><td>0,5× vstup</td><td>Pouze v Batch API s povoleným discountem</td></tr>
 </tbody>
 </table></div>
 
 <div class="callout">
   <div class="callout-title">Prakticky</div>
-  <p>Pokud pošleš stejný 100KB soubor 10×: Poprvé = 125 tokenů (cache write), pak 9× po 10 tokenech (cache read) = 125 + 90 = <strong>215 tokenů za vše</strong>. Bez cache = každý přečet plný cena.</p>
+  <p>Pokud pošleš stejný 100KB soubor 10×: Poprvé = 125 tokenů (cache write), pak 9× po 10 tokenech (cache read) = 125 + 90 = <strong>215 tokenů za vše</strong>. Bez cache = každé přečtení za plnou cenu.</p>
 </div>
 
 <h2 id="ctiri-opravy">Čtyři klíčové opravy pro tokeny</h2>
 
-<h3>1. Paměť (Memory) není "paní všehochuť"</h3>
+<h3 id="pamet-memory-neni-pani-vsehochut">1. Paměť (Memory) není "paní všehochuť"</h3>
 <p>Memory neuchovává konverzaci — uchovává <strong>shrnutí klíčových faktů</strong> a předává je dalším session. <strong>Cena:</strong> poprvé 1 soubor sumarizace, pak 0,5× vstup (automaticky).</p>
 <ul class="tl">
   <li><strong>Co ukládat:</strong> Styl psaní, preferované nástroje, kontakt na lidi, pravidelné projekty, osobní pravidla.</li>
-  <li><strong>Co NEUKLÁDAT:</strong> Faktů, která se mění (ceny, aktuální novinky), šetří to jen čas, ne tokeny.</li>
+  <li><strong>Co NEUKLÁDAT:</strong> Fakta, která se mění (ceny, aktuální novinky), šetří to jen čas, ne tokeny.</li>
   <li><strong>Doba: </strong> Memory se aktualizuje jednou za session, ne každou zprávu.</li>
 </ul>
 
-<h3>2. Cache — nejlevnější opakování</h3>
-<p>Vložíš-li stejný PDF 5× do jedné session, <strong>cache se aktivuje po druhém používání.</strong> Výstupní sazby klesnou na 10% ceny vstupu.</p>
+<h3 id="cache-nejlevnejsi-opakovani">2. Cache — nejlevnější opakování</h3>
+<p>Vložíš-li stejné PDF 5× do jedné session, <strong>cache se aktivuje po druhém používání.</strong> Cena opakovaně čteného vstupu klesne na 10 %.</p>
 <ul class="tl">
   <li><strong>Paměť cache: </strong> 5 minut až 1 hodina (v závislosti na účtu, předplatném).</li>
-  <li><strong>Co ji ruší:</strong> Výměna modelů, změ<strong>na úsilí, příkaz /compact, přepnutí Fast, připojení MCP.</strong></li>
+  <li><strong>Co ji ruší:</strong> Výměna modelů, změna úsilí, příkaz /compact, přepnutí Fast, připojení MCP.</li>
   <li><strong>Bez cache:</strong> Dlouhé pauzy (nad 1 hodinu) = studený start, vše se znovu čte za plnou cenu.</li>
 </ul>
 
-<h3>3. Batching — až 50% úspora na masivním provozu</h3>
-<p>Máš-li stovky zpráv, které je možné spustit bez čekání, Batch API je 10× levnější než live. Vyplatí se jen pro automatizaci nocí.</p>
+<h3 id="batching-az-50-uspora-na-masivnim-provozu">3. Batching — až 50% úspora na masivním provozu</h3>
+<p>Máš-li stovky zpráv, které je možné spustit bez čekání, Batch API je o 50 % levnější než live. Vyplatí se jen pro automatizaci nocí.</p>
 
 <div class="callout bl">
   <div class="callout-title">Příklad: Refaktoring 1000 souborů</div>
@@ -85,54 +85,54 @@
   <strong>Úspora:</strong> 250 USD a žádné limity live session</p>
 </div>
 
-<h3>4. Volba modelu — nejdůležitější rozhodnutí</h3>
+<h3 id="volba-modelu-nejdulezitejsi-rozhodnuti">4. Volba modelu — nejdůležitější rozhodnutí</h3>
 <p>Ne všechno potřebuje Opus. Výběr správného modelu = <strong>až 80% úspora</strong>.</p>
 
 <ul class="tl">
-  <li><strong>Haiku:</strong> Rutina, extracty, formatování — 80% levnější než Opus.</li>
+  <li><strong>Haiku:</strong> Rutina, extracty, formátování — 80% levnější než Opus.</li>
   <li><strong>Sonnet:</strong> Vyvažuje cenu a kvalitu — 50% levnější než Opus, kvalita na 95%.</li>
   <li><strong>Opus:</strong> Složitá architektura, debugging, design. Jen pro klíčové session.</li>
 </ul>
 
 <h2 id="master-prompt">Master Prompt — single source of truth</h2>
 
-<p>Master Prompt = jediný text, který se Loading v každé session. Šetří to <strong>opakované psaní instrukcí</strong> a <strong>zabrání chybám</strong>.</p>
+<p>Master Prompt = jediný text, který se načte v každé session. Šetří to <strong>opakované psaní instrukcí</strong> a <strong>zabrání chybám</strong>.</p>
 
 <div class="cb">
   <div class="cb-label">Příklad master promptu</div>
-  <pre>Vy jste expert na Python, s <strong>15 let zkušenosti</strong> v backend development.
+  <pre>Vy jste expert na Python, s <strong>15 lety zkušeností</strong> v backend development.
 
 Vaše role:
-- Psát čitatelný, dokumentovaný kód
+- Psát čitelný, dokumentovaný kód
 - Nikdy nepiš bez type hints
-- Vždy napřed vrácíš plán, pak kód
+- Vždy napřed vrátíš plán, pak kód
 
 Výstupní formát:
 1. PLÁN — Jak to vyřeším (text, ne kód)
 2. KÓD — Implementace + komentáře
 3. VERIFIKACE — Jak si ověřit, že funguje
 
-Nikdy neměň tyto pravidla.</pre>
+Nikdy neměň tato pravidla.</pre>
 </div>
 
 <p>Jakmile Master Prompt nastavíš, do druhé session se už nemusíš opakovat — Claude si jej pamatuje.</p>
 
 <h2 id="pet-navyku">Pět návyků — jak přestat cpát tokeny</h2>
 
-<h3>Návyk 1: Jedna zpráva = jedna myšlenka</h3>
+<h3 id="navyk-1-jedna-zprava-jedna-myslenka">Návyk 1: Jedna zpráva = jedna myšlenka</h3>
 <p><strong>Špatně:</strong> "Kontrola textu A, pak B, pak vytvořit C" — 3 úkoly = 3 přepsání kontextu = potřeba 3 session.</p>
 <p><strong>Dobře:</strong> Rozděl do 3 zpráv: (1) A, (2) B, (3) C. Každá si vezme kontext z předchozí bez přepisování.</p>
 
-<h3>Návyk 2: Vkládej soubory jednou, ptej se mnohokrát</h3>
+<h3 id="navyk-2-vkladej-soubory-jednou-ptej-se-mnohokrat">Návyk 2: Vkládej soubory jednou, ptej se mnohokrát</h3>
 <p>PDF jednou do cache → pět otázek k témuž PDF = 1× cache write + 4× cache read (80% úspora).</p>
 
-<h3>Návyk 3: Ne ke každému souboru komentář</h3>
-<p>Když vkládáš 50 drobných souborů, <strong>nespiš "tady je soubor A, tady je B..."</strong> — to jsou zbytečné tokeny. Prostě je vlož, Claude je vidí sám.</p>
+<h3 id="navyk-3-ne-ke-kazdemu-souboru-komentar">Návyk 3: Ne ke každému souboru komentář</h3>
+<p>Když vkládáš 50 drobných souborů, <strong>nepiš "tady je soubor A, tady je B..."</strong> — to jsou zbytečné tokeny. Prostě je vlož, Claude je vidí sám.</p>
 
-<h3>Návyk 4: Prompt jednou, varianty později</h3>
-<p>Dobrý prompt = 50% úspora. Uprav prompt jednou, pak jej kouš-kouš vylepšuj v další session, ne chaoticky.</p>
+<h3 id="navyk-4-prompt-jednou-varianty-pozdeji">Návyk 4: Prompt jednou, varianty později</h3>
+<p>Dobrý prompt = 50% úspora. Uprav prompt jednou, pak jej kousek po kousku vylepšuj v další session, ne chaoticky.</p>
 
-<h3>Návyk 5: Archivuj session bez obsahu</h3>
+<h3 id="navyk-5-archivuj-session-bez-obsahu">Návyk 5: Archivuj session bez obsahu</h3>
 <p>Session která bude stále otevřená = neurčitá cache doba. Archivuj ji — nová session = čistý start, bez legacy kontextu.</p>
 
 <h2 id="model-strategie">Strategie výběru modelů — tabulka rozhodnutí</h2>
@@ -140,17 +140,17 @@ Nikdy neměň tyto pravidla.</pre>
 <div class="tw"><table>
 <thead><tr><th>Úkol</th><th>Model</th><th>Cena</th><th>Poznámka</th></tr></thead>
 <tbody>
-<tr><td><strong>Parsing JSON, extracty, formatování</strong></td><td>Haiku</td><td>3–8 USD/MTok</td><td>Haiku dělá jednoduché transformace chytře.</td></tr>
+<tr><td><strong>Parsing JSON, extracty, formátování</strong></td><td>Haiku</td><td>0,80–2,40 USD/MTok</td><td>Haiku dělá jednoduché transformace chytře.</td></tr>
 <tr><td><strong>Copywriting, PR, social media</strong></td><td>Sonnet</td><td>3–15 USD/MTok</td><td>Sonnet > Haiku v kreativitě, levnější než Opus.</td></tr>
-<tr><td><strong>Sonnet</strong></td><td>Běžné úkoly, refaktoring, standardní funkce, rutinní dny</td><td>3–15 USD/MTok</td><td>Session zaměřená na rutinní práci. Výchozí pro začátečníky.</td></tr>
-<tr><td><strong>Opus</strong></td><td>Architektura, debugging, vše co vyžaduje úsudek, dlouhé session</td><td>5–25 USD/MTok</td><td>Výchozí model pro důležité session.</td></tr>
-<tr><td><strong>Fable</strong></td><td>Design, nejsložitější úvahy, vše kde záleží na vkusu</td><td>10–50 USD/MTok</td><td>Vyhrazené session pro design, top priority.</td></tr>
+<tr><td><strong>Běžné úkoly, refaktoring, standardní funkce, rutinní dny</strong></td><td>Sonnet</td><td>3–15 USD/MTok</td><td>Session zaměřená na rutinní práci. Výchozí pro začátečníky.</td></tr>
+<tr><td><strong>Architektura, debugging, vše co vyžaduje úsudek, dlouhé session</strong></td><td>Opus</td><td>5–25 USD/MTok</td><td>Výchozí model pro důležité session.</td></tr>
+<tr><td><strong>Design, nejsložitější úvahy, vše kde záleží na vkusu</strong></td><td>Fable</td><td>10–50 USD/MTok</td><td>Vyhrazené session pro design, top priority.</td></tr>
 </tbody>
 </table></div>
 
-<h3>Žebříček krok za krokem</h3>
+<h3 id="zebricek-krok-za-krokem">Žebříček krok za krokem</h3>
 <ul class="tl">
-  <li><strong>Zůstáváte v Claude:</strong> Hlavní session Opus. Haiku v skills/pod-agentech. Sonnet pro rutinu. Fable pro design. <strong>Nula přepnutí uprostřed session.</strong></li>
+  <li><strong>Zůstáváte v Claude:</strong> Hlavní session Opus. Haiku ve skills/pod-agentech. Sonnet pro rutinu. Fable pro design. <strong>Nula přepnutí uprostřed session.</strong></li>
   <li><strong>Kdy odejít na Codex:</strong> Exekuce náročná na tokeny, kde je plán hotový. Claude = ověřování, Codex = rychlý výstup. Až 4× méně tokenů. Dvě předplatná = dva rozpočty.</li>
   <li><strong>Kdy odejít na DeepSeek/GLM:</strong> Objemná práce s nízkým rizikem — masivní refaktoring, batch, noční běhy. Kapacita na token > kvalita.</li>
 </ul>
@@ -194,7 +194,7 @@ Nikdy neměň tyto pravidla.</pre>
     </div>
     <div class="callout gn">
       <div class="callout-title">✓ Pravda</div>
-      <p><code>/compact</code> znovu odešle celou konverzaci aby ji sumarizoval (nejrozdávanější zpráva) a pak smaže cache. Kontinuita bez úspory.</p>
+      <p><code>/compact</code> znovu odešle celou konverzaci aby ji sumarizoval (nejrozsáhlejší zpráva) a pak smaže cache. Kontinuita bez úspory.</p>
     </div>
   </div>
   <div>
@@ -235,7 +235,7 @@ Nikdy neměň tyto pravidla.</pre>
 </ul>
 
 <h2 id="ruční-nastavení">Ruční nastavení — 60 vteřin práce</h2>
-<p>Tři věci která se dělají jednou a pak fungují automaticky:</p>
+<p>Tři věci, které se dělají jednou a pak fungují automaticky:</p>
 
 <ul class="tl">
   <li><strong>Odpojte nepoužívané konektory:</strong> V aplikaci: Nastavení → Konektory. Nebo CLI: <code>claude mcp remove &lt;název&gt;</code></li>
@@ -243,11 +243,11 @@ Nikdy neměň tyto pravidla.</pre>
   <li><strong>Zapněte statusline:</strong> Master Prompt ji nastaví. Živý ukazatel nákladů změní vaše chování více než jakékoli pravidlo.</li>
 </ul>
 
-<h2>Bonusová sekce: Designérská práce — kde tokeny mizí nejrychleji</h2>
+<h2 id="bonusova-sekce-designerska-prace-kde-tokeny-mizi-nejrychleji">Bonusová sekce: Designérská práce — kde tokeny mizí nejrychleji</h2>
 <p>Designové session jsou nejdražší — zpětná vazba funguje na snímcích a přepisování souborů. Jeden snímek = ~2 700 tokenů. 4K = ~5 000. 30 iterací se snímky = 100k+ tokenů jen v pixelech.</p>
 
 <ul class="tl">
-  <li><strong>Kodifikujte vkus jedorázově:</strong> Design style guide jednou — paleta, typografie, mezery, ~2 KB. Každá další session jej načte.</li>
+  <li><strong>Kodifikujte vkus jednorázově:</strong> Design style guide jednou — paleta, typografie, mezery, ~2 KB. Každá další session jej načte.</li>
   <li><strong>Reference → specifikace:</strong> Máte web? Extrahujte do souboru. Dále předávejte specifikaci, ne referenci.</li>
   <li><strong>Kritici s čistým kontextem:</strong> Pod-agenti posoudí vzhled ve svém kontextu, vrátí verdikty jako text (levné).</li>
   <li><strong>Text před pixely:</strong> Nejdříve DOM a CSS. Snímek až když text nestačí.</li>

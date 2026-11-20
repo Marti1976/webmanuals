@@ -59,7 +59,7 @@
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">HA</span> http://homeassistant.local (nebo :8123) se nenačte</div>
-    <h4>Možné příčiny a řešení:</h4>
+    <h4 id="mozne-priciny-a-reseni">Možné příčiny a řešení:</h4>
     <ul>
       <li><strong>Systém ještě startuje</strong> – první boot trvá orientačně 10–25 minut. Počkej a zkus znovu.</li>
       <li><strong>mDNS nefunguje</strong> – zkus přímou IP adresu místo hostname: <code>http://192.168.0.11</code> (u starších instalací <code>http://192.168.0.11:8123</code>)</li>
@@ -73,7 +73,7 @@
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">HA</span> HA se nespouští po aktualizaci / bílá obrazovka</div>
-    <h4>Možné příčiny a řešení:</h4>
+    <h4 id="mozne-priciny-a-reseni-2">Možné příčiny a řešení:</h4>
     <ul>
       <li><strong>Aktualizace stále probíhá</strong> – velké aktualizace Core trvají minuty až desítky minut. Počkej a obnovuj stránku každé 2 minuty.</li>
       <li><strong>UI nefunguje, ale systém běží</strong> – zkus přímé URL: <code>http://192.168.0.11/lovelace/0</code> nebo <code>http://192.168.0.11/config</code> (u starších instalací s <code>:8123</code>)</li>
@@ -105,7 +105,7 @@
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">SSD</span> Disk je plný – HA odmítá zálohu nebo aktualizaci</div>
-    <h4>Příznaky: chyba "No space left on device", záloha selhává, aktualizace se nestáhne</h4>
+    <h4 id="priznaky-chyba-no-space-left-on-device-zaloha-selhava-aktual">Příznaky: chyba "No space left on device", záloha selhává, aktualizace se nestáhne</h4>
     <ul>
       <li>Zkontroluj místo přes SSH: <code>df -h</code> – sleduj oddíl s daty</li>
       <li><strong>Největší spotřebitelé:</strong> zálohy v <code>/backup/</code> a HA databáze</li>
@@ -123,7 +123,7 @@
 
   <div class="issue">
     <div class="issue-title"><span class="issue-tag">Z2M</span> Z2M nejde spustit – „Failed to start“</div>
-    <h4>Postup diagnostiky:</h4>
+    <h4 id="postup-diagnostiky">Postup diagnostiky:</h4>
     <ul>
       <li>Zkontroluj záložku <strong>Log (PROTOKOL)</strong> aplikace Zigbee2MQTT – co říká přesně?</li>
       <li><strong>„USB adapter discovery error“</strong> → Zigbee2MQTT nenašlo adaptér. Vyplň sekci <code>serial</code> ručně (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#yaml-konfig">sekce 9.1</a>)</li>
@@ -132,7 +132,7 @@
       <li><strong>„Invalid YAML“</strong> → chyba v konfiguraci (odsazení, uvozovky)</li>
       <li><strong>„502: Bad Gateway“</strong> po spuštění → počkej a obnov stránku, pokud to trvá déle než asi 2 minuty, zkontroluj Log</li>
     </ul>
-    <h4>Kontrolní seznam:</h4>
+    <h4 id="kontrolni-seznam">Kontrolní seznam:</h4>
     <ul>
       <li>USB Zigbee dongle je fyzicky zapojen do RPi</li>
       <li>Adresa portu v konfiguraci odpovídá výstupu z Nastavení → Systém → Hardware</li>
@@ -174,7 +174,7 @@
       <li>WiFi rušení – zkontroluj Zigbee kanál vs WiFi kanál (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#zigbee-kanal">sekce 9.3</a>)</li>
       <li>Dongle je příliš blízko WiFi routeru – zvětši vzdálenost na min. 1 metr a použij prodlužovací kabel (viz <a href="03_raspberry_poznamka_k_zigbee_modulu.html#antena">sekce 3.6</a>)</li>
       <li>Slabé napájení může rušit USB dongle (viz <a href="02_raspberry_hardware.html#napajeni">sekce 2.2</a>)</li>
-      <li>Vadná baterie v senzoru – vyměň baterii i když ukazuje 40 %</li>
+      <li>Vadná baterie v senzoru – vyměň baterii, i když ukazuje 40 %</li>
     </ul>
   </div>
 </section>
@@ -249,7 +249,7 @@
     <p>Nainstaluj si aplikaci Terminal &amp; SSH a nastav přihlášení předem (viz <a href="06_raspberry_zakladni_nastaveni_home_assistant.html#ssh-terminal">sekce 6.7</a>). Když jsi už zamčený, přihlásit se do HA kvůli instalaci nepůjde.</p>
   </div>
 
-  <h3>Varianta A: přes SSH (aplikace Terminal &amp; SSH)</h3>
+  <h3 id="varianta-a-pres-ssh-aplikace-terminal-ssh">Varianta A: přes SSH (aplikace Terminal &amp; SSH)</h3>
   <ol>
     <li>Připoj se: <code>ssh root@192.168.0.11</code></li>
     <li>Zálohuj soubor s 2FA a odstraň ho z cesty (přejmenováním):
@@ -259,7 +259,7 @@
     <li>Přihlas se jen heslem a hned znovu zapni 2FA (viz sekce 11.3), tentokrát s kódem ve dvou zařízeních</li>
   </ol>
 
-  <h3>Varianta B: přes konzoli RPi (monitor a klávesnice)</h3>
+  <h3 id="varianta-b-pres-konzoli-rpi-monitor-a-klavesnice">Varianta B: přes konzoli RPi (monitor a klávesnice)</h3>
   <ol>
     <li>Zapoj monitor a klávesnici, přihlas se jako <code>root</code></li>
     <li>Přejmenuj soubor ve složce s konfigurací: <code>cd /mnt/data/supervisor/homeassistant/.storage</code> a <code>mv auth_module.totp auth_module.totp.bak</code></li>

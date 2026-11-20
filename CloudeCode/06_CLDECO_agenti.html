@@ -50,7 +50,7 @@
   <p>Anthropic používá termíny <strong>agentic loop</strong> (smyčka), <strong>tool use</strong> (volání nástrojů), <strong>orchestrator</strong> (hlavní agent koordinující ostatní) a <strong>subagent</strong> (agent provádějící konkrétní podúkol). V Claude Code se s tím setkáte v logování a při debugování.</p>
 </div>
 
-<h3>Kdy se agent aktivuje automaticky</h3>
+<h3 id="kdy-se-agent-aktivuje-automaticky">Kdy se agent aktivuje automaticky</h3>
 <p>Claude Code přechází do agentic mode automaticky, pokud mu dáte úkol, který vyžaduje více kroků — například "přidej autentizaci do aplikace" nebo "oprav všechny failing testy." Indikací je, že Claude začne sám spouštět příkazy bez toho, aby se vás ptal na každý krok.</p>
 <p>Pokud chcete explicitně spustit agenta na delší autonomní úkol, použijte přepínač <code>--auto-approve</code> nebo povolte auto mode v nastavení:</p>
 
@@ -68,7 +68,7 @@
 <p>Subagent je samostatná instance Clauda spuštěná hlavním agentem (orchestrátorem) pro konkrétní podúkol. Orchestrátor definuje co se má udělat, subagent dostane vlastní kontext a provede práci.</p>
 <p>Výhoda je izolace: každý subagent pracuje ve vlastním kontextovém okně, takže hlavní agent nemusí nést v paměti všechny detaily každého podúkolu. To je klíčové pro velké projekty, kde by kontext jinak přetekl.</p>
 
-<h3>Příklad: orchestrátor + 3 subagenti</h3>
+<h3 id="priklad-orchestrator-3-subagenti">Příklad: orchestrátor + 3 subagenti</h3>
 <div class="cb"><div class="cb-label">Hlavní prompt pro orchestrátora</div><pre>
 Potřebuji připravit novou verzi produktu. Deleguj tyto úkoly:
 
@@ -82,14 +82,14 @@ Po dokončení mi dej souhrnný report, co každý udělal.
 
 <div class="callout rd">
   <div class="callout-title">Upozornění k nákladům</div>
-  <p>Každý subagent spotřebovává tokeny samostatně. Tři paralelní subagenti = trojnásobná spotřeba oproti jednomu agentovi. Na <strong>Pro plánu ($20)</strong> limity rychle vyčerpají. Subagenty jsou praktické na <strong>Max 20× ($200)</strong> nebo přes API s rozmyslným nastavením.</p>
+  <p>Každý subagent spotřebovává tokeny samostatně. Tři paralelní subagenti = trojnásobná spotřeba oproti jednomu agentovi. Na <strong>Pro plánu ($20)</strong> limity se rychle vyčerpají. Subagenti jsou praktičtí na <strong>Max 20× ($200)</strong> nebo přes API s rozmyšleným nastavením.</p>
 </div>
 
 <h2 id="paralelni">Paralelní zpracování</h2>
 
-<p>Největší silou agentů je paralelizace — spouštět více nezávislých úkolů současně, ne sequenčně. Místo 3 hodin práce za sebou to může trvat 1 hodinu, pokud úkoly na sobě nezávisí.</p>
+<p>Největší silou agentů je paralelizace — spouštět více nezávislých úkolů současně, ne sekvenčně. Místo 3 hodin práce za sebou to může trvat 1 hodinu, pokud úkoly na sobě nezávisí.</p>
 
-<h3>Kdy paralelizace dává smysl</h3>
+<h3 id="kdy-paralelizace-dava-smysl">Kdy paralelizace dává smysl</h3>
 <ul class="tl">
   <li><strong>Nezávislé moduly</strong> — Refaktoring frontendu a backendu zároveň (pokud nesdílí rozhraní).</li>
   <li><strong>Generování testů</strong> — Každý subagent píše testy pro jinou část kódu.</li>
@@ -97,7 +97,7 @@ Po dokončení mi dej souhrnný report, co každý udělal.
   <li><strong>Jazykové lokalizace</strong> — Překlad do více jazyků paralelně.</li>
 </ul>
 
-<h3>Kdy paralelizace nedává smysl</h3>
+<h3 id="kdy-paralelizace-nedava-smysl">Kdy paralelizace nedává smysl</h3>
 <ul class="tl">
   <li><strong>Závislé kroky</strong> — Napsání kódu musí být před psaním testů.</li>
   <li><strong>Sdílené soubory</strong> — Dva agenti upravující stejný soubor způsobí konflikty.</li>
@@ -124,7 +124,7 @@ Po dokončení mi dej souhrnný report, co každý udělal.
 <p>Agent Teams je pokročilejší orchestrace dostupná v Desktop App od dubna 2026. Namísto ručního spuštění worktrees se celý tým agentů konfiguruje a monitoruje přes GUI.</p>
 <p>V rozhraní vidíte všechny aktivní agenty jako "karty" — každá ukazuje aktuální krok, spotřebu tokenů a stav. Můžete agenta pozastavit, upravit instrukce za běhu nebo ho úplně zastavit bez nutnosti přepínat terminály.</p>
 
-<h3>Jak nakonfigurovat Agent Team</h3>
+<h3 id="jak-nakonfigurovat-agent-team">Jak nakonfigurovat Agent Team</h3>
 <ul class="tl">
   <li>Otevřete Desktop App → New Team Session.</li>
   <li>Definujte <strong>orchestrátora</strong> — popište celkový cíl a přiložte context soubory.</li>
@@ -137,7 +137,7 @@ Po dokončení mi dej souhrnný report, co každý udělal.
 
 <p>Cloud Routines umožňují spouštět Claude Code agenty automaticky bez vašeho zásahu — na základě časového plánu (CRON), webhooku nebo jiné události. Jde v podstatě o "crontab" pro AI agenty.</p>
 
-<h3>Jak Routines fungují</h3>
+<h3 id="jak-routines-funguji">Jak Routines fungují</h3>
 <p>Routine je definovaná v Anthropic Console nebo přes API. Obsahuje: trigger (kdy spustit), instrukce pro agenta (co udělat), oprávnění (k jakým nástrojům a repozitářům má přístup) a notifikace (kam poslat výsledek).</p>
 
 <div class="cb"><div class="cb-label">Příklad Routine via API — každý den v 6:00</div><pre>
@@ -155,13 +155,13 @@ Po dokončení mi dej souhrnný report, co každý udělal.
 }
 </pre></div>
 
-<h3>Praktické use cases pro Routines</h3>
+<h3 id="prakticke-use-cases-pro-routines">Praktické use cases pro Routines</h3>
 <ul class="tl">
   <li><strong>Denní security scan</strong> — Kontrola závislostí a kódu pro zranitelnosti každé ráno.</li>
   <li><strong>Aktualizace dokumentace</strong> — Po každém mergi do main automaticky aktualizuj README a API docs.</li>
   <li><strong>Monitoring dead code</strong> — Každý týden najdi nepoužívané funkce a vytvoř cleanup issues.</li>
   <li><strong>Zpráva o stavu projektu</strong> — Každý pátek pošli přehled otevřených TODO, failing testů a tech debt do Slacku.</li>
-  <li><strong>Dependency updates</strong> — Každé pondělí vytvoř PR s aktualizacemi závislostí (a rovnou otestuje, jestli build prochází).</li>
+  <li><strong>Dependency updates</strong> — Každé pondělí vytvoř PR s aktualizacemi závislostí (a rovnou otestuj, jestli build prochází).</li>
 </ul>
 
 <div class="callout gn">
@@ -171,9 +171,9 @@ Po dokončení mi dej souhrnný report, co každý udělal.
 
 <h2 id="monitoring">Monitoring a řízení nákladů agentů</h2>
 
-<p>Agentní úlohy mohou spotřebovat překvapivě mnoho tokenů, protože každý krok v agentic smyčce znovu posílá celý kontext. Jedna tisícistránková refaktorizace může stát desítky dolarů v API tokenech.</p>
+<p>Agentní úlohy mohou spotřebovat překvapivě mnoho tokenů, protože každý krok v agentic smyčce znovu posílá celý kontext. Jedna refaktorizace tisíce souborů může stát desítky dolarů v API tokenech.</p>
 
-<h3>Jak sledovat spotřebu</h3>
+<h3 id="jak-sledovat-spotrebu">Jak sledovat spotřebu</h3>
 <div class="cb"><div class="cb-label">Sledování nákladů v session</div><pre>
 <span class="c"># V průběhu session</span>
 <span class="a">/stats</span>       <span class="c">-- Pro/Max: zobrazí využití vůči limitu</span>
@@ -187,7 +187,7 @@ cat ~/.claude/logs/session-$(date +%Y%m%d).json | grep total_tokens
 npx cc-usage
 </pre></div>
 
-<h3>Limity pro agenty — jak nastavit strop</h3>
+<h3 id="limity-pro-agenty-jak-nastavit-strop">Limity pro agenty — jak nastavit strop</h3>
 <div class="cb"><div class="cb-label">.claude/settings.json — limity pro agentic runs</div><pre>
 {
   <span class="k">"agentLimits"</span>: {

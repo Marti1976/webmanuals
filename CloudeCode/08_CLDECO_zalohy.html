@@ -59,8 +59,8 @@
 
 <p>Git je nejlepší záchranná síť — pokud ho správně používáte. Klíčový princip: <strong>commitujte před každou session</strong>, kde plánujete větší změny.</p>
 
-<h3>Zlaté pravidlo před každou Claude session</h3>
-<div class="cb"><div class="cb-label">Povinný ritual před spuštěním agenta</div><pre>
+<h3 id="zlate-pravidlo-pred-kazdou-claude-session">Zlaté pravidlo před každou Claude session</h3>
+<div class="cb"><div class="cb-label">Povinný rituál před spuštěním agenta</div><pre>
 <span class="c"># 1. Zkontrolujte stav — co je necommitnuté?</span>
 <span class="a">git</span> status
 
@@ -75,7 +75,7 @@
 <span class="a">claude</span>
 </pre></div>
 
-<h3>Proč nová větev pro každý větší úkol?</h3>
+<h3 id="proc-nova-vetev-pro-kazdy-vetsi-ukol">Proč nová větev pro každý větší úkol?</h3>
 <p>Pokud agent udělá něco špatně, stačí větev smazat a jste zpět na výchozím stavu. Bez nové větve musíte revertovat commity nebo používat <code>git reflog</code> — což je stresující a chybové.</p>
 
 <h2 id="checkpoint">Checkpointy během dlouhé session</h2>
@@ -100,19 +100,19 @@
 <p>Chystáte se na rozsáhlou migraci, refaktoring celé vrstvy nebo přechod na nový framework? Tady je kompletní postup:</p>
 
 <div class="steps">
-  <div class="step"><div class="step-n">1</div><div><h4>Záloha celého projektu mimo Git</h4><p>Zkopírujte celý adresář projektu na jiné místo. Jednoduché, ale zachrání vás i při smazání <code>.git</code> adresáře.</p></div></div>
-  <div class="step"><div class="step-n">2</div><div><h4>Commitněte aktuální stav</h4><p>Udělejte commit s jasnou zprávou jako "BEFORE: migrace na PostgreSQL". Tento commit bude váš záchytný bod.</p></div></div>
-  <div class="step"><div class="step-n">3</div><div><h4>Vytvořte novou větev</h4><p>Pojmenujte ji popisně: <code>claude/postgres-migration-2026-05</code>. Veškerá práce agenta jde do této větve.</p></div></div>
-  <div class="step"><div class="step-n">4</div><div><h4>Záloha databáze (pokud relevantní)</h4><p>Před jakýmikoli databázovými operacemi: <code>pg_dump</code>, <code>mysqldump</code> nebo snapshot v cloudové konzoli.</p></div></div>
-  <div class="step"><div class="step-n">5</div><div><h4>Spusťte agenta v Plan mode</h4><p>Před skutečnými změnami nechte Clauda vysvětlit plán. Zkontrolujte ho — hledejte destruktivní operace.</p></div></div>
-  <div class="step"><div class="step-n">6</div><div><h4>Schvalte a sledujte</h4><p>Nechte agenta pracovat, ale neklikejte "approve all" slepě. Prohlédněte diffy před každým zápisem.</p></div></div>
+  <div class="step"><div class="step-n">1</div><div><h4 id="zaloha-celeho-projektu-mimo-git">Záloha celého projektu mimo Git</h4><p>Zkopírujte celý adresář projektu na jiné místo. Jednoduché, ale zachrání vás i při smazání <code>.git</code> adresáře.</p></div></div>
+  <div class="step"><div class="step-n">2</div><div><h4 id="commitnete-aktualni-stav">Commitněte aktuální stav</h4><p>Udělejte commit s jasnou zprávou jako "BEFORE: migrace na PostgreSQL". Tento commit bude váš záchytný bod.</p></div></div>
+  <div class="step"><div class="step-n">3</div><div><h4 id="vytvorte-novou-vetev">Vytvořte novou větev</h4><p>Pojmenujte ji popisně: <code>claude/postgres-migration-2026-05</code>. Veškerá práce agenta jde do této větve.</p></div></div>
+  <div class="step"><div class="step-n">4</div><div><h4 id="zaloha-databaze-pokud-relevantni">Záloha databáze (pokud relevantní)</h4><p>Před jakýmikoli databázovými operacemi: <code>pg_dump</code>, <code>mysqldump</code> nebo snapshot v cloudové konzoli.</p></div></div>
+  <div class="step"><div class="step-n">5</div><div><h4 id="spustte-agenta-v-plan-mode">Spusťte agenta v Plan mode</h4><p>Před skutečnými změnami nechte Clauda vysvětlit plán. Zkontrolujte ho — hledejte destruktivní operace.</p></div></div>
+  <div class="step"><div class="step-n">6</div><div><h4 id="schvalte-a-sledujte">Schvalte a sledujte</h4><p>Nechte agenta pracovat, ale neklikejte "approve all" slepě. Prohlédněte diffy před každým zápisem.</p></div></div>
 </div>
 
 <h2 id="obnova">Obnova po chybě agenta — krok za krokem</h2>
 
 <p>Stalo se. Agent udělal něco špatně. Nepanikujte — záchrana je téměř vždy možná.</p>
 
-<h3>Scénář A: Agent zkazil commitnutý kód</h3>
+<h3 id="scenar-a-agent-zkazil-commitnuty-kod">Scénář A: Agent zkazil commitnutý kód</h3>
 <div class="cb"><div class="cb-label">Návrat k poslednímu dobrému stavu</div><pre>
 <span class="c"># Zobrazit historii commitů</span>
 <span class="a">git</span> log --oneline -20
@@ -127,9 +127,9 @@
 <span class="a">git</span> revert HEAD~2..HEAD    <span class="c"># revertuje poslední 2 commity</span>
 </pre></div>
 
-<h3>Scénář B: Agent smazal soubory, které nebyly commitnuté</h3>
+<h3 id="scenar-b-agent-smazal-soubory-ktere-nebyly-commitnute">Scénář B: Agent smazal soubory po WIP záloze</h3>
 <div class="cb"><div class="cb-label">Záchrana přes git reflog</div><pre>
-<span class="c"># Reflog zaznamená VŠECHNY pohyby HEAD — i před-commitové</span>
+<span class="c"># Reflog zaznamená všechny pohyby HEAD — obnovit lze jen stav, který byl commitnutý (např. WIP záloha)</span>
 <span class="a">git</span> reflog
 
 <span class="c"># Uvidíte výpis jako:</span>
@@ -141,7 +141,7 @@
 <span class="a">git</span> checkout ghi9012 -- .   <span class="c"># obnoví všechny soubory z daného stavu</span>
 </pre></div>
 
-<h3>Scénář C: Agent provedl nežádoucí git push</h3>
+<h3 id="scenar-c-agent-provedl-nezadouci-git-push">Scénář C: Agent provedl nežádoucí git push</h3>
 <div class="cb"><div class="cb-label">Stažení nežádoucího pushe z remote</div><pre>
 <span class="c"># Zobrazit historii remote větve</span>
 <span class="a">git</span> log origin/feature-branch --oneline

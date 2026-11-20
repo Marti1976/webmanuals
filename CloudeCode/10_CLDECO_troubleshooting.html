@@ -94,7 +94,7 @@
 <div class="err-block">
   <div class="err-head">Login loop — browser otevře ale nevrátí token</div>
   <div class="err-body">
-    <p>Autentizace přes předplatné (<code>claude auth login</code>) spustí prohlížeč, ale po přihlášení se token nepřenese do CLI. Obvyklé na Linux nebo při nestandardním nastavení prohlížeče.</p>
+    <p>Autentizace přes předplatné (<code>claude auth login</code>) spustí prohlížeč, ale po přihlášení se token nepřenese do CLI. Obvyklé na Linuxu nebo při nestandardním nastavení prohlížeče.</p>
   </div>
   <div class="err-fix">
     Zkuste <code>claude auth login --print-redirect-url</code> — zobrazí URL s tokenem, který zkopírujete ručně. Nebo použijte API klíč jako alternativu: <code>export ANTHROPIC_API_KEY="sk-ant-..."</code>.
@@ -104,7 +104,7 @@
 <div class="err-block">
   <div class="err-head">Error: You are not subscribed to Claude Code</div>
   <div class="err-body">
-    <p>Váš plán nezahrnuje Claude Code. Týká se to zejména Team Standard ($20/seat) a Free plánu.</p>
+    <p>Váš plán nezahrnuje Claude Code. Týká se to zejména Free plánu.</p>
   </div>
   <div class="err-fix">
     Claude Code je dostupný od Pro ($20/měs) nebo Team Premium ($100/seat). Přejděte na <strong>claude.com/upgrade</strong> a upgradujte plán.
@@ -129,7 +129,7 @@
     <p>Překročili jste rate limit API. Každý tier (Free, Build, Scale) má jiné limity — počet požadavků za minutu a tokeny za minutu (TPM).</p>
   </div>
   <div class="err-fix">
-    Claude Code má automatický retry s exponential backoff — počkejte chvíli, zkusí to sám. Pokud limit narážíte pravidelně, upgradujte API tier v Anthropic Console nebo optimalizujte prompty (viz díl 01, sekce Jak ušetřit).
+    Claude Code má automatický retry s exponential backoff — počkejte chvíli, zkusí to sám. Pokud na limit narážíte pravidelně, upgradujte API tier v Anthropic Console nebo optimalizujte prompty (viz díl 01, sekce Jak ušetřit).
   </div>
 </div>
 
@@ -137,7 +137,7 @@
 
 <p>Jedním z nejčastějších problémů není technická chyba, ale <em>behaviorální</em>: Claude začne dělat věci, které jste nezamýšleli, nebo se opakovaně vrací ke stejné nesprávné implementaci.</p>
 
-<h3>Příznaky bloudění</h3>
+<h3 id="priznaky-bloudeni">Příznaky bloudění</h3>
 <ul class="tl">
   <li>Claude opravuje bug → vytvoří nový bug → opravuje nový bug → smyčka</li>
   <li>Claude ignoruje váš požadavek a dělá "lepší" řešení po svém</li>
@@ -145,7 +145,7 @@
   <li>Claude generuje stále delší a delší odpovědi bez pokroku</li>
 </ul>
 
-<h3>Jak z toho ven</h3>
+<h3 id="jak-z-toho-ven">Jak z toho ven</h3>
 <div class="cb"><div class="cb-label">Postup při bloudění</div><pre>
 <span class="c"># Krok 1: Zastavte agenta</span>
 Ctrl+C
@@ -165,7 +165,7 @@ Ctrl+C
 <span class="c">-- napište konkrétnější prompt, viz tipy níže</span>
 </pre></div>
 
-<h3>Jak napsat lepší prompt aby Claude nebloudil</h3>
+<h3 id="jak-napsat-lepsi-prompt-aby-claude-nebloudil">Jak napsat lepší prompt aby Claude nebloudil</h3>
 <ul class="tl">
   <li><strong>Specifikujte soubory explicitně:</strong> "Uprav POUZE soubor src/auth/login.ts, jiné soubory neměň."</li>
   <li><strong>Definujte co NECHCETE:</strong> "Nerefaktoruj existující kód, jen přidej validaci emailu."</li>
@@ -220,7 +220,7 @@ cat ~/.claude/logs/session-$(date +%Y%m%d).json | python3 -m json.tool
 
 <h2 id="pomoc">Kde hledat pomoc a hlásit bugy</h2>
 <ul class="tl">
-  <li><strong>Oficální dokumentace:</strong> <code>docs.anthropic.com/en/docs/claude-code</code> — první zastávka, často obsahuje řešení</li>
+  <li><strong>Oficiální dokumentace:</strong> <code>docs.anthropic.com/en/docs/claude-code</code> — první zastávka, často obsahuje řešení</li>
   <li><strong>GitHub Issues:</strong> <code>github.com/anthropics/claude-code</code> — hlášení bugů, sledování known issues</li>
   <li><strong>Anthropic Discord:</strong> Server #claude-code kanál — komunita vývojářů, rychlé odpovědi</li>
   <li><strong>Support ticket:</strong> <code>support.anthropic.com</code> — pro platební problémy a account issues</li>

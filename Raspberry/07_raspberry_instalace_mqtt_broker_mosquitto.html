@@ -44,12 +44,12 @@
       <div class="mqtt-arrow">→ subscribe →</div>
       <div class="mqtt-box">Home Assistant Core</div>
     </div>
-    <div class="mqtt-flow-note">Všechny zprávy prochází Mosquitto – funguje i bez internetu, čistě lokálně</div>
+    <div class="mqtt-flow-note">Všechny zprávy procházejí přes Mosquitto – funguje i bez internetu, čistě lokálně</div>
   </div>
   <p>Mosquitto v HAOS naslouchá na portu 1883 i v tvé <strong>místní síti (LAN)</strong>, takže se k němu mohou připojit i zařízení mimo RPi. Připojení je ale možné <strong>jen po přihlášení</strong> uživatelem Home Assistantu, anonymní přístup je zakázán. Z internetu je broker nedostupný, pokud sám neotevřeš port na routeru (viz <a href="11_raspberry_bezpecnost.html">kapitola 11</a>).</p>
   <p>Pokud broker z místní sítě nepotřebuješ, můžeš porty zavřít: v kartě <strong>Síť (Network)</strong> aplikace je smaž. Zigbee2MQTT i Home Assistant se připojují vnitřní adresou <code>core-mosquitto</code> a poběží dál.</p>
 
-  <h3>Struktura MQTT topics (témat)</h3>
+  <h3 id="struktura-mqtt-topics-temat">Struktura MQTT topics (témat)</h3>
   <p>MQTT komunikace je organizovaná do <strong>topics</strong> – hierarchických textových cest. Zigbee2MQTT automaticky vytváří topics pro každé zařízení:</p>
   <ul>
     <li><code>zigbee2mqtt/teplomer_loznice</code> → JSON data ze senzoru (teplota, vlhkost, baterie)</li>
@@ -144,7 +144,7 @@
     <div class="cred-row"><span class="cred-key">Port</span><span class="cred-val">1883</span></div>
   </div>
 
-  <h3>Varianta B: lokální uživatel přímo v konfiguraci aplikace</h3>
+  <h3 id="varianta-b-lokalni-uzivatel-primo-v-konfiguraci-aplikace">Varianta B: lokální uživatel přímo v konfiguraci aplikace</h3>
   <p>Pokud nechceš zakládat uživatele v Home Assistantu, můžeš ho vytvořit přímo v konfiguraci aplikace Mosquitto. Na záložce <strong>KONFIGURACE</strong> přidej:</p>
   <pre><code>logins:
   - username: mqtt_user
@@ -170,7 +170,7 @@
     </div>
   </div>
 
-  <h3>Varianta B: ruční přidání integrace</h3>
+  <h3 id="varianta-b-rucni-pridani-integrace">Varianta B: ruční přidání integrace</h3>
   <p>Pokud se integrace nenabídla sama, přidej ji ručně:</p>
   <ol>
     <li>Jdi do <strong>Nastavení → Zařízení a služby → + Přidat integraci (Add integration)</strong>, vyhledej <strong>„MQTT“</strong> a vyber ji.</li>
@@ -201,7 +201,7 @@
     <li>✅ MQTT integrace aktivní v HA (Nastavení → Zařízení a služby)</li>
     <li>✅ Zapamatované přihlašovací údaje pro MQTT (broker, port, uživatel, heslo)</li>
   </ul>
-  <p>Pokud vše zelené, můžeš pokračovat na <a href="08_raspberry_instalace_zigbee2mqtt.html">Kapitolu 08 – Instalace Zigbee2MQTT</a>.</p>
+  <p>Pokud je vše zelené, můžeš pokračovat na <a href="08_raspberry_instalace_zigbee2mqtt.html">Kapitolu 08 – Instalace Zigbee2MQTT</a>.</p>
 </section>
 
 <div id="pn"></div>

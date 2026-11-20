@@ -61,11 +61,11 @@
 <p>Než zadáte první prompt, je dobré vědět, jak Claude Code funguje. Není to chatbot, který píše kód do odpovědi — je to agent, který skutečně čte soubory, spouští příkazy a zapisuje změny na disk.</p>
 <p>Při každém promptu Claude projde tímto cyklem:</p>
 <div class="steps">
-  <div class="step"><div class="step-n">1</div><div><h4>Čtení kontextu</h4><p>Claude si přečte CLAUDE.md, prozkoumá strukturu projektu a načte relevantní soubory. Vidíte řádky jako "Reading src/auth/login.ts..." — to je Claude, jak se orientuje v kódu.</p></div></div>
-  <div class="step"><div class="step-n">2</div><div><h4>Analýza a plánování</h4><p>Claude pochopí zadání, identifikuje které soubory musí změnit a jakým způsobem. Pokud si není jistý přístupem, může se zeptat nebo navrhnout plán (v Plan mode).</p></div></div>
-  <div class="step"><div class="step-n">3</div><div><h4>Navrhuje změny — zobrazí diff</h4><p>Před zápisem Claude ukáže přesný diff každého souboru, který chce změnit. Máte možnost schválit celou sadu, nebo zamítnout konkrétní soubor a vysvětlit proč.</p></div></div>
-  <div class="step"><div class="step-n">4</div><div><h4>Zapíše soubory</h4><p>Po vašem schválení Claude zapíše změny na disk. Toto je nevratné (bez Gitu) — proto je dobré mít commitnutý stav před každou velkou session.</p></div></div>
-  <div class="step"><div class="step-n">5</div><div><h4>Ověření (testy, lint)</h4><p>Claude automaticky nabídne spuštění testů a lintu. Pokud testy selžou, Claude analyzuje chybu a navrhne opravu — a může celý cyklus opakovat.</p></div></div>
+  <div class="step"><div class="step-n">1</div><div><h4 id="cteni-kontextu">Čtení kontextu</h4><p>Claude si přečte CLAUDE.md, prozkoumá strukturu projektu a načte relevantní soubory. Vidíte řádky jako "Reading src/auth/login.ts..." — to je Claude, jak se orientuje v kódu.</p></div></div>
+  <div class="step"><div class="step-n">2</div><div><h4 id="analyza-a-planovani">Analýza a plánování</h4><p>Claude pochopí zadání, identifikuje které soubory musí změnit a jakým způsobem. Pokud si není jistý přístupem, může se zeptat nebo navrhnout plán (v Plan mode).</p></div></div>
+  <div class="step"><div class="step-n">3</div><div><h4 id="navrhuje-zmeny-zobrazi-diff">Navrhuje změny — zobrazí diff</h4><p>Před zápisem Claude ukáže přesný diff každého souboru, který chce změnit. Máte možnost schválit celou sadu, nebo zamítnout konkrétní soubor a vysvětlit proč.</p></div></div>
+  <div class="step"><div class="step-n">4</div><div><h4 id="zapise-soubory">Zapíše soubory</h4><p>Po vašem schválení Claude zapíše změny na disk. Toto je nevratné (bez Gitu) — proto je dobré mít commitnutý stav před každou velkou session.</p></div></div>
+  <div class="step"><div class="step-n">5</div><div><h4 id="overeni-testy-lint">Ověření (testy, lint)</h4><p>Claude automaticky nabídne spuštění testů a lintu. Pokud testy selžou, Claude analyzuje chybu a navrhne opravu — a může celý cyklus opakovat.</p></div></div>
 </div>
 
 <h2 id="slash-prikazy">Přehled slash příkazů</h2>
@@ -114,7 +114,7 @@ git diff --staged | <span class="a">claude</span> -p "Napiš commit message v č
 
 <h2 id="plan-mode">Plan mode vs Auto mode</h2>
 
-<h3>Plan mode — nejdřív plán, pak kód</h3>
+<h3 id="plan-mode-nejdriv-plan-pak-kod">Plan mode — nejdřív plán, pak kód</h3>
 <p>Plan mode aktivujete příkazem <code>/plan</code> nebo příznakem <code>--plan</code>. Claude přečte relevantní soubory, navrhne <em>strukturovaný plán</em> co přesně udělá (které soubory změní, jak) — a čeká na vaše schválení. Teprve po odsouhlasení začne psát kód.</p>
 <p><strong>Proč to dělat?</strong> Pokud Claude začne špatnou cestou, opravit plán stojí zlomek tokenů oproti zahozenému kódu z celé implementace. Plan mode je obzvlášť cenný pro úkoly, kde si nejste jistí přístupem nebo kde existuje víc způsobů řešení.</p>
 <div class="cb"><div class="cb-label">Aktivace Plan mode</div><pre>
@@ -133,7 +133,7 @@ git diff --staged | <span class="a">claude</span> -p "Napiš commit message v č
 <span class="v">Pokračovat? [y/n]</span>
 </pre></div>
 
-<h3>Auto mode — autonomní práce s guardrails</h3>
+<h3 id="auto-mode-autonomni-prace-s-guardrails">Auto mode — autonomní práce s guardrails</h3>
 <p>Auto mode (<code>--auto-approve</code>) povolí Claudovi provádět operace ze schváleného allowlistu bez potvrzení u každého kroku. <strong>Není</strong> to totéž jako <code>--dangerously-skip-permissions</code> — guardrails stále platí, jen schvalování bezpečných operací probíhá automaticky. Vhodné pro opakující se, dobře definované úkoly.</p>
 
 <h2 id="workflow">Kompletní workflow od zadání po PR</h2>
@@ -186,7 +186,7 @@ git diff --staged | <span class="a">claude</span> -p "Napiš commit message v č
 <h2 id="tipy-prompty">Tipy pro psaní efektivních promptů</h2>
 
 <ul class="tl">
-  <li><strong>Specifikujte soubory explicitně.</strong> "Oprav validaci v <code>src/forms/ContactForm.tsx</code>" je lepší než "Oprav formulář." Claude nenačítá zbytečné soubory a vaše záměr je jasný.</li>
+  <li><strong>Specifikujte soubory explicitně.</strong> "Oprav validaci v <code>src/forms/ContactForm.tsx</code>" je lepší než "Oprav formulář." Claude nenačítá zbytečné soubory a váš záměr je jasný.</li>
   <li><strong>Dejte negativní instrukce.</strong> "Neupravuj existující testy, jen přidej nové" nebo "Nepoužívej lodash, máme vlastní util funkce." Bez nich Claude odhaduje.</li>
   <li><strong>Uveďte příklad nebo vzor.</strong> "Podobně jako je to uděláno v <code>UserProfile.tsx</code>" — Claude pochopí konvence z existujícího kódu lépe než z abstraktního popisu.</li>
   <li><strong>Rozdělte velký úkol na etapy.</strong> Místo "Refaktoruj celou databázovou vrstvu" → "Nejdřív mi ukaž plán → po schválení implementuj jen Repository třídy → pak testy → pak migrace."</li>
@@ -198,7 +198,7 @@ git diff --staged | <span class="a">claude</span> -p "Napiš commit message v č
 
 <ul class="tl">
   <li><strong>Spuštění ve špatném adresáři.</strong> Claude pracuje v aktuálním adresáři. Pokud spustíte <code>claude</code> v domovském adresáři místo v projektu, přečte jiné soubory a bude zmaten.</li>
-  <li><strong>Příliš vágní prompt.</strong> "Oprav to" nebo "Udělej lepší" — bez kontextu Claude buď se zeptá (= zbytečný round-trip) nebo odhadne špatně.</li>
+  <li><strong>Příliš vágní prompt.</strong> "Oprav to" nebo "Udělej lepší" — bez kontextu se Claude buď zeptá (= zbytečný round-trip) nebo odhadne špatně.</li>
   <li><strong>Nezálohovat před agentic session.</strong> Viz díl 08 — <code>git commit</code> před každou session je pojistka.</li>
   <li><strong>Neopravit CLAUDE.md po změnách projektu.</strong> CLAUDE.md reflektuje stav projektu — pokud přejdete na jiný framework nebo změníte příkazy, aktualizujte ho.</li>
   <li><strong>Nechávat session běžet příliš dlouho.</strong> Kontext narůstá, každý prompt je dražší. <code>/clear</code> je váš přítel.</li>

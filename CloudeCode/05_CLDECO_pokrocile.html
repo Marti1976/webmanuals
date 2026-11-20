@@ -42,7 +42,7 @@
 <p>MCP (Model Context Protocol) je otevřený standard, který umožňuje Claudovi připojit se k externím systémům a nástrojům. Místo toho, abyste kopírovali data z Jiry do chatu, Claude si je přečte sám. Místo ručního volání GitHub API Claude vytvoří PR přímo.</p>
 <p>MCP server je malý program (lokální nebo vzdálený), který Claudovi zpřístupňuje sadu nástrojů. Anthropic a komunita poskytují servery pro desítky populárních služeb — a nové přibývají každý týden.</p>
 
-<h3>Populární MCP servery</h3>
+<h3 id="popularni-mcp-servery">Populární MCP servery</h3>
 <div class="mcp-grid">
   <div class="mcp-card"><div class="mcp-card-name">filesystem</div><div class="mcp-card-desc">Rozšířený přístup k souborům mimo projekt, rekurzivní vyhledávání</div></div>
   <div class="mcp-card"><div class="mcp-card-name">github</div><div class="mcp-card-desc">Issues, PRs, releases, komentáře — vše přes GitHub API</div></div>
@@ -95,7 +95,7 @@
 
 <div class="callout bl">
   <div class="callout-title">Kde najít MCP servery</div>
-  <p>Oficální seznam: <strong>modelcontextprotocol.io/servers</strong>. Komunitní servery: GitHub hledání "mcp-server". Claude.ai má připravené vizuální konektory pro Gmail, Google Calendar, Google Drive a Slack — stačí kliknout "Connect" v nastavení.</p>
+  <p>Oficiální seznam: <strong>modelcontextprotocol.io/servers</strong>. Komunitní servery: GitHub hledání "mcp-server". Claude.ai má připravené vizuální konektory pro Gmail, Google Calendar, Google Drive a Slack — stačí kliknout "Connect" v nastavení.</p>
 </div>
 
 <h2 id="hooks">Hooks — automatizace kolem akcí Clauda</h2>
@@ -144,7 +144,7 @@
 
 <div class="callout gn">
   <div class="callout-title">Praktické use cases pro hooks</div>
-  <p>Automatický <code>prettier</code> po každém zápisu souboru · Slack notifikace po dokončení agentic tasku · Zápis do logu které soubory Claude změnil · Automatické spuštění testů po každém <code>Write</code> · Upozornění na mobilu když dlouhý build skončí.</p>
+  <p>Automatický <code>prettier</code> po každém zápisu souboru · Slack notifikace po dokončení agentic tasku · Zápis do logu, které soubory Claude změnil · Automatické spuštění testů po každém <code>Write</code> · Upozornění na mobilu když dlouhý build skončí.</p>
 </div>
 
 <h2 id="vlastni-prikazy">Vlastní slash příkazy</h2>
@@ -208,7 +208,7 @@ Zkontroluj před začátkem:
 
 ## Rollback
 Pokud deploy selže nebo Sentry ukáže spike errorů:
-`vercel rollback` nebo v Vercel Dashboard → Deployments → Revert
+`vercel rollback` nebo ve Vercel Dashboard → Deployments → Revert
 </pre></div>
 
 <h2 id="worktrees">Git worktrees — paralelní práce</h2>

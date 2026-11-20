@@ -45,14 +45,14 @@
 
 <h2 id="github-actions">Claude Code v GitHub Actions</h2>
 
-<p>GitHub Actions je nejrozšířenější platforma pro CI/CD u GitHub projektů. Anthropic poskytuje oficální GitHub Action pro Claude Code integraci.</p>
+<p>GitHub Actions je nejrozšířenější platforma pro CI/CD u GitHub projektů. Anthropic poskytuje oficiální GitHub Action pro Claude Code integraci.</p>
 
 <div class="callout bl">
   <div class="callout-title">Předpoklad</div>
   <p>Potřebujete Anthropic API klíč (ne předplatné). V GitHub repozitáři ho uložte jako secret: Settings → Secrets → New repository secret → <code>ANTHROPIC_API_KEY</code>.</p>
 </div>
 
-<h3>Základní workflow soubor</h3>
+<h3 id="zakladni-workflow-soubor">Základní workflow soubor</h3>
 <div class="cb"><div class="cb-label">.github/workflows/claude-review.yml</div><pre>
 <span class="k">name:</span> <span class="v">Claude Code Review</span>
 
@@ -93,7 +93,7 @@
 
 <p>Základní review je jen začátek. Můžete Clauda nastavit jako specializovaného reviewera pro různé aspekty — bezpečnost, výkon, test coverage nebo dodržování konvencí týmu.</p>
 
-<h3>Review zaměřené na bezpečnost</h3>
+<h3 id="review-zamerene-na-bezpecnost">Review zaměřené na bezpečnost</h3>
 <div class="cb"><div class="cb-label">Prompt pro security review</div><pre>
 <span class="k">prompt:</span> |
   Jsi bezpečnostní reviewer. Prohledej tento PR pro:
@@ -113,7 +113,7 @@
   konkrétní oprava.
 </pre></div>
 
-<h3>@claude trigger — review na vyžádání</h3>
+<h3 id="claude-trigger-review-na-vyzadani">@claude trigger — review na vyžádání</h3>
 <p>Místo automatického review na každý PR můžete Clauda zavolat manuálně tagem v komentáři:</p>
 <div class="cb"><div class="cb-label">Volání Clauda v PR komentáři</div><pre>
 <span class="c">// Napište do komentáře PR:</span>
@@ -164,7 +164,7 @@
 
 <h2 id="dokumentace">Automatická aktualizace dokumentace</h2>
 
-<p>Dokumentace zastarávání je klasický problém. Claude Code ho může řešit automaticky — při každém mergi do main zkontroluje, jestli se změnilo API nebo chování funkcí, a aktualizuje dokumentaci.</p>
+<p>Zastarávání dokumentace je klasický problém. Claude Code ho může řešit automaticky — při každém mergi do main zkontroluje, jestli se změnilo API nebo chování funkcí, a aktualizuje dokumentaci.</p>
 
 <div class="cb"><div class="cb-label">.github/workflows/update-docs.yml</div><pre>
 <span class="k">on:</span>
@@ -188,7 +188,7 @@
             - Změnilo se chování nebo návratová hodnota
             - Byl opravený popsaný bug
             
-            Commit změny v docs/ se zprávou "docs: auto-update"
+            Commitni změny v docs/ se zprávou "docs: auto-update"
 </pre></div>
 
 <h2 id="routines">Cloud Routines v CI kontextu</h2>

@@ -26,6 +26,12 @@
   </div>
 </header>
 
+<section id="search-container" class="sec search-results">
+  <h2 class="sec-title">🔎 Nalezeno</h2>
+  <div class="grid" id="search-output"></div>
+</section>
+
+<div id="index-container">
 <!-- STATS -->
 <section class="stats">
   <div class="stat">
@@ -174,6 +180,8 @@
   </div>
 </section>
 
+</div>
+
 <!-- FOOTER -->
 <footer>
   <span class="footer-copy">Raspberry Pi &amp; Home Assistant — Kompletní průvodce &nbsp;·&nbsp; Listopad 2026</span>
@@ -185,7 +193,56 @@
 </div>
 </div>
 
+<script src="search-data.js"></script>
 <script src="sidebar-config.js"></script>
 <script src="sidebar-init.js"></script>
+<script>
+// Živé hledání na indexu. Běží až po sidebar-init.js, protože pole #sb-search-input vzniká generováním.
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('sb-search-input');
+  const searchContainer = document.getElementById('search-container');
+  const indexContainer = document.getElementById('index-container');
+  const searchOutput = document.getElementById('search-output');
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryParam = urlParams.get('q');
+  if (queryParam) {
+    searchInput.value = queryParam;
+    performSearch(queryParam);
+  }
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    performSearch(query);
+  });
+
+  function performSearch(query) {
+    query = query.toLowerCase(); // nutné i tady — dotaz může přijít přes ?q=
+    if (query.length < 2) {
+      searchContainer.classList.remove('active');
+      indexContainer.style.display = 'block';
+      return;
+    }
+    const results = SEARCH_INDEX.filter(item =>
+      item.title.toLowerCase().includes(query) ||
+      item.tags.some(tag => tag.toLowerCase().includes(query))
+    );
+    indexContainer.style.display = 'none';
+    searchContainer.classList.add('active');
+    if (results.length === 0) {
+      searchOutput.innerHTML = '<div class="card"><div class="card-desc">Nebyly nalezeny žádné výsledky pro dotaz: <strong>' + query + '</strong></div></div>';
+    } else {
+      searchOutput.innerHTML = results.map(item => `
+        <a href="${item.page}${item.anchor}" class="card">
+          <span class="card-num">${item.page.slice(0, 2)}</span>
+          <div class="card-title">${item.title}</div>
+          <div class="card-desc">${item.tags.map(t => `#${t}`).join(' ')}</div>
+          <span class="card-link">Otevřít →</span>
+        </a>
+      `).join('');
+    }
+  }
+});
+</script>
 </body>
 </html>

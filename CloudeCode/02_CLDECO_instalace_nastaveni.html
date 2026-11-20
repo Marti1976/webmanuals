@@ -46,18 +46,18 @@
 <div class="tw"><table>
 <thead><tr><th>Rozhraní</th><th>Příkaz</th><th>Vhodné pro</th><th>Poznámka</th></tr></thead>
 <tbody>
-<tr><td><strong>CLI (terminál)</strong></td><td><code>claude ...</code></td><td>Dev, scripty, automatizace, CI/CD</td><td>Nejjednoduší start. Je to shell session s Claudem.</td></tr>
+<tr><td><strong>CLI (terminál)</strong></td><td><code>claude ...</code></td><td>Dev, scripty, automatizace, CI/CD</td><td>Nejjednodušší start. Je to shell session s Claudem.</td></tr>
 <tr><td><strong>VS Code plugin</strong></td><td>Sidebar v editoru</td><td>IDE integrace, inline edit, git diff</td><td>Nejlepší DX pro vývojáře. Instalace přes Extension Marketplace.</td></tr>
 <tr><td><strong>JetBrains plugin</strong></td><td>Sidebar v IntelliJ, PyCharm, atp.</td><td>JetBrains uživatelé, stejné jako VS Code</td><td>Alternativa k VS Code, stejná logika.</td></tr>
 <tr><td><strong>Web UI (claude.ai)</strong></td><td>Browser</td><td>Chat, brainstorm, dokumentace</td><td>Bez přístupu k filesystému — pro rychlé otázky a exploraci.</td></tr>
 </tbody>
 </table></div>
 
-<p><strong>Doporučení pro začátek:</strong> Nainstalujte CLI, pak si vyzkoušejte VS Code plugin. Oba se sdílí stejnou konfigurací (CLAUDE.md, settings.json, oprávnění).</p>
+<p><strong>Doporučení pro začátek:</strong> Nainstalujte CLI, pak si vyzkoušejte VS Code plugin. Oba sdílejí stejnou konfiguraci (CLAUDE.md, settings.json, oprávnění).</p>
 
 <h2 id="cli">CLI instalace</h2>
 
-<p>Claude Code v terminálu se instaluje přes npm (globálně) nebo přes Homebrew (macOS).</p>
+<p>Claude Code v terminálu se instaluje přes npm (globálně) nebo přes Homebrew (macOS, Linux).</p>
 
 <div class="cb"><div class="cb-label">Instalace přes npm (všechny OS)</div><pre>
 <span class="c"># Globální instalace</span>
@@ -124,12 +124,12 @@
 
 <span class="k">## Omezení</span>
 - Nikdy neměň `db/seed.ts` — obsahuje testovací data
-- Ne přes `/eslint` nebo `/prettier` — ty jsou spuštěny v CI
-- Nepojívej ES5, vždy minimálně ES2020 syntax
+- Nespouštěj `eslint` ani `prettier` — ty jsou spuštěny v CI
+- Nepoužívej ES5, vždy minimálně ES2020 syntax
 
 <span class="k">## Užitečné příkazy</span>
 ```
-npm run dev       — vývojová Build + watch
+npm run dev       — vývojový build + watch
 npm run test      — spustí testovací suite
 npm run typecheck — kontrola TypeScript
 git status        — stav repo
@@ -141,7 +141,7 @@ git status        — stav repo
   <li><strong>Konvence kódu</strong> — jaký jazyk, formát, pojmenování</li>
   <li><strong>Architektura projektu</strong> — kde je co, jak je to zorganizované</li>
   <li><strong>Příkazy pro běžné úkoly</strong> — co spustit na test, build, lint</li>
-  <li><strong>Omezení a pravidla</strong> — co Claude nesmí dělat, co je zákazáno</li>
+  <li><strong>Omezení a pravidla</strong> — co Claude nesmí dělat, co je zakázáno</li>
   <li><strong>Důležité soubory</strong> — které soubory jsou kritické (neměnit)</li>
 </ul>
 

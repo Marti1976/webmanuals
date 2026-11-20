@@ -71,7 +71,7 @@
       <div class="step-body">
         <div class="step-title">Zkontroluj a zvaž vypnutí UPnP</div>
         <div class="step-desc">
-          <p>UPnP (Universal Plug and Play) umožňuje aplikacím automaticky otevírat porty v routeru bez tvého vědomí. Najdi v routeru sekci <strong>UPnP</strong> a zvažuj jeho vypnutí.</p>
+          <p>UPnP (Universal Plug and Play) umožňuje aplikacím automaticky otevírat porty v routeru bez tvého vědomí. Najdi v routeru sekci <strong>UPnP</strong> a zvaž jeho vypnutí.</p>
           <p>Vypnutí UPnP může rozbít některé funkce (online hry, video hovory) – posuď dle potřeby. Pro maximálně přísné nastavení ho vypni a přidávej přesměrování portů ručně jen pro to, co skutečně potřebuješ.</p>
         </div>
       </div>
@@ -106,7 +106,7 @@
   </div>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ Jak se nezamknout</div>
-    <p>Mít kód ve dvou nezávislých zařízeních je nejjednodušší ochrana. Druhá možnost je <strong>mít v HA druhý účet správce</strong> uložený v správci hesel, přes který se dostaneš dovnitř a 2FA prvního účtu vypneš. Přihlášení přes Trusted Networks (sekce 11.5) 2FA obchází.</p>
+    <p>Mít kód ve dvou nezávislých zařízeních je nejjednodušší ochrana. Druhá možnost je <strong>mít v HA druhý účet správce</strong> uložený ve správci hesel, přes který se dostaneš dovnitř a 2FA prvního účtu vypneš. Přihlášení přes Trusted Networks (sekce 11.5) 2FA obchází.</p>
   </div>
 </section>
 
@@ -136,10 +136,10 @@
     <p>Metoda Trusted Networks (varianta B) <strong>obchází dvoufaktorové ověření</strong>. HA navíc od verze 2026.8 hlásí, že nastavení <code>allow_bypass_login</code> a <code>trusted_users</code> v YAML přestane fungovat ve verzi 2027.2.0 (zdroj: hlášení uživatelů, <strong>nutné prověřit u tebe</strong>). Proto je varianta A lepší.</p>
   </div>
 
-  <h3>Varianta A: samostatný uživatel pro nástěnný tablet (doporučeno)</h3>
+  <h3 id="varianta-a-samostatny-uzivatel-pro-nastenny-tablet-doporucen">Varianta A: samostatný uživatel pro nástěnný tablet (doporučeno)</h3>
   <p>Vytvoř v HA uživatele jen pro tablet (Nastavení → Osoby → Uživatelé → Přidat uživatele, bez práv správce, jen z lokální sítě). Na tabletu se jednou přihlas, tablet zůstane přihlášený a heslo nezadává. Tablet nemá práva správce, takže případné zneužití je omezené.</p>
 
-  <h3>Varianta B: Trusted Networks v configuration.yaml (zastaralé)</h3>
+  <h3 id="varianta-b-trusted-networks-v-configuration-yaml-zastarale">Varianta B: Trusted Networks v configuration.yaml (zastaralé)</h3>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -163,7 +163,7 @@
   </div>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ Pozor na bezpečnostní kontext</div>
-    <p>Trusted Networks je vhodné pouze pokud je tvoje WiFi dobře zabezpečená (WPA3 nebo WPA2 se silným heslem) a nemáš hosty s přístupem do hlavní sítě. Pro hosty použij izolovanou guest WiFi síť.</p>
+    <p>Trusted Networks je vhodné, pouze pokud je tvoje WiFi dobře zabezpečená (WPA3 nebo WPA2 se silným heslem) a nemáš hosty s přístupem do hlavní sítě. Pro hosty použij izolovanou guest WiFi síť.</p>
   </div>
 </section>
 
@@ -194,7 +194,7 @@
   </div>
   <div class="callout callout-info">
     <div class="callout-title">ℹ️ Lokální uživatelé v konfiguraci</div>
-    <p>Blok <code>logins:</code> v konfiguraci Mosquitto není pro zabezpečení nutný. Je to jen volitelná varianta B z <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html#mqtt-uzivatel">sekce 7.3</a>. Prázdná konfigurace <strong>neznamená</strong> přístup bez přihlášení.</p>
+    <p>Blok <code>logins:</code> v konfiguraci Mosquitto není pro zabezpečení nutný. Je to jen volitelná varianta B ze <a href="07_raspberry_instalace_mqtt_broker_mosquitto.html#mqtt-uzivatel">sekce 7.3</a>. Prázdná konfigurace <strong>neznamená</strong> přístup bez přihlášení.</p>
   </div>
 </section>
 
@@ -216,7 +216,7 @@
     </div>
   </div>
 
-  <h3>Jak nastavit Tailscale (doporučeno pro zdarma přístup)</h3>
+  <h3 id="jak-nastavit-tailscale-doporuceno-pro-zdarma-pristup">Jak nastavit Tailscale (doporučeno pro zdarma přístup)</h3>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -345,7 +345,7 @@ actions:
     <li><strong>Zařízení s trvale zapnutým Touchlink</strong> se vyhýbej, zejména na místech, kam se snadno dostane cizí osoba. Touchlink používá nezabezpečené zprávy v těsné blízkosti.</li>
   </ul>
 
-  <h3>Seznam povolených zařízení (passlist) – doporučeno</h3>
+  <h3 id="seznam-povolenych-zarizeni-passlist-doporuceno">Seznam povolených zařízení (passlist) – doporučeno</h3>
   <p><strong>O co jde:</strong> každé Zigbee zařízení má unikátní adresu IEEE (jako sériové číslo, např. <code>0x00158d0001234567</code>). Passlist je seznam těchto adres, které se smějí do tvé sítě připojit. Zařízení, které v seznamu není, Zigbee2MQTT nepřijme.</p>
   <p><strong>Proč ho použít:</strong> bez passlistu se může do sítě přidat každé Zigbee zařízení, které je zrovna v párovacím režimu a v dosahu, i cizí (například sousedovo nebo omylem spárované). Passlist tomu předchází a chrání i před přidáním zařízení někým, kdo by získal přístup k otevřenému párování (Permit Join). Nejvíc se hodí v bytových domech. Doporučuji ho zapnout <strong>až po spárování všech svých zařízení</strong>.</p>
   <ol>

@@ -119,7 +119,7 @@
         <div class="hw-card-title">🌐 Ethernet kabel</div>
         <span class="hw-badge hw-badge-recommended">doporučeno</span>
       </div>
-      <p>RPi 3 B+ má WiFi, ale <strong>Ethernet = stabilita</strong>. HA zapisuje data průběžně a WiFi výpadky mohou způsobit problémy. Pro server který běží 24/7 preferuj drát.</p>
+      <p>RPi 3 B+ má WiFi, ale <strong>Ethernet = stabilita</strong>. HA zapisuje data průběžně a WiFi výpadky mohou způsobit problémy. Pro server, který běží 24/7 preferuj drát.</p>
       <ul>
         <li>Kategorie: Cat 5e nebo Cat 6 (RPi 3 B+ zvládne reálně max. cca 300 Mbit/s – gigabitový port je zapojený přes USB 2.0)</li>
         <li>Délka: dle potřeby – měříme od RPi k routeru/switchi</li>
@@ -173,9 +173,9 @@
     <div class="power-row">
       <div>
         <div class="power-label">Napětí</div>
-        <div class="power-note">Přesně 5V nebo mírně výš – 5.1V je ideál</div>
+        <div class="power-note">Přesně 5 V nebo mírně výš – 5,1 V je ideál</div>
       </div>
-      <div class="power-value">5V DC</div>
+      <div class="power-value">5 V DC</div>
     </div>
     <div class="power-row">
       <div>
@@ -211,7 +211,7 @@
     </ul>
   </div>
 
-  <h3>Hlášení o slabém napájení i při silnějším zdroji</h3>
+  <h3 id="hlaseni-o-slabem-napajeni-i-pri-silnejsim-zdroji">Hlášení o slabém napájení i při silnějším zdroji</h3>
   <p>Varování o podpětí (undervoltage) se často objevuje, i když máš zdroj s dostatečným proudem. Proud totiž není jediná příčina – rozhoduje napětí přímo na desce RPi. Postupuj podle kroků a po každém zkontroluj, jestli varování zmizelo:</p>
 
   <div class="steps">
@@ -290,7 +290,7 @@
     <p>Pokud varování zůstává i s originálním zdrojem a krátkým kabelem, zkus jiné pouzdro SSD (některá berou víc proudu) nebo jiný kus Zigbee donglu. Odpojením zařízení po jednom zjistíš, které přetěžuje napájení.</p>
   </div>
 
-  <h3>Kde koupit napájecí zdroj v ČR</h3>
+  <h3 id="kde-koupit-napajeci-zdroj-v-cr">Kde koupit napájecí zdroj v ČR</h3>
 
   <div class="shop-grid">
     <a href="https://www.alza.cz" class="shop-link" target="_blank" rel="noopener noreferrer">
@@ -335,7 +335,7 @@
   <h2 id="ssd-pouzdro">USB pouzdro pro mSATA</h2>
   <p>Ne každé pouzdro (enclosure) pro mSATA SSD funguje s RPi bez problémů. Některé řadiče (známý příklad: <strong>JMS578</strong>) způsobují náhodné pády kvůli chybám v protokolu UAS (USB Attached Storage).</p>
 
-  <h3>Jak zjistit chipset svého pouzdra</h3>
+  <h3 id="jak-zjistit-chipset-sveho-pouzdra">Jak zjistit chipset svého pouzdra</h3>
   <ol>
     <li>Připoj pouzdro k PC s Windows</li>
     <li>Otevři Správce zařízení (Device Manager) → najdi USB úložiště → Vlastnosti (Properties) → Podrobnosti (Details) → ID hardwaru (Hardware Ids)</li>
@@ -343,7 +343,7 @@
     <li>Pokud vidíš <code>152d:0578</code> = JMS578, může být problém s UAS</li>
   </ol>
 
-  <h3>Pokud máš problémové pouzdro – řešení</h3>
+  <h3 id="pokud-mas-problemove-pouzdro-reseni">Pokud máš problémové pouzdro – řešení</h3>
   <p>Přidej parametr quirks do souboru <code>cmdline.txt</code> na bootovacím oddílu. Nejjednodušší je to udělat z Windows – bootovací oddíl je FAT32 a Windows ho přečte (viz sekce 4.5):</p>
   <pre><code># 1) Zjisti VendorID:ProductID pouzdra (postup výše), např. 152d:0578
 # 2) Otevři soubor cmdline.txt na bootovacím oddílu (např. v Poznámkovém bloku)
@@ -356,7 +356,7 @@ usb-storage.quirks=152d:0578:u
     <p>Před koupí zkontroluj recenze konkrétního pouzdra v komunitě Home Assistant a Raspberry Pi. Hledej zmínky o UAS, pádech nebo nutnosti quirks. Recenze najdeš na <a href="https://community.home-assistant.io" target="_blank" rel="noopener noreferrer">community.home-assistant.io</a>.</p>
   </div>
 
-  <h3>Jak vybrat mSATA SSD</h3>
+  <h3 id="jak-vybrat-msata-ssd">Jak vybrat mSATA SSD</h3>
   <ul>
     <li><strong>Konektor:</strong> pozor na rozdíl mezi mSATA, M.2 SATA a M.2 NVMe. Nejsou zaměnitelné a pouzdro musí odpovídat typu disku.</li>
     <li><strong>Kapacita:</strong> min. 32 GB, lépe 64 GB.</li>
@@ -375,7 +375,7 @@ usb-storage.quirks=152d:0578:u
     <li><strong>Aktivní chlazení (ventilátor):</strong> teplotu výrazně sníží. Pro Home Assistant se Zigbee2MQTT obvykle není nutné.</li>
   </ul>
 
-  <h3>Jak nainstalovat heatsink</h3>
+  <h3 id="jak-nainstalovat-heatsink">Jak nainstalovat heatsink</h3>
   <ul>
     <li>Heatsink je malý hliníkový nebo měděný blok se samolepicí termální podložkou</li>
     <li>Nalep přímo na hlavní CPU čip (největší čip na desce – Broadcom BCM2837)</li>
@@ -383,7 +383,7 @@ usb-storage.quirks=152d:0578:u
     <li>Součástí většiny RPi kitů a hliníkových pouzder</li>
   </ul>
 
-  <h3>Jak zkontrolovat teplotu</h3>
+  <h3 id="jak-zkontrolovat-teplotu">Jak zkontrolovat teplotu</h3>
   <p>Aktuální teplotu CPU zjistíš dvěma způsoby:</p>
   <ul>
     <li><strong>V Home Assistant:</strong> přidej integraci System Monitor (Sledování systému) – Nastavení → Zařízení a služby → Přidat integraci (Settings → Devices &amp; services → Add integration). Nabízí senzor teploty procesoru (Processor temperature).</li>

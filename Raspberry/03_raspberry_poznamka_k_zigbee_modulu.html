@@ -147,13 +147,13 @@
   <h2 id="konfig-z2m">Vliv na konfiguraci Z2M</h2>
   <p>Typ čipu určuje, jaký <strong>adaptér (adapter)</strong> používá Zigbee2MQTT. Špatný adaptér je častá chyba při nastavení – Z2M pak nenaběhne. Při prvním nastavení Z2M adaptér často najde a nabídne sám (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#yaml-konfig">sekce 9.1</a>), ruční zadání se hodí jako záložní varianta.</p>
 
-  <h3>Pro SLZB-07 (EFR32MG21) – Silicon Labs EmberZNet</h3>
+  <h3 id="pro-slzb-07-efr32mg21-silicon-labs-emberznet">Pro SLZB-07 (EFR32MG21) – Silicon Labs EmberZNet</h3>
   <pre><code>serial:
   port: /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_XXXX-if00-port0
   adapter: ember    # ← SPRÁVNĚ pro EFR32MG21 (EmberZNet firmware)
   rtscts: true      # hardwarové řízení toku (SLZB-07); u Sonoff ZBDongle-E ho nenastavuj</code></pre>
 
-  <h3>Pro Ebyte E72 (CC2652P) – Texas Instruments Z-Stack</h3>
+  <h3 id="pro-ebyte-e72-cc2652p-texas-instruments-z-stack">Pro Ebyte E72 (CC2652P) – Texas Instruments Z-Stack</h3>
   <pre><code>serial:
   port: /dev/serial/by-id/usb-XXXXXX...
   adapter: zstack   # ← SPRÁVNĚ pro CC2652P / CC1352 / CC2530</code></pre>
@@ -168,10 +168,10 @@
     <p>Po zapojení donglu do RPi jdi v Home Assistant na: <strong>Nastavení → Systém → Hardware → ⋮ → Veškerý hardware (Settings → System → Hardware → ⋮ → All hardware, v novějších verzích System hardware)</strong>. Hledej záznam s názvem USB-UART převodníku (např. „CP210x“, „CH340“ nebo „CH9102“). Přesná adresa ve formátu <code>/dev/serial/by-id/...</code> se zobrazí vedle záznamu. Tuto adresu vždy preferuj před <code>/dev/ttyUSB0</code> – je stabilní i po restartu. Podrobný postup je v <a href="08_raspberry_instalace_zigbee2mqtt.html#zjisteni-portu">sekci 8.5</a>.</p>
   </div>
 
-  <h3>Síťový koordinátor (Ethernet / PoE) – příklady</h3>
+  <h3 id="sitovy-koordinator-ethernet-poe-priklady">Síťový koordinátor (Ethernet / PoE) – příklady</h3>
   <p>Síťový koordinátor se v Zigbee2MQTT nepřipojuje přes <code>/dev/serial/by-id/…</code>, ale přes IP adresu a port. Adresu najdeš ve webovém rozhraní koordinátoru. Nastav mu v routeru pevnou IP adresu (rezervaci), stejně jako Home Assistantu (viz <a href="05_raspberry_prvni_spusteni_a_nastaveni_home_assistant.html#staticka-ip">sekce 5.5</a>). V ukázkách je jako příklad adresa <code>192.168.0.12</code>.</p>
 
-  <h3>Příklad: SMLIGHT SLZB-06M</h3>
+  <h3 id="priklad-smlight-slzb-06m">Příklad: SMLIGHT SLZB-06M</h3>
   <p>Čip EFR32MG21, adaptér <code>ember</code>.</p>
   <pre><code>serial:
   port: tcp://192.168.0.12:6638
@@ -186,7 +186,7 @@
     <li>Rozhraní SLZB-OS má stránku „Z2M and ZHA“, která vygeneruje konfiguraci pro tvoje zařízení. Doporučuji s ní ukázku porovnat.</li>
   </ul>
 
-  <h3>Příklad: SMLIGHT SLZB-MR1</h3>
+  <h3 id="priklad-smlight-slzb-mr1">Příklad: SMLIGHT SLZB-MR1</h3>
   <p>Víceradiový koordinátor: Zigbee na čipu Texas Instruments CC2652P7, adaptér <code>zstack</code>.</p>
   <pre><code>serial:
   port: tcp://192.168.0.12:7638
@@ -207,7 +207,7 @@
 
 <p>Označení <span class="tag-good">NOVÉ</span> znamená, že koordinátor byl doplněn v této revizi z oficiálního přehledu adaptérů Zigbee2MQTT (stav září 2026). Slovní popis vychází z tohoto přehledu, výrobců a nezávislých srovnání. Pro tuto příručku zůstává základem SLZB-07.</p>
 
-  <h3>USB koordinátory</h3>
+  <h3 id="usb-koordinatory">USB koordinátory</h3>
   <table class="alt-table">
     <thead>
       <tr>
@@ -285,7 +285,7 @@
     </tbody>
   </table>
 
-  <h3>Síťové (Ethernet / PoE) koordinátory</h3>
+  <h3 id="sitove-ethernet-poe-koordinatory">Síťové (Ethernet / PoE) koordinátory</h3>
   <p>Připojují se kabelem, ne přes USB. Pro RPi 3 B+ to má dvě výhody: odpadá napájení donglu z USB (viz problémy s podpětím v sekci 2.2) a koordinátor může stát na lepším místě v bytě. Oficiální dokumentace Z2M doporučuje kabelový Ethernet, připojení přes WiFi má horší stabilitu. Nastavení se liší (adresa <code>tcp://…</code>). Konkrétní příklady jsou v sekci 3.3, podrobný postup v kapitole 09.</p>
   <table class="alt-table">
     <thead>
@@ -324,7 +324,7 @@
     </tbody>
   </table>
 
-  <h3>Nedoporučené</h3>
+  <h3 id="nedoporucene">Nedoporučené</h3>
   <ul>
     <li><strong>Čipy Texas Instruments CC2531, CC2530, CC2538:</strong> slabší, vyžadují další hardware k flashování a nemusí zvládnout sítě s 20 a více zařízeními. CC2531 má navíc špatný dosah.</li>
     <li><strong>ZiGate:</strong> podle Z2M se nevyvíjí. <strong>ZBOSS (Nordic):</strong> experimentální.</li>
@@ -349,7 +349,7 @@
     <p>Zigbee2MQTT umí aktualizovat firmware <strong>Zigbee zařízení</strong> (senzory, žárovky) bezdrátově (over-the-air, OTA) přímo ze svého rozhraní (Settings → OTA updates). Koordinátor (USB dongle) se takto aktualizovat nedá – ten vyžaduje přímý flash přes webový nástroj nebo CLI.</p>
   </div>
 
-  <h3>coordinator_backup.json – záloha identity Zigbee sítě</h3>
+  <h3 id="coordinator-backup-json-zaloha-identity-zigbee-site">coordinator_backup.json – záloha identity Zigbee sítě</h3>
   <p>Zigbee2MQTT automaticky vytváří soubor <strong>coordinator_backup.json</strong> ve své datové složce (v Home Assistant <code>/config/zigbee2mqtt/</code>). Je <strong>velmi důležitý</strong> – obsahuje identitu tvé sítě:</p>
   <ul>
     <li>Síťový šifrovací klíč (Network Key) – bez něj zařízení nerozumí nové síti</li>

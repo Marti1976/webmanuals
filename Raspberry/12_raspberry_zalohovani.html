@@ -74,7 +74,7 @@
   <h2 id="obsah-zalohy">Co záloha obsahuje</h2>
   <p>Záloha Home Assistantu je archiv <code>.tar</code>. Ve výchozím nastavení je <strong>šifrovaná</strong> (viz sekce 12.3). Před spoléháním na zálohu je dobré vědět, co v ní skutečně je.</p>
 
-  <h3>Co záloha OBSAHUJE ✅</h3>
+  <h3 id="co-zaloha-obsahuje">Co záloha OBSAHUJE ✅</h3>
   <ul>
     <li><code>configuration.yaml</code> a všechny konfigurační soubory</li>
     <li>Databáze HA (historie, logbook, energie) – může být velká!</li>
@@ -85,7 +85,7 @@
     <li>Integrace a jejich konfigurace</li>
   </ul>
 
-  <h3>Co záloha NEOBSAHUJE ❌</h3>
+  <h3 id="co-zaloha-neobsahuje">Co záloha NEOBSAHUJE ❌</h3>
   <ul>
     <li>Samotný operační systém HAOS (stáhne se znovu při obnově)</li>
     <li>Obrazy aplikací (stáhnou se znovu, proto obnova trvá déle)</li>
@@ -150,7 +150,7 @@
   <h2 id="nas">Síťové úložiště a NAS</h2>
   <p>Zálohy můžeš ukládat na Synology, jiný NAS nebo jakékoli úložiště se sdílením SMB či NFS. Společná příprava platí pro všechny varianty níže.</p>
 
-  <h3>Příprava na Synology (společná)</h3>
+  <h3 id="priprava-na-synology-spolecna">Příprava na Synology (společná)</h3>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -177,7 +177,7 @@
     </div>
   </div>
 
-  <h3>Varianta A: nativní síťové úložiště v HA (doporučeno)</h3>
+  <h3 id="varianta-a-nativni-sitove-uloziste-v-ha-doporuceno">Varianta A: nativní síťové úložiště v HA (doporučeno)</h3>
   <p>Home Assistant umí zálohovat přímo na sdílenou složku, bez další aplikace. Šetří paměť RPi.</p>
   <ol>
     <li>Jdi do <strong>Nastavení → Systém → Úložiště (Settings → System → Storage)</strong> a klikni <strong>Přidat síťové úložiště (Add network storage)</strong>.</li>
@@ -185,10 +185,10 @@
     <li>V <strong>Nastavení → Systém → Zálohy</strong> zapni nové úložiště jako umístění záloh.</li>
   </ol>
 
-  <h3>Varianta B: integrace Synology DSM</h3>
+  <h3 id="varianta-b-integrace-synology-dsm">Varianta B: integrace Synology DSM</h3>
   <p>Od Home Assistantu 2025.2 umí integrace Synology DSM ukládat zálohy přímo na Synology NAS. Přidej ji v <strong>Nastavení → Zařízení a služby → Přidat integraci</strong>, vyplň údaje NAS a pak ji zapni jako umístění záloh. Podrobnosti viz <a href="https://www.home-assistant.io/integrations/synology_dsm/" target="_blank" rel="noopener noreferrer">dokumentaci integrace</a>. <strong>Nutné prověřit na tvém HA</strong>, jak přesně se umístění zapíná.</p>
 
-  <h3>Varianta C: komunitní aplikace Samba Backup</h3>
+  <h3 id="varianta-c-komunitni-aplikace-samba-backup">Varianta C: komunitní aplikace Samba Backup</h3>
   <p>Aplikace zkopíruje zálohy HA na NAS podle vlastního plánu. Zabírá ale paměť navíc, takže na RPi 3 B+ je přednější varianta A.</p>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ Neudržovaná aplikace</div>
@@ -227,7 +227,7 @@ trigger_days:
   <h2 id="cloud">Cloud zdarma</h2>
   <p>Záloha mimo domov chrání i při krádeži nebo požáru. Používej jen bezplatný limit služby. Záloha obvykle zabere desítky až stovky MB, takže při deseti zálohách se vejdeš do několika GB. Zálohy jsou šifrované, takže jsou v cloudu v bezpečí.</p>
 
-  <h3>Varianta A: Google Drive nativní integrací (zdarma, složitější nastavení)</h3>
+  <h3 id="varianta-a-google-drive-nativni-integraci-zdarma-slozitejsi">Varianta A: Google Drive nativní integrací (zdarma, složitější nastavení)</h3>
   <p>Google Drive dává zdarma 15 GB. Integrace vyžaduje vlastní přístupové údaje (OAuth) z Google Cloud Console. Je to jednorázová práce na pár minut.</p>
   <ol>
     <li>V <strong>Google Cloud Console</strong> vytvoř projekt, povol <strong>Google Drive API</strong> a nastav <strong>OAuth consent screen</strong>.</li>
@@ -236,7 +236,7 @@ trigger_days:
     <li>V Google Drive vznikne složka <strong>Home Assistant</strong> pro zálohy. V <strong>Nastavení → Systém → Zálohy</strong> zapni Google Drive jako umístění záloh.</li>
   </ol>
 
-  <h3>Varianta B: komunitní aplikace Google Drive Backup (jednodušší přihlášení)</h3>
+  <h3 id="varianta-b-komunitni-aplikace-google-drive-backup-jednodussi">Varianta B: komunitní aplikace Google Drive Backup (jednodušší přihlášení)</h3>
   <p>Aplikace sama vytváří zálohy podle vlastního plánu a nahrává je na Google Drive. Autorizace je jednodušší, ale aplikace zabírá paměť navíc. Repozitář byl naposledy aktualizován v lednu 2025 (podle GitHubu), proto je vhodnější varianta A, pokud ti nevadí složitější nastavení.</p>
   <ol>
     <li>Přidej repozitář <code>https://github.com/sabeechen/hassio-google-drive-backup</code> (Obchod → ⋮ → Repozitáře) a nainstaluj <strong>„Home Assistant Google Drive Backup“</strong>. Spusť aplikaci.</li>
@@ -244,7 +244,7 @@ trigger_days:
     <li>Nastav počet záloh v HA a na Drive (např. 3 a 10), čas zálohování (např. <code>02:30</code>, ať se nekříží s plánem HA) a ulož. Pro test klikni <strong>„Backup Now“</strong>. Zálohy najdeš na drive.google.com ve složce <code>Home Assistant Backups</code>.</li>
   </ol>
 
-  <h3>Varianta C: OneDrive</h3>
+  <h3 id="varianta-c-onedrive">Varianta C: OneDrive</h3>
   <p>Integrace OneDrive (od HA 2025.2) uloží zálohy do tvého Microsoft OneDrive. Přidej ji v <strong>Nastavení → Zařízení a služby → Přidat integraci</strong>, přihlas se účtem Microsoft a povol přístup. Bezplatný limit OneDrive je zhruba 5 GB (ověř podle svého účtu).</p>
 
 </section>
@@ -258,7 +258,7 @@ trigger_days:
     <li><strong>Doporučená:</strong> lokálně + NAS nativním síťovým úložištěm (12.5, varianta A)</li>
     <li><strong>Maximální (3-2-1):</strong> lokálně + NAS + cloud zdarma (12.6)</li>
   </ul>
-  <h3>Časování</h3>
+  <h3 id="casovani">Časování</h3>
   <ul>
     <li><strong>03:00</strong> – automatická záloha HA. Nativní umístění (síťové úložiště, Google Drive, OneDrive) ji nahrají samy, žádný další čas nenastavuješ.</li>
     <li>Komunitní aplikace mají vlastní plán: <strong>02:30</strong> Google Drive Backup, <strong>04:00</strong> Samba Backup. Vytvářejí nebo kopírují zálohy zvlášť, takže je nepoužívej souběžně s nativním umístěním stejného cíle.</li>

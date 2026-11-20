@@ -40,7 +40,7 @@
   <h2 id="pece-ssd">Péče o SSD</h2>
   <p>Přechodem ze SD karty na SSD jsi výrazně zvýšil spolehlivost. I tak je dobré znát pár zásad:</p>
   <ul>
-    <li><strong>Náhlý výpadek napájení</strong> je stále největší riziko – SSD to zvládne lépe než SD karta, ale konzistence databáze může být narušena. Zvažuj záložní napájení (UPS) pro RPi.</li>
+    <li><strong>Náhlý výpadek napájení</strong> je stále největší riziko – SSD to zvládne lépe než SD karta, ale konzistence databáze může být narušena. Zvaž záložní napájení (UPS) pro RPi.</li>
     <li><strong>USB pouzdro</strong> s některými řadiči (např. JMS578) může způsobovat pády kvůli UAS. Postup řešení je v <a href="02_raspberry_hardware.html#ssd-pouzdro">sekci 2.3</a> a v <a href="14_raspberry_reseni_problemu_troubleshooting.html">kapitole 14</a>.</li>
     <li><strong>Kontrola zdraví SSD (SMART):</strong> příkaz bývá <code>smartctl -a -d sat /dev/sda</code> (přepínač <code>-d sat</code> je u USB pouzder většinou potřeba). Funguje jen tehdy, když pouzdro SMART data předává. V aplikaci Terminal &amp; SSH nemusí být <code>smartctl</code> ani zařízení <code>/dev/sda</code> dostupné. <strong>Nutné prověřit na tvém RPi.</strong> Zkontroluj 1× ročně.</li>
     <li><strong>Teplota SSD</strong> v pouzdře je při zátěži orientačně 40–60 °C, což je v pořádku. Nad 70 °C je potenciálně problematická.</li>
@@ -73,10 +73,10 @@
 <section class="sec">
   <h2 id="zigbee-optimalizace">Optimalizace Zigbee sítě</h2>
 
-  <h3>Umístění USB koordinátoru</h3>
+  <h3 id="umisteni-usb-koordinatoru">Umístění USB koordinátoru</h3>
   <p>Umístění koordinátoru (anténa, prodlužovací kabel, vzdálenost od WiFi routeru, výška) je popsáno v <a href="03_raspberry_poznamka_k_zigbee_modulu.html#antena">sekci 3.6</a>. Platí tam i varování před kovovými skříněmi a příčkami.</p>
 
-  <h3>Budování stabilní mesh sítě</h3>
+  <h3 id="budovani-stabilni-mesh-site">Budování stabilní mesh sítě</h3>
   <ul>
     <li>Pro menší byt obvykle stačí koordinátor a několik napájených routerů (zásuvky, žárovky)</li>
     <li>Pro větší prostory přidávej routery rovnoměrně po bytě, dosah v budově ovlivňují zdi a stropy</li>
@@ -84,14 +84,14 @@
     <li>Bateriové senzory (end devices) automaticky hledají nejbližší router</li>
   </ul>
 
-  <h3>Zigbee vs WiFi rušení</h3>
+  <h3 id="zigbee-vs-wifi-ruseni">Zigbee vs WiFi rušení</h3>
   <ul>
     <li>Zigbee kanál <strong>15 nebo 20</strong> – minimální překryv s WiFi kanály 1, 6, 11 (viz <a href="09_raspberry_konfigurace_zigbee2mqtt.html#zigbee-kanal">sekce 9.3</a>)</li>
     <li>Pokud máš WiFi na kanálu 13, vyhni se Zigbee kanálu 25</li>
     <li>Bluetooth na RPi 3 B+ sdílí rádiovou část s WiFi. Pokud Bluetooth nepotřebuješ, vypni ho: v souboru <code>config.txt</code> na bootovacím oddílu přidej řádek <code>dtoverlay=pi3-disable-bt</code>. Úprava je nejjednodušší z Windows (bootovací oddíl je FAT32, viz <a href="04_raspberry_priprava_usb_msata_ssd_windows.html#oddily">sekce 4.5</a>) a projeví se po restartu. Přestanou ti fungovat integrace využívající Bluetooth.</li>
   </ul>
 
-  <h3>Vizualizace Zigbee sítě</h3>
+  <h3 id="vizualizace-zigbee-site">Vizualizace Zigbee sítě</h3>
   <p>V Z2M webovém rozhraní jdi na záložku <strong>Map</strong>. Zobrazí se grafická mapa sítě – vidíš, jak zařízení komunikují a přes které routery. Podrobnosti najdeš v dokumentaci Zigbee2MQTT.</p>
   <div class="callout callout-tip">
     <div class="callout-title">💡 Stabilizace sítě po přidání zařízení</div>
@@ -104,7 +104,7 @@
   <h2 id="vykon">Sledování výkonu</h2>
   <p>RPi 3 B+ má 1 GB RAM. Sledování pomáhá odhalit problémy dříve, než způsobí nestabilitu.</p>
 
-  <h3>Kde sledovat výkon</h3>
+  <h3 id="kde-sledovat-vykon">Kde sledovat výkon</h3>
   <ul>
     <li><strong>Integrace System Monitor (Sledování systému):</strong> Nastavení → Zařízení a služby → Přidat integraci (Settings → Devices &amp; services → Add integration). Nabízí senzory využití procesoru, teploty procesoru a paměti.</li>
     <li><strong>Glances:</strong> integrace vyžaduje běžící Glances server (existuje i komunitní aplikace). Sama zatěžuje paměť, proto ji na RPi 3 B+ nepoužívej, pokud nemusíš.</li>
@@ -139,7 +139,7 @@
   </div>
   <p>Hodnoty paměti jsou orientační. Teplotní limity jsou údaje výrobce RPi 3 B+ (viz <a href="02_raspberry_hardware.html#chlazeni">sekce 2.4</a>).</p>
 
-  <h3>Jak ušetřit RAM</h3>
+  <h3 id="jak-usetrit-ram">Jak ušetřit RAM</h3>
   <ul>
     <li>Vypni nebo odinstaluj nepoužívané aplikace</li>
     <li>Omez historii v <code>configuration.yaml</code>, viz <a href="#recorder">sekce 13.5</a></li>
@@ -175,13 +175,13 @@
     <p>Pokud databáze narostla a HA je pomalé: <strong>Nástroje pro vývojáře → Akce (Developer tools → Actions)</strong> → <code>recorder.purge</code> → nastavit <code>keep_days: 5</code> a spustit. Může to trvat i desítky minut a HA bude dočasně pomalejší.</p>
   </div>
 
-  <h3>Pokročilá volba: databáze v RAM</h3>
+  <h3 id="pokrocila-volba-databaze-v-ram">Pokročilá volba: databáze v RAM</h3>
   <p>Pro minimalizaci zápisů na SSD lze přesunout databázi zcela do RAM. Data se při restartu ztratí – vhodné pouze pokud historii nepotřebuješ:</p>
   <pre><code>recorder:
   db_url: "sqlite:///:memory:"   # databáze v RAM – ztratí se po restartu!</code></pre>
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ In-memory databáze – co ztratíš</div>
-    <p>S <code>sqlite:///:memory:</code> ztratíš veškerou historii senzorů při každém restartu HA. Grafy v ovládacím panelu (dashboard) budou prázdné. Automatizace závislé na historii přestanou fungovat. Doporučuji místo toho zkrátit <code>purge_keep_days: 3</code> – ušetříš místo, ale historii zachováš.</p>
+    <p>Se <code>sqlite:///:memory:</code> ztratíš veškerou historii senzorů při každém restartu HA. Grafy v ovládacím panelu (dashboard) budou prázdné. Automatizace závislé na historii přestanou fungovat. Doporučuji místo toho zkrátit <code>purge_keep_days: 3</code> – ušetříš místo, ale historii zachováš.</p>
   </div>
 </section>
 
@@ -190,14 +190,14 @@
   <h2 id="hacs">HACS – rozšíření</h2>
   <p><strong>HACS (Home Assistant Community Store)</strong> výrazně rozšiřuje možnosti HA – přidává komunitní integrace, karty ovládacího panelu a témata, které nejsou v oficiální nabídce. Není oficiální součástí Home Assistantu. Potřebuješ <strong>bezplatný účet GitHub</strong>.</p>
 
-  <h3>Co HACS nabízí</h3>
+  <h3 id="co-hacs-nabizi">Co HACS nabízí</h3>
   <ul>
     <li><strong>Integrace</strong> – zařízení a služby bez oficiální podpory (Local Tuya, better_thermostat, Xiaomi Home...)</li>
     <li><strong>Frontend karty</strong> – Mushroom Cards (moderní UI), ApexCharts (pokročilé grafy), Mini Graph Card, Button Card a další</li>
     <li><strong>Témata</strong> – vizuální témata ovládacího panelu</li>
   </ul>
 
-  <h3>Jak nainstalovat HACS</h3>
+  <h3 id="jak-nainstalovat-hacs">Jak nainstalovat HACS</h3>
   <p>Postup závisí na verzi Home Assistantu:</p>
   <ul>
     <li><strong>Home Assistant 2026.10 a starší (Home Assistant OS) – aplikace Get HACS:</strong>
@@ -212,17 +212,17 @@
   </ul>
   <p>Aktuální postup vždy ověř na <a href="https://hacs.xyz/docs/use/download/download/" target="_blank" rel="noopener noreferrer">hacs.xyz</a>.</p>
 
-  <h3>Doporučené HACS karty pro začátek</h3>
+  <h3 id="doporucene-hacs-karty-pro-zacatek">Doporučené HACS karty pro začátek</h3>
   <ul>
     <li><strong>Mushroom Cards</strong> – moderní karty, náhrada výchozích karet. Instalace: HACS → Frontend → Mushroom</li>
     <li><strong>ApexCharts Card</strong> – pokročilé grafy teploty, spotřeby, přítomnosti. Výrazně lepší než vestavěný History Graph</li>
     <li><strong>Mini Graph Card</strong> – kompaktní mini grafy přímo na ovládacím panelu</li>
-    <li><strong>Browser Mod</strong> – proměnit tablet na pevný kiosk s ovládacím panelem HA</li>
+    <li><strong>Browser Mod</strong> – promění tablet na pevný kiosk s ovládacím panelem HA</li>
   </ul>
 
   <div class="callout callout-warn">
     <div class="callout-title">⚠️ HACS instaluj až po stabilizaci základu</div>
-    <p>HACS a komunitní karty či integrace přidávají závislosti navíc a na RPi 3 B+ zatěžují paměť. Instaluj je až poté, co základní systém (Zigbee2MQTT, zálohy, bezpečnost) běží stabilně alespoň týden. Rozšiřování dříve než je stabilní základ ztěžuje hledání příčin problémů.</p>
+    <p>HACS a komunitní karty či integrace přidávají závislosti navíc a na RPi 3 B+ zatěžují paměť. Instaluj je až poté, co základní systém (Zigbee2MQTT, zálohy, bezpečnost) běží stabilně alespoň týden. Rozšiřování dříve, než je stabilní základ ztěžuje hledání příčin problémů.</p>
   </div>
 </section>
 
@@ -318,7 +318,7 @@
   <h2 id="notifikace-bat">Notifikace vybitých baterií</h2>
   <p>Užitečná automatizace: HA tě upozorní, když baterie v Zigbee senzoru klesne pod 20 %. Máš tři varianty.</p>
 
-  <h3>Varianta A: hotová šablona (blueprint), doporučeno</h3>
+  <h3 id="varianta-a-hotova-sablona-blueprint-doporuceno">Varianta A: hotová šablona (blueprint), doporučeno</h3>
   <p>Komunitní šablona (blueprint) <strong>„Low battery level detection &amp; notification for all battery sensors“</strong> pravidelně kontroluje všechny senzory s device class <code>battery</code> a pošle upozornění. Nemusíš vypisovat jednotlivé senzory.</p>
   <ol>
     <li>Jdi do <strong>Nastavení → Automatizace a scény → Šablony (Blueprints)</strong> a zvol <strong>Importovat šablonu (Import blueprint)</strong></li>
@@ -326,7 +326,7 @@
     <li>Vytvoř ze šablony (blueprintu) automatizaci, nastav hranici 20 % a akci odeslání upozornění na mobil</li>
   </ol>
 
-  <h3>Varianta B: seznam konkrétních senzorů</h3>
+  <h3 id="varianta-b-seznam-konkretnich-senzoru">Varianta B: seznam konkrétních senzorů</h3>
   <p>Zástupný znak (<code>sensor.*_battery</code>) v <code>entity_id</code> nefunguje, proto vypiš senzory ručně. Přidej přes <strong>Nastavení → Automatizace a scény → + Vytvořit automatizaci → ⋮ → Upravit v YAML (Edit in YAML)</strong>:</p>
   <pre><code>alias: "Notifikace: Vybité baterie"
 description: "Upozornění, když baterie klesne pod 20 %"
@@ -344,7 +344,7 @@ actions:
 mode: queued</code></pre>
   <p>Zápis <code>triggers</code>, <code>trigger</code>, <code>actions</code> a <code>action</code> platí od Home Assistantu 2024.10. Starší zápis <code>trigger / platform / service</code> funguje dál.</p>
 
-  <h3>Varianta C: všechny baterie jednou šablonou</h3>
+  <h3 id="varianta-c-vsechny-baterie-jednou-sablonou">Varianta C: všechny baterie jednou šablonou</h3>
   <p>Spouštěč sleduje všechny senzory s device class <code>battery</code> a ve zprávě vypíše, které jsou slabé. <strong>Nutné prověřit na tvém HA</strong>:</p>
   <pre><code>triggers:
   - trigger: template

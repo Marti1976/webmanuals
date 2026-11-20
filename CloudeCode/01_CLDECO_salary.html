@@ -42,7 +42,7 @@
 <div class="tw"><table>
 <thead><tr><th>Model</th><th>Cena</th><th>Kdy jej používat</th><th>Limity</th></tr></thead>
 <tbody>
-<tr><td><strong>Claude.ai Pro</strong></td><td>$20/měs</td><td>Jednotlivec, osobní projekty, lespoň 1–2 h/den</td><td>~80–120 promptů/den; limity na request</td></tr>
+<tr><td><strong>Claude.ai Pro</strong></td><td>$20/měs</td><td>Jednotlivec, osobní projekty, alespoň 1–2 h/den</td><td>~80–120 promptů/den; limity na request</td></tr>
 <tr><td><strong>Claude.ai Max 5×</strong></td><td>$100/měs</td><td>Dev, 5–8 h/den práce; Opus, produktivita</td><td>~500 promptů/den; higher rate limits</td></tr>
 <tr><td><strong>Claude.ai Max 20×</strong></td><td>$200/měs</td><td>Dev, agenti, CI/CD; Opus full power</td><td>Nejvyšší rate limits; neomezené Opus</td></tr>
 <tr><td><strong>API (pay-as-you-go)</strong></td><td>$0.80–5 USD/MTok input</td><td>Batch, CI/CD, automation; nepotřebujete web UI</td><td>Žádné — platíte jen za spotřebu</td></tr>
@@ -53,18 +53,18 @@
 
 <h2 id="prehled-planu">Přehled plánů</h2>
 
-<h3>Claude.ai Pro — $20/měs</h3>
+<h3 id="claude-ai-pro-20-mes">Claude.ai Pro — $20/měs</h3>
 <p><strong>Co dostanete:</strong> Přístup k aktuálnímu Claudovi (Sonnet 4.6 výchozí, Opus 4.7 dostupný), web UI, rate limits cca 80–120 promptů/den, paměť (memory) zachovávající kontext přes sessions.</p>
 <p><strong>Kdy se vyplatí:</strong> Začátečníci, osobní projekty, psaní, brainstorming. Pokud pracujete s Claudem méně než 3 hodiny denně, Pro je dostatečné.</p>
 <p><strong>Omezení:</strong> Rate limits jsou těsné pro development sessiony — pokud necháte session běžet delší dobu a posíláte mnoho promptů, můžete narazit na throttling.</p>
 
-<h3>Claude.ai Max — $100/měs (5×) a $200/měs (20×)</h3>
+<h3 id="claude-ai-max-100-mes-5-a-200-mes-20">Claude.ai Max — $100/měs (5×) a $200/měs (20×)</h3>
 <p><strong>Co dostanete (5×):</strong> 5× vyšší rate limits, neomezený Sonnet (4.6), omezený Opus (4.7 — cca 50k tokens za den). Web UI, advanced features.</p>
 <p><strong>Co dostanete (20×):</strong> 20× vyšší rate limits, neomezený Sonnet i Opus, full access k extended thinking, AI features bez omezení.</p>
 <p><strong>Kdy se vyplatí:</strong> Profesionální dev, dlouhé session se složitými úkoly, agenti. Max 20× je ideální pro produktivitu — při počtu sessionů a délce promptů, kterou vývojáři obvykle mají, se vám vrátí mnohokrát.</p>
 <p><strong>Praktika:</strong> Pokud používáte Claude v průměru 5+ hodin denně na komplexní úkoly, Max se vyplatí. Pokud 2–3 hodiny, zvažte Pro + API pro specifické úlohy.</p>
 
-<h3>API (pay-as-you-go) — od $0.80 USD/MTok input</h3>
+<h3 id="api-pay-as-you-go-od-0-80-usd-mtok-input">API (pay-as-you-go) — od $0.80 USD/MTok input</h3>
 <p><strong>Co dostanete:</strong> Přímý přístup k modelům přes REST API (bez web UI), Batch API s 50% slevou, neomezené prompty (platíte jen za tokeny).</p>
 <p><strong>Cena za model:</strong></p>
 <div class="tw"><table>
@@ -76,12 +76,12 @@
 </tbody>
 </table></div>
 
-<p><strong>Kdy se vyplatí:</strong> Automation, CI/CD, backend processů, Batch API pro noci. Bez web UI — pro vývojáře kteří nevyžadují interaktivní session.</p>
-<p><strong>Praktika:</strong> Pokud běhá 1000 promptů noci skrze Batch API s Haiku = $0.80–3 = cca $3. Na Max 20× bych za to zaplatil $200 měsíčně bez ohledu na využití. API se vyplatí pro infrastrukturu, nikoliv pro interactive dev.</p>
+<p><strong>Kdy se vyplatí:</strong> Automation, CI/CD, backend procesy, Batch API pro noci. Bez web UI — pro vývojáře kteří nevyžadují interaktivní session.</p>
+<p><strong>Praktika:</strong> Pokud v noci poběží 1000 promptů přes Batch API s Haiku = $0.80–3 = cca $3. Na Max 20× bych za to zaplatil $200 měsíčně bez ohledu na využití. API se vyplatí pro infrastrukturu, nikoliv pro interactive dev.</p>
 
-<h3>Team Premium — $100/seat/měs (roční $1200)</h3>
+<h3 id="team-premium-100-seat-mes-rocni-1200">Team Premium — $100/seat/měs (roční $1200)</h3>
 <p><strong>Pro týmy 5–50 lidí.</strong> Centrální billing, SSO, audit log, workspace management, jednotné nastavení.</p>
-<p><strong>Kdy se vyplatí:</strong> Startup, agentura nebo tým, který chce jednu fakturu a dohled nad všemi membry.</p>
+<p><strong>Kdy se vyplatí:</strong> Startup, agentura nebo tým, který chce jednu fakturu a dohled nad všemi členy.</p>
 
 <h2 id="api-sazby">API sazby za tokeny</h2>
 
@@ -106,7 +106,7 @@
 
 <h2 id="jak-usetrit">Jak ušetřit náklady — čtyři konkrétní taktiky</h2>
 
-<h3>1. Prompt caching — nejlevnější trik</h3>
+<h3 id="prompt-caching-nejlevnejsi-trik">1. Prompt caching — nejlevnější trik</h3>
 <p>Pokud máte dlouhý soubor (dokumentace, codebase, specifikace) a ptáte se ho 5+× na věci, cache je brutálně levné. Soubor se "přilepí" — každý další prompt jen přečte z cache za 10 % ceny.</p>
 
 <div class="cb"><div class="cb-label">Aktivace prompt cache v API</div><pre>
@@ -131,7 +131,7 @@
 <span class="c"># Cena input tokenu klesne na 10 %</span>
 </pre></div>
 
-<h3>2. Batch API — až 50 % úspora</h3>
+<h3 id="batch-api-az-50-uspora">2. Batch API — až 50 % úspora</h3>
 <p>Máte noční běh s 1000 prompty? Nepoužívejte live API. Batch API je asynchronní, zpracuje se do 24 h a je o 50 % levnější. Vyplatí se naopak jen pro velké objemy nebo rutinní automatizaci.</p>
 
 <div class="cb"><div class="cb-label">Batch API setup — jednoduše</div><pre>
@@ -151,7 +151,7 @@
 <span class="c"># Typická doba zpracování: 15 minut až 24 hodin</span>
 </pre></div>
 
-<h3>3. Chytrý výběr modelu — ušetřete 3–5×</h3>
+<h3 id="chytry-vyber-modelu-usetrete-35">3. Chytrý výběr modelu — ušetřete 3–5×</h3>
 <p>Největší chyba, které se vývojáři dopouštějí: používají Opus na vše. Opus je výjimečný model — ale pro 80 % každodenní práce je Sonnet stejně dobrý a třikrát levnější. A pro jednoduché opakující se operace je Haiku pětkrát levnější než Sonnet.</p>
 
 <div class="tw"><table>
@@ -179,8 +179,8 @@
 { "model": "claude-sonnet-4-6" }
 </pre></div>
 
-<h3>4. Extended Thinking — kdy vypnout</h3>
-<p>Extended thinking dává Claudovi prostor k hlubší úvaze před odpovědí. Je zapnuto výchozě a "thinking tokeny" se účtují jako <strong>output tokeny</strong> — tedy $25/MTok na Opus 4.7. To je největší skrytý náklad, o kterém spousta vývojářů neví.</p>
+<h3 id="extended-thinking-kdy-vypnout">4. Extended Thinking — kdy vypnout</h3>
+<p>Extended thinking dává Claudovi prostor k hlubší úvaze před odpovědí. Je ve výchozím stavu zapnuto a "thinking tokeny" se účtují jako <strong>output tokeny</strong> — tedy $25/MTok na Opus 4.7. To je největší skrytý náklad, o kterém spousta vývojářů neví.</p>
 <p>Na jednoduchých úkolech (přejmenování, formátování, přidání komentářů) thinking nepřidává žádnou hodnotu — ale stojí vás desítky procent extra. Nastavte strop nebo ho selektivně vypněte:</p>
 <div class="cb"><div class="cb-label">Ovládání thinking tokenů</div><pre>
 <span class="c"># Globální strop v ENV — doporučeno pro každodenní práci</span>
@@ -195,7 +195,7 @@ export MAX_THINKING_TOKENS=8000
 <span class="a">/config</span> thinking: false
 </pre></div>
 
-<h3>5. Session hygiena — kontext a tokeny</h3>
+<h3 id="session-hygiena-kontext-a-tokeny">5. Session hygiena — kontext a tokeny</h3>
 <p>Každá zpráva v session, každý přečtený soubor a každý výsledek spuštěného příkazu se přidá do "okna kontextu" — a celé toto okno se posílá s každým dalším requestem. Čím déle session trvá a čím více souborů Claude načte, tím dražší každý další prompt je.</p>
 
 <p><strong>Praktická pravidla pro kontextovou hygienu:</strong></p>
@@ -213,11 +213,11 @@ export MAX_THINKING_TOKENS=8000
   <div class="saving-row"><span><strong>Úspora 80 % — jen lepší organizací sessions</strong></span><span class="saving-val">bez ztráty výsledku</span></div>
 </div>
 
-<h3>6. Kvalitní CLAUDE.md snižuje počet potřebných promptů</h3>
+<h3 id="kvalitni-claude-md-snizuje-pocet-potrebnych-promptu">6. Kvalitní CLAUDE.md snižuje počet potřebných promptů</h3>
 <p>Dobré CLAUDE.md znamená, že Claude hned ví co dělat — nemusí se ptát na konvence, architekturu nebo příkazy. Každý "ujasňovací" prompt navíc stojí tokeny. Investice do dobrého CLAUDE.md se vrátí desetinásobně.</p>
 <p>Konkrétně: bez CLAUDE.md strávíte první 2–3 prompty každé session tím, že Claudovi vysvětlujete kontext. S dobrým CLAUDE.md rovnou začínáte pracovat. Při 20 sessions týdně to ušetří 40–60 promptů — v API tokenech klidně $5–15 měsíčně na Opus.</p>
 
-<h3>7. Plan mode před drahými operacemi</h3>
+<h3 id="plan-mode-pred-drahymi-operacemi">7. Plan mode před drahými operacemi</h3>
 <p>Plan mode (<code>/plan</code>) nechá Clauda přečíst soubory a navrhnout přístup, aniž by psal kód. Teprve po vašem schválení začne implementovat. Toto zachrání situace, kdy Claude by šel špatnou cestou a vy byste platili za velký refaktoring, který pak zahodíte.</p>
 
 <h2 id="realne-naklady">Reálné měsíční náklady — přehledy typů uživatelů</h2>
@@ -233,7 +233,7 @@ export MAX_THINKING_TOKENS=8000
 </table></div>
 
 <div class="callout gn">
-  <div class="callout-title">Reálný příběh — 93 % úspora</div>
+  <div class="callout-title">Reálný příběh — 90 % úspora</div>
   <p>Vývojář, který dokumentoval spotřebu v roce 2025: 10 miliard tokenů za 8 měsíců, z toho převážně Opus. Ekvivalentní náklady na API by přesáhly $15 000. Na Max 20× předplatném zaplatil zhruba $1 600 celkem. Úspora 90 %.</p>
 </div>
 

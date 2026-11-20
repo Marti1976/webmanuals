@@ -1,4 +1,24 @@
 // Vkládá sidebar, navigaci mezi kapitolami a podporu lokálních podsekcí.
+
+// Uložená šířka sidebaru (nastavuje se tažením okraje). Platí jen na počítači – na mobilu zůstává výchozí.
+const SB_WIDTH_KEY = 'raspberry-sidebar-width';
+const SB_MIN = 200;
+const SB_MAX = 520;
+const SB_DESKTOP = window.matchMedia('(min-width: 900px)');
+let sbUserWidth = null;
+try {
+  const savedWidth = parseInt(localStorage.getItem(SB_WIDTH_KEY), 10);
+  if (savedWidth >= SB_MIN && savedWidth <= SB_MAX) sbUserWidth = savedWidth;
+} catch (e) { /* localStorage nedostupný – zůstane výchozí šířka */ }
+const applySidebarWidth = () => {
+  if (sbUserWidth && SB_DESKTOP.matches) {
+    document.documentElement.style.setProperty('--sidebar-width', sbUserWidth + 'px');
+  } else {
+    document.documentElement.style.removeProperty('--sidebar-width');
+  }
+};
+applySidebarWidth();
+SB_DESKTOP.addEventListener('change', applySidebarWidth);
 document.addEventListener('DOMContentLoaded', () => {
   // Progress bar (pokud ho stránka má)
   const progressBar = document.getElementById('progressBar');
@@ -51,7 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
 
     sidebarContainer.innerHTML = `<nav class="sidebar" aria-label="Navigace">
-      ${currentPage === chapters[0].num ? '' : `<a href="${chapters[0].file}" class="sb-home">← Zpět na Úvod</a>`}
+      ${currentPage === chapters[0].num ? '<a href="../index.html" class="sb-home">← Zpět na rozcestník</a>' : `<a href="${chapters[0].file}" class="sb-home">← Zpět na Úvod</a>`}
+      <div class="sb-search"><input type="text" id="sb-search-input" placeholder="🔍 Hledat…" autocomplete="off"></div>
       <ul class="sb-chapters">${links}</ul>
     </nav>`;
 
@@ -100,6 +121,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.body.append(hamburger, backdrop);
+
+    // Roztažení sidebaru tažením za pravý okraj (jen na počítači), dvojklik = výchozí šířka
+    const resizer = document.createElement('div');
+    resizer.className = 'sb-resizer';
+    resizer.title = 'Táhněte pro změnu šířky · dvojklik = výchozí';
+    document.body.append(resizer);
+
+    resizer.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      resizer.setPointerCapture(e.pointerId);
+      document.body.classList.add('sb-resizing');
+      let moved = false;
+      const move = (ev) => {
+        sbUserWidth = Math.min(SB_MAX, Math.max(SB_MIN, Math.round(ev.clientX)));
+        moved = true;
+        applySidebarWidth();
+      };
+      const up = () => {
+        resizer.removeEventListener('pointermove', move);
+        resizer.removeEventListener('pointerup', up);
+        resizer.removeEventListener('pointercancel', up);
+        document.body.classList.remove('sb-resizing');
+        if (moved) {
+          try { localStorage.setItem(SB_WIDTH_KEY, String(sbUserWidth)); } catch (err) { /* nic */ }
+        }
+      };
+      resizer.addEventListener('pointermove', move);
+      resizer.addEventListener('pointerup', up);
+      resizer.addEventListener('pointercancel', up);
+    });
+
+    resizer.addEventListener('dblclick', () => {
+      sbUserWidth = null;
+      applySidebarWidth();
+      try { localStorage.removeItem(SB_WIDTH_KEY); } catch (err) { /* nic */ }
+    });
+
+    // Hledání: mimo index Enter přesměruje na index s dotazem (?q=), na indexu řídí hledání skript indexu
+    const sbSearchInput = document.getElementById('sb-search-input');
+    if (sbSearchInput && currentPage !== chapters[0].num) {
+      sbSearchInput.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        const q = e.target.value.trim();
+        if (q) window.location.href = chapters[0].file + '?q=' + encodeURIComponent(q);
+      });
+    }
   }
 
   // Čísla podsekcí před nadpisy <h2> (stejná čísla jako v sidebaru)
