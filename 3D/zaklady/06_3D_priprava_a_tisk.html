@@ -5,222 +5,81 @@
 <title>06 Příprava tisku a tisk — 3D Tisk průvodce</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:      #0d0f14;
-    --surface: #13161e;
-    --card:    #181c27;
-    --border:  #252b3b;
-    --accent:  #e8a020;
-    --accent2: #f0c050;
-    --tuf:     #c8860a;
-    --green:   #3ecf76;
-    --red:     #e85050;
-    --blue:    #4a9eff;
-    --text:    #d8dce8;
-    --muted:   #6e7590;
-    --mono:    'IBM Plex Mono', monospace;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
-
-  /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19,22,30,.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
-  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
-  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-  .sidebar-product { display: flex; align-items: center; gap: 10px; }
-  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
-  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
-  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-  .sb-search { padding: 15px 20px 5px; }
-  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .sb-search input:focus { border-color: var(--accent); }
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all .2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232,160,32,.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
-  .nav-item-text { flex: 1; min-width: 0; }
-  .nav-subs { margin: 0; padding: 0 0 10px; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all .2s; }
-  .nav-sub-item:hover { color: #fff; background: rgba(255,255,255,.03); border-left-color: var(--accent); }
-
-  /* ── MAIN ── */
-  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
-
-  /* ── HERO ── */
-  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
-  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
-  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
-  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
-  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
-  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
-  .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 680px; }
-
-  /* ── PART DIVIDER ── */
-  .part-divider { display: flex; align-items: center; gap: 16px; margin: 52px 0 8px; }
-  .part-num { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.12); border: 1px solid rgba(232,160,32,.3); padding: 4px 12px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); flex-shrink: 0; letter-spacing: .1em; }
-  .part-title { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: #fff; }
-  .part-title span { color: var(--accent); }
-  .part-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--tuf), transparent); }
-
-  /* ── LAYOUT ── */
-  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
-
-  /* ── SECTIONS ── */
-  .section { margin: 36px 0; }
-  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .5px; }
-  .section h3 { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 600; color: var(--accent2); margin: 28px 0 12px; }
-  .section p { margin-bottom: 14px; }
-  .section p:last-child { margin-bottom: 0; }
-
-  /* ── KARTY ── */
-  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; margin-top: 14px; }
-  .card { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; transition: border-color .2s; }
-  .card:hover { border-color: var(--accent); }
-  .card h4 { color: #fff; margin-bottom: 6px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 600; }
-  .card p { font-size: 13.5px; color: var(--text); line-height: 1.6; }
-
-  /* ── CHECKLIST KROKY ── */
-  .checklist { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
-  .check-item { display: flex; align-items: flex-start; gap: 14px; background: var(--card); border: 1px solid var(--border); padding: 13px 18px; transition: border-color .2s; }
-  .check-item:hover { border-color: rgba(232,160,32,.35); }
-  .check-num { font-family: var(--mono); font-size: 12px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 7px; clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%); flex-shrink: 0; margin-top: 2px; min-width: 30px; text-align: center; }
-  .check-body strong { display: block; font-family: 'Rajdhani', sans-serif; font-size: 15px; color: #fff; margin-bottom: 2px; }
-  .check-body p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
-  .check-body a { color: var(--accent); text-decoration: none; font-size: 12px; font-family: var(--mono); }
-  .check-body a:hover { color: var(--accent2); }
-
-  /* ── TABULKA POVRCH/MATERIÁL ── */
-  .surf-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
-  .surf-table th { background: var(--surface); font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--border); }
-  .surf-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  .surf-table tr:nth-child(even) td { background: rgba(255,255,255,.015); }
-  .surf-table td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); width: 18%; }
-  .ok   { color: var(--green); font-weight: 700; }
-  .warn { color: var(--accent); font-weight: 700; }
-  .bad  { color: var(--red); font-weight: 700; }
-
-  /* ── PIPELINE ── */
-  .pipeline { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 14px 0; }
-  .pipe-step { background: var(--surface); border: 1px solid var(--border); padding: 8px 13px; font-family: var(--mono); font-size: 11px; color: var(--text); white-space: nowrap; }
-  .pipe-arrow { color: var(--accent); font-size: 15px; padding: 0 5px; flex-shrink: 0; }
-
-  /* ── INIT STEPS ── */
-  .init-steps { display: flex; flex-direction: column; gap: 0; margin-top: 14px; }
-  .init-step { display: flex; gap: 14px; align-items: flex-start; padding: 0 0 20px; position: relative; }
-  .init-step::before { content: ''; position: absolute; left: 17px; top: 36px; bottom: 0; width: 1px; background: var(--border); }
-  .init-step:last-child::before { display: none; }
-  .init-step:last-child { padding-bottom: 0; }
-  .step-dot { width: 36px; height: 36px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--tuf); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; color: var(--accent); clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
-  .step-content strong { display: block; font-family: 'Rajdhani', sans-serif; font-size: 15px; color: #fff; margin-bottom: 3px; padding-top: 7px; }
-  .step-content p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
-
-  /* ── LAYER EXAMPLES ── */
-  .layer-examples { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; margin-top: 14px; }
-  .layer-ex { background: var(--card); border: 1px solid var(--border); padding: 14px 16px; }
-  .layer-ex-icon { font-size: 24px; margin-bottom: 6px; }
-  .layer-ex h4 { font-family: 'Rajdhani', sans-serif; font-size: 15px; color: #fff; margin-bottom: 3px; }
-  .layer-ex p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
-  .layer-ex.ok  { border-color: var(--green); }
-  .layer-ex.bad { border-color: var(--red); }
-  .layer-ex.wrn { border-color: var(--accent); }
-
-  /* ── ODKAZ NA CHECKLIST ── */
-  .checklist-link { display: flex; align-items: center; gap: 14px; background: rgba(232,160,32,.05); border: 1px solid var(--tuf); padding: 16px 22px; margin: 28px 0; text-decoration: none; transition: background .2s; }
-  .checklist-link:hover { background: rgba(232,160,32,.1); }
-  .checklist-link-icon { font-size: 26px; flex-shrink: 0; }
-  .checklist-link-text strong { display: block; font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent); margin-bottom: 2px; }
-  .checklist-link-text span { font-size: 13px; color: var(--muted); font-family: var(--mono); }
-
-  /* ── ALERTS ── */
-  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 13px 17px; margin: 14px 0; font-size: 14px; line-height: 1.6; }
-  .alert-icon { font-size: 17px; line-height: 1.3; flex-shrink: 0; }
-  .alert-info  { border: 1px solid var(--blue);   background: rgba(74,158,255,.07); }
-  .alert-tip   { border: 1px solid var(--green);  background: rgba(62,207,118,.07); }
-  .alert-warn  { border: 1px solid var(--red);    background: rgba(232,80,80,.07); }
-  .alert-gold  { border: 1px solid var(--tuf);    background: rgba(200,134,10,.08); }
-  .alert-kobra { border: 1px solid var(--accent); background: rgba(232,160,32,.07); }
-
-  /* ── YT ── */
-  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin-top: 8px; }
-  .yt-link:hover { opacity: .8; }
-
-  /* ── PAGE NAV ── */
-  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
-  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
-  .pn a:hover { color: var(--accent); }
-  .pn .nx { margin-left: auto; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } .logo-row { flex-wrap: wrap; row-gap: 10px; } .mobile-search-bar { display: flex !important; } }
-  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
-  .mobile-search-bar input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .mobile-search-bar input:focus { border-color: var(--accent); }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="06">
 
-<!-- ── SIDEBAR ── -->
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <div class="sidebar-product">
-      <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
-    </div>
-  </div>
-  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
-  <div class="nav-group-label">Základní sekce</div>
-  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
-  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
-  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
-  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
-  <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
-  </ul>
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item active"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
-  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </div>
-  <ul class="nav-subs">
-    <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
-    <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item ">08b · Kalibrace filamentu</a></li>
-    <li><a href="08c_3D_Filament_next.html" class="nav-sub-item ">08c · Filamenty rozšíření</a></li>
-  </ul>
-  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
-  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
-  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
-  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
-  <div class="nav-group-label">Ostatní přílohy</div>
-  <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">Soubory</span><span class="nav-item-text">Výběr příloh</span>
-  </a>
-  <div class="nav-group-label">Oblíbené odkazy</div>
-  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,.2);border-color:rgba(232,160,32,.5);">WEB</span><span class="nav-item-text">Výběr odkazů</span>
-  </a>
-  <div style="height:32px;flex-shrink:0;"></div>
-</nav>
+<!-- ── SIDEBAR (generuje sidebar-init.js z sidebar-config.js) ── -->
+<div id="sidebar"></div>
 
-<!-- ── MAIN ── -->
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    {
+      "id": "sw-priprava-model-a-slicer",
+      "num": "06.01",
+      "name": "SW příprava — model a slicer"
+    },
+    {
+      "id": "zalozni-filament-filament-backup",
+      "num": "06.02",
+      "name": "Filament Backup (záložní filament)"
+    },
+    {
+      "id": "monitoring-tisku-kamera",
+      "num": "06.03",
+      "name": "Monitoring tisku — kamera"
+    },
+    {
+      "id": "hw-priprava-tiskova-podlozka",
+      "num": "06.04",
+      "name": "HW příprava — tisková podložka"
+    },
+    {
+      "id": "hw-priprava-tiskarna",
+      "num": "06.05",
+      "name": "HW příprava — tiskárna"
+    },
+    {
+      "id": "zapnuti-a-inicializace-kobry-x",
+      "num": "06.06",
+      "name": "Zapnutí a inicializace Kobry X"
+    },
+    {
+      "id": "sledovani-prvni-vrstvy",
+      "num": "06.07",
+      "name": "Sledování první vrstvy"
+    },
+    {
+      "id": "behem-tisku-co-sledovat",
+      "num": "06.08",
+      "name": "Během tisku — co sledovat"
+    },
+    {
+      "id": "po-tisku-vyjmuti-modelu",
+      "num": "06.09",
+      "name": "Po tisku — vyjmutí modelu"
+    },
+    {
+      "id": "upravy-a-dokoncovani-vytisku",
+      "num": "06.10",
+      "name": "Úpravy a dokončování výtisků"
+    },
+    {
+      "id": "nejcastejsi-problemy-a-rychla-reseni",
+      "num": "06.11",
+      "name": "Nejčastější problémy a rychlá řešení"
+    }
+  ]
+}
+</script>
+
 <main class="main-content">
   <div class="hero">
     <div class="hero-inner">
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 06</span>
         <span class="ver-badge">PRAXE</span>
-        <div class="mobile-search-bar">
-          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
-        </div>
       </div>
       <h1>Příprava <span>&amp; tisk</span></h1>
       <p>Jak správně připravit tiskárnu, podložku i model před každým tiskem — a co sledovat když tisk běží. Platí pro každý tisk, nejen ten první.</p>
@@ -233,102 +92,102 @@
          ČÁST A — PŘÍPRAVA TISKU
     ════════════════════════════════════════════════════ -->
     <div class="part-divider">
-      <span class="part-num">ČÁST A</span>
+      <span class="tuf-badge">ČÁST A</span>
       <span class="part-title">Příprava <span>tisku</span></span>
       <div class="part-line"></div>
     </div>
 
-    <p style="color:var(--muted); font-size:14px; margin-top: 8px;">Správná příprava rozhoduje o 80 % výsledku. Tato část pokrývá vše co udělat <em>před</em> stiskem tlačítka Print — od SW nastavení po fyzický stav tiskárny.</p>
+    <p class="source-note">Správná příprava rozhoduje o 80 % výsledku. Tato část pokrývá vše co udělat <em>před</em> stiskem tlačítka Print — od SW nastavení po fyzický stav tiskárny.</p>
 
     <!-- ─── SW: MODEL A SLICER ─── -->
     <div class="section" id="sw-priprava-model-a-slicer">
       <div class="section-header"><h2>SW příprava — model a slicer</h2></div>
-      <p>Než cokoliv pošlete na tiskárnu, projděte rychlý SW checklist. Jde o základy — detailní nastavení najdete v kapitolách <a href="05a_3D_slicer_tisk.html" style="color:var(--accent);">05a</a>, <a href="05b_3D_slicer_rychlost.html" style="color:var(--accent);">05b</a> a <a href="05c_3D_slicer_filament.html" style="color:var(--accent);">05c</a>.</p>
+      <p>Než cokoliv pošlete na tiskárnu, projděte rychlý SW checklist. Jde o základy — detailní nastavení najdete v kapitolách <a href="05a_3D_slicer_tisk.html">05a</a>, <a href="05b_3D_slicer_rychlost.html">05b</a> a <a href="05c_3D_slicer_filament.html">05c</a>.</p>
 
-      <div class="checklist">
-        <div class="check-item" id="spravny-profil-tiskarny-a-materialu">
-          <span class="check-num">SW1</span>
-          <div class="check-body">
-            <strong>Správný profil tiskárny a materiálu</strong>
+      <div class="card-stack">
+        <div class="card" id="spravny-profil-tiskarny-a-materialu">
+          <span class="card-num card-num--accent">SW1</span>
+          <div>
+            <h4>Správný profil tiskárny a materiálu</h4>
             <p>V Anycubic Slicer Next zkontrolujte, že je vybrán profil Kobra X a správný materiál (PLA / PETG / ABS…). Profil nastavuje základní teploty, rychlosti a retrakcí. Špatný profil = garantovaný špatný výtisk.</p>
           </div>
         </div>
-        <div class="check-item" id="teplota-trysky-a-podlozky">
-          <span class="check-num">SW2</span>
-          <div class="check-body">
-            <strong>Teplota trysky a podložky</strong>
+        <div class="card" id="teplota-trysky-a-podlozky">
+          <span class="card-num card-num--accent">SW2</span>
+          <div>
+            <h4>Teplota trysky a podložky</h4>
             <p>Zkontrolujte teploty dle materiálu — viz <a href="08a_3D_filamenty.html">kap. 08 Filamenty</a>. Kobra X: podložka max 100 °C, tryska max 260 °C. Pro PLA: tryska 185–235 °C (typicky 210 °C) / podložka 50–60 °C. Různé značky PLA se mohou lišit — vždy respektujte doporučení výrobce filamentu.</p>
           </div>
         </div>
-        <div class="check-item" id="vyska-vrstvy-rychlost-vs-kvalita">
-          <span class="check-num">SW3</span>
-          <div class="check-body">
-            <strong>Výška vrstvy — rychlost vs. kvalita</strong>
+        <div class="card" id="vyska-vrstvy-rychlost-vs-kvalita">
+          <span class="card-num card-num--accent">SW3</span>
+          <div>
+            <h4>Výška vrstvy — rychlost vs. kvalita</h4>
             <p>Výška vrstvy je nejdůležitější parametr pro poměr kvalita/čas. Pro trysku 0,4 mm platí: <strong>0,1 mm</strong> = jemné detaily (pomalé), <strong>0,2 mm</strong> = standard (doporučeno pro začátek), <strong>0,28–0,32 mm</strong> = rychlý tisk (hrubší povrch). Max. výška = 80 % průměru trysky.</p>
           </div>
         </div>
-        <div class="check-item" id="orientace-modelu-na-podlozce">
-          <span class="check-num">SW4</span>
-          <div class="check-body">
-            <strong>Orientace modelu na podložce</strong>
+        <div class="card" id="orientace-modelu-na-podlozce">
+          <span class="card-num card-num--accent">SW4</span>
+          <div>
+            <h4>Orientace modelu na podložce</h4>
             <p>Model by měl mít největší plochu dole — minimalizuje podpory a maximalizuje přilnavost první vrstvy. Model nesmí "viset ve vzduchu" — musí ležet přesně na Z=0.</p>
           </div>
         </div>
-        <div class="check-item" id="podpory-a-prilnavost-brim-raft">
-          <span class="check-num">SW5</span>
-          <div class="check-body">
-            <strong>Podpory a přilnavost (Brim / Raft)</strong>
+        <div class="card" id="podpory-a-prilnavost-brim-raft">
+          <span class="card-num card-num--accent">SW5</span>
+          <div>
+            <h4>Podpory a přilnavost (Brim / Raft)</h4>
             <p>Zapněte podpory pokud má model převisy &gt;45°. Pro vysoké nebo tenké modely přidejte Brim (5–8 mm). Detaily: <a href="05a_3D_slicer_tisk.html">kap. 05a — Parametry tisku</a>.</p>
           </div>
         </div>
-        <div class="check-item" id="nahled-vrstev-pred-exportem">
-          <span class="check-num">SW6</span>
-          <div class="check-body">
-            <strong>Náhled vrstev před exportem</strong>
+        <div class="card" id="nahled-vrstev-pred-exportem">
+          <span class="card-num card-num--accent">SW6</span>
+          <div>
+            <h4>Náhled vrstev před exportem</h4>
             <p>Přepněte do Preview a proklikejte vrstvy. Zkontrolujte první vrstvu, umístění podpor a celkový průběh tisku. Problémy odhalíte za 30 sekund — ne za 3 hodiny tisku.</p>
           </div>
         </div>
-        <div class="check-item" id="odhadovany-cas-a-spotreba-filamentu">
-          <span class="check-num">SW7</span>
-          <div class="check-body">
-            <strong>Odhadovaný čas a spotřeba filamentu</strong>
+        <div class="card" id="odhadovany-cas-a-spotreba-filamentu">
+          <span class="card-num card-num--accent">SW7</span>
+          <div>
+            <h4>Odhadovaný čas a spotřeba filamentu</h4>
             <p>Slicer zobrazí čas tisku a hmotnost filamentu. Ověřte, že máte dostatek materiálu na cívce. Kobra X: filament runout sensor tisk pozastaví, ale lepší je mít zásobu dopředu.</p>
           </div>
         </div>
       </div>
 
-      <div class="alert alert-info" style="margin-top:8px;">
-        <div class="alert-icon">💡</div>
-        <div>Detailní nastavení všech parametrů sliceru: <a href="05a_3D_slicer_tisk.html" style="color:var(--accent);">05a Parametry tisku</a> · <a href="05b_3D_slicer_rychlost.html" style="color:var(--accent);">05b Parametry rychlosti</a> · <a href="05c_3D_slicer_filament.html" style="color:var(--accent);">05c Parametry filamentu</a></div>
+      <div class="alert alert-info">
+        <div class="alert-icon">📖</div>
+        <div>Detailní nastavení všech parametrů sliceru: <a href="05a_3D_slicer_tisk.html">05a Parametry tisku</a> · <a href="05b_3D_slicer_rychlost.html">05b Parametry rychlosti</a> · <a href="05c_3D_slicer_filament.html">05c Parametry filamentu</a></div>
       </div>
 
       <h3 id="specialne-pro-vicebarevny-tisk-kobra-x-4-civky">Speciálně pro vícebarevný tisk (Kobra X — 4 cívky)</h3>
-      <div class="checklist">
-        <div class="check-item" id="prirazeni-barev-v-sliceru">
-          <span class="check-num">MC1</span>
-          <div class="check-body">
-            <strong>Přiřazení barev v sliceru</strong>
+      <div class="card-stack">
+        <div class="card" id="prirazeni-barev-v-sliceru">
+          <span class="card-num card-num--accent">MC1</span>
+          <div>
+            <h4>Přiřazení barev v sliceru</h4>
             <p>V Anycubic Slicer Next přiřaďte každé části modelu správnou extruder pozici (1–4). Zkontrolujte náhled barev před exportem — záměna extruderů = špatné barvy v tisku.</p>
           </div>
         </div>
-        <div class="check-item" id="purge-tower-cistici-vezicka">
-          <span class="check-num">MC2</span>
-          <div class="check-body">
-            <strong>Purge Tower (čistící věžička)</strong>
+        <div class="card" id="purge-tower-cistici-vezicka">
+          <span class="card-num card-num--accent">MC2</span>
+          <div>
+            <h4>Purge Tower (čistící věžička)</h4>
             <p>Při změně barvy tiskárna potřebuje vytlačit zbytek předchozího materiálu — vytváří se Purge Tower (sloupek plastu mimo model). Je to normální a nutné. Zkontrolujte v náhledu, že věžička leží na tiskové ploše a nepřekáží modelu.</p>
           </div>
         </div>
-        <div class="check-item" id="kompatibilita-materialu">
-          <span class="check-num">MC3</span>
-          <div class="check-body">
-            <strong>Kompatibilita materiálů</strong>
-            <p>Všechny 4 filamenty musí mít <strong>podobné tiskové teploty</strong> (max. ±20 °C rozdíl). Kombinace PLA + PLA (různé barvy) = ideální. Kombinace PLA + PETG = problematické — rozdílné teploty způsobují špatné spoje. Více: <a href="08a_3D_filamenty.html" style="color:var(--accent);">kap. 08 Filamenty</a>.</p>
+        <div class="card" id="kompatibilita-materialu">
+          <span class="card-num card-num--accent">MC3</span>
+          <div>
+            <h4>Kompatibilita materiálů</h4>
+            <p>Všechny 4 filamenty musí mít <strong>podobné tiskové teploty</strong> (max. ±20 °C rozdíl). Kombinace PLA + PLA (různé barvy) = ideální. Kombinace PLA + PETG = problematické — rozdílné teploty způsobují špatné spoje. Více: <a href="08a_3D_filamenty.html">kap. 08 Filamenty</a>.</p>
           </div>
         </div>
-        <div class="check-item" id="cislovani-teflonovych-trubic">
-          <span class="check-num">MC4</span>
-          <div class="check-body">
-            <strong>Číslování teflonových trubic</strong>
+        <div class="card" id="cislovani-teflonovych-trubic">
+          <span class="card-num card-num--accent">MC4</span>
+          <div>
+            <h4>Číslování teflonových trubic</h4>
             <p>Zkontrolujte fyzicky, že trubice 1–4 jsou zapojeny ve správném pořadí jak ve sliceru tak na tiskárně. Záměna = tiskárna podává špatnou barvu. Kobra X: porty jsou číslovány na selektoru ACE Hub.</p>
           </div>
         </div>
@@ -338,34 +197,34 @@
     <!-- ─── FILAMENT BACKUP ─── -->
     <div class="section" id="zalozni-filament-filament-backup">
       <div class="section-header"><h2>Filament Backup (záložní filament)</h2></div>
-      <div class="alert alert-kobra">
-        <div class="alert-icon">🐍</div>
+      <div class="alert alert-info">
+        <div class="alert-icon">📖</div>
         <div><strong>KOBRA X:</strong> Má vestavěnou funkci záložního filamentu — při dopnutí cívky tiskárna automaticky přepne na záložní slot bez přerušení tisku. Ideální pro velké a dlouhé tisky.</div>
       </div>
 
-      <div class="alert alert-gold" style="margin-top:12px;">
-        <div class="alert-icon">💡</div>
+      <div class="alert alert-info">
+        <div class="alert-icon">📖</div>
         <div><strong>Kompromis barev:</strong> Pro Filament Backup potřebujete 2 sloty se stejným materiálem a barvou — zbývají tedy jen 2 sloty pro barvy. Pokud tisknete jednou barvou nebo netisknete vícebarevně, žádný kompromis neexistuje.</div>
       </div>
 
-      <div class="init-steps" style="margin-top:14px;">
-        <div class="init-step">
+      <div class="step-rows">
+        <div class="step-row">
           <div class="step-dot">1</div>
           <div class="step-content"><strong>Zapnout na displeji</strong><p>Printing → Print Settings → <strong>Filament Backup → zapnout</strong></p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">2</div>
           <div class="step-content"><strong>Vložit záložní cívku</strong><p>Stejný materiál + stejná barva do dvou různých držáků. Záměna materiálu nebo barvy = funkce se neaktivuje.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">3</div>
           <div class="step-content"><strong>Nastavit filament ručně (bez čipu)</strong><p>Anycubic originální cívky s čipem — tiskárna rozpozná automaticky. Cívky třetích stran — ručně nastavte oba sloty na stejný materiál a barvu v menu filamentů.</p></div>
         </div>
       </div>
 
-      <div class="alert alert-warn" style="margin-top:12px;">
-        <div class="alert-icon">⚠</div>
-        <div><strong>Upozornění:</strong> Opotřebované nebo zanesené PTFE trubice mohou způsobit selhání přepnutí. Před dlouhým tiskem zkontrolujte stav trubic. Cívky nesmí být zamotané ani pod nadměrným tahem. Zdroj: <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" style="color:var(--accent);">Anycubic Wiki — Filament Backup Guide</a></div>
+      <div class="alert alert-warn">
+        <div class="alert-icon">🔥</div>
+        <div><strong>Upozornění:</strong> Opotřebované nebo zanesené PTFE trubice mohou způsobit selhání přepnutí. Před dlouhým tiskem zkontrolujte stav trubic. Cívky nesmí být zamotané ani pod nadměrným tahem. Zdroj: <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank">Anycubic Wiki — Filament Backup Guide</a></div>
       </div>
     </div>
 
@@ -374,7 +233,7 @@
       <div class="section-header"><h2>Monitoring tisku — kamera</h2></div>
       <p>Kobra X je vybavena vestavěnou kamerou. Tisk můžete sledovat vzdáleně přes Anycubic App nebo přímo na displeji tiskárny.</p>
 
-      <div class="chapter-grid">
+      <div class="card-grid cols-2">
         <div class="card" id="sledovani-pres-anycubic-app">
           <h4>Sledování přes Anycubic App</h4>
           <p>Po spárování tiskárny s aplikací (Settings → Account → QR kód) uvidíte živý obraz z kamery kdykoli na telefonu. Tisk lze vzdáleně pozastavit nebo zastavit. Ideální pro dlouhé tisky přes noc.</p>
@@ -400,62 +259,62 @@
       <h3 id="spravna-podlozka-pro-dany-material">Správná podložka pro daný materiál</h3>
       <p>Kobra X je vybavena <strong>magnetickým PEI textured plátem</strong> — ten je vhodný pro PLA, PLA+, PETG (opatrně!) a TPU. Pro náročnější materiály je třeba upravit přípravu povrchu:</p>
 
-      <table class="surf-table">
+      <table>
         <thead>
           <tr><th>Materiál</th><th>PEI Textured (Kobra X)</th><th>Příprava povrchu</th><th>Poznámka</th></tr>
         </thead>
         <tbody>
-          <tr><td>PLA</td><td class="ok">✓ Výborné</td><td>IPA + čistý plát</td><td>Nejjednodušší varianta</td></tr>
-          <tr><td>PLA+</td><td class="ok">✓ Výborné</td><td>IPA + čistý plát</td><td>—</td></tr>
-          <tr><td>PETG</td><td class="warn">⚠ Opatrně</td><td>IPA + tenká vrstva PVA lepidla nebo Magigoo</td><td>Bez separační vrstvy hrozí odloupnutí PEI!</td></tr>
-          <tr><td>TPU</td><td class="ok">✓ Dobré</td><td>IPA + čistý plát</td><td>Teplota podložky 40–85 °C, nižší = snadnější oddělení</td></tr>
-          <tr><td>ABS / ASA</td><td class="warn">⚠ Nutné adhesivum</td><td>IPA + Kores tyčinka / Magigoo ABS</td><td>Enclosure nutné, jinak warping</td></tr>
-          <tr><td>Nylon (PA)</td><td class="warn">⚠ Problematické</td><td>IPA + Magigoo PA / PEI smooth plát</td><td>Vyžaduje speciální povrch</td></tr>
-          <tr><td>PC</td><td class="bad">✗ Nedoporučeno</td><td>—</td><td>Kobra X: nedostatečná teplota podložky</td></tr>
+          <tr><td>PLA</td><td class="t-ok">✓ Výborné</td><td>IPA + čistý plát</td><td>Nejjednodušší varianta</td></tr>
+          <tr><td>PLA+</td><td class="t-ok">✓ Výborné</td><td>IPA + čistý plát</td><td>—</td></tr>
+          <tr><td>PETG</td><td class="t-warn">⚠ Opatrně</td><td>IPA + tenká vrstva PVA lepidla nebo Magigoo</td><td>Bez separační vrstvy hrozí odloupnutí PEI!</td></tr>
+          <tr><td>TPU</td><td class="t-ok">✓ Dobré</td><td>IPA + čistý plát</td><td>Teplota podložky 40–85 °C, nižší = snadnější oddělení</td></tr>
+          <tr><td>ABS / ASA</td><td class="t-warn">⚠ Nutné adhesivum</td><td>IPA + Kores tyčinka / Magigoo ABS</td><td>Enclosure nutné, jinak warping</td></tr>
+          <tr><td>Nylon (PA)</td><td class="t-warn">⚠ Problematické</td><td>IPA + Magigoo PA / PEI smooth plát</td><td>Vyžaduje speciální povrch</td></tr>
+          <tr><td>PC</td><td class="t-bad">✗ Nedoporučeno</td><td>—</td><td>Kobra X: nedostatečná teplota podložky</td></tr>
         </tbody>
       </table>
 
-      <div class="alert alert-warn" style="margin-top:14px;">
-        <div class="alert-icon">⚠</div>
+      <div class="alert alert-warn">
+        <div class="alert-icon">🔥</div>
         <div><strong>PETG a PEI — velké riziko:</strong> PETG se k čistému odmaštěnému PEI plátu přilepí natolik silně, že při vyjímání odloupne PEI povrch. Vždy používejte separační vrstvu — PVA lepidlová tyčinka (Kores), Magigoo nebo záblesk laku na vlasy. Tenká vrstva stačí.</div>
       </div>
 
       <h3 id="cisteni-podlozky-pred-tiskem">Čištění podložky před tiskem</h3>
       <p>Toto je <strong>nejdůležitější rutina</strong> — provádějte před každým tiskem nebo alespoň každých 3–5 tisků. Otisky prstů a mastnota jsou největší příčina špatné přilnavosti.</p>
 
-      <div class="checklist" style="margin-top:12px;">
-        <div class="check-item" id="nastrikejte-ipa-90-na-studeny-plat">
-          <span class="check-num">P1</span>
-          <div class="check-body">
-            <strong>Nastříkejte IPA (90 %+) na studený plát</strong>
+      <div class="card-stack">
+        <div class="card" id="nastrikejte-ipa-90-na-studeny-plat">
+          <span class="card-num card-num--accent">P1</span>
+          <div>
+            <h4>Nastříkejte IPA (90 %+) na studený plát</h4>
             <p>Vždy čistěte na studeném plátu — na horkém povrchu IPA okamžitě vyprchá bez účinku. Postačí pár stříků z rozprašovače nebo navlhčený hadřík.</p>
           </div>
         </div>
-        <div class="check-item" id="otrete-neparfemovanou-papirovou-uterkou">
-          <span class="check-num">P2</span>
-          <div class="check-body">
-            <strong>Otřete neparfémovanou papírovou utěrkou</strong>
+        <div class="card" id="otrete-neparfemovanou-papirovou-uterkou">
+          <span class="card-num card-num--accent">P2</span>
+          <div>
+            <h4>Otřete neparfémovanou papírovou utěrkou</h4>
             <p>Papírová utěrka (ne tkanina!) — tkanina zanechává vlákna na povrchu. Otřete jedním tahem od středu k okraji, nevracejte se přes stejné místo mastnou stranou utěrky.</p>
           </div>
         </div>
-        <div class="check-item" id="nedotykejte-se-cisteho-povrchu-holou-rukou">
-          <span class="check-num">P3</span>
-          <div class="check-body">
-            <strong>Nedotýkejte se čistého povrchu holou rukou</strong>
+        <div class="card" id="nedotykejte-se-cisteho-povrchu-holou-rukou">
+          <span class="card-num card-num--accent">P3</span>
+          <div>
+            <h4>Nedotýkejte se čistého povrchu holou rukou</h4>
             <p>Jeden otisk prstu = špatná přilnavost na tom místě. Po čištění uchopte plát pouze za okraje. Pokud se omylem dotknete středu — opakujte čištění.</p>
           </div>
         </div>
-        <div class="check-item" id="pri-silnem-znecisteni-mydlova-voda">
-          <span class="check-num">P4</span>
-          <div class="check-body">
-            <strong>Při silném znečištění — mýdlová voda</strong>
+        <div class="card" id="pri-silnem-znecisteni-mydlova-voda">
+          <span class="card-num card-num--accent">P4</span>
+          <div>
+            <h4>Při silném znečištění — mýdlová voda</h4>
             <p>Pokud IPA nestačí (zbytky lepidla, pigmentu), omyjte plát teplou vodou s kapkou mycího prostředku. Opláchněte, osušte a dočistěte IPA. Pak nechte zcela vyschnout.</p>
           </div>
         </div>
-        <div class="check-item" id="nikdy-aceton-na-pei-plat">
-          <span class="check-num">P5</span>
-          <div class="check-body">
-            <strong>Nikdy acetón na PEI plát</strong>
+        <div class="card" id="nikdy-aceton-na-pei-plat">
+          <span class="card-num card-num--accent">P5</span>
+          <div>
+            <h4>Nikdy acetón na PEI plát</h4>
             <p>Acetón trvale poškodí PEI povrch. Používejte pouze IPA nebo mýdlovou vodu. Acetón je povolený pouze pro ABS díly v kapitole post-processingu — ne pro čištění podložky.</p>
           </div>
         </div>
@@ -463,12 +322,12 @@
 
       <h3 id="adhesiva-kdy-a-jak-pouzit">Adhesiva — kdy a jak použít</h3>
 
-      <div class="alert alert-gold" style="margin-top:0; margin-bottom:16px;">
-        <div class="alert-icon">💡</div>
+      <div class="alert alert-info">
+        <div class="alert-icon">📖</div>
         <div>
           <strong>Důležité: lepidlo ≠ separační bariéra — jsou to dva různé účely</strong><br>
           Adhezivní přípravky při 3D tisku plní <em>dva zcela odlišné úkoly</em> podle materiálu:
-          <ul style="margin-top:8px; padding-left:18px; line-height:1.7;">
+          <ul>
             <li><strong>Přilepení</strong> — materiály které na PEI špatně drží (ABS, ASA, Nylon). Lepidlo zde skutečně pomáhá modelu přilnout.</li>
             <li><strong>Separační bariéra</strong> — materiály které na PEI drží <em>příliš silně</em> (PETG, TPU). Tenká vrstva PVA nebo Magigoo Original zde paradoxně <em>zabrání</em> přilepení — bez ní by PETG při vyjímání odlouplo část PEI povrchu. Vrstva zajistí, že tisk sice neodpadne během práce, ale po vychladnutí se snadno oddělí.</li>
           </ul>
@@ -476,7 +335,7 @@
         </div>
       </div>
 
-      <div class="chapter-grid">
+      <div class="card-grid">
         <div class="card" id="pva-lepidlova-tycinka-kores-pritt">
           <h4>PVA lepidlová tyčinka (Kores, Pritt)</h4>
           <p>Nejdostupnější volba. Naneste <strong>tenkou</strong> vrstvu na studený plát a nechte zaschnout. Pro PETG a TPU funguje jako <strong>separační bariéra</strong> — zabrání trvalému přilepení k PEI. Pro ABS/ASA zlepšuje přilnavost. Po tisku snadno smyjete teplou vodou.</p>
@@ -499,10 +358,10 @@
         </div>
       </div>
 
-      <div class="alert alert-info" style="margin-top:14px;">
-        <div class="alert-icon">🛒</div>
+      <div class="alert alert-info">
+        <div class="alert-icon">📖</div>
         <div>
-          <strong>Kde koupit:</strong> PVA tyčinka Kores — běžně v papírnictvích a supermarketech. Magigoo Original a Magigoo PA — <a href="https://www.magigoo.com" target="_blank" style="color:var(--accent);">magigoo.com</a>, na3d.cz, materialpro3d.cz, filament-pm.cz. Vždy zkontrolujte, že kupujete správnou variantu (Original / PA / ABS…).
+          <strong>Kde koupit:</strong> PVA tyčinka Kores — běžně v papírnictvích a supermarketech. Magigoo Original a Magigoo PA — <a href="https://www.magigoo.com" target="_blank">magigoo.com</a>, na3d.cz, materialpro3d.cz, filament-pm.cz. Vždy zkontrolujte, že kupujete správnou variantu (Original / PA / ABS…).
         </div>
       </div>
     </div>
@@ -511,123 +370,121 @@
     <div class="section" id="hw-priprava-tiskarna">
       <div class="section-header"><h2>HW příprava — tiskárna</h2></div>
 
-      <div class="checklist">
-        <div class="check-item" id="spravna-tryska-prumer-a-material">
-          <span class="check-num">HW1</span>
-          <div class="check-body">
-            <strong>Správná tryska — průměr a materiál</strong>
+      <div class="card-stack">
+        <div class="card" id="spravna-tryska-prumer-a-material">
+          <span class="card-num card-num--accent">HW1</span>
+          <div>
+            <h4>Správná tryska — průměr a materiál</h4>
             <p>Zkontrolujte, že průměr trysky v sliceru odpovídá skutečně osazené trysce (standard Kobra X = <strong>0,4 mm hardened steel</strong> — tvrzená ocel z výroby). Výměna trysky je rychlá díky Quick-Release systému. Více: <a href="02_3D_tiskarna.html">kap. 02 Tiskárna</a>.</p>
           </div>
         </div>
-        <div class="check-item" id="tryska-cista-purge-a-kontrola-prutoku">
-          <span class="check-num">HW2</span>
-          <div class="check-body">
-            <strong>Tryska čistá — purge a kontrola průtoku</strong>
-            <p>Po změně materiálu spusťte purge dokud nevychází čistý plast. <strong>Příznak ucpané trysky:</strong> filament se nepodává, tisk je slabý nebo přerušovaný, extruder kliká. Rychlé řešení — <strong>Cold Pull:</strong> zahřejte trysku na 200 °C, zaveďte filament, ochlaďte na 90 °C a filament prudce vytáhněte — vytáhne špunt znečistění s sebou. Opakujte 2–3×. Detailní postup: <a href="13_3D_troubleshooting.html" style="color:var(--accent);">kap. 13 Troubleshooting</a>.</p>
+        <div class="card" id="tryska-cista-purge-a-kontrola-prutoku">
+          <span class="card-num card-num--accent">HW2</span>
+          <div>
+            <h4>Tryska čistá — purge a kontrola průtoku</h4>
+            <p>Po změně materiálu spusťte purge dokud nevychází čistý plast. <strong>Příznak ucpané trysky:</strong> filament se nepodává, tisk je slabý nebo přerušovaný, extruder kliká. Rychlé řešení — <strong>Cold Pull:</strong> zahřejte trysku na 200 °C, zaveďte filament, ochlaďte na 90 °C a filament prudce vytáhněte — vytáhne špunt znečistění s sebou. Opakujte 2–3×. Detailní postup: <a href="13_3D_troubleshooting.html">kap. 13 Troubleshooting</a>.</p>
           </div>
         </div>
-        <div class="check-item" id="filament-spravne-zaveden-teflonove-trubice-14">
-          <span class="check-num">HW3</span>
-          <div class="check-body">
-            <strong>Filament správně zaveden — teflonové trubice 1–4</strong>
+        <div class="card" id="filament-spravne-zaveden-teflonove-trubice-14">
+          <span class="card-num card-num--accent">HW3</span>
+          <div>
+            <h4>Filament správně zaveden — teflonové trubice 1–4</h4>
             <p>Zkontrolujte, že filament je zasunut až do extruderu a správně prochází teflonovou trubicí. Kobra X: každá trubice musí být v správně číslovaném portu. Po zavedení tiskárna pípne a zobrazí typ materiálu.</p>
           </div>
         </div>
-        <div class="check-item" id="kontrola-dostatku-filamentu-na-civce">
-          <span class="check-num">HW4</span>
-          <div class="check-body">
-            <strong>Kontrola dostatku filamentu na cívce</strong>
+        <div class="card" id="kontrola-dostatku-filamentu-na-civce">
+          <span class="card-num card-num--accent">HW4</span>
+          <div>
+            <h4>Kontrola dostatku filamentu na cívce</h4>
             <p>Odhadněte spotřebu ze sliceru a zkontrolujte zbývající množství. Pokud filament nestačí, nachystejte záložní cívku stejného materiálu a barvy — Kobra X podporuje automatický Filament Backup (viz sekce výše).</p>
           </div>
         </div>
-        <div class="check-item" id="suchy-filament-ne-vlhky">
-          <span class="check-num">HW5</span>
-          <div class="check-body">
-            <strong>Suchý filament — ne vlhký</strong>
+        <div class="card" id="suchy-filament-ne-vlhky">
+          <span class="card-num card-num--accent">HW5</span>
+          <div>
+            <h4>Suchý filament — ne vlhký</h4>
             <p>Vlhký filament prská, tvoří bubliny a špatně přilne. Pokud cívka leží déle než týden na otevřeném vzduchu, před tiskem sušte. PLA 45–55 °C / 4–6 h, PETG 65 °C / 6–8 h, Nylon 80 °C / 12 h. Více: <a href="08a_3D_filamenty.html">kap. 08 Filamenty</a>.</p>
           </div>
         </div>
-        <div class="check-item" id="tiskarna-je-cista-purge-wiper-bez-zbytku">
-          <span class="check-num">HW6</span>
-          <div class="check-body">
-            <strong>Tiskárna je čistá — Purge Wiper bez zbytků</strong>
+        <div class="card" id="tiskarna-je-cista-purge-wiper-bez-zbytku">
+          <span class="card-num card-num--accent">HW6</span>
+          <div>
+            <h4>Tiskárna je čistá — Purge Wiper bez zbytků</h4>
             <p>Zkontrolujte podložku a okolí trysky. Zbytky plastu kolem trysky spadnou do tisku a způsobí defekty. <strong>Purge Wiper</strong> (silikonová stěrka vlevo na rámu) — otřete jej vlhkým hadříkem nebo párátkem pokud je pokrytý ztuhlým plastem. Opotřebovaný nebo zdeformovaný Wiper vyměňte (náhradní díl).</p>
           </div>
         </div>
-        <div class="check-item" id="osy-jsou-promazane-a-pohyb-je-plynuly">
-          <span class="check-num">HW7</span>
-          <div class="check-body">
-            <strong>Osy jsou promazané a pohyb je plynulý</strong>
+        <div class="card" id="osy-jsou-promazane-a-pohyb-je-plynuly">
+          <span class="card-num card-num--accent">HW7</span>
+          <div>
+            <h4>Osy jsou promazané a pohyb je plynulý</h4>
             <p>Suchý kluz os způsobuje nerovnoměrný pohyb a ghosting. Pravidelně promazávejte lineární tyče strojním olejem, trapézový šroub Z tukem. Detailně v <a href="11_3D_udrzba.html">kap. 11 Údržba</a>.</p>
           </div>
         </div>
-        <div class="check-item" id="remeny-jsou-spravne-napnute">
-          <span class="check-num">HW8</span>
-          <div class="check-body">
-            <strong>Řemeny jsou správně napnuté</strong>
+        <div class="card" id="remeny-jsou-spravne-napnute">
+          <span class="card-num card-num--accent">HW8</span>
+          <div>
+            <h4>Řemeny jsou správně napnuté</h4>
             <p>Povolený řemen způsobuje ghosting (vlnky na stěnách) a nepřesné rozměry. Test: přiložte prst k řemenu a pinknete — má znít jako nízká basová nota, ne prázdné plácaní. Kobra X: šrouby napínání na ose X a Y.</p>
           </div>
         </div>
-        <div class="check-item" id="okoli-tiskarny-je-volne">
-          <span class="check-num">HW9</span>
-          <div class="check-body">
-            <strong>Okolí tiskárny je volné</strong>
+        <div class="card" id="okoli-tiskarny-je-volne">
+          <span class="card-num card-num--accent">HW9</span>
+          <div>
+            <h4>Okolí tiskárny je volné</h4>
             <p>Podložka se pohybuje až 26 cm dopředu. Odstraňte předměty z dosahu. Pro ABS/ASA: uzavřete enclosure (pokud máte) a zavřete okna — průvan způsobuje praskání vrstev.</p>
           </div>
         </div>
       </div>
 
       <!-- ODKAZ NA CHECKLIST -->
-      <a href="00_3D_index.html#ostatni_prilohy" class="checklist-link" style="margin-top:24px;">
-        <div class="checklist-link-icon">📋</div>
-        <div class="checklist-link-text">
-          <strong>→ Checklist před tiskem</strong>
-          <span>Jednostránkový přehled všech kroků — připravte si ho vedle tiskárny · Dostupné v Ostatní přílohy</span>
-        </div>
+      <a href="00_3D_index.html#ostatni_prilohy" class="card card-accent">
+        <div class="card-icon">📋</div>
+        <h4>→ Checklist před tiskem</h4>
+        <p>Jednostránkový přehled všech kroků — připravte si ho vedle tiskárny · Dostupné v Ostatní přílohy</p>
       </a>
     </div>
 
     <!-- ═══════════════════════════════════════════════════
          ČÁST B — TISK SAMOTNÝ
     ════════════════════════════════════════════════════ -->
-    <div class="part-divider" style="margin-top: 56px;">
-      <span class="part-num">ČÁST B</span>
+    <div class="part-divider">
+      <span class="tuf-badge">ČÁST B</span>
       <span class="part-title">Tisk <span>samotný</span></span>
       <div class="part-line"></div>
     </div>
 
-    <p style="color:var(--muted); font-size:14px; margin-top: 8px;">Příprava je hotová — spouštíme tisk. Tato část popisuje co sledovat, jak reagovat na problémy za chodu a jak správně vyjmout hotový model.</p>
+    <p class="source-note">Příprava je hotová — spouštíme tisk. Tato část popisuje co sledovat, jak reagovat na problémy za chodu a jak správně vyjmout hotový model.</p>
 
     <!-- ─── INICIALIZACE ─── -->
     <div class="section" id="zapnuti-a-inicializace-kobry-x">
       <div class="section-header"><h2>Zapnutí a inicializace Kobry X</h2></div>
       <p>Při prvním zapnutí tiskárna provede průvodce nastavením (jazyk, Wi-Fi, spárování s aplikací). Při každém dalším zapnutí proběhne pouze rychlá samokontrola a auto-leveling.</p>
 
-      <div class="init-steps">
-        <div class="init-step">
+      <div class="step-rows">
+        <div class="step-row">
           <div class="step-dot">1</div>
           <div class="step-content"><strong>Homing (reset na nulu)</strong><p>Tiskárna najede do výchozí pozice na všech osách. Trvá 30–60 sekund.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">2</div>
           <div class="step-content"><strong>Auto-Level (automatické vyrovnání podložky)</strong><p>Senzor změří vzdálenost trysky od podložky v síti bodů a uloží kompenzační mapu. Proběhne automaticky před každým tiskem — neřeší se ručně.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">3</div>
           <div class="step-content"><strong>Zahřátí trysky a podložky</strong><p>Tiskárna zahřeje trysku a podložku na nastavené teploty. PLA: čekejte cca 2–3 minuty. ABS: 5–8 minut.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">4</div>
           <div class="step-content"><strong>Purge (čistění trysky)</strong><p>Tiskárna najede k Purge Wiperu a vytlačí malé množství plastu pro pročistění trysky. Normální chování — nevyzvedávejte plast ihned.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">▶</div>
           <div class="step-content"><strong>Tisk spuštěn — první vrstva</strong><p>Tiskárna přejede na podložku a začne tisknout. Zůstaňte u tiskárny po celou první vrstvu.</p></div>
         </div>
       </div>
 
-      <div class="alert alert-kobra" style="margin-top:14px;">
-        <div class="alert-icon">🐍</div>
+      <div class="alert alert-info">
+        <div class="alert-icon">📖</div>
         <div><strong>KOBRA X — auto-leveling při každém tisku:</strong> Senzor před tiskem vždy automaticky zmapuje podložku. Nemusíte nic nastavovat ručně — systém kompenzuje prohnutí a teplotní roztažnost rámu. Pokud auto-leveling selže nebo oznámí chybu, zkontrolujte čistotu senzoru a podložky.</div>
       </div>
     </div>
@@ -637,36 +494,36 @@
       <div class="section-header"><h2>Sledování první vrstvy</h2></div>
       <p>První vrstva je klíčová — zůstaňte u tiskárny celé 2–5 minut které trvá. Pokud první vrstva vypadá dobře, zbytek tisku obvykle proběhne v pořádku.</p>
 
-      <div class="alert alert-gold">
+      <div class="alert alert-tip">
         <div class="alert-icon">💡</div>
         <div><strong>Pravidlo 80 %:</strong> Správná první vrstva = 80 % úspěchu celého tisku. Linky by měly být mírně zploštělé, rovnoměrné a pevně přilepené k podložce.</div>
       </div>
 
-      <div class="layer-examples">
-        <div class="layer-ex ok" id="idealni-prvni-vrstva">
-          <div class="layer-ex-icon">✅</div>
+      <div class="card-grid cols-narrow">
+        <div class="card card--ok" id="idealni-prvni-vrstva">
+          <div class="card-icon">✅</div>
           <h4>Ideální první vrstva</h4>
           <p>Linky zploštělé, navzájem propojené. Povrch rovnoměrný, bez mezer ani přebytku materiálu.</p>
         </div>
-        <div class="layer-ex bad" id="tryska-prilis-nizko">
-          <div class="layer-ex-icon">❌</div>
+        <div class="card card--bad" id="tryska-prilis-nizko">
+          <div class="card-icon">❌</div>
           <h4>Tryska příliš nízko</h4>
           <p>Plast se hromadí, tryska škrábe. Zvyšte Z-Offset (tryska výš) po kroku 0,05 mm.</p>
         </div>
-        <div class="layer-ex bad" id="tryska-prilis-vysoko">
-          <div class="layer-ex-icon">❌</div>
+        <div class="card card--bad" id="tryska-prilis-vysoko">
+          <div class="card-icon">❌</div>
           <h4>Tryska příliš vysoko</h4>
           <p>Kulaté linky, nedrží. Model se odlepí. Snižte Z-Offset (tryska níž).</p>
         </div>
-        <div class="layer-ex wrn" id="nerovnomerna-vrstva">
-          <div class="layer-ex-icon">⚠️</div>
+        <div class="card card--warn" id="nerovnomerna-vrstva">
+          <div class="card-icon">⚠️</div>
           <h4>Nerovnoměrná vrstva</h4>
           <p>OK na jedné straně, špatně na druhé. Znečistěná podložka nebo problém s auto-levelingem.</p>
         </div>
       </div>
 
-      <div class="alert alert-tip" style="margin-top:12px;">
-        <div class="alert-icon">✓</div>
+      <div class="alert alert-tip">
+        <div class="alert-icon">💡</div>
         <div>
           <strong>Z-Offset za chodu — kde ho najít na Kobře X:</strong> Během tisku první vrstvy klepněte na displej → <strong>Tune → Z-Offset</strong>. Typické hodnoty jsou v rozsahu –2 až +2 mm. <strong>Záporná hodnota</strong> = tryska blíž k podložce (linky zploštělejší). <strong>Kladná hodnota</strong> = tryska dál (linky kulatější). Upravujte po <strong>0,05 mm</strong> a počkejte 2–3 linky na výsledek. Hodnotu si zapište — příště víte kde začít.
         </div>
@@ -677,41 +534,41 @@
     <div class="section" id="behem-tisku-co-sledovat">
       <div class="section-header"><h2>Během tisku — co sledovat</h2></div>
 
-      <div class="checklist">
-        <div class="check-item" id="model-drzi-na-podlozce-zadny-warping">
-          <span class="check-num">→</span>
-          <div class="check-body">
-            <strong>Model drží na podložce — žádný warping</strong>
+      <div class="card-stack">
+        <div class="card" id="model-drzi-na-podlozce-zadny-warping">
+          <span class="card-num card-num--accent">→</span>
+          <div>
+            <h4>Model drží na podložce — žádný warping</h4>
             <p>Rohy se nezvedají. Pokud začnou odlepovat — zastavte tisk, přidejte Brim nebo adhesivum a zkuste znovu.</p>
           </div>
         </div>
-        <div class="check-item" id="kontinualni-prutok-zadne-mezery-ve-stenach">
-          <span class="check-num">→</span>
-          <div class="check-body">
-            <strong>Kontinuální průtok — žádné mezery ve stěnách</strong>
+        <div class="card" id="kontinualni-prutok-zadne-mezery-ve-stenach">
+          <span class="card-num card-num--accent">→</span>
+          <div>
+            <h4>Kontinuální průtok — žádné mezery ve stěnách</h4>
             <p>Z trysky vytéká rovnoměrná linie plastu. Přerušení = ucpaná tryska nebo problém s podáváním filamentu.</p>
           </div>
         </div>
-        <div class="check-item" id="zadne-neobvykle-zvuky">
-          <span class="check-num">→</span>
-          <div class="check-body">
-            <strong>Žádné neobvyklé zvuky</strong>
+        <div class="card" id="zadne-neobvykle-zvuky">
+          <span class="card-num card-num--accent">→</span>
+          <div>
+            <h4>Žádné neobvyklé zvuky</h4>
             <p>Normální: klikání, šumění, vrčení. Neobvyklé: hlasité praskání (vlhký filament), kovové skřípání os, opakované cvakání extruderu (grinding).</p>
           </div>
         </div>
-        <div class="check-item" id="vrstvy-rostou-rovnomerne-zadny-layer-shift">
-          <span class="check-num">→</span>
-          <div class="check-body">
-            <strong>Vrstvy rostou rovnoměrně — žádný layer shift</strong>
+        <div class="card" id="vrstvy-rostou-rovnomerne-zadny-layer-shift">
+          <span class="card-num card-num--accent">→</span>
+          <div>
+            <h4>Vrstvy rostou rovnoměrně — žádný layer shift</h4>
             <p>Model roste přímo nahoru. Posunuté vrstvy (layer shift) = přeskočený krok motoru → zastavte tisk a diagnostikujte.</p>
           </div>
         </div>
       </div>
 
       <h3 id="vzdalene-monitorovani-pres-anycubic-app">Vzdálené monitorování přes Anycubic App</h3>
-      <p>Po spárování tiskárny s Anycubic účtem (viz <a href="02_3D_tiskarna.html" style="color:var(--accent);">kap. 02</a>) sledujte průběh tisku přes vestavěnou kameru odkudkoliv. V aplikaci vidíte živý obraz, procento dokončení a teploty. Tisk lze vzdáleně zastavit.</p>
+      <p>Po spárování tiskárny s Anycubic účtem (viz <a href="02_3D_tiskarna.html">kap. 02</a>) sledujte průběh tisku přes vestavěnou kameru odkudkoliv. V aplikaci vidíte živý obraz, procento dokončení a teploty. Tisk lze vzdáleně zastavit.</p>
 
-      <div class="chapter-grid" style="grid-template-columns:1fr 1fr; margin-top:14px;">
+      <div class="card-grid cols-2">
         <div class="card" id="pozastavit-pause">
           <h4>Pause (pozastavit)</h4>
           <p>Na displeji klepněte Pause. Tiskárna přejede stranou a čeká. Pro kontrolu modelu nebo výměnu filamentu. Pokračujte tlačítkem Resume.</p>
@@ -727,51 +584,49 @@
     <div class="section" id="po-tisku-vyjmuti-modelu">
       <div class="section-header"><h2>Po tisku — vyjmutí modelu</h2></div>
 
-      <div class="init-steps">
-        <div class="init-step">
+      <div class="step-rows">
+        <div class="step-row">
           <div class="step-dot">1</div>
           <div class="step-content"><strong>Počkejte na vychladnutí podložky</strong><p>PEI plát pustí model sám při poklesu pod ~35 °C. Uslyšíte prasknutí — model se sám odlepí. Trvá 5–15 minut. Nespěchejte.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">2</div>
           <div class="step-content"><strong>Vyjměte magnetický plát z podložky</strong><p>Sundejte plát za roh — pracuje se s ním pohodlněji mimo tiskárnu.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">3</div>
           <div class="step-content"><strong>Ohněte plát do oblouku</strong><p>Obě ruce, jeden roh dopředu druhý dozadu. Plát se ohne a model bezpečně odpadne. Funguje pro 95 % modelů.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">4</div>
           <div class="step-content"><strong>Špachtle pokud model stále drží</strong><p>Zasuňte tenkou plastovou špachtli pod okraj a jemně páčte podél hrany. Nikdy bodově — zlomíte model nebo poškrábete PEI.</p></div>
         </div>
       </div>
 
-      <div class="alert alert-warn" style="margin-top:12px;">
-        <div class="alert-icon">⚠</div>
+      <div class="alert alert-warn">
+        <div class="alert-icon">🔥</div>
         <div><strong>Nikdy nestrháváte model z horké podložky.</strong> Horká PEI je měkká — škrábance a odloupnutí povrchu jsou nevratné. Vždy počkejte na vychladnutí.</div>
       </div>
       <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
+        <div class="alert-icon">💡</div>
         <div><strong>Model nejde odlepit ani po vychladnutí?</strong> Dejte plát na 10 minut do mrazáku. Prudká změna teploty způsobí, že se PEI a plast smrští různou rychlostí a model se uvolní sám.</div>
       </div>
 
       <h3 id="bezpecne-vypnuti-tiskarny">Bezpečné vypnutí tiskárny</h3>
-      <div class="init-steps">
-        <div class="init-step">
+      <div class="step-rows">
+        <div class="step-row">
           <div class="step-dot">✓</div>
           <div class="step-content"><strong>Nechte tiskárnu dokončit cooldown</strong><p>Po dokončení tisku tiskárna automaticky spustí cooldown — tryska a podložka se chladí na bezpečnou teplotu. <strong>Nevypínejte tiskárnu dokud tryska neklesne pod 50 °C</strong>. Horký filament uvnitř trysky se při náhlém vypnutí může ztuhnout ve špatné poloze.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">✓</div>
           <div class="step-content"><strong>Vypněte hlavním vypínačem</strong><p>Až po vychladnutí vypněte tiskárnu kolébkovým vypínačem na zadní straně základny. Nikdy nevytrhávejte kabel — firmware ukládá data o kalibraci při správném vypnutí.</p></div>
         </div>
-        <div class="init-step">
+        <div class="step-row">
           <div class="step-dot">✓</div>
           <div class="step-content"><strong>Uložte filament</strong><p>Pokud netisknete další den — stáhněte cívky do sáčku se silikagelem, zejména PETG, Nylon a TPU. Vlhký filament příště prská a tvoří bubliny.</p></div>
         </div>
       </div>
-    </div>
-
     </div>
 
     <!-- ─── ÚPRAVY VÝTISKŮ ─── -->
@@ -779,7 +634,7 @@
       <div class="section-header"><h2>Úpravy a dokončování výtisků</h2></div>
       <p>Tisk je konec technické části — ale začátek té řemeslné. Každý materiál umožňuje jiné úpravy: od rychlého odhranění po profesionální chemický smoothing. Přehled co jde udělat a s čím.</p>
 
-      <div class="chapter-grid">
+      <div class="card-grid">
 
         <div class="card" id="odhraneni-a-zakladni-cisteni">
           <h4>✂️ Odhranění a základní čištění</h4>
@@ -848,18 +703,18 @@
 
       </div>
 
-      <div class="alert alert-info" style="margin-top:16px;">
+      <div class="alert alert-info">
         <div class="alert-icon">📖</div>
-        <div>Detailní postupy broušení, smoothingu, lakování a acetón vaporu najdete v <a href="07_3D_post_processing.html" style="color:var(--accent);">kapitole 07 — Post-processing</a>.</div>
+        <div>Detailní postupy broušení, smoothingu, lakování a acetón vaporu najdete v <a href="07_3D_post_processing.html">kapitole 07 — Post-processing</a>.</div>
       </div>
     </div>
 
     <!-- ─── SELHÁNÍ TISKU ─── -->
     <div class="section" id="nejcastejsi-problemy-a-rychla-reseni">
       <div class="section-header"><h2>Nejčastější problémy a rychlá řešení</h2></div>
-      <p>Tisk selhal nebo nevypadá dobře? Zde jsou nejčastější příčiny a okamžitá řešení. Detailní troubleshooting najdete v <a href="13_3D_troubleshooting.html" style="color:var(--accent);">kap. 13</a>.</p>
+      <p>Tisk selhal nebo nevypadá dobře? Zde jsou nejčastější příčiny a okamžitá řešení. Detailní troubleshooting najdete v <a href="13_3D_troubleshooting.html">kap. 13</a>.</p>
 
-      <div class="chapter-grid">
+      <div class="card-grid">
         <div class="card" id="model-se-odlepuje-warping">
           <h4>❌ Model se odlepuje — warping</h4>
           <p><strong>Příčina:</strong> Studená nebo mastná podložka, chybí adhesivum, průvan.<br>
@@ -883,7 +738,7 @@
         <div class="card" id="tiskarna-prestane-podavat-material">
           <h4>❌ Tiskárna přestane podávat materiál</h4>
           <p><strong>Příčina:</strong> Ucpaná tryska, vlhký filament, heat creep, grinding struny.<br>
-          <strong>Řešení:</strong> Zkontrolujte, zda struna není omletá u extruderu. Spusťte Cold Pull (studený tah) pro vyčištění trysky. Více: <a href="13_3D_troubleshooting.html" style="color:var(--accent);">kap. 13</a>.</p>
+          <strong>Řešení:</strong> Zkontrolujte, zda struna není omletá u extruderu. Spusťte Cold Pull (studený tah) pro vyčištění trysky. Více: <a href="13_3D_troubleshooting.html">kap. 13</a>.</p>
         </div>
         <div class="card" id="praskly-nebo-krehky-tisk">
           <h4>❌ Prasklý nebo křehký tisk</h4>
@@ -892,40 +747,20 @@
         </div>
       </div>
 
-      <div class="alert alert-info" style="margin-top:16px;">
-        <div class="alert-icon">🔧</div>
+      <div class="alert alert-warn">
+        <div class="alert-icon">🔥</div>
         <div><strong>Jak zastavit tisk při selhání:</strong> Na displeji klepněte <strong>Stop / Cancel</strong> — tiskárna přejede do home pozice a bezpečně ukončí tisk. Nikdy nevypínejte hlavním vypínačem uprostřed tisku — tryska zůstane zanoření v modelu a při ochlazení může poškodit hotend nebo podložku.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=3D+tisk+prvni+vrstva+z+offset+kalibrace+podlozka&hl=cs" target="_blank" class="yt-link">▶ YouTube: první vrstva, Z-Offset a příprava podložky</a>
+      <a href="https://www.youtube.com/results?search_query=3D+tisk+prvni+vrstva+z+offset+kalibrace+podlozka&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ YouTube: první vrstva, Z-Offset a příprava podložky</a>
     </div>
 
-    <!-- ── PAGE NAV ── -->
-    <div class="pn">
-      <a href="05c_3D_slicer_filament.html">← 05c · Parametry filamentu</a>
-      <a href="07_3D_post_processing.html" class="nx">07 · Post-processing →</a>
-    </div>
+    <div id="pn"></div>
 
-  </div>
+  </div><!-- /wrapper -->
 </main>
 
-<script>
-const searchInput = document.getElementById('sb-search-input');
-const mobileSearchInput = document.getElementById('mobile-search-input');
-
-function goToSearch(q) {
-  q = q.trim();
-  if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
-}
-
-searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-mobileSearchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-searchInput.addEventListener('input', (e) => { mobileSearchInput.value = e.target.value; });
-mobileSearchInput.addEventListener('input', (e) => { searchInput.value = e.target.value; });
-</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>

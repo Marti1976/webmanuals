@@ -5,198 +5,79 @@
 <title>13 Troubleshooting — 3D Tisk průvodce</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:#0d0f14; --surface:#13161e; --card:#181c27; --border:#252b3b;
-    --accent:#e8a020; --accent2:#f0c050; --tuf:#c8860a;
-    --green:#3ecf76; --red:#e85050; --blue:#4a9eff;
-    --text:#d8dce8; --muted:#6e7590; --mono:'IBM Plex Mono',monospace;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.65;overflow-x:hidden;}
-
-  /* SIDEBAR */
-  .sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:rgba(19,22,30,0.97);border-right:1px solid var(--tuf);display:flex;flex-direction:column;z-index:200;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
-  .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);}
-  .sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
-  .sidebar-product{display:flex;align-items:center;gap:10px;}
-  .sidebar-tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:2px;padding:3px 7px;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);flex-shrink:0;}
-  .sidebar-model{font-family:var(--mono);font-size:11px;color:var(--text);font-weight:500;line-height:1.4;}
-  .sidebar-model small{display:block;color:var(--muted);font-size:10px;margin-top:2px;}
-  .sb-search{padding:15px 20px 5px;}
-  .sb-search input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 12px;border-radius:3px;outline:none;}
-  .sb-search input:focus{border-color:var(--accent);}
-  .nav-group-label{padding:16px 20px 6px;font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
-  .nav-item{display:flex;align-items:center;gap:10px;padding:8px 20px;color:#8aadcc;text-decoration:none;font-size:13px;font-family:'Inter',sans-serif;transition:all 0.2s;border-left:2px solid transparent;line-height:1.3;}
-  .nav-item:hover,.nav-item.active{color:#fff;background:rgba(232,160,32,0.06);border-left-color:var(--accent);}
-  .nav-num{font-family:var(--mono);font-size:10px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:1px 5px;flex-shrink:0;min-width:28px;text-align:center;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);}
-  .nav-item-text{flex:1;min-width:0;}
-  .nav-subs{margin:0;padding:0 0 10px 0;list-style:none;display:flex;flex-direction:column;}
-  .nav-sub-item{display:block;padding:6px 20px 6px 58px;color:#8aadcc;text-decoration:none;font-size:12.5px;font-family:'Inter',sans-serif;border-left:2px solid transparent;transition:all 0.2s;}
-  .nav-sub-item:hover,.nav-sub-item.active{color:#fff;background:rgba(255,255,255,0.03);border-left-color:var(--accent);}
-
-  /* MAIN */
-  .main-content{margin-left:260px;width:calc(100% - 260px);display:flex;flex-direction:column;}
-
-  /* HERO */
-  .hero{position:relative;background:linear-gradient(135deg,#0a0c10 0%,#141925 40%,#1a1208 100%);border-bottom:2px solid var(--tuf);padding:48px 32px 36px;overflow:hidden;width:100%;}
-  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px);}
-  .hero-inner{position:relative;max-width:960px;margin:0 auto;width:100%;}
-  .logo-row{display:flex;align-items:center;gap:16px;margin-bottom:12px;}
-  .tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:2px;padding:4px 10px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
-  .ver-badge{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--border);padding:3px 8px;}
-  .hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.1;letter-spacing:1px;color:#fff;}
-  .hero h1 span{color:var(--accent);}
-  .hero p{margin-top:10px;color:var(--muted);font-size:14.5px;max-width:600px;}
-
-  /* LAYOUT */
-  .wrapper{max-width:960px;margin:0 auto;padding:0 32px 60px;width:100%;}
-
-  /* GROUP HEADER */
-  .group-header{display:flex;align-items:center;gap:16px;margin:52px 0 20px;padding-bottom:14px;border-bottom:2px solid var(--tuf);}
-  .group-num{font-family:var(--mono);font-size:12px;color:#000;background:var(--accent);padding:3px 10px;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);font-weight:700;flex-shrink:0;}
-  .group-header h2{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:.5px;}
-
-  /* ISSUE CARD */
-  .issue{background:var(--card);border:1px solid var(--border);margin:14px 0;overflow:hidden;transition:border-color .2s;}
-  .issue:hover{border-color:rgba(232,160,32,0.4);}
-  .issue-header{display:flex;align-items:stretch;cursor:pointer;user-select:none;}
-  .issue-icon{font-size:22px;padding:16px 18px;background:rgba(232,160,32,0.05);border-right:1px solid var(--border);display:flex;align-items:center;flex-shrink:0;}
-  .issue-title-wrap{flex:1;padding:14px 18px;display:flex;flex-direction:column;gap:4px;}
-  .issue-title{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:#fff;}
-  .issue-subtitle{font-size:13px;color:var(--muted);}
-  .issue-arrow{padding:14px 16px;display:flex;align-items:center;color:var(--accent);font-size:18px;flex-shrink:0;transition:transform .2s;}
-  .issue.open .issue-arrow{transform:rotate(90deg);}
-  .issue-body{display:none;border-top:1px solid var(--border);}
-  .issue.open .issue-body{display:block;}
-  .issue-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;}
-  .issue-col{padding:18px 22px;}
-  .issue-col:first-child{border-right:1px solid var(--border);}
-  .issue-col h4{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-  .issue-col ul{padding-left:16px;font-size:14px;color:var(--text);line-height:1.75;}
-  .issue-col ul li{margin-bottom:3px;}
-  .issue-col p{font-size:14px;color:var(--text);line-height:1.65;}
-  .kobra-note{background:rgba(232,80,80,0.07);border:1px solid rgba(232,80,80,0.3);padding:10px 14px;margin:12px 22px 16px;font-size:13px;color:var(--text);}
-  .kobra-note strong{color:var(--red);}
-  /* IMAGE SYSTEM */
-  .img-wrap{background:#0a0c10;border-bottom:1px solid var(--border);display:flex;flex-direction:column;}
-  .img-wrap-inner{display:flex;align-items:center;justify-content:center;min-height:280px;max-height:480px;overflow:hidden;}
-  .issue-img{width:100%;max-height:480px;object-fit:contain;display:block;background:#0a0c10;}
-  .img-meta{display:flex;align-items:center;justify-content:space-between;padding:8px 22px;background:#0d0f14;border-top:1px solid var(--border);flex-wrap:wrap;gap:8px;}
-  .img-caption{font-family:var(--mono);font-size:11px;color:var(--muted);font-style:italic;flex:1;min-width:0;}
-  .img-google{font-family:var(--mono);font-size:11px;color:var(--blue);text-decoration:none;white-space:nowrap;flex-shrink:0;}
-  .img-google:hover{text-decoration:underline;}
-  .solution-steps{padding-left:0;list-style:none;margin:0;}
-  .solution-steps li{display:flex;gap:10px;margin-bottom:8px;font-size:14px;line-height:1.6;}
-  .solution-steps li::before{content:counter(step);counter-increment:step;font-family:var(--mono);font-size:10px;background:rgba(232,160,32,0.15);color:var(--accent);padding:2px 6px;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);flex-shrink:0;height:fit-content;margin-top:3px;}
-  .solution-steps{counter-reset:step;}
-
-  /* ALERTS */
-  .alert{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;margin:20px 0;font-size:14px;}
-  .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
-  .alert-info{border:1px solid var(--blue);background:rgba(74,158,255,.07);}
-  .alert-tip{border:1px solid var(--green);background:rgba(62,207,118,.07);}
-  .alert-warn{border:1px solid var(--red);background:rgba(232,80,80,.07);}
-
-  /* SUPPORT BOX */
-  .support-box{background:linear-gradient(135deg,rgba(232,160,32,0.08),rgba(232,160,32,0.03));border:1px solid var(--accent);padding:28px 32px;margin:40px 0;text-align:center;}
-  .support-box h3{font-family:'Rajdhani',sans-serif;font-size:22px;color:var(--accent2);margin-bottom:10px;}
-  .support-box p{color:var(--muted);font-size:14px;margin-bottom:16px;}
-  .support-box a{display:inline-block;font-family:var(--mono);font-size:13px;color:#000;background:var(--accent);padding:8px 20px;text-decoration:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:opacity .2s;}
-  .support-box a:hover{opacity:.85;}
-  .support-box .sn-note{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:12px;}
-
-  /* QUICK NAV */
-  .qnav{background:var(--surface);border:1px solid var(--border);padding:18px 24px;margin:24px 0;}
-  .qnav h3{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-  .qnav-grid{display:flex;flex-wrap:wrap;gap:8px;}
-  .qnav-item{font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.2);padding:4px 10px;text-decoration:none;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:background .15s;}
-  .qnav-item:hover{background:rgba(232,160,32,0.18);}
-
-  /* YT */
-  .yt-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:13px;color:var(--red);text-decoration:none;margin:8px 0 4px;}
-  .yt-link:hover{opacity:.8;}
-
-  /* PAGE NAV */
-  .pn{margin-top:60px;padding-top:26px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:16px;}
-  .pn a{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;transition:color .15s;}
-  .pn a:hover{color:var(--accent);}
-  .pn .nx{margin-left:auto;}
-
-
-  /* IMAGE PLACEHOLDER */
-  .img-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px 28px;background:#0a0c10;min-height:280px;text-align:center;}
-  .img-placeholder span{font-size:48px;}
-  .img-placeholder p{font-size:13px;color:var(--muted);}
-  .img-placeholder code{font-family:var(--mono);font-size:12px;color:var(--accent);background:rgba(232,160,32,0.1);padding:2px 6px;}
-  .img-placeholder a{font-family:var(--mono);font-size:12px;color:var(--blue);text-decoration:none;}
-  .img-placeholder a:hover{text-decoration:underline;}
-
-  @media(max-width:900px){
-    .sidebar{display:none;}.main-content{margin-left:0;width:100%;}
-    .issue-inner{grid-template-columns:1fr;}
-    .issue-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
-    .logo-row{flex-wrap:wrap;row-gap:10px;}
-    .mobile-search-bar{display:flex !important;}
-  }
-  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
-  .mobile-search-bar input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .mobile-search-bar input:focus { border-color: var(--accent); }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="13">
 
-<!-- SIDEBAR -->
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-brand">
-    <div class="sidebar-product">
-      <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
-    </div>
-  </div>
-  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
+<!-- ── SIDEBAR (generuje sidebar-init.js z sidebar-config.js) ── -->
+<div id="sidebar"></div>
 
-  <div class="nav-group-label">Základní sekce</div>
-  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
-  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
-  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
-  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
-  <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
-  </ul>
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
-  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </div>
-  <ul class="nav-subs">
-    <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
-    <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item ">08b · Kalibrace filamentu</a></li>
-    <li><a href="08c_3D_Filament_next.html" class="nav-sub-item ">08c · Filamenty rozšíření</a></li>
-  </ul>
-  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
-  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
-  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
-  <a href="13_3D_troubleshooting.html" class="nav-item active"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
-
-  <div class="nav-group-label">Ostatní přílohy</div>
-<a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
-    <span class="nav-item-text">Výběr příloh</span>
-  </a>
-  <div class="nav-group-label">Oblíbené odkazy</div>
-  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
-    <span class="nav-item-text">Výběr odkazů</span>
-  </a>
-  <div style="height:32px;flex-shrink:0;"></div>
-</nav>
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    {
+      "id": "g1",
+      "num": "13.01",
+      "name": "Problémy s přilnavostí první vrstvy"
+    },
+    {
+      "id": "g2",
+      "num": "13.02",
+      "name": "Stringing a nánosy"
+    },
+    {
+      "id": "g3",
+      "num": "13.03",
+      "name": "Problémy s kvalitou povrchu"
+    },
+    {
+      "id": "g4",
+      "num": "13.04",
+      "name": "Under-extrusion (nedostatečná extrúze)"
+    },
+    {
+      "id": "g5",
+      "num": "13.05",
+      "name": "Over-extrusion (nadměrná extrúze)"
+    },
+    {
+      "id": "g6",
+      "num": "13.06",
+      "name": "Problémy s podporami"
+    },
+    {
+      "id": "g7",
+      "num": "13.07",
+      "name": "Problémy s mosty a převisy"
+    },
+    {
+      "id": "g8",
+      "num": "13.08",
+      "name": "Problémy s filamentem"
+    },
+    {
+      "id": "g9",
+      "num": "13.09",
+      "name": "Teplotní problémy"
+    },
+    {
+      "id": "g10",
+      "num": "13.10",
+      "name": "Problémy s tiskárnou (hardware)"
+    },
+    {
+      "id": "g11",
+      "num": "13.11",
+      "name": "Záložní filament — tisk bez přerušení"
+    },
+    {
+      "id": "g12",
+      "num": "13.12",
+      "name": "Povrch, vzhled a přerušení tisku"
+    }
+  ]
+}
+</script>
 
 <!-- MAIN -->
 <main class="main-content">
@@ -205,9 +86,6 @@
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 13</span>
         <span class="ver-badge">ŘEŠENÍ PROBLÉMŮ</span>
-        <div class="mobile-search-bar">
-          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
-        </div>
       </div>
       <h1><span>Troubleshooting</span></h1>
       <p>Něco se pokazilo? Přehledná tabulka desítek běžných problémů, jejich příčin a krok za krokem řešení.</p>
@@ -217,9 +95,9 @@
   <div class="wrapper">
 
     <!-- INTRO -->
-    <div class="alert alert-info" style="margin-top:32px;">
-      <div class="alert-icon">💡</div>
-      <div><strong>Jak tuto kapitolu používat:</strong> Klikněte na název problému který vidíte — rozbalí se příčiny a řešení. Problémy jsou seřazeny do skupin dle kategorie. Pokud tiskárna vůbec nereaguje nebo problém přetrvává po všech krocích — kontaktujte podporu Anycubic: <a href="https://support.anycubic.com" target="_blank" style="color:var(--blue);">support.anycubic.com</a> nebo <a href="https://anycubicsupport.zendesk.com/hc/en-001" target="_blank" style="color:var(--blue);">Zendesk Support</a>. Připravte SN číslo tiskárny (Nastavení → Informace o zařízení).</div>
+    <div class="alert alert-info">
+      <div class="alert-icon">📖</div>
+      <div><strong>Jak tuto kapitolu používat:</strong> Klikněte na název problému který vidíte — rozbalí se příčiny a řešení. Problémy jsou seřazeny do skupin dle kategorie. Pokud tiskárna vůbec nereaguje nebo problém přetrvává po všech krocích — kontaktujte podporu Anycubic: <a href="https://support.anycubic.com" target="_blank">support.anycubic.com</a> nebo <a href="https://anycubicsupport.zendesk.com/hc/en-001" target="_blank">Zendesk Support</a>. Připravte SN číslo tiskárny (Nastavení → Informace o zařízení).</div>
     </div>
 
     <!-- RYCHLÁ NAVIGACE -->
@@ -244,10 +122,8 @@
     <!-- ══════════════════════════════════════
          SKUPINA 1 — PRVNÍ VRSTVA
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g1">
-      <span class="group-num">01</span>
-      <h2>Problémy s přilnavostí první vrstvy</h2>
-    </div>
+    <div class="section" id="g1">
+      <div class="section-header"><h2>Problémy s přilnavostí první vrstvy</h2></div>
 
     <!-- 1.1 -->
     <div class="issue" id="i1-1">
@@ -266,12 +142,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Typický případ špatné adheze — výtisk se odlepuje z rohů (warping)</span>
-            <a href="https://www.google.com/search?q=no+adhesion+warping+3d+print&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=no+adhesion+warping+3d+print&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/no_adhesion.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/no_adhesion.jpg</code></p>
             <a href="https://www.google.com/search?q=no+adhesion+warping+3d+print&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -289,7 +165,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení — krok za krokem</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Odmastěte podložku IPA 90 % a papírovým ubrouskem</li>
               <li>Snižte Z-offset o 0,05–0,1 mm (první vrstva musí být viditelně přimáčknutá)</li>
               <li>Spusťte znovu Auto-leveling (ABL) — Kobra X kalibruje automaticky před tiskem</li>
@@ -297,11 +173,11 @@
               <li>Zvyšte teplotu podložky o 5–10 °C (PLA: 60 °C, PETG: 80 °C)</li>
               <li>Zvyšte teplotu trysky pro první vrstvu o +5 °C</li>
               <li>Pro ABS/ASA: použijte enclosure nebo zakryjte průvan</li>
-              <li>Naneste tenkou vrstvu lepidla (Pritt) jako adhezní pomůcku</li>
+              <li>Naneste tenkou vrstvu lepidla (Pritt, UHU nebo Kores) jako adhezní pomůcku</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X:</strong> Auto-leveling probíhá automaticky před každým tiskem — pokud selhává nebo dává nerovnoměrné výsledky, zkontrolujte čistotu senzoru BLTouch a nastavte manuální Z-offset v menu Nastavení → Z-offset.</div>
+        <div class="alert alert-tip"><div class="alert-icon">💡</div><div><strong>KOBRA X:</strong> Auto-leveling probíhá automaticky před každým tiskem — pokud selhává nebo dává nerovnoměrné výsledky, zkontrolujte čistotu senzoru BLTouch a nastavte manuální Z-offset v menu Nastavení → Z-offset.</div></div>
       </div>
     </div>
 
@@ -322,12 +198,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">PETG nebo jiný filament přilnul příliš pevně — odlepení poškozuje podložku nebo model</span>
-            <a href="https://www.google.com/search?q=3d+print+stuck+too+hard+PEI+plate&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=3d+print+stuck+too+hard+PEI+plate&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/too_sticky.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/too_sticky.jpg</code></p>
           <a href="https://www.google.com/search?q=3d+print+stuck+too+hard+PEI+plate&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -342,16 +218,16 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Počkejte až podložka zcela vychladne — PEI se při chlazení mírně smršťuje a model uvolní sám</li>
               <li>Zvyšte Z-offset o 0,05 mm (méně přimáčknutá první vrstva)</li>
-              <li>Pro PETG: naneste tenkou vrstvu lepicí tyčinky (Pritt) jako separační vrstvu na PEI</li>
+              <li>Pro PETG: naneste tenkou vrstvu lepicí tyčinky (Pritt, UHU nebo Kores) jako separační vrstvu na PEI</li>
               <li>Snižte teplotu podložky o 5 °C</li>
               <li>Nikdy nepoužívejte kovové nástroje s ostrým hrotem — použijte pružnou plastovou špachtle</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X:</strong> PETG na textured PEI podložce Kobry X přilne extrémně pevně. Vždy používejte separační vrstvu (lepicí tyčinka) pro PETG — bez ní riskujete poškození PEI povrchu.</div>
+        <div class="alert alert-warn"><div class="alert-icon">🔥</div><div><strong>KOBRA X:</strong> PETG na textured PEI podložce Kobry X přilne extrémně pevně. Vždy používejte separační vrstvu (lepicí tyčinka) pro PETG — bez ní riskujete poškození PEI povrchu.</div></div>
       </div>
     </div>
 
@@ -372,12 +248,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Elephant foot — spodní vrstvy jsou rozlité a přesahují okraje modelu</span>
-            <a href="https://www.google.com/search?q=elephant+foot+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=elephant+foot+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/elephant_foot.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/elephant_foot.jpg</code></p>
             <a href="https://www.google.com/search?q=elephant+foot+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -392,7 +268,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zvyšte Z-offset o 0,05–0,1 mm</li>
               <li>Snižte teplotu podložky o 5 °C</li>
               <li>Zapněte part cooling ventilátor od 2. vrstvy (ne od 1. — první vrstva potřebuje teplo pro přilnutí)</li>
@@ -421,12 +297,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Nerovnoměrná první vrstva — na různých místech podložky jiná tloušťka vrstvy</span>
-            <a href="https://www.google.com/search?q=uneven+first+layer+3d+printing+mesh+leveling&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=uneven+first+layer+3d+printing+mesh+leveling&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/uneven_first_layer.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/uneven_first_layer.jpg</code></p>
           <a href="https://www.google.com/search?q=uneven+first+layer+3d+printing+mesh+leveling&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -442,28 +318,28 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Spusťte Auto-leveling znovu — Kobra X dělá 25-bodový mesh</li>
               <li>Očistěte senzor leveling suchým hadříkem</li>
               <li>Zkontrolujte, zda magnetická podložka správně sedí a není pod ní vzduch nebo nečistoty</li>
-              <li>Tiskněte Bed Level Test (viz Kapitola 12) a vizuálně zkontrolujte rovnoměrnost</li>
+              <li>Tiskněte Bed Level Test (viz 12.01) a vizuálně zkontrolujte rovnoměrnost</li>
               <li>Pokud je podložka trvale nerovná — zvažte výměnu za novou PEI desku</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X:</strong> Mesh leveling se kalibruje automaticky při každém spuštění tisku — nemusíte ho spouštět ručně. Pokud výsledky nejsou stabilní, zkontrolujte upevnění senzoru a případně aktualizujte firmware.</div>
+        <div class="alert alert-info"><div class="alert-icon">📖</div><div><strong>KOBRA X:</strong> Mesh leveling se kalibruje automaticky při každém spuštění tisku — nemusíte ho spouštět ručně. Pokud výsledky nejsou stabilní, zkontrolujte upevnění senzoru a případně aktualizujte firmware.</div></div>
       </div>
     </div>
 
-    <a href="https://www.youtube.com/results?search_query=3D+tisk+prva+vrstva+kalibrace+Z+offset&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tisk první vrstva kalibrace Z-offset</a>
+    <a href="https://www.youtube.com/results?search_query=3D+tisk+prva+vrstva+kalibrace+Z+offset&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: 3D tisk první vrstva kalibrace Z-offset</a>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 2 — STRINGING
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g2">
-      <span class="group-num">02</span>
-      <h2>Stringing a nánosy</h2>
-    </div>
+    <div class="section" id="g2">
+      <div class="section-header"><h2>Stringing a nánosy</h2></div>
 
     <!-- 2.1 -->
     <div class="issue" id="i2-1">
@@ -482,12 +358,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Stringing — tenká plastová vlákna mezi vzdálenými částmi modelu</span>
-            <a href="https://www.google.com/search?q=stringing+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=stringing+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/stringing.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/stringing.jpg</code></p>
             <a href="https://www.google.com/search?q=stringing+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -504,9 +380,9 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Snižte teplotu trysky o 5 °C (zkuste Temperature Tower pro nalezení optima)</li>
-              <li>Zvyšte retrakci o 0,5 mm (Kobra X Bowden: výchozí 4–6 mm)</li>
+              <li>Zvyšte retrakci o 0,5 mm (Kobra X Direct Drive: výchozí 0,5–2 mm)</li>
               <li>Zvyšte Travel Speed na 150–200 mm/s</li>
               <li>Zapněte „Avoid crossing perimeters" v OrcaSliceru</li>
               <li>Vysušte filament — vlhký PETG a Nylon stringují vždy</li>
@@ -514,7 +390,7 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — Bowden systém:</strong> Kobra X používá Bowden extrudér (motor vzdálený od trysky). Optimální retrakce je 4–7 mm při 45–60 mm/s. Hodnoty z tutoriálů pro Direct Drive (0,5–2 mm) jsou pro Kobru X příliš nízké.</div>
+        <div class="alert alert-info"><div class="alert-icon">📖</div><div><strong>KOBRA X — Direct Drive:</strong> Kobra X používá přímý náhon (Direct Drive, motor extrudéru přímo nad tryskou). Optimální retrakce je 0,5–2 mm při 30 mm/s. Hodnoty z tutoriálů pro Bowden (4–7 mm) jsou pro Kobru X příliš vysoké.</div></div>
       </div>
     </div>
 
@@ -535,12 +411,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Blobs a zits — drobné plastové výstupky a kapky na vnějším povrchu stěn modelu</span>
-            <a href="https://www.google.com/search?q=blobs+zits+3d+printing+surface&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=blobs+zits+3d+printing+surface&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/blobs_zits.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/blobs_zits.jpg</code></p>
           <a href="https://www.google.com/search?q=blobs+zits+3d+printing+surface&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -556,7 +432,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Nastavte Seam Position na „Rear" nebo „Aligned" — seam se skryje nebo bude rovný</li>
               <li>Povolte Wipe before outer wall v OrcaSliceru</li>
               <li>Snižte Extra Restart Distance na zápornou hodnotu (−0,1 až −0,2 mm)</li>
@@ -585,12 +461,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Oozing — plast vytéká z trysky při pohybech bez tisku a zanechává stopy a vlákna</span>
-            <a href="https://www.google.com/search?q=oozing+3d+printing+travel+moves&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=oozing+3d+printing+travel+moves&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/oozing.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/oozing.jpg</code></p>
           <a href="https://www.google.com/search?q=oozing+3d+printing+travel+moves&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -606,7 +482,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Snižte teplotu trysky o 5–10 °C</li>
               <li>Zvyšte retrakci o 0,5–1 mm</li>
               <li>Zapněte „Retract on layer change" v OrcaSliceru</li>
@@ -617,14 +493,14 @@
         </div>
       </div>
     </div>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 3 — KVALITA POVRCHU
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g3">
-      <span class="group-num">03</span>
-      <h2>Problémy s kvalitou povrchu</h2>
-    </div>
+    <div class="section" id="g3">
+      <div class="section-header"><h2>Problémy s kvalitou povrchu</h2></div>
 
     <!-- 3.1 -->
     <div class="issue" id="i3-1">
@@ -643,12 +519,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Ghosting (ringing) — opakující se vlnky za ostrými hranami modelu způsobené vibracemi</span>
-            <a href="https://www.google.com/search?q=ghosting+ringing+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=ghosting+ringing+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/ghosting.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/ghosting.jpg</code></p>
             <a href="https://www.google.com/search?q=ghosting+ringing+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -664,7 +540,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Snižte rychlost tisku o 20–30 %</li>
               <li>Utáhněte všechny šrouby rámu (zejména spoje rohů)</li>
               <li>Zkontrolujte napětí řemenů — měly by znít jako nízká struna</li>
@@ -674,7 +550,7 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — Input Shaping:</strong> Kobra X má zabudovanou kompenzaci rezonancí (Input Shaping / Resonance Compensation). Pokud ghosting přetrvává, rekalibrujte Input Shaping z menu tiskárny — kalibrace trvá cca 5 minut.</div>
+        <div class="alert alert-info"><div class="alert-icon">📖</div><div><strong>KOBRA X — Input Shaping:</strong> Kobra X má zabudovanou kompenzaci rezonancí (Input Shaping / Resonance Compensation). Pokud ghosting přetrvává, rekalibrujte Input Shaping z menu tiskárny — kalibrace trvá cca 5 minut.</div></div>
       </div>
     </div>
 
@@ -695,12 +571,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Layer shifting — vrstvy jsou posunuty v ose X nebo Y, model vypadá jako „sestoupený"</span>
-            <a href="https://www.google.com/search?q=layer+shift+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=layer+shift+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/layer_shift.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/layer_shift.jpg</code></p>
             <a href="https://www.google.com/search?q=layer+shift+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -717,7 +593,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkontrolujte a dotáhněte napnutí řemenů X a Y</li>
               <li>Snižte rychlost tisku a akceleraci (Acceleration max 2000–3000 mm/s²)</li>
               <li>Zkontrolujte dráhu pohybu — žádné kabely, šrouby ani cizí předměty</li>
@@ -747,12 +623,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Z-wobble — pravidelné horizontální vlnky na povrchu stěn opakující se každou vrstvu</span>
-            <a href="https://www.google.com/search?q=z+wobble+3d+printing+z+axis&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=z+wobble+3d+printing+z+axis&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/z_wobble.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/z_wobble.jpg</code></p>
           <a href="https://www.google.com/search?q=z+wobble+3d+printing+z+axis&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -768,7 +644,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Namažte trapézový šroub lithiovou vazelínou po celé délce</li>
               <li>Zkontrolujte, zda šroub není viditelně ohnutý — při rotaci by neměl být výkyv</li>
               <li>Zkontrolujte spojku motoru — musí být pevná, bez vůle</li>
@@ -797,12 +673,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Viditelné vrstvové linie — výtisk vypadá schodovite, vrstvy jsou velmi výrazné</span>
-            <a href="https://www.google.com/search?q=visible+layer+lines+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=visible+layer+lines+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/layer_lines.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/layer_lines.jpg</code></p>
           <a href="https://www.google.com/search?q=visible+layer+lines+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -817,9 +693,9 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Snižte výšku vrstvy na 0,1–0,15 mm pro detail (pomalejší, ale hladší)</li>
-              <li>Kalibrujte Flow Rate pomocí Flow Calibration Cube (viz Kapitola 12)</li>
+              <li>Kalibrujte Flow Rate pomocí Flow Calibration Cube (viz 12.01)</li>
               <li>Pro post-processing: brusný papír 400→800→1200 a primer nebo acetone vapor (ABS)</li>
               <li>Použijte Ironing pro vršek modelu — výrazně uhladí horní plochy</li>
             </ol>
@@ -845,12 +721,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Warping — rohy velkého výtisku se deformují a zvedají od podložky vlivem tepelných napětí</span>
-            <a href="https://www.google.com/search?q=warping+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=warping+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/warping.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/warping.jpg</code></p>
             <a href="https://www.google.com/search?q=warping+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -866,7 +742,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Použijte enclosure pro ABS/ASA — teplý vzduch uvnitř dramaticky snižuje warping</li>
               <li>Zvyšte teplotu podložky (ABS: 100–110 °C, max Kobry X je 100 °C)</li>
               <li>Naneste ABS juice nebo lepidlo na podložku</li>
@@ -876,19 +752,19 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — heatbed limit:</strong> Max. teplota vyhřívané podložky Kobry X je <strong>100 °C</strong>. ABS a ASA ideálně potřebují 110 °C — při 100 °C je warping vyšší. Kompenzujte enclosem a lepidlem.</div>
+        <div class="alert alert-warn"><div class="alert-icon">🔥</div><div><strong>KOBRA X — heatbed limit:</strong> Max. teplota vyhřívané podložky Kobry X je <strong>100 °C</strong>. ABS a ASA ideálně potřebují 110 °C — při 100 °C je warping vyšší. Kompenzujte enclosem a lepidlem.</div></div>
       </div>
     </div>
 
-    <a href="https://www.youtube.com/results?search_query=3D+tisk+layer+shift+ghosting+oprava&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tisk layer shift ghosting oprava</a>
+    <a href="https://www.youtube.com/results?search_query=3D+tisk+layer+shift+ghosting+oprava&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: 3D tisk layer shift ghosting oprava</a>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 4 — UNDER-EXTRUSION
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g4">
-      <span class="group-num">04</span>
-      <h2>Under-extrusion (nedostatečná extrúze)</h2>
-    </div>
+    <div class="section" id="g4">
+      <div class="section-header"><h2>Under-extrusion (nedostatečná extrúze)</h2></div>
 
     <!-- 4.1 -->
     <div class="issue" id="i4-1">
@@ -906,13 +782,13 @@
             <img class="issue-img" src="pic/under_extrusion.jpg" alt="Under-extrusion - mezery ve stěnách" onerror="imgError(this)">
           </div>
           <div class="img-meta">
-            <span class="img-caption">Under-extrusion — mezery a díry ve stěnách výtisku způsobené nedostatečným průtokem filametu</span>
-            <a href="https://www.google.com/search?q=under+extrusion+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <span class="img-caption">Under-extrusion — mezery a díry ve stěnách výtisku způsobené nedostatečným průtokem filamentu</span>
+            <a href="https://www.google.com/search?q=under+extrusion+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/under_extrusion.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/under_extrusion.jpg</code></p>
             <a href="https://www.google.com/search?q=under+extrusion+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -930,10 +806,10 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zvyšte teplotu trysky o 5–10 °C</li>
               <li>Snižte rychlost tisku o 20 %</li>
-              <li>Proveďte Cold Pull pro vyčištění trysky (viz Kapitola 11)</li>
+              <li>Proveďte Cold Pull pro vyčištění trysky (viz 11.03)</li>
               <li>Kalibrujte Flow Rate — tiskněte stěnový cube a změřte tloušťku</li>
               <li>Zkontrolujte extrudér — ozubené kolo musí filament pevně sevřít bez prokluzování</li>
               <li>Zkontrolujte PTFE trubici na kroucení nebo ucpání</li>
@@ -949,7 +825,7 @@
       <div class="issue-header" onclick="toggleIssue(this)">
         <div class="issue-icon">⚙️</div>
         <div class="issue-title-wrap">
-          <div class="issue-title">Grinding / Stripping filametu</div>
+          <div class="issue-title">Grinding / Stripping filamentu</div>
           <div class="issue-subtitle">Extrudér brousí filament, slyšíte klikání nebo praskání, z extrudéru padají piliny</div>
         </div>
         <div class="issue-arrow">›</div>
@@ -957,16 +833,16 @@
       <div class="issue-body">
         <div class="img-wrap">
           <div class="img-wrap-inner">
-            <img class="issue-img" src="pic/grinding.jpg" alt="Grinding - broušení filametu extrudérem" onerror="imgError(this)">
+            <img class="issue-img" src="pic/grinding.jpg" alt="Grinding - broušení filamentu extrudérem" onerror="imgError(this)">
           </div>
           <div class="img-meta">
             <span class="img-caption">Grinding — extrudér brousí filament místo podávání. Piliny plastu padají z extrudéru.</span>
-            <a href="https://www.google.com/search?q=grinding+stripping+filament+3d+printing+extruder&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=grinding+stripping+filament+3d+printing+extruder&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/grinding.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/grinding.jpg</code></p>
           <a href="https://www.google.com/search?q=grinding+stripping+filament+3d+printing+extruder&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -982,12 +858,12 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Prvně vyčistěte trysku — Cold Pull nebo výměna</li>
               <li>Snižte retrakci o 0,5–1 mm</li>
               <li>Zvyšte teplotu trysky o 5–10 °C</li>
               <li>Zkontrolujte přítlačnou pružinu extrudéru — musí pevně sevřít filament</li>
-              <li>Vyčistěte zbytky broušeného filametu z extrudérového ozubeného kola (měkký kartáček)</li>
+              <li>Vyčistěte zbytky broušeného filamentu z extrudérového ozubeného kola (měkký kartáček)</li>
               <li>Pokud kolo je viditelně opotřebené — vyměňte extrudér</li>
             </ol>
           </div>
@@ -1012,12 +888,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Cold pull výsledek — odlitek tvaru trysky s tmavými usazeninami zachycenými uvnitř (vlevo znečištěný, vpravo čistý)</span>
-            <a href="https://www.google.com/search?q=cold+pull+clogged+nozzle+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=cold+pull+clogged+nozzle+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/clogging.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/clogging.jpg</code></p>
             <a href="https://www.google.com/search?q=cold+pull+clogged+nozzle+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -1030,19 +906,19 @@
               <li>Tryska nevytlačí nic ani při správné teplotě</li>
               <li>Pod tryskou visí tenká vlákna místo plného proudu plastu</li>
             </ul>
-            <h4 style="margin-top:14px;">Příčiny</h4>
+            <h4>Příčiny</h4>
             <ul>
               <li>Vlhký filament — bubliny páry karbonizují plast uvnitř trysky</li>
               <li>Příliš nízká teplota — plast se neroztaví celý</li>
               <li>Záměna materiálů bez purge (PLA přes Nylon)</li>
               <li>Heat creep — plast změknul příliš vysoko nad tryskou</li>
               <li>PTFE trubice bez dosednutí — mezera = hromadění plastu</li>
-              <li>Prach a nečistoty na filametu</li>
+              <li>Prach a nečistoty na filamentu</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Rychlé řešení — Cold Pull</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li><strong>Zahřejte</strong> na 200–220 °C (PLA) nebo 230–250 °C (PETG/ABS) a extrudujte 20–30 mm</li>
               <li><strong>Zchlaďte</strong> na 85–95 °C (PLA) nebo 100–110 °C (PETG) — nechte aktivně chladit ventilátorem</li>
               <li><strong>Pevně uchopte</strong> filament a prudce ho vytáhněte jedním tahem přímo nahoru</li>
@@ -1050,15 +926,15 @@
               <li><strong>Opakujte 2–5×</strong> dokud vychází čistý odlitek bez tmavých usazenin</li>
               <li><strong>Ověřte průtok</strong> — extrudujte 20 mm a zkontrolujte rovnoměrný výtok</li>
             </ol>
-            <h4 style="margin-top:14px;">Pokud Cold Pull nestačí</h4>
-            <ol class="solution-steps">
+            <h4>Pokud Cold Pull nestačí</h4>
+            <ol class="steps">
               <li>Jehlou (∅ 0,3 mm) prostrčte otvor trysky za tepla (220–240 °C)</li>
-              <li>Extrudujte 50 cm čistícího filametu (cleaning filament)</li>
+              <li>Extrudujte 50 cm čisticího filamentu (cleaning filament)</li>
               <li>Vyměňte trysku — 5 minut, za tepla, klíč 7 mm</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — výměna trysky za tepla:</strong> Zahřejte hotend na 180–200 °C. Klíč 7 mm na trysku, druhý klíč přidržte heat block. <strong>Nikdy studenou trysku</strong> — závit se zlomí. Podrobný postup cold pull viz <a href="11_3D_udrzba.html#i-sekce2" style="color:var(--blue);">Kapitola 11 · Sekce 2</a>.</div>
+        <div class="alert alert-tip"><div class="alert-icon">💡</div><div><strong>KOBRA X — výměna trysky za tepla:</strong> Zahřejte hotend na 180–200 °C. Klíč 7 mm na trysku, druhý klíč přidržte heat block. <strong>Nikdy studenou trysku</strong> — závit se zlomí. Podrobný postup cold pull viz <a href="11_3D_udrzba.html#cold-pull-studeny-tah-krok-za-krokem">11.03</a>.</div></div>
       </div>
     </div>
 
@@ -1079,12 +955,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Tiskárna netlačí filament — extrudér se pohybuje, ale z trysky nevychází žádný plast</span>
-            <a href="https://www.google.com/search?q=no+extrusion+3d+printing+filament&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=no+extrusion+3d+printing+filament&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/no_extrusion.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/no_extrusion.jpg</code></p>
           <a href="https://www.google.com/search?q=no+extrusion+3d+printing+filament&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1096,34 +972,34 @@
               <li>Filament se zasekl v extrudéru nebo PTFE trubici</li>
               <li>PTFE trubice se uvolnila z fittingu</li>
               <li>Extrudérový motor nefunguje (elektrický problém)</li>
-              <li>Špatně zvolený kanál filametu (Kobra X má 4 kanály)</li>
+              <li>Špatně zvolený kanál filamentu (Kobra X má 4 kanály)</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkontrolujte zda filament stále vede do extrudéru — vizuálně nebo odstraňte kryty</li>
               <li>Zkontrolujte PTFE fittingy — trubice musí sedět pevně na obou koncích</li>
               <li>Manuálně extrudujte filament z menu tiskárny při zahřáté trysce</li>
               <li>Pokud motor se točí ale netlačí — zkontrolujte ozubené kolo a přítlačnou pružinu</li>
               <li>Vyčistěte nebo vyměňte trysku</li>
-              <li>Kobra X: ověřte v menu že je vybrán správný kanál filametu (1–4)</li>
+              <li>Kobra X: ověřte v menu že je vybrán správný kanál filamentu (1–4)</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — multi-filament:</strong> Kobra X má 4 kanály filametu. Zkontrolujte v menu tiskárny, že je aktivní správný kanál (1–4) odpovídající cívce která je zasunutá. Špatný kanál = extrudér tlačí prázdno.</div>
+        <div class="alert alert-tip"><div class="alert-icon">💡</div><div><strong>KOBRA X — multi-filament:</strong> Kobra X má 4 kanály filamentu. Zkontrolujte v menu tiskárny, že je aktivní správný kanál (1–4) odpovídající cívce která je zasunutá. Špatný kanál = extrudér tlačí prázdno.</div></div>
       </div>
     </div>
 
-    <a href="https://www.youtube.com/results?search_query=3D+tisk+under+extrusion+clogging+oprava&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tisk under-extrusion clogging oprava</a>
+    <a href="https://www.youtube.com/results?search_query=3D+tisk+under+extrusion+clogging+oprava&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: 3D tisk under-extrusion clogging oprava</a>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 5 — OVER-EXTRUSION
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g5">
-      <span class="group-num">05</span>
-      <h2>Over-extrusion (nadměrná extrúze)</h2>
-    </div>
+    <div class="section" id="g5">
+      <div class="section-header"><h2>Over-extrusion (nadměrná extrúze)</h2></div>
 
     <!-- 5.1 -->
     <div class="issue" id="i5-1">
@@ -1142,12 +1018,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Over-extrusion — stěny jsou příliš tlusté, otvory zalepené, povrch nerovný s valy plastu</span>
-            <a href="https://www.google.com/search?q=over+extrusion+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=over+extrusion+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/over_extrusion.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/over_extrusion.jpg</code></p>
           <a href="https://www.google.com/search?q=over+extrusion+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1157,14 +1033,14 @@
               <li>Příliš vysoký Flow Rate</li>
               <li>Příliš vysoká teplota — plast je příliš tekutý a roztéká se</li>
               <li>Špatně kalibrovaný E-steps extrudéru</li>
-              <li>Průměr filametu zadán menší než je reálný (1,75 mm vs. skutečnost)</li>
+              <li>Průměr filamentu zadán menší než je reálný (1,75 mm vs. skutečnost)</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Snižte Flow Rate o 2–5 % a tiskněte Flow Calibration Cube</li>
-              <li>Změřte skutečný průměr filametu posuvným měřítkem na 3 místech — zadejte průměr do sliceru</li>
+              <li>Změřte skutečný průměr filamentu posuvným měřítkem na 3 místech — zadejte průměr do sliceru</li>
               <li>Snižte teplotu trysky o 5 °C</li>
               <li>Kalibrujte E-steps extrudéru (extrudujte 100 mm a změřte skutečnou délku)</li>
               <li>Pro díry a otvory: použijte „Hole Horizontal Expansion" v OrcaSliceru</li>
@@ -1173,14 +1049,14 @@
         </div>
       </div>
     </div>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 6 — PODPORY
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g6">
-      <span class="group-num">06</span>
-      <h2>Problémy s podporami</h2>
-    </div>
+    <div class="section" id="g6">
+      <div class="section-header"><h2>Problémy s podporami</h2></div>
 
     <!-- 6.1 -->
     <div class="issue" id="i6-1">
@@ -1199,12 +1075,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Podpory se lámají nebo trhají při odstraňování a poškozují povrch modelu</span>
-            <a href="https://www.google.com/search?q=support+removal+3d+printing+breaking&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=support+removal+3d+printing+breaking&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/support_breaking.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/support_breaking.jpg</code></p>
           <a href="https://www.google.com/search?q=support+removal+3d+printing+breaking&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1219,7 +1095,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zvyšte Z-distance na 0,2–0,3 mm (větší mezera = snazší odlepení)</li>
               <li>Snižte Interface density na 50–60 %</li>
               <li>Přepněte na Tree (Organic) supports — snáze se odstraňují</li>
@@ -1248,12 +1124,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Jizvy po podpěrách — hrubé stopy a nerovnosti na modelu po odstraňování podpor</span>
-            <a href="https://www.google.com/search?q=support+scars+marks+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=support+scars+marks+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/support_scars.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/support_scars.jpg</code></p>
           <a href="https://www.google.com/search?q=support+scars+marks+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1268,7 +1144,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zvyšte Z-distance na 0,25–0,35 mm</li>
               <li>Snižte počet Interface Layers na 1–2</li>
               <li>Použijte PVA podpory (rozpustné ve vodě) pro složité modely — vyžaduje multi-material</li>
@@ -1297,12 +1173,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Podpory se tiskly do vzduchu nebo se odlomily — špatná adheze základny podpor</span>
-            <a href="https://www.google.com/search?q=support+failed+detached+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=support+failed+detached+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/support_detached.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/support_detached.jpg</code></p>
           <a href="https://www.google.com/search?q=support+failed+detached+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1317,7 +1193,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Přidejte Brim pro podpory (Support Brim) — zlepší adhezi základny podpor</li>
               <li>Snižte XY-distance podpor na 0,4–0,6 mm</li>
               <li>Přejděte na Tree supports — mají lepší stabilitu než mřížkové</li>
@@ -1327,14 +1203,14 @@
         </div>
       </div>
     </div>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 7 — MOSTY A PŘEVISY
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g7">
-      <span class="group-num">07</span>
-      <h2>Problémy s mosty a převisy</h2>
-    </div>
+    <div class="section" id="g7">
+      <div class="section-header"><h2>Problémy s mosty a převisy</h2></div>
 
     <!-- 7.1 -->
     <div class="issue" id="i7-1">
@@ -1353,12 +1229,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Přemostění — vlákna visí dolů nebo se most propadá. Nedostatečné chlazení nebo příliš dlouhý most.</span>
-            <a href="https://www.google.com/search?q=bridging+failure+3d+printing+drooping&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=bridging+failure+3d+printing+drooping&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/bridging.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/bridging.jpg</code></p>
           <a href="https://www.google.com/search?q=bridging+failure+3d+printing+drooping&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1374,7 +1250,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zvyšte part cooling ventilátor na 100 % pro bridging</li>
               <li>Snižte teplotu trysky o 5–10 °C pro bridging vrstvy</li>
               <li>Zvyšte Bridge Speed na 40–60 mm/s (rychlejší = kratší čas ve vzduchu)</li>
@@ -1403,12 +1279,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Šikmé plochy výtisku se prověšují — překročen maximální úhel bez podpor (typicky nad 55°)</span>
-            <a href="https://www.google.com/search?q=overhang+failure+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=overhang+failure+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/overhang.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/overhang.jpg</code></p>
           <a href="https://www.google.com/search?q=overhang+failure+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1418,13 +1294,13 @@
               <li>Nedostatečné chlazení převisu</li>
               <li>Úhel překračuje schopnosti tiskárny bez podpor (typicky >55°)</li>
               <li>Příliš vysoká teplota trysky</li>
-              <li>Vysoká vlhkost filametu</li>
+              <li>Vysoká vlhkost filamentu</li>
               <li>Přidané chlazení nestačí — weak part cooling</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zvyšte part cooling na 100 %</li>
               <li>Snižte rychlost tisku pro plochy s převisem</li>
               <li>Snižte teplotu trysky o 5 °C</li>
@@ -1436,14 +1312,14 @@
         </div>
       </div>
     </div>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 8 — FILAMENT
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g8">
-      <span class="group-num">08</span>
-      <h2>Problémy s filamentem</h2>
-    </div>
+    <div class="section" id="g8">
+      <div class="section-header"><h2>Problémy s filamentem</h2></div>
 
     <!-- 8.1 -->
     <div class="issue" id="i8-1">
@@ -1462,12 +1338,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Filament se přelámal uvnitř PTFE trubice nebo extrudéru — křehký nebo starý filament</span>
-            <a href="https://www.google.com/search?q=broken+filament+inside+tube+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=broken+filament+inside+tube+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/broken_filament.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/broken_filament.jpg</code></p>
           <a href="https://www.google.com/search?q=broken+filament+inside+tube+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1482,8 +1358,8 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
-              <li>Zahřejte trysku na teplotu filametu a zkuste pomalu vytáhnout zlomený kus</li>
+            <ol class="steps">
+              <li>Zahřejte trysku na teplotu filamentu a zkuste pomalu vytáhnout zlomený kus</li>
               <li>Pokud nejde vytáhnout — demontujte PTFE fitting a trubici pro přístup</li>
               <li>Zasuňte nový filament z druhé strany aby vytlačil starý kus</li>
               <li>Po vyčištění zkontrolujte PTFE trubici — příliš ostrý ohyb rovnejte nebo vyměňte trubici</li>
@@ -1491,7 +1367,7 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — 4 trubice:</strong> Kobra X má 4 oddělené PTFE trubice. Přelomení v jedné trubici neovlivní ostatní kanály. Označte trubici číslem před demontáží — záměna kanálů způsobí problémy s podáváním.</div>
+        <div class="alert alert-info"><div class="alert-icon">📖</div><div><strong>KOBRA X — 4 trubice:</strong> Kobra X má 4 oddělené PTFE trubice. Přelomení v jedné trubici neovlivní ostatní kanály. Označte trubici číslem před demontáží — záměna kanálů způsobí problémy s podáváním.</div></div>
       </div>
     </div>
 
@@ -1508,16 +1384,16 @@
       <div class="issue-body">
         <div class="img-wrap">
           <div class="img-wrap-inner">
-            <img class="issue-img" src="pic/runout.jpg" alt="Dojití filametu - prázdná cívka" onerror="imgError(this)">
+            <img class="issue-img" src="pic/runout.jpg" alt="Dojití filamentu - prázdná cívka" onerror="imgError(this)">
           </div>
           <div class="img-meta">
-            <span class="img-caption">Filament dojel uprostřed tisku — prázdná cívka nebo senzor filametu selhal</span>
-            <a href="https://www.google.com/search?q=filament+runout+empty+spool+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <span class="img-caption">Filament dojel uprostřed tisku — prázdná cívka nebo senzor filamentu selhal</span>
+            <a href="https://www.google.com/search?q=filament+runout+empty+spool+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/runout.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/runout.jpg</code></p>
           <a href="https://www.google.com/search?q=filament+runout+empty+spool+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1525,15 +1401,15 @@
             <h4>Příčiny</h4>
             <ul>
               <li>Cívka se vyprázdnila — filament dojel</li>
-              <li>Senzor filametu selhal nebo není aktivní</li>
+              <li>Senzor filamentu selhal nebo není aktivní</li>
               <li>Filament se přetrhl na cívce před senzorem</li>
               <li>Filament se zamotal na cívce (tangla)</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
-              <li>Kobra X má senzor filametu — zkontrolujte, že je aktivní v menu nastavení</li>
+            <ol class="steps">
+              <li>Kobra X má senzor filamentu — zkontrolujte, že je aktivní v menu nastavení</li>
               <li>Vyměňte cívku — nový filament zasuňte a pokračujte tiskem (Resume Print)</li>
               <li>Pokud tisk pokračoval bez plastu: odstraňte poškozené vrstvy, opravte model v CAD a vytiskněte zbývající část</li>
               <li>Zamotaný filament: nikdy neříznout — postupně odmotávejte od konce a sledujte kde je smyčka</li>
@@ -1561,12 +1437,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Vlhký filament — při tisku praskání nebo syčení, výtisk má bublinky nebo matný nerovný povrch</span>
-            <a href="https://www.google.com/search?q=wet+filament+moisture+bubbles+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=wet+filament+moisture+bubbles+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/wet_filament.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/wet_filament.jpg</code></p>
           <a href="https://www.google.com/search?q=wet+filament+moisture+bubbles+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1581,10 +1457,10 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
-              <li>Vysušte filament v sušičce nebo sušičce potravin (viz Kapitola 10)</li>
+            <ol class="steps">
+              <li>Vysušte filament v sušičce nebo sušičce potravin (viz 10.05)</li>
               <li>PLA: 45–50 °C / 4–6 hodin. PETG: 55–65 °C / 4–6 hodin. Nylon: 70–80 °C / 8–12 hodin</li>
-              <li>Po sušení tiskněte přímo ze sušičky (SUNLU S1 má otvor pro filament)</li>
+              <li>Po sušení tiskněte přímo ze sušičky (sušičky jako SUNLU S1, Creality Space Pi nebo eSUN eBOX mají otvor pro filament)</li>
               <li>Uskladňujte filament v zip-lock sáčku nebo dry boxu s silikagelovým sušidlem</li>
               <li>Přiložte mini hygrometr — vlhkost pod 15 % je cíl</li>
             </ol>
@@ -1592,14 +1468,14 @@
         </div>
       </div>
     </div>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 9 — TEPLOTNÍ PROBLÉMY
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g9">
-      <span class="group-num">09</span>
-      <h2>Teplotní problémy</h2>
-    </div>
+    <div class="section" id="g9">
+      <div class="section-header"><h2>Teplotní problémy</h2></div>
 
     <!-- 9.1 -->
     <div class="issue" id="i9-1">
@@ -1618,12 +1494,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Thermal Runaway Error — tiskárna zastavila tisk s bezpečnostní chybou. Termistor nebo topné těleso.</span>
-            <a href="https://www.google.com/search?q=thermal+runaway+error+3d+printer&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=thermal+runaway+error+3d+printer&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/thermal_runaway.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/thermal_runaway.jpg</code></p>
           <a href="https://www.google.com/search?q=thermal+runaway+error+3d+printer&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1639,7 +1515,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkontrolujte fyzické uchycení termistoru v heat blocku — musí být pevně přichycen kaplán páskou</li>
               <li>Zkontrolujte konektory termistoru a topení na řídicí desce — musí pevně sedět</li>
               <li>Změřte odpor termistoru (100 kΩ při pokojové teplotě pro NTC 100K) — pokud je jiný, vyměňte</li>
@@ -1648,7 +1524,7 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — bezpečnost:</strong> Thermal Runaway je kritická bezpečnostní ochrana. Pokud se chyba opakuje po kontrole konektorů, kontaktujte Anycubic podporu — může jít o defektní díl pod zárukou.</div>
+        <div class="alert alert-warn"><div class="alert-icon">🔥</div><div><strong>KOBRA X — bezpečnost:</strong> Thermal Runaway je kritická bezpečnostní ochrana. Pokud se chyba opakuje po kontrole konektorů, kontaktujte Anycubic podporu — může jít o defektní díl pod zárukou.</div></div>
       </div>
     </div>
 
@@ -1669,12 +1545,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Hotend se zahřívá pomalu nebo nedosáhne teploty — selhávající topné těleso nebo špatný kontakt</span>
-            <a href="https://www.google.com/search?q=heater+cartridge+fail+3d+printer+hotend&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=heater+cartridge+fail+3d+printer+hotend&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/heater_fail.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/heater_fail.jpg</code></p>
           <a href="https://www.google.com/search?q=heater+cartridge+fail+3d+printer+hotend&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1689,7 +1565,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkontrolujte konektory topení na řídicí desce — pevný kontakt</li>
               <li>Zkontrolujte silikonovou ponožku heat blocku — pokud chybí nebo je poškozená, teplo uniká</li>
               <li>Změřte odpor topného tělesa multimetrem (10–15 Ω) — pokud je nižší, vyměňte</li>
@@ -1717,12 +1593,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Heat creep — filament změknul příliš vysoko nad tryskou v chladné zóně a zablokoval průchod</span>
-            <a href="https://www.google.com/search?q=heat+creep+3d+printing+hotend&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=heat+creep+3d+printing+hotend&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/heat_creep.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/heat_creep.jpg</code></p>
           <a href="https://www.google.com/search?q=heat+creep+3d+printing+hotend&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1737,7 +1613,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkontrolujte hotend ventilátor — musí vždy běžet při zahřáté trysce</li>
               <li>Zkontrolujte PTFE trubici — musí dosáhnout až na doraz k trysce bez mezery</li>
               <li>Pro tisk PLA v enclosure: otevřete kryt nebo zapněte ventilaci dovnitř</li>
@@ -1746,19 +1622,19 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — PLA a enclosure:</strong> Nikdy netiskněte PLA v uzavřeném krytu bez ventilace. Zahřátý vzduch uvnitř způsobuje heat creep. Pro PLA: otevřete kryt nebo instalujte ventilátor pro výměnu vzduchu uvnitř krytu.</div>
+        <div class="alert alert-warn"><div class="alert-icon">🔥</div><div><strong>KOBRA X — PLA a enclosure:</strong> Nikdy netiskněte PLA v uzavřeném krytu bez ventilace. Zahřátý vzduch uvnitř způsobuje heat creep. Pro PLA: otevřete kryt nebo instalujte ventilátor pro výměnu vzduchu uvnitř krytu.</div></div>
       </div>
     </div>
 
-    <a href="https://www.youtube.com/results?search_query=3D+tisk+thermal+runaway+heat+creep+oprava&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tisk thermal runaway heat creep oprava</a>
+    <a href="https://www.youtube.com/results?search_query=3D+tisk+thermal+runaway+heat+creep+oprava&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: 3D tisk thermal runaway heat creep oprava</a>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 10 — HARDWARE
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g10">
-      <span class="group-num">10</span>
-      <h2>Problémy s tiskárnou (hardware)</h2>
-    </div>
+    <div class="section" id="g10">
+      <div class="section-header"><h2>Problémy s tiskárnou (hardware)</h2></div>
 
     <!-- 10.1 -->
     <div class="issue" id="i10-1">
@@ -1777,12 +1653,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Auto-leveling selhává nebo dává extrémně nepravidelný mesh — problem se senzorem nebo podložkou</span>
-            <a href="https://www.google.com/search?q=auto+leveling+fail+error+3d+printer+BLTouch&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=auto+leveling+fail+error+3d+printer+BLTouch&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/leveling_error.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/leveling_error.jpg</code></p>
           <a href="https://www.google.com/search?q=auto+leveling+fail+error+3d+printer+BLTouch&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1798,7 +1674,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Vyčistěte senzor suchým hadříkem — nesmí mít nečistoty</li>
               <li>Resetujte kalibraci v menu: Nastavení → Reset leveling data</li>
               <li>Zkontrolujte manuální výšku podložky — nesmí být extrémně nakloněná (upravte šrouby podložky)</li>
@@ -1827,12 +1703,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Po stisknutí vypínače se nic nestane — přepálená pojistka, vadný PSU nebo špatné napětí</span>
-            <a href="https://www.google.com/search?q=3d+printer+not+turning+on+power+supply&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=3d+printer+not+turning+on+power+supply&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/power_fail.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/power_fail.jpg</code></p>
           <a href="https://www.google.com/search?q=3d+printer+not+turning+on+power+supply&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1848,7 +1724,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkontrolujte napájecí kabel — jiná zásuvka, jiný kabel</li>
               <li>Zkontrolujte přepínač napětí na PSU — musí být 230V pro EU</li>
               <li>Zkontrolujte pojistku (zadní panel tiskárny) — hodnota 250V/10A</li>
@@ -1857,7 +1733,7 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — pojistka:</strong> Pojistka je <strong>250V / 10A</strong> — pouze tato hodnota! Jiná hodnota (např. 5A nebo 15A) není vhodná a může způsobit selhání ochrany nebo opakované vypalování.</div>
+        <div class="alert alert-warn"><div class="alert-icon">🔥</div><div><strong>KOBRA X — pojistka:</strong> Pojistka je <strong>250V / 10A</strong> — pouze tato hodnota! Jiná hodnota (např. 5A nebo 15A) není vhodná a může způsobit selhání ochrany nebo opakované vypalování.</div></div>
       </div>
     </div>
 
@@ -1878,12 +1754,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Tiskárna nenajde Wi-Fi síť nebo se odpojuje — problem s pásmem 2,4/5 GHz nebo heslem</span>
-            <a href="https://www.google.com/search?q=Anycubic+Kobra+wifi+connection+problem&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=Anycubic+Kobra+wifi+connection+problem&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/wifi_fail.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/wifi_fail.jpg</code></p>
           <a href="https://www.google.com/search?q=Anycubic+Kobra+wifi+connection+problem&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1899,7 +1775,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkuste připojit na 2,4 GHz síť — stabilnější pro IoT zařízení</li>
               <li>Zkontrolujte SSID a heslo — žádné speciální znaky (#, &amp;, mezery)</li>
               <li>Přiblížte tiskárnu k routeru pro test</li>
@@ -1909,7 +1785,7 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — Wi-Fi:</strong> Kobra X podporuje 2,4 GHz i 5 GHz Wi-Fi. Pokud máte problémy s 5 GHz — zkuste 2,4 GHz. Ujistěte se, že firmware je aktuální pro plnou 5 GHz podporu.</div>
+        <div class="alert alert-tip"><div class="alert-icon">💡</div><div><strong>KOBRA X — Wi-Fi:</strong> Kobra X podporuje 2,4 GHz i 5 GHz Wi-Fi. Pokud máte problémy s 5 GHz — zkuste 2,4 GHz. Ujistěte se, že firmware je aktuální pro plnou 5 GHz podporu.</div></div>
       </div>
     </div>
 
@@ -1930,12 +1806,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Živý obraz kamery se nezobrazuje nebo je černý v aplikaci Anycubic — Wi-Fi nebo kabel kamery</span>
-            <a href="https://www.google.com/search?q=Anycubic+camera+not+working+app&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=Anycubic+camera+not+working+app&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/camera_fail.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/camera_fail.jpg</code></p>
           <a href="https://www.google.com/search?q=Anycubic+camera+not+working+app&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1951,7 +1827,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Ověřte Wi-Fi připojení tiskárny — v menu se musí zobrazovat IP adresa</li>
               <li>Aktualizujte aplikaci Anycubic na nejnovější verzi</li>
               <li>Restartujte tiskárnu a aplikaci</li>
@@ -1981,12 +1857,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Tiskárna vydává skřípání nebo pískání při pohybech — suché tyče, ložiska nebo nečistoty v dráze</span>
-            <a href="https://www.google.com/search?q=3d+printer+squeaking+noisy+linear+rails&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=3d+printer+squeaking+noisy+linear+rails&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/squeaking.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/squeaking.jpg</code></p>
           <a href="https://www.google.com/search?q=3d+printer+squeaking+noisy+linear+rails&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -1995,14 +1871,14 @@
             <ul>
               <li>Suché lineární tyče — chybí mazání</li>
               <li>Suché ložisko v kladce nebo vozíku</li>
-              <li>Cizí těleso (vlákno filametu) v dráze pohybu</li>
+              <li>Cizí těleso (vlákno filamentu) v dráze pohybu</li>
               <li>Uvolněný nebo přetažený řemen — píská při specifické frekvenci</li>
               <li>Suchý trapézový šroub osy Z</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Namažte lineární tyče strojním olejem nebo lithiovým mazivem</li>
               <li>Namažte trapézový šroub Z lithiovou vazelínou</li>
               <li>Zkontrolujte dráhu pohybu — odstraňte všechna vlákna a nečistoty</li>
@@ -2031,12 +1907,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Dotykový displej nereaguje nebo zobrazuje černou obrazovku — firmware crash nebo kabel displeje</span>
-            <a href="https://www.google.com/search?q=3d+printer+touchscreen+frozen+not+responding&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=3d+printer+touchscreen+frozen+not+responding&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/display_frozen.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/display_frozen.jpg</code></p>
           <a href="https://www.google.com/search?q=3d+printer+touchscreen+frozen+not+responding&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -2051,7 +1927,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Vypněte tiskárnu vypínačem, počkejte 30 sekund, zapněte znovu</li>
               <li>Pokud se displej po restartu nezobrazí — zkontrolujte kabel displeje (zadní panel)</li>
               <li>Proveďte factory reset: Nastavení → Reset to Factory (záloha Wi-Fi nastavení)</li>
@@ -2080,12 +1956,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Osa Z blokována přepravními šrouby — nutno uvolnit před prvním zapnutím klíčem H2.0</span>
-            <a href="https://www.google.com/search?q=Anycubic+Kobra+Z+axis+transport+screw&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=Anycubic+Kobra+Z+axis+transport+screw&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/z_transport.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/z_transport.jpg</code></p>
           <a href="https://www.google.com/search?q=Anycubic+Kobra+Z+axis+transport+screw&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -2099,7 +1975,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Vypněte tiskárnu</li>
               <li>Imbusovým klíčem H2.0 povolte přepravní šrouby osy Z (jsou označeny v manuálu)</li>
               <li>Šrouby nevytahujte — jen je povolte tak, aby Z mohlo volně klouzat</li>
@@ -2107,23 +1983,23 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — první zapnutí:</strong> Před prvním zapnutím je <strong>nutné</strong> uvolnit přepravní šrouby osy Z klíčem H2.0. Toto je popsáno v manuálu jako první krok — bez uvolnění hrozí poškození motoru nebo rámu při pokusu o kalibraci.</div>
+        <div class="alert alert-warn"><div class="alert-icon">🔥</div><div><strong>KOBRA X — první zapnutí:</strong> Před prvním zapnutím je <strong>nutné</strong> uvolnit přepravní šrouby osy Z klíčem H2.0. Toto je popsáno v manuálu jako první krok — bez uvolnění hrozí poškození motoru nebo rámu při pokusu o kalibraci.</div></div>
       </div>
     </div>
 
-    <a href="https://www.youtube.com/results?search_query=Anycubic+Kobra+X+problem+fix+tutorial&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Anycubic Kobra X problem fix tutorial</a>
+    <a href="https://www.youtube.com/results?search_query=Anycubic+Kobra+X+problem+fix+tutorial&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Anycubic Kobra X problem fix tutorial</a>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 11 — ZÁLOŽNÍ FILAMENT
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g11">
-      <span class="group-num">11</span>
-      <h2>Záložní filament — tisk bez přerušení</h2>
-    </div>
+    <div class="section" id="g11">
+      <div class="section-header"><h2>Záložní filament — tisk bez přerušení</h2></div>
 
     <div class="alert alert-info">
-      <div class="alert-icon">💡</div>
-      <div><strong>Co je Filament Backup na Kobře X:</strong> Kobra X umožňuje nastavit záložní kanál filametu. Když primární cívka dojde, tiskárna automaticky přepne na záložní kanál a pokračuje v tisku bez přerušení. Tisk se nezastaví, nemusíte být přítomni. Cena: přijdete o jeden ze 4 kanálů (de facto tisknete ze 2 cívek místo ze 4), ale za kompenzaci máte jistotu nepřerušeného tisku.</div>
+      <div class="alert-icon">📖</div>
+      <div><strong>Co je Filament Backup na Kobře X:</strong> Kobra X umožňuje nastavit záložní kanál filamentu. Když primární cívka dojde, tiskárna automaticky přepne na záložní kanál a pokračuje v tisku bez přerušení. Tisk se nezastaví, nemusíte být přítomni. Cena: přijdete o jeden ze 4 kanálů (de facto tisknete ze 2 cívek místo ze 4), ale za kompenzaci máte jistotu nepřerušeného tisku.</div>
     </div>
 
     <!-- 11.1 -->
@@ -2131,7 +2007,7 @@
       <div class="issue-header" onclick="toggleIssue(this)">
         <div class="issue-icon">🔄</div>
         <div class="issue-title-wrap">
-          <div class="issue-title">Filament Backup (nastavení záložního filametu)</div>
+          <div class="issue-title">Filament Backup (nastavení záložního filamentu)</div>
           <div class="issue-subtitle">Kobra X přepne automaticky na záložní cívku když primární dojde — tisk se nepřeruší</div>
         </div>
         <div class="issue-arrow">›</div>
@@ -2139,16 +2015,16 @@
       <div class="issue-body">
         <div class="img-wrap">
           <div class="img-wrap-inner">
-            <img class="issue-img" src="pic/filament_backup.jpg" alt="Nastavení záložního filametu Kobra X" onerror="imgError(this)">
+            <img class="issue-img" src="pic/filament_backup.jpg" alt="Nastavení záložního filamentu Kobra X" onerror="imgError(this)">
           </div>
           <div class="img-meta">
             <span class="img-caption">Filament Backup — nastavení záložního kanálu pro automatické přepnutí při dojití primární cívky</span>
-            <a href="https://www.google.com/search?q=Anycubic+Kobra+filament+backup+multi+channel&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=Anycubic+Kobra+filament+backup+multi+channel&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/filament_backup.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/filament_backup.jpg</code></p>
           <a href="https://www.google.com/search?q=Anycubic+Kobra+filament+backup+multi+channel&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -2157,11 +2033,11 @@
             <ul>
               <li>Tisk se nepřeruší při dojití filamentu — tiskárna sama přepne kanál</li>
               <li>Ideální pro dlouhé tisky (8+ hodin) přes noc nebo bez dozoru</li>
-              <li>Po nedokončeném tisku při dojití filametu je navázání velmi obtížné nebo nemožné — lepší tomu předejít</li>
+              <li>Po nedokončeném tisku při dojití filamentu je navázání velmi obtížné nebo nemožné — lepší tomu předejít</li>
               <li>Kobra X má 4 kanály — při nastavení backup použijete 2 kanály pro jeden materiál, zbývají 2 pro další</li>
               <li>Pro jednobarevný tisk (PLA jedna barva) je to ideální řešení bez kompromisů</li>
             </ul>
-            <h4 style="margin-top:14px;">Omezení</h4>
+            <h4>Omezení</h4>
             <ul>
               <li>Záložní cívka musí být <strong>stejný materiál a stejná barva</strong> — přechod bude viditelný pokud se liší</li>
               <li>Při aktivním backup režimu máte efektivně 2 aktivní kanály místo 4</li>
@@ -2170,8 +2046,8 @@
           </div>
           <div class="issue-col">
             <h4>Postup nastavení — krok za krokem</h4>
-            <ol class="solution-steps">
-              <li>Připravte dvě cívky <strong>stejného filametu a barvy</strong> — primární a záložní</li>
+            <ol class="steps">
+              <li>Připravte dvě cívky <strong>stejného filamentu a barvy</strong> — primární a záložní</li>
               <li>Zaveďte primární filament do kanálu 1 (nebo jiného zvoleného kanálu)</li>
               <li>Zaveďte záložní filament do kanálu 2 (nebo jiného záložního kanálu)</li>
               <li>Na displeji tiskárny otevřete menu <strong>Nastavení → Filament → Backup Filament</strong></li>
@@ -2179,12 +2055,12 @@
               <li>Uložte nastavení — tiskárna je nyní připravena pro automatické přepnutí</li>
               <li>Spusťte tisk — při dojití kanálu 1 se automaticky aktivuje kanál 2</li>
             </ol>
-            <div style="margin-top:12px;">
-              <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" style="font-family:var(--mono);font-size:12px;color:var(--blue);text-decoration:none;">↗ Oficální Anycubic Wiki: Filament Backup Guide</a>
+            <div>
+              <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" class="link-mono link-mono--sub">↗ Oficiální Anycubic Wiki: Filament Backup Guide</a>
             </div>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — doporučení:</strong> Pokud tiskárnu plánujete nechat tisknout bez dozoru (přes noc, v práci), záložní filament je nejjednodušší pojistka. Kombinujte s detektorem kouře v místnosti a kamerou pro vzdálený monitoring (viz Kapitola 10 · Sekce 3).</div>
+        <div class="alert alert-tip"><div class="alert-icon">💡</div><div><strong>KOBRA X — doporučení:</strong> Pokud tiskárnu plánujete nechat tisknout bez dozoru (přes noc, v práci), záložní filament je nejjednodušší pojistka. Kombinujte s detektorem kouře v místnosti a kamerou pro vzdálený monitoring (viz 10.03).</div></div>
       </div>
     </div>
 
@@ -2194,7 +2070,7 @@
         <div class="issue-icon">⚠️</div>
         <div class="issue-title-wrap">
           <div class="issue-title">Záložní filament se neaktivoval — tisk se přerušil</div>
-          <div class="issue-subtitle">Senzor filametu zahlásil dojití, ale přepnutí na záložní kanál neproběhlo</div>
+          <div class="issue-subtitle">Senzor filamentu zahlásil dojití, ale přepnutí na záložní kanál neproběhlo</div>
         </div>
         <div class="issue-arrow">›</div>
       </div>
@@ -2204,13 +2080,13 @@
             <img class="issue-img" src="pic/backup_fail.jpg" alt="Záložní filament se neaktivoval" onerror="imgError(this)">
           </div>
           <div class="img-meta">
-            <span class="img-caption">Senzor detekoval dojití filametu, ale přepnutí na záložní kanál neproběhlo</span>
-            <a href="https://www.google.com/search?q=Anycubic+Kobra+filament+backup+not+switching&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <span class="img-caption">Senzor detekoval dojití filamentu, ale přepnutí na záložní kanál neproběhlo</span>
+            <a href="https://www.google.com/search?q=Anycubic+Kobra+filament+backup+not+switching&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/backup_fail.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/backup_fail.jpg</code></p>
           <a href="https://www.google.com/search?q=Anycubic+Kobra+filament+backup+not+switching&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -2219,14 +2095,14 @@
             <ul>
               <li>Záložní filament nebyl správně zasunut do extrudéru záložního kanálu</li>
               <li>Backup nastavení nebylo uloženo před spuštěním tisku</li>
-              <li>Záložní kanál má jiný typ filametu — tiskárna detekuje nekompatibilitu</li>
+              <li>Záložní kanál má jiný typ filamentu — tiskárna detekuje nekompatibilitu</li>
               <li>Firmware verze nepodporuje Filament Backup — nutná aktualizace</li>
               <li>Senzor záložního kanálu nedetekuje filament (nečistota v senzoru)</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkontrolujte, že záložní filament je fyzicky zasunutý celou cestou do extrudéru záložního kanálu</li>
               <li>Ověřte Backup nastavení v menu ještě před spuštěním tisku — ne po</li>
               <li>Aktualizujte firmware tiskárny — Nastavení → Firmware Update</li>
@@ -2243,7 +2119,7 @@
       <div class="issue-header" onclick="toggleIssue(this)">
         <div class="issue-icon">🎨</div>
         <div class="issue-title-wrap">
-          <div class="issue-title">Viditelný přechod po přepnutí záložního filametu</div>
+          <div class="issue-title">Viditelný přechod po přepnutí záložního filamentu</div>
           <div class="issue-subtitle">Na výtisku je patrná horizontální linie nebo změna barvy v místě přepnutí kanálu</div>
         </div>
         <div class="issue-arrow">›</div>
@@ -2251,16 +2127,16 @@
       <div class="issue-body">
         <div class="img-wrap">
           <div class="img-wrap-inner">
-            <img class="issue-img" src="pic/color_change.jpg" alt="Viditelná linie přechodu barvy filametu" onerror="imgError(this)">
+            <img class="issue-img" src="pic/color_change.jpg" alt="Viditelná linie přechodu barvy filamentu" onerror="imgError(this)">
           </div>
           <div class="img-meta">
-            <span class="img-caption">Na výtisku je patrná horizontální linie v místě přepnutí záložního kanálu — různé šarže filametu</span>
-            <a href="https://www.google.com/search?q=3d+print+color+change+line+visible+seam&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <span class="img-caption">Na výtisku je patrná horizontální linie v místě přepnutí záložního kanálu — různé šarže filamentu</span>
+            <a href="https://www.google.com/search?q=3d+print+color+change+line+visible+seam&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/color_change.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/color_change.jpg</code></p>
           <a href="https://www.google.com/search?q=3d+print+color+change+line+visible+seam&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -2268,34 +2144,34 @@
             <h4>Příčiny</h4>
             <ul>
               <li>Primární a záložní filament jsou různých barev nebo odstínů</li>
-              <li>Různý výrobce nebo šarže filametu — mírně odlišný odstín</li>
-              <li>Různý průměr filametu nebo flow rate — viditelná změna tloušťky vrstev</li>
+              <li>Různý výrobce nebo šarže filamentu — mírně odlišný odstín</li>
+              <li>Různý průměr filamentu nebo flow rate — viditelná změna tloušťky vrstev</li>
               <li>Teplota přechodu se liší od optimální pro záložní materiál</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Jak minimalizovat viditelný přechod</h4>
-            <ol class="solution-steps">
-              <li>Použijte <strong>stejnou barvu, výrobce i šarži</strong> filametu pro primární i záložní cívku</li>
+            <ol class="steps">
+              <li>Použijte <strong>stejnou barvu, výrobce i šarži</strong> filamentu pro primární i záložní cívku</li>
               <li>Změřte průměr obou filamentů posuvným měřítkem — musí být shodný (ideálně ±0,02 mm)</li>
               <li>Pro funkční díly (ne dekorativní) přechod většinou nevadí — pevnost spoje je stejná</li>
-              <li>Pokud je přechod neúnosný — zvažte tisk v noci s plnou zásobou filametu aby přepnutí nenastalo</li>
+              <li>Pokud je přechod neúnosný — zvažte tisk v noci s plnou zásobou filamentu aby přepnutí nenastalo</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>Praktická rada:</strong> Pro jednobarevné funkční výtisky (držáky, kryty, náhradní díly) je přechod zcela zanedbatelný. Pro dekorativní nebo prezentační výtisky kupte dostatečně velkou cívku aby pokryla celý tisk bez zálohy.</div>
+        <div class="alert alert-tip"><div class="alert-icon">💡</div><div><strong>Praktická rada:</strong> Pro jednobarevné funkční výtisky (držáky, kryty, náhradní díly) je přechod zcela zanedbatelný. Pro dekorativní nebo prezentační výtisky kupte dostatečně velkou cívku aby pokryla celý tisk bez zálohy.</div></div>
       </div>
     </div>
 
-    <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" class="yt-link" style="color:var(--blue);">↗ Anycubic Wiki: Kobra X — Filament Backup Guide (oficiální dokumentace)</a>
+    <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/filament-backup-guide" target="_blank" class="link-mono link-mono--sub">↗ Anycubic Wiki: Kobra X — Filament Backup Guide (oficiální dokumentace)</a>
+    </div><!-- /section -->
+
 
     <!-- ══════════════════════════════════════
          SKUPINA 12 — POVRCH, VZHLED, PŘERUŠENÍ
     ══════════════════════════════════════ -->
-    <div class="group-header" id="g12">
-      <span class="group-num">12</span>
-      <h2>Povrch, vzhled a přerušení tisku</h2>
-    </div>
+    <div class="section" id="g12">
+      <div class="section-header"><h2>Povrch, vzhled a přerušení tisku</h2></div>
 
     <!-- 12.1 -->
     <div class="issue" id="i12-1">
@@ -2314,12 +2190,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Spaghetti print — model se odlepil od podložky a tisková hlava tiskla do vzduchu, výsledkem je hromada plastových vláken</span>
-            <a href="https://www.google.com/search?q=spaghetti+print+3d+printing+failure&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=spaghetti+print+3d+printing+failure&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/spaghetti.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/spaghetti.jpg</code></p>
             <a href="https://www.google.com/search?q=spaghetti+print+3d+printing+failure&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -2336,17 +2212,17 @@
           </div>
           <div class="issue-col">
             <h4>Řešení a prevence</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zastavte tisk okamžitě — odstraňte všechna vlákna z tiskové plochy i z hotendu</li>
               <li>Zkontrolujte trysku — vlákna mohou být navinuta kolem hotendu</li>
               <li>Příčinou je téměř vždy špatná adheze první vrstvy — viz Skupina 1</li>
               <li>Přidejte Brim, zvyšte teplotu podložky, odmastěte IPA</li>
-              <li>Při tisku bez dozoru: zapněte Obico (AI detekce selhání tisku) nebo sledujte kameru</li>
+              <li>Při tisku bez dozoru: zapněte Obico, OctoEverywhere (Gadget) nebo SimplyPrint (AI detekce selhání tisku) nebo sledujte kameru</li>
               <li>Kobra X: využijte vestavěnou kameru + aplikaci Anycubic pro vzdálený monitoring</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — AI detekce:</strong> Anycubic Slicer Next a aplikace podporují základní detekci selhání tisku přes kameru. Pro pokročilou AI detekci spaghetti (okamžité zastavení tisku) lze použít open-source platformu <a href="https://obico.io" target="_blank" style="color:var(--blue);">Obico.io</a> — funguje s většinou tiskáren přes OctoPrint nebo Moonraker/Klipper.</div>
+        <div class="alert alert-info"><div class="alert-icon">📖</div><div><strong>KOBRA X — AI detekce:</strong> Anycubic Slicer Next a aplikace podporují základní detekci selhání tisku přes kameru. Pro pokročilou AI detekci spaghetti (okamžité zastavení tisku) lze použít open-source platformu <a href="https://obico.io" target="_blank">Obico.io</a> (podobně OctoEverywhere Gadget nebo SimplyPrint) — funguje s většinou tiskáren přes OctoPrint nebo Moonraker/Klipper.</div></div>
       </div>
     </div>
 
@@ -2367,12 +2243,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Pillowing — vrchní vrstvy výtisku jsou nerovné, bublinkové nebo děravé. Infill prosvítá skrz horní povrch.</span>
-            <a href="https://www.google.com/search?q=pillowing+3d+printing+top+surface&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=pillowing+3d+printing+top+surface&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
             <span>📷</span>
-            <p>Uložte vlastní foto jako <code>pic/pillowing.jpg</code></p>
+            <p>Uložte vlastní foto jako <code class="kbd">pic/pillowing.jpg</code></p>
             <a href="https://www.google.com/search?q=pillowing+3d+printing+top+surface&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
           </div>
         <div class="issue-inner">
@@ -2388,7 +2264,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zvyšte počet Top Layers na 5–6 (OrcaSlicer: Top shell layers)</li>
               <li>Zvyšte hustotu infill na alespoň 15–20 % — horní vrstva potřebuje oporu</li>
               <li>Zvyšte part cooling ventilátor na 100 % pro horní vrstvy</li>
@@ -2418,12 +2294,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Vrstvy výtisku se od sebe odlupují — nízká teplota, vysoká rychlost, vlhkost nebo ABS bez enclosure</span>
-            <a href="https://www.google.com/search?q=delamination+layer+separation+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=delamination+layer+separation+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/delamination.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/delamination.jpg</code></p>
           <a href="https://www.google.com/search?q=delamination+layer+separation+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -2440,7 +2316,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zvyšte teplotu trysky o 5–10 °C (testujte Temperature Tower)</li>
               <li>Snižte výšku vrstvy — max. 75 % průměru trysky (0,4 mm tryska → max. 0,3 mm vrstva)</li>
               <li>Snižte rychlost tisku o 20 %</li>
@@ -2450,7 +2326,7 @@
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X + ABS:</strong> Maximální teplota podložky je 100 °C. Pro ABS je to na hranici — kombinujte s enclosure a vypnutým nebo velmi slabým chlazením (max 20 %). Delaminace ABS bez krytu je téměř jistá při větších modelech.</div>
+        <div class="alert alert-warn"><div class="alert-icon">🔥</div><div><strong>KOBRA X + ABS:</strong> Maximální teplota podložky je 100 °C. Pro ABS je to na hranici — kombinujte s enclosure a vypnutým nebo velmi slabým chlazením (max 20 %). Delaminace ABS bez krytu je téměř jistá při větších modelech.</div></div>
       </div>
     </div>
 
@@ -2471,12 +2347,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Na povrchu modelu je viditelná svislá linie — místo kde začíná každá vrstva tisku</span>
-            <a href="https://www.google.com/search?q=visible+seam+layer+start+3d+printing&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=visible+seam+layer+start+3d+printing&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/seam.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/seam.jpg</code></p>
           <a href="https://www.google.com/search?q=visible+seam+layer+start+3d+printing&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -2492,7 +2368,7 @@
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Nastavte Seam Position na <strong>„Rear"</strong> (zadní strana) — seam se skryje na nejméně viditelném místě</li>
               <li>Pro figurky a organické modely: „Nearest" nebo „Aligned" — seam podél hrany modelu kde méně vadí</li>
               <li>Snižte Extra Restart Distance na −0,1 až −0,2 mm — méně plastu na startu</li>
@@ -2522,12 +2398,12 @@
           </div>
           <div class="img-meta">
             <span class="img-caption">Tiskárna se zastavila uprostřed tisku bez zjevného důvodu — výpadek proudu, firmware crash nebo senzor</span>
-            <a href="https://www.google.com/search?q=3d+print+stopped+mid+print+unexpectedly&tbm=isch" target="_blank" class="img-google">🔍 Ukázky na Google Images</a>
+            <a href="https://www.google.com/search?q=3d+print+stopped+mid+print+unexpectedly&tbm=isch" target="_blank" class="link-mono link-mono--sub">🔍 Ukázky na Google Images</a>
           </div>
         </div>
-        <div class="img-placeholder" style="display:none;">
+        <div class="img-placeholder" hidden>
           <span>📷</span>
-          <p>Uložte vlastní foto jako <code>pic/print_stopped.jpg</code></p>
+          <p>Uložte vlastní foto jako <code class="kbd">pic/print_stopped.jpg</code></p>
           <a href="https://www.google.com/search?q=3d+print+stopped+mid+print+unexpectedly&tbm=isch" target="_blank">🔍 Ukázky na Google Images</a>
         </div>
         <div class="issue-inner">
@@ -2538,93 +2414,91 @@
               <li>Přehřátá řídicí deska nebo steppr drivery — tepelná ochrana</li>
               <li>Firmware crash nebo přetečení paměti při složitém G-kódu</li>
               <li>Poškozené nebo neúplné G-kód soubory na USB/SD kartě</li>
-              <li>Chyba senzoru filametu — falešné dojití filametu</li>
+              <li>Chyba senzoru filamentu — falešné dojití filamentu</li>
               <li>Wi-Fi výpadek při tisku přes síť (pokud tisk závisí na spojení)</li>
               <li>Uvolněný kabel steppr motoru — motor přestal reagovat</li>
             </ul>
           </div>
           <div class="issue-col">
             <h4>Řešení</h4>
-            <ol class="solution-steps">
+            <ol class="steps">
               <li>Zkontrolujte napájení — stabilní zásuvka, bez sdílení s výkonnými spotřebiči</li>
               <li>Zkontrolujte teplotu tiskárny — přehřátá elektronika zastaví tisk ochranou. Zlepšete ventilaci okolí.</li>
               <li>Přegenerujte G-kód v sliceru a znovu uložte na USB/SD kartu (kartou mohou být problémy se čtením)</li>
-              <li>Zkontrolujte senzor filametu — v menu deaktivujte pokud způsobuje falešné alarmy</li>
+              <li>Zkontrolujte senzor filamentu — v menu deaktivujte pokud způsobuje falešné alarmy</li>
               <li>Pro tisk přes síť: přejděte na tisk z USB/SD karty — přímý přístup je spolehlivější</li>
               <li>Zkontrolujte kabely k motorům — musí být pevně zapojeny a nesmí být přiskřípnuty</li>
               <li>Aktualizujte firmware — starší verze mají známé chyby stability</li>
             </ol>
           </div>
         </div>
-        <div class="kobra-note">🐍 <strong>KOBRA X — Power Loss Recovery:</strong> Kobra X podporuje obnovení tisku po výpadku proudu (Power Loss Recovery). Po restartu tiskárna nabídne pokračování přerušeného tisku. Funkci aktivujte v Nastavení → Power Loss Recovery → Zapnuto. Spoj vrstev po obnovení bude mírně viditelný, ale díl bude funkční.</div>
+        <div class="alert alert-info"><div class="alert-icon">📖</div><div><strong>KOBRA X — Power Loss Recovery:</strong> Kobra X podporuje obnovení tisku po výpadku proudu (Power Loss Recovery). Po restartu tiskárna nabídne pokračování přerušeného tisku. Funkci aktivujte v Nastavení → Power Loss Recovery → Zapnuto. Spoj vrstev po obnovení bude mírně viditelný, ale díl bude funkční.</div></div>
       </div>
     </div>
 
+    </div><!-- /section -->
+
     <!-- BACK TO TOP -->
-    <div style="text-align:center;margin:32px 0 8px;">
-      <a href="#" style="font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:8px 20px;display:inline-block;transition:color .15s,border-color .15s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)';" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)';">↑ Zpět na navigaci</a>
+    <div>
+      <a href="#" class="link-pill">↑ Zpět na navigaci</a>
     </div>
 
     <!-- SUPPORT BOX -->
-    <div class="support-box">
+    <div class="card card-accent">
       <h3>Problém přetrvává?</h3>
       <p>Pokud žádné z výše uvedených řešení nepomohlo — nejdříve projděte Anycubic Wiki (dokumentace, chybové kódy, firmware). Pokud ani to nepomůže, kontaktujte podporu s SN číslem tiskárny a fotkami.</p>
 
       <!-- WIKI ODKAZ GRID -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0;text-align:left;">
+      <div class="card-grid cols-narrow">
 
-        <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
-          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Kobra X — Návody</span>
-          <span style="font-size:12px;color:var(--muted);">Oficiální dokumentace a postupy přímo pro Kobru X</span>
+        <a href="https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x" target="_blank" class="card">
+          <span class="card-num card-num--plain">WIKI</span>
+          <h4>Kobra X — Návody</h4>
+          <p>Oficiální dokumentace a postupy přímo pro Kobru X</p>
         </a>
 
-        <a href="https://wiki.anycubic.com/en/error-codes" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
-          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Chybové kódy</span>
-          <span style="font-size:12px;color:var(--muted);">Přehled všech chybových hlášek a jejich řešení</span>
+        <a href="https://wiki.anycubic.com/en/error-codes" target="_blank" class="card">
+          <span class="card-num card-num--plain">WIKI</span>
+          <h4>Chybové kódy</h4>
+          <p>Přehled všech chybových hlášek a jejich řešení</p>
         </a>
 
-        <a href="https://wiki.anycubic.com/en/filament-and-resin" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
-          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Filamenty & Resin</span>
-          <span style="font-size:12px;color:var(--muted);">Doporučené materiály, nastavení a tipy</span>
+        <a href="https://wiki.anycubic.com/en/filament-and-resin" target="_blank" class="card">
+          <span class="card-num card-num--plain">WIKI</span>
+          <h4>Filamenty & Resin</h4>
+          <p>Doporučené materiály, nastavení a tipy</p>
         </a>
 
-        <a href="https://wiki.anycubic.com/en/home/knowledge-sharing" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
-          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Knowledge Sharing</span>
-          <span style="font-size:12px;color:var(--muted);">Sdílení znalostí a tipů od komunity Anycubic</span>
+        <a href="https://wiki.anycubic.com/en/home/knowledge-sharing" target="_blank" class="card">
+          <span class="card-num card-num--plain">WIKI</span>
+          <h4>Knowledge Sharing</h4>
+          <p>Sdílení znalostí a tipů od komunity Anycubic</p>
         </a>
 
-        <a href="https://wiki.anycubic.com/en/software-and-app" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
-          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Software & App</span>
-          <span style="font-size:12px;color:var(--muted);">Slicery, firmware, mobilní aplikace Anycubic</span>
+        <a href="https://wiki.anycubic.com/en/software-and-app" target="_blank" class="card">
+          <span class="card-num card-num--plain">WIKI</span>
+          <h4>Software & App</h4>
+          <p>Slicery, firmware, mobilní aplikace Anycubic</p>
         </a>
 
-        <a href="https://wiki.anycubic.com/en/home/update-log" target="_blank" style="display:flex;flex-direction:column;gap:4px;background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.25);padding:12px 14px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(232,160,32,0.25)'">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;">WIKI</span>
-          <span style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;color:#fff;">Wiki Update Log</span>
-          <span style="font-size:12px;color:var(--muted);">Novinky a změny v dokumentaci Anycubic Wiki</span>
+        <a href="https://wiki.anycubic.com/en/home/update-log" target="_blank" class="card">
+          <span class="card-num card-num--plain">WIKI</span>
+          <h4>Wiki Update Log</h4>
+          <p>Novinky a změny v dokumentaci Anycubic Wiki</p>
         </a>
 
       </div>
 
       <!-- SUPPORT KONTAKTY -->
-      <div style="border-top:1px solid rgba(232,160,32,0.2);padding-top:18px;margin-top:8px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <a href="https://support.anycubic.com" target="_blank" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:#000;background:var(--accent);padding:9px 22px;text-decoration:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">→ support.anycubic.com</a>
-        <a href="https://anycubicsupport.zendesk.com/hc/en-001" target="_blank" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--accent);background:transparent;border:1px solid var(--accent);padding:9px 22px;text-decoration:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:opacity .2s;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">→ Zendesk Support</a>
+      <div>
+        <a href="https://support.anycubic.com" target="_blank" class="link-pill link-pill--solid">→ support.anycubic.com</a>
+        <a href="https://anycubicsupport.zendesk.com/hc/en-001" target="_blank" class="link-pill link-pill--solid">→ Zendesk Support</a>
       </div>
 
-      <div class="sn-note" style="margin-top:14px;">Připravte SN číslo: Nastavení → Informace o zařízení → Serial Number · Přiložte popis problému a fotky výtisku</div>
+      <p class="source-note">Připravte SN číslo: Nastavení → Informace o zařízení → Serial Number · Přiložte popis problému a fotky výtisku</p>
     </div>
 
-    <!-- PAGE NAV -->
-    <div class="pn">
-      <a href="12_3D_tipy.html">← 12 · Tipy & triky</a>
-      <a href="00_3D_index.html" class="nx">00 · Obsah & Hledání →</a>
-    </div>
+    <div id="pn"></div>
 
   </div><!-- /wrapper -->
 </main>
@@ -2669,24 +2543,6 @@ function toggleIssue(header) {
   issue.classList.toggle('open', !isOpen);
 }
 
-// Sidebar vyhledávání
-const searchInput = document.getElementById('sb-search-input');
-const mobileSearchInput = document.getElementById('mobile-search-input');
-
-function goToSearch(q) {
-  q = q.trim();
-  if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
-}
-
-searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-mobileSearchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-searchInput.addEventListener('input', (e) => { mobileSearchInput.value = e.target.value; });
-mobileSearchInput.addEventListener('input', (e) => { searchInput.value = e.target.value; });
-
 // Automaticky otevřít issue pokud je anchor v URL
 window.addEventListener('DOMContentLoaded', () => {
   const hash = window.location.hash;
@@ -2699,5 +2555,8 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>

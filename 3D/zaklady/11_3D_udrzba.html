@@ -5,173 +5,55 @@
 <title>11 Údržba & spotřební mat. — 3D Tisk průvodce</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:#0d0f14; --surface:#13161e; --card:#181c27; --border:#252b3b;
-    --accent:#e8a020; --accent2:#f0c050; --tuf:#c8860a;
-    --green:#3ecf76; --red:#e85050; --blue:#4a9eff;
-    --text:#d8dce8; --muted:#6e7590; --mono:'IBM Plex Mono',monospace;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.65;overflow-x:hidden;}
-
-  /* SIDEBAR */
-  .sidebar{position:fixed;left:0;top:0;width:260px;height:100vh;background:rgba(19,22,30,0.97);border-right:1px solid var(--tuf);display:flex;flex-direction:column;z-index:200;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
-  .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);}
-  .sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
-  .sidebar-product{display:flex;align-items:center;gap:10px;}
-  .sidebar-tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:2px;padding:3px 7px;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);flex-shrink:0;}
-  .sidebar-model{font-family:var(--mono);font-size:11px;color:var(--text);font-weight:500;line-height:1.4;}
-  .sidebar-model small{display:block;color:var(--muted);font-size:10px;margin-top:2px;}
-  .sb-search{padding:15px 20px 5px;}
-  .sb-search input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 12px;border-radius:3px;outline:none;}
-  .sb-search input:focus{border-color:var(--accent);}
-  .nav-group-label{padding:16px 20px 6px;font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
-  .nav-item{display:flex;align-items:center;gap:10px;padding:8px 20px;color:#8aadcc;text-decoration:none;font-size:13px;font-family:'Inter',sans-serif;transition:all 0.2s;border-left:2px solid transparent;line-height:1.3;}
-  .nav-item:hover,.nav-item.active{color:#fff;background:rgba(232,160,32,0.06);border-left-color:var(--accent);}
-  .nav-num{font-family:var(--mono);font-size:10px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:1px 5px;flex-shrink:0;min-width:28px;text-align:center;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);}
-  .nav-item-text{flex:1;min-width:0;}
-  .nav-subs{margin:0;padding:0 0 10px 0;list-style:none;display:flex;flex-direction:column;}
-  .nav-sub-item{display:block;padding:6px 20px 6px 58px;color:#8aadcc;text-decoration:none;font-size:12.5px;font-family:'Inter',sans-serif;border-left:2px solid transparent;transition:all 0.2s;}
-  .nav-sub-item:hover,.nav-sub-item.active{color:#fff;background:rgba(255,255,255,0.03);border-left-color:var(--accent);}
-
-  /* MAIN */
-  .main-content{margin-left:260px;width:calc(100% - 260px);display:flex;flex-direction:column;}
-
-  /* HERO */
-  .hero{position:relative;background:linear-gradient(135deg,#0a0c10 0%,#141925 40%,#1a1208 100%);border-bottom:2px solid var(--tuf);padding:48px 32px 36px;overflow:hidden;width:100%;}
-  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(232,160,32,.06) 40px);}
-  .hero-inner{position:relative;max-width:960px;margin:0 auto;width:100%;}
-  .logo-row{display:flex;align-items:center;gap:16px;margin-bottom:12px;}
-  .tuf-badge{background:var(--accent);color:#000;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:2px;padding:4px 10px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
-  .ver-badge{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--border);padding:3px 8px;}
-  .hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.1;letter-spacing:1px;color:#fff;}
-  .hero h1 span{color:var(--accent);}
-  .hero p{margin-top:10px;color:var(--muted);font-size:14.5px;max-width:600px;}
-
-  /* LAYOUT */
-  .wrapper{max-width:960px;margin:0 auto;padding:0 32px 60px;width:100%;}
-
-  /* SECTIONS */
-  .section{margin:44px 0;}
-  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-  .section h2{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:.5px;}
-  h3.sub{font-family:'Rajdhani',sans-serif;color:var(--accent2);font-size:19px;font-weight:600;margin:36px 0 14px;}
-
-  /* CARDS */
-  .card{background:var(--card);border:1px solid var(--border);padding:22px 26px;transition:border-color .2s,background .2s;}
-  .card:hover{border-color:var(--accent);background:rgba(232,160,32,.03);}
-  .card h3{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:600;color:var(--accent2);margin:0 0 8px;}
-  .card p{font-size:14px;color:var(--text);line-height:1.6;}
-  .card-num{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:2px 8px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);margin-bottom:10px;}
-  .chapter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin:20px 0;}
-  .two-col{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin:20px 0;}
-
-  /* STEPS */
-  .steps{margin:20px 0;display:flex;flex-direction:column;gap:0;}
-  .step{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--border);}
-  .step:last-child{border-bottom:none;}
-  .step-num{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:4px 10px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);flex-shrink:0;height:fit-content;margin-top:2px;}
-  .step-body h4{font-family:'Rajdhani',sans-serif;font-size:17px;color:#fff;margin-bottom:5px;}
-  .step-body p{font-size:14px;color:var(--text);line-height:1.6;}
-
-  /* ALERTS */
-  .alert{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;margin:20px 0;font-size:14px;}
-  .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
-  .alert-info{border:1px solid var(--blue);background:rgba(74,158,255,.07);}
-  .alert-tip{border:1px solid var(--green);background:rgba(62,207,118,.07);}
-  .alert-warn{border:1px solid var(--red);background:rgba(232,80,80,.07);}
-
-  /* SCHEDULE TABLE */
-  .data-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;}
-  .data-table thead tr{background:var(--surface);}
-  .data-table th{padding:10px 14px;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border);}
-  .data-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
-  .data-table tr:nth-child(even) td{background:rgba(255,255,255,.015);}
-  .pill{display:inline-block;font-size:11px;font-family:var(--mono);padding:2px 8px;border-radius:2px;font-weight:600;}
-  .pill-green{background:rgba(62,207,118,.15);color:var(--green);}
-  .pill-yellow{background:rgba(232,160,32,.15);color:var(--accent);}
-  .pill-red{background:rgba(232,80,80,.15);color:var(--red);}
-  .pill-blue{background:rgba(74,158,255,.15);color:var(--blue);}
-
-  /* SHOPPING LIST */
-  .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:20px 0;}
-  .shop-item{background:var(--card);border:1px solid var(--border);padding:16px 20px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s;}
-  .shop-item:hover{border-color:var(--accent);}
-  .shop-item .si-name{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;color:#fff;}
-  .shop-item .si-qty{font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(232,160,32,0.1);border:1px solid rgba(232,160,32,0.25);padding:2px 7px;display:inline-block;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);width:fit-content;}
-  .shop-item .si-note{font-size:13px;color:var(--muted);line-height:1.5;}
-  .shop-item .si-price{font-family:var(--mono);font-size:12px;color:var(--green);margin-top:2px;}
-
-  /* PAGE NAV */
-  .pn{margin-top:60px;padding-top:26px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:16px;}
-  .pn a{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;transition:color .15s;}
-  .pn a:hover{color:var(--accent);}
-  .pn .nx{margin-left:auto;}
-
-  /* YT */
-  .yt-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:13px;color:var(--red);text-decoration:none;margin:8px 0 4px;}
-  .yt-link:hover{opacity:.8;}
-
-  @media(max-width:900px){.sidebar{display:none;}.main-content{margin-left:0;width:100%;}.logo-row{flex-wrap:wrap;row-gap:10px;}.mobile-search-bar{display:flex !important;}}
-  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
-  .mobile-search-bar input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .mobile-search-bar input:focus { border-color: var(--accent); }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="11">
 
-<!-- SIDEBAR -->
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-brand">
-    <div class="sidebar-product">
-      <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
-    </div>
-  </div>
-  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
+<!-- ── SIDEBAR (generuje sidebar-init.js z sidebar-config.js) ── -->
+<div id="sidebar"></div>
 
-  <div class="nav-group-label">Základní sekce</div>
-  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
-  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
-  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
-  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
-  <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
-  </ul>
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
-  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </div>
-  <ul class="nav-subs">
-    <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
-    <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item ">08b · Kalibrace filamentu</a></li>
-    <li><a href="08c_3D_Filament_next.html" class="nav-sub-item ">08c · Filamenty rozšíření</a></li>
-  </ul>
-  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
-  <a href="11_3D_udrzba.html" class="nav-item active"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
-  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
-  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    {
+      "id": "prehled-co-a-kdy-delat",
+      "num": "11.01",
+      "name": "Přehled — co a kdy dělat"
+    },
+    {
+      "id": "sekce-1",
+      "num": "11.02",
+      "name": "Mazání os"
+    },
+    {
+      "id": "sekce-2",
+      "num": "11.03",
+      "name": "Čištění a výměna trysky"
+    },
+    {
+      "id": "sekce-3",
+      "num": "11.04",
+      "name": "Výměna teflonové (PTFE) trubice"
+    },
+    {
+      "id": "sekce-4",
+      "num": "11.05",
+      "name": "Péče o tiskovou podložku"
+    },
+    {
+      "id": "sekce-5",
+      "num": "11.06",
+      "name": "Ostatní pravidelná kontrola"
+    },
+    {
+      "id": "sekce-6",
+      "num": "11.07",
+      "name": "Spotřební materiál — nákupní přehled"
+    }
+  ]
+}
+</script>
 
-  <div class="nav-group-label">Ostatní přílohy</div>
-<a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
-    <span class="nav-item-text">Výběr příloh</span>
-  </a>
-  <div class="nav-group-label">Oblíbené odkazy</div>
-  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
-    <span class="nav-item-text">Výběr odkazů</span>
-  </a>
-  <div style="height:32px;flex-shrink:0;"></div>
-</nav>
 
 <!-- MAIN -->
 <main class="main-content">
@@ -180,25 +62,20 @@
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 11</span>
         <span class="ver-badge">ÚDRŽBA</span>
-        <div class="mobile-search-bar">
-          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
-        </div>
       </div>
       <h1>Údržba & <span>spotřební mat.</span></h1>
-      <p>Pravidelná péče prodlouží životnost tiskárny a zabrání zbytečným výpadkům. Mazání, čistění, výměna teflonu a přehled co mít vždy v zásobě.</p>
+      <p>Pravidelná péče prodlouží životnost tiskárny a zabrání zbytečným výpadkům. Mazání, čištění, výměna teflonu a přehled co mít vždy v zásobě.</p>
     </div>
   </div>
 
   <div class="wrapper">
 
     <!-- ODKAZ NA KOMPLETNÍ ANYCUBIC WIKI ÚDRŽBU -->
-    <div style="background:linear-gradient(135deg,rgba(232,160,32,0.08),rgba(232,160,32,0.03));border:1px solid rgba(232,160,32,0.35);padding:20px 26px;margin-bottom:36px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-      <div style="font-size:28px;flex-shrink:0;">🔧</div>
-      <div style="flex:1;min-width:220px;">
-        <div style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;">Kompletní průvodce údržbou Kobry X</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.5;">Přeložená verze oficální Anycubic Wiki s fotografiemi — trapézový šroub, vodicí lišty, purge wiper, PTFE trubice, tisková podložka a další. Veškeré postupy přímo pro Kobru X.</div>
-      </div>
-      <a href="X_udrzba_anycubic.html" style="display:inline-block;font-family:var(--mono);font-size:12px;color:#000;background:var(--accent);padding:9px 20px;text-decoration:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);white-space:nowrap;flex-shrink:0;">→ Otevřít průvodce údržbou</a>
+    <div class="card card-accent">
+      <div class="card-icon">🔧</div>
+      <h4>Kompletní průvodce údržbou Kobry X</h4>
+      <p>Přeložená verze oficiální Anycubic Wiki s fotografiemi — trapézový šroub, vodicí lišty, purge wiper, PTFE trubice, tisková podložka a další. Veškeré postupy přímo pro Kobru X.</p>
+      <a href="ostatni_prilohy/Udrzba_anycubic_Kobra_X.html" class="link-pill link-pill--solid">→ Otevřít průvodce údržbou</a>
     </div>
 
     <!-- PŘEHLEDNÁ TABULKA INTERVALŮ -->
@@ -206,7 +83,7 @@
       <div class="section-header"><h2>Přehled — co a kdy dělat</h2></div>
       <p>Rychlý přehled pravidelné údržby. Podrobný postup každého bodu najdete v sekcích níže.</p>
 
-      <table class="data-table">
+      <table>
         <thead>
           <tr>
             <th>Úkon</th>
@@ -219,74 +96,74 @@
           <tr>
             <td>Odmastění tiskové podložky (IPA)</td>
             <td>Každých 5–10 tisků</td>
-            <td><span class="pill pill-green">Snadné</span></td>
-            <td><a href="#sekce-4" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 4</a></td>
+            <td><span class="card-num card-num--green">Snadné</span></td>
+            <td><a href="#sekce-4">→ 11.05</a></td>
           </tr>
           <tr>
             <td>Vizuální kontrola kabeláže a konektorů</td>
             <td>Každých 20 tisků</td>
-            <td><span class="pill pill-green">Snadné</span></td>
-            <td><a href="#sekce-5" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 5</a></td>
+            <td><span class="card-num card-num--green">Snadné</span></td>
+            <td><a href="#sekce-5">→ 11.06</a></td>
           </tr>
           <tr>
             <td>Čištění tiskové podložky (mýdlová voda)</td>
             <td>Každých 30–50 tisků</td>
-            <td><span class="pill pill-green">Snadné</span></td>
-            <td><a href="#sekce-4" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 4</a></td>
+            <td><span class="card-num card-num--green">Snadné</span></td>
+            <td><a href="#sekce-4">→ 11.05</a></td>
           </tr>
           <tr>
             <td>Utažení šroubů rámu</td>
             <td>Každých 50 provozních hodin</td>
-            <td><span class="pill pill-green">Snadné</span></td>
-            <td><a href="#sekce-5" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 5</a></td>
+            <td><span class="card-num card-num--green">Snadné</span></td>
+            <td><a href="#sekce-5">→ 11.06</a></td>
           </tr>
           <tr>
             <td>Mazání lineárních tyčí a lišt</td>
             <td>Každých 200 provozních hodin</td>
-            <td><span class="pill pill-yellow">Střední</span></td>
-            <td><a href="#sekce-1" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 1</a></td>
+            <td><span class="card-num card-num--accent">Střední</span></td>
+            <td><a href="#sekce-1">→ 11.02</a></td>
           </tr>
           <tr>
             <td>Mazání trapézového šroubu osy Z</td>
             <td>Každých 200 provozních hodin</td>
-            <td><span class="pill pill-yellow">Střední</span></td>
-            <td><a href="#sekce-1" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 1</a></td>
+            <td><span class="card-num card-num--accent">Střední</span></td>
+            <td><a href="#sekce-1">→ 11.02</a></td>
           </tr>
           <tr>
             <td>Kontrola napětí řemenů</td>
             <td>Každých 200 provozních hodin</td>
-            <td><span class="pill pill-yellow">Střední</span></td>
-            <td><a href="#sekce-5" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 5</a></td>
+            <td><span class="card-num card-num--accent">Střední</span></td>
+            <td><a href="#sekce-5">→ 11.06</a></td>
           </tr>
           <tr>
             <td>Cold pull / čištění trysky</td>
             <td>Při podezření na ucpání</td>
-            <td><span class="pill pill-yellow">Střední</span></td>
-            <td><a href="#sekce-2" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 2</a></td>
+            <td><span class="card-num card-num--accent">Střední</span></td>
+            <td><a href="#sekce-2">→ 11.03</a></td>
           </tr>
           <tr>
             <td>Výměna trysky (mosaz)</td>
             <td>Po 300–500 hod. nebo při poklesu kvality</td>
-            <td><span class="pill pill-yellow">Střední</span></td>
-            <td><a href="#sekce-2" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 2</a></td>
+            <td><span class="card-num card-num--accent">Střední</span></td>
+            <td><a href="#sekce-2">→ 11.03</a></td>
           </tr>
           <tr>
             <td>Kontrola PTFE trubic</td>
             <td>Každých 500 hodin nebo při problémech</td>
-            <td><span class="pill pill-yellow">Střední</span></td>
-            <td><a href="#sekce-3" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 3</a></td>
+            <td><span class="card-num card-num--accent">Střední</span></td>
+            <td><a href="#sekce-3">→ 11.04</a></td>
           </tr>
           <tr>
             <td>Výměna PTFE trubic</td>
             <td>Při viditelném opotřebení</td>
-            <td><span class="pill pill-red">Náročnější</span></td>
-            <td><a href="#sekce-3" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 3</a></td>
+            <td><span class="card-num card-num--red">Náročnější</span></td>
+            <td><a href="#sekce-3">→ 11.04</a></td>
           </tr>
           <tr>
             <td>Výměna tiskové podložky</td>
             <td>Při trvalém poškrábání nebo ztrátě přilnavosti</td>
-            <td><span class="pill pill-green">Snadné</span></td>
-            <td><a href="#sekce-4" style="color:var(--blue);font-family:var(--mono);font-size:13px;">→ Sekce 4</a></td>
+            <td><span class="card-num card-num--green">Snadné</span></td>
+            <td><a href="#sekce-4">→ 11.05</a></td>
           </tr>
         </tbody>
       </table>
@@ -294,22 +171,22 @@
 
     <!-- SEKCE 1: MAZÁNÍ -->
     <div class="section" id="sekce-1">
-      <div class="section-header"><h2>1 — Mazání os</h2></div>
+      <div class="section-header"><h2>Mazání os</h2></div>
 
       <p>Správné mazání pohyblivých částí je zásadní pro dlouhou životnost tiskárny a přesnost pohybu. Nemazaná tiskárna se projevuje hlučnějším provozem, viditelnými artefakty na výtisku (Z-wobble, ringing) a předčasným opotřebením.</p>
 
-      <div class="alert alert-warn">
-        <div class="alert-icon">🐍</div>
-        <div><strong>KOBRA X:</strong> Anycubic dodává mazivo v balení přímo s tiskárnou. Použijte ho přesně dle návodu v této sekci. Po spotřebení doporučujeme PTFE sprej nebo lithiové mazivo — dostupné na hornbach.cz nebo Aliexpress.</div>
+      <div class="alert alert-tip">
+        <div class="alert-icon">💡</div>
+        <div><strong>KOBRA X:</strong> Anycubic dodává mazivo v balení přímo s tiskárnou. Použijte ho přesně dle návodu v této sekci. Po spotřebení doporučujeme PTFE sprej nebo lithiové mazivo — dostupné na hornbach.cz, <a href="https://www.aliexpress.com/" target="_blank">Aliexpress</a>, <a href="https://allegro.cz/" target="_blank">Allegro</a> nebo <a href="https://www.amazon.de/" target="_blank">Amazon.de</a>.</div>
       </div>
 
-      <h3 class="sub" id="co-mazat-a-cim">Co mazat a čím</h3>
-      <div class="chapter-grid">
+      <h3 id="co-mazat-a-cim">Co mazat a čím</h3>
+      <div class="card-grid cols-2">
         <div class="card" id="strojni-olej-nebo-lithiove-mazivo">
           <span class="card-num">Lineární tyče</span>
           <h3>Strojní olej nebo lithiové mazivo</h3>
-          <p>Hladké ocelové tyče os X a Y. Naneste tenkou vrstvu oleje (strojní olej, Singer olej na šicí stroje) nebo lithiového maziva na tyč a ručně projeďte osu celým rozsahem pohybu. Přebytečný olej otřete hadříkem.</p>
-          <p style="margin-top:8px;font-size:13px;color:var(--muted);">Frekvence: každých 200 provozních hodin nebo při slyšitelném skřípání.</p>
+          <p>Hladké ocelové tyče os X a Y. Naneste tenkou vrstvu oleje (strojní olej, olej na šicí stroje — Singer, Brother nebo Pfaff) nebo lithiového maziva na tyč a ručně projeďte osu celým rozsahem pohybu. Přebytečný olej otřete hadříkem.</p>
+          <p>Frekvence: každých 200 provozních hodin nebo při slyšitelném skřípání.</p>
         </div>
         <div class="card" id="lithiove-mazivo-nebo-ptfe-sprej">
           <span class="card-num">Vodicí lišty</span>
@@ -320,7 +197,7 @@
           <span class="card-num">Trapézový šroub Z</span>
           <h3>Tuk / vazelína (hustší konzistence)</h3>
           <p>Závitový šroub osy Z potřebuje hustší mazivo než tyče. Použijte lithiovou vazelínu nebo bílý tuk. Naneste tenkou vrstvu po celé délce závitu a nechte tiskárnu projet celý rozsah osy Z.</p>
-          <p style="margin-top:8px;font-size:13px;color:var(--muted);">Nikdy nepoužívejte WD-40 — je to čistič, ne mazivo, a závit rychle vysuší.</p>
+          <p>Nikdy nepoužívejte WD-40 — je to čistič, ne mazivo, a závit rychle vysuší.</p>
         </div>
         <div class="card" id="nemazat-suche">
           <span class="card-num">Napínací kladky</span>
@@ -330,21 +207,21 @@
       </div>
 
       <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
+        <div class="alert-icon">💡</div>
         <div><strong>Tip — jak poznat kdy mazat:</strong> Poslouchejte tiskárnu. Suché tyče vydávají charakteristické skřípání nebo pískání při rychlých pohybech. Vizuálně poznáte vysychání maziva jako tmavý šedý povlak prachu smíchaného se starým olejem na tyčích.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=3D+tiskarna+mazani+os+udrzba&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tiskárna mazání os údržba</a>
+      <a href="https://www.youtube.com/results?search_query=3D+tiskarna+mazani+os+udrzba&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: 3D tiskárna mazání os údržba</a>
     </div>
 
     <!-- SEKCE 2: ČIŠTĚNÍ TRYSKY -->
     <div class="section" id="sekce-2">
-      <div class="section-header"><h2>2 — Čištění a výměna trysky</h2></div>
+      <div class="section-header"><h2>Čištění a výměna trysky</h2></div>
 
       <p>Tryska je jedno z nejdůležitějších a zároveň nejlépe dostupných míst na tiskárně. Zanešená tryska způsobuje under-extrusion, stringing a nestabilní průtok. Čištění trvá minuty, výměna trysky 5–10 minut.</p>
 
-      <h3 class="sub" id="jak-poznat-ucpanou-trysku">Jak poznat ucpanou trysku</h3>
-      <div class="chapter-grid">
+      <h3 id="jak-poznat-ucpanou-trysku">Jak poznat ucpanou trysku</h3>
+      <div class="card-grid cols-2">
         <div class="card" id="nepravidelny-prutok">
           <span class="card-num">Příznak 01</span>
           <h3>Nepravidelný průtok</h3>
@@ -367,8 +244,8 @@
         </div>
       </div>
 
-      <h3 class="sub" id="priciny-ucpani">Příčiny ucpání</h3>
-      <div class="two-col">
+      <h3 id="priciny-ucpani">Příčiny ucpání</h3>
+      <div class="card-grid cols-2">
         <div class="card" id="filament-a-teploty">
           <span class="card-num">Materiálové příčiny</span>
           <h3>Filament a teploty</h3>
@@ -379,67 +256,49 @@
         <div class="card" id="hardware-a-prostredi">
           <span class="card-num">Mechanické příčiny</span>
           <h3>Hardware a prostředí</h3>
-          <p><strong>Heat creep</strong> — plast změknul příliš vysoko nad tryskou (v chladné zóně) a zablokoval průchod. Způsobuje zastaven hotend ventilátor nebo mezera v PTFE.<br><br>
+          <p><strong>Heat creep</strong> — plast změknul příliš vysoko nad tryskou (v chladné zóně) a zablokoval průchod. Způsobuje zastavený hotend ventilátor nebo mezera v PTFE.<br><br>
           <strong>Příliš rychlá první vrstva</strong> — plast nestíhá protékat, extrudér přetlačí a způsobí grinding + ucpání.<br><br>
-          <strong>Prach na filametu</strong> — drobné nečistoty se hromadí v trysce.</p>
+          <strong>Prach na filamentu</strong> — drobné nečistoty se hromadí v trysce.</p>
         </div>
       </div>
 
-      <h3 class="sub" id="cold-pull-studeny-tah-krok-za-krokem">Cold Pull (studený tah) — krok za krokem</h3>
-      <p style="margin-bottom:16px;">Cold pull (také <em>atomic pull</em>) je nejšetrnější a nejúčinnější metoda čištění — fyzicky vytáhne nečistoty z trysky bez chemikálií. Zvládne 95 % ucpání.</p>
+      <h3 id="cold-pull-studeny-tah-krok-za-krokem">Cold Pull (studený tah) — krok za krokem</h3>
+      <p>Cold pull (také <em>atomic pull</em>) je nejšetrnější a nejúčinnější metoda čištění — fyzicky vytáhne nečistoty z trysky bez chemikálií. Zvládne 95 % ucpání.</p>
 
-      <div class="steps">
-        <div class="step" id="zahrejte-trysku-na-tiskovou-teplotu">
-          <span class="step-num">01</span>
-          <div class="step-body">
+      <ol class="steps">
+        <li id="zahrejte-trysku-na-tiskovou-teplotu">
             <h4>Zahřejte trysku na tiskovou teplotu</h4>
             <p>PLA → 200–220 °C. PETG/ABS → 230–250 °C. Zasuňte filament a extrudujte ručně nebo z menu ~30–50 mm plastu dokud vytéká. Tím vyprázdníte trysku od zbytků předchozího tisku.</p>
-          </div>
-        </div>
-        <div class="step" id="ochladte-na-cilovou-teplotu">
-          <span class="step-num">02</span>
-          <div class="step-body">
+        </li>
+        <li id="ochladte-na-cilovou-teplotu">
             <h4>Ochlaďte na cílovou teplotu</h4>
-            <p>Snižte teplotu na <strong>85–95 °C</strong> (PLA) nebo <strong>100–110 °C</strong> (PETG/ABS). Nevypínejte tiskárnu — teplota musí být přesně řízená. Aktivně chlaďte part cooling ventilátorem. Filament uvnitř tuhne a přilne ke znečistění.</p>
-          </div>
-        </div>
-        <div class="step" id="prudce-vytahnete-filament-jednim-tahem">
-          <span class="step-num">03</span>
-          <div class="step-body">
+            <p>Snižte teplotu na <strong>85–95 °C</strong> (PLA) nebo <strong>100–110 °C</strong> (PETG/ABS). Nevypínejte tiskárnu — teplota musí být přesně řízená. Aktivně chlaďte part cooling ventilátorem. Filament uvnitř tuhne a přilne ke znečištění.</p>
+        </li>
+        <li id="prudce-vytahnete-filament-jednim-tahem">
             <h4>Prudce vytáhněte filament jedním tahem</h4>
             <p>Pevně uchopte filament těsně nad extrudérem. Jedním rychlým a silným tahem vytáhněte filament přímo nahoru. Pohyb musí být plynulý a rychlý — neváhejte, netáhněte pomalu.</p>
-          </div>
-        </div>
-        <div class="step" id="zkontrolujte-odlitek">
-          <span class="step-num">04</span>
-          <div class="step-body">
+        </li>
+        <li id="zkontrolujte-odlitek">
             <h4>Zkontrolujte odlitek</h4>
-            <p>Na konci vytaženého filametu uvidíte odlitek tvaru vnitřku trysky. <strong>Čistý odlitek</strong> = světlá špička, průhledná nebo barvy filametu. <strong>Znečištěný odlitek</strong> = tmavé nebo hnědé záteky, spálené kousky. Ucpání stále přetrvává.</p>
-          </div>
-        </div>
-        <div class="step" id="opakujte-25">
-          <span class="step-num">05</span>
-          <div class="step-body">
+            <p>Na konci vytaženého filamentu uvidíte odlitek tvaru vnitřku trysky. <strong>Čistý odlitek</strong> = světlá špička, průhledná nebo barvy filamentu. <strong>Znečištěný odlitek</strong> = tmavé nebo hnědé záteky, spálené kousky. Ucpání stále přetrvává.</p>
+        </li>
+        <li id="opakujte-25">
             <h4>Opakujte 2–5×</h4>
             <p>Zahřejte znovu na tiskovou teplotu, extrudujte pár mm, ochlaďte a opakujte. Pokračujte dokud nevychází čistý odlitek bez tmavých usazenin. Obvykle stačí 3–4 opakování.</p>
-          </div>
-        </div>
-        <div class="step" id="overte-prutok">
-          <span class="step-num">06</span>
-          <div class="step-body">
+        </li>
+        <li id="overte-prutok">
             <h4>Ověřte průtok</h4>
-            <p>Zahřejte na standardní tiskovou teplotu a extrudujte 20–30 mm filametu. Plast by měl vycházet rovnoměrně, plynule a bez přerušení. Pokud ano — tryska je čistá. Zkuste krátký testovací tisk.</p>
-          </div>
-        </div>
-      </div>
+            <p>Zahřejte na standardní tiskovou teplotu a extrudujte 20–30 mm filamentu. Plast by měl vycházet rovnoměrně, plynule a bez přerušení. Pokud ano — tryska je čistá. Zkuste krátký testovací tisk.</p>
+        </li>
+      </ol>
 
       <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div><strong>Pro nejlepší výsledky Cold Pull:</strong> Použijte nylonovou strunkou (Atomic Pull) — Nylon při správné teplotě (100–120 °C) lépe přilne ke znečistění a vytáhne více nečistot než PLA. Pokud Nylon nemáte, PLA funguje pro běžné ucpání.</div>
+        <div class="alert-icon">💡</div>
+        <div><strong>Pro nejlepší výsledky Cold Pull:</strong> Použijte nylonovou strunou (Atomic Pull) — Nylon při správné teplotě (100–120 °C) lépe přilne ke znečištění a vytáhne více nečistot než PLA. Pokud Nylon nemáte, PLA funguje pro běžné ucpání.</div>
       </div>
 
-      <h3 class="sub" id="pokud-cold-pull-nestaci">Pokud Cold Pull nestačí</h3>
-      <div class="chapter-grid">
+      <h3 id="pokud-cold-pull-nestaci">Pokud Cold Pull nestačí</h3>
+      <div class="card-grid">
         <div class="card" id="horka-jehla-dratek">
           <span class="card-num">Metoda B</span>
           <h3>Horká jehla / drátek</h3>
@@ -447,27 +306,27 @@
         </div>
         <div class="card" id="cistici-filament-purge">
           <span class="card-num">Metoda C</span>
-          <h3>Cleaning filament (čistící filament)</h3>
-          <p>Speciální čistící filament (cleaning filament) — extrudujte 30–50 cm při 220 °C. Abrazivní složení mechanicky vyčistí stěny trysky. Ideální pro přechod mezi materiály (ABS → PLA) jako preventivní purge.</p>
+          <h3>Cleaning filament (čisticí filament)</h3>
+          <p>Speciální čisticí filament (cleaning filament) — extrudujte 30–50 cm při 220 °C. Abrazivní složení mechanicky vyčistí stěny trysky. Ideální pro přechod mezi materiály (ABS → PLA) jako preventivní purge.</p>
         </div>
         <div class="card" id="vymena-trysky">
           <span class="card-num">Metoda D</span>
           <h3>Výměna trysky</h3>
-          <p>Pokud ani opakovaný cold pull ani jehla nezabere — vyměňte trysku. Za tepla (180–200 °C), klíč 7 mm, 5 minut práce. Nová mosazná tryska 0,4 mm stojí 30–80 Kč. Vždy mějte zásobu v šuplíku.</p>
+          <p>Pokud ani opakovaný cold pull ani jehla nezabere — vyměňte trysku. Za tepla (180–200 °C), klíč 7 mm, 5 minut práce. Aktuální cena nové mosazné trysky 0,4 mm: <a href="https://www.aliexpress.com/wholesale?SearchText=brass+nozzle+0.4+3d+printer" target="_blank">Aliexpress</a> · <a href="https://allegro.cz/listing?string=tryska+0%2C4+mosaz+3D+tisk" target="_blank">Allegro</a> · <a href="https://www.temu.com/search_result.html?search_key=brass+nozzle+0.4+3d+printer" target="_blank">Temu</a> · <a href="https://www.amazon.de/s?k=brass+nozzle+0.4+3d+printer" target="_blank">Amazon.de</a>. Vždy mějte zásobu v šuplíku.</p>
         </div>
       </div>
 
-      <div class="alert alert-warn">
-        <div class="alert-icon">🐍</div>
+      <div class="alert alert-tip">
+        <div class="alert-icon">💡</div>
         <div><strong>KOBRA X — výměna trysky:</strong> Zahřejte hotend na 180–200 °C. Klíč 7 mm na trysku, druhý klíč přidržte heat block. <strong>Nikdy netáhněte studenou trysku</strong> — závit se zlomí a oprava je nákladná. Kobra X dodává čistič trysky v balení.</div>
       </div>
 
-      <h3 class="sub" id="preventivni-pece-o-trysku">Preventivní péče o trysku</h3>
-      <div class="chapter-grid">
+      <h3 id="preventivni-pece-o-trysku">Preventivní péče o trysku</h3>
+      <div class="card-grid cols-2">
         <div class="card" id="purge-pri-kazdem-spusteni">
           <span class="card-num">✓</span>
           <h3>Purge při každém spuštění</h3>
-          <p>Před tiskem vždy extrudujte 20–30 mm filametu (startup purge). Vyčistí zbytky z předchozího tisku a ověří průtok ještě před startem. OrcaSlicer to dělá automaticky přes Skirt nebo Purge Line.</p>
+          <p>Před tiskem vždy extrudujte 20–30 mm filamentu (startup purge). Vyčistí zbytky z předchozího tisku a ověří průtok ještě před startem. OrcaSlicer to dělá automaticky přes Skirt nebo Purge Line.</p>
         </div>
         <div class="card" id="mosazny-kartacek-za-tepla">
           <span class="card-num">✓</span>
@@ -481,27 +340,27 @@
         </div>
         <div class="card" id="suche-skladovani-filametu">
           <span class="card-num">✓</span>
-          <h3>Suché skladování filametu</h3>
+          <h3>Suché skladování filamentu</h3>
           <p>Vlhký filament je nejčastější příčina karbonizace uvnitř trysky. Filament skladujte v dry boxu se silikagelovým sušidlem. Vlhkost pod 15 % — sledujte hygrometrem. Viz Kapitola 10.</p>
         </div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=3D+tisk+cold+pull+atomic+pull+cisteni+trysky&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D tisk cold pull atomic pull čištění trysky</a>
+      <a href="https://www.youtube.com/results?search_query=3D+tisk+cold+pull+atomic+pull+cisteni+trysky&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: 3D tisk cold pull atomic pull čištění trysky</a>
     </div>
 
     <!-- SEKCE 3: PTFE TRUBICE -->
     <div class="section" id="sekce-3">
-      <div class="section-header"><h2>3 — Výměna teflonové (PTFE) trubice</h2></div>
+      <div class="section-header"><h2>Výměna teflonové (PTFE) trubice</h2></div>
 
       <p>PTFE trubice vede filament od extrudéru do tiskové hlavy. Časem se opotřebuje — vnitřní průměr se rozšíří, trubice žloutne nebo se zkroutí. Opotřebená trubice způsobuje nepravidelnou extrúzi, ucpávání a stringing.</p>
 
       <div class="alert alert-warn">
-        <div class="alert-icon">🐍</div>
-        <div><strong>KOBRA X — multi-filamentový systém:</strong> Kobra X má <strong>4 teflonové trubice</strong> (jedna pro každou cívku filametu). Trubice jsou číslované 1–4 a musí zůstat na svých místech — záměna způsobí problémy s podáváním filametu. Při výměně označte každou trubici před odpojením.</div>
+        <div class="alert-icon">🔥</div>
+        <div><strong>KOBRA X — multi-filamentový systém:</strong> Kobra X má <strong>4 teflonové trubice</strong> (jedna pro každou cívku filamentu). Trubice jsou číslované 1–4 a musí zůstat na svých místech — záměna způsobí problémy s podáváním filamentu. Při výměně označte každou trubici před odpojením.</div>
       </div>
 
-      <h3 class="sub" id="jak-poznat-opotrebeni">Jak poznat opotřebení</h3>
-      <div class="chapter-grid">
+      <h3 id="jak-poznat-opotrebeni">Jak poznat opotřebení</h3>
+      <div class="card-grid">
         <div class="card" id="zloutnuti-a-hnednuti">
           <span class="card-num">Vizuální znaky</span>
           <h3>Žloutnutí a hnědnutí</h3>
@@ -519,73 +378,55 @@
         </div>
       </div>
 
-      <h3 class="sub" id="postup-vymeny-krok-za-krokem">Postup výměny — krok za krokem</h3>
-      <div class="steps">
-        <div class="step" id="oznacte-trubici-cislem">
-          <span class="step-num">01</span>
-          <div class="step-body">
+      <h3 id="postup-vymeny-krok-za-krokem">Postup výměny — krok za krokem</h3>
+      <ol class="steps">
+        <li id="oznacte-trubici-cislem">
             <h4>Označte trubici číslem</h4>
             <p>Před odpojením čímkoliv (izolepa, fix) označte trubici jejím číslem 1–4. Kobra X má trubice barevně nebo číselně označeny přímo na tiskárně — zkopírujte označení na novou trubici.</p>
-          </div>
-        </div>
-        <div class="step" id="odpojte-fitting-push-fit-konektor">
-          <span class="step-num">02</span>
-          <div class="step-body">
+        </li>
+        <li id="odpojte-fitting-push-fit-konektor">
             <h4>Odpojte fitting (push-fit konektor)</h4>
             <p>Push-fit konektory (PC4-M6 nebo PC4-M10) se odemknou stlačením modrého (nebo černého) kroužku dolů a zároveň taháte za trubici. Nepotřebujete nástroj — jen stlačit a vytáhnout.</p>
-          </div>
-        </div>
-        <div class="step" id="odmerte-a-odriznete-novou-trubici">
-          <span class="step-num">03</span>
-          <div class="step-body">
+        </li>
+        <li id="odmerte-a-odriznete-novou-trubici">
             <h4>Odměřte a odřízněte novou trubici</h4>
             <p>Přiložte starou trubici jako šablonu a odřízněte novou na stejnou délku. Řez musí být přesně kolmý — šikmý řez způsobí mezeru uvnitř hotendu a ucpání. Použijte ostrý nůž nebo speciální řezačku PTFE.</p>
-          </div>
-        </div>
-        <div class="step" id="zasunte-novou-trubici">
-          <span class="step-num">04</span>
-          <div class="step-body">
+        </li>
+        <li id="zasunte-novou-trubici">
             <h4>Zasuňte novou trubici</h4>
             <p>Zasuňte trubici do fittingu až na doraz — musí dosáhnout až k trysce uvnitř hotendu bez mezery. Pokud trubice nedosedne celou délkou, vznikne prostor kde se hromadí plast a způsobuje ucpání (heat creep).</p>
-          </div>
-        </div>
-        <div class="step" id="zajistete-pojistnym-klipem">
-          <span class="step-num">05</span>
-          <div class="step-body">
+        </li>
+        <li id="zajistete-pojistnym-klipem">
             <h4>Zajistěte pojistným klipem</h4>
-            <p>Nasaďte Bowden fitting klíp (pojistnou svorku) na fitting. Tento plastový klip zabraňuje samovolnému vysunutí trubice při retrakcích. Bez klípu se trubice postupně uvolní.</p>
-          </div>
-        </div>
-        <div class="step" id="testovaci-tisk">
-          <span class="step-num">06</span>
-          <div class="step-body">
+            <p>Nasaďte Bowden fitting klip (pojistnou svorku) na fitting. Tento plastový klip zabraňuje samovolnému vysunutí trubice při retrakcích. Bez klipu se trubice postupně uvolní.</p>
+        </li>
+        <li id="testovaci-tisk">
             <h4>Testovací tisk</h4>
             <p>Po výměně proveďte testovací extruzi a krátký testovací tisk. Sledujte první vrstvy — rovnoměrná extruze potvrzuje správnou instalaci. Pokud je extruze nestabilní, znovu zkontrolujte dosednutí trubice.</p>
-          </div>
-        </div>
-      </div>
+        </li>
+      </ol>
 
       <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div><strong>Tip — zásoby:</strong> Mějte vždy zásobu alespoň 4 PTFE trubic (jedna pro každý kanál Kobry X). Kobra X dodává náhradní trubice v balení — po jejich použití nakupte na na3d.cz nebo materialpro3d.cz. Cena ~30–60 Kč / kus.</div>
+        <div class="alert-icon">💡</div>
+        <div><strong>Tip — zásoby:</strong> Mějte vždy zásobu alespoň 4 PTFE trubic (jedna pro každý kanál Kobry X). Kobra X dodává náhradní trubice v balení — po jejich použití nakupte na na3d.cz, materialpro3d.cz nebo hotend.cz. Aktuální cena: <a href="https://www.aliexpress.com/wholesale?SearchText=PTFE+tube+3d+printer" target="_blank">Aliexpress</a> · <a href="https://allegro.cz/listing?string=PTFE+trubi%C4%8Dka+3D+tisk" target="_blank">Allegro</a> · <a href="https://www.temu.com/search_result.html?search_key=PTFE+tube+3d+printer" target="_blank">Temu</a> · <a href="https://www.amazon.de/s?k=PTFE+tube+3d+printer" target="_blank">Amazon.de</a>.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=PTFE+tube+replacement+3D+printer+bowden&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: PTFE tube replacement 3D printer</a>
+      <a href="https://www.youtube.com/results?search_query=PTFE+tube+replacement+3D+printer+bowden&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: PTFE tube replacement 3D printer</a>
     </div>
 
     <!-- SEKCE 4: TISKOVÁ PODLOŽKA -->
     <div class="section" id="sekce-4">
-      <div class="section-header"><h2>4 — Péče o tiskovou podložku</h2></div>
+      <div class="section-header"><h2>Péče o tiskovou podložku</h2></div>
 
       <p>Tisková podložka je první kontaktní plocha výtisku a zároveň jedno z nejčastějších míst problémů. Správná údržba podložky předchází 80 % problémů s přilnavostí první vrstvy.</p>
 
-      <h3 class="sub" id="rutinni-cisteni">Rutinní čištění</h3>
-      <div class="two-col">
+      <h3 id="rutinni-cisteni">Rutinní čištění</h3>
+      <div class="card-grid cols-2">
         <div class="card" id="odmasteni-ipa-izopropyl-alkohol">
           <span class="card-num">Po každých 5–10 tiscích</span>
           <h3>Odmastění IPA (izopropyl alkohol)</h3>
           <p>Naneste IPA 70–90 % na papírový ubrousek a otřete celý povrch podložky. Odmaštění odstraňuje mastnotu z prstů a zbytky plastových nečistot, které snižují přilnavost. Počkejte, až IPA zcela vyschne (cca 30 sekund).</p>
-          <p style="margin-top:8px;font-size:13px;color:var(--muted);">Důležité: čistěte studenou podložku. Na zahřáté podložce IPA příliš rychle vyprchá.</p>
+          <p>Důležité: čistěte studenou podložku. Na zahřáté podložce IPA příliš rychle vyprchá.</p>
         </div>
         <div class="card" id="hluboke-cisteni-mydlovou-vodou">
           <span class="card-num">Po každých 30–50 tiscích</span>
@@ -594,8 +435,8 @@
         </div>
       </div>
 
-      <h3 class="sub" id="co-nedelat-caste-chyby">Co nedělat — časté chyby</h3>
-      <div class="chapter-grid">
+      <h3 id="co-nedelat-caste-chyby">Co nedělat — časté chyby</h3>
+      <div class="card-grid">
         <div class="card" id="aceton-na-pei-podlozku">
           <span class="card-num">✗</span>
           <h3>Aceton na PEI podložku</h3>
@@ -604,7 +445,7 @@
         <div class="card" id="ostre-nastroje-na-povrchu">
           <span class="card-num">✗</span>
           <h3>Ostré nástroje na povrchu</h3>
-          <p>Kovové špachtle s ostrým koncem, nože nebo sekáče poškrábou PEI povrch. Pro odstraňování modelů používejte pouze pružnou plastovou špachtle nebo počkejte na vychladnutí — modely pak odpadnou samy.</p>
+          <p>Kovové špachtle s ostrým koncem, nože nebo sekáče poškrábou PEI povrch. Pro odstraňování modelů používejte pouze pružnou plastovou špachtli nebo počkejte na vychladnutí — modely pak odpadnou samy.</p>
         </div>
         <div class="card" id="dotykat-se-podlozky-rukou">
           <span class="card-num">✗</span>
@@ -613,10 +454,10 @@
         </div>
       </div>
 
-      <h3 class="sub" id="lepidla-a-separacni-vrstvy">Lepidla a separační vrstvy</h3>
-      <p style="margin-bottom:16px;">Různé kombinace filament + povrch podložky mohou vyžadovat pomocné vrstvy pro lepší adhezi nebo naopak snazší odlepení výtisku.</p>
+      <h3 id="lepidla-a-separacni-vrstvy">Lepidla a separační vrstvy</h3>
+      <p>Různé kombinace filament + povrch podložky mohou vyžadovat pomocné vrstvy pro lepší adhezi nebo naopak snazší odlepení výtisku.</p>
 
-      <table class="data-table">
+      <table>
         <thead>
           <tr>
             <th>Filament</th>
@@ -629,75 +470,75 @@
           <tr>
             <td><strong>PLA</strong></td>
             <td>Textured PEI</td>
-            <td><span class="pill pill-green">Výborná</span></td>
+            <td><span class="card-num card-num--green">Výborná</span></td>
             <td>Žádná — čistá podložka stačí</td>
           </tr>
           <tr>
             <td><strong>PLA</strong></td>
             <td>Smooth PEI</td>
-            <td><span class="pill pill-green">Dobrá</span></td>
+            <td><span class="card-num card-num--green">Dobrá</span></td>
             <td>Žádná nebo lehce tisková pasta</td>
           </tr>
           <tr>
             <td><strong>PETG</strong></td>
             <td>Textured PEI</td>
-            <td><span class="pill pill-red">Příliš silná!</span></td>
-            <td><strong>Nutná separace</strong> — tenká vrstva tuhé tyčinky lepidla (Pritt, Kores) nebo PVA sprej. Chrání podložku před poškozením při odlepení.</td>
+            <td><span class="card-num card-num--red">Příliš silná!</span></td>
+            <td><strong>Nutná separace</strong> — tenká vrstva tuhé tyčinky lepidla (Pritt, Kores, UHU) nebo PVA sprej. Chrání podložku před poškozením při odlepení.</td>
           </tr>
           <tr>
             <td><strong>PETG</strong></td>
             <td>Smooth PEI</td>
-            <td><span class="pill pill-yellow">Dobrá</span></td>
+            <td><span class="card-num card-num--accent">Dobrá</span></td>
             <td>Lehká vrstva lepidla jako pojistka</td>
           </tr>
           <tr>
             <td><strong>ABS / ASA</strong></td>
             <td>Textured PEI</td>
-            <td><span class="pill pill-yellow">Střední</span></td>
+            <td><span class="card-num card-num--accent">Střední</span></td>
             <td>ABS juice (ABS rozpuštěný v acetonu) nebo lepidlo. Enclosure nutný.</td>
           </tr>
           <tr>
             <td><strong>TPU</strong></td>
             <td>Textured PEI</td>
-            <td><span class="pill pill-green">Dobrá</span></td>
+            <td><span class="card-num card-num--green">Dobrá</span></td>
             <td>Žádná nebo lehká vrstva lepidla pro snazší odlepení</td>
           </tr>
           <tr>
             <td><strong>Nylon</strong></td>
             <td>PEI</td>
-            <td><span class="pill pill-yellow">Proměnlivá</span></td>
-            <td>Silná vrstva lepidla (Magigoo PA nebo tuhá tyčinka). Nylon je náročný.</td>
+            <td><span class="card-num card-num--accent">Proměnlivá</span></td>
+            <td>Silná vrstva lepidla (Magigoo PA, Nano Polymer Adhesive, 3DLAC nebo tuhá tyčinka). Nylon je náročný.</td>
           </tr>
         </tbody>
       </table>
 
-      <div class="alert alert-info">
+      <div class="alert alert-tip">
         <div class="alert-icon">💡</div>
         <div><strong>Jak nanášet lepidlo (tuhá tyčinka):</strong> Naneste tenkou vrstvu na zahřátou podložku (~60 °C). Na studené podložce se lepidlo nanáší hůře a nerovnoměrně. Po dokončení tisku a vychladnutí podložky lepidlo zůstane na výtisku — opláchněte vodou. Podložku pak znovu odmastěte IPA.</div>
       </div>
 
-      <h3 class="sub" id="kdy-podlozku-vymenit">Kdy podložku vyměnit</h3>
+      <h3 id="kdy-podlozku-vymenit">Kdy podložku vyměnit</h3>
       <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
-        <div><strong>Signály pro výměnu:</strong> Hluboká poškrábání nebo prohlubně v místě kde tiskárna začíná první vrstvu. Podložka ztratila přilnavost v celé ploše i po důkladném čištění. Povrch je viditelně nerovnoměrný (prohlídněte šikmým světlem). Nová magnetická PEI podložka pro Kobru X: ~200–500 Kč na Aliexpress nebo na3d.cz.</div>
+        <div class="alert-icon">🔥</div>
+        <div><strong>Signály pro výměnu:</strong> Hluboká poškrábání nebo prohlubně v místě kde tiskárna začíná první vrstvu. Podložka ztratila přilnavost v celé ploše i po důkladném čištění. Povrch je viditelně nerovnoměrný (prohlédněte šikmým světlem). Nová magnetická PEI podložka pro Kobru X — aktuální cena: <a href="https://www.aliexpress.com/wholesale?SearchText=magnetic+PEI+sheet+Kobra+X" target="_blank">Aliexpress</a> · <a href="https://allegro.cz/listing?string=magnetick%C3%A1+PEI+podlo%C5%BEka+Kobra+X" target="_blank">Allegro</a> · <a href="https://www.temu.com/search_result.html?search_key=magnetic+PEI+sheet+Kobra+X" target="_blank">Temu</a> · <a href="https://www.amazon.de/s?k=magnetic+PEI+sheet+Kobra+X" target="_blank">Amazon.de</a>, nebo na3d.cz.</div>
       </div>
     </div>
 
     <!-- SEKCE 5: OSTATNÍ KONTROLA -->
     <div class="section" id="sekce-5">
-      <div class="section-header"><h2>5 — Ostatní pravidelná kontrola</h2></div>
+      <div class="section-header"><h2>Ostatní pravidelná kontrola</h2></div>
 
       <p>Kromě mazání a čištění je důležité pravidelně kontrolovat mechanické součásti tiskárny. Uvolněný šroub nebo povolený řemen dokáže znehodnotit hodiny tisku.</p>
 
-      <h3 class="sub" id="utahovani-sroubu-ramu">Utahování šroubů rámu</h3>
-      <p style="margin-bottom:16px;">Vibrace při tisku postupně uvolňují šrouby. Projděte celý rám tiskárny a mírně utáhněte všechny šrouby — zejména spoje rámu, upevnění motorů a uchycení os. Interval: každých 50 provozních hodin.</p>
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
-        <div><strong>Tip:</strong> Neutahujte šrouby silou — plastové díly se mohou prasknout. Lehký dotah (šroub se přestane točit) je správný. Pokud šroub znovu povolí, použijte kapku Loctite 243 (střední fixace).</div>
+      <h3 id="utahovani-sroubu-ramu">Utahování šroubů rámu</h3>
+      <p>Vibrace při tisku postupně uvolňují šrouby. Projděte celý rám tiskárny a mírně utáhněte všechny šrouby — zejména spoje rámu, upevnění motorů a uchycení os. Interval: každých 50 provozních hodin.</p>
+      <div class="alert alert-warn">
+        <div class="alert-icon">🔥</div>
+        <div><strong>Tip:</strong> Neutahujte šrouby silou — plastové díly se mohou prasknout. Lehký dotah (šroub se přestane točit) je správný. Pokud šroub znovu povolí, použijte kapku zajišťovače závitů střední pevnosti (Loctite 243, Permatex Blue, Würth).</div>
       </div>
 
-      <h3 class="sub" id="kontrola-napeti-remenu">Kontrola napětí řemenů</h3>
-      <div class="two-col">
+      <h3 id="kontrola-napeti-remenu">Kontrola napětí řemenů</h3>
+      <div class="card-grid cols-2">
         <div class="card" id="pinknout-prstem">
           <span class="card-num">Jak testovat</span>
           <h3>„Pinknout prstem"</h3>
@@ -710,8 +551,8 @@
         </div>
       </div>
 
-      <h3 class="sub" id="kontrola-ventilatoru">Kontrola ventilátorů</h3>
-      <div class="chapter-grid">
+      <h3 id="kontrola-ventilatoru">Kontrola ventilátorů</h3>
+      <div class="card-grid">
         <div class="card" id="chlazeni-hotendu">
           <span class="card-num">Hotend ventilátor</span>
           <h3>Chlazení hotendu</h3>
@@ -720,7 +561,7 @@
         <div class="card" id="chlazeni-vytisku">
           <span class="card-num">Part cooling ventilátor</span>
           <h3>Chlazení výtisku</h3>
-          <p>Fouká na model při tisku. Pokud neběží správně, výtisky mají špatné převisy a mosty. Zkontrolujte, zda ventilátor volně rotuje (bez odporu od prachu nebo vláken filametu).</p>
+          <p>Fouká na model při tisku. Pokud neběží správně, výtisky mají špatné převisy a mosty. Zkontrolujte, zda ventilátor volně rotuje (bez odporu od prachu nebo vláken filamentu).</p>
         </div>
         <div class="card" id="chlazeni-ridici-desky">
           <span class="card-num">Ventilátor elektroniky</span>
@@ -729,17 +570,17 @@
         </div>
       </div>
 
-      <h3 class="sub" id="drobne-kontroly">Drobné kontroly</h3>
-      <div class="chapter-grid">
+      <h3 id="drobne-kontroly">Drobné kontroly</h3>
+      <div class="card-grid">
         <div class="card" id="cocka-kamery">
           <span class="card-num">Kamera</span>
           <h3>Čočka kamery</h3>
-          <p>Čočku vestavěné kamery otřete jemným hadříkem nebo optickým čistícím papírkem lehce navlhčeným IPA. Prach na čočce degraduje obraz při vzdáleném monitoringu. Interval: dle potřeby.</p>
+          <p>Čočku vestavěné kamery otřete jemným hadříkem nebo optickým čisticím papírkem lehce navlhčeným IPA. Prach na čočce degraduje obraz při vzdáleném monitoringu. Interval: dle potřeby.</p>
         </div>
         <div class="card" id="halluv-senzor-pruchodu">
-          <span class="card-num">Senzor filametu</span>
+          <span class="card-num">Senzor filamentu</span>
           <h3>Hallův senzor průchodu</h3>
-          <p>Senzor detekuje přítomnost filametu a zastaví tisk při dojití cívky. Prach a vlákna filametu mohou způsobit falešné poplachy. Vyčistěte otvorem senzoru jemným štětcem nebo stlačeným vzduchem.</p>
+          <p>Senzor detekuje přítomnost filamentu a zastaví tisk při dojití cívky. Prach a vlákna filamentu mohou způsobit falešné poplachy. Vyčistěte otvorem senzoru jemným štětcem nebo stlačeným vzduchem.</p>
         </div>
         <div class="card" id="vizualni-kontrola-vodicu">
           <span class="card-num">Kabeláž</span>
@@ -748,129 +589,173 @@
         </div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=3D+printer+maintenance+checklist&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D printer maintenance checklist</a>
+      <a href="https://www.youtube.com/results?search_query=3D+printer+maintenance+checklist&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: 3D printer maintenance checklist</a>
     </div>
 
     <!-- SEKCE 6: NÁKUPNÍ PŘEHLED -->
     <div class="section" id="sekce-6">
-      <div class="section-header"><h2>6 — Spotřební materiál — nákupní přehled</h2></div>
+      <div class="section-header"><h2>Spotřební materiál — nákupní přehled</h2></div>
 
       <p>Mít zásobu základního spotřebního materiálu šetří čas a zabraňuje nuceným pauzám uprostřed projektu. Níže je doporučený seznam pro Kobru X.</p>
 
-      <div class="shop-grid">
-        <div class="shop-item" id="ptfe-trubice-4-ks">
-          <span class="si-name">PTFE trubice (4 ks)</span>
-          <span class="si-qty">Zásobu 4 ks</span>
-          <p class="si-note">ID 2 mm / OD 4 mm — Capricorn nebo Creality kompatibilní. Kobra X má 4 kanály — potřebujete sadu 4 trubic najednou.</p>
-          <span class="si-price">~30–60 Kč / kus</span>
+      <div class="card-grid">
+        <div class="card" id="ptfe-trubice-4-ks">
+          <h4>PTFE trubice (4 ks)</h4>
+          <span class="card-num card-num--accent">Zásobu 4 ks</span>
+          <p>ID 2 mm / OD 4 mm — Capricorn, Creality nebo Trianglelab kompatibilní. Kobra X má 4 kanály — potřebujete sadu 4 trubic najednou.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.aliexpress.com/wholesale?SearchText=PTFE+tube+3d+printer" target="_blank">Aliexpress</a> · <a href="https://allegro.cz/listing?string=PTFE+trubi%C4%8Dka+3D+tisk" target="_blank">Allegro</a> · <a href="https://www.temu.com/search_result.html?search_key=PTFE+tube+3d+printer" target="_blank">Temu</a> · <a href="https://www.amazon.de/s?k=PTFE+tube+3d+printer" target="_blank">Amazon.de</a></div>
         </div>
-        <div class="shop-item" id="trysky-0-4-mm-mosaz-5-ks">
-          <span class="si-name">Trysky 0,4 mm mosaz (5 ks)</span>
-          <span class="si-qty">Zásobu 5 ks</span>
-          <p class="si-note">MK8 nebo Volcano kompatibilní (ověřte typ pro Kobru X). Mosaz vydrží 300–500 hod. PLA, méně u abrazivních filamentů.</p>
-          <span class="si-price">~30–80 Kč / kus</span>
+        <div class="card" id="trysky-0-4-mm-mosaz-5-ks">
+          <h4>Trysky 0,4 mm mosaz (5 ks)</h4>
+          <span class="card-num card-num--accent">Zásobu 5 ks</span>
+          <p>MK8 nebo Volcano kompatibilní (ověřte typ pro Kobru X). Mosaz vydrží 300–500 hod. PLA, méně u abrazivních filamentů.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.aliexpress.com/wholesale?SearchText=brass+nozzle+0.4+3d+printer" target="_blank">Aliexpress</a> · <a href="https://allegro.cz/listing?string=tryska+0%2C4+mosaz+3D+tisk" target="_blank">Allegro</a> · <a href="https://www.temu.com/search_result.html?search_key=brass+nozzle+0.4+3d+printer" target="_blank">Temu</a> · <a href="https://www.amazon.de/s?k=brass+nozzle+0.4+3d+printer" target="_blank">Amazon.de</a></div>
         </div>
-        <div class="shop-item" id="tryska-nerez-0-4-mm-1-ks">
-          <span class="si-name">Tryska nerez 0,4 mm (1 ks)</span>
-          <span class="si-qty">1 ks záloha</span>
-          <p class="si-note">Pro abrazivní filamenty (Carbon, Glow in the Dark, dřevo). Hardened steel (kalená ocel) vydrží 10× déle než mosaz při těchto materiálech.</p>
-          <span class="si-price">~100–200 Kč / kus</span>
+        <div class="card" id="tryska-nerez-0-4-mm-1-ks">
+          <h4>Tryska nerez 0,4 mm (1 ks)</h4>
+          <span class="card-num card-num--accent">1 ks záloha</span>
+          <p>Pro abrazivní filamenty (Carbon, Glow in the Dark, dřevo). Hardened steel (kalená ocel) vydrží 10× déle než mosaz při těchto materiálech.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.aliexpress.com/wholesale?SearchText=hardened+steel+nozzle+0.4" target="_blank">Aliexpress</a> · <a href="https://allegro.cz/listing?string=tryska+kalen%C3%A1+ocel+0%2C4+3D+tisk" target="_blank">Allegro</a> · <a href="https://www.temu.com/search_result.html?search_key=hardened+steel+nozzle+0.4" target="_blank">Temu</a> · <a href="https://www.amazon.de/s?k=hardened+steel+nozzle+0.4" target="_blank">Amazon.de</a></div>
         </div>
-        <div class="shop-item" id="ipa-7090-500-ml">
-          <span class="si-name">IPA 70–90 % (500 ml)</span>
-          <span class="si-qty">500 ml</span>
-          <p class="si-note">Izopropylalkohol pro odmastění tiskové podložky. Drogerie (Isopropylalkohol) nebo lékárna. Neplést s ethanolem — ten nechává film.</p>
-          <span class="si-price">~80–150 Kč</span>
+        <div class="card" id="ipa-7090-500-ml">
+          <h4>IPA 70–90 % (500 ml)</h4>
+          <span class="card-num card-num--accent">500 ml</span>
+          <p>Izopropylalkohol pro odmastění tiskové podložky. Drogerie (Isopropylalkohol) nebo lékárna. Neplést s ethanolem — ten nechává film.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=izopropylalkohol" target="_blank">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;hl=cs&amp;q=izopropylalkohol" target="_blank">Google Nákupy</a> · <a href="https://allegro.cz/listing?string=izopropylalkohol" target="_blank">Allegro</a> · <a href="https://www.amazon.de/s?k=isopropyl+alcohol" target="_blank">Amazon.de</a></div>
         </div>
-        <div class="shop-item" id="lithiove-mazivo-tuk">
-          <span class="si-name">Lithiové mazivo (tuk)</span>
-          <span class="si-qty">1 tuba</span>
-          <p class="si-note">Pro trapézový šroub osy Z a vodicí lišty. Super Lube nebo bílý lithiový tuk (Hornbach, Auto Kelly). Balení vydrží roky.</p>
-          <span class="si-price">~100–200 Kč</span>
+        <div class="card" id="lithiove-mazivo-tuk">
+          <h4>Lithiové mazivo (tuk)</h4>
+          <span class="card-num card-num--accent">1 tuba</span>
+          <p>Pro trapézový šroub osy Z a vodicí lišty. Super Lube, Molykote, Liqui Moly nebo bílý lithiový tuk (Hornbach, Auto Kelly, OBI). Balení vydrží roky.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=lithiov%C3%A9+mazivo" target="_blank">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;hl=cs&amp;q=lithiov%C3%A9+mazivo" target="_blank">Google Nákupy</a> · <a href="https://allegro.cz/listing?string=lithiov%C3%A9+mazivo" target="_blank">Allegro</a> · <a href="https://www.amazon.de/s?k=lithium+grease" target="_blank">Amazon.de</a></div>
         </div>
-        <div class="shop-item" id="strojni-olej-nebo-singer">
-          <span class="si-name">Strojní olej (nebo Singer)</span>
-          <span class="si-qty">1 lahvička</span>
-          <p class="si-note">Pro lineární tyče os X a Y. Strojní olej ISO 32 nebo olej na šicí stroje. Lehká konzistence, nevytváří nánosy.</p>
-          <span class="si-price">~60–120 Kč</span>
+        <div class="card" id="strojni-olej-nebo-singer">
+          <h4>Strojní olej (nebo Singer)</h4>
+          <span class="card-num card-num--accent">1 lahvička</span>
+          <p>Pro lineární tyče os X a Y. Strojní olej ISO 32 nebo olej na šicí stroje. Lehká konzistence, nevytváří nánosy.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=olej+na+%C5%A1ic%C3%AD+stroje" target="_blank">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;hl=cs&amp;q=olej+na+%C5%A1ic%C3%AD+stroje" target="_blank">Google Nákupy</a> · <a href="https://allegro.cz/listing?string=olej+na+%C5%A1ic%C3%AD+stroje" target="_blank">Allegro</a> · <a href="https://www.amazon.de/s?k=sewing+machine+oil" target="_blank">Amazon.de</a></div>
         </div>
-        <div class="shop-item" id="kapton-tape-10-mm-30-m">
-          <span class="si-name">Kapton tape (10 mm × 30 m)</span>
-          <span class="si-qty">1 role</span>
-          <p class="si-note">Polyimidová páska odolná teplotě. Ochrana konektorů, fixace termistorů, záložní bed adheze. Aliexpress nebo na3d.cz.</p>
-          <span class="si-price">~50–100 Kč</span>
+        <div class="card" id="kapton-tape-10-mm-30-m">
+          <h4>Kapton tape (10 mm × 30 m)</h4>
+          <span class="card-num card-num--accent">1 role</span>
+          <p>Polyimidová páska odolná teplotě. Ochrana konektorů, fixace termistorů, záložní bed adheze. <a href="https://www.aliexpress.com/" target="_blank">Aliexpress</a>, <a href="https://allegro.cz/" target="_blank">Allegro</a>, <a href="https://www.temu.com/" target="_blank">Temu</a>, <a href="https://www.amazon.de/" target="_blank">Amazon.de</a> nebo na3d.cz.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.aliexpress.com/wholesale?SearchText=kapton+tape" target="_blank">Aliexpress</a> · <a href="https://allegro.cz/listing?string=kapton+p%C3%A1ska" target="_blank">Allegro</a> · <a href="https://www.temu.com/search_result.html?search_key=kapton+tape" target="_blank">Temu</a> · <a href="https://www.amazon.de/s?k=kapton+tape" target="_blank">Amazon.de</a></div>
         </div>
-        <div class="shop-item" id="bowden-fitting-klipy-10-ks">
-          <span class="si-name">Bowden fitting klípy (10 ks)</span>
-          <span class="si-qty">10 ks</span>
-          <p class="si-note">Pojistky pro PC4-M6 fittingy — zabraňují vysunutí PTFE trubice. Velmi levné, ztratí se nebo zlomí — mít zásobu.</p>
-          <span class="si-price">~20–50 Kč za sadu</span>
+        <div class="card" id="bowden-fitting-klipy-10-ks">
+          <h4>Bowden fitting klipy (10 ks)</h4>
+          <span class="card-num card-num--accent">10 ks</span>
+          <p>Pojistky pro PC4-M6 fittingy — zabraňují vysunutí PTFE trubice. Velmi levné, ztratí se nebo zlomí — mít zásobu.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.aliexpress.com/wholesale?SearchText=PC4-M6+clip+collet" target="_blank">Aliexpress</a> · <a href="https://allegro.cz/listing?string=PC4-M6+klip" target="_blank">Allegro</a> · <a href="https://www.temu.com/search_result.html?search_key=PC4-M6+clip+collet" target="_blank">Temu</a> · <a href="https://www.amazon.de/s?k=PC4-M6+clip+collet" target="_blank">Amazon.de</a></div>
         </div>
-        <div class="shop-item" id="lepici-tycinka-pritt-kores">
-          <span class="si-name">Lepicí tyčinka (Pritt/Kores)</span>
-          <span class="si-qty">2–3 ks</span>
-          <p class="si-note">Separační vrstva pro PETG na PEI a adhezní vrstva pro ABS/Nylon. Klasická kancelářská lepicí tyčinka — nic speciálního.</p>
-          <span class="si-price">~30–60 Kč / ks</span>
-        </div>
-        <div class="shop-item" id="silikonovy-gel-pro-srouby">
-          <span class="si-name">Silikonový gel pro šrouby</span>
-          <span class="si-qty">1 tuba</span>
-          <p class="si-note">Loctite 243 (střední fixace) — pro šrouby, které se opakovaně uvolňují. Pouze kapka na závit. Zajistí šroub, ale jde stále odšroubovat nářadím.</p>
-          <span class="si-price">~150–250 Kč</span>
+        <div class="card" id="lepici-tycinka-pritt-kores">
+          <h4>Lepicí tyčinka (Pritt/Kores/UHU)</h4>
+          <span class="card-num card-num--accent">2–3 ks</span>
+          <p>Separační vrstva pro PETG na PEI a adhezní vrstva pro ABS/Nylon. Klasická kancelářská lepicí tyčinka — nic speciálního.</p>
+          <div class="card-tags card-tags--accent">Aktuální cena: <a href="https://www.heureka.cz/?h%5Bfraze%5D=lepic%C3%AD+ty%C4%8Dinka" target="_blank">Heureka</a> · <a href="https://www.google.com/search?tbm=shop&amp;hl=cs&amp;q=lepic%C3%AD+ty%C4%8Dinka" target="_blank">Google Nákupy</a> · <a href="https://allegro.cz/listing?string=lepic%C3%AD+ty%C4%8Dinka" target="_blank">Allegro</a> · <a href="https://www.amazon.de/s?k=glue+stick" target="_blank">Amazon.de</a></div>
         </div>
       </div>
 
-      <h3 class="sub" id="kde-nakoupit-v-cr">Kde nakoupit v ČR</h3>
-      <div class="chapter-grid">
+      <h3 id="kde-nakoupit-v-cr">Kde nakoupit v ČR</h3>
+      <div class="card-grid">
         <div class="card" id="na3d-cz">
           <span class="card-num">CZ</span>
           <h3>na3d.cz</h3>
           <p>Specializovaný obchod pro 3D tisk. Trysky, PTFE trubice, náhradní díly, filamenty. Rychlé dodání, česká podpora. Přímo pro Anycubic tiskárny.</p>
+          <a href="http://www.na3d.cz/" target="_blank" class="link-mono link-mono--sub">www.na3d.cz</a>
         </div>
         <div class="card" id="materialpro3d-cz">
           <span class="card-num">CZ</span>
           <h3>materialpro3d.cz</h3>
-          <p>Filamenty a spotřební materiál pro 3D tisk. Dobrý výběr trysk a příslušenství. Rychlé dodání z ČR.</p>
+          <p>Filamenty a spotřební materiál pro 3D tisk. Dobrý výběr trysek a příslušenství. Rychlé dodání z ČR.</p>
+          <a href="https://www.materialpro3d.cz/" target="_blank" class="link-mono link-mono--sub">www.materialpro3d.cz</a>
         </div>
         <div class="card" id="akros-cz">
           <span class="card-num">CZ</span>
           <h3>akros.cz</h3>
           <p>Elektro a hobby součástky, náhradní díly. Dobrá volba pro elektronické komponenty (ventilátory, konektory, kabeláž) a maziva.</p>
+          <a href="http://www.akros.cz/" target="_blank" class="link-mono link-mono--sub">www.akros.cz</a>
+        </div>
+        <div class="card" id="majkl3d-cz">
+          <span class="card-num">CZ</span>
+          <h3>majkl3d.cz</h3>
+          <p>Specializovaný obchod pro 3D tisk. Trysky, PTFE trubičky, hotendy, maziva a filamenty, velký sklad.</p>
+          <a href="https://www.majkl3d.cz/" target="_blank" class="link-mono link-mono--sub">www.majkl3d.cz</a>
+        </div>
+        <div class="card" id="hotend-cz">
+          <span class="card-num">CZ</span>
+          <h3>hotend.cz</h3>
+          <p>Náhradní díly a komponenty pro 3D tiskárny — hotendy, trysky, extrudéry, tiskové podložky, PTFE trubičky i elektronika.</p>
+          <a href="https://www.hotend.cz/" target="_blank" class="link-mono link-mono--sub">www.hotend.cz</a>
+        </div>
+        <div class="card" id="3dstisk-cz">
+          <span class="card-num">CZ</span>
+          <h3>3dstisk.cz</h3>
+          <p>Obchod pro 3D tisk s výdejním místem v Ostravě. Filamenty, trysky, PTFE trubičky, hotendy a maziva.</p>
+          <a href="https://3dstisk.cz/" target="_blank" class="link-mono link-mono--sub">3dstisk.cz</a>
+        </div>
+        <div class="card" id="3dfoxshop-cz">
+          <span class="card-num">CZ</span>
+          <h3>3dfoxshop.cz</h3>
+          <p>Obchod pro 3D tisk z Liberce. Filamenty, trysky, hotendy, tiskové podložky a náhradní díly.</p>
+          <a href="https://www.3dfoxshop.cz/" target="_blank" class="link-mono link-mono--sub">www.3dfoxshop.cz</a>
+        </div>
+        <div class="card" id="3dfil-cz">
+          <span class="card-num">CZ</span>
+          <h3>3dfil.cz</h3>
+          <p>Filamenty pro 3D tisk, k tomu hotendy, tiskové podložky a další doplňky a náhradní díly.</p>
+          <a href="https://www.3dfil.cz/" target="_blank" class="link-mono link-mono--sub">www.3dfil.cz</a>
+        </div>
+        <div class="card" id="3dmanufaktura-cz">
+          <span class="card-num">CZ</span>
+          <h3>3dmanufaktura.cz</h3>
+          <p>Obchod pro 3D tisk — příslušenství, filamenty a náhradní díly k 3D tiskárnám.</p>
+          <a href="https://eshop.3dmanufaktura.cz/" target="_blank" class="link-mono link-mono--sub">eshop.3dmanufaktura.cz</a>
+        </div>
+        <div class="card" id="alza-cz">
+          <span class="card-num">CZ</span>
+          <h3>Alza.cz</h3>
+          <p>Filamenty, 3D tiskárny a příslušenství pro 3D tisk. Výdejní místa a AlzaBoxy po celé ČR.</p>
+          <a href="https://www.alza.cz/" target="_blank" class="link-mono link-mono--sub">www.alza.cz</a>
+        </div>
+        <div class="card" id="datart-cz">
+          <span class="card-num">CZ</span>
+          <h3>Datart.cz</h3>
+          <p>Filamenty, 3D tiskárny a základní příslušenství. Prodejny po celé ČR.</p>
+          <a href="https://www.datart.cz/" target="_blank" class="link-mono link-mono--sub">www.datart.cz</a>
+        </div>
+        <div class="card" id="amazon-de">
+          <span class="card-num">EU</span>
+          <h3>Amazon.de</h3>
+          <p>Široký výběr příslušenství pro 3D tisk, maziv a spotřebního materiálu s doručením do ČR. Hledejte anglickým názvem.</p>
+          <a href="https://www.amazon.de/" target="_blank" class="link-mono link-mono--sub">www.amazon.de</a>
+        </div>
+        <div class="card" id="allegro-cz">
+          <span class="card-num">CZ</span>
+          <h3>Allegro.cz</h3>
+          <p>Tržiště s mnoha prodejci — příslušenství, náhradní díly, maziva i spotřební materiál pro 3D tisk.</p>
+          <a href="https://allegro.cz/" target="_blank" class="link-mono link-mono--sub">allegro.cz</a>
         </div>
         <div class="card" id="aliexpress-amazon">
-          <span class="card-num">EU</span>
-          <h3>Aliexpress / Amazon</h3>
-          <p>Trysky, PTFE trubice a drobné příslušenství výrazně levněji. Počítejte s dodáním 2–4 týdny (Aliexpress) nebo 3–5 dní (Amazon EU). Vhodné pro zásoby, ne pro urgentní potřebu.</p>
+          <span class="card-num">CN</span>
+          <h3>Aliexpress</h3>
+          <p>Trysky, PTFE trubice a drobné příslušenství výrazně levněji. Vhodné pro zásoby, ne pro urgentní potřebu.</p>
+          <a href="https://www.aliexpress.com/" target="_blank" class="link-mono link-mono--sub">www.aliexpress.com</a>
+        </div>
+        <div class="card" id="temu">
+          <span class="card-num">CN</span>
+          <h3>Temu</h3>
+          <p>Drobné příslušenství a nářadí za nízké ceny. Vhodné pro zásoby, ne pro urgentní potřebu.</p>
+          <a href="https://www.temu.com/" target="_blank" class="link-mono link-mono--sub">www.temu.com</a>
         </div>
       </div>
     </div>
 
-    <!-- PAGE NAV -->
-    <div class="pn">
-      <a href="10_3D_prostredi_upgrady.html">← 10 · Prostředí & upgrady</a>
-      <a href="12_3D_tipy.html" class="nx">12 · Tipy & triky →</a>
-    </div>
+    <div id="pn"></div>
 
   </div><!-- /wrapper -->
 </main>
 
-<script>
-const searchInput = document.getElementById('sb-search-input');
-const mobileSearchInput = document.getElementById('mobile-search-input');
-
-function goToSearch(q) {
-  q = q.trim();
-  if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
-}
-
-searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-mobileSearchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-searchInput.addEventListener('input', (e) => { mobileSearchInput.value = e.target.value; });
-mobileSearchInput.addEventListener('input', (e) => { searchInput.value = e.target.value; });
-</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>

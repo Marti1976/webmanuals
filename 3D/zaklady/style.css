@@ -1,0 +1,517 @@
+/* ============================================================
+   style.css — sdílený vzhled webu „Průvodce 3D tiskem"
+   Sekce: 1) sdílené základy (proměnné, hero, sekce, text)
+          2) sidebar, hamburger, předchozí/další
+          3) sjednocené komponenty (karty, odznaky, alerty, tabulky, kroky …)
+          4) výjimky = komponenty specifické pro jednu stránku (K1; zdůvodnění v Katalog_stylu.md, tabulka 3.14)
+   Vzor je stránky 00–02 (sjednoceno, R27, R28). Pravidla stránek se nezapouzdřují;
+   nové komponenty se přidávají do sekce 3, případně 4. Nesmí vzniknout duplicita (P9).
+   V HTML nejsou žádné `style=` (R29): vše je zde. Každá třída musí být někde použita (R38).
+   ============================================================ */
+
+/* ===== 1) SDÍLENÉ ZÁKLADY ===== */
+:root {
+  --bg:       #0d0f14;
+  --surface:  #13161e;
+  --card:     #181c27;
+  --border:   #252b3b;
+  --accent:   #e8a020;
+  --accent2:  #f0c050;
+  --tuf:      #c8860a;
+  --green:    #3ecf76;
+  --red:      #e85050;
+  --blue:     #4a9eff;
+  --text:     #d8dce8;
+  --muted:    #6e7590;
+  --mono:     'IBM Plex Mono', monospace;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15.5px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%);
+  border-bottom: 2px solid var(--tuf);
+  padding: 48px 32px 36px;
+  overflow: hidden;
+  width: 100%;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent, transparent 39px, color-mix(in srgb, var(--accent) 6%, transparent) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, color-mix(in srgb, var(--accent) 6%, transparent) 40px);
+}
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.ver-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+}
+.hero h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: var(--heading);
+}
+.hero h1 span {
+  color: var(--accent);
+}
+.hero p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14.5px;
+  max-width: 640px;
+}
+.section {
+  margin: 44px 0;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: .5px;
+  flex: 1;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  padding: 8px 14px;
+}
+.sec-num {
+  display: inline-block;
+  margin-right: 14px;
+  vertical-align: 3px;
+  padding: 2px 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  --cut: 3px;
+}
+
+/* ===== 2) SIDEBAR, HAMBURGER, PŘEDCHOZÍ/DALŠÍ ===== */
+/* Hodnoty (barvy, 260 px, odsazení, tvar odznaku) převzaty ze stávajícího sidebaru. */
+:root {
+  --sidebar-width: 400px; /* výchozí šířka (musí odpovídat widthDefault v sidebar-config.js); uživatel ji může tažením změnit */
+  --sidebar-bg: rgba(19, 22, 30, 0.97);
+  --heading: #fff;
+  --sb-link: #a6caef;   /* světle modrá: odkazy v sidebaru i nadpisy sekcí */
+}
+
+body.menu-open { overflow: hidden; }
+
+.sidebar { position: fixed; left: 0; top: 0; width: var(--sidebar-width); height: 100vh; background: var(--sidebar-bg); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+.sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
+
+.sb-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.sb-product { display: flex; align-items: center; gap: 10px; }
+.sb-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
+.sb-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+
+.sb-home { display: block; padding: 12px 20px; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); text-decoration: none; flex-shrink: 0; transition: color 0.2s; }
+.sb-home:hover { color: var(--accent); }
+
+.sb-search { padding: 15px 20px 5px; }
+.sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
+.sb-search input:focus { border-color: var(--accent); }
+
+.sb-chapters { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.sb-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+
+.sb-link { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: var(--sb-link); text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
+.sb-link:hover, .sb-link.active { color: var(--heading); background: color-mix(in srgb, var(--accent) 6%, transparent); border-left-color: var(--accent); }
+.sb-parent { cursor: default; }
+.sb-text { flex: 1; min-width: 0; }
+
+.sb-sub { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
+.sb-sublink { display: block; padding: 6px 20px 6px 58px; color: var(--sb-link); text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
+.sb-sublink:hover, .sb-sublink.active { color: var(--heading); background: rgba(255, 255, 255, 0.03); border-left-color: var(--accent); }
+
+/* Lokální podsekce stránky (pod aktivní kapitolou) */
+.sb-subchapters { list-style: none; margin: 0 0 4px 58px; padding: 0; background: rgba(0, 0, 0, 0.22); border-left: 1px solid var(--border); }
+.sb-subchapter { display: block; padding: 6px 12px 6px 14px; font-family: var(--mono); font-size: 11px; line-height: 1.4; color: var(--heading); text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.04); transition: all 0.15s; }
+.sb-subchapter:hover, .sb-subchapter.active { color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, transparent); }
+
+.sb-spacer { height: 32px; flex-shrink: 0; }
+
+/* Předchozí / další */
+.pn, .page-end { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); }
+.pn { display: flex; justify-content: space-between; gap: 16px; }
+.pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.pn a:hover { color: var(--accent); }
+.pn .nx { margin-left: auto; }
+
+/* Tažítko pro změnu šířky sidebaru (jen desktop; vytváří sidebar-init.js) */
+.sb-resizer { position: fixed; top: 0; left: calc(var(--sidebar-width) - 3px); width: 6px; height: 100vh; cursor: col-resize; z-index: 210; touch-action: none; transition: background 0.15s; }
+.sb-resizer:hover, .sb-resizer:focus-visible, body.sb-resizing .sb-resizer { background: color-mix(in srgb, var(--accent) 50%, transparent); outline: none; }
+body.sb-resizing { user-select: none; cursor: col-resize; }
+
+/* Hamburger a backdrop (vytváří sidebar-init.js) */
+.hamburger, .sidebar-backdrop { display: none; }
+
+@media (min-width: 900px) {
+  .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); }
+}
+
+@media (max-width: 899px) {
+  .main-content { margin-left: 0; width: 100%; }
+  .hero { padding-top: 68px; }
+  .sidebar { width: 300px; transform: translateX(-100%); transition: transform 0.24s ease; max-width: 85vw; }
+  .sb-resizer { display: none; }
+  .sidebar.open { transform: translateX(0); }
+  .hamburger { display: grid; place-items: center; position: fixed; top: 12px; left: 12px; z-index: 150; width: 42px; height: 42px; border: 1px solid var(--border); border-radius: 3px; background: var(--surface); color: var(--accent); font-size: 1.25rem; cursor: pointer; }
+  .sidebar-backdrop { display: block; position: fixed; inset: 0; z-index: 190; background: rgba(0, 0, 0, 0.7); opacity: 0; pointer-events: none; transition: opacity 0.24s ease; }
+  .sidebar-backdrop.visible { opacity: 1; pointer-events: auto; }
+}
+
+/* ===== 3) SJEDNOCENÉ KOMPONENTY =====
+   ZÁSADA (P9): jedna varianta každé komponenty, žádné pravidlo jen pro jednu stránku.
+   Odlišnosti řeší jen malé MODIFIKÁTORY (třída navíc). Barvy jen z proměnných výše. */
+:root { --page-width: 960px; }
+
+/* Rozložení stránky */
+.hero-inner, .wrapper { max-width: var(--page-width); margin: 0 auto; width: 100%; }
+.hero-inner { position: relative; }
+.wrapper { padding: 0 32px 60px; }
+
+/* Text v sekci */
+.section p { margin-bottom: 14px; }
+.section p:last-child { margin-bottom: 0; }
+.section h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
+:where(.section a:not(.card), .wrapper a:not(.card)) { color: var(--accent); }
+/* Odkaz ven (web) a na přílohu = modrý; tlačítka, karty a mono odkazy mají vlastní barvu */
+:where(.section, .wrapper) a:is([href^="http"], [href*="ostatni_prilohy/"]):not(.card, .link-pill, .link-mono, .card-num) { color: var(--blue); }
+/* Seznamy s odrážkami a čísly: odsazení od kraje */
+:where(.section, .wrapper) :is(ul, ol:not(.steps)) { padding-left: 40px; }
+:where(.section, .wrapper) :is(ul, ol:not(.steps)) > li { margin: 4px 0; }
+.source-note { font-size: 13px; color: var(--text); margin-top: 8px; }
+
+/* Odznaky (rovnoběžník): plný oranžový = .tuf-badge/.sb-badge; průhledný s barvou = .sb-num/.card-num.
+   Tvar (šikmé rohy) je zapsán jednou pro všechny odznaky včetně .sec-num a .step-dot; velikost řezu určuje --cut (výchozí 6 px). */
+.tuf-badge, .sb-badge, .sb-num, .card-num, .sec-num, .step-dot, .cm-platform { clip-path: polygon(var(--cut, 6px) 0%, 100% 0%, calc(100% - var(--cut, 6px)) 100%, 0% 100%); }
+.tuf-badge, .sb-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: var(--bfs, 11px); font-weight: var(--bw, 500); letter-spacing: 2px; padding: var(--bpad, 4px 10px); }
+.sb-badge { --bfs: 9px; --bw: 600; --bpad: 3px 7px; --cut: 5px; flex-shrink: 0; }
+.sb-num, .card-num { --c: var(--accent); --a: 10%; --b: 25%; font-family: var(--mono); color: var(--c); background: color-mix(in srgb, var(--c) var(--a), transparent); border: 1px solid color-mix(in srgb, var(--c) var(--b), transparent); --cut: 3px; }
+.sb-num { font-size: 10px; padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; }
+.card-num { display: inline-block; font-size: 12px; padding: 2px 8px; margin-bottom: 10px; }
+.sb-num-accent, .card-num--accent, .card-num--red, .card-num--green, .card-num--blue, .card-num--white { --a: 20%; --b: 50%; }
+.card-num--red { --c: var(--red); }
+.card-num--green { --c: var(--green); }
+.card-num--blue { --c: var(--blue); }
+.card-num--white { --c: #fff; --a: 10%; --b: 20%; }
+a.card-num { text-decoration: none; transition: background .15s; }
+a.card-num:hover { background: color-mix(in srgb, var(--c) 20%, transparent); }
+.card-num--plain { background: transparent; padding: 0 6px; border: none; margin-bottom: 4px; font-size: 12.6px; }
+
+/* Karty a mřížka karet (jedna karta; vnořená karta je tmavší) */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: 16px; }
+.card-grid.cols-wide { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+.card-grid.cols-narrow { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+.card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.card { display: block; background: var(--card); border: 1px solid var(--border); padding: 20px 22px; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+.card .card { background: rgba(0, 0, 0, 0.15); }
+.card:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 3%, transparent); }
+.card-accent { border-color: var(--accent); }
+.card-wide { grid-column: 1 / -1; }
+.card h3 { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 600; color: var(--accent2); margin: 0 0 6px; }
+.card h4 { font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 600; color: var(--heading); margin: 0 0 6px; }
+.card p { font-size: 13.5px; color: var(--text); line-height: 1.55; margin: 0; }
+.card p:not(:last-child) { margin-bottom: 10px; }
+.card-tags { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.card-tags span { background: rgba(255, 255, 255, 0.05); padding: 2px 6px; margin-right: 6px; border-radius: 3px; }
+.card-tags--accent { color: var(--accent); }
+.card-tags--yt { color: var(--red); }
+.card-label { display: block; font-family: var(--mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+.card:has(> .card-label) { font-size: 13.5px; }
+.card--ok { border-color: var(--green); }
+.card--warn { border-color: var(--accent); }
+.card--bad { border-color: var(--red); }
+/* Štítky s rámečkem (vlastnosti materiálu 08a, štítky 08b) */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.chip { font-family: var(--mono); font-size: 11px; color: var(--text); background: var(--surface); border: 1px solid var(--border); padding: 4px 10px; }
+.chip span { color: var(--accent2); margin-right: 4px; }
+.card-stack { display: flex; flex-direction: column; gap: 6px; }
+.card-stack > .card { flex: 1; }
+
+/* Hlavička karty: titulek (h3 + small) vlevo, hodnota (.card-num) vpravo */
+.card-head, .card-header { display: flex; gap: 12px; flex-wrap: wrap; }
+.card-head { justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.card-head h3, .card-header h3 { margin: 0; }
+.card-head small, .card-header small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+.card-head .card-num { margin: 0; white-space: nowrap; }
+/* Dlouhá karta ze tří pásů (hlavička | tělo | patička); používá se s .card */
+.card-long { padding: 0; margin-bottom: 24px; }
+.card-header { align-items: center; gap: 16px; padding: 18px 24px 14px; border-bottom: 1px solid var(--border); }
+.card-body { padding: 18px 24px; display: flex; flex-direction: column; gap: 14px; }
+.card-footer { padding: 0 24px 18px; display: flex; flex-direction: column; gap: 8px; }
+.card-icon { font-size: 24px; flex-shrink: 0; }
+.card-icon--yt { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 28px; margin-bottom: 8px; background: var(--red); color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-variant-emoji: text; border-radius: 6px; }
+
+/* Řada kroků se šipkami */
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.flow-step { background: var(--surface); border: 1px solid var(--border); padding: 8px 14px; font-family: var(--mono); font-size: 12px; color: var(--text); }
+.flow-step b { color: var(--accent); }
+.flow-arrow { color: var(--accent); font-size: 16px; }
+.flow--accent .flow-step { background: var(--card); border-color: var(--accent); color: var(--accent2); }
+
+/* Inline kód / klávesová zkratka */
+.kbd { display: inline-block; font-family: var(--mono); font-size: .88em; background: color-mix(in srgb, var(--accent) 8%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent); color: var(--accent2); padding: 1px 6px; }
+
+/* Poznámka s barevným pruhem vlevo (--c) */
+.note { --c: var(--accent); background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--c); padding: 14px 18px; margin: 14px 0; }
+.note strong { color: var(--heading); }
+.note--blue { --c: var(--blue); }
+.note--green { --c: var(--green); }
+.note--mono { font-family: var(--mono); font-size: 14px; line-height: 1.7; color: #cfe4ff; overflow: auto; }
+.note--blue:not(.note--mono) > :is(b, strong):first-child { color: var(--accent); }
+.note--toc ul { columns: 2; column-gap: 40px; }
+.note--toc li { break-inside: avoid; }
+.note--toc > :is(b, strong):first-child { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.card .note { font-size: 13px; }
+/* Rozbalovací blok */
+details { border: 1px solid var(--border); background: var(--card); padding: 10px 14px; margin: 12px 0; }
+summary { cursor: pointer; font-weight: 600; color: var(--accent2); }
+details[open] summary { margin-bottom: 8px; }
+
+/* Obrázek s popiskem (+ volitelný odkaz) */
+.figure { margin: 20px 0; border: 1px solid var(--border); padding: 10px; background: var(--card); }
+.figure img { display: block; max-width: 100%; max-height: 560px; margin: 0 auto; background: #fff; }
+.figure img.wide { width: 100%; max-height: none; }
+.figure figcaption { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; color: var(--muted); padding: 9px 3px 2px; }
+
+/* Číslovaný seznam kroků (.steps--compact = menší, bez linek); časová osa viz .step-rows */
+.steps { list-style: none; counter-reset: step; margin: 16px 0; padding: 0; }
+.steps li { position: relative; padding: 10px 0 10px 42px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
+.steps li:last-child { border-bottom: none; }
+.steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 8px; width: 26px; height: 26px; background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid var(--accent); color: var(--accent2); font: 600 12px var(--mono); display: flex; align-items: center; justify-content: center; }
+.steps li strong, .steps li b { color: var(--accent2); }
+.steps li h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 600; color: var(--accent2); margin: 0 0 4px; }
+.steps li p { margin: 0; font-size: 14px; }
+
+
+/* Výsledky hledání (karty) */
+.search-results { display: none; margin-top: 30px; }
+.search-results.active { display: block; }
+.search-results .card { margin-bottom: 10px; }
+
+/* Odkaz-tlačítko (zpět; --accent = propojení na kapitoly; --solid = plné tlačítko výzvy) */
+.link-pill { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: 7px 14px; transition: color .15s, border-color .15s; }
+.link-pill span { color: var(--accent); }
+.page-end .link-pill { margin-top: 0; }
+.link-pill--accent { margin-top: 4px; color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, transparent); border-color: color-mix(in srgb, var(--accent) 25%, transparent); }
+.link-pill--solid { margin-top: 14px; color: #000; background: var(--accent); border-color: var(--accent); font-weight: 600; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
+.link-pill--solid:hover { opacity: .85; }
+
+/* Odkaz v písmu mono: barva přes --c; .link-mono--sub (modrý, odkaz pod kartou), .link-mono--yt (červený, YouTube) */
+.link-mono { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--c); text-decoration: none; }
+.link-mono:hover { opacity: .8; }
+.link-mono--sub { --c: var(--blue); }
+.link-mono--yt { --c: var(--red); margin-top: 10px; }
+
+/* Varování: tři typy, barva přes --c */
+.alert { --c: var(--blue); display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; line-height: 1.6; border: 1px solid var(--c); background: color-mix(in srgb, var(--c) 7%, transparent); }
+.alert-tip { --c: var(--green); }
+.alert-warn { --c: var(--red); }
+.alert-icon { font-size: 18px; line-height: 1.3; flex-shrink: 0; }
+
+/* Barva textu (✓ / ⚠ / ✗) */
+.t-ok { color: var(--green); font-weight: 700; }
+.t-warn { color: var(--accent); font-weight: 700; }
+.t-bad { color: var(--red); font-weight: 700; }
+
+/* Tabulky: jedna kostra; první sloupec i záhlaví oranžové. Varianta .table-spec = dvousloupcová (parametr | hodnota) */
+table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+thead tr { background: var(--surface); }
+th { font-family: var(--mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(255, 255, 255, .02); }
+td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); width: 22%; }
+.table-spec td:first-child { width: 42%; }
+.table-spec td:last-child { color: var(--text); font-weight: 500; }
+.table-wrap { overflow: auto; margin: 16px 0; }
+.table-wrap table { margin-top: 0; }
+
+/* Kroky — časová osa */
+.step-rows { display: flex; flex-direction: column; gap: 0; margin-top: 14px; }
+.step-row { display: flex; gap: 14px; align-items: flex-start; padding: 0 0 20px; position: relative; }
+.step-row::before { content: ''; position: absolute; left: 17px; top: 36px; bottom: 0; width: 1px; background: var(--border); }
+.step-row:last-child::before { display: none; }
+.step-row:last-child { padding-bottom: 0; }
+.step-dot { width: 36px; height: 36px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--tuf); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; color: var(--accent); }
+.step-content > strong { display: block; font-family: 'Rajdhani', sans-serif; font-size: 15px; color: var(--accent); margin-bottom: 3px; padding-top: 7px; }
+.step-content p { font-size: 13px; color: var(--heading); margin: 0; line-height: 1.5; }
+
+/* ===== 4) VÝJIMKY: komponenty specifické pro jednu stránku (K1) — bez zapouzdření; použitelné i jinde ===== */
+/* Statistiky (02 hero, 10 hodnoty) — sdílené, proto zde jen z historických důvodů; viz .stats */
+.stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.stat { background: rgba(255,255,255,.04); border: 1px solid var(--border); padding: 10px 18px; display: flex; flex-direction: column; gap: 2px; }
+.stat-val { font-family: var(--mono); font-size: 15px; color: var(--accent); font-weight: 500; }
+.stat-lbl { font-family: var(--mono); font-size: 10px; color: var(--text); text-transform: uppercase; letter-spacing: .1em; }
+.hotend-diagram { display: flex; flex-direction: column; gap: 0; margin: 20px 0; max-width: 460px; }
+.hd-row { display: flex; align-items: center; gap: 0; }
+.hd-label { font-family: var(--mono); font-size: 12px; color: var(--accent); width: 180px; text-align: right; padding-right: 16px; flex-shrink: 0; }
+.hd-bar { --c: var(--accent); flex: 1; padding: 9px 14px; border: 1px solid var(--c); background: color-mix(in srgb, var(--c) 8%, transparent); font-size: 13.5px; font-weight: 500; color: var(--heading); }
+.hd-bar strong { color: var(--c); }
+.hd-blue { --c: var(--blue); }
+.hd-red { --c: var(--red); }
+.hd-arrow { display: flex; justify-content: center; padding: 3px 0 3px 180px; color: var(--muted); font-size: 16px; }
+
+/* --- Menu aplikace Slicer (03, 04 a další menu): název + překlad hned za ním, zkratka vpravo --- */
+.ui-tabs { display: flex; gap: 2px; margin: 0 0 24px; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
+.ui-tabs span { font-family: var(--mono); font-size: 12px; padding: 8px 16px; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.ui-tabs .active { color: var(--accent2); border-bottom-color: var(--accent); font-weight: 600; }
+.ui-tabs .hidden { color: #3a4055; font-style: italic; }
+.ui-menu { margin: 12px 0 20px; }
+.ui-menu-item { display: flex; justify-content: flex-start; align-items: baseline; gap: 8px; font-family: var(--mono); font-size: 13px; background: var(--surface); border: 1px solid var(--border); padding: 6px 14px; margin: 3px 0; color: var(--text); }
+.ui-menu-item small { color: var(--muted); font-size: 11px; }
+.ui-menu-item .kbd { margin-left: auto; font-size: 11px; }
+.ui-menu-sep { height: 1px; background: var(--border); margin: 8px 0; }
+
+/* --- Oddělovač částí stránky „ČÁST A/B“ (06) --- */
+.part-divider { display: flex; align-items: center; gap: 16px; margin: 52px 0 8px; }
+.part-title { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: var(--heading); }
+.part-title span { color: var(--accent); }
+.part-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--tuf), transparent); }
+
+/* --- Hvězdičky obtížnosti (08a) --- */
+.diff { display: inline-flex; gap: 1px; color: var(--accent); }
+.diff .off { color: var(--border); }
+
+/* --- Barvy materiálů (08a; R45): jedna barva = jeden druh --- */
+.tuf-badge--white { background: #fff; }
+.tuf-badge--yellow { background: #ffd84d; }
+.tuf-badge--black { background: #1a1a1f; color: #fff; box-shadow: inset 0 0 0 1px var(--muted); }
+.tuf-badge--orange { background: #ff8a2a; }
+.tuf-badge--red { background: var(--red); color: #fff; }
+.tuf-badge--green { background: var(--green); }
+.tuf-badge--rainbow { background: linear-gradient(90deg, #fff, #ffd84d); }
+
+/* --- Graf hlučnosti (10) --- */
+.noise-wrap { background: var(--surface); border: 1px solid var(--border); padding: 22px 26px; margin: 20px 0; }
+.noise-row { display: flex; align-items: center; gap: 16px; margin: 10px 0; }
+.noise-label { font-family: var(--mono); font-size: 12px; color: var(--text); min-width: 180px; }
+.noise-bar-bg { flex: 1; height: 10px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.noise-bar-fill { height: 100%; border-radius: 2px; }
+.noise-bar-fill--low { width: 28%; background: var(--green); }
+.noise-bar-fill--mid { width: 50%; background: linear-gradient(90deg, var(--green), var(--accent)); }
+.noise-bar-fill--high { width: 62%; background: var(--accent); }
+.noise-bar-fill--max { width: 68%; background: var(--muted); }
+.noise-val { font-family: var(--mono); font-size: 12px; color: var(--accent); min-width: 70px; text-align: right; }
+
+/* --- Platformy (12): štítek s barvou značky --- */
+.cm-platform { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; padding: 2px 8px; display: inline-block; width: fit-content; --cut: 3px; }
+.cm-reddit { background: rgba(255,100,50,.15); color: #ff6432; }
+.cm-facebook { background: rgba(74,144,226,.15); color: #4a90e2; }
+.cm-discord { background: rgba(114,137,218,.15); color: #7289da; }
+.cm-forum { background: color-mix(in srgb, var(--green) 15%, transparent); color: var(--green); }
+
+/* --- Rozbalovací karta problému a rychlá navigace (13; JS přidává .open) --- */
+.issue { background: var(--card); border: 1px solid var(--border); margin: 14px 0; overflow: hidden; transition: border-color .2s; }
+.issue:hover { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.issue-header { display: flex; align-items: stretch; cursor: pointer; user-select: none; }
+.issue-icon { font-size: 22px; padding: 16px 18px; background: color-mix(in srgb, var(--accent) 5%, transparent); border-right: 1px solid var(--border); display: flex; align-items: center; flex-shrink: 0; }
+.issue-title-wrap { flex: 1; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px; }
+.issue-title { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: var(--heading); }
+.issue-subtitle { font-size: 13px; color: var(--text); }
+.issue-arrow { padding: 14px 16px; display: flex; align-items: center; color: var(--accent); font-size: 18px; flex-shrink: 0; transition: transform .2s; }
+.issue.open .issue-arrow { transform: rotate(90deg); }
+.issue-body { display: none; border-top: 1px solid var(--border); }
+.issue.open .issue-body { display: block; }
+.issue-inner { display: grid; grid-template-columns: 1fr 1fr; }
+.issue-col { padding: 18px 22px; }
+.issue-col:first-child { border-right: 1px solid var(--border); }
+.issue-col h4 { font-family: var(--mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--text); margin-bottom: 10px; }
+.issue-col ul { padding-left: 16px; font-size: 14px; color: var(--text); line-height: 1.75; }
+.issue-col ul li { margin-bottom: 3px; }
+.issue-col p { font-size: 14px; color: var(--text); line-height: 1.65; }
+.issue-img { width: 100%; max-height: 480px; object-fit: contain; display: block; background: #0a0c10; }
+.img-wrap { background: #0a0c10; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; }
+.img-wrap-inner { display: flex; align-items: center; justify-content: center; min-height: 280px; max-height: 480px; overflow: hidden; }
+.img-meta { display: flex; align-items: center; justify-content: space-between; padding: 8px 22px; background: var(--bg); border-top: 1px solid var(--border); flex-wrap: wrap; gap: 8px; }
+.img-caption { font-family: var(--mono); font-size: 11px; color: var(--text); font-style: italic; flex: 1; min-width: 0; }
+.img-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 40px 28px; background: #0a0c10; min-height: 280px; text-align: center; }
+.img-placeholder span { font-size: 48px; }
+.img-placeholder p { font-size: 13px; color: var(--text); }
+.img-placeholder[hidden] { display: none; }
+.qnav { background: var(--surface); border: 1px solid var(--border); padding: 18px 24px; margin: 24px 0; }
+.qnav h3 { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text); margin: 0 0 12px; }
+.qnav-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.qnav-item { font-family: var(--mono); font-size: 11px; color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent); padding: 4px 10px; text-decoration: none; --cut: 4px; clip-path: polygon(var(--cut) 0%, 100% 0%, calc(100% - var(--cut)) 100%, 0% 100%); transition: background .15s; }
+.qnav-item:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); }
+
+@media (max-width: 900px) {
+  .issue-inner { grid-template-columns: 1fr; }
+  .issue-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  .card-grid.cols-2 { grid-template-columns: 1fr; }
+  .note--toc ul { columns: 1; }
+}
+
+/* 08a: boxy v patičce dlouhé karty — odstup 20 px (6 + mezera 8 + 6) */
+.card-footer > .alert { margin: 6px 0; }
+
+/* ── Blok s tlačítkem Kopírovat (.code-copy) — přidáno 2026-11-19 (08b) ── */
+.code-copy { position: relative; margin: 14px 0; background: var(--card); border: 1px solid var(--border); border-radius: 8px; }
+.code-copy pre { margin: 0; padding: 16px 120px 16px 18px; font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--accent); white-space: pre; overflow-x: auto; }
+.code-copy-btn { position: absolute; top: 8px; right: 8px; font-family: var(--mono); font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.code-copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+.code-copy-btn.is-copied { color: var(--green); border-color: var(--green); }
+
+/* ── Generátor a pracovní tabulka testu Adaptive PA (.apa-*) — přidáno 2026-11-19 (08b) ── */
+.apa-gen { margin: 16px 0; padding: 16px 18px; background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; }
+.apa-gen-title { font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+.apa-gen-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-top: 8px; }
+.apa-gen-row label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+.apa-input { width: 110px; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 13px; padding: 6px 8px; border-radius: 4px; outline: none; }
+.apa-input--wide { width: 190px; }
+.apa-input:focus { border-color: var(--accent); }
+.apa-btn { font-family: var(--mono); font-size: 13px; color: var(--bg); background: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 7px 14px; cursor: pointer; }
+.apa-btn:hover { background: var(--accent2); border-color: var(--accent2); }
+.apa-btn--ghost { color: var(--accent); background: transparent; }
+.apa-btn--ghost:hover { color: var(--bg); }
+.apa-sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.apa-sheet td .apa-input { width: 90px; }
+.apa-row-out { font-family: var(--mono); color: var(--accent); white-space: nowrap; }
+#apa-print-area { display: none; }
+@media print {
+  html.apa-print body { background: #fff; }
+  html.apa-print body > *:not(#apa-print-area) { display: none !important; }
+  html.apa-print #apa-print-area { display: block; color: #000; background: #fff; }
+  html.apa-print #apa-print-area .apa-sheet, html.apa-print #apa-print-area h3, html.apa-print #apa-print-area p, html.apa-print #apa-print-area th, html.apa-print #apa-print-area td { color: #000; background: #fff; }
+  html.apa-print #apa-print-area th, html.apa-print #apa-print-area td { border: 1px solid #999; }
+  html.apa-print #apa-print-area .apa-input { border: none; border-bottom: 1px solid #000; background: #fff; color: #000; }
+}

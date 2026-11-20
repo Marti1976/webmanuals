@@ -5,176 +5,45 @@
 <title>05b Parametry rychlosti — 3D Tisk průvodce</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:       #0d0f14;
-    --surface:  #13161e;
-    --card:     #181c27;
-    --border:   #252b3b;
-    --accent:   #e8a020;
-    --accent2:  #f0c050;
-    --tuf:      #c8860a;
-    --green:    #3ecf76;
-    --red:      #e85050;
-    --blue:     #4a9eff;
-    --text:     #d8dce8;
-    --muted:    #6e7590;
-    --mono:     'IBM Plex Mono', monospace;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
-
-  /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
-  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
-  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-  .sidebar-product { display: flex; align-items: center; gap: 10px; }
-  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
-  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
-  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-  .sb-search { padding: 15px 20px 5px; }
-  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .sb-search input:focus { border-color: var(--accent); }
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
-  .nav-item-text { flex: 1; min-width: 0; }
-  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
-  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
-
-  /* ── MAIN ── */
-  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
-
-  /* ── HERO ── */
-  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
-  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
-  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
-  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
-  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
-  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
-  .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
-
-  /* ── LAYOUT ── */
-  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
-
-  /* ── SECTIONS ── */
-  .section { margin: 44px 0; }
-  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
-  h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
-
-  /* ── TAB INDICATOR ── */
-  .tab-bar { display: flex; gap: 2px; margin: 0 0 24px; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
-  .tab-bar span { font-family: var(--mono); font-size: 12px; padding: 8px 16px; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; }
-  .tab-bar span.active { color: var(--accent2); border-bottom-color: var(--accent); font-weight: 600; }
-
-  /* ── PARAM BLOK ── */
-  .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
-  .param:hover { border-color: var(--accent); }
-  .param-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
-  .param-title { font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent2); font-weight: 600; }
-  .param-title small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
-  .param-val { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
-  .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
-  .param p + p { margin-top: 6px; }
-  .param-risk { margin-top: 10px; padding: 8px 12px; background: rgba(232,80,80,.08); border-left: 3px solid var(--red); font-size: 13px; }
-  .param-risk strong { color: #ff9a9a; }
-
-  /* ── ALERTS ── */
-  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
-  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
-  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
-  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
-
-  /* ── TABLE ── */
-  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-  thead tr { background: var(--surface); }
-  th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
-  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
-  td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
-
-  /* ── YT LINK ── */
-  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
-  .yt-link:hover { opacity: .8; }
-
-  /* ── REF LINK ── */
-  .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
-  .ref-link:hover { background: rgba(74,158,255,.14); }
-
-  /* ── PAGE NAV ── */
-  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
-  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
-  .pn a:hover { color: var(--accent); }
-  .pn .nx { margin-left: auto; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } .logo-row { flex-wrap: wrap; row-gap: 10px; } .mobile-search-bar { display: flex !important; } }
-  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
-  .mobile-search-bar input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .mobile-search-bar input:focus { border-color: var(--accent); }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="05b">
 
-<!-- ── SIDEBAR ── -->
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <div class="sidebar-product">
-      <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
-    </div>
-  </div>
-  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
+<!-- ── SIDEBAR (generuje sidebar-init.js z sidebar-config.js) ── -->
+<div id="sidebar"></div>
 
-  <div class="nav-group-label">Základní sekce</div>
-  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
-  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
-  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
-  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
-  <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item active">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
-  </ul>
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
-  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </div>
-  <ul class="nav-subs">
-    <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
-    <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item ">08b · Kalibrace filamentu</a></li>
-    <li><a href="08c_3D_Filament_next.html" class="nav-sub-item ">08c · Filamenty rozšíření</a></li>
-  </ul>
-  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
-  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
-  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
-  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    {
+      "id": "rychlost-ostatnich-vrstev",
+      "num": "05b.01",
+      "name": "Rychlost ostatních vrstev"
+    },
+    {
+      "id": "rychlost-previsu",
+      "num": "05b.02",
+      "name": "Slow Down for Overhangs (rychlost převisů)"
+    },
+    {
+      "id": "cestovni-rychlost-zrychleni",
+      "num": "05b.03",
+      "name": "Travel Speed a Acceleration"
+    },
+    {
+      "id": "jerk-pokrocile",
+      "num": "05b.04",
+      "name": "Jerk (XY) a Advanced"
+    },
+    {
+      "id": "rizika-rychlosti",
+      "num": "05b.05",
+      "name": "Rizika: co se stane, když rychlost/zrychlení nastavíte špatně"
+    }
+  ]
+}
+</script>
 
-  <div class="nav-group-label">Ostatní přílohy</div>
-  <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
-    <span class="nav-item-text">Výběr příloh</span>
-  </a>
-  <div class="nav-group-label">Oblíbené odkazy</div>
-  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
-    <span class="nav-item-text">Výběr odkazů</span>
-  </a>
-  <div style="height:32px;flex-shrink:0;"></div>
-</nav>
-
-<!-- ── MAIN ── -->
 <main class="main-content">
 
   <div class="hero">
@@ -182,9 +51,6 @@
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 05b</span>
         <span class="ver-badge">DETAILNÍ PARAMETRY</span>
-        <div class="mobile-search-bar">
-          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
-        </div>
       </div>
       <h1>Parametry <span>rychlosti</span></h1>
       <p>Kompletní rozpis záložky Speed (rychlost) v okně Process (proces) — rychlosti podle typu úseku, zpomalení u převisů, zrychlení a Jerk. Plus přehled rizik: co se stane, když rychlost nastavíte špatně.</p>
@@ -194,14 +60,14 @@
   <div class="wrapper">
 
     <div class="alert alert-info">
-      <div class="alert-icon">💡</div>
-      <div><strong>Jak je tahle kapitola udělaná:</strong> Stejně jako <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a</a> a <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a> jdeme pole po poli přesně podle záložky <strong>Speed</strong> (rychlost) v okně Process (proces) v Anycubic Slicer Next. Hlavní název je vždy <strong>anglický</strong>, český překlad v malé poznámce. Na konci kapitoly je samostatná sekce shrnující rizika — co se stane, když rychlost/zrychlení nastavíte špatně.</div>
+      <div class="alert-icon">📖</div>
+      <div><strong>Jak je tahle kapitola udělaná:</strong> Stejně jako <a href="05a_3D_slicer_tisk.html">05a</a> a <a href="05c_3D_slicer_filament.html">05c</a> jdeme pole po poli přesně podle záložky <strong>Speed</strong> (rychlost) v okně Process (proces) v Anycubic Slicer Next. Hlavní název je vždy <strong>anglický</strong>, český překlad v malé poznámce. Na konci kapitoly je samostatná sekce shrnující rizika — co se stane, když rychlost/zrychlení nastavíte špatně.</div>
     </div>
 
-    <p style="margin-bottom: 8px;">Propojení s ostatními kapitolami:
-      <a href="05a_3D_slicer_tisk.html" class="ref-link">→ 05a Parametry tisku</a>
-      <a href="05c_3D_slicer_filament.html" class="ref-link">→ 05c Parametry filamentu</a>
-      <a href="02_3D_tiskarna.html" class="ref-link">→ 02 Tiskárna Kobra X</a>
+    <p>Propojení s ostatními kapitolami:
+      <a href="05a_3D_slicer_tisk.html" class="link-pill link-pill--accent">→ 05a Parametry tisku</a>
+      <a href="05c_3D_slicer_filament.html" class="link-pill link-pill--accent">→ 05c Parametry filamentu</a>
+      <a href="02_3D_tiskarna.html" class="link-pill link-pill--accent">→ 02 Tiskárna Kobra X</a>
     </p>
 
     <!-- ═══════════════════════════════════════════
@@ -209,96 +75,59 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="rychlost-ostatnich-vrstev">
       <div class="section-header">
-        <h2>1 — Rychlost ostatních vrstev</h2>
+        <h2>Rychlost ostatních vrstev</h2>
       </div>
 
-      <div class="tab-bar">
+      <div class="ui-tabs">
         <span>Quality</span><span>Strength</span><span class="active">Speed</span><span>Support</span><span>Multimaterial</span><span>Others</span>
       </div>
 
       <p>Tato skupina určuje rychlost tisku jednotlivých typů úseků pro všechny vrstvy <strong>kromě</strong> první (ta má vlastní samostatné rychlosti řešené jinde v profilu). Obecné pravidlo: viditelné povrchy (vnější stěna, horní plocha) tiskněte pomaleji, skryté úseky (vnitřní výplň, vnitřní stěna) rychleji.</p>
 
-      <div class="param" id="vnejsi-stena">
-        <div class="param-head">
-          <div class="param-title">Outer wall speed<small>Vnější stěna</small></div>
-          <span class="param-val">60 mm/s</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="vnejsi-stena">
+        <div class="card-head"><h3>Outer wall speed<small>Vnější stěna</small></h3><span class="card-num card-num--accent">60 mm/s</span></div>
         <p>Rychlost tisku vnějšího obvodu modelu — to, co vidíte jako výsledný povrch. Vždy nejpomalejší (nebo druhý nejpomalejší po první vrstvě) úsek tisku. Pomalejší tisk = méně vibrací, hladší povrch, méně viditelný šev.</p>
       </div>
-
-      <div class="param" id="vnitrni-stena">
-        <div class="param-head">
-          <div class="param-title">Inner wall speed<small>Vnitřní stěna</small></div>
-          <span class="param-val">150 mm/s</span>
-        </div>
-        <p>Rychlost vnitřních perimetrů (pokud Počet perimetrů &gt; 1, viz <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a</a>). Nejsou vidět zvenčí, takže mohou být výrazně rychlejší — zde 2,5× rychlejší než vnější stěna.</p>
+      <div class="card" id="vnitrni-stena">
+        <div class="card-head"><h3>Inner wall speed<small>Vnitřní stěna</small></h3><span class="card-num card-num--accent">150 mm/s</span></div>
+        <p>Rychlost vnitřních perimetrů (pokud Počet perimetrů &gt; 1, viz <a href="05a_3D_slicer_tisk.html">05a</a>). Nejsou vidět zvenčí, takže mohou být výrazně rychlejší — zde 2,5× rychlejší než vnější stěna.</p>
       </div>
-
-      <div class="param" id="male-perimetry">
-        <div class="param-head">
-          <div class="param-title">Small perimeters speed<small>Malé perimetry</small></div>
-          <span class="param-val">50 % mm/s or %</span>
-        </div>
+      <div class="card" id="male-perimetry">
+        <div class="card-head"><h3>Small perimeters speed<small>Malé perimetry</small></h3><span class="card-num card-num--accent">50 % mm/s or %</span></div>
         <p>Samostatná (typicky pomalejší) rychlost pro velmi malé/krátké perimetry — u krátkých úseků hrozí, že by tryska při normální rychlosti nestihla správně zrychlit a zase zpomalit, takže se výchozí přístup je zpomalit už od začátku.</p>
       </div>
-
-      <div class="param" id="hranice-maleho-perimetru">
-        <div class="param-head">
-          <div class="param-title">Small perimeter threshold<small>Hranice malého perimetru</small></div>
-          <span class="param-val">0 mm (= použít vestavěnou výchozí hranici)</span>
-        </div>
+      <div class="card" id="hranice-maleho-perimetru">
+        <div class="card-head"><h3>Small perimeter threshold<small>Hranice malého perimetru</small></h3><span class="card-num card-num--accent">0 mm (= použít vestavěnou výchozí hranici)</span></div>
         <p>Délka/průměr, pod kterým se perimetr považuje za "malý" a aplikuje se na něj rychlost z řádku výše. Hodnota 0 typicky znamená, že program používá svou vlastní vestavěnou výchozí hranici.</p>
       </div>
-
-      <div class="param" id="vnitrni-vypln">
-        <div class="param-head">
-          <div class="param-title">Sparse infill speed<small>Vnitřní výplň</small></div>
-          <span class="param-val">200 mm/s</span>
-        </div>
-        <p>Výplň není vidět a netvoří nosnou strukturu povrchu, takže se tiskne nejrychleji ze všech úseků. Vysoká rychlost výrazně zkracuje celkový čas tisku bez dopadu na vzhled. Limitem je Max Volumetric Speed materiálu (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>) — pokud je tato rychlost v kombinaci s šířkou linie a výškou vrstvy nad fyzickým limitem hotendu, program automaticky zpomalí.</p>
+      <div class="card" id="vnitrni-vypln">
+        <div class="card-head"><h3>Sparse infill speed<small>Vnitřní výplň</small></h3><span class="card-num card-num--accent">200 mm/s</span></div>
+        <p>Výplň není vidět a netvoří nosnou strukturu povrchu, takže se tiskne nejrychleji ze všech úseků. Vysoká rychlost výrazně zkracuje celkový čas tisku bez dopadu na vzhled. Limitem je Max Volumetric Speed materiálu (viz <a href="05c_3D_slicer_filament.html">05c</a>) — pokud je tato rychlost v kombinaci s šířkou linie a výškou vrstvy nad fyzickým limitem hotendu, program automaticky zpomalí.</p>
       </div>
-
-      <div class="param" id="vnitrni-plna-vypln">
-        <div class="param-head">
-          <div class="param-title">Internal solid infill speed<small>Vnitřní plná výplň</small></div>
-          <span class="param-val">200 mm/s</span>
-        </div>
+      <div class="card" id="vnitrni-plna-vypln">
+        <div class="card-head"><h3>Internal solid infill speed<small>Vnitřní plná výplň</small></h3><span class="card-num card-num--accent">200 mm/s</span></div>
         <p>Rychlost pro plnou (100%) výplň v místech, kde ji program automaticky generuje (kolem otvorů, kontaktních bodů). Stejně rychlá jako běžná výplň, protože ani tato plocha není přímo vidět.</p>
       </div>
-
-      <div class="param" id="horni-plocha">
-        <div class="param-head">
-          <div class="param-title">Top surface speed<small>Horní plocha</small></div>
-          <span class="param-val">150 mm/s</span>
-        </div>
+      <div class="card" id="horni-plocha">
+        <div class="card-head"><h3>Top surface speed<small>Horní plocha</small></h3><span class="card-num card-num--accent">150 mm/s</span></div>
         <p>Horní plné vrstvy jsou viditelné, ale tato hodnota (150 mm/s) je v profilu Kobry X poměrně vysoká — vyšší než klasické doporučení 25–35 mm/s z obecné teorie. To je možné díky Input Shaping kompenzaci vibrací (viz Sekce 4 této kapitoly), která umožňuje vyšší rychlosti bez ztráty kvality povrchu.</p>
       </div>
-
-      <div class="param" id="vypln-mezery">
-        <div class="param-head">
-          <div class="param-title">Gap fill speed<small>Výplň mezery</small></div>
-          <span class="param-val">50 mm/s</span>
-        </div>
-        <p>Rychlost pro speciální tenké výplňové linie, kterými program vyplňuje drobné mezery mezi perimetry a hlavní výplní (viz Použít vyplnění mezer v <a href="05a_3D_slicer_tisk.html" style="color:var(--blue);">05a</a>) — pomalejší rychlost pro tyto křehké/krátké úseky zlepšuje konzistenci extruze.</p>
+      <div class="card" id="vypln-mezery">
+        <div class="card-head"><h3>Gap fill speed<small>Výplň mezery</small></h3><span class="card-num card-num--accent">50 mm/s</span></div>
+        <p>Rychlost pro speciální tenké výplňové linie, kterými program vyplňuje drobné mezery mezi perimetry a hlavní výplní (viz Použít vyplnění mezer v <a href="05a_3D_slicer_tisk.html">05a</a>) — pomalejší rychlost pro tyto křehké/krátké úseky zlepšuje konzistenci extruze.</p>
       </div>
-
-      <div class="param" id="podpery">
-        <div class="param-head">
-          <div class="param-title">Support speed<small>Podpěry</small></div>
-          <span class="param-val">150 mm/s</span>
-        </div>
+      <div class="card" id="podpery">
+        <div class="card-head"><h3>Support speed<small>Podpěry</small></h3><span class="card-num card-num--accent">150 mm/s</span></div>
         <p>Podpěry se po tisku odstraňují, estetika nehraje roli, takže se tisknou rychle — srovnatelně s vnitřní stěnou/výplní.</p>
       </div>
-
-      <div class="param" id="kontaktni-vrstva-podper">
-        <div class="param-head">
-          <div class="param-title">Support interface speed<small>Kontaktní vrstva podpěr</small></div>
-          <span class="param-val">80 mm/s</span>
-        </div>
+      <div class="card" id="kontaktni-vrstva-podper">
+        <div class="card-head"><h3>Support interface speed<small>Kontaktní vrstva podpěr</small></h3><span class="card-num card-num--accent">80 mm/s</span></div>
         <p>Pomalejší než zbytek podpěrné struktury — kontaktní (interface) vrstvy se dotýkají samotného modelu, takže kvalita tady ovlivňuje výsledný povrch modelu po odstranění podpěry.</p>
       </div>
+      </div>
 
-      <a href="https://www.youtube.com/results?search_query=outer+wall+speed+infill+speed+settings+3D+printing&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Outer wall speed infill speed settings 3D printing rychlosti</a>
+      <a href="https://www.youtube.com/results?search_query=outer+wall+speed+infill+speed+settings+3D+printing&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Outer wall speed infill speed settings 3D printing rychlosti</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -306,25 +135,20 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="rychlost-previsu">
       <div class="section-header">
-        <h2>2 — Slow Down for Overhangs (rychlost převisů)</h2>
+        <h2>Slow Down for Overhangs (rychlost převisů)</h2>
       </div>
 
       <p>Tato skupina postupně zpomaluje tisk podle toho, jak málo je daný úsek stěny podepřen materiálem pod ním (tedy jak "převislý" je) — bez podpěr i tak umožňuje tisknout krátké/mírné převisy díky pomalejšímu tisku a silnějšímu chlazení.</p>
 
-      <div class="param" id="zpomaleni-pro-zakroucene-obvody">
-        <div class="param-head">
-          <div class="param-title">Slow down for curled perimeters<small>Zpomalení pro zakroucené obvody</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="zpomaleni-pro-zakroucene-obvody">
+        <div class="card-head"><h3>Slow down for curled perimeters<small>Zpomalení pro zakroucené obvody</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, program detekuje obvody, které mají tendenci se "kroutit" nahoru (typicky u tenkostěnných nebo silně zakřivených modelů) a automaticky je zpomalí pro lepší kontrolu.</p>
       </div>
-
-      <div class="param" id="zpomaleni-u-previsu">
-        <div class="param-head">
-          <div class="param-title">Slow down for overhangs<small>Zpomalení u převisů</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="zpomaleni-u-previsu">
+        <div class="card-head"><h3>Slow down for overhangs<small>Zpomalení u převisů</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Hlavní vypínač celé funkce postupného zpomalování podle míry převisu. Pod tímto přepínačem následuje tabulka pěti prahů — od mírného (~10%) po extrémní (100%~) převis.</p>
+      </div>
       </div>
 
       <h3 id="tabulka-rychlosti-dle-miry-previsu">Tabulka rychlostí dle míry převisu</h3>
@@ -340,28 +164,23 @@
         </tbody>
       </table>
 
-      <div class="param" id="most-vnejsi">
-        <div class="param-head">
-          <div class="param-title">Bridge speed — external<small>Most — Vnější</small></div>
-          <span class="param-val">30 mm/s</span>
-        </div>
-        <p>Fixní (ne procentuální) rychlost pro vnější (viditelné) mosty — pomalý tisk dává plastu čas ztuhnout ihned po extruzi, než se stihne prověsit. Kombinováno s maximálním chlazením (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c — Force cooling for overhangs and bridges (vynutit chlazení pro převisy a mosty)</a>).</p>
+      <div class="card-stack">
+      <div class="card" id="most-vnejsi">
+        <div class="card-head"><h3>Bridge speed — external<small>Most — Vnější</small></h3><span class="card-num card-num--accent">30 mm/s</span></div>
+        <p>Fixní (ne procentuální) rychlost pro vnější (viditelné) mosty — pomalý tisk dává plastu čas ztuhnout ihned po extruzi, než se stihne prověsit. Kombinováno s maximálním chlazením (viz <a href="05c_3D_slicer_filament.html">05c — Force cooling for overhangs and bridges (vynutit chlazení pro převisy a mosty)</a>).</p>
       </div>
-
-      <div class="param" id="most-vnitrni">
-        <div class="param-head">
-          <div class="param-title">Bridge speed — internal<small>Most — Vnitřní</small></div>
-          <span class="param-val">150 % mm/s or %</span>
-        </div>
+      <div class="card" id="most-vnitrni">
+        <div class="card-head"><h3>Bridge speed — internal<small>Most — Vnitřní</small></h3><span class="card-num card-num--accent">150 % mm/s or %</span></div>
         <p>Rychlost pro vnitřní mosty (nejsou vidět) — výrazně rychlejší než vnější mosty (procentuální hodnota vztažená k jiné základní rychlosti), protože estetika zde nehraje roli.</p>
+      </div>
       </div>
 
       <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
+        <div class="alert-icon">🔥</div>
         <div><strong>Riziko příliš agresivního nastavení tabulky převisů:</strong> Pokud v tabulce <strong>Slow down for overhangs</strong> (rychlost převisů) nastavíte i mírné převisy (~10–25%) na velmi nízkou rychlost, celkový čas tisku členitých modelů (figurky, organické tvary) se může výrazně prodloužit, protože velká část povrchu bude klasifikována jako "převis" už od malého úhlu. Naopak pokud rychlosti pro 50–100% nastavíte příliš vysoko, riskujete propadlé/zborcené převisy bez podpěr.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=overhang+speed+slowdown+table+OrcaSlicer+bridging&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Overhang speed slowdown table OrcaSlicer bridging</a>
+      <a href="https://www.youtube.com/results?search_query=overhang+speed+slowdown+table+OrcaSlicer+bridging&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Overhang speed slowdown table OrcaSlicer bridging</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -369,117 +188,75 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="cestovni-rychlost-zrychleni">
       <div class="section-header">
-        <h2>3 — Travel Speed a Acceleration</h2>
+        <h2>Travel Speed a Acceleration</h2>
       </div>
 
       <h3 id="cestovni-rychlost">Travel Speed (cestovní rychlost)</h3>
 
-      <div class="param" id="rychloposun">
-        <div class="param-head">
-          <div class="param-title">Travel speed<small>Rychloposun</small></div>
-          <span class="param-val">300 mm/s</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="rychloposun">
+        <div class="card-head"><h3>Travel speed<small>Rychloposun</small></h3><span class="card-num card-num--accent">300 mm/s</span></div>
         <p>Rychlost pohybu tiskové hlavy při přesunech, kdy se nic netiskne (tryska je zavřená/retrahovaná). Nemá vliv na kvalitu povrchu, ovlivňuje jen celkový čas tisku. Hodnota 300 mm/s je vysoká — umožněna díky Input Shaping kompenzaci Kobry X (viz Sekce 4).</p>
+      </div>
       </div>
 
       <h3 id="zrychleni">Acceleration (zrychlení)</h3>
 
       <p>Rychlost (Speed) udává, jak rychle se hlava pohybuje v ustáleném stavu. Zrychlení určuje, jak rychle se hlava <strong>zrychluje a zpomaluje</strong> mezi pohyby — má zásadní vliv na vibrace, a tedy na vzhled povrchu (efekt zvaný ghosting/ringing).</p>
 
-      <div class="param" id="normalni-tisk">
-        <div class="param-head">
-          <div class="param-title">Default/normal print acceleration<small>Normální tisk</small></div>
-          <span class="param-val">4000 mm/s²</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="normalni-tisk">
+        <div class="card-head"><h3>Default/normal print acceleration<small>Normální tisk</small></h3><span class="card-num card-num--accent">4000 mm/s²</span></div>
         <p>Základní zrychlení použité tam, kde nemáte specifikovanou hodnotu pro konkrétní typ úseku.</p>
       </div>
-
-      <div class="param" id="vnejsi-stena-2">
-        <div class="param-head">
-          <div class="param-title">Outer wall acceleration<small>Vnější stěna</small></div>
-          <span class="param-val">2000 mm/s²</span>
-        </div>
+      <div class="card" id="vnejsi-stena-2">
+        <div class="card-head"><h3>Outer wall acceleration<small>Vnější stěna</small></h3><span class="card-num card-num--accent">2000 mm/s²</span></div>
         <p>Nižší zrychlení specificky pro vnější stěnu — nejdůležitější viditelný povrch. Polovina normálního zrychlení zde znamená méně vibrací a tedy hladší, přesnější vnější povrch.</p>
       </div>
-
-      <div class="param" id="vnitrni-stena-2">
-        <div class="param-head">
-          <div class="param-title">Inner wall acceleration<small>Vnitřní stěna</small></div>
-          <span class="param-val">4000 mm/s²</span>
-        </div>
+      <div class="card" id="vnitrni-stena-2">
+        <div class="card-head"><h3>Inner wall acceleration<small>Vnitřní stěna</small></h3><span class="card-num card-num--accent">4000 mm/s²</span></div>
         <p>Stejné jako Normální tisk — vnitřní stěny nejsou vidět, takže není důvod je zpomalovat zrychlením.</p>
       </div>
-
-      <div class="param" id="most">
-        <div class="param-head">
-          <div class="param-title">Bridge acceleration<small>Most</small></div>
-          <span class="param-val">5000 mm/s² or %</span>
-        </div>
+      <div class="card" id="most">
+        <div class="card-head"><h3>Bridge acceleration<small>Most</small></h3><span class="card-num card-num--accent">5000 mm/s² or %</span></div>
         <p>Zrychlení pro mostní úseky — vyšší než normální tisk, protože mosty se obecně tisknou s nižší absolutní rychlostí (viz Sekce 2), takže i vyšší zrychlení nezpůsobí nadměrné vibrace v tomto kontextu.</p>
       </div>
-
-      <div class="param" id="vnitrni-vypln-2">
-        <div class="param-head">
-          <div class="param-title">Sparse infill acceleration<small>Vnitřní výplň</small></div>
-          <span class="param-val">5000 mm/s² or %</span>
-        </div>
+      <div class="card" id="vnitrni-vypln-2">
+        <div class="card-head"><h3>Sparse infill acceleration<small>Vnitřní výplň</small></h3><span class="card-num card-num--accent">5000 mm/s² or %</span></div>
         <p>Vysoké zrychlení pro výplň — výplň se tiskne nejrychleji ze všech úseků (viz Sekce 1), takže potřebuje i vysoké zrychlení, aby dosáhla cílové rychlosti rychle a nebrzdila celkový čas tisku.</p>
       </div>
-
-      <div class="param" id="vnitrni-plna-vypln-2">
-        <div class="param-head">
-          <div class="param-title">Internal solid infill acceleration<small>Vnitřní plná výplň</small></div>
-          <span class="param-val">0 mm/s² or % (= použít výchozí/nepřepisovat)</span>
-        </div>
+      <div class="card" id="vnitrni-plna-vypln-2">
+        <div class="card-head"><h3>Internal solid infill acceleration<small>Vnitřní plná výplň</small></h3><span class="card-num card-num--accent">0 mm/s² or % (= použít výchozí/nepřepisovat)</span></div>
         <p>Hodnota 0 zde typicky znamená "nepřepisovat", tedy použít zrychlení odvozené od jiné nastavené hodnoty (např. Normální tisk nebo Vnitřní výplň).</p>
       </div>
-
-      <div class="param" id="prvni-vrstva">
-        <div class="param-head">
-          <div class="param-title">First layer acceleration<small>První vrstva</small></div>
-          <span class="param-val">500 mm/s²</span>
-        </div>
-        <p>Výrazně nižší zrychlení pro první vrstvu — nejdůležitější vrstva pro úspěšný tisk (viz <a href="06_3D_priprava_a_tisk.html" style="color:var(--blue);">06</a>). Nízké zrychlení dává plastu čas se správně přichytit k podložce bez rizika posunu/vibrací, které by mohly narušit čerstvě nanesenou vrstvu.</p>
+      <div class="card" id="prvni-vrstva">
+        <div class="card-head"><h3>First layer acceleration<small>První vrstva</small></h3><span class="card-num card-num--accent">500 mm/s²</span></div>
+        <p>Výrazně nižší zrychlení pro první vrstvu — nejdůležitější vrstva pro úspěšný tisk (viz <a href="06_3D_priprava_a_tisk.html">06</a>). Nízké zrychlení dává plastu čas se správně přichytit k podložce bez rizika posunu/vibrací, které by mohly narušit čerstvě nanesenou vrstvu.</p>
       </div>
-
-      <div class="param" id="horni-plocha-2">
-        <div class="param-head">
-          <div class="param-title">Top surface acceleration<small>Horní plocha</small></div>
-          <span class="param-val">2000 mm/s²</span>
-        </div>
+      <div class="card" id="horni-plocha-2">
+        <div class="card-head"><h3>Top surface acceleration<small>Horní plocha</small></h3><span class="card-num card-num--accent">2000 mm/s²</span></div>
         <p>Stejné jako Vnější stěna — horní plocha je viditelná, takže nižší zrychlení zlepšuje kvalitu povrchu.</p>
       </div>
-
-      <div class="param" id="rychloposun-2">
-        <div class="param-head">
-          <div class="param-title">Travel acceleration<small>Rychloposun</small></div>
-          <span class="param-val">10000 mm/s²</span>
-        </div>
+      <div class="card" id="rychloposun-2">
+        <div class="card-head"><h3>Travel acceleration<small>Rychloposun</small></h3><span class="card-num card-num--accent">10000 mm/s²</span></div>
         <p>Velmi vysoké zrychlení pro travel pohyby (bez tisku) — vibrace při travel pohybu nezasahují do povrchu modelu (tryska je zavřená), takže zde se program nemusí omezovat ohledem na kvalitu povrchu.</p>
       </div>
-
-      <div class="param" id="povolit-accel-to-decel">
-        <div class="param-head">
-          <div class="param-title">Enable accel_to_decel<small>Povolit accel_to_decel</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="povolit-accel-to-decel">
+        <div class="card-head"><h3>Enable accel_to_decel<small>Povolit accel_to_decel</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Pokročilá funkce firmwaru, která řídí plynulý přechod mezi zrychlováním a zpomalováním (na rozdíl od náhlého přepnutí) — zlepšuje plynulost pohybu zejména na složitých trajektoriích s mnoha změnami směru.</p>
       </div>
-
-      <div class="param" id="accel-to-decel">
-        <div class="param-head">
-          <div class="param-title">accel_to_decel ratio<small>accel_to_decel</small></div>
-          <span class="param-val">50 %</span>
-        </div>
+      <div class="card" id="accel-to-decel">
+        <div class="card-head"><h3>accel_to_decel ratio<small>accel_to_decel</small></h3><span class="card-num card-num--accent">50 %</span></div>
         <p>Konkrétní poměr/hodnota pro funkci accel_to_decel z řádku výše — určuje, jak plynulý je přechod mezi fází zrychlování a zpomalování pohybu.</p>
+      </div>
       </div>
 
       <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
+        <div class="alert-icon">🔥</div>
         <div><strong>Riziko příliš vysokého zrychlení:</strong> Pokud zvýšíte <strong>Default/normal print acceleration</strong> nebo <strong>Outer wall acceleration</strong> (normální tisk nebo vnější stěna zrychlení) výrazně nad výchozí hodnoty z profilu Kobry X, riskujete ringing/ghosting (vlnky kolem hran způsobené vibrací rámu po rychlé změně směru) a v extrémním případě i <strong>ztracené kroky motoru</strong> (lost steps) — pokud motor nezvládne fyzicky tak rychlé zrychlení, přeskočí kroky a celá geometrie modelu se posune/zdeformuje od daného místa dál.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=print+acceleration+settings+ringing+ghosting+3D+printer&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Print acceleration settings ringing ghosting 3D printer zrychlení</a>
+      <a href="https://www.youtube.com/results?search_query=print+acceleration+settings+ringing+ghosting+3D+printer&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Print acceleration settings ringing ghosting 3D printer zrychlení</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -487,75 +264,53 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="jerk-pokrocile">
       <div class="section-header">
-        <h2>4 — Jerk-Ryv (XY) a Advanced (pokročilé)</h2>
+        <h2>Jerk (XY) a Advanced</h2>
       </div>
 
-      <p>Jerk (česky přeloženo jako "Ryv") je maximální okamžitá změna rychlosti, kterou tiskárna povolí bez postupné akcelerace — v praxi "jak ostře" se může hlava otočit v rohu, aniž by musela nejdřív plynule zpomalit. Spolu se Zrychlením (Sekce 3) tvoří hlavní dvojici parametrů řídících vibrace a kvalitu povrchu.</p>
+      <p>Jerk (česky přeloženo jako "Ryv", doslova „trhnutí“ nebo „cuknutí“) je maximální okamžitá změna rychlosti, kterou tiskárna povolí bez postupné akcelerace — v praxi "jak ostře" se může hlava otočit v rohu, aniž by musela nejdřív plynule zpomalit. Spolu se Zrychlením (Sekce 3) tvoří hlavní dvojici parametrů řídících vibrace a kvalitu povrchu.</p>
 
-      <div class="param" id="vychozi">
-        <div class="param-head">
-          <div class="param-title">Default jerk<small>Výchozí</small></div>
-          <span class="param-val">9 mm/s</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="vychozi">
+        <div class="card-head"><h3>Default jerk<small>Výchozí</small></h3><span class="card-num card-num--accent">9 mm/s</span></div>
         <p>Základní jerk hodnota použitá tam, kde nemáte specifikovanou hodnotu pro konkrétní typ úseku.</p>
       </div>
-
-      <div class="param" id="vnejsi-stena-vnitrni-stena">
-        <div class="param-head">
-          <div class="param-title">Outer/inner wall jerk<small>Vnější stěna / Vnitřní stěna</small></div>
-          <span class="param-val">9 mm/s / 9 mm/s</span>
-        </div>
+      <div class="card" id="vnejsi-stena-vnitrni-stena">
+        <div class="card-head"><h3>Outer/inner wall jerk<small>Vnější stěna / Vnitřní stěna</small></h3><span class="card-num card-num--accent">9 mm/s / 9 mm/s</span></div>
         <p>Jerk pro perimetry — na rozdíl od Zrychlení (kde se vnější a vnitřní stěna výrazně liší, 2000 vs 4000 mm/s²), zde má profil Kobry X obě stejné. Pokud chcete extra kvalitu vnějšího povrchu, můžete snížit jerk specificky pro vnější stěnu pod tuto hodnotu.</p>
       </div>
-
-      <div class="param" id="vypln">
-        <div class="param-head">
-          <div class="param-title">Infill jerk<small>Výplň</small></div>
-          <span class="param-val">9 mm/s</span>
-        </div>
+      <div class="card" id="vypln">
+        <div class="card-head"><h3>Infill jerk<small>Výplň</small></h3><span class="card-num card-num--accent">9 mm/s</span></div>
         <p>Jerk pro výplň — stejná hodnota jako výchozí, protože výplň nepotřebuje speciální omezení vibrací.</p>
       </div>
-
-      <div class="param" id="horni-plocha-3">
-        <div class="param-head">
-          <div class="param-title">Top surface jerk<small>Horní plocha</small></div>
-          <span class="param-val">9 mm/s</span>
-        </div>
+      <div class="card" id="horni-plocha-3">
+        <div class="card-head"><h3>Top surface jerk<small>Horní plocha</small></h3><span class="card-num card-num--accent">9 mm/s</span></div>
         <p>Jerk pro horní viditelnou plochu — stejná hodnota jako výchozí v tomto profilu.</p>
       </div>
-
-      <div class="param" id="prvni-vrstva-2">
-        <div class="param-head">
-          <div class="param-title">First layer jerk<small>První vrstva</small></div>
-          <span class="param-val">9 mm/s</span>
-        </div>
+      <div class="card" id="prvni-vrstva-2">
+        <div class="card-head"><h3>First layer jerk<small>První vrstva</small></h3><span class="card-num card-num--accent">9 mm/s</span></div>
         <p>Jerk pro první vrstvu — na rozdíl od Zrychlení (kde je první vrstva výrazně snížena na 500 mm/s², viz Sekce 3) zůstává jerk na stejné hodnotě jako zbytek profilu.</p>
       </div>
-
-      <div class="param" id="rychloposun-3">
-        <div class="param-head">
-          <div class="param-title">Travel jerk<small>Rychloposun</small></div>
-          <span class="param-val">9 mm/s</span>
-        </div>
+      <div class="card" id="rychloposun-3">
+        <div class="card-head"><h3>Travel jerk<small>Rychloposun</small></h3><span class="card-num card-num--accent">9 mm/s</span></div>
         <p>Jerk pro travel pohyby — stejná hodnota jako ostatní, na rozdíl od Zrychlení, kde Travel má výrazně vyšší hodnotu (10000 mm/s² oproti 4000 mm/s² normálnímu tisku).</p>
+      </div>
       </div>
 
       <h3 id="pokrocile">Advanced (pokročilé)</h3>
 
-      <div class="param" id="vyhlazeni-rychlosti-extruze">
-        <div class="param-head">
-          <div class="param-title">Extrusion rate smoothing<small>Vyhlazení rychlosti extruze</small></div>
-          <span class="param-val">0 mm³/s² (vypnuto)</span>
-        </div>
-        <p>Pokročilá funkce, která vyhlazuje náhlé změny v objemovém průtoku materiálu (ne jen rychlost pohybu hlavy) — pomáhá s konzistencí extruze při rychlých změnách směru nebo rychlosti, podobně jako Pressure Advance (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>), ale na jiné úrovni řízení.</p>
+      <div class="card-stack">
+      <div class="card" id="vyhlazeni-rychlosti-extruze">
+        <div class="card-head"><h3>Extrusion rate smoothing<small>Vyhlazení rychlosti extruze</small></h3><span class="card-num card-num--accent">0 mm³/s² (vypnuto)</span></div>
+        <p>Pokročilá funkce, která vyhlazuje náhlé změny v objemovém průtoku materiálu (ne jen rychlost pohybu hlavy) — pomáhá s konzistencí extruze při rychlých změnách směru nebo rychlosti, podobně jako Pressure Advance (viz <a href="05c_3D_slicer_filament.html">05c</a>), ale na jiné úrovni řízení.</p>
+      </div>
       </div>
 
       <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
+        <div class="alert-icon">📖</div>
         <div><strong>Jerk vs Junction Deviation:</strong> Pojem "Jerk" pochází z firmware Marlin. Modernější firmware (včetně systémů odvozených z Klipperu) může místo Jerk používat koncept <strong>Junction Deviation</strong>, který řeší totéž matematicky elegantněji (jedna hodnota určující maximální odchylku v rohu, místo separátní rychlostní hranice). Pokud program nebo firmware Kobry X zobrazuje "Jerk-Ryv" v jednotkách mm/s, pracuje s klasickým Jerk modelem.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=jerk+junction+deviation+3D+printer+settings+explained&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Jerk junction deviation 3D printer settings explained</a>
+      <a href="https://www.youtube.com/results?search_query=jerk+junction+deviation+3D+printer+settings+explained&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Jerk junction deviation 3D printer settings explained</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -563,7 +318,7 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="rizika-rychlosti">
       <div class="section-header">
-        <h2>5 — Rizika: co se stane, když rychlost/zrychlení nastavíte špatně</h2>
+        <h2>Rizika: co se stane, když rychlost/zrychlení nastavíte špatně</h2>
       </div>
 
       <p>Rychlostní parametry jsou jedny z nejčastěji "ohýbaných" nastavení — lákavé je zrychlit tisk co nejvíc, ale každá hodnota má svůj fyzický strop. Tady je přehled konkrétních příznaků a příčin, abyste poznali problém dřív, než zničíte celý tisk.</p>
@@ -579,7 +334,7 @@
           <tr>
             <td>Mezery/slabá místa, model je "průsvitný" i přes dostatečnou výplň</td>
             <td>Rychlost výplně/vnitřní stěny vyšší, než hotend zvládne při dané teplotě (under-extrusion)</td>
-            <td>Zkontrolujte Max Volumetric Speed v <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>, případně snižte <strong>Sparse infill speed</strong> (rychlost vnitřní výplně, Sekce 1)</td>
+            <td>Zkontrolujte Max Volumetric Speed v <a href="05c_3D_slicer_filament.html">05c</a>, případně snižte <strong>Sparse infill speed</strong> (rychlost vnitřní výplně, Sekce 1)</td>
           </tr>
           <tr>
             <td>Geometrie modelu se náhle "posune" nebo zdeformuje od určitého místa dál</td>
@@ -604,18 +359,18 @@
         </tbody>
       </table>
 
-      <div class="alert alert-warn">
-        <div class="alert-icon">⚠</div>
+      <div class="alert alert-tip">
+        <div class="alert-icon">💡</div>
         <div><strong>Obecné pravidlo pro bezpečné experimentování:</strong> Měňte rychlostní parametry <strong>postupně, po malých krocích</strong> (např. +10–20 % najednou), a po každé změně vytiskněte malý testovací model (kalibrační krychli nebo Speed Tower test), než aplikujete novou hodnotu na velký/důležitý tisk. Kobra X díky Input Shaping zvládá vyšší rychlosti než tiskárny bez této kompenzace, ale stále má fyzické limity — výchozí hodnoty z profilu Anycubic jsou už dobře vyladěné pro tento konkrétní hardware.</div>
       </div>
 
       <h3 id="kalibrace-rychlosti-speed-tower">Kalibrace rychlosti — Speed Tower</h3>
 
       <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
+        <div class="alert-icon">💡</div>
         <div>
           <strong>Postup kalibrace:</strong>
-          <ol style="margin-top:8px; padding-left:20px; font-size:14px; line-height:1.8;">
+          <ol class="steps">
             <li>Stáhněte Speed Tower model z Printables nebo MakerWorld</li>
             <li>Vytiskněte s rozsahem rychlostí (např. 40–150 mm/s po segmentech výšky)</li>
             <li>Prohlédněte si povrch každého segmentu — hledejte ringing, nedostatečnou extruzi, ztrátu ostrosti rohů</li>
@@ -624,37 +379,15 @@
         </div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=3D+print+speed+test+tower+calibration+lost+steps&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: 3D print speed test tower calibration lost steps</a>
+      <a href="https://www.youtube.com/results?search_query=3D+print+speed+test+tower+calibration+lost+steps&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: 3D print speed test tower calibration lost steps</a>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         PAGE NAV
-    ════════════════════════════════════════════ -->
-    <div class="pn">
-      <a href="05a_3D_slicer_tisk.html">← 05a · Parametry tisku</a>
-      <a href="05c_3D_slicer_filament.html" class="nx">05c · Parametry filamentu →</a>
-    </div>
+    <div id="pn"></div>
 
   </div><!-- /wrapper -->
 </main>
 
-<script>
-const searchInput = document.getElementById('sb-search-input');
-const mobileSearchInput = document.getElementById('mobile-search-input');
-
-function goToSearch(q) {
-  q = q.trim();
-  if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
-}
-
-searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-mobileSearchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-searchInput.addEventListener('input', (e) => { mobileSearchInput.value = e.target.value; });
-mobileSearchInput.addEventListener('input', (e) => { searchInput.value = e.target.value; });
-</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>

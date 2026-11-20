@@ -5,191 +5,75 @@
 <title>05a Parametry tisku — 3D Tisk průvodce</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:       #0d0f14;
-    --surface:  #13161e;
-    --card:     #181c27;
-    --border:   #252b3b;
-    --accent:   #e8a020;
-    --accent2:  #f0c050;
-    --tuf:      #c8860a;
-    --green:    #3ecf76;
-    --red:      #e85050;
-    --blue:     #4a9eff;
-    --text:     #d8dce8;
-    --muted:    #6e7590;
-    --mono:     'IBM Plex Mono', monospace;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15.5px; line-height: 1.65; overflow-x: hidden; }
-
-  /* ── SIDEBAR ── */
-  .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: rgba(19, 22, 30, 0.97); border-right: 1px solid var(--tuf); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
-  .sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
-  .sidebar-brand { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-  .sidebar-product { display: flex; align-items: center; gap: 10px; }
-  .sidebar-tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 2px; padding: 3px 7px; clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%); flex-shrink: 0; }
-  .sidebar-model { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 500; line-height: 1.4; }
-  .sidebar-model small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
-  .sb-search { padding: 15px 20px 5px; }
-  .sb-search input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .sb-search input:focus { border-color: var(--accent); }
-  .nav-group-label { padding: 16px 20px 6px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: #8aadcc; text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.3; }
-  .nav-item:hover, .nav-item.active { color: #fff; background: rgba(232, 160, 32, 0.06); border-left-color: var(--accent); }
-  .nav-num { font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(232, 160, 32, 0.1); border: 1px solid rgba(232, 160, 32, 0.25); padding: 1px 5px; flex-shrink: 0; min-width: 28px; text-align: center; clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%); }
-  .nav-item-text { flex: 1; min-width: 0; }
-  .nav-subs { margin: 0; padding: 0 0 10px 0; list-style: none; display: flex; flex-direction: column; }
-  .nav-sub-item { display: block; padding: 6px 20px 6px 58px; color: #8aadcc; text-decoration: none; font-size: 12.5px; font-family: 'Inter', sans-serif; border-left: 2px solid transparent; transition: all 0.2s; }
-  .nav-sub-item:hover, .nav-sub-item.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: var(--accent); }
-
-  /* ── MAIN ── */
-  .main-content { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; }
-
-  /* ── HERO ── */
-  .hero { position: relative; background: linear-gradient(135deg, #0a0c10 0%, #141925 40%, #1a1208 100%); border-bottom: 2px solid var(--tuf); padding: 48px 32px 36px; overflow: hidden; width: 100%; }
-  .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(232,160,32,.06) 40px); }
-  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; width: 100%; }
-  .logo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-  .tuf-badge { background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 10px; clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%); }
-  .ver-badge { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 3px 8px; }
-  .hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(28px, 5vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: 1px; color: #fff; }
-  .hero h1 span { color: var(--accent); }
-  .hero p { margin-top: 10px; color: var(--muted); font-size: 14.5px; max-width: 600px; }
-
-  /* ── LAYOUT ── */
-  .wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; width: 100%; }
-
-  /* ── SECTIONS ── */
-  .section { margin: 44px 0; }
-  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .section h2 { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: .5px; }
-  h3 { font-family: 'Rajdhani', sans-serif; font-size: 19px; font-weight: 600; color: var(--accent2); margin: 36px 0 14px; }
-  h4.subhead { font-family: 'Rajdhani', sans-serif; font-size: 15.5px; font-weight: 600; color: #9fb8d6; margin: 22px 0 10px; text-transform: uppercase; letter-spacing: .04em; }
-
-  /* ── TAB INDICATOR ── */
-  .tab-bar { display: flex; gap: 2px; margin: 0 0 24px; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
-  .tab-bar span { font-family: var(--mono); font-size: 12px; padding: 8px 16px; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; }
-  .tab-bar span.active { color: var(--accent2); border-bottom-color: var(--accent); font-weight: 600; }
-
-  /* ── PARAM BLOK ── */
-  .param { background: var(--card); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 12px; transition: border-color .2s; }
-  .param:hover { border-color: var(--accent); }
-  .param-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
-  .param-title { font-family: 'Rajdhani', sans-serif; font-size: 17px; color: var(--accent2); font-weight: 600; }
-  .param-title small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
-  .param-val { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.25); padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
-  .param p { font-size: 14px; color: var(--text); line-height: 1.6; }
-  .param p + p { margin-top: 6px; }
-  .param-risk { margin-top: 10px; padding: 8px 12px; background: rgba(232,80,80,.08); border-left: 3px solid var(--red); font-size: 13px; }
-  .param-risk strong { color: #ff9a9a; }
-
-  /* ── ALERTS ── */
-  .alert { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; margin: 20px 0; font-size: 14px; }
-  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .alert-info  { border: 1px solid var(--blue);  background: rgba(74,158,255,.07);  }
-  .alert-tip   { border: 1px solid var(--green); background: rgba(62,207,118,.07); }
-  .alert-warn  { border: 1px solid var(--red);   background: rgba(232,80,80,.07);  }
-
-  /* ── TABLE ── */
-  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-  thead tr { background: var(--surface); }
-  th { text-align: left; padding: 10px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; border-bottom: 1px solid var(--border); }
-  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
-  td:first-child { font-family: var(--mono); font-size: 12px; color: var(--accent2); }
-
-  /* ── CARDS GRID ── */
-  .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
-  .card { background: var(--card); border: 1px solid var(--border); padding: 18px 20px; transition: border-color .2s; }
-  .card:hover { border-color: var(--accent); background: rgba(232,160,32,.03); }
-  .card h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; color: var(--accent2); margin-bottom: 6px; }
-  .card p { font-size: 13.5px; color: var(--muted); }
-
-  /* ── STEP LIST ── */
-  .steps { list-style: none; counter-reset: step; margin: 16px 0; }
-  .steps li { position: relative; padding: 10px 0 10px 42px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
-  .steps li:last-child { border-bottom: none; }
-  .steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 8px; width: 26px; height: 26px; background: rgba(232,160,32,.12); border: 1px solid var(--accent); color: var(--accent2); font-family: var(--mono); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
-  .steps li strong { color: var(--accent2); }
-
-  /* ── YT LINK ── */
-  .yt-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--red); text-decoration: none; margin: 10px 0; }
-  .yt-link:hover { opacity: .8; }
-
-  /* ── REF LINK ── */
-  .ref-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--blue); text-decoration: none; background: rgba(74,158,255,.07); border: 1px solid rgba(74,158,255,.2); padding: 4px 10px; margin: 4px 4px 4px 0; }
-  .ref-link:hover { background: rgba(74,158,255,.14); }
-
-  /* ── PAGE NAV ── */
-  .pn { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
-  .pn a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .15s; }
-  .pn a:hover { color: var(--accent); }
-  .pn .nx { margin-left: auto; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; width: 100%; } .logo-row { flex-wrap: wrap; row-gap: 10px; } .mobile-search-bar { display: flex !important; } }
-  .mobile-search-bar { display: none; align-items: center; margin-left: auto; flex: 1 1 200px; max-width: 260px; }
-  .mobile-search-bar input { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 12px; padding: 8px 12px; border-radius: 3px; outline: none; }
-  .mobile-search-bar input:focus { border-color: var(--accent); }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="05a">
 
-<!-- ── SIDEBAR ── -->
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <div class="sidebar-product">
-      <span class="sidebar-tuf-badge">3D</span>
-      <div class="sidebar-model">ANYCUBIC KOBRA X<small>Průvodce 3D tiskem · CZ</small></div>
-    </div>
-  </div>
-  <div class="sb-search"><input type="text" placeholder="🔍 Hledat..." id="sb-search-input"></div>
+<!-- ── SIDEBAR (generuje sidebar-init.js z sidebar-config.js) ── -->
+<div id="sidebar"></div>
 
-  <div class="nav-group-label">Základní sekce</div>
-  <a href="00_3D_index.html" class="nav-item"><span class="nav-num">00</span><span class="nav-item-text">Obsah & Hledání</span></a>
-  <a href="01_3D_uvod.html" class="nav-item"><span class="nav-num">01</span><span class="nav-item-text">Úvod do FDM tisku</span></a>
-  <a href="02_3D_tiskarna.html" class="nav-item"><span class="nav-num">02</span><span class="nav-item-text">Tiskárna Kobra X</span></a>
-  <a href="03_3D_slicer_zaklad.html" class="nav-item"><span class="nav-num">03</span><span class="nav-item-text">Slicer — základy</span></a>
-  <a href="04_3D_slicer_pokrocily.html" class="nav-item"><span class="nav-num">04</span><span class="nav-item-text">Slicer — pokročilý</span></a>
-  <div class="nav-item" style="cursor:default;"><span class="nav-num">05</span><span class="nav-item-text">Detailní parametry</span></div>
-  <ul class="nav-subs">
-    <li><a href="05a_3D_slicer_tisk.html" class="nav-sub-item active">05a · Parametry tisku</a></li>
-    <li><a href="05b_3D_slicer_rychlost.html" class="nav-sub-item">05b · Parametry rychlosti</a></li>
-    <li><a href="05c_3D_slicer_filament.html" class="nav-sub-item">05c · Parametry filamentu</a></li>
-  </ul>
-  <a href="06_3D_priprava_a_tisk.html" class="nav-item"><span class="nav-num">06</span><span class="nav-item-text">Příprava & tisk</span></a>
-  <a href="07_3D_post_processing.html" class="nav-item"><span class="nav-num">07</span><span class="nav-item-text">Post-processing</span></a>
-  <div class="nav-item" style="cursor: default;">
-    <span class="nav-num">08</span>
-    <span class="nav-item-text">Filamenty</span>
-  </div>
-  <ul class="nav-subs">
-    <li><a href="08a_3D_filamenty.html" class="nav-sub-item ">08a · Vše o Filamentech</a></li>
-    <li><a href="08b_3D_kalibrace_filamentu.html" class="nav-sub-item ">08b · Kalibrace filamentu</a></li>
-    <li><a href="08c_3D_Filament_next.html" class="nav-sub-item ">08c · Filamenty rozšíření</a></li>
-  </ul>
-  <a href="09_3D_modely_cad.html" class="nav-item"><span class="nav-num">09</span><span class="nav-item-text">3D Modely & CAD</span></a>
-  <a href="10_3D_prostredi_upgrady.html" class="nav-item"><span class="nav-num">10</span><span class="nav-item-text">Prostředí & upgrady</span></a>
-  <a href="11_3D_udrzba.html" class="nav-item"><span class="nav-num">11</span><span class="nav-item-text">Údržba & spot. mat.</span></a>
-  <a href="12_3D_tipy.html" class="nav-item"><span class="nav-num">12</span><span class="nav-item-text">Tipy & triky</span></a>
-  <a href="13_3D_troubleshooting.html" class="nav-item"><span class="nav-num">13</span><span class="nav-item-text">Troubleshooting</span></a>
+<script type="application/json" id="page-chapters">
+{
+  "chapters": [
+    {
+      "id": "globalni-vs-objekty",
+      "num": "05a.01",
+      "name": "Globální nastavení vs. nastavení pro jednotlivý objekt"
+    },
+    {
+      "id": "zalozka-kvalita-vrstvy",
+      "num": "05a.02",
+      "name": "Záložka Quality (kvalita) — Layer Height a Extrusion Width"
+    },
+    {
+      "id": "zalozka-kvalita-sev-presnost",
+      "num": "05a.03",
+      "name": "Záložka Quality (kvalita) — Seam a Precision"
+    },
+    {
+      "id": "zalozka-kvalita-stenz",
+      "num": "05a.04",
+      "name": "Záložka Quality (kvalita) — Ironing, Wall Generator, Walls and Surfaces"
+    },
+    {
+      "id": "zalozka-kvalita-mosty",
+      "num": "05a.05",
+      "name": "Záložka Quality (kvalita) — Bridging a Overhangs"
+    },
+    {
+      "id": "zalozka-pevnost-steny",
+      "num": "05a.06",
+      "name": "Záložka Strength (pevnost) — Walls a Top/Bottom Shells"
+    },
+    {
+      "id": "zalozka-pevnost-vyplna",
+      "num": "05a.07",
+      "name": "Záložka Strength (pevnost) — Infill a Advanced"
+    },
+    {
+      "id": "zalozka-podpery-zaklad",
+      "num": "05a.08",
+      "name": "Záložka Support (podpěry) — Základní nastavení"
+    },
+    {
+      "id": "zalozka-podpery-pokrocile",
+      "num": "05a.09",
+      "name": "Záložka Support (podpěry) — Advanced a Tree Supports"
+    },
+    {
+      "id": "zalozka-multimaterial",
+      "num": "05a.10",
+      "name": "Záložka Multimaterial (multimateriál)"
+    },
+    {
+      "id": "zalozka-ostatni",
+      "num": "05a.11",
+      "name": "Záložka Others (ostatní)"
+    }
+  ]
+}
+</script>
 
-  <div class="nav-group-label">Ostatní přílohy</div>
-  <a href="00_3D_index.html#ostatni_prilohy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">Soubory</span>
-    <span class="nav-item-text">Výběr příloh</span>
-  </a>
-  <div class="nav-group-label">Oblíbené odkazy</div>
-  <a href="00_3D_index.html#oblibene_odkazy" class="nav-item">
-    <span class="nav-num" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.5);">WEB</span>
-    <span class="nav-item-text">Výběr odkazů</span>
-  </a>
-  <div style="height:32px;flex-shrink:0;"></div>
-</nav>
-
-<!-- ── MAIN ── -->
 <main class="main-content">
 
   <div class="hero">
@@ -197,9 +81,6 @@
       <div class="logo-row">
         <span class="tuf-badge">KAPITOLA 05a</span>
         <span class="ver-badge">DETAILNÍ PARAMETRY</span>
-        <div class="mobile-search-bar">
-          <input type="text" placeholder="🔍 Hledat..." id="mobile-search-input">
-        </div>
       </div>
       <h1>Parametry <span>tisku</span></h1>
       <p>Kompletní rozpis okna Process (proces) v Anycubic Slicer Next — záložky Quality (kvalita), Strength (pevnost), Support (podpěry), Multimaterial (multimateriál) a Others (ostatní), pole po poli, přesně tak, jak je vidíte na obrazovce v zapnutém režimu Advanced (pokročilé).</p>
@@ -209,14 +90,14 @@
   <div class="wrapper">
 
     <div class="alert alert-info">
-      <div class="alert-icon">💡</div>
-      <div><strong>Jak je tahle kapitola udělaná:</strong> Stejně jako kapitola <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a> jdeme pole po poli přesně podle okna <strong>Process</strong> (proces) v Anycubic Slicer Next — záložky Quality (kvalita), Strength (pevnost), Support (podpěry), Multimaterial (multimateriál), Others (ostatní). Hlavní název je vždy <strong>anglický</strong> (přesně jak v programu — čeština v Anycubic Slicer Next nefunguje spolehlivě), český překlad je v malé poznámce pod ním. Rychlostní pole (záložka Speed) jsou vyčleněna do samostatné kapitoly <a href="05b_3D_slicer_rychlost.html" style="color:var(--blue);">05b</a>, protože jich je hodně a mají vlastní rizika.</div>
-    </div>
+        <div class="alert-icon">📖</div>
+        <div><strong>Jak je tahle kapitola udělaná:</strong> Stejně jako kapitola <a href="05c_3D_slicer_filament.html">05c</a> jdeme pole po poli přesně podle okna <strong>Process</strong> (proces) v Anycubic Slicer Next — záložky Quality (kvalita), Strength (pevnost), Support (podpěry), Multimaterial (multimateriál), Others (ostatní). Hlavní název je vždy <strong>anglický</strong> (přesně jak v programu — čeština v Anycubic Slicer Next nefunguje spolehlivě), český překlad je v malé poznámce pod ním. Rychlostní pole (záložka Speed) jsou vyčleněna do samostatné kapitoly <a href="05b_3D_slicer_rychlost.html">05b</a>, protože jich je hodně a mají vlastní rizika.</div>
+      </div>
 
-    <p style="margin-bottom: 8px;">Propojení s ostatními kapitolami:
-      <a href="05b_3D_slicer_rychlost.html" class="ref-link">→ 05b Parametry rychlosti</a>
-      <a href="05c_3D_slicer_filament.html" class="ref-link">→ 05c Parametry filamentu</a>
-      <a href="04_3D_slicer_pokrocily.html" class="ref-link">→ 04 Slicer — pokročilý</a>
+    <p>Propojení s ostatními kapitolami:
+      <a href="05b_3D_slicer_rychlost.html" class="link-pill link-pill--accent">→ 05b Parametry rychlosti</a>
+      <a href="05c_3D_slicer_filament.html" class="link-pill link-pill--accent">→ 05c Parametry filamentu</a>
+      <a href="04_3D_slicer_pokrocily.html" class="link-pill link-pill--accent">→ 04 Slicer — pokročilý</a>
     </p>
 
     <!-- ═══════════════════════════════════════════
@@ -224,23 +105,20 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="globalni-vs-objekty">
       <div class="section-header">
-        <h2>1 — Globální nastavení vs. nastavení pro jednotlivý objekt</h2>
+        <h2>Globální nastavení vs. nastavení pro jednotlivý objekt</h2>
       </div>
 
       <p>V horní části okna Process (proces) jsou dva přepínače: <strong>Global</strong> (globální) a <strong>Objects</strong> (objekty). Tohle je jeden z nejdůležitějších, ale často přehlížených konceptů celého programu — určuje, jestli nastavení platí pro <strong>celý projekt</strong>, nebo jen pro <strong>jeden konkrétní model</strong> na podložce.</p>
 
-      <div class="param" id="globalni">
-        <div class="param-head">
-          <div class="param-title">Global<small>Globální</small></div>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="globalni">
+        <div class="card-head"><h3>Global<small>Globální</small></h3></div>
         <p>Nastavení, které vidíte v tomto režimu, platí pro <strong>všechny objekty</strong> na všech podložkách v projektu, pokud pro ně není výslovně nastaven přepis (override) v režimu Objects. Toto je výchozí pohled a většina uživatelů s ním pracuje po celou dobu.</p>
       </div>
-
-      <div class="param" id="objekty">
-        <div class="param-head">
-          <div class="param-title">Objects<small>Objekty</small></div>
-        </div>
+      <div class="card" id="objekty">
+        <div class="card-head"><h3>Objects<small>Objekty</small></h3></div>
         <p>Po přepnutí na tento režim se zobrazí <strong>strom všech podložek a objektů</strong> v projektu — vidíte název modelu (např. „End+Bracket.stl"), kolikrát se daný objekt vyskytuje (sloupec „Fila."), a po kliknutí na konkrétní objekt se otevře <strong>zkrácená sada záložek</strong>: <em>Frequently Used, Quality, Strength, Speed, Support, Multimaterial, Others</em>. Cokoliv zde nastavíte, přepíše globální hodnotu <strong>jen pro tento jeden objekt</strong>.</p>
+      </div>
       </div>
 
       <h3 id="strom-objektu-co-znamenaji-barvy-a-ikony">Strom objektů — co znamenají barvy a ikony</h3>
@@ -259,24 +137,24 @@
 
       <p>Tato záložka se zobrazuje <strong>pouze</strong> v režimu Objects (v Globálním pohledu chybí) a obsahuje jen čtyři nejčastěji upravovaná pole, aby se k nim nemuselo proklikávat přes celé Quality/Strength/Support:</p>
 
-      <div class="chapter-grid">
+      <div class="card-grid cols-2">
         <div class="card"><h4>Výška vrstvy</h4><p>Rychlý přepis výšky vrstvy jen pro tento objekt — užitečné pro detailní díl uprostřed jinak hrubšího tisku</p></div>
         <div class="card"><h4>Hustota vnitřní výplně</h4><p>Tento konkrétní díl pevnější/lehčí než zbytek tiskové dávky</p></div>
         <div class="card"><h4>Počet perimetrů/stěn</h4><p>Zesílení stěn jen u funkčního dílu, zatímco dekorativní kusy zůstanou na výchozí hodnotě</p></div>
         <div class="card"><h4>Povolit podpěry</h4><p>Vypnutí/zapnutí podpěr jen pro jeden vybraný objekt, ne pro celou podložku</p></div>
       </div>
 
-      <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
+      <div class="alert alert-info">
+        <div class="alert-icon">📖</div>
         <div><strong>Typický případ použití:</strong> Tisknete najednou víc různých dílů na jedné podložce — třeba sadu Roller Parts a Dessicant Box ze screenshotu výše. Pro Dessicant Box (krabička na vysoušedlo) chcete vyšší výplň pro pevnost, ale Roller Parts (válečky) mohou zůstat na výchozích 15 %. Místo dvou samostatných tiskových dávek nastavíte výplň pro Dessicant Box objekt individuálně přes záložku Frequently Used nebo Strength v režimu Objects — Roller Parts zůstanou nedotčené na globální hodnotě.</div>
       </div>
 
       <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
+        <div class="alert-icon">📖</div>
         <div><strong>Ne všechna pole jsou v Objects dostupná.</strong> Záložka Others má v režimu Objects výrazně zkrácený obsah (jen Obrys/Počáteční bod okraje, Límec, část Speciálního režimu) — chybí třeba Výstup G-kódu, Post-processing skripty nebo Poznámky. To je logické: G-code skripty a názvy souborů dávají smysl jen jako nastavení celého tisku, ne jednotlivého dílu.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=OrcaSlicer+Anycubic+per+object+settings+override&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: OrcaSlicer per object settings override globální vs objekt</a>
+      <a href="https://www.youtube.com/results?search_query=OrcaSlicer+Anycubic+per+object+settings+override&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: OrcaSlicer per object settings override globální vs objekt</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -284,10 +162,10 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-kvalita-vrstvy">
       <div class="section-header">
-        <h2>2 — Záložka Quality (kvalita) — Layer Height a Extrusion Width</h2>
+        <h2>Záložka Quality (kvalita) — Layer Height a Extrusion Width</h2>
       </div>
 
-      <div class="tab-bar">
+      <div class="ui-tabs">
         <span class="active">Quality</span><span>Strength</span><span>Speed</span><span>Support</span><span>Multimaterial</span><span>Others</span>
       </div>
 
@@ -295,96 +173,62 @@
 
       <h3 id="vyska-vrstvy">Layer Height (výška vrstvy)</h3>
 
-      <div class="param" id="vyska-vrstvy-2">
-        <div class="param-head">
-          <div class="param-title">Layer height<small>Výška vrstvy</small></div>
-          <span class="param-val">0,2 mm</span>
-        </div>
-        <p>Tloušťka jedné vytištěné vrstvy v ose Z. Nižší hodnota = lepší detail a hladší povrch na šikmých plochách, ale delší čas tisku. Pro Kobru X s tryskou 0,4 mm dodržujte pravidlo: výška vrstvy nesmí přesáhnout cca 75 % průměru trysky, tedy maximum kolem 0,3 mm. Program nabízí předpřipravené profily 0,08/0,12/0,16/0,20/0,24/0,28 mm — viz výběr profilu v Sekci 1 kapitoly <a href="03_3D_slicer_zaklad.html" style="color:var(--blue);">03</a>.</p>
+      <div class="card-stack">
+      <div class="card" id="vyska-vrstvy-2">
+        <div class="card-head"><h3>Layer height<small>Výška vrstvy</small></h3><span class="card-num card-num--accent">0,2 mm</span></div>
+        <p>Tloušťka jedné vytištěné vrstvy v ose Z. Nižší hodnota = lepší detail a hladší povrch na šikmých plochách, ale delší čas tisku. Pro Kobru X s tryskou 0,4 mm dodržujte pravidlo: výška vrstvy nesmí přesáhnout cca 75 % průměru trysky, tedy maximum kolem 0,3 mm. Program nabízí předpřipravené profily 0,08/0,12/0,16/0,20/0,24/0,28 mm — viz výběr profilu v Sekci 1 kapitoly <a href="03_3D_slicer_zaklad.html">03</a>.</p>
       </div>
-
-      <div class="param" id="vyska-prvni-vrstvy">
-        <div class="param-head">
-          <div class="param-title">First layer height<small>Výška první vrstvy</small></div>
-          <span class="param-val">0,2 mm (může být i vyšší, např. 0,24–0,28 mm)</span>
-        </div>
+      <div class="card" id="vyska-prvni-vrstvy">
+        <div class="card-head"><h3>First layer height<small>Výška první vrstvy</small></h3><span class="card-num card-num--accent">0,2 mm (může být i vyšší, např. 0,24–0,28 mm)</span></div>
         <p>Výška úplně první vrstvy, nezávislá na zbytku tisku. Vyšší první vrstva je tolerantnější k drobným nerovnostem podložky a usnadňuje kalibraci Z-offsetu — pokud máte problémy s přilnavostí, zkuste zvýšit na 0,24–0,28 mm i při Layer Height 0,2 mm pro zbytek modelu.</p>
+      </div>
       </div>
 
       <h3 id="sirka-extruze">Extrusion Width (šířka extruze)</h3>
 
       <p>Tato skupina určuje, jak <strong>širokou</strong> linii tryska vytlačuje v různých částech modelu — odděleně pro každý typ úseku, protože širší/užší linie má různé výhody podle toho, kde se používá.</p>
 
-      <div class="param" id="vychozi">
-        <div class="param-head">
-          <div class="param-title">Default extrusion width<small>Výchozí</small></div>
-          <span class="param-val">0,42 mm/% (tryska 0,4 mm)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="vychozi">
+        <div class="card-head"><h3>Default extrusion width<small>Výchozí</small></h3><span class="card-num card-num--accent">0,42 mm/% (tryska 0,4 mm)</span></div>
         <p>Základní šířka linie použitá tam, kde nemáte specifikovanou hodnotu pro konkrétní typ úseku. Typicky 100–110 % průměru trysky — pro trysku 0,4 mm tedy 0,40–0,44 mm.</p>
       </div>
-
-      <div class="param" id="prvni-vrstva">
-        <div class="param-head">
-          <div class="param-title">First layer extrusion width<small>První vrstva</small></div>
-          <span class="param-val">0,5 mm/%</span>
-        </div>
+      <div class="card" id="prvni-vrstva">
+        <div class="card-head"><h3>First layer extrusion width<small>První vrstva</small></h3><span class="card-num card-num--accent">0,5 mm/%</span></div>
         <p>Širší linie pro první vrstvu — víc materiálu na ploše rovná se lepší přilnavost k podložce. Vyšší hodnota než zbytek modelu je standardní praxe.</p>
       </div>
-
-      <div class="param" id="vnejsi-stena">
-        <div class="param-head">
-          <div class="param-title">Outer wall extrusion width<small>Vnější stěna</small></div>
-          <span class="param-val">0,42 mm/%</span>
-        </div>
+      <div class="card" id="vnejsi-stena">
+        <div class="card-head"><h3>Outer wall extrusion width<small>Vnější stěna</small></h3><span class="card-num card-num--accent">0,42 mm/%</span></div>
         <p>Šířka linie viditelné vnější stěny — obvykle stejná nebo blízká výchozí hodnotě, protože přímo ovlivňuje vizuální kvalitu a přesnost rozměrů modelu.</p>
       </div>
-
-      <div class="param" id="vnitrni-stena">
-        <div class="param-head">
-          <div class="param-title">Inner wall extrusion width<small>Vnitřní stěna</small></div>
-          <span class="param-val">0,45 mm/%</span>
-        </div>
+      <div class="card" id="vnitrni-stena">
+        <div class="card-head"><h3>Inner wall extrusion width<small>Vnitřní stěna</small></h3><span class="card-num card-num--accent">0,45 mm/%</span></div>
         <p>Vnitřní (neviditelné) perimetry mohou být o trochu širší než vnější — nejsou vidět, takže přesnost není kritická, a širší linie znamená méně linií potřebných k vyplnění stejné tloušťky stěny = rychlejší tisk.</p>
       </div>
-
-      <div class="param" id="horni-plocha">
-        <div class="param-head">
-          <div class="param-title">Top surface extrusion width<small>Horní plocha</small></div>
-          <span class="param-val">0,42 mm/%</span>
-        </div>
+      <div class="card" id="horni-plocha">
+        <div class="card-head"><h3>Top surface extrusion width<small>Horní plocha</small></h3><span class="card-num card-num--accent">0,42 mm/%</span></div>
         <p>Šířka linie pro viditelnou horní plochu — podobně jako u vnější stěny chcete spíš standardní/užší šířku pro hladký, přesný povrch.</p>
       </div>
-
-      <div class="param" id="vnitrni-vypln">
-        <div class="param-head">
-          <div class="param-title">Sparse infill extrusion width<small>Vnitřní výplň</small></div>
-          <span class="param-val">0,45 mm/%</span>
-        </div>
+      <div class="card" id="vnitrni-vypln">
+        <div class="card-head"><h3>Sparse infill extrusion width<small>Vnitřní výplň</small></h3><span class="card-num card-num--accent">0,45 mm/%</span></div>
         <p>Šířka linie pro řídkou výplň (infill). Širší linie = rychlejší tisk výplně, protože nevidíte detaily uvnitř modelu.</p>
       </div>
-
-      <div class="param" id="vnitrni-plna-vypln">
-        <div class="param-head">
-          <div class="param-title">Internal solid infill extrusion width<small>Vnitřní plná výplň</small></div>
-          <span class="param-val">0,42 mm/%</span>
-        </div>
+      <div class="card" id="vnitrni-plna-vypln">
+        <div class="card-head"><h3>Internal solid infill extrusion width<small>Vnitřní plná výplň</small></h3><span class="card-num card-num--accent">0,42 mm/%</span></div>
         <p>Šířka linie pro plnou (100%) výplň uvnitř modelu — používá se třeba v místech, kde program automaticky zesílí výplň kolem otvorů nebo podpěrných bodů.</p>
       </div>
-
-      <div class="param" id="podpery">
-        <div class="param-head">
-          <div class="param-title">Support extrusion width<small>Podpěry</small></div>
-          <span class="param-val">0,42 mm/%</span>
-        </div>
+      <div class="card" id="podpery">
+        <div class="card-head"><h3>Support extrusion width<small>Podpěry</small></h3><span class="card-num card-num--accent">0,42 mm/%</span></div>
         <p>Šířka linie pro podpěrné struktury — nemusí být přesná, podpěry se po tisku odstraňují.</p>
+      </div>
       </div>
 
       <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
+        <div class="alert-icon">💡</div>
         <div><strong>Pro běžné používání s tryskou 0,4 mm:</strong> Výchozí hodnoty z předpřipraveného profilu „0.20mm High Quality @AC KX" (0,42/0,45 mm rozsah) jsou dobře vyladěné a není potřeba je měnit, pokud nemáte specifický důvod (např. velmi malé detaily, kde chcete užší linie všude).</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=extrusion+width+line+width+3D+printing+explained&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Extrusion width line width 3D printing explained šířka extruze</a>
+      <a href="https://www.youtube.com/results?search_query=extrusion+width+line+width+3D+printing+explained&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Extrusion width line width 3D printing explained šířka extruze</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -392,153 +236,91 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-kvalita-sev-presnost">
       <div class="section-header">
-        <h2>3 — Záložka Quality (kvalita) — Seam a Precision</h2>
+        <h2>Záložka Quality (kvalita) — Seam a Precision</h2>
       </div>
 
       <h3 id="sev">Seam (šev)</h3>
 
       <p>Šev je místo, kde tryska začíná a končí každý uzavřený obvod (perimetr). Vzhledem k tomu, že přechod mezi koncem a začátkem linie nikdy není dokonalý, vzniká na tomto místě drobný viditelný artefakt — tato skupina polí řídí, kde se tento artefakt objeví a jak je maskovaný.</p>
 
-      <div class="param" id="pozice-svu">
-        <div class="param-head">
-          <div class="param-title">Seam position<small>Pozice švu</small></div>
-          <span class="param-val">Aligned (zarovnaný)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="pozice-svu">
+        <div class="card-head"><h3>Seam position<small>Pozice švu</small></h3><span class="card-num card-num--accent">Aligned (zarovnaný)</span></div>
         <p>Program se snaží zarovnat švy nad sebou napříč vrstvami do jedné svislé linie — soustředí artefakt na jedno předvídatelné místo. Další možnosti typicky zahrnují <strong>Nearest</strong> (nejbližší — nejmenší travel pohyb), <strong>Random</strong> (náhodný — rozptýlí artefakty po celém povrchu, žádná viditelná svislá čára) a <strong>Back</strong> (zadní — vždy na zadní straně modelu).</p>
       </div>
-
-      <div class="param" id="odstupnovane-vnitrni-svy">
-        <div class="param-head">
-          <div class="param-title">Staggered inner seams<small>Odstupňované vnitřní švy</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="odstupnovane-vnitrni-svy">
+        <div class="card-head"><h3>Staggered inner seams<small>Odstupňované vnitřní švy</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, švy <strong>vnitřních</strong> perimetrů (ne vnější stěny) se mírně posunou mezi jednotlivými vrstvami, aby nevytvářely jednu viditelnou slabou linii uvnitř konstrukce stěny — zlepšuje pevnost stěny v místě švu.</p>
       </div>
-
-      <div class="param" id="mezera-svu">
-        <div class="param-head">
-          <div class="param-title">Seam gap<small>Mezera švu</small></div>
-          <span class="param-val">10 % / mm</span>
-        </div>
+      <div class="card" id="mezera-svu">
+        <div class="card-head"><h3>Seam gap<small>Mezera švu</small></h3><span class="card-num card-num--accent">10 % / mm</span></div>
         <p>Malá mezera ponechaná na konci perimetru před návratem na startovní bod, aby se zabránilo přebytečnému nahromadění plastu (blob) v místě setkání linií.</p>
       </div>
-
-      <div class="param" id="spoj-limce-na-svu-beta">
-        <div class="param-head">
-          <div class="param-title">Seam slope / Scarf seam (beta)<small>Spoj límce na švu (beta)</small></div>
-          <span class="param-val">None (žádné)</span>
-        </div>
+      <div class="card" id="spoj-limce-na-svu-beta">
+        <div class="card-head"><h3>Seam slope / Scarf seam (beta)<small>Spoj límce na švu (beta)</small></h3><span class="card-num card-num--accent">None (žádné)</span></div>
         <p>Experimentální funkce, která vytvoří šikmý (zkosený) přechod na švu místo prostého zarovnaného konce, čímž téměř eliminuje viditelnost švu. Oznaceno jako beta — pro běžné používání nechte na "Žádné", dokud nebude funkce stabilní.</p>
       </div>
-
-      <div class="param" id="rychlost-cisteni-podle-role">
-        <div class="param-head">
-          <div class="param-title">Wipe speed by role<small>Rychlost čištění podle role</small></div>
-          <span class="param-val">zapnuto, 80 % (mm/s or %)</span>
-        </div>
+      <div class="card" id="rychlost-cisteni-podle-role">
+        <div class="card-head"><h3>Wipe speed by role<small>Rychlost čištění podle role</small></h3><span class="card-num card-num--accent">zapnuto, 80 % (mm/s or %)</span></div>
         <p>Rychlost pohybu trysky při čisticím (wipe) pohybu po švu se odvozuje jako procento z rychlosti dané role tisku (např. vnější stěna), místo fixní hodnoty. Zaškrtnuté pole aktivuje tento režim, hodnota 80 % určuje poměr.</p>
       </div>
-
-      <div class="param" id="cistit-na-smycce">
-        <div class="param-head">
-          <div class="param-title">Wipe on loops<small>Čistit na smyčce</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="cistit-na-smycce">
+        <div class="card-head"><h3>Wipe on loops<small>Čistit na smyčce</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, čisticí pohyb se provádí i na uzavřených smyčkách (ne jen na otevřených koncích linií) — okrajový případ pro specifické geometrie.</p>
       </div>
-
-      <div class="param" id="ocisteni-pred-vnejsim-okruhem">
-        <div class="param-head">
-          <div class="param-title">Wipe before external loop<small>Očištění před vnějším okruhem</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="ocisteni-pred-vnejsim-okruhem">
+        <div class="card-head"><h3>Wipe before external loop<small>Očištění před vnějším okruhem</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Provede čisticí pohyb ještě před tiskem vnějšího obvodu (ne až po něm) — pomáhá zajistit, že tryska je čistá ještě dřív, než začne tisknout viditelnou vnější plochu.</p>
+      </div>
       </div>
 
       <h3 id="presnost">Precision (přesnost)</h3>
 
-      <div class="param" id="polomer-uzavreni-mezery-v-tiskove-vrstve">
-        <div class="param-head">
-          <div class="param-title">Slice gap closing radius<small>Poloměr uzavření mezery v tiskové vrstvě</small></div>
-          <span class="param-val">0,049 mm</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="polomer-uzavreni-mezery-v-tiskove-vrstve">
+        <div class="card-head"><h3>Slice gap closing radius<small>Poloměr uzavření mezery v tiskové vrstvě</small></h3><span class="card-num card-num--accent">0,049 mm</span></div>
         <p>Pokud má model drobné mezery nebo nedokonalosti v geometrii (např. dva povrchy, které se téměř, ale ne úplně dotýkají), program tyto mezery do této velikosti automaticky "uzavře" při slicování, aby nevznikly nechtěné díry nebo oddělené ostrůvky tisku.</p>
       </div>
-
-      <div class="param" id="rozliseni">
-        <div class="param-head">
-          <div class="param-title">Slice resolution / Resolution<small>Rozlišení</small></div>
-          <span class="param-val">0,012 mm</span>
-        </div>
+      <div class="card" id="rozliseni">
+        <div class="card-head"><h3>Slice resolution / Resolution<small>Rozlišení</small></h3><span class="card-num card-num--accent">0,012 mm</span></div>
         <p>Jak detailně program zpracovává zakřivené/komplexní geometrie při slicování — nižší hodnota = vyšší přesnost, ale delší čas slicování (ne tisku) a větší G-code soubor. Pro většinu modelů je výchozí hodnota zcela dostačující.</p>
       </div>
-
-      <div class="param" id="prizpusobeni-oblouku">
-        <div class="param-head">
-          <div class="param-title">Arc fitting<small>Přizpůsobení oblouku</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="prizpusobeni-oblouku">
+        <div class="card-head"><h3>Arc fitting<small>Přizpůsobení oblouku</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, program nahradí dlouhé sekvence malých přímkových segmentů na zakřivených plochách jedním G-code příkazem pro oblouk (G2/G3) — zmenšuje velikost G-code souboru a může zlepšit hladkost pohybu na zaoblených tvarech, ale vyžaduje firmware s podporou těchto příkazů.</p>
       </div>
-
-      <div class="param" id="x-y-kompenzace-otvoru">
-        <div class="param-head">
-          <div class="param-title">XY hole compensation<small>X-Y Kompenzace otvoru</small></div>
-          <span class="param-val">0 mm</span>
-        </div>
+      <div class="card" id="x-y-kompenzace-otvoru">
+        <div class="card-head"><h3>XY hole compensation<small>X-Y Kompenzace otvoru</small></h3><span class="card-num card-num--accent">0 mm</span></div>
         <p>Zvětší (kladná hodnota) nebo zmenší vnitřní rozměr kruhových/válcových otvorů v modelu, aby se kompenzovalo smršťování materiálu. Pokud tisknete přesné otvory pro šrouby nebo čepy a zjistíte, že jsou po vytištění menší než v návrhu, zadejte sem kladnou hodnotu (typicky 0,05–0,15 mm).</p>
-        <div class="param-risk"><strong>Jak kalibrovat:</strong> Vytiskněte testovací díl s otvorem známého průměru, změřte skutečnou velikost posuvným měřítkem, rozdíl (cíl minus naměřeno) zadejte jako kompenzaci.</div>
+        <div class="alert alert-tip"><div class="alert-icon">💡</div><div><strong>Jak kalibrovat:</strong> Vytiskněte testovací díl s otvorem známého průměru, změřte skutečnou velikost posuvným měřítkem, rozdíl (cíl minus naměřeno) zadejte jako kompenzaci.</div></div>
       </div>
-
-      <div class="param" id="x-y-kompenzace-obrysu">
-        <div class="param-head">
-          <div class="param-title">XY contour compensation<small>X-Y Kompenzace obrysu</small></div>
-          <span class="param-val">0 mm</span>
-        </div>
+      <div class="card" id="x-y-kompenzace-obrysu">
+        <div class="card-head"><h3>XY contour compensation<small>X-Y Kompenzace obrysu</small></h3><span class="card-num card-num--accent">0 mm</span></div>
         <p>Stejný princip jako kompenzace otvoru, ale pro <strong>vnější</strong> obrys modelu. Kladná hodnota = model bude větší (vnější stěny se posunou ven), záporná = menší. Slouží pro přesné strojní díly, kde záleží na přesných vnějších rozměrech.</p>
       </div>
-
-      <div class="param" id="kompenzace-rozplacnuti-prvni-vrstvy">
-        <div class="param-head">
-          <div class="param-title">Elephant foot compensation<small>Kompenzace rozplácnutí první vrstvy</small></div>
-          <span class="param-val">0,1 mm</span>
-        </div>
+      <div class="card" id="kompenzace-rozplacnuti-prvni-vrstvy">
+        <div class="card-head"><h3>Elephant foot compensation<small>Kompenzace rozplácnutí první vrstvy</small></h3><span class="card-num card-num--accent">0,1 mm</span></div>
         <p>První vrstva bývá o trochu širší než ostatní, protože váha trysky a tlak na čerstvě nanesený plast způsobí jeho "rozplácnutí" (efekt zvaný elephant foot/sloní noha). Tato hodnota mírně zúží první vrstvu (a několik dalších, podle nastavení níže), aby se tomuto efektu předešlo.</p>
       </div>
-
-      <div class="param" id="vrstvy-kompenzace-sloni-nohy">
-        <div class="param-head">
-          <div class="param-title">Elephant foot compensation layers<small>Vrstvy kompenzace sloní nohy</small></div>
-          <span class="param-val">1 vrstva</span>
-        </div>
+      <div class="card" id="vrstvy-kompenzace-sloni-nohy">
+        <div class="card-head"><h3>Elephant foot compensation layers<small>Vrstvy kompenzace sloní nohy</small></h3><span class="card-num card-num--accent">1 vrstva</span></div>
         <p>Na kolik vrstev od základny se kompenzace rozplácnutí postupně lineárně vytrácí (od plné hodnoty na vrstvě 1 k nulové kompenzaci). Hodnota 1 znamená, že kompenzace se týká jen úplně první vrstvy.</p>
       </div>
-
-      <div class="param" id="presna-stena">
-        <div class="param-head">
-          <div class="param-title">Precise wall<small>Přesná stěna</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="presna-stena">
+        <div class="card-head"><h3>Precise wall<small>Přesná stěna</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, program upraví trajektorii tak, aby výsledná tloušťka stěny odpovídala přesně zadané hodnotě bez ohledu na zaokrouhlení počtu linií — užitečné pro přesné strojní díly, kde i desetiny milimetru hrají roli.</p>
       </div>
-
-      <div class="param" id="presna-vyska-z">
-        <div class="param-head">
-          <div class="param-title">Precise Z height<small>Přesná výška Z</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="presna-vyska-z">
+        <div class="card-head"><h3>Precise Z height<small>Přesná výška Z</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Zajišťuje, že celková výška modelu po vytištění odpovídá přesně zadané hodnotě v návrhu, kompenzací mírných odchylek v poslední vrstvě. Relevantní hlavně pro díly, kde záleží na přesné celkové výšce (např. lícující se s jiným dílem).</p>
       </div>
-
-      <div class="param" id="prevest-otvor-na-polyotvor-mnohouhelnikovy-otvor">
-        <div class="param-head">
-          <div class="param-title">Convert holes to polyholes<small>Převést otvor na polyotvor (Mnohoúhelníkový-Otvor)</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="prevest-otvor-na-polyotvor-mnohouhelnikovy-otvor">
+        <div class="card-head"><h3>Convert holes to polyholes<small>Převést otvor na polyotvor (Mnohoúhelníkový-Otvor)</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokročilá technika, která nahradí kruhové otvory v modelu mnohoúhelníkovou aproximací s korigovanými vrcholy — řeší známý problém, kdy 3D tiskárny tisknou kruhové otvory o trochu menší a "hranatější", než by měly být, díky způsobu, jakým se kruh aproximuje přímkovými segmenty.</p>
       </div>
+      </div>
 
-      <a href="https://www.youtube.com/results?search_query=XY+compensation+elephant+foot+precise+wall+3D+print&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: XY compensation elephant foot precise wall 3D print</a>
+      <a href="https://www.youtube.com/results?search_query=XY+compensation+elephant+foot+precise+wall+3D+print&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: XY compensation elephant foot precise wall 3D print</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -546,112 +328,73 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-kvalita-stenz">
       <div class="section-header">
-        <h2>4 — Záložka Quality (kvalita) — Ironing, Wall Generator, Walls and Surfaces</h2>
+        <h2>Záložka Quality (kvalita) — Ironing, Wall Generator, Walls and Surfaces</h2>
       </div>
 
       <h3 id="zehleni">Ironing (žehlení)</h3>
 
-      <div class="param" id="zpusob-zehleni">
-        <div class="param-head">
-          <div class="param-title">Ironing type<small>Způsob žehlení</small></div>
-          <span class="param-val">No ironing (nežehlit) — výchozí</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="zpusob-zehleni">
+        <div class="card-head"><h3>Ironing type<small>Způsob žehlení</small></h3><span class="card-num card-num--accent">No ironing (nežehlit) — výchozí</span></div>
         <p>Žehlení znovu přejede tryskou po horní ploše bez (nebo s minimální) extruze a vyhladí drobné nerovnosti mezi liniemi do skoro lesklého povrchu. Možnosti: <strong>No ironing</strong> (nežehlit), <strong>All top surfaces</strong> (jen na horní ploše), <strong>Topmost surface only</strong> (jen nejvyšší plocha), <strong>All solid layers</strong> (na celém povrchu). Zapínejte jen pro modely, kde záleží na vzhledu horní plochy — zpomaluje tisk této vrstvy.</p>
+      </div>
       </div>
 
       <h3 id="generator-steny">Wall Generator (generátor stěny)</h3>
 
-      <div class="param" id="generator-steny-2">
-        <div class="param-head">
-          <div class="param-title">Wall generator<small>Generátor stěny</small></div>
-          <span class="param-val">Classic (klasický)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="generator-steny-2">
+        <div class="card-head"><h3>Wall generator<small>Generátor stěny</small></h3><span class="card-num card-num--accent">Classic (klasický)</span></div>
         <p>Algoritmus, kterým program generuje obvodové linie (perimetry). <strong>Klasický</strong> — tradiční přístup s pevným počtem stejně širokých perimetrů, předvídatelné a rychlé na zpracování. <strong>Arachne</strong> (druhá možnost, pokud je nabízena) — modernější algoritmus, který dynamicky upravuje šířku a počet linií podle lokální tloušťky stěny modelu, takže tenké i silné části stěny jsou vyplněné lépe bez mezer nebo přebytečného materiálu. Arachne je obvykle lepší pro organické/variabilní tvary, Klasický je rychlejší a předvídatelnější pro jednoduché geometrické modely.</p>
+      </div>
       </div>
 
       <h3 id="steny-a-povrchy">Walls and Surfaces (stěny a povrchy)</h3>
 
-      <div class="param" id="poradi-tisku-sten">
-        <div class="param-head">
-          <div class="param-title">Wall order<small>Pořadí tisku stěn</small></div>
-          <span class="param-val">Inner/Outer (vnitřní/vnější)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="poradi-tisku-sten">
+        <div class="card-head"><h3>Wall order<small>Pořadí tisku stěn</small></h3><span class="card-num card-num--accent">Inner/Outer (vnitřní/vnější)</span></div>
         <p>Určuje, zda se nejprve tiskne vnitřní nebo vnější perimetr. <strong>Vnitřní/vnější</strong> (vnitřní první) — moderní výchozí volba, zlepšuje povrchovou kvalitu vnější stěny, protože ta se tiskne jako poslední na již stabilním podkladu. Opačné pořadí (vnější první) dává přesnější vnější rozměry, ale viditelnější švy.</p>
       </div>
-
-      <div class="param" id="nejprve-tisknout-vypln">
-        <div class="param-head">
-          <div class="param-title">Infill first<small>Nejprve tisknout výplň</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="nejprve-tisknout-vypln">
+        <div class="card-head"><h3>Infill first<small>Nejprve tisknout výplň</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, program vytiskne výplň vrstvy ještě před perimetry (obvyklé pořadí je opačné — nejdřív stěny, pak výplň). Zapnutí může pomoct s přilnavostí výplně ke stěnám u některých specifických modelů, ale obvykle zhoršuje kvalitu povrchu vnější stěny.</p>
       </div>
-
-      <div class="param" id="smer-smycek-sten">
-        <div class="param-head">
-          <div class="param-title">Wall loop direction<small>Směr smyček stěn</small></div>
-          <span class="param-val">Auto (automaticky)</span>
-        </div>
+      <div class="card" id="smer-smycek-sten">
+        <div class="card-head"><h3>Wall loop direction<small>Směr smyček stěn</small></h3><span class="card-num card-num--accent">Auto (automaticky)</span></div>
         <p>Směr (po směru/proti směru hodinových ručiček), jakým se tiskne každý perimetr. Automaticky nechá program rozhodnout optimální směr pro každou situaci — manuální nastavení je okrajový případ pro specifické materiály nebo požadavky na vzhled povrchu.</p>
       </div>
-
-      <div class="param" id="pomer-prutoku">
-        <div class="param-head">
-          <div class="param-title">Flow ratio (per-feature)<small>Poměr průtoku</small></div>
-          <span class="param-val">1 (jen v Objects, per-objekt)</span>
-        </div>
-        <p>Lokální korekce průtoku jen pro stěny tohoto konkrétního objektu (v režimu Objects) — odlišné od globálního Poměru průtoku v profilu filamentu (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>).</p>
+      <div class="card" id="pomer-prutoku">
+        <div class="card-head"><h3>Flow ratio (per-feature)<small>Poměr průtoku</small></h3><span class="card-num card-num--accent">1 (jen v Objects, per-objekt)</span></div>
+        <p>Lokální korekce průtoku jen pro stěny tohoto konkrétního objektu (v režimu Objects) — odlišné od globálního Poměru průtoku v profilu filamentu (viz <a href="05c_3D_slicer_filament.html">05c</a>).</p>
       </div>
-
-      <div class="param" id="pomer-prutoku-horni-vrstvy-spodni-vrstvy">
-        <div class="param-head">
-          <div class="param-title">Top/bottom solid infill flow ratio<small>Poměr průtoku horní vrstvy / spodní vrstvy</small></div>
-          <span class="param-val">1 / 1</span>
-        </div>
+      <div class="card" id="pomer-prutoku-horni-vrstvy-spodni-vrstvy">
+        <div class="card-head"><h3>Top/bottom solid infill flow ratio<small>Poměr průtoku horní vrstvy / spodní vrstvy</small></h3><span class="card-num card-num--accent">1 / 1</span></div>
         <p>Samostatná korekce průtoku konkrétně pro horní a spodní plné vrstvy — pokud vidíte přebytek nebo nedostatek materiálu specificky na těchto plochách (ne v celém modelu), upravte zde místo globálního Poměru průtoku.</p>
       </div>
-
-      <div class="param" id="pouze-jedna-stena-na-hornich-plochach">
-        <div class="param-head">
-          <div class="param-title">Only one wall on top surfaces<small>Pouze jedna stěna na horních plochách</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="pouze-jedna-stena-na-hornich-plochach">
+        <div class="card-head"><h3>Only one wall on top surfaces<small>Pouze jedna stěna na horních plochách</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Na horních plochách (kde je víc než jedna stěna kvůli sklonu) program použije jen jeden perimetr místo plného počtu — zrychluje tisk šikmých horních ploch bez znatelné ztráty kvality, protože plná výplň pod tím dodá potřebnou pevnost.</p>
       </div>
-
-      <div class="param" id="hranice-jedne-steny">
-        <div class="param-head">
-          <div class="param-title">Only one wall threshold<small>Hranice jedné stěny</small></div>
-          <span class="param-val">300 % mm or %</span>
-        </div>
+      <div class="card" id="hranice-jedne-steny">
+        <div class="card-head"><h3>Only one wall threshold<small>Hranice jedné stěny</small></h3><span class="card-num card-num--accent">300 % mm or %</span></div>
         <p>Prahová hodnota (vztažená k šířce extruze), pod kterou se aplikuje pravidlo "pouze jedna stěna" z řádku výše. Vyšší hodnota = pravidlo platí pro širší rozsah šikmých ploch.</p>
       </div>
-
-      <div class="param" id="pouze-jedna-stena-v-prvni-vrstve">
-        <div class="param-head">
-          <div class="param-title">Only one wall on first layer<small>Pouze jedna stěna v první vrstvě</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="pouze-jedna-stena-v-prvni-vrstve">
+        <div class="card-head"><h3>Only one wall on first layer<small>Pouze jedna stěna v první vrstvě</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Stejný princip jako výše, ale specificky aplikovaný na první vrstvu modelu. Obvykle necháváte vypnuto, protože první vrstva potřebuje plnou pevnost a přilnavost.</p>
       </div>
-
-      <div class="param" id="vyhnete-se-prejizdeni-sten">
-        <div class="param-head">
-          <div class="param-title">Avoid crossing walls<small>Vyhněte se přejíždění stěn</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="vyhnete-se-prejizdeni-sten">
+        <div class="card-head"><h3>Avoid crossing walls<small>Vyhněte se přejíždění stěn</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, travel pohyby (přesuny bez tisku) se snaží zůstat uvnitř již vytištěných stěn modelu místo přímé cesty přes okraj — zabraňuje viditelným stopám od oozingu na vnějším povrchu. Prodlužuje čas slicování (složitější výpočet trasy).</p>
       </div>
-
-      <div class="param" id="kompenzace-prutoku-na-male-plose-beta">
-        <div class="param-head">
-          <div class="param-title">Small area flow compensation (beta)<small>Kompenzace průtoku na malé ploše (beta)</small></div>
-          <span class="param-val">vypnuto (experimentální)</span>
-        </div>
+      <div class="card" id="kompenzace-prutoku-na-male-plose-beta">
+        <div class="card-head"><h3>Small area flow compensation (beta)<small>Kompenzace průtoku na malé ploše (beta)</small></h3><span class="card-num card-num--accent">vypnuto (experimentální)</span></div>
         <p>Experimentální funkce, která upravuje průtok speciálně pro velmi malé/krátké úseky tisku, kde běžná dynamika extruze nemusí stihnout správně reagovat. Beta status = pro běžné používání nechte vypnuto.</p>
       </div>
+      </div>
 
-      <a href="https://www.youtube.com/results?search_query=wall+order+inner+outer+OrcaSlicer+one+wall+top+surface&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Wall order inner outer OrcaSlicer one wall top surface</a>
+      <a href="https://www.youtube.com/results?search_query=wall+order+inner+outer+OrcaSlicer+one+wall+top+surface&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Wall order inner outer OrcaSlicer one wall top surface</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -659,133 +402,83 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-kvalita-mosty">
       <div class="section-header">
-        <h2>5 — Záložka Quality (kvalita) — Bridging a Overhangs</h2>
+        <h2>Záložka Quality (kvalita) — Bridging a Overhangs</h2>
       </div>
 
       <h3 id="mostovani">Bridging (mostování)</h3>
 
       <p>Most (bridge) je úsek, kde tiskárna tiskne plast "do vzduchu" mezi dvěma pevnými body bez podpěry pod ním.</p>
 
-      <div class="param" id="prutok-mostu">
-        <div class="param-head">
-          <div class="param-title">Bridge flow ratio<small>Průtok mostu</small></div>
-          <span class="param-val">1</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="prutok-mostu">
+        <div class="card-head"><h3>Bridge flow ratio<small>Průtok mostu</small></h3><span class="card-num card-num--accent">1</span></div>
         <p>Korekce množství extrudovaného materiálu specificky při tisku mostů. Hodnota pod 1 (např. 0,85–0,95) je častá volba — méně plastu znamená tenčí, lehčí linii, která se méně prověšuje vlastní vahou.</p>
       </div>
-
-      <div class="param" id="pomer-prutoku-pro-vnitrni-most">
-        <div class="param-head">
-          <div class="param-title">Internal bridge flow ratio<small>Poměr průtoku pro vnitřní most</small></div>
-          <span class="param-val">1</span>
-        </div>
+      <div class="card" id="pomer-prutoku-pro-vnitrni-most">
+        <div class="card-head"><h3>Internal bridge flow ratio<small>Poměr průtoku pro vnitřní most</small></h3><span class="card-num card-num--accent">1</span></div>
         <p>Stejné jako výše, ale specificky pro mosty <strong>uvnitř</strong> modelu (nejsou vidět zvenčí, typicky přes vnitřní dutiny).</p>
       </div>
-
-      <div class="param" id="hustota-externiho-mostu">
-        <div class="param-head">
-          <div class="param-title">External bridge density<small>Hustota externího mostu</small></div>
-          <span class="param-val">100 %</span>
-        </div>
+      <div class="card" id="hustota-externiho-mostu">
+        <div class="card-head"><h3>External bridge density<small>Hustota externího mostu</small></h3><span class="card-num card-num--accent">100 %</span></div>
         <p>Hustota výplně mostu na vnějším (viditelném) povrchu — 100 % znamená plně uzavřený most bez mezer mezi linkami.</p>
       </div>
-
-      <div class="param" id="hustota-vnitrniho-mostu">
-        <div class="param-head">
-          <div class="param-title">Internal bridge density<small>Hustota vnitřního mostu</small></div>
-          <span class="param-val">100 %</span>
-        </div>
+      <div class="card" id="hustota-vnitrniho-mostu">
+        <div class="card-head"><h3>Internal bridge density<small>Hustota vnitřního mostu</small></h3><span class="card-num card-num--accent">100 %</span></div>
         <p>Stejné jako výše, pro vnitřní mosty. Lze snížit pod 100 % u vnitřních mostů, kde estetika nehraje roli a chcete ušetřit materiál/čas.</p>
       </div>
-
-      <div class="param" id="silne-vnejsi-mosty-silne-vnitrni-mosty">
-        <div class="param-head">
-          <div class="param-title">Thick external/internal bridges<small>Silné vnější mosty / Silné vnitřní mosty</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="silne-vnejsi-mosty-silne-vnitrni-mosty">
+        <div class="card-head"><h3>Thick external/internal bridges<small>Silné vnější mosty / Silné vnitřní mosty</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, program vytiskne mosty s plnou výškou vrstvy (silnější) místo standardní tenčí mostní linie — zvyšuje pevnost mostu, ale na úkor estetiky a přesnosti tloušťky.</p>
       </div>
-
-      <div class="param" id="dalsi-mostove-vrstvy-beta">
-        <div class="param-head">
-          <div class="param-title">Extra bridge layers (beta)<small>Další mostové vrstvy (beta)</small></div>
-          <span class="param-val">Disabled (zakázáno)</span>
-        </div>
+      <div class="card" id="dalsi-mostove-vrstvy-beta">
+        <div class="card-head"><h3>Extra bridge layers (beta)<small>Další mostové vrstvy (beta)</small></h3><span class="card-num card-num--accent">Disabled (zakázáno)</span></div>
         <p>Experimentální funkce přidávající extra vrstvy speciálně upravené pro mostní podporu nad samotným mostem — pomáhá s kvalitou vrstev hned nad přemostěnou oblastí. Beta status.</p>
       </div>
-
-      <div class="param" id="filtrovat-male-vnitrni-mosty">
-        <div class="param-head">
-          <div class="param-title">Filter small internal bridges<small>Filtrovat malé vnitřní mosty</small></div>
-          <span class="param-val">Filter (filtr)</span>
-        </div>
+      <div class="card" id="filtrovat-male-vnitrni-mosty">
+        <div class="card-head"><h3>Filter small internal bridges<small>Filtrovat malé vnitřní mosty</small></h3><span class="card-num card-num--accent">Filter (filtr)</span></div>
         <p>Ignoruje velmi malé vnitřní mosty (kde by speciální mostní logika byla zbytečná nebo kontraproduktivní) a tiskne je standardním způsobem jako běžnou výplň.</p>
       </div>
-
-      <div class="param" id="zapustne-otvory-v-mustcich">
-        <div class="param-head">
-          <div class="param-title">Bridge over holes<small>Zápustné otvory v můstcích</small></div>
-          <span class="param-val">None (žádné)</span>
-        </div>
+      <div class="card" id="zapustne-otvory-v-mustcich">
+        <div class="card-head"><h3>Bridge over holes<small>Zápustné otvory v můstcích</small></h3><span class="card-num card-num--accent">None (žádné)</span></div>
         <p>Řeší speciální případ malých otvorů, které se nachází přímo pod mostní oblastí — jak se má program k nim chovat (přemostit je, nebo respektovat jako samostatné otvory).</p>
+      </div>
       </div>
 
       <h3 id="previsy">Overhangs (převisy)</h3>
 
-      <div class="param" id="detekovat-previsy-sten">
-        <div class="param-head">
-          <div class="param-title">Detect overhang wall<small>Detekovat převisy stěn</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="detekovat-previsy-sten">
+        <div class="card-head"><h3>Detect overhang wall<small>Detekovat převisy stěn</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Hlavní vypínač detekce převislých stěn — pokud zapnuto, program automaticky identifikuje úseky stěny, které jsou nedostatečně podepřeny, a aplikuje na ně speciální logiku (zpomalení, zvýšené chlazení, dodatečné perimetry — viz níže).</p>
       </div>
-
-      <div class="param" id="smooth-speed-discontinuity-area">
-        <div class="param-head">
-          <div class="param-title">Smooth speed discontinuity area<small>vyhlazení nespojitosti rychlosti</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="smooth-speed-discontinuity-area">
+        <div class="card-head"><h3>Smooth speed discontinuity area<small>vyhlazení nespojitosti rychlosti</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Vyhlazuje přechody rychlosti mezi normálními a převislými úseky stěny, aby nedocházelo k náhlým skokům rychlosti, které by mohly způsobit viditelné artefakty na přechodu.</p>
       </div>
-
-      <div class="param" id="smooth-coefficient">
-        <div class="param-head">
-          <div class="param-title">Smooth coefficient<small>koeficient vyhlazení</small></div>
-          <span class="param-val">40</span>
-        </div>
+      <div class="card" id="smooth-coefficient">
+        <div class="card-head"><h3>Smooth coefficient<small>koeficient vyhlazení</small></h3><span class="card-num card-num--accent">40</span></div>
         <p>Míra vyhlazení z předchozího řádku — vyšší hodnota znamená plynulejší (delší) přechod rychlosti, nižší znamená rychlejší (skokovější) změnu.</p>
       </div>
-
-      <div class="param" id="umoznit-tisk-previsu">
-        <div class="param-head">
-          <div class="param-title">Enable support for overhangs / Allow printing overhangs<small>Umožnit tisk převisů</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="umoznit-tisk-previsu">
+        <div class="card-head"><h3>Enable support for overhangs / Allow printing overhangs<small>Umožnit tisk převisů</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokročilá funkce umožňující tisknout extrémní převisy (i nad 90°, tedy "visící" geometrii) speciální technikou bez nutnosti klasických podpěr. Funguje jen pro určité typy geometrie a vyžaduje pomalejší, pečlivěji kontrolovaný tisk.</p>
       </div>
-
-      <div class="param" id="dodatecne-perimetry-u-previsu">
-        <div class="param-head">
-          <div class="param-title">Extra perimeters on overhangs<small>Dodatečné perimetry u převisů</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="dodatecne-perimetry-u-previsu">
+        <div class="card-head"><h3>Extra perimeters on overhangs<small>Dodatečné perimetry u převisů</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Přidá extra obvodové linie konkrétně v převislých oblastech, aby se zlepšila jejich pevnost a kvalita povrchu — převisy jsou bez podpory náchylnější na slabé místo, extra perimetr to kompenzuje.</p>
       </div>
-
-      <div class="param" id="obratit-na-sudych">
-        <div class="param-head">
-          <div class="param-title">Reverse on odd / even layers<small>Obrátit na sudých</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="obratit-na-sudych">
+        <div class="card-head"><h3>Reverse on odd / even layers<small>Obrátit na sudých</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Obrací směr tisku perimetru na sudých (nebo lichých) vrstvách — technika pro rovnoměrnější rozložení mírného tahu/pnutí materiálu napříč vrstvami, hlavně u tenkostěnných modelů.</p>
+      </div>
       </div>
 
       <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div>Detailní rychlostní aspekt převisů — konkrétní rychlosti pro různé stupně sklonu (Rychlost převisů, tabulka 5 prahů) — je popsaný v kapitole <a href="05b_3D_slicer_rychlost.html" style="color:#fff;">05b — Rychlost převisů</a>, protože jde čistě o rychlostní parametr, ne geometrický.</div>
+        <div class="alert-icon">📖</div>
+        <div>Detailní rychlostní aspekt převisů — konkrétní rychlosti pro různé stupně sklonu (Rychlost převisů, tabulka 5 prahů) — je popsaný v kapitole <a href="05b_3D_slicer_rychlost.html">05b — Rychlost převisů</a>, protože jde čistě o rychlostní parametr, ne geometrický.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=overhang+detection+bridging+settings+OrcaSlicer&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Overhang detection bridging settings OrcaSlicer mosty převisy</a>
+      <a href="https://www.youtube.com/results?search_query=overhang+detection+bridging+settings+OrcaSlicer&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Overhang detection bridging settings OrcaSlicer mosty převisy</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -793,10 +486,10 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-pevnost-steny">
       <div class="section-header">
-        <h2>6 — Záložka Strength (pevnost) — Walls a Top/Bottom Shells</h2>
+        <h2>Záložka Strength (pevnost) — Walls a Top/Bottom Shells</h2>
       </div>
 
-      <div class="tab-bar">
+      <div class="ui-tabs">
         <span>Quality</span><span class="active">Strength</span><span>Speed</span><span>Support</span><span>Multimaterial</span><span>Others</span>
       </div>
 
@@ -804,89 +497,55 @@
 
       <h3 id="steny">Walls (stěny)</h3>
 
-      <div class="param" id="pocet-perimetru-sten">
-        <div class="param-head">
-          <div class="param-title">Wall loops / Perimeters<small>Počet perimetrů/stěn</small></div>
-          <span class="param-val">2</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="pocet-perimetru-sten">
+        <div class="card-head"><h3>Wall loops / Perimeters<small>Počet perimetrů/stěn</small></h3><span class="card-num card-num--accent">2</span></div>
         <p>Kolik obvodových linií se vytiskne kolem modelu před vyplněním výplní. 2 je minimum pro vizuálně přijatelný a vodotěsný výsledek u dekorativních modelů. Pro funkční/namáhané díly zvyšte na 3–4 — výrazně to zvýší pevnost stěn nezávisle na hustotě výplně.</p>
       </div>
-
-      <div class="param" id="stridava-pridavna-stena">
-        <div class="param-head">
-          <div class="param-title">Alternate extra wall<small>Střídavá přídavná stěna</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="stridava-pridavna-stena">
+        <div class="card-head"><h3>Alternate extra wall<small>Střídavá přídavná stěna</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, program přidává jeden extra perimetr navíc na střídavých vrstvách (např. každá druhá vrstva má o jednu stěnu víc) — kompromisní technika pro zvýšení pevnosti bez plného zvýšení Počtu perimetrů na všech vrstvách.</p>
       </div>
-
-      <div class="param" id="detekce-tenkych-sten">
-        <div class="param-head">
-          <div class="param-title">Detect thin walls<small>Detekce tenkých stěn</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="detekce-tenkych-sten">
+        <div class="card-head"><h3>Detect thin walls<small>Detekce tenkých stěn</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud je část modelu tak tenká, že se do ní nevejde plný počet perimetrů (např. tenké žebro), tato funkce automaticky upraví šířku extruze, aby se tenká stěna vůbec vytiskla, místo aby ji program úplně vynechal.</p>
+      </div>
       </div>
 
       <h3 id="horni-spodni-skorepiny">Top/Bottom Shells (horní/spodní skořepiny)</h3>
 
-      <div class="param" id="vrchni-vrstvy-skorepiny">
-        <div class="param-head">
-          <div class="param-title">Top shell layers<small>Vrchní vrstvy skořepiny</small></div>
-          <span class="param-val">5 vrstev</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="vrchni-vrstvy-skorepiny">
+        <div class="card-head"><h3>Top shell layers<small>Vrchní vrstvy skořepiny</small></h3><span class="card-num card-num--accent">5 vrstev</span></div>
         <p>Kolik plných vrstev se vytiskne na vrcholu modelu, než je dokončen. Příliš málo = výplň prosvítá nebo vznikají díry na horní ploše. Pro Layer Height 0,2 mm je 4–5 vrstev (celková tloušťka stropu cca 0,8–1 mm) standardní hodnota.</p>
       </div>
-
-      <div class="param" id="tloustka-horni-skorepiny">
-        <div class="param-head">
-          <div class="param-title">Top shell thickness<small>Tloušťka horní skořepiny</small></div>
-          <span class="param-val">1 mm</span>
-        </div>
+      <div class="card" id="tloustka-horni-skorepiny">
+        <div class="card-head"><h3>Top shell thickness<small>Tloušťka horní skořepiny</small></h3><span class="card-num card-num--accent">1 mm</span></div>
         <p>Alternativní způsob definovat tloušťku horní skořepiny přímo v milimetrech místo počtu vrstev — program si dopočítá potřebný počet vrstev podle aktuální Výšky vrstvy. Pokud je tato hodnota vyplněna, obvykle má prioritu před počtem vrstev výše.</p>
       </div>
-
-      <div class="param" id="vzor-horniho-povrchu">
-        <div class="param-head">
-          <div class="param-title">Top surface pattern<small>Vzor horního povrchu</small></div>
-          <span class="param-val">Monotonic (monotónní)</span>
-        </div>
+      <div class="card" id="vzor-horniho-povrchu">
+        <div class="card-head"><h3>Top surface pattern<small>Vzor horního povrchu</small></h3><span class="card-num card-num--accent">Monotonic (monotónní)</span></div>
         <p>Vzor vyplnění horní plochy. <strong>Monotónní</strong> tiskne všechny linie ve stejném směru pro jednotnější vzhled bez vlnitého efektu. Alternativy: <strong>Rectilinear</strong> (přímočarý — rovné linie tam a zpět, rychlejší ale méně rovnoměrný vzhled), Concentric (soustředné kruhy podle obvodu).</p>
       </div>
-
-      <div class="param" id="spodni-vrstvy-skorepiny">
-        <div class="param-head">
-          <div class="param-title">Bottom shell layers<small>Spodní vrstvy skořepiny</small></div>
-          <span class="param-val">3 vrstvy</span>
-        </div>
+      <div class="card" id="spodni-vrstvy-skorepiny">
+        <div class="card-head"><h3>Bottom shell layers<small>Spodní vrstvy skořepiny</small></h3><span class="card-num card-num--accent">3 vrstvy</span></div>
         <p>Stejný princip jako Vrchní vrstvy, pro spodní stranu modelu. Obvykle o 1–2 vrstvy méně než horní, protože spodní strana má lepší spojení s podložkou hned od první vrstvy.</p>
       </div>
-
-      <div class="param" id="tloustka-spodni-skorepiny">
-        <div class="param-head">
-          <div class="param-title">Bottom shell thickness<small>Tloušťka spodní skořepiny</small></div>
-          <span class="param-val">0 mm (nepoužito, řízeno počtem vrstev)</span>
-        </div>
+      <div class="card" id="tloustka-spodni-skorepiny">
+        <div class="card-head"><h3>Bottom shell thickness<small>Tloušťka spodní skořepiny</small></h3><span class="card-num card-num--accent">0 mm (nepoužito, řízeno počtem vrstev)</span></div>
         <p>Alternativní zadání v milimetrech, stejně jako u horní skořepiny. Hodnota 0 znamená, že se používá zadání počtem vrstev (Spodní vrstvy skořepiny výše).</p>
       </div>
-
-      <div class="param" id="vzor-spodniho-povrchu">
-        <div class="param-head">
-          <div class="param-title">Bottom surface pattern<small>Vzor spodního povrchu</small></div>
-          <span class="param-val">Monotonic (monotónní)</span>
-        </div>
+      <div class="card" id="vzor-spodniho-povrchu">
+        <div class="card-head"><h3>Bottom surface pattern<small>Vzor spodního povrchu</small></h3><span class="card-num card-num--accent">Monotonic (monotónní)</span></div>
         <p>Stejné možnosti jako Vzor horního povrchu, ale pro spodní stranu modelu (tu, která je v kontaktu s podložkou).</p>
       </div>
-
-      <div class="param" id="prekryti-plne-vyplne-steny-nahore-dole">
-        <div class="param-head">
-          <div class="param-title">Top/bottom solid infill/wall overlap<small>Překrytí plné výplně/stěny nahoře/dole</small></div>
-          <span class="param-val">15 %</span>
-        </div>
+      <div class="card" id="prekryti-plne-vyplne-steny-nahore-dole">
+        <div class="card-head"><h3>Top/bottom solid infill/wall overlap<small>Překrytí plné výplně/stěny nahoře/dole</small></h3><span class="card-num card-num--accent">15 %</span></div>
         <p>O kolik procent plná výplň horní/spodní vrstvy "zasahuje" do oblasti stěny, aby vznikl pevný spoj mezi výplní a perimetrem na těchto plochách. Příliš malé překrytí = riziko mezer/slabých míst na rozhraní stěny a horní/spodní plochy.</p>
       </div>
+      </div>
 
-      <a href="https://www.youtube.com/results?search_query=top+bottom+shell+layers+wall+count+3D+printing+strength&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Top bottom shell layers wall count 3D printing strength</a>
+      <a href="https://www.youtube.com/results?search_query=top+bottom+shell+layers+wall+count+3D+printing+strength&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Top bottom shell layers wall count 3D printing strength</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -894,142 +553,84 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-pevnost-vyplna">
       <div class="section-header">
-        <h2>7 — Záložka Strength (pevnost) — Infill a Advanced</h2>
+        <h2>Záložka Strength (pevnost) — Infill a Advanced</h2>
       </div>
 
       <h3 id="vypln">Infill (výplň)</h3>
 
-      <div class="param" id="hustota-vnitrni-vyplne">
-        <div class="param-head">
-          <div class="param-title">Sparse infill density<small>Hustota vnitřní výplně</small></div>
-          <span class="param-val">15 %</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="hustota-vnitrni-vyplne">
+        <div class="card-head"><h3>Sparse infill density<small>Hustota vnitřní výplně</small></h3><span class="card-num card-num--accent">15 %</span></div>
         <p>Procentuální podíl vnitřního objemu vyplněného materiálem. 15 % je standardní pro dekorativní modely. Zvyšte na 25–40 % pro mírně zatěžované funkční díly, 60–100 % pro silně namáhané mechanické součásti.</p>
       </div>
-
-      <div class="param" id="vzor-vnitrni-vyplne">
-        <div class="param-head">
-          <div class="param-title">Sparse infill pattern<small>Vzor vnitřní výplně</small></div>
-          <span class="param-val">Gyroid</span>
-        </div>
+      <div class="card" id="vzor-vnitrni-vyplne">
+        <div class="card-head"><h3>Sparse infill pattern<small>Vzor vnitřní výplně</small></h3><span class="card-num card-num--accent">Gyroid</span></div>
         <p>Geometrický vzor výplně. Gyroid je výchozí univerzální volba — má vyrovnanou pevnost ve všech směrech (izotropní), tiskne se rychle a nevytváří dlouhé přímé linie náchylné na rezonanci. Další možnosti: Grid, Honeycomb, Cubic, Triangle, Lightning (jen podpora horní plochy, minimální spotřeba).</p>
       </div>
-
-      <div class="param" id="maximalni-delka-vyplnove-kotvy">
-        <div class="param-head">
-          <div class="param-title">Infill anchor max length<small>Maximální délka výplňové kotvy</small></div>
-          <span class="param-val">20 mm or %</span>
-        </div>
+      <div class="card" id="maximalni-delka-vyplnove-kotvy">
+        <div class="card-head"><h3>Infill anchor max length<small>Maximální délka výplňové kotvy</small></h3><span class="card-num card-num--accent">20 mm or %</span></div>
         <p>Maximální délka, na kterou se výplň "zakotví" do okolní stěny pro lepší spojení. Vyšší hodnota = pevnější spoj výplně se stěnou, ale o trochu více materiálu v přechodové zóně.</p>
       </div>
-
-      <div class="param" id="delka-kotvy-vnitrni-vyplne">
-        <div class="param-head">
-          <div class="param-title">Infill anchor<small>Délka kotvy vnitřní výplně</small></div>
-          <span class="param-val">400 % mm or %</span>
-        </div>
+      <div class="card" id="delka-kotvy-vnitrni-vyplne">
+        <div class="card-head"><h3>Infill anchor<small>Délka kotvy vnitřní výplně</small></h3><span class="card-num card-num--accent">400 % mm or %</span></div>
         <p>Souvisí s parametrem výše — určuje konkrétní cílovou délku zakotvení vzhledem k šířce extruze. Vyšší procento znamená delší a tedy pevnější zakotvení výplně do stěny.</p>
       </div>
-
-      <div class="param" id="vzor-vnitrni-plne-vyplne">
-        <div class="param-head">
-          <div class="param-title">Internal solid infill pattern<small>Vzor vnitřní plné výplně</small></div>
-          <span class="param-val">Rectilinear (přímočarý)</span>
-        </div>
+      <div class="card" id="vzor-vnitrni-plne-vyplne">
+        <div class="card-head"><h3>Internal solid infill pattern<small>Vzor vnitřní plné výplně</small></h3><span class="card-num card-num--accent">Rectilinear (přímočarý)</span></div>
         <p>Vzor pro oblasti, kde program automaticky generuje 100% plnou výplň uvnitř modelu (např. kolem podpěrných kontaktních bodů nebo malých izolovaných oblastí), na rozdíl od běžné řídké výplně.</p>
       </div>
-
-      <div class="param" id="pouzit-vyplneni-mezer">
-        <div class="param-head">
-          <div class="param-title">Fill gaps<small>Použít vyplnění mezer</small></div>
-          <span class="param-val">Top and bottom (horní a dolní)</span>
-        </div>
+      <div class="card" id="pouzit-vyplneni-mezer">
+        <div class="card-head"><h3>Fill gaps<small>Použít vyplnění mezer</small></h3><span class="card-num card-num--accent">Top and bottom (horní a dolní)</span></div>
         <p>Kde program automaticky vyplňuje drobné mezery, které vzniknou mezi perimetry a výplní na specifických místech geometrie — typicky na horních a spodních plochách, kde jsou mezery nejvíc viditelné.</p>
       </div>
-
-      <div class="param" id="odfiltrujte-drobne-mezery">
-        <div class="param-head">
-          <div class="param-title">Filter out tiny gaps<small>Odfiltrujte drobné mezery</small></div>
-          <span class="param-val">0 mm (nepoužito)</span>
-        </div>
+      <div class="card" id="odfiltrujte-drobne-mezery">
+        <div class="card-head"><h3>Filter out tiny gaps<small>Odfiltrujte drobné mezery</small></h3><span class="card-num card-num--accent">0 mm (nepoužito)</span></div>
         <p>Ignoruje extrémně malé mezery pod zadanou velikost, které by jinak program zbytečně složitě vyplňoval — šetří čas slicování a tisku bez znatelného dopadu na kvalitu.</p>
       </div>
-
-      <div class="param" id="vypln-presah-steny">
-        <div class="param-head">
-          <div class="param-title">Infill/wall overlap<small>Výplň/Přesah stěny</small></div>
-          <span class="param-val">15 %</span>
-        </div>
+      <div class="card" id="vypln-presah-steny">
+        <div class="card-head"><h3>Infill/wall overlap<small>Výplň/Přesah stěny</small></h3><span class="card-num card-num--accent">15 %</span></div>
         <p>O kolik procent řídká výplň zasahuje do oblasti stěny (analogicky k Překrytí plné výplně/stěny nahoře/dole, ale pro běžnou řídkou výplň v "těle" modelu). Zajišťuje pevný spoj mezi výplní a perimetrem.</p>
+      </div>
       </div>
 
       <h3 id="pokrocile-vypln">Advanced (pokročilé) — výplň</h3>
 
-      <div class="param" id="smer-ridke-vyplne-smer-plneho-vyplneni">
-        <div class="param-head">
-          <div class="param-title">Sparse infill direction / Solid infill direction<small>Směr řídké výplně / Směr plného vyplnění</small></div>
-          <span class="param-val">45° / 45°</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="smer-ridke-vyplne-smer-plneho-vyplneni">
+        <div class="card-head"><h3>Sparse infill direction / Solid infill direction<small>Směr řídké výplně / Směr plného vyplnění</small></h3><span class="card-num card-num--accent">45° / 45°</span></div>
         <p>Úhel orientace linií výplně. 45° je standardní hodnota dávající rozumnou pevnost ve více směrech. Pro vícevrstvé modely se úhel typicky automaticky střídá mezi vrstvami.</p>
       </div>
-
-      <div class="param" id="rotate-solid-infill-direction">
-        <div class="param-head">
-          <div class="param-title">Rotate solid infill direction<small>rotovat směr plné výplně</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="rotate-solid-infill-direction">
+        <div class="card-head"><h3>Rotate solid infill direction<small>rotovat směr plné výplně</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Pokud zapnuto, program automaticky střídá úhel plné výplně mezi vrstvami (např. 45°/135°) pro lepší izotropní pevnost místo jednoho fixního úhlu na všech vrstvách.</p>
       </div>
-
-      <div class="param" id="bridge-direction">
-        <div class="param-head">
-          <div class="param-title">Bridge angle<small>směr přemostění (bridge direction)</small></div>
-          <span class="param-val">0° (automaticky)</span>
-        </div>
+      <div class="card" id="bridge-direction">
+        <div class="card-head"><h3>Bridge angle<small>směr přemostění (bridge direction)</small></h3><span class="card-num card-num--accent">0° (automaticky)</span></div>
         <p>Úhel orientace linií při tisku mostů. Hodnota 0 obvykle znamená, že program automaticky vypočítá optimální směr podle geometrie mostu (kolmo na nejkratší vzdálenost mezi podpěrnými body).</p>
       </div>
-
-      <div class="param" id="smer-vyplne-vnitrniho-mostu">
-        <div class="param-head">
-          <div class="param-title">Internal bridge infill direction<small>Směr výplně vnitřního mostu</small></div>
-          <span class="param-val">0°</span>
-        </div>
+      <div class="card" id="smer-vyplne-vnitrniho-mostu">
+        <div class="card-head"><h3>Internal bridge infill direction<small>Směr výplně vnitřního mostu</small></h3><span class="card-num card-num--accent">0°</span></div>
         <p>Stejný princip jako Bridge direction, ale specificky pro mosty uvnitř modelu.</p>
       </div>
-
-      <div class="param" id="minimalni-hranice-vnitrni-vyplne">
-        <div class="param-head">
-          <div class="param-title">Minimum sparse infill threshold<small>Minimální hranice vnitřní výplně</small></div>
-          <span class="param-val">15 mm²</span>
-        </div>
+      <div class="card" id="minimalni-hranice-vnitrni-vyplne">
+        <div class="card-head"><h3>Minimum sparse infill threshold<small>Minimální hranice vnitřní výplně</small></h3><span class="card-num card-num--accent">15 mm²</span></div>
         <p>Pokud je plocha výplně v dané vrstvě menší než tato hranice, program ji ignoruje nebo zpracuje jinak (typicky převede na plnou výplň) — zabraňuje zbytečně komplikovanému generování řídké výplně na velmi malých izolovaných plochách.</p>
       </div>
-
-      <div class="param" id="kombinace-vyplne">
-        <div class="param-head">
-          <div class="param-title">Infill combination / Combine infill every X layers<small>Kombinace výplně</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="kombinace-vyplne">
+        <div class="card-head"><h3>Infill combination / Combine infill every X layers<small>Kombinace výplně</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Sloučí výplň několika sousedních vrstev do jedné silnější vrstvy extruze — zrychluje tisk u modelů s nízkou hustotou výplně, ale snižuje přesnost vnitřní struktury. Vhodné jen pro čistě výplňové vrstvy, ne pro horní/spodní vrstvy.</p>
       </div>
-
-      <div class="param" id="detekovat-uzkou-vnitrni-plnou-vypln">
-        <div class="param-head">
-          <div class="param-title">Detect narrow internal solid infill<small>Detekovat úzkou vnitřní plnou výplň</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="detekovat-uzkou-vnitrni-plnou-vypln">
+        <div class="card-head"><h3>Detect narrow internal solid infill<small>Detekovat úzkou vnitřní plnou výplň</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Detekuje úzké pruhy plné výplně (např. mezi dvěma blízkými otvory) a upraví trajektorii, aby se vytiskly správně i přes svou malou šířku, místo aby je program přeskočil nebo zpracoval chybně.</p>
       </div>
-
-      <div class="param" id="zajistit-tloustku-svislych-sten">
-        <div class="param-head">
-          <div class="param-title">Ensure vertical shell thickness<small>Zajistit tloušťku svislých stěn</small></div>
-          <span class="param-val">All (všechny)</span>
-        </div>
+      <div class="card" id="zajistit-tloustku-svislych-sten">
+        <div class="card-head"><h3>Ensure vertical shell thickness<small>Zajistit tloušťku svislých stěn</small></h3><span class="card-num card-num--accent">All (všechny)</span></div>
         <p>Zaručuje minimální tloušťku stěny i na svislých plochách s nízkou hustotou výplně pod nimi — program případně automaticky vloží extra plnou výplň, aby zabránil "propadnutí" tenké stěny dovnitř modelu kvůli nedostatečné podpoře.</p>
       </div>
+      </div>
 
-      <a href="https://www.youtube.com/results?search_query=infill+pattern+density+gyroid+strength+settings+explained&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Infill pattern density gyroid strength settings explained</a>
+      <a href="https://www.youtube.com/results?search_query=infill+pattern+density+gyroid+strength+settings+explained&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Infill pattern density gyroid strength settings explained</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -1037,125 +638,82 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-podpery-zaklad">
       <div class="section-header">
-        <h2>8 — Záložka Support (podpěry) — Základní nastavení</h2>
+        <h2>Záložka Support (podpěry) — Základní nastavení</h2>
       </div>
 
-      <div class="tab-bar">
+      <div class="ui-tabs">
         <span>Quality</span><span>Strength</span><span>Speed</span><span class="active">Support</span><span>Multimaterial</span><span>Others</span>
       </div>
 
       <p>Podpěry jsou pomocné struktury, které tiskárna vytiskne pod převislými částmi modelu. Tato záložka má tři skupiny: základní Support (podpěry), Raft, a Filament na podpěry — plus rozsáhlá sekce Advanced (pokročilé) a samostatná sekce Stromové podpěry (obě v Sekci 9).</p>
 
-      <div class="param" id="povolit-podpery">
-        <div class="param-head">
-          <div class="param-title">Enable support<small>Povolit podpěry</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="povolit-podpery">
+        <div class="card-head"><h3>Enable support<small>Povolit podpěry</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Hlavní vypínač generování podpěr. Po zapnutí program automaticky analyzuje model a vygeneruje podpěry všude, kde úhel převisu překračuje Hraniční úhel (níže).</p>
       </div>
-
-      <div class="param" id="typ">
-        <div class="param-head">
-          <div class="param-title">Support type<small>Typ podpěr</small></div>
-          <span class="param-val">Tree (auto) (strom)</span>
-        </div>
+      <div class="card" id="typ">
+        <div class="card-head"><h3>Support type<small>Typ podpěr</small></h3><span class="card-num card-num--accent">Tree (auto) (strom)</span></div>
         <p><strong>Tree (auto)</strong> (strom) — stromové podpěry, které rostou jako větve a spojují se, podepírají víc míst z méně kořenů na podložce — méně materiálu, snazší odstranění. Alternativa <strong>Normal/Grid</strong> (mřížka) — klasické svislé sloupky/mřížka přímo pod převisy, jednodušší výpočet, ale víc materiálu na složitých modelech.</p>
       </div>
-
-      <div class="param" id="styl">
-        <div class="param-head">
-          <div class="param-title">Support style<small>Styl podpěr</small></div>
-          <span class="param-val">Default (Grid...) (výchozí, mřížka)</span>
-        </div>
+      <div class="card" id="styl">
+        <div class="card-head"><h3>Support style<small>Styl podpěr</small></h3><span class="card-num card-num--accent">Default (Grid...) (výchozí, mřížka)</span></div>
         <p>Konkrétní vizuální/strukturální styl podpěr v rámci vybraného typu — ovlivňuje hustotu a tvar základní mřížky podpěrné struktury.</p>
       </div>
-
-      <div class="param" id="hranicni-uhel">
-        <div class="param-head">
-          <div class="param-title">Support threshold angle<small>Hraniční úhel</small></div>
-          <span class="param-val">30°</span>
-        </div>
+      <div class="card" id="hranicni-uhel">
+        <div class="card-head"><h3>Support threshold angle<small>Hraniční úhel</small></h3><span class="card-num card-num--accent">30°</span></div>
         <p>Úhel měřený od svislé osy, od kterého program považuje plochu za "převis" vyžadující podpěru. Nižší hodnota = agresivnější generování podpěr (i mírné převisy budou podepřeny), vyšší = méně podpěr, ale riziko propadlých převisů.</p>
-        <div class="param-risk"><strong>Pozor na rozdíl od obecné teorie:</strong> Některé návody uvádí standardní práh 45° — Anycubic profil pro Kobru X má výchozí 30°, což je agresivnější (víc podpěr) nastavení. Pokud chcete méně podpěr na lehce sklopených plochách, zvyšte tuto hodnotu.</div>
+        <div class="alert alert-warn"><div class="alert-icon">🔥</div><div><strong>Pozor na rozdíl od obecné teorie:</strong> Některé návody uvádí standardní práh 45° — Anycubic profil pro Kobru X má výchozí 30°, což je agresivnější (víc podpěr) nastavení. Pokud chcete méně podpěr na lehce sklopených plochách, zvyšte tuto hodnotu.</div></div>
       </div>
-
-      <div class="param" id="prahove-prekryti">
-        <div class="param-head">
-          <div class="param-title">Overlap threshold<small>Prahové překrytí</small></div>
-          <span class="param-val">50 % mm or % (zašedlé/needitovatelné u Strom typu)</span>
-        </div>
+      <div class="card" id="prahove-prekryti">
+        <div class="card-head"><h3>Overlap threshold<small>Prahové překrytí</small></h3><span class="card-num card-num--accent">50 % mm or % (zašedlé/needitovatelné u Strom typu)</span></div>
         <p>Relevantní hlavně pro Normal/Mřížka typ podpěr — určuje minimální míru "překrytí" plochy s podpěrou potřebnou pro její vygenerování. U typu Strom (auto) bývá toto pole needitovatelné, protože stromová logika počítá jinak.</p>
       </div>
-
-      <div class="param" id="pocatecni-hustota-vrstvy">
-        <div class="param-head">
-          <div class="param-title">Initial layer density<small>Počáteční hustota vrstvy</small></div>
-          <span class="param-val">90 %</span>
-        </div>
+      <div class="card" id="pocatecni-hustota-vrstvy">
+        <div class="card-head"><h3>Initial layer density<small>Počáteční hustota vrstvy</small></h3><span class="card-num card-num--accent">90 %</span></div>
         <p>Hustota výplně podpěr konkrétně na první vrstvě podpěrné struktury (té, co se dotýká podložky) — vysoká hodnota zajišťuje stabilní základnu, na které stojí celá podpěrná konstrukce.</p>
       </div>
-
-      <div class="param" id="rozsireni-prvni-vrstvy">
-        <div class="param-head">
-          <div class="param-title">Initial layer expansion<small>Rozšíření první vrstvy</small></div>
-          <span class="param-val">5 mm</span>
-        </div>
+      <div class="card" id="rozsireni-prvni-vrstvy">
+        <div class="card-head"><h3>Initial layer expansion<small>Rozšíření první vrstvy</small></h3><span class="card-num card-num--accent">5 mm</span></div>
         <p>O kolik milimetrů se rozšíří základna podpěr na první vrstvě oproti zbytku podpěrné struktury — širší základna = lepší přilnavost a stabilita celé podpěrné věže během tisku.</p>
       </div>
-
-      <div class="param" id="pouze-na-podlozce">
-        <div class="param-head">
-          <div class="param-title">Support on build plate only<small>Pouze na podložce</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="pouze-na-podlozce">
+        <div class="card-head"><h3>Support on build plate only<small>Pouze na podložce</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Pokud zapnuto, podpěry se generují jen tam, kde mohou stát přímo na tiskové podložce — program nevytváří podpěry, které by samy musely stát na jiné části modelu (tzv. "podpěry na podpěrách"). Zjednodušuje strukturu a snadnost odstranění, ale u některých složitých modelů to může znamenat, že se některé převisy nepodepřou vůbec.</p>
       </div>
-
-      <div class="param" id="odstranit-male-previsy">
-        <div class="param-head">
-          <div class="param-title">Remove small overhangs<small>Odstranit malé převisy</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="odstranit-male-previsy">
+        <div class="card-head"><h3>Remove small overhangs<small>Odstranit malé převisy</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Ignoruje velmi malé převislé oblasti, kde by generování podpěry bylo nepřiměřeně komplikované vzhledem k minimálnímu přínosu — tyto drobné převisy se obvykle vytisknou v pořádku i bez podpěry díky rychlému tuhnutí plastu.</p>
       </div>
-
-      <div class="param" id="enforce-support-for-the-first-n-layers">
-        <div class="param-head">
-          <div class="param-title">Enforce support for first N layers<small>Enforce support for the first n layers</small></div>
-          <span class="param-val">0 vrstev (nepoužito)</span>
-        </div>
+      <div class="card" id="enforce-support-for-the-first-n-layers">
+        <div class="card-head"><h3>Enforce support for first N layers<small>Enforce support for the first n layers</small></h3><span class="card-num card-num--accent">0 vrstev (nepoužito)</span></div>
         <p>Vynutí podpěru pro prvních N vrstev bez ohledu na to, zda by jí normální logika (úhel převisu) vyžadovala — užitečné pro zajištění extra stability na úplném začátku tisku komplexních modelů.</p>
+      </div>
       </div>
 
       <h3 id="raft">Raft</h3>
 
-      <div class="param" id="vrstev-raftu">
-        <div class="param-head">
-          <div class="param-title">Raft layers<small>Vrstev raftu</small></div>
-          <span class="param-val">0 vrstev (vypnuto)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="vrstev-raftu">
+        <div class="card-head"><h3>Raft layers<small>Vrstev raftu</small></h3><span class="card-num card-num--accent">0 vrstev (vypnuto)</span></div>
         <p>Počet vrstev podkladové struktury (raft) vytištěné pod celým modelem před začátkem tisku samotného modelu. Hodnota 0 = bez raftu. Zvyšte na problematických modelech s malou kontaktní plochou nebo nerovnou podložkou — raft kompenzuje nerovnosti a zlepšuje přilnavost, ale za cenu horší kvality spodního povrchu modelu (musí se po odstranění raftu obrousit).</p>
+      </div>
       </div>
 
       <h3 id="filament-na-podpery">Support/Raft Filament (filament na podpěry)</h3>
 
-      <div class="param" id="podpery-raft-zakladna">
-        <div class="param-head">
-          <div class="param-title">Support/raft base filament<small>Podpěry/raft základna</small></div>
-          <span class="param-val">Default (výchozí)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="podpery-raft-zakladna">
+        <div class="card-head"><h3>Support/raft base filament<small>Podpěry/raft základna</small></h3><span class="card-num card-num--accent">Default (výchozí)</span></div>
         <p>Pokud máte multi-material tisk (víc cívek), zde můžete určit, který konkrétní filament/slot se použije pro základnu podpěr/raftu — typicky levnější nebo rozpustný materiál (PVA) odlišný od materiálu hlavního modelu.</p>
       </div>
-
-      <div class="param" id="podpery-raft-kontaktni-vrstva">
-        <div class="param-head">
-          <div class="param-title">Support/raft interface filament<small>Podpěry/raft kontaktní vrstva</small></div>
-          <span class="param-val">Default (výchozí)</span>
-        </div>
+      <div class="card" id="podpery-raft-kontaktni-vrstva">
+        <div class="card-head"><h3>Support/raft interface filament<small>Podpěry/raft kontaktní vrstva</small></h3><span class="card-num card-num--accent">Default (výchozí)</span></div>
         <p>Stejně jako výše, ale pro kontaktní (interface) vrstvy podpěr — místo, kde se podpěra dotýká samotného modelu. Pro tuto vrstvu se často volí rozpustný materiál (PVA) i v jinak jednomateriálovém tisku, pro snadnější a čistší odstranění podpěr z citlivých povrchů.</p>
       </div>
+      </div>
 
-      <a href="https://www.youtube.com/results?search_query=tree+supports+threshold+angle+OrcaSlicer+settings&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Tree supports threshold angle OrcaSlicer settings podpěry</a>
+      <a href="https://www.youtube.com/results?search_query=tree+supports+threshold+angle+OrcaSlicer+settings&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Tree supports threshold angle OrcaSlicer settings podpěry</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -1163,173 +721,103 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-podpery-pokrocile">
       <div class="section-header">
-        <h2>9 — Záložka Support (podpěry) — Advanced a Tree Supports</h2>
+        <h2>Záložka Support (podpěry) — Advanced a Tree Supports</h2>
       </div>
 
       <h3 id="pokrocile">Advanced (pokročilé)</h3>
 
-      <div class="param" id="vzdalenost-horni-z-vzdalenost-dolni-z">
-        <div class="param-head">
-          <div class="param-title">Top/bottom Z distance<small>Vzdálenost horní Z / Vzdálenost dolní Z</small></div>
-          <span class="param-val">0,2 mm / 0,2 mm</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="vzdalenost-horni-z-vzdalenost-dolni-z">
+        <div class="card-head"><h3>Top/bottom Z distance<small>Vzdálenost horní Z / Vzdálenost dolní Z</small></h3><span class="card-num card-num--accent">0,2 mm / 0,2 mm</span></div>
         <p>Mezera v ose Z mezi vrcholem podpěry a spodní plochou modelu (horní Z), a mezi podložkou/modelem a spodní stranou podpěry (dolní Z). Tato mezera umožní snadné odlomení podpěry po tisku. Příliš malá = podpěra se "přivaří" k modelu, příliš velká = převis se propadne do mezery.</p>
       </div>
-
-      <div class="param" id="smycky-sten-podpory">
-        <div class="param-head">
-          <div class="param-title">Support wall loops<small>Smyčky stěn podpory</small></div>
-          <span class="param-val">0</span>
-        </div>
+      <div class="card" id="smycky-sten-podpory">
+        <div class="card-head"><h3>Support wall loops<small>Smyčky stěn podpory</small></h3><span class="card-num card-num--accent">0</span></div>
         <p>Počet obvodových stěn kolem samotné podpěrné struktury (ne kolem modelu) — vyšší hodnota dělá podpěry pevnější/stabilnější, ale s vyšší spotřebou materiálu.</p>
       </div>
-
-      <div class="param" id="zakladni-vzor">
-        <div class="param-head">
-          <div class="param-title">Base pattern<small>Základní vzor</small></div>
-          <span class="param-val">Default (výchozí)</span>
-        </div>
+      <div class="card" id="zakladni-vzor">
+        <div class="card-head"><h3>Base pattern<small>Základní vzor</small></h3><span class="card-num card-num--accent">Default (výchozí)</span></div>
         <p>Vzor výplně použitý pro hlavní tělo podpěrné struktury (mimo kontaktní vrstvy) — ovlivňuje hustotu a snadnost odstranění.</p>
       </div>
-
-      <div class="param" id="rozestup-zakladniho-vzoru">
-        <div class="param-head">
-          <div class="param-title">Base pattern spacing<small>Rozestup základního vzoru</small></div>
-          <span class="param-val">2,5 mm</span>
-        </div>
+      <div class="card" id="rozestup-zakladniho-vzoru">
+        <div class="card-head"><h3>Base pattern spacing<small>Rozestup základního vzoru</small></h3><span class="card-num card-num--accent">2,5 mm</span></div>
         <p>Mezera mezi jednotlivými liniemi v základním vzoru podpěry — větší rozestup = méně materiálu a snazší odstranění, ale méně stabilní podpěra.</p>
       </div>
-
-      <div class="param" id="uhel-vzoru">
-        <div class="param-head">
-          <div class="param-title">Support angle<small>Úhel vzoru</small></div>
-          <span class="param-val">0°</span>
-        </div>
+      <div class="card" id="uhel-vzoru">
+        <div class="card-head"><h3>Support angle<small>Úhel vzoru</small></h3><span class="card-num card-num--accent">0°</span></div>
         <p>Orientace linií základního vzoru podpěr vzhledem k osám X/Y.</p>
       </div>
-
-      <div class="param" id="vrchni-kontaktni-vrstvy-spodni-kontaktni-vrstvy">
-        <div class="param-head">
-          <div class="param-title">Top/bottom interface layers<small>Vrchní kontaktní vrstvy / Spodní kontaktní vrstvy</small></div>
-          <span class="param-val">2 vrstvy / Stejné jako vrchní</span>
-        </div>
+      <div class="card" id="vrchni-kontaktni-vrstvy-spodni-kontaktni-vrstvy">
+        <div class="card-head"><h3>Top/bottom interface layers<small>Vrchní kontaktní vrstvy / Spodní kontaktní vrstvy</small></h3><span class="card-num card-num--accent">2 vrstvy / Stejné jako vrchní</span></div>
         <p>Počet speciálních hustších vrstev v místě, kde se podpěra dotýká modelu (nahoře) nebo podložky (dole). Hustší interface vrstvy zlepšují kvalitu povrchu modelu na místě podpěry, zatímco zbytek podpěry může zůstat řídký.</p>
       </div>
-
-      <div class="param" id="vzor-kontaktni-vrstvy">
-        <div class="param-head">
-          <div class="param-title">Interface pattern<small>Vzor kontaktní vrstvy</small></div>
-          <span class="param-val">Default (výchozí)</span>
-        </div>
+      <div class="card" id="vzor-kontaktni-vrstvy">
+        <div class="card-head"><h3>Interface pattern<small>Vzor kontaktní vrstvy</small></h3><span class="card-num card-num--accent">Default (výchozí)</span></div>
         <p>Vzor výplně specificky pro kontaktní (interface) vrstvy — obvykle hustší a jemnější než základní vzor podpěry pro lepší povrchovou kvalitu na styčné ploše.</p>
       </div>
-
-      <div class="param" id="horni-rozestup-spodni-rozestup">
-        <div class="param-head">
-          <div class="param-title">Top/bottom interface spacing<small>Horní rozestup / Spodní rozestup</small></div>
-          <span class="param-val">0,5 mm / 0,5 mm</span>
-        </div>
+      <div class="card" id="horni-rozestup-spodni-rozestup">
+        <div class="card-head"><h3>Top/bottom interface spacing<small>Horní rozestup / Spodní rozestup</small></h3><span class="card-num card-num--accent">0,5 mm / 0,5 mm</span></div>
         <p>Mezera mezi liniemi v rámci kontaktních (interface) vrstev — menší rozestup = hustší, kvalitnější kontaktní plocha, ale obtížnější odstranění.</p>
       </div>
-
-      <div class="param" id="rozsireni-normalni-podpery">
-        <div class="param-head">
-          <div class="param-title">Normal support expansion<small>Rozšíření normální podpěry</small></div>
-          <span class="param-val">0 mm</span>
-        </div>
+      <div class="card" id="rozsireni-normalni-podpery">
+        <div class="card-head"><h3>Normal support expansion<small>Rozšíření normální podpěry</small></h3><span class="card-num card-num--accent">0 mm</span></div>
         <p>O kolik milimetrů se rozšíří plocha normální (ne stromové) podpěrné struktury oproti přesně vypočítané oblasti potřebné pro podporu — pro extra stabilitu.</p>
       </div>
-
-      <div class="param" id="podpery-objekt-xy-vzdalenost">
-        <div class="param-head">
-          <div class="param-title">Support/object XY distance<small>Podpěry/Objekt xy vzdálenost</small></div>
-          <span class="param-val">0,35 mm</span>
-        </div>
+      <div class="card" id="podpery-objekt-xy-vzdalenost">
+        <div class="card-head"><h3>Support/object XY distance<small>Podpěry/Objekt xy vzdálenost</small></h3><span class="card-num card-num--accent">0,35 mm</span></div>
         <p>Mezera v rovině XY mezi podpěrou a svislými stěnami modelu. Zabraňuje "slití" podpěry se svislou stěnou modelu — bez této mezery by bylo odstranění podpěry obtížné a mohlo by poškodit povrch.</p>
       </div>
-
-      <div class="param" id="podpora-mezera-prvni-vrstvy-mezi-podperou-a-objektem">
-        <div class="param-head">
-          <div class="param-title">Support/object first layer gap<small>Podpora/mezera první vrstvy mezi podpěrou a objektem</small></div>
-          <span class="param-val">0,2 mm</span>
-        </div>
+      <div class="card" id="podpora-mezera-prvni-vrstvy-mezi-podperou-a-objektem">
+        <div class="card-head"><h3>Support/object first layer gap<small>Podpora/mezera první vrstvy mezi podpěrou a objektem</small></h3><span class="card-num card-num--accent">0,2 mm</span></div>
         <p>Specifická mezera mezi podpěrou a modelem konkrétně na první vrstvě — může se lišit od běžné XY vzdálenosti, protože první vrstva má jiné tepelné a mechanické chování.</p>
       </div>
-
-      <div class="param" id="nevytvaret-podpery-pod-mosty">
-        <div class="param-head">
-          <div class="param-title">Don't support bridges<small>Nevytvářet podpěry pod mosty</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="nevytvaret-podpery-pod-mosty">
+        <div class="card-head"><h3>Don't support bridges<small>Nevytvářet podpěry pod mosty</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, program nevygeneruje podpěry pod plochami, které jsou klasifikované jako mosty (bridge) — protože mosty by se podle teorie měly tisknout bez podpěry díky vlastní mostní logice (zvýšené chlazení, zpomalení). Zapínejte jen pokud máte dobře nakalibrované mostní parametry.</p>
+      </div>
       </div>
 
       <h3 id="stromove-podpery">Tree Supports (stromové podpěry)</h3>
 
       <p>Tato skupina je relevantní jen pokud je Typ podpěr nastaven na Strom (auto) nebo Strom (manuální). Stromové podpěry mají vlastní geometrickou logiku odlišnou od klasické mřížky.</p>
 
-      <div class="param" id="prumer-hrotu">
-        <div class="param-head">
-          <div class="param-title">Tip diameter<small>Průměr hrotu</small></div>
-          <span class="param-val">0,8 mm</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="prumer-hrotu">
+        <div class="card-head"><h3>Tip diameter<small>Průměr hrotu</small></h3><span class="card-num card-num--accent">0,8 mm</span></div>
         <p>Průměr nejtenčí části "větve" stromové podpěry — místa, kde se dotýká modelu. Menší průměr = méně viditelná stopa po podpěře na modelu po odstranění, ale méně stabilní kontakt.</p>
       </div>
-
-      <div class="param" id="vzdalenost-vetvi-podper-stromu">
-        <div class="param-head">
-          <div class="param-title">Branch distance<small>Vzdálenost větví podpěr stromů</small></div>
-          <span class="param-val">1 mm</span>
-        </div>
+      <div class="card" id="vzdalenost-vetvi-podper-stromu">
+        <div class="card-head"><h3>Branch distance<small>Vzdálenost větví podpěr stromů</small></h3><span class="card-num card-num--accent">1 mm</span></div>
         <p>Minimální vzdálenost mezi jednotlivými větvemi stromové podpěry — ovlivňuje hustotu/množství materiálu použitého na podpěrnou strukturu.</p>
       </div>
-
-      <div class="param" id="hustota-vetvi">
-        <div class="param-head">
-          <div class="param-title">Branch density<small>Hustota větví</small></div>
-          <span class="param-val">30 %</span>
-        </div>
+      <div class="card" id="hustota-vetvi">
+        <div class="card-head"><h3>Branch density<small>Hustota větví</small></h3><span class="card-num card-num--accent">30 %</span></div>
         <p>Celková hustota podpěrné struktury tvořené větvemi — vyšší hustota = pevnější podpěra, ale víc materiálu a obtížnější odstranění.</p>
       </div>
-
-      <div class="param" id="prumer-vetve-podper-stromu">
-        <div class="param-head">
-          <div class="param-title">Branch diameter<small>Průměr větve podpěr stromu</small></div>
-          <span class="param-val">2 mm</span>
-        </div>
+      <div class="card" id="prumer-vetve-podper-stromu">
+        <div class="card-head"><h3>Branch diameter<small>Průměr větve podpěr stromu</small></h3><span class="card-num card-num--accent">2 mm</span></div>
         <p>Průměr "kmenové" části větví (tlustší než hrot, který se dotýká modelu) — silnější větve unesou víc váhy a podepřou víc hrotů, ale potřebují víc materiálu a místa.</p>
       </div>
-
-      <div class="param" id="uhel-definujici-prumer-vetve">
-        <div class="param-head">
-          <div class="param-title">Branch diameter angle<small>Úhel definující průměr větve</small></div>
-          <span class="param-val">5°</span>
-        </div>
+      <div class="card" id="uhel-definujici-prumer-vetve">
+        <div class="card-head"><h3>Branch diameter angle<small>Úhel definující průměr větve</small></h3><span class="card-num card-num--accent">5°</span></div>
         <p>Úhel, kterým se průměr větve postupně zvětšuje směrem dolů k základně (větve jsou tlustší u podložky, tenčí u hrotu) — simuluje přirozený tvar stromu pro lepší rozložení váhy.</p>
       </div>
-
-      <div class="param" id="uhel-vetve-podper-stromu">
-        <div class="param-head">
-          <div class="param-title">Tree support branch angle<small>Úhel větve podpěr stromu</small></div>
-          <span class="param-val">40°</span>
-        </div>
+      <div class="card" id="uhel-vetve-podper-stromu">
+        <div class="card-head"><h3>Tree support branch angle<small>Úhel větve podpěr stromu</small></h3><span class="card-num card-num--accent">40°</span></div>
         <p>Maximální úhel, ve kterém se větve mohou rozbíhat od svislé osy — ovlivňuje, jak "rozprostřená" může být podpěrná struktura při hledání optimální cesty k podložce.</p>
       </div>
-
-      <div class="param" id="preferovany-uhel-vetve">
-        <div class="param-head">
-          <div class="param-title">Preferred branch angle<small>Preferovaný úhel větve</small></div>
-          <span class="param-val">25°</span>
-        </div>
+      <div class="card" id="preferovany-uhel-vetve">
+        <div class="card-head"><h3>Preferred branch angle<small>Preferovaný úhel větve</small></h3><span class="card-num card-num--accent">25°</span></div>
         <p>Úhel, který program preferuje při generování větví, pokud má na výběr — kompromis mezi efektivitou cesty k podložce a stabilitou struktury.</p>
+      </div>
       </div>
 
       <div class="alert alert-tip">
-        <div class="alert-icon">✓</div>
+        <div class="alert-icon">💡</div>
         <div><strong>Pro běžné použití:</strong> Výchozí hodnoty stromových podpěr z profilu Anycubic Kobra X jsou dobře vyladěné pro většinu modelů. Nejčastěji upravované pole je <strong>Hraniční úhel</strong> (Sekce 8) — pokud chcete méně agresivní generování podpěr na mírných svazích, zvyšte ho z výchozích 30° na 40–50°.</div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=tree+support+branch+settings+advanced+OrcaSlicer&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Tree support branch settings advanced OrcaSlicer stromové podpěry</a>
+      <a href="https://www.youtube.com/results?search_query=tree+support+branch+settings+advanced+OrcaSlicer&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Tree support branch settings advanced OrcaSlicer stromové podpěry</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -1337,153 +825,98 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-multimaterial">
       <div class="section-header">
-        <h2>10 — Záložka Multimaterial (multimateriál)</h2>
+        <h2>Záložka Multimaterial (multimateriál)</h2>
       </div>
 
-      <div class="tab-bar">
+      <div class="ui-tabs">
         <span>Quality</span><span>Strength</span><span>Speed</span><span>Support</span><span class="active">Multimaterial</span><span>Others</span>
       </div>
 
       <div class="alert alert-info">
-        <div class="alert-icon">💡</div>
-        <div>Tato záložka je relevantní jen pro tisk s víc cívkami/barvami najednou (ACE Pro). Pokud tisknete z jedné cívky, můžete tuto sekci přeskočit. Čisticí objem (matice proplachovacích hodnot mezi sloty) je popsaný v kapitole <a href="05c_3D_slicer_filament.html" style="color:#fff;">05c — Sekce 1</a> — zde se věnujeme zbylým polím záložky Multimaterial v okně Process, která se týkají geometrie a chování čisticí věže.</div>
+        <div class="alert-icon">📖</div>
+        <div>Tato záložka je relevantní jen pro tisk s víc cívkami/barvami najednou (ACE Pro). Pokud tisknete z jedné cívky, můžete tuto sekci přeskočit. Čisticí objem (matice proplachovacích hodnot mezi sloty) je popsaný v kapitole <a href="05c_3D_slicer_filament.html">05c — Sekce 1</a> — zde se věnujeme zbylým polím záložky Multimaterial v okně Process, která se týkají geometrie a chování čisticí věže.</div>
       </div>
 
       <h3 id="cistici-vez">Prime Tower (čisticí věž)</h3>
 
-      <div class="param" id="zapnout">
-        <div class="param-head">
-          <div class="param-title">Enable prime tower<small>Zapnout</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="zapnout">
+        <div class="card-head"><h3>Enable prime tower<small>Zapnout</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Hlavní vypínač čisticí (purge) věže — pomocné věžičky vedle modelu, do které tiskárna vytlačí starý materiál před přechodem na nový při výměně filamentu. Zapněte vždy při multi-material tisku.</p>
       </div>
-
-      <div class="param" id="sirka">
-        <div class="param-head">
-          <div class="param-title">Prime tower width<small>Šířka věže</small></div>
-          <span class="param-val">30 mm</span>
-        </div>
+      <div class="card" id="sirka">
+        <div class="card-head"><h3>Prime tower width<small>Šířka věže</small></h3><span class="card-num card-num--accent">30 mm</span></div>
         <p>Šířka čisticí věže. Větší = víc místa na podložce, ale větší spotřeba materiálu. Menší = méně jisté vyčištění mezi barvami.</p>
       </div>
-
-      <div class="param" id="max-speed">
-        <div class="param-head">
-          <div class="param-title">Prime tower max speed<small>maximální rychlost čisticí věže</small></div>
-          <span class="param-val">90 mm/s</span>
-        </div>
+      <div class="card" id="max-speed">
+        <div class="card-head"><h3>Prime tower max speed<small>maximální rychlost čisticí věže</small></h3><span class="card-num card-num--accent">90 mm/s</span></div>
         <p>Maximální rychlost tisku čisticí věže — věž nemusí být esteticky dokonalá, ale příliš vysoká rychlost by mohla způsobit nestabilitu vysoké tenké struktury.</p>
       </div>
-
-      <div class="param" id="zakladni-objem">
-        <div class="param-head">
-          <div class="param-title">Prime volume<small>Základní objem</small></div>
-          <span class="param-val">30 mm³</span>
-        </div>
-        <p>Minimální objem materiálu vytlačeného do věže při každé výměně, nezávisle na konkrétní barevné kombinaci (viz Čisticí objem v <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>, kde se objem liší podle barevného přechodu).</p>
+      <div class="card" id="zakladni-objem">
+        <div class="card-head"><h3>Prime volume<small>Základní objem</small></h3><span class="card-num card-num--accent">30 mm³</span></div>
+        <p>Minimální objem materiálu vytlačeného do věže při každé výměně, nezávisle na konkrétní barevné kombinaci (viz Čisticí objem v <a href="05c_3D_slicer_filament.html">05c</a>, kde se objem liší podle barevného přechodu).</p>
       </div>
-
-      <div class="param" id="sirka-limce">
-        <div class="param-head">
-          <div class="param-title">Prime tower brim width<small>Šířka límce</small></div>
-          <span class="param-val">5 mm</span>
-        </div>
+      <div class="card" id="sirka-limce">
+        <div class="card-head"><h3>Prime tower brim width<small>Šířka límce</small></h3><span class="card-num card-num--accent">5 mm</span></div>
         <p>Šířka přídavného okraje (brim) kolem základny čisticí věže pro lepší přilnavost — vysoká úzká věž by se bez tohoto okraje mohla snadno odlepit.</p>
       </div>
-
-      <div class="param" id="skip-points">
-        <div class="param-head">
-          <div class="param-title">Skip points<small>přeskočit body</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="skip-points">
+        <div class="card-head"><h3>Skip points<small>přeskočit body</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Optimalizační funkce, která přeskočí nadbytečné body trajektorie ve věži, pokud nejsou nutné pro funkci čištění — zrychluje tisk věže.</p>
       </div>
-
-      <div class="param" id="infill-gap">
-        <div class="param-head">
-          <div class="param-title">Prime tower infill gap<small>mezera výplně čisticí věže</small></div>
-          <span class="param-val">150 %</span>
-        </div>
+      <div class="card" id="infill-gap">
+        <div class="card-head"><h3>Prime tower infill gap<small>mezera výplně čisticí věže</small></h3><span class="card-num card-num--accent">150 %</span></div>
         <p>Mezera mezi liniemi výplně uvnitř čisticí věže (vztažená k šířce extruze) — věž nepotřebuje plnou pevnost, takže může mít řídkou strukturu, čímž šetří materiál a čas.</p>
       </div>
-
-      <div class="param" id="rib-wall">
-        <div class="param-head">
-          <div class="param-title">Rib wall<small>žebrovaná stěna</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="rib-wall">
+        <div class="card-head"><h3>Rib wall<small>žebrovaná stěna</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Přidá zpevňující "žebra" do struktury čisticí věže — zvyšuje stabilitu vysoké úzké konstrukce během tisku.</p>
       </div>
-
-      <div class="param" id="dodatecna-delka-zebra-sirka-zebra">
-        <div class="param-head">
-          <div class="param-title">Rib length/width<small>Dodatečná délka žebra / Šířka žebra</small></div>
-          <span class="param-val">0 mm / 8 mm</span>
-        </div>
+      <div class="card" id="dodatecna-delka-zebra-sirka-zebra">
+        <div class="card-head"><h3>Rib length/width<small>Dodatečná délka žebra / Šířka žebra</small></h3><span class="card-num card-num--accent">0 mm / 8 mm</span></div>
         <p>Konkrétní rozměry zpevňujících žeber věže z předchozího řádku.</p>
       </div>
-
-      <div class="param" id="zaoblena-stena">
-        <div class="param-head">
-          <div class="param-title">Rounded wall<small>Zaoblená stěna</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="zaoblena-stena">
+        <div class="card-head"><h3>Rounded wall<small>Zaoblená stěna</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Zaoblí hrany čisticí věže místo ostrých rohů — zlepšuje mechanickou stabilitu věže a může mírně omezit vibrace při vysokorychlostním tisku věže.</p>
+      </div>
       </div>
 
       <h3 id="moznosti-cisteni">Flushing Options (možnosti čištění)</h3>
 
-      <div class="param" id="cisteni-do-vyplne-objektu">
-        <div class="param-head">
-          <div class="param-title">Flush into objects' infill<small>Čištění do výplně objektů</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="cisteni-do-vyplne-objektu">
+        <div class="card-head"><h3>Flush into objects' infill<small>Čištění do výplně objektů</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Místo do samostatné věžičky se čisticí materiál vytlačí přímo do výplně tištěného modelu — šetří materiál i čas, ale jen pokud nevadí barevně odlišná výplň uvnitř modelu (neviditelná zvenčí, ale ovlivňuje funkční díly, kde byste mohli model rozřezat).</p>
       </div>
-
-      <div class="param" id="cisteni-do-tohoto-objektu">
-        <div class="param-head">
-          <div class="param-title">Flush into this object<small>Čištění do tohoto objektu</small></div>
-          <span class="param-val">vypnuto (jen v režimu Objects)</span>
-        </div>
+      <div class="card" id="cisteni-do-tohoto-objektu">
+        <div class="card-head"><h3>Flush into this object<small>Čištění do tohoto objektu</small></h3><span class="card-num card-num--accent">vypnuto (jen v režimu Objects)</span></div>
         <p>Per-objektová verze předchozího nastavení — umožňuje vybrat konkrétní jeden objekt na podložce jako "obětní" cíl pro čisticí materiál, zatímco ostatní objekty zůstanou čisté.</p>
       </div>
-
-      <div class="param" id="cisteni-do-podper-objektu">
-        <div class="param-head">
-          <div class="param-title">Flush into objects' support<small>Čištění do podpěr objektů</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="cisteni-do-podper-objektu">
+        <div class="card-head"><h3>Flush into objects' support<small>Čištění do podpěr objektů</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Vytlačí čisticí materiál do podpěrné struktury místo do samostatné věže — podpěry se po tisku stejně odstraňují, takže barevná nečistota uvnitř nevadí. Doporučený výchozí kompromis mezi úsporou materiálu a čistotou modelu.</p>
+      </div>
       </div>
 
       <h3 id="pokrocile-2">Advanced (pokročilé)</h3>
 
-      <div class="param" id="pouzit-propojeni-materialu-paprsky">
-        <div class="param-head">
-          <div class="param-title">Use ray-based interlocking<small>Použít propojení materiálu paprsky</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="pouzit-propojeni-materialu-paprsky">
+        <div class="card-head"><h3>Use ray-based interlocking<small>Použít propojení materiálu paprsky</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokročilá technika pro mechanické propojení dvou různých materiálů na jejich rozhraní (užitečné pro materiály, které se k sobě chemicky nelepí dobře) — vytvoří mřížkovou strukturu "zámků" mezi materiály pro lepší fyzické spojení.</p>
       </div>
-
-      <div class="param" id="mezilehle-steny">
-        <div class="param-head">
-          <div class="param-title">Interlocking walls<small>Mezilehlé stěny</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="mezilehle-steny">
+        <div class="card-head"><h3>Interlocking walls<small>Mezilehlé stěny</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Podobný princip jako výše, ale zaměřený na propojení stěn mezi materiály.</p>
       </div>
-
-      <div class="param" id="maximalni-sirka-segmentovane-oblasti-hloubka-propojeni-segme">
-        <div class="param-head">
-          <div class="param-title">Max segmented region width/depth<small>Maximální šířka segmentované oblasti / Hloubka propojení segmentované oblasti</small></div>
-          <span class="param-val">0 mm / 0 mm (nepoužito)</span>
-        </div>
+      <div class="card" id="maximalni-sirka-segmentovane-oblasti-hloubka-propojeni-segme">
+        <div class="card-head"><h3>Max segmented region width/depth<small>Maximální šířka segmentované oblasti / Hloubka propojení segmentované oblasti</small></h3><span class="card-num card-num--accent">0 mm / 0 mm (nepoužito)</span></div>
         <p>Pokročilé parametry řídící velikost a hloubku oblastí, kde se dva materiály na modelu setkávají a vzájemně segmentují — relevantní jen pro pokročilé multi-material projekty s komplexními barevnými přechody.</p>
       </div>
+      </div>
 
-      <a href="https://www.youtube.com/results?search_query=prime+tower+settings+multi+material+purge+OrcaSlicer&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Prime tower settings multi material purge OrcaSlicer</a>
+      <a href="https://www.youtube.com/results?search_query=prime+tower+settings+multi+material+purge+OrcaSlicer&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Prime tower settings multi material purge OrcaSlicer</a>
     </div>
 
     <!-- ═══════════════════════════════════════════
@@ -1491,10 +924,10 @@
     ════════════════════════════════════════════ -->
     <div class="section" id="zalozka-ostatni">
       <div class="section-header">
-        <h2>11 — Záložka Others (ostatní)</h2>
+        <h2>Záložka Others (ostatní)</h2>
       </div>
 
-      <div class="tab-bar">
+      <div class="ui-tabs">
         <span>Quality</span><span>Strength</span><span>Speed</span><span>Support</span><span>Multimaterial</span><span class="active">Others</span>
       </div>
 
@@ -1502,239 +935,136 @@
 
       <p>Obrys (Skirt) je několik obvodových linií vytištěných okolo modelu (nikoli pod ním, na rozdíl od Límce/Brim níže) — neslouží k přilnavosti modelu, ale k ustálení toku plastu z trysky před začátkem skutečného tisku.</p>
 
-      <div class="param" id="obrysove-smycky">
-        <div class="param-head">
-          <div class="param-title">Skirt loops<small>Obrysové smyčky</small></div>
-          <span class="param-val">0 (vypnuto v Global; v Objects vidět hodnota -135° pro úhel)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="obrysove-smycky">
+        <div class="card-head"><h3>Skirt loops<small>Obrysové smyčky</small></h3><span class="card-num card-num--accent">0 (vypnuto v Global; v Objects vidět hodnota -135° pro úhel)</span></div>
         <p>Počet soustředných obvodů Obrysu. Hodnota 0 = bez obrysu. Zvyšte na 2–3, pokud chcete ustálit tok plastu před tiskem modelu (užitečné při změně filamentu nebo trysky).</p>
       </div>
-
-      <div class="param" id="typ-obrysu">
-        <div class="param-head">
-          <div class="param-title">Skirt type<small>Typ obrysu</small></div>
-          <span class="param-val">Combined (kombinovaný)</span>
-        </div>
+      <div class="card" id="typ-obrysu">
+        <div class="card-head"><h3>Skirt type<small>Typ obrysu</small></h3><span class="card-num card-num--accent">Combined (kombinovaný)</span></div>
         <p>Způsob, jakým se obrys generuje vzhledem k více objektům na podložce — Kombinovaný typicky obkrouží všechny objekty jedním společným obrysem místo samostatného obrysu kolem každého.</p>
       </div>
-
-      <div class="param" id="minimalni-delka-extruze-okraje">
-        <div class="param-head">
-          <div class="param-title">Skirt minimum extrusion length<small>Minimální délka extruze okraje</small></div>
-          <span class="param-val">0 mm (zašedlé, neaktivní)</span>
-        </div>
+      <div class="card" id="minimalni-delka-extruze-okraje">
+        <div class="card-head"><h3>Skirt minimum extrusion length<small>Minimální délka extruze okraje</small></h3><span class="card-num card-num--accent">0 mm (zašedlé, neaktivní)</span></div>
         <p>Vynutí minimální celkovou délku extruze v rámci obrysu — alternativní způsob, jak zajistit dostatečné ustálení toku, místo počítání podle počtu smyček.</p>
       </div>
-
-      <div class="param" id="vzdalenost-obrysu">
-        <div class="param-head">
-          <div class="param-title">Skirt distance<small>Vzdálenost obrysu</small></div>
-          <span class="param-val">2 mm</span>
-        </div>
+      <div class="card" id="vzdalenost-obrysu">
+        <div class="card-head"><h3>Skirt distance<small>Vzdálenost obrysu</small></h3><span class="card-num card-num--accent">2 mm</span></div>
         <p>Mezera mezi Obrysem a samotným modelem. Příliš malá vzdálenost riskuje nechtěné spojení s modelem.</p>
       </div>
-
-      <div class="param" id="pocatecni-bod-okraje">
-        <div class="param-head">
-          <div class="param-title">Skirt start point<small>Počáteční bod okraje</small></div>
-          <span class="param-val">-135°</span>
-        </div>
+      <div class="card" id="pocatecni-bod-okraje">
+        <div class="card-head"><h3>Skirt start point<small>Počáteční bod okraje</small></h3><span class="card-num card-num--accent">-135°</span></div>
         <p>Úhel, ze kterého program začíná tisknout obrys vzhledem k modelu — ovlivňuje, na které straně podložky se tryska "rozjíždí" před začátkem tisku samotného modelu.</p>
       </div>
-
-      <div class="param" id="vyska-obrysu">
-        <div class="param-head">
-          <div class="param-title">Skirt height<small>Výška obrysu</small></div>
-          <span class="param-val">1 vrstva</span>
-        </div>
+      <div class="card" id="vyska-obrysu">
+        <div class="card-head"><h3>Skirt height<small>Výška obrysu</small></h3><span class="card-num card-num--accent">1 vrstva</span></div>
         <p>Na kolik vrstev se obrys vytiskne — obvykle jen první vrstva je dostačující pro účel ustálení toku.</p>
       </div>
-
-      <div class="param" id="rychlost-obrysu">
-        <div class="param-head">
-          <div class="param-title">Skirt speed<small>Rychlost obrysu</small></div>
-          <span class="param-val">50 mm/s</span>
-        </div>
+      <div class="card" id="rychlost-obrysu">
+        <div class="card-head"><h3>Skirt speed<small>Rychlost obrysu</small></h3><span class="card-num card-num--accent">50 mm/s</span></div>
         <p>Rychlost tisku obrysu — nezávislá na rychlostech samotného modelu, protože obrys neslouží k ničemu jinému než zahřátí/ustálení trysky.</p>
       </div>
-
-      <div class="param" id="ochranny-stit">
-        <div class="param-head">
-          <div class="param-title">Skirt shield / Wall guard<small>Ochranný štít</small></div>
-          <span class="param-val">Disabled (zakázáno)</span>
-        </div>
+      <div class="card" id="ochranny-stit">
+        <div class="card-head"><h3>Skirt shield / Wall guard<small>Ochranný štít</small></h3><span class="card-num card-num--accent">Disabled (zakázáno)</span></div>
         <p>Pokud aktivováno, obrys může sloužit i jako částečná bariéra proti průvanu kolem modelu — okrajová funkce, relevantní hlavně pro materiály citlivé na proudění vzduchu.</p>
+      </div>
       </div>
 
       <h3 id="limec-brim">Límec (Brim)</h3>
 
       <p>Límec je na rozdíl od Obrysu <strong>přímo spojený</strong> s první vrstvou modelu — vytváří širší kontaktní plochu s podložkou jako "křídla" kolem základny. Ideální pro vysoké, úzké nebo nestabilní modely náchylné na odlepení nebo warping.</p>
 
-      <div class="param" id="typ-limce">
-        <div class="param-head">
-          <div class="param-title">Brim type<small>Typ límce</small></div>
-          <span class="param-val">Auto (automaticky)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="typ-limce">
+        <div class="card-head"><h3>Brim type<small>Typ límce</small></h3><span class="card-num card-num--accent">Auto (automaticky)</span></div>
         <p>Program automaticky rozhodne, zda a jaký typ límce model potřebuje na základě jeho geometrie a stability. Alternativy typicky zahrnují: <strong>No-brim</strong> (žádný), <strong>Outer brim only</strong> (vnější), <strong>Inner brim only</strong> (vnitřní), <strong>Outer and inner brim</strong> (vnější+vnitřní), <strong>Mouse ear</strong> (jen v rozích, místo po celém obvodu).</p>
       </div>
-
-      <div class="param" id="sirka-limce-2">
-        <div class="param-head">
-          <div class="param-title">Brim width<small>Šířka límce</small></div>
-          <span class="param-val">5 mm</span>
-        </div>
+      <div class="card" id="sirka-limce-2">
+        <div class="card-head"><h3>Brim width<small>Šířka límce</small></h3><span class="card-num card-num--accent">5 mm</span></div>
         <p>Jak daleko od modelu límec sahá. Širší límec = víc přídavné přilnavé plochy, ale víc materiálu a práce s odstraňováním. Pro ABS/ASA (náchylné na warping) zkuste 8–10 mm.</p>
       </div>
-
-      <div class="param" id="mezera-mezi-limcem-a-objektem">
-        <div class="param-head">
-          <div class="param-title">Brim object gap<small>Mezera mezi Límcem a Objektem</small></div>
-          <span class="param-val">0,1 mm</span>
-        </div>
+      <div class="card" id="mezera-mezi-limcem-a-objektem">
+        <div class="card-head"><h3>Brim object gap<small>Mezera mezi Límcem a Objektem</small></h3><span class="card-num card-num--accent">0,1 mm</span></div>
         <p>Malá mezera mezi límcem a modelem usnadňuje jejich pozdější oddělení — bez mezery by límec mohl srůst příliš pevně s modelem a ztížit jeho odstranění.</p>
+      </div>
       </div>
 
       <h3 id="specialni-rezim">Special Mode (speciální režim)</h3>
 
-      <div class="param" id="rezim-slicovani">
-        <div class="param-head">
-          <div class="param-title">Slicing mode<small>Režim Slicování</small></div>
-          <span class="param-val">Regular (obvyklý)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="rezim-slicovani">
+        <div class="card-head"><h3>Slicing mode<small>Režim Slicování</small></h3><span class="card-num card-num--accent">Regular (obvyklý)</span></div>
         <p>Základní algoritmus slicování. Obvyklý je standardní volba pro většinu modelů. Alternativní režimy mohou existovat pro speciální geometrie (např. velmi tenké/komplexní mesh struktury).</p>
       </div>
-
-      <div class="param" id="tiskova-sekvence">
-        <div class="param-head">
-          <div class="param-title">Print sequence<small>Tisková sekvence</small></div>
-          <span class="param-val">By Layer (podle vrstvy)</span>
-        </div>
+      <div class="card" id="tiskova-sekvence">
+        <div class="card-head"><h3>Print sequence<small>Tisková sekvence</small></h3><span class="card-num card-num--accent">By Layer (podle vrstvy)</span></div>
         <p>Pořadí, ve kterém se tisknou objekty na podložce. <strong>Podle vrstvy</strong> — všechny objekty se tisknou současně, vrstva po vrstvě (standardní přístup). Alternativa <strong>Podle objektu</strong> (Sequential/By object) — dokončí se jeden celý objekt, poté se tryska přesune a tiskne další — užitečné pro vysoké, úzké objekty, kde hrozí riziko, že by se tryska zachytila o jiný hotový model.</p>
       </div>
-
-      <div class="param" id="poradi-v-ramci-vrstvy">
-        <div class="param-head">
-          <div class="param-title">Within-layer order<small>Pořadí v rámci vrstvy</small></div>
-          <span class="param-val">Default (výchozí)</span>
-        </div>
+      <div class="card" id="poradi-v-ramci-vrstvy">
+        <div class="card-head"><h3>Within-layer order<small>Pořadí v rámci vrstvy</small></h3><span class="card-num card-num--accent">Default (výchozí)</span></div>
         <p>Pokud je víc objektů tištěno na stejné vrstvě současně (režim "Podle vrstvy"), toto pole určuje, v jakém pořadí se tisknou jednotlivé objekty v rámci jedné vrstvy.</p>
       </div>
-
-      <div class="param" id="spiralova-vaza">
-        <div class="param-head">
-          <div class="param-title">Spiral vase<small>Spirálová váza</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="spiralova-vaza">
+        <div class="card-head"><h3>Spiral vase<small>Spirálová váza</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Speciální režim, kde osa Z plynule stoupá po celou dobu tisku jedné nepřerušené spirálové stěny — bez vrstvových švů, bez výplně, bez horní plochy. Vhodné jen pro duté dekorativní objekty jako vázy. Nelze kombinovat s výplní ani víc objekty na podložce zároveň.</p>
       </div>
-
-      <div class="param" id="casosber">
-        <div class="param-head">
-          <div class="param-title">Timelapse<small>Časosběr</small></div>
-          <span class="param-val">Traditional (tradiční)</span>
-        </div>
+      <div class="card" id="casosber">
+        <div class="card-head"><h3>Timelapse<small>Časosběr</small></h3><span class="card-num card-num--accent">Traditional (tradiční)</span></div>
         <p>Pokud má tiskárna kameru a podporu timelapse funkce, toto určuje styl snímání — Tradiční obvykle znamená pořízení snímku po dokončení každé vrstvy (případně s přesunem hlavy mimo záběr pro čistý snímek).</p>
       </div>
-
-      <div class="param" id="clenity-povrch">
-        <div class="param-head">
-          <div class="param-title">Fuzzy skin<small>Členitý povrch</small></div>
-          <span class="param-val">None (žádné)</span>
-        </div>
+      <div class="card" id="clenity-povrch">
+        <div class="card-head"><h3>Fuzzy skin<small>Členitý povrch</small></h3><span class="card-num card-num--accent">None (žádné)</span></div>
         <p>Fuzzy Skin záměrně "rozhází" trajektorii trysky na vnější stěně malými nepravidelnými odchylkami, čímž vznikne matný texturovaný povrch (jako brusný papír), který skrývá viditelnost vrstev a švu. Možnosti obvykle: <strong>None</strong> (žádné), <strong>Outer wall</strong> (vnější stěna), <strong>All walls</strong> (všechny stěny).</p>
+      </div>
       </div>
 
       <h3 id="vystup-g-kodu">G-code Output (výstup G-kódu)</h3>
 
-      <div class="param" id="omezeni-retrakci-ve-vyplni">
-        <div class="param-head">
-          <div class="param-title">Limit retraction in infill<small>Omezení retrakcí ve výplni</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="omezeni-retrakci-ve-vyplni">
+        <div class="card-head"><h3>Limit retraction in infill<small>Omezení retrakcí ve výplni</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Omezuje provádění retrakce při přesunech v rámci výplně (kde riziko viditelného oozingu je nízké) — šetří opotřebení extruderu a čas bez znatelného dopadu na kvalitu.</p>
       </div>
-
-      <div class="param" id="komentare-do-g-kodu">
-        <div class="param-head">
-          <div class="param-title">G-code comments<small>Komentáře do G-Kódu</small></div>
-          <span class="param-val">vypnuto</span>
-        </div>
+      <div class="card" id="komentare-do-g-kodu">
+        <div class="card-head"><h3>G-code comments<small>Komentáře do G-Kódu</small></h3><span class="card-num card-num--accent">vypnuto</span></div>
         <p>Pokud zapnuto, výsledný G-code obsahuje lidsky čitelné komentáře popisující, co každý úsek dělá — užitečné pro pokročilé uživatele, kteří G-code ručně analyzují nebo upravují, ale zvětšuje velikost souboru.</p>
       </div>
-
-      <div class="param" id="oznacovani-objektu">
-        <div class="param-head">
-          <div class="param-title">Label objects<small>Označování objektů</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="oznacovani-objektu">
+        <div class="card-head"><h3>Label objects<small>Označování objektů</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Vkládá do G-code identifikační značky pro každý objekt — umožňuje funkcím jako "Vynechat objekty" (níže) za běhu tisku poznat, který objekt se právě tiskne.</p>
       </div>
-
-      <div class="param" id="vynechat-objekty">
-        <div class="param-head">
-          <div class="param-title">Exclude objects<small>Vynechat objekty</small></div>
-          <span class="param-val">zapnuto</span>
-        </div>
+      <div class="card" id="vynechat-objekty">
+        <div class="card-head"><h3>Exclude objects<small>Vynechat objekty</small></h3><span class="card-num card-num--accent">zapnuto</span></div>
         <p>Umožňuje za běhu tisku (přímo na displeji tiskárny) vynechat konkrétní objekt z tiskové dávky, pokud zjistíte, že se nepovedl nebo se odlepil — tiskárna jednoduše přeskočí tento objekt a pokračuje s ostatními, aniž by musela zastavit celý tisk.</p>
       </div>
-
-      <div class="param" id="format-nazvu-souboru">
-        <div class="param-head">
-          <div class="param-title">Filename format<small>Formát názvu souboru</small></div>
-          <span class="param-val">{timestamp}-...{layer_height}_{print_time}.gcode</span>
-        </div>
+      <div class="card" id="format-nazvu-souboru">
+        <div class="card-head"><h3>Filename format<small>Formát názvu souboru</small></h3><span class="card-num card-num--accent">{timestamp}-...{layer_height}_{print_time}.gcode</span></div>
         <p>Šablona, podle které program automaticky generuje název výsledného G-code souboru — obsahuje proměnné jako čas vytvoření, výšku vrstvy, typ filamentu a odhadovaný čas tisku. Pro běžné používání nemusíte upravovat.</p>
+      </div>
       </div>
 
       <h3 id="post-processing-skripty-a-poznamky">Post-processing Scripts and Notes (post-processing skripty a poznámky)</h3>
 
-      <div class="param" id="post-processing-skripty">
-        <div class="param-head">
-          <div class="param-title">Post-processing scripts<small>Post-processing skripty</small></div>
-          <span class="param-val">prázdné (pokročilá funkce)</span>
-        </div>
+      <div class="card-stack">
+      <div class="card" id="post-processing-skripty">
+        <div class="card-head"><h3>Post-processing scripts<small>Post-processing skripty</small></h3><span class="card-num card-num--accent">prázdné (pokročilá funkce)</span></div>
         <p>Umožňuje propojit externí skript (Python apod.), který se automaticky spustí na vygenerovaném G-code souboru po slicování — pro pokročilé úpravy nad rámec toho, co program sám nabízí. Pro běžné používání nepoužíváno.</p>
       </div>
-
-      <div class="param" id="poznamky">
-        <div class="param-head">
-          <div class="param-title">Notes<small>Poznámky</small></div>
-          <span class="param-val">volné textové pole</span>
-        </div>
-        <p>Stejně jako u filament profilu (viz <a href="05c_3D_slicer_filament.html" style="color:var(--blue);">05c</a>) — čisté informační pole pro vaše vlastní poznámky k tomuto konkrétnímu process profilu.</p>
+      <div class="card" id="poznamky">
+        <div class="card-head"><h3>Notes<small>Poznámky</small></h3><span class="card-num card-num--accent">volné textové pole</span></div>
+        <p>Stejně jako u filament profilu (viz <a href="05c_3D_slicer_filament.html">05c</a>) — čisté informační pole pro vaše vlastní poznámky k tomuto konkrétnímu process profilu.</p>
+      </div>
       </div>
 
-      <a href="https://www.youtube.com/results?search_query=skirt+brim+spiral+vase+exclude+objects+OrcaSlicer&hl=cs" target="_blank" class="yt-link">▶ Hledat na YouTube: Skirt brim spiral vase exclude objects OrcaSlicer</a>
+      <a href="https://www.youtube.com/results?search_query=skirt+brim+spiral+vase+exclude+objects+OrcaSlicer&hl=cs" target="_blank" class="link-mono link-mono--yt">▶ Hledat na YouTube: Skirt brim spiral vase exclude objects OrcaSlicer</a>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         PAGE NAV
-    ════════════════════════════════════════════ -->
-    <div class="pn">
-      <a href="04_3D_slicer_pokrocily.html">← 04 · Slicer — pokročilý</a>
-      <a href="05b_3D_slicer_rychlost.html" class="nx">05b · Parametry rychlosti →</a>
-    </div>
+    <div id="pn"></div>
 
   </div><!-- /wrapper -->
 </main>
 
-<script>
-const searchInput = document.getElementById('sb-search-input');
-const mobileSearchInput = document.getElementById('mobile-search-input');
-
-function goToSearch(q) {
-  q = q.trim();
-  if(q) window.location.href = '00_3D_index.html?q=' + encodeURIComponent(q);
-}
-
-searchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-mobileSearchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') goToSearch(e.target.value);
-});
-searchInput.addEventListener('input', (e) => { mobileSearchInput.value = e.target.value; });
-mobileSearchInput.addEventListener('input', (e) => { searchInput.value = e.target.value; });
-</script>
+<script src="sidebar-config.js"></script>
+<script src="sidebar-init.js"></script>
 </body>
 </html>
